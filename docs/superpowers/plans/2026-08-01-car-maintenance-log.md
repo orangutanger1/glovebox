@@ -549,7 +549,7 @@ This task is the product. The "all my service dates became Jan 1, 0001" bug that
   - `applyMigrations(exec: (sql: string) => void, currentVersion: number): number` — pure orchestration, returns new version
   - `getDb(): SQLiteDatabase` — opens, migrates safely, returns the handle
 
-- [ ] **Step 1: Write the failing migration test**
+- [x] **Step 1: Write the failing migration test**
 
 `tests/migrations.test.ts`:
 
@@ -601,7 +601,7 @@ test("no migration contains a destructive statement", () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails**
+- [x] **Step 2: Run it and confirm it fails**
 
 Add to `package.json`: `"scripts": { "test": "jest" }` and a `jest.config.js`:
 
@@ -616,7 +616,7 @@ npx jest tests/migrations.test.ts
 
 Expected: FAIL — `Cannot find module '../src/db/schema'`.
 
-- [ ] **Step 3: Write the schema**
+- [x] **Step 3: Write the schema**
 
 `src/db/schema.ts`:
 
@@ -680,7 +680,7 @@ export function applyMigrations(exec: (sql: string) => void, currentVersion: num
 
 `performed_at` is stored as a full ISO-8601 string, never a Unix epoch integer and never a locale-formatted string. The Jan 1, 0001 class of bug comes from a numeric zero-value date being reinterpreted after a schema change.
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 ```bash
 npx jest tests/migrations.test.ts
@@ -688,7 +688,7 @@ npx jest tests/migrations.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the client with pre-migration backup**
+- [x] **Step 5: Write the client with pre-migration backup**
 
 `src/db/client.ts`:
 
@@ -742,7 +742,7 @@ export function getDb(): SQLite.SQLiteDatabase {
 }
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/db tests/migrations.test.ts jest.config.js package.json
