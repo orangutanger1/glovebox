@@ -7,7 +7,9 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "platforms": ["ios"],
+    "platforms": [
+      "ios"
+    ],
     "ios": {
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": false,
@@ -19,10 +21,26 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
-      ["expo-notifications", { "iosDisplayInForeground": true }],
+      [
+        "expo-notifications",
+        {
+          "iosDisplayInForeground": true
+        }
+      ],
       "expo-updates"
     ],
-    "runtimeVersion": { "policy": "appVersion" },
-    "experiments": { "typedRoutes": true }
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
+      }
+    },
+    "owner": "mayfield"
   }
 }
