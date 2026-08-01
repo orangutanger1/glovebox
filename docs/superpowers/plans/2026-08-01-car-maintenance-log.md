@@ -766,7 +766,7 @@ Pure functions, zero I/O, exhaustively tested. This is where correctness actuall
   - `nextDue(input: { lastPerformedAt: string; lastOdometer?: number; interval: { months?: number; miles?: number } }): { dueAt?: string; dueOdometer?: number }`
   - `dueStatus(input: { dueAt?: string; dueOdometer?: number; now: string; odometer?: number }): 'due' | 'soon' | 'ok'`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/schedule.test.ts`:
 
@@ -846,7 +846,7 @@ test("every default interval specifies months or miles", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -854,7 +854,7 @@ npx jest tests/schedule.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `src/schedule/index.ts`:
 
@@ -932,7 +932,7 @@ export function dueStatus(input: {
 
 Whichever comes first — date or mileage — wins. That matches how manufacturers actually specify service and is what users expect.
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -940,7 +940,7 @@ npx jest tests/schedule.test.ts
 
 Expected: 10 passing.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/schedule tests/schedule.test.ts
