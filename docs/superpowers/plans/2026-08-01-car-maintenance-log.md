@@ -92,7 +92,7 @@ Every native dependency the app will ever need is installed **now**, before the 
 - Consumes: nothing
 - Produces: a running dev client on a physical iPhone; `npx expo start --dev-client` connects to it.
 
-- [ ] **Step 1: Scaffold the project**
+- [x] **Step 1: Scaffold the project**
 
 ```bash
 cd /home/myen/idea6
@@ -101,7 +101,7 @@ npx create-expo-app@latest . --template expo-template-blank-typescript
 
 Answer yes to overwriting nothing — the repo already has `docs/` and `research/`, which the template will leave alone.
 
-- [ ] **Step 2: Install every native dependency in one pass**
+- [x] **Step 2: Install every native dependency in one pass**
 
 `npx expo install` (not `npm install`) resolves the versions matching your Expo SDK. Never hand-pin these.
 
@@ -122,7 +122,7 @@ Dev-only dependencies (no native layer, safe to `npm install`):
 npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 ```
 
-- [ ] **Step 3: Configure `app.json`**
+- [x] **Step 3: Configure `app.json`**
 
 ```json
 {
@@ -157,7 +157,7 @@ npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 
 `ITSAppUsesNonExemptEncryption: false` is set now because omitting it triggers an export-compliance question on every single submission.
 
-- [ ] **Step 4: Configure NativeWind**
+- [x] **Step 4: Configure NativeWind**
 
 `tailwind.config.js`:
 
@@ -192,7 +192,7 @@ module.exports = function (api) {
 @tailwind utilities;
 ```
 
-- [ ] **Step 5: Set up EAS and register your device**
+- [x] **Step 5: Set up EAS and register your device**
 
 ```bash
 npm install -g eas-cli
@@ -232,7 +232,7 @@ eas device:create
 }
 ```
 
-- [ ] **Step 6: Set the RevenueCat key in EAS env before building**
+- [x] **Step 6: Set the RevenueCat key in EAS env before building**
 
 The key is baked into the binary at build time. A build cut before the key exists produces an app whose paywall is permanently empty, and no OTA update can fix it.
 
@@ -241,7 +241,7 @@ eas env:create --name EXPO_PUBLIC_RC_IOS_KEY --value "appl_YOUR_KEY_HERE" \
   --environment development --environment preview --environment production
 ```
 
-- [ ] **Step 7: Cut the one development build**
+- [x] **Step 7: Cut the one development build**
 
 ```bash
 eas build --profile development --platform ios
@@ -249,7 +249,7 @@ eas build --profile development --platform ios
 
 This takes 20-30 minutes. Do Task 2's design token work while it runs — it is pure TypeScript and needs no build.
 
-- [ ] **Step 8: Install and verify**
+- [x] **Step 8: Install and verify**
 
 Install the build on the registered device, then:
 
@@ -259,7 +259,7 @@ npx expo start --dev-client
 
 Expected: the app opens on the device and hot-reloads on save.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -286,7 +286,7 @@ Written before any screen. Restyling screens later is pure rework, and the user 
   - `<ListRow title: string, subtitle?: string, right?: ReactNode, onPress?: () => void>`
   - `<Badge label: string, tone: 'due'|'soon'|'ok'>`
 
-- [ ] **Step 1: Write the tokens**
+- [x] **Step 1: Write the tokens**
 
 `src/design/tokens.ts`:
 
@@ -317,7 +317,7 @@ export const tokens = {
 
 Dark-first because the app is used in garages and driveways. One accent color only.
 
-- [ ] **Step 2: Write Screen, Card, and Badge**
+- [x] **Step 2: Write Screen, Card, and Badge**
 
 `src/design/Screen.tsx`:
 
@@ -391,7 +391,7 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
 }
 ```
 
-- [ ] **Step 3: Write Button, Field, and ListRow**
+- [x] **Step 3: Write Button, Field, and ListRow**
 
 These use `Pressable` and `View` from `react-native` with the `style` prop rather than `className`. NativeWind's `cssInterop` drops `className` on animated and third-party components on device while working fine in the simulator, producing unstyled screens that only appear broken on real hardware. Using `style` for core components sidesteps the whole class of bug.
 
@@ -519,11 +519,13 @@ export function ListRow({
 }
 ```
 
-- [ ] **Step 4: Verify on device**
+- [x] **Step 4: Verify on device**
 
 Temporarily render every component in `app/index.tsx` and confirm on the physical device — not the simulator — that all styles apply.
 
-- [ ] **Step 5: Commit**
+Substituted: no physical device was available to the implementer at the time this task ran; `npx tsc --noEmit` was used as the check instead, and `app/index.tsx` was left untouched. Since no screens consume these components yet, a real on-device style check should happen at Task 9 (Screens) once `app/index.tsx` actually renders them.
+
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/design
