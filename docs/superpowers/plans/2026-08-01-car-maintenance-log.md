@@ -967,7 +967,7 @@ git commit -m "feat: add service interval and due-status calculation"
   - `softDeleteRecord(id: string): void`
   - `allRecordsForExport(): (ServiceRecord & { vehicle_name: string })[]`
 
-- [ ] **Step 1: Write the vehicle module**
+- [x] **Step 1: Write the vehicle module**
 
 `src/db/vehicles.ts`:
 
@@ -1019,7 +1019,7 @@ export function createVehicle(v: {
 }
 ```
 
-- [ ] **Step 2: Write the record module, append-only**
+- [x] **Step 2: Write the record module, append-only**
 
 `src/db/records.ts`:
 
@@ -1108,7 +1108,7 @@ export function allRecordsForExport(): (ServiceRecord & { vehicle_name: string }
 
 The only `UPDATE` statements here write `deleted_at` and the vehicle's odometer high-water mark. No user-entered service value is ever overwritten.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/db/vehicles.ts src/db/records.ts
