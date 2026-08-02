@@ -5,6 +5,7 @@
     "scheme": "carmaintenancelog",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "platforms": [
       "ios"
@@ -12,7 +13,7 @@
     "ios": {
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": false,
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -26,7 +27,16 @@
           "iosDisplayInForeground": true
         }
       ],
-      "expo-updates"
+      "expo-updates",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "backgroundColor": "#0F1113",
+          "imageWidth": 160,
+          "resizeMode": "contain"
+        }
+      ]
     ],
     "runtimeVersion": {
       "policy": "appVersion"
