@@ -1290,7 +1290,7 @@ git commit -m "feat: add always-free CSV export with share sheet"
   - `requestPermission(): Promise<boolean>`
   - `rescheduleAll(): Promise<void>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/notify/index.ts`:
 
@@ -1362,7 +1362,7 @@ Permission denial returns early rather than throwing. The core loop keeps workin
 
 Notification scheduling does not work in the simulator. Temporarily set an interval to a few seconds, confirm delivery on hardware, then revert.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add src/notify
