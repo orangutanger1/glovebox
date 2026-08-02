@@ -2010,7 +2010,7 @@ Item 7 is not optional polish. "Entered data is never discarded on error" is the
 app exists to displace, and it is the one thing in the smoke pass that cannot be verified by reading
 the code. Force it by temporarily throwing inside `addRecord`.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add app
