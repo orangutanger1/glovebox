@@ -1,4 +1,11 @@
-import { parseNumber, parseDateInput } from "../src/format";
+import {
+  parseNumber,
+  parseDateInput,
+  vehicleDisplayName,
+  clampDateParts,
+  dateFromParts,
+  daysInMonth,
+} from "../src/format";
 
 describe("parseNumber", () => {
   it("accepts the grouped format the odometer placeholder itself shows", () => {
@@ -87,5 +94,93 @@ describe("parseDateInput", () => {
 
   it("lands at noon so the UTC date the history shows is the day typed", () => {
     expect(parseDateInput("3/14/2026", today)!.getHours()).toBe(12);
+  });
+});
+
+describe("vehicleDisplayName", () => {
+  it("builds the name from the parts the user actually typed", () => {
+    expect(vehicleDisplayName({ year: 2019, make: "Honda", model: "Civic" })).toBe(
+      "2019 Honda Civic"
+    );
+  });
+
+  it("drops the parts that were left blank", () => {
+    expect(vehicleDisplayName({ make: "Honda", model: "Civic" })).toBe("Honda Civic");
+    expect(vehicleDisplayName({ year: 2019 })).toBe("2019");
+  });
+
+  it("falls back to a usable label rather than an empty row", () => {
+    expect(vehicleDisplayName({})).toBe("My car");
+    expect(vehicleDisplayName({ make: "  ", model: "" })).toBe("My car");
+  });
+
+  it("lets a nickname win — a second car is 'the truck', not its spec sheet", () => {
+    expect(vehicleDisplayName({ nickname: "The truck", year: 2014, make: "Ford" })).toBe(
+      "The truck"
+    );
+  });
+
+  it("ignores a nickname that is only whitespace", () => {
+    expect(vehicleDisplayName({ nickname: "   ", make: "Honda" })).toBe("Honda");
+  });
+});
+
+describe("clampDateParts", () => {
+  const today = new Date(2026, 7, 1, 9, 0, 0); // Aug 1 2026
+
+  it("pulls an impossible day back to the end of the month", () => {
+    // The three wheels move independently: leaving the day on 31 and rolling
+    // the month to February must land on the 28th, not on March 3rd.
+    expect(clampDateParts({ year: 2026, month: 2, day: 31 }, today)).toEqual({
+      year: 2026,
+      month: 2,
+      day: 28,
+    });
+    expect(clampDateParts({ year: 2024, month: 2, day: 30 }, today)).toEqual({
+      year: 2024,
+      month: 2,
+      day: 29,
+    });
+  });
+
+  it("caps a future date at today — the work cannot have been done yet", () => {
+    expect(clampDateParts({ year: 2026, month: 12, day: 25 }, today)).toEqual({
+      year: 2026,
+      month: 8,
+      day: 1,
+    });
+  });
+
+  it("leaves today itself alone", () => {
+    expect(clampDateParts({ year: 2026, month: 8, day: 1 }, today)).toEqual({
+      year: 2026,
+      month: 8,
+      day: 1,
+    });
+  });
+
+  it("leaves any past date alone", () => {
+    expect(clampDateParts({ year: 2019, month: 11, day: 30 }, today)).toEqual({
+      year: 2019,
+      month: 11,
+      day: 30,
+    });
+  });
+});
+
+describe("dateFromParts", () => {
+  it("builds noon local, so the UTC string keeps the calendar day", () => {
+    const d = dateFromParts({ year: 2026, month: 3, day: 14 });
+    expect([d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours()]).toEqual([
+      2026, 3, 14, 12,
+    ]);
+  });
+});
+
+describe("daysInMonth", () => {
+  it("knows the leap year", () => {
+    expect(daysInMonth(2024, 2)).toBe(29);
+    expect(daysInMonth(2026, 2)).toBe(28);
+    expect(daysInMonth(2026, 4)).toBe(30);
   });
 });

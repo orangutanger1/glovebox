@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, Pressable } from "react-native";
 import { useRouter } from "expo-router";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { requestPermission, rescheduleAll } from "../../src/notify";
 import { presentPaywall } from "../../src/purchases";
 import { completeOnboarding } from "../../src/onboarding";
+import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 export default function OnboardingReminders() {
   const router = useRouter();
@@ -44,27 +44,23 @@ export default function OnboardingReminders() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
-      <View
-        style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg, justifyContent: "center" }}
-      >
-        <Text style={{ ...tokens.text.title, color: tokens.color.text }}>
-          Want a reminder when it is due?
-        </Text>
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-          One notification per service, on the day it comes due. Nothing else, ever.
-        </Text>
-      </View>
-      <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-        <Button label="Remind me" onPress={onRemindMe} disabled={busy} />
-        <Pressable
-          onPress={finish}
-          disabled={busy}
-          style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
-        >
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>Not now</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+    <OnboardingScreen
+      step={5}
+      center
+      title="Want a reminder when it is due?"
+      subtitle="One notification per service, on the day it comes due. Nothing else, ever."
+      footer={
+        <>
+          <Button label="Remind me" onPress={onRemindMe} disabled={busy} />
+          <Pressable
+            onPress={finish}
+            disabled={busy}
+            style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
+          >
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>Not now</Text>
+          </Pressable>
+        </>
+      }
+    />
   );
 }

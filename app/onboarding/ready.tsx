@@ -1,5 +1,4 @@
 import { View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
@@ -10,6 +9,7 @@ import { listVehicles } from "../../src/db/vehicles";
 import { listRecords } from "../../src/db/records";
 import { nextDue, DEFAULT_INTERVALS } from "../../src/schedule";
 import { setOnboardingStep } from "../../src/onboarding";
+import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 const HEADLINE_TYPES = ["Oil Change", "Tire Rotation", "Brake Inspection"];
 
@@ -41,40 +41,33 @@ export default function OnboardingReady() {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
-      <View
-        style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg, justifyContent: "center" }}
-      >
-        <Text style={{ ...tokens.text.title, color: tokens.color.text }}>
-          Done. Here is what Glovebox knows.
-        </Text>
-
-        <Panel>
-          <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Gauge legend="Vehicle" value={vehicle?.name ?? "My car"} />
-              <Gauge
-                legend="Odometer"
-                value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "—"}
-                unit={vehicle?.odometer ? "mi" : undefined}
-                align="right"
-              />
-            </View>
-            <View style={{ gap: tokens.space.xs }}>
-              {lines.map((l) => (
-                <ListRow key={l.type} title={l.type} subtitle={l.line} status="ok" />
-              ))}
-            </View>
+    <OnboardingScreen
+      step={4}
+      title="Done. Here is what Glovebox knows."
+      footer={<Button label="Continue" onPress={onContinue} />}
+    >
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Gauge legend="Vehicle" value={vehicle?.name ?? "My car"} />
+            <Gauge
+              legend="Odometer"
+              value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "—"}
+              unit={vehicle?.odometer ? "mi" : undefined}
+              align="right"
+            />
           </View>
-        </Panel>
+          <View style={{ gap: tokens.space.xs }}>
+            {lines.map((l) => (
+              <ListRow key={l.type} title={l.type} subtitle={l.line} status="ok" />
+            ))}
+          </View>
+        </View>
+      </Panel>
 
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-          Whichever comes first, date or mileage.
-        </Text>
-      </View>
-      <View style={{ padding: tokens.space.md }}>
-        <Button label="Continue" onPress={onContinue} />
-      </View>
-    </SafeAreaView>
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+        Whichever comes first, date or mileage.
+      </Text>
+    </OnboardingScreen>
   );
 }

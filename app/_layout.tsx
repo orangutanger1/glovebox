@@ -93,6 +93,16 @@ export default function RootLayout() {
             ),
           }}
         />
+        {/* The onboarding group owns its whole screen. Without this entry the
+            root stack gave it a default header: the route name "onboarding"
+            printed across the top, and a back chevron beside it that popped the
+            entire group and dropped the user into the garage mid-setup —
+            "finished" as far as the app was concerned, with a half-filled car
+            already written. Onboarding now exits only through its last step. */}
+        <Stack.Screen
+          name="onboarding"
+          options={{ headerShown: false, gestureEnabled: false }}
+        />
         <Stack.Screen name="settings" options={{ title: "Settings", headerTitle: "" }} />
         <Stack.Screen name="vehicle/new" options={{ title: "Add vehicle", headerTitle: "" }} />
         {/* The one screen with no body title: it names the vehicle in the
