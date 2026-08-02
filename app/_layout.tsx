@@ -5,16 +5,23 @@ import { Stack, useRouter } from "expo-router";
 import { getDb } from "../src/db/client";
 import { initPurchases } from "../src/purchases";
 import { rescheduleAll } from "../src/notify";
+import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { tokens } from "../src/design/tokens";
 import "../global.css";
 
 export default function RootLayout() {
   const router = useRouter();
 
+  // Runs once on mount, not gated on route state — depending on the route
+  // here would produce a redirect loop.
   useEffect(() => {
     getDb();
     initPurchases();
     rescheduleAll();
+    if (!isOnboarded()) {
+      const step = getOnboardingStep() ?? "welcome";
+      router.replace(`/onboarding/${step}` as Parameters<typeof router.replace>[0]);
+    }
   }, []);
 
   return (

@@ -2049,7 +2049,7 @@ Target: **first service logged inside 60 seconds of first launch.**
   - `setOnboardingStep(step: string): void` / `getOnboardingStep(): string | null`
   - `completeOnboarding(): void`
 
-- [ ] **Step 1: Onboarding state over `app_state`**
+- [x] **Step 1: Onboarding state over `app_state`**
 
 `src/onboarding/state.ts` reads and writes two keys, `onboarding_complete` and `onboarding_step`.
 Keep the key/value logic pure over an injected `exec`/`get` pair the same way `applyMigrations` is,
@@ -2058,13 +2058,13 @@ so it is testable in Node without the device driver.
 The step key is what makes a force-quit mid-flow recoverable: the user resumes where they left off
 with their partial vehicle intact, rather than starting over or, worse, ending up with two vehicles.
 
-- [ ] **Step 2: Route guard**
+- [x] **Step 2: Route guard**
 
 In `app/_layout.tsx`, after `getDb()`, redirect to `/onboarding/welcome` when `isOnboarded()` is
 false, resuming at `getOnboardingStep()` when one is recorded. The guard runs once on mount. Do not
 put it in a `useEffect` that depends on route state — that produces a redirect loop.
 
-- [ ] **Step 3: Screen 1, welcome**
+- [x] **Step 3: Screen 1, welcome**
 
 Headline "Your service records, kept forever." Subline "On this phone. No account, no server,
 nothing to log out of." One button, "Set up my car". No login link, because there is none. No skip,
@@ -2073,7 +2073,7 @@ because there is nothing yet to skip. No beta or version badge.
 If no photographic asset exists at build time, ship type-only. A stock car photo reads as a template
 and undoes the credibility the copy is buying.
 
-- [ ] **Step 4: Screen 2, the car**
+- [x] **Step 4: Screen 2, the car**
 
 Nickname autofocused, keyboard up on arrival. Year / make / model as one row of three small optional
 inputs, visually subordinate. Calls `createVehicle`. **Skip creates a vehicle named "My car"** and
@@ -2082,14 +2082,14 @@ continues, because a user with a vehicle row can use the app and a user without 
 Do not build a make/model dropdown tree or a VIN decoder. Both are non-goals in the spec, and a
 three-level dropdown is the exact setup burden being displaced.
 
-- [ ] **Step 5: Screen 3, the odometer**
+- [x] **Step 5: Screen 3, the odometer**
 
 One large numeric input, `text.numeric`, keypad up on arrival. One line of explanation underneath:
 "Used to work out what is due by mileage, not just by date." An unexplained number field mid-flow is
 where people quit. Skip states its own consequence in caption text: "Then reminders will use dates
 only."
 
-- [ ] **Step 6: Screen 4, last service**
+- [x] **Step 6: Screen 4, last service**
 
 Chip grid of the six common types. Selecting one advances immediately, with no Continue button, to a
 one-tap date question: `Just now` / `Last month` / `3 months ago` / `6 months ago` / `Pick a date…` /
@@ -2101,7 +2101,7 @@ the safe direction to be wrong in.
 This is the personalization question the consumer-subscription pattern calls for, and unlike that
 pattern's version, the answer becomes a row in `service_records`.
 
-- [ ] **Step 7: Screen 5, the aha**
+- [x] **Step 7: Screen 5, the aha**
 
 Runs `nextDue` on what the user just entered and shows the result:
 
@@ -2119,7 +2119,7 @@ services are shown on purpose: they show the shape of the thing and invite the n
 
 No progress bar and no "analyzing your vehicle". The computation genuinely is instant.
 
-- [ ] **Step 8: Screen 6, reminder soft-ask**
+- [x] **Step 8: Screen 6, reminder soft-ask**
 
 "Want a reminder when it is due?" with the exact frequency stated: "One notification per service, on
 the day it comes due. Nothing else, ever." `Remind me` calls `requestPermission`; `Not now` does not.
@@ -2128,7 +2128,7 @@ The soft-ask is not decoration. A denied iOS prompt is permanent, and firing it 
 below 30%. `Not now` must not re-prompt on next launch — Settings offers it again whenever the user
 wants it, and the Garage due badges cover the gap meanwhile.
 
-- [ ] **Step 9: Screen 7, the paywall**
+- [x] **Step 9: Screen 7, the paywall**
 
 Call `presentPaywall()`, not `presentPaywallIfNeeded()`. The latter is right at the add-vehicle gate
 in Task 9; here the intent is to show the offer exactly once regardless of state.
