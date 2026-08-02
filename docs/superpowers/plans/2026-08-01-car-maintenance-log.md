@@ -1385,7 +1385,7 @@ git commit -m "feat: schedule service-due notifications"
   - `presentPaywall(): Promise<boolean>` — resolves true if the user now has `pro`
   - `restore(): Promise<boolean>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/purchases/index.ts`:
 
@@ -1431,7 +1431,7 @@ export async function restore(): Promise<boolean> {
 
 Build the paywall itself in the RevenueCat dashboard using their Paywall editor, not in code. It is remote-configurable, so pricing and copy change without an App Store review cycle.
 
-- [ ] **Step 2: Wire the root layout**
+- [x] **Step 2: Wire the root layout**
 
 `app/_layout.tsx`:
 
@@ -1467,7 +1467,7 @@ export default function RootLayout() {
 
 Expected: the paywall renders with both products and real prices. If it is empty, check in this order — Paid Apps agreement signed, products attached to the `default` offering, `EXPO_PUBLIC_RC_IOS_KEY` present in EAS env **before** this build was cut. The third cannot be fixed by an OTA update; it needs a rebuild.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add src/purchases app/_layout.tsx
