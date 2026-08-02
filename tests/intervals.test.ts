@@ -45,6 +45,10 @@ test("a custom interval actually moves the due date", () => {
     lastOdometer: 50000,
     interval: custom["Oil Change"],
   });
-  expect(due.dueAt).toBe("2027-01-15T12:00:00.000Z");
+  // Asserted as a local date: due times are pinned to 9am local, so the UTC
+  // string moves with the offset while the day the user sees does not.
+  const dueLocal = new Date(due.dueAt!);
+  expect([dueLocal.getFullYear(), dueLocal.getMonth() + 1, dueLocal.getDate()]).toEqual([2027, 1, 15]);
+  expect(dueLocal.getHours()).toBe(9);
   expect(due.dueOdometer).toBe(60000);
 });

@@ -33,3 +33,16 @@ export async function restore(): Promise<boolean> {
   const info = await Purchases.restorePurchases();
   return info.entitlements.active[ENTITLEMENT] !== undefined;
 }
+
+/**
+ * The only way out of a subscription from inside the app.
+ *
+ * `presentPaywall` wraps `presentPaywallIfNeeded`, which does nothing once the
+ * entitlement is active — correct for gating, but it left a subscriber with no
+ * route to switch between monthly and annual, to cancel, or even to see what
+ * they were paying for. Customer Center is RevenueCat's native sheet for all of
+ * that; its contents are configured in the dashboard rather than built here.
+ */
+export async function presentCustomerCenter(): Promise<void> {
+  await RevenueCatUI.presentCustomerCenter();
+}

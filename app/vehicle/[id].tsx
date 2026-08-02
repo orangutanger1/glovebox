@@ -18,6 +18,7 @@ import {
   type ServiceRecord,
 } from "../../src/db/records";
 import { nextDue, dueStatus } from "../../src/schedule";
+import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
@@ -89,9 +90,13 @@ export default function VehicleDetail() {
     };
   }, []);
 
+  // Deleting has to rebuild the schedule for the same reason logging does.
+  // Without it a reminder outlived the record it was derived from, and the
+  // vehicle delete below announced an oil change for a car the user had sold.
   function onDelete(recordId: string) {
     softDeleteRecord(recordId);
     refresh();
+    rescheduleAll().catch(() => {});
     setUndoId(recordId);
     if (undoTimer.current) clearTimeout(undoTimer.current);
     undoTimer.current = setTimeout(() => setUndoId(null), UNDO_WINDOW_MS);
@@ -113,6 +118,7 @@ export default function VehicleDetail() {
           style: "destructive",
           onPress: () => {
             softDeleteVehicle(vehicle.id);
+            rescheduleAll().catch(() => {});
             // replace, not back: the detail screen for a hidden vehicle would
             // render an empty cluster if it were left on the stack.
             router.replace("/");
@@ -128,6 +134,7 @@ export default function VehicleDetail() {
     if (undoTimer.current) clearTimeout(undoTimer.current);
     setUndoId(null);
     refresh();
+    rescheduleAll().catch(() => {});
   }
 
   const due = vehicle ? dueItems(vehicle, records) : [];

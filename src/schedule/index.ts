@@ -45,17 +45,29 @@ export function mergeIntervals(
   return out;
 }
 
+/** The local hour a service falls due, and therefore the hour any reminder for
+ *  it fires. Early enough that the day is still useful, late enough not to wake
+ *  anyone. */
+export const DUE_HOUR = 9;
+
+/**
+ * Walks forward whole months on the *local* calendar and lands at 9am local.
+ *
+ * Local, not UTC, because the day a service was performed is the day the user
+ * saw on the wheel — records are stored at noon local for exactly this reason
+ * (see `dateFromParts`). Doing the arithmetic in UTC and reading the result
+ * back locally moved the due date a day either way depending on the timezone.
+ *
+ * The time of day is pinned rather than inherited. A due date carried the clock
+ * time of the original service, so a job logged at 23:40 came due — and fired
+ * its notification — at 23:40 six months later.
+ */
 function addMonths(iso: string, months: number): string {
   const d = new Date(iso);
-  const day = d.getUTCDate();
-  const target = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + months, 1));
-  const lastDay = new Date(
-    Date.UTC(target.getUTCFullYear(), target.getUTCMonth() + 1, 0)
-  ).getUTCDate();
-  target.setUTCDate(Math.min(day, lastDay));
-  target.setUTCHours(
-    d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds()
-  );
+  const target = new Date(d.getFullYear(), d.getMonth() + months, 1);
+  const lastDay = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate();
+  target.setDate(Math.min(d.getDate(), lastDay));
+  target.setHours(DUE_HOUR, 0, 0, 0);
   return target.toISOString();
 }
 
