@@ -12,6 +12,7 @@ import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
+import { recordReviewEvent, maybeRequestReview } from "../../../src/review";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
 
 // The six people actually log. Everything else lives behind "Other".
@@ -88,7 +89,14 @@ export default function LogService() {
     // user as a lost service record.
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     rescheduleAll().catch(() => {});
+    recordReviewEvent("log_service");
     router.back();
+
+    // The app's whole job, just done, on a user who has done it before —
+    // maybeRequestReview only fires above the score threshold, which no single
+    // save can reach. Deferred past the pop so StoreKit presents onto a screen
+    // that has settled rather than one mid-transition.
+    setTimeout(() => void maybeRequestReview(), 1200);
   }
 
   return (

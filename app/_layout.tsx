@@ -7,6 +7,7 @@ import { getDb } from "../src/db/client";
 import { initPurchases } from "../src/purchases";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
+import { recordReviewEvent } from "../src/review";
 import { tokens } from "../src/design/tokens";
 
 export default function RootLayout() {
@@ -26,6 +27,10 @@ export default function RootLayout() {
       return;
     }
     initPurchases();
+    // Weakest of the happiness signals and forgotten within a day. It is here
+    // so that coming back repeatedly counts for something, never so that it
+    // can trigger an ask on its own.
+    recordReviewEvent("app_open");
     rescheduleAll().catch(() => {});
     if (!isOnboarded()) {
       const step = getOnboardingStep() ?? "welcome";
