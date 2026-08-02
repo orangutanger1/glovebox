@@ -1,0 +1,58 @@
+import { useState } from "react";
+import { View, Text, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { Field } from "../../src/design/Field";
+import { Button } from "../../src/design/Button";
+import { tokens } from "../../src/design/tokens";
+import { listVehicles, setOdometerIfHigher } from "../../src/db/vehicles";
+import { setOnboardingStep } from "../../src/onboarding";
+
+export default function OnboardingOdometer() {
+  const router = useRouter();
+  const [odometer, setOdometer] = useState("");
+
+  function advance() {
+    setOnboardingStep("service");
+    router.push("/onboarding/service");
+  }
+
+  function onSkip() {
+    advance();
+  }
+
+  function onContinue() {
+    const vehicle = listVehicles()[0];
+    if (vehicle && odometer) {
+      setOdometerIfHigher(vehicle.id, Number(odometer));
+    }
+    advance();
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }}>
+      <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg }}>
+        <Pressable onPress={onSkip} style={{ alignSelf: "flex-end" }}>
+          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>Skip</Text>
+        </Pressable>
+        <Text style={{ ...tokens.text.title, color: tokens.color.text }}>
+          How many miles on it?
+        </Text>
+        <Field
+          label="Odometer"
+          value={odometer}
+          onChangeText={setOdometer}
+          keyboardType="numeric"
+          placeholder="84,210"
+          autoFocus
+        />
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+          Used to work out what is due by mileage, not just by date.
+          {"\n"}Then reminders will use dates only, if skipped.
+        </Text>
+        <View style={{ flex: 1 }} />
+        <Button label="Continue" onPress={onContinue} />
+      </View>
+    </SafeAreaView>
+  );
+}

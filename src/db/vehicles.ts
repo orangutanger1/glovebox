@@ -43,3 +43,11 @@ export function createVehicle(v: {
   );
   return row;
 }
+
+/** Same guarded high-water-mark update addRecord already relies on — never lowers a reading. */
+export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
+  getDb().runSync(
+    "UPDATE vehicles SET odometer = ? WHERE id = ? AND (odometer IS NULL OR odometer < ?)",
+    [odometer, vehicleId, odometer]
+  );
+}
