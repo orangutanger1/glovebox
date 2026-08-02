@@ -170,23 +170,81 @@ backend, no auth provider, no analytics SDK in v1.
 - A corrupt database file triggers restore from the most recent pre-migration
   copy, with the user informed.
 
+## App name
+
+**Glovebox.** Chosen over a generic keyword-string title because it's the one
+place car owners already kept paper service records before this app existed —
+the metaphor sells the durability pitch on its own, and it's memorable enough
+to survive word-of-mouth ("just use Glovebox") where
+`Car Maintenance Log Reminder` isn't. Live in ASC as the app name (app id
+`6797103341`) and in RevenueCat as the app display name (`app774f157580`,
+project `car` / `projf0d996da`). Bundle ID is unchanged
+(`com.idea6.carmaintenancelog`) — not customer-visible, not worth the churn.
+
 ## App Store metadata
 
-Character counts verified against Apple limits.
+Character counts verified against Apple limits. Competitor set drawn from
+`research/scored.json` (live iTunes search, not vendor estimates): CARFAX Car
+Care (125k ratings, free/dealer-lead-gen), Vehicle Maintenance Tracker (2,861,
+the "Jan 1, 0001" bug app), Car Maintenance Reminders (171), Fuelly: MPG &
+Service Tracker (29,298, owns the fuel-tracking cluster we deliberately don't
+compete in).
 
-- **Title** (28/30): `Car Maintenance Log Reminder` — covers the two highest-value
-  keywords in the cluster.
-- **Subtitle** (28/30): `Service records kept forever`
-- **Keywords** (99/100), no duplication of title/subtitle terms:
-  `oil,change,vehicle,auto,repair,mileage,odometer,tire,rotation,due,history,records,mechanic,car care`
+- **Title** (29/30): `Glovebox: Car Maintenance Log` — brand + the
+  highest-volume exact-match keyword pair (`car maintenance`, `log`). Live in
+  ASC.
+- **Subtitle** (30/30): `Service Reminders & Repair Log` — covers `service`,
+  `reminders`, `repair` without repeating title terms (Apple indexes title,
+  subtitle, and keywords separately; duplicating wastes budget). Live in ASC.
+- **Keywords** (97/100), zero duplication of title/subtitle terms:
+  `tracker,vehicle,auto,oil,change,mileage,odometer,tire,rotation,due,history,records,mechanic,brake`
+  — recovers `tracker` (owned by the `car maintenance tracker` cluster, 6 weak
+  apps in top 10) since it lost its slot in the title rework.
+  **Not yet pushed** — version-localization fields (`keywords`, `description`,
+  `promotionalText`) require an App Store *version* to exist, and none does
+  until the Task 1 EAS build lands. Push via
+  `asc metadata keywords import` / `asc metadata apply` once the first version
+  is created; this file is the source of truth until then.
+- **Promotional text** (160/170): `Your maintenance records, on your phone,
+  that never disappear. No account, no server, no login — just a permanent log
+  of every oil change, rotation, and repair.`
+- **Description** (1292/4000):
 
-Positioning line, drawn directly from competitor reviews: "Your maintenance
-records, on your phone, that never disappear."
+  ```
+  Your service records, kept forever — on your phone, not someone else's server.
+
+  Every other car maintenance app is one bad login away from losing years of
+  history. Glovebox never asks for an account, never talks to a server, and
+  never loses a record. Everything you log stays on your device, permanently.
+
+  WHAT IT DOES
+  • Log oil changes, tire rotations, brake jobs, inspections — anything
+  • Get a reminder exactly when the next service is due, by date or mileage,
+    whichever comes first
+  • See every vehicle's full history at a glance
+  • Export your entire log to CSV or PDF anytime — never paywalled, never
+    locked away
+
+  WHY IT'S DIFFERENT
+  No account. No login. No server. No sync required, no sync to break. Your
+  maintenance history can't disappear because there's nothing to disappear
+  from — it's saved right here, on your phone, the same way you'd keep a paper
+  logbook in the glovebox.
+
+  BUILT FOR REAL OWNERS
+  • Multiple vehicles supported
+  • Custom service intervals for oil, tires, brakes, filters, coolant, and more
+  • Odometer- and date-based due tracking — whichever comes first
+  • Dark, glare-friendly design for reading in the driveway or garage
+
+  Free to start with one vehicle. Upgrade to Glovebox Pro for unlimited
+  vehicles and custom intervals — export always stays free, for everyone.
+  ```
 
 Post-launch, the App Store Connect Analytics Reports API supplies real
 search-term impression data for our own listing, which replaces these estimates
-with ground truth. Metadata updates ship via an App Store Connect CLI rather
-than the web UI.
+with ground truth. Metadata updates ship via the `asc` CLI rather than the web
+UI.
 
 ## Open risks
 

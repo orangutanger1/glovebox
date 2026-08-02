@@ -19,12 +19,16 @@
 - **Entitlement identifier is `pro`** everywhere — RevenueCat dashboard and code must match this exact string.
 - **Free tier: 1 vehicle.** Pro: unlimited vehicles + custom service intervals.
 - **Bundle ID: `com.idea6.carmaintenancelog`** — used in `app.json`, ASC, and RevenueCat. Must match exactly in all three.
-- **Design system exists before any screen is written.** No screen may use raw hex colors or magic spacing numbers.
+- **App name: Glovebox** (ASC app id `6797103341`, RevenueCat app `app774f157580` in project `car` / `projf0d996da`). Not `Car Maintenance Log Reminder` — see spec doc "App name" section for why.
+- **Design system exists before any screen is written.** No screen may use raw hex colors or magic spacing numbers. Tokens, screen specs, and the onboarding flow are in `specs/2026-08-01-glovebox-ui-ux-and-onboarding.md`; that document is the source of truth for anything visual and this plan is its build order.
+- **Bone is the only accent.** Red, amber, and green are semantic (overdue, due soon, healthy) and are never used decoratively. No colored dots on nav items or list rows.
+- **Onboarding runs once, ends at the paywall, and every screen writes a real row.** No goal quiz, no fake loading screen, no invented social proof. Free tier stays fully usable when the paywall is dismissed.
 - **One EAS build per batch.** Never cut a build for a single fix; queue changes and smoke them in one pass.
-- **App Store metadata** (verified char counts, do not alter without re-counting):
-  - Title (28/30): `Car Maintenance Log Reminder`
-  - Subtitle (28/30): `Service records kept forever`
-  - Keywords (99/100): `oil,change,vehicle,auto,repair,mileage,odometer,tire,rotation,due,history,records,mechanic,car care`
+- **App Store metadata** (verified char counts, do not alter without re-counting — full description/promo text in the spec doc):
+  - Title (29/30): `Glovebox: Car Maintenance Log`
+  - Subtitle (30/30): `Service Reminders & Repair Log`
+  - Keywords (97/100): `tracker,vehicle,auto,oil,change,mileage,odometer,tire,rotation,due,history,records,mechanic,brake`
+  - Keywords/description not yet pushed to ASC — no app version exists until the Task 1 build. Push via `asc metadata` once it does.
 
 ---
 
@@ -32,14 +36,21 @@
 
 These are calendar time, not work time. Every one of them has blocked a submission before. None require code. Do them first, then proceed to Task 1 while they process.
 
-- [ ] **Apple Developer Program enrollment** — can take 24-48h, sometimes longer for individuals requiring ID verification.
-- [ ] **App Store Connect Paid Apps agreement** — sign it now. Unsigned agreement = RevenueCat returns zero products and the paywall renders empty. This is the single most common "my paywall is broken" cause and it is not a code bug.
-- [ ] **Create the app record in ASC** with bundle ID `com.idea6.carmaintenancelog`.
-- [ ] **Create RevenueCat account**, add an iOS app with the same bundle ID, and note the public SDK key (starts `appl_`).
-- [ ] **Create the subscription products in ASC** — `pro_annual` and `pro_monthly`. New IAP products sit in "Waiting for Review" and can take a day to become fetchable.
-- [ ] **In RevenueCat: create entitlement `pro`, attach both products to it, create the `default` offering, attach the products to the offering.** Products not attached to an offering do not appear in the paywall even when everything else is correct.
+- [x] **Apple Developer Program enrollment** — confirmed enrolled.
+- [x] **App Store Connect Paid Apps agreement** — confirmed signed.
+- [x] **Create the app record in ASC** with bundle ID `com.idea6.carmaintenancelog`. App id `6797103341`, named `Glovebox: Car Maintenance Log`.
+- [x] **Create RevenueCat account**, add an iOS app with the same bundle ID, and note the public SDK key (starts `appl_`). Project `car` (`projf0d996da`), app `app774f157580`. Public key: `appl_GiAzQPouJjtKKsPOqTuiHrwGlxg` — goes into EAS env as `EXPO_PUBLIC_RC_IOS_KEY` in Task 1 Step 6.
+- [x] **Create the subscription products in ASC** — `pro_annual` ($19.99/yr) and `pro_monthly` ($2.99/mo), subscription group "Pro" (id `22280869`), USA territory only for now. New IAP products sit in "Waiting for Review" and can take a day to become fetchable.
+- [x] **In RevenueCat: create entitlement `pro`, attach both products to it, create the `default` offering, attach the products to the offering.** Entitlement `entlf1943f9d49`, products `prodc7916d3637`/`prodac00001316` attached to `pro` and to the `$rc_monthly`/`$rc_annual` packages in the existing `default` offering.
+- [ ] **Add a 7-day free trial to `pro_annual` in ASC** (Subscriptions → Pro → `pro_annual` →
+  Introductory Offer → Free Trial, 1 week, USA). The benchmark that justifies putting the paywall at
+  the end of onboarding is specifically *onboarding paywall plus trial*: that combination converts at
+  1.35% on average, the highest of any placement-and-trial pairing, and roughly 90% of trial starts
+  happen on Day 0. Without an intro offer the placement ships without the thing that makes it work.
+  Introductory offers need review, so file this with the Task 0 lead-time items, not later.
 - [ ] **Publish a privacy policy URL and a terms URL.** Required at submission. A GitHub Pages page is acceptable.
-- [ ] **Generate an ASC API key** (Users and Access → Integrations → App Store Connect API), download the `.p8` — it can only be downloaded once.
+- [x] **Generate an ASC API key** (Users and Access → Integrations → App Store Connect API) — `AuthKey_V7S2585B32.p8`, already configured as the `asc` CLI's default profile (`tour`).
+- [x] **Upload the RevenueCat In-App Purchase (subscription) key** — `SubscriptionKey_28X2Y7B56J.p8` (via `/mnt/c/Users/matth/Downloads/`), issuer `06130c95-276e-4817-bc39-53abadf44e67` (same Apple team as the `asc` API key). Also pushed the ASC API key itself for product imports. Both `app_store_connect_api_key_configured` and `subscription_key_configured` now `true` on RC app `app774f157580`.
 
 ---
 
@@ -47,7 +58,15 @@ These are calendar time, not work time. Every one of them has blocked a submissi
 
 ```
 app/                              expo-router routes
-  _layout.tsx                     root layout, providers, db init
+  _layout.tsx                     root layout, providers, db init, onboarding guard
+  onboarding/
+    _layout.tsx                   stack, no back-to-app escape until done
+    welcome.tsx                   value screen
+    vehicle.tsx                   creates the vehicles row
+    odometer.tsx                  current mileage
+    service.tsx                   last service, creates the first record
+    ready.tsx                     computed next-due, the aha screen
+    reminders.tsx                 notification soft-ask, then the paywall
   index.tsx                       Garage — vehicle list, due badges
   vehicle/[id].tsx                Vehicle detail — service history
   vehicle/[id]/log.tsx            Log a service (the core action)
@@ -68,9 +87,11 @@ src/
     index.ts                      Notification scheduling wrapper
   purchases/
     index.ts                      RevenueCat init, entitlement check, paywall
+  onboarding/
+    state.ts                      app_state flag + resume point (pure over an exec fn)
   design/
     tokens.ts                     Colors, spacing, type scale, radii
-    Button.tsx  Card.tsx  Screen.tsx  Field.tsx  ListRow.tsx  Badge.tsx
+    Button.tsx  Card.tsx  Screen.tsx  Field.tsx  ListRow.tsx  Badge.tsx  Chip.tsx
 tests/
   schedule.test.ts
   csv.test.ts
@@ -127,9 +148,9 @@ npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 ```json
 {
   "expo": {
-    "name": "Car Maintenance Log",
-    "slug": "car-maintenance-log",
-    "scheme": "carmaintenancelog",
+    "name": "Glovebox",
+    "slug": "glovebox",
+    "scheme": "glovebox",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -273,7 +294,7 @@ git commit -m "chore: scaffold Expo iOS app with all native dependencies"
 Written before any screen. Restyling screens later is pure rework, and the user asked specifically to lock UI/UX up front.
 
 **Files:**
-- Create: `src/design/tokens.ts`, `src/design/Screen.tsx`, `src/design/Button.tsx`, `src/design/Card.tsx`, `src/design/Field.tsx`, `src/design/ListRow.tsx`, `src/design/Badge.tsx`
+- Create: `src/design/tokens.ts`, `src/design/Screen.tsx`, `src/design/Button.tsx`, `src/design/Card.tsx`, `src/design/Field.tsx`, `src/design/ListRow.tsx`, `src/design/Badge.tsx`, `src/design/Chip.tsx`
 
 **Interfaces:**
 - Consumes: nothing
@@ -284,7 +305,8 @@ Written before any screen. Restyling screens later is pure rework, and the user 
   - `<Card children: ReactNode>`
   - `<Field label: string, value: string, onChangeText: (s: string) => void, keyboardType?: 'default'|'numeric', placeholder?: string>`
   - `<ListRow title: string, subtitle?: string, right?: ReactNode, onPress?: () => void>`
-  - `<Badge label: string, tone: 'due'|'soon'|'ok'>`
+  - `<Badge label: string, tone: 'due'|'soon'|'ok'>` — `ok` exists for completeness; screens do not render it
+  - `<Chip label: string, selected: boolean, onPress: () => void>` — pill, 44pt min hit height
 
 - [ ] **Step 1: Write the tokens**
 
@@ -293,29 +315,45 @@ Written before any screen. Restyling screens later is pure rework, and the user 
 ```ts
 export const tokens = {
   color: {
-    bg: "#0B0F14",
-    surface: "#151C24",
-    surfaceAlt: "#1D2733",
-    border: "#2A3644",
-    text: "#F2F6FA",
-    textMuted: "#8FA3B8",
-    accent: "#3B82F6",
-    due: "#EF4444",
-    soon: "#F59E0B",
-    ok: "#22C55E",
+    bg: "#0D0E0F",         // near-black, neutral, never pure #000
+    surface: "#17181A",
+    surfaceAlt: "#202225",
+    border: "#2C2E32",
+    text: "#F4F2EE",       // warm off-white
+    textMuted: "#9A9AA0",
+    accent: "#EDE3D2",     // bone — the only non-semantic color
+    onAccent: "#0D0E0F",   // text on a bone fill
+    due: "#E5484D",
+    soon: "#E8A33D",
+    ok: "#6FA98A",         // text only, never a filled badge
   },
-  space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 },
-  radius: { sm: 8, md: 12, lg: 16 },
+  space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },
+  radius: { sm: 8, md: 12, lg: 16, pill: 999 },
   text: {
-    title: { fontSize: 28, fontWeight: "700" as const },
-    heading: { fontSize: 20, fontWeight: "600" as const },
-    body: { fontSize: 16, fontWeight: "400" as const },
-    caption: { fontSize: 13, fontWeight: "400" as const },
+    hero: { fontSize: 34, fontWeight: "700" as const, lineHeight: 40 },
+    title: { fontSize: 28, fontWeight: "700" as const, lineHeight: 34 },
+    heading: { fontSize: 20, fontWeight: "600" as const, lineHeight: 25 },
+    body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
+    caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
+    numeric: { fontSize: 17, fontVariant: ["tabular-nums"] as const },
   },
 };
 ```
 
-Dark-first because the app is used in garages and driveways. One accent color only.
+Dark-first because the app is used in garages and driveways. Rationale for every value is in
+`specs/2026-08-01-glovebox-ui-ux-and-onboarding.md` §1. The three rules that matter while writing screens:
+
+- **Bone is the only accent.** Red, amber, and green are semantic and mean exactly one thing each:
+  overdue, due soon, healthy. A fourth saturated hue turns every screen into a traffic light. This is
+  why the accent is not the blue an earlier draft of this plan specified.
+- **`ok` never renders as a filled badge.** A badge appears only for `due` and `soon`. A healthy
+  vehicle shows plain muted text. Three green pills in a row teach the user to stop reading badges.
+- **Shape lock:** buttons `radius.md`, cards `radius.lg`, inputs `radius.sm`, chips `radius.pill`.
+- **`text.numeric` on every mileage and cost figure.** Without `tabular-nums`, `9,000` and `112,480`
+  shift column position down a history list and it reads as broken.
+
+Body is 17pt, the iOS default, not 16. Every screen must survive Dynamic Type at the largest
+accessibility size without clipping — this app's audience skews older than average.
 
 - [ ] **Step 2: Write Screen, Card, and Badge**
 
@@ -407,6 +445,13 @@ const BG = {
   danger: tokens.color.due,
 };
 
+// Bone fill needs dark text. Getting this wrong ships an unreadable primary button.
+const FG = {
+  primary: tokens.color.onAccent,
+  secondary: tokens.color.text,
+  danger: tokens.color.text,
+};
+
 export function Button({
   label,
   onPress,
@@ -424,13 +469,14 @@ export function Button({
       disabled={disabled}
       style={({ pressed }) => ({
         backgroundColor: BG[variant],
-        opacity: disabled ? 0.4 : pressed ? 0.7 : 1,
+        opacity: disabled ? 0.4 : 1,
+        transform: [{ scale: pressed ? 0.98 : 1 }],
         borderRadius: tokens.radius.md,
-        paddingVertical: 14,
+        paddingVertical: 16,
         alignItems: "center",
       })}
     >
-      <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>
+      <Text style={{ ...tokens.text.body, fontWeight: "600", color: FG[variant] }}>
         {label}
       </Text>
     </Pressable>
@@ -658,6 +704,15 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
         ON service_records (vehicle_id, performed_at DESC);
     `,
   },
+  {
+    version: 2,
+    sql: `
+      CREATE TABLE IF NOT EXISTS app_state (
+        key TEXT PRIMARY KEY NOT NULL,
+        value TEXT
+      );
+    `,
+  },
 ];
 
 /**
@@ -675,6 +730,11 @@ export function applyMigrations(exec: (sql: string) => void, currentVersion: num
   return version;
 }
 ```
+
+`app_state` (v2) is a key/value table holding the onboarding-complete flag and the resume point, so a
+user who force-quits mid-onboarding comes back where they left off with their partial vehicle intact.
+It is a separate migration rather than a v1 edit on purpose: this is what an additive migration looks
+like, and shipping the second one before launch proves the runner works on a populated database.
 
 `performed_at` is stored as a full ISO-8601 string, never a Unix epoch integer and never a locale-formatted string. The Jan 1, 0001 class of bug comes from a numeric zero-value date being reinterpreted after a schema change.
 
@@ -1461,6 +1521,9 @@ export default function RootLayout() {
 }
 ```
 
+Task 9.5 adds the onboarding redirect here, and Task 9 adds the settings gear as `headerRight` on the
+index route. Both go in this file; neither exists yet at this point in the plan.
+
 - [ ] **Step 3: Verify on device**
 
 Expected: the paywall renders with both products and real prices. If it is empty, check in this order — Paid Apps agreement signed, products attached to the `default` offering, `EXPO_PUBLIC_RC_IOS_KEY` present in EAS env **before** this build was cut. The third cannot be fixed by an OTA update; it needs a rebuild.
@@ -1492,7 +1555,7 @@ Three screens, no more. Every screen uses only Task 2 components.
 ```tsx
 import { useCallback, useState } from "react";
 import { Text } from "react-native";
-import { Link, useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
@@ -1504,11 +1567,21 @@ import { listRecords } from "../src/db/records";
 import { nextDue, dueStatus, DEFAULT_INTERVALS } from "../src/schedule";
 import { isPro, presentPaywall } from "../src/purchases";
 
-function worstStatus(vehicle: Vehicle): "due" | "soon" | "ok" {
+/**
+ * The worst status across a vehicle's tracked services, plus the sentence that
+ * explains it. A magnitude ("400 mi over") is more use at a glance than a date
+ * the reader has to subtract from today.
+ */
+function summarize(vehicle: Vehicle): { status: "due" | "soon" | "ok"; line: string } {
   const records = listRecords(vehicle.id);
   const seen = new Set<string>();
   const now = new Date().toISOString();
-  let worst: "due" | "soon" | "ok" = "ok";
+  let best: { status: "due" | "soon" | "ok"; line: string } = {
+    status: "ok",
+    line: "Nothing logged yet",
+  };
+  const rank = { due: 2, soon: 1, ok: 0 } as const;
+
   for (const r of records) {
     if (seen.has(r.service_type)) continue;
     seen.add(r.service_type);
@@ -1519,11 +1592,24 @@ function worstStatus(vehicle: Vehicle): "due" | "soon" | "ok" {
       lastOdometer: r.odometer,
       interval,
     });
-    const s = dueStatus({ ...due, now, odometer: vehicle.odometer });
-    if (s === "due") return "due";
-    if (s === "soon") worst = "soon";
+    const status = dueStatus({ ...due, now, odometer: vehicle.odometer });
+    if (best.line !== "Nothing logged yet" && rank[status] <= rank[best.status]) continue;
+
+    const milesOver =
+      due.dueOdometer !== undefined && vehicle.odometer !== undefined
+        ? vehicle.odometer - due.dueOdometer
+        : undefined;
+    const line =
+      status === "due" && milesOver !== undefined && milesOver > 0
+        ? `${r.service_type}, ${milesOver.toLocaleString()} mi over`
+        : status === "due"
+          ? `${r.service_type} is due`
+          : status === "soon"
+            ? `${r.service_type} due soon`
+            : `Next: ${r.service_type}`;
+    best = { status, line };
   }
-  return worst;
+  return best;
 }
 
 export default function Garage() {
@@ -1533,6 +1619,8 @@ export default function Garage() {
   useFocusEffect(useCallback(() => setVehicles(listVehicles()), []));
 
   async function onAdd() {
+    // Paywall before the form, never after. Making someone fill in a form and
+    // then telling them it costs money is the worst version of this moment.
     if (vehicles.length >= 1 && !(await isPro())) {
       const purchased = await presentPaywall();
       if (!purchased) return;
@@ -1540,38 +1628,62 @@ export default function Garage() {
     router.push("/vehicle/new");
   }
 
+  // One vehicle: skip the picker and go straight to logging.
+  function onLog() {
+    if (vehicles.length === 1) router.push(`/vehicle/${vehicles[0].id}/log`);
+    else if (vehicles.length > 1) router.push(`/vehicle/${vehicles[0].id}`);
+  }
+
   return (
     <Screen title="Garage">
       {vehicles.length === 0 ? (
         <Card>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            Add your car to start logging service. Everything stays on this phone.
+            No vehicles. Add one to start logging.
           </Text>
         </Card>
       ) : (
         <Card>
           {vehicles.map((v) => {
-            const s = worstStatus(v);
+            const { status, line } = summarize(v);
+            const miles = v.odometer ? `${v.odometer.toLocaleString()} mi · ` : "";
             return (
               <ListRow
                 key={v.id}
                 title={v.name}
-                subtitle={v.odometer ? `${v.odometer.toLocaleString()} mi` : "No mileage yet"}
-                right={<Badge label={s === "due" ? "Due" : s === "soon" ? "Soon" : "OK"} tone={s} />}
+                subtitle={`${miles}${line}`}
+                right={
+                  status === "ok" ? null : (
+                    <Badge label={status === "due" ? "Due" : "Soon"} tone={status} />
+                  )
+                }
                 onPress={() => router.push(`/vehicle/${v.id}`)}
               />
             );
           })}
         </Card>
       )}
-      <Button label="Add vehicle" onPress={onAdd} />
-      <Link href="/settings" style={{ color: tokens.color.textMuted, textAlign: "center" }}>
-        Settings
-      </Link>
+      {vehicles.length > 0 ? <Button label="Log a service" onPress={onLog} /> : null}
+      <Button
+        label="Add vehicle"
+        variant={vehicles.length > 0 ? "secondary" : "primary"}
+        onPress={onAdd}
+      />
     </Screen>
   );
 }
 ```
+
+Two deliberate departures from a first-instinct layout:
+
+- **"Log a service" is the primary action, not "Add vehicle."** Logging is the recurring loop and the
+  reason anyone opens the app twice. Adding a vehicle happens once. On a single-vehicle install,
+  "Log a service" goes straight to that vehicle's form with no picker in between.
+- **Settings is a gear in the navigation bar**, not a text link at the bottom of the scroll. Wire it
+  in `app/_layout.tsx` via `headerRight` on the index route. A centered link under the last button is
+  easy to miss and reads as unfinished.
+
+No `Badge` is rendered for an `ok` vehicle. The status colors have to keep meaning something.
 
 - [ ] **Step 2: Add vehicle screen**
 
@@ -1624,10 +1736,9 @@ export default function NewVehicle() {
 
 ```tsx
 import { useCallback, useState } from "react";
-import { Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
-import { Screen } from "../../src/design/Screen";
-import { Card } from "../../src/design/Card";
 import { Button } from "../../src/design/Button";
 import { ListRow } from "../../src/design/ListRow";
 import { tokens } from "../../src/design/tokens";
@@ -1648,29 +1759,64 @@ export default function VehicleDetail() {
   );
 
   return (
-    <Screen title={vehicle?.name ?? "Vehicle"}>
-      <Button label="Log a service" onPress={() => router.push(`/vehicle/${id}/log`)} />
-      <Card>
-        {records.length === 0 ? (
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }} edges={["bottom"]}>
+      <FlatList
+        data={records}
+        keyExtractor={(r) => r.id}
+        contentContainerStyle={{ padding: tokens.space.md, gap: tokens.space.xs }}
+        ListHeaderComponent={
+          <View style={{ gap: tokens.space.xs, paddingBottom: tokens.space.md }}>
+            <Text style={{ ...tokens.text.title, ...tokens.text.numeric, color: tokens.color.text }}>
+              {vehicle?.odometer ? `${vehicle.odometer.toLocaleString()} mi` : "No mileage yet"}
+            </Text>
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+              {[vehicle?.year, vehicle?.make, vehicle?.model].filter(Boolean).join(" ") || " "}
+            </Text>
+            <Text
+              style={{
+                ...tokens.text.caption,
+                color: tokens.color.textMuted,
+                paddingTop: tokens.space.lg,
+              }}
+            >
+              HISTORY
+            </Text>
+          </View>
+        }
+        ListEmptyComponent={
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            No service logged yet.
+            No service logged yet. Log the last thing you had done.
           </Text>
-        ) : (
-          records.map((r) => (
-            <ListRow
-              key={r.id}
-              title={r.service_type}
-              subtitle={`${r.performed_at.slice(0, 10)}${
-                r.odometer ? ` · ${r.odometer.toLocaleString()} mi` : ""
-              }`}
-            />
-          ))
+        }
+        renderItem={({ item }) => (
+          <ListRow
+            title={item.service_type}
+            subtitle={`${item.performed_at.slice(0, 10)}${
+              item.odometer ? ` · ${item.odometer.toLocaleString()} mi` : ""
+            }`}
+          />
         )}
-      </Card>
-    </Screen>
+      />
+      <View style={{ padding: tokens.space.md }}>
+        <Button label="Log a service" onPress={() => router.push(`/vehicle/${id}/log`)} />
+      </View>
+    </SafeAreaView>
   );
 }
 ```
+
+This screen does not use `Screen`, because `Screen` wraps its children in a `ScrollView` and nesting a
+`FlatList` inside one breaks virtualization and logs a warning. A five-year log is hundreds of rows, so
+the list has to virtualize; `Screen` stays for the short form screens.
+
+A "DUE NOW" section belongs above HISTORY, listing only the services whose `dueStatus` is `due` or
+`soon`, using the same `summarize` math as the Garage. When nothing is due, the section is omitted
+entirely rather than replaced with an "All caught up" card. Absence is the message, and the header
+reappearing is itself the signal.
+
+Swipe-left on a history row calls `softDeleteRecord` and shows an undo affordance for 8 seconds,
+backed by `undoDelete` clearing `deleted_at`. Because the undo is in the database and not in an
+in-memory stack, it survives the app being killed inside that window.
 
 - [ ] **Step 4: Log service screen — the core action**
 
@@ -1679,79 +1825,124 @@ export default function VehicleDetail() {
 ```tsx
 import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../../src/design/Screen";
 import { Card } from "../../../src/design/Card";
+import { Chip } from "../../../src/design/Chip";
 import { Field } from "../../../src/design/Field";
 import { Button } from "../../../src/design/Button";
 import { tokens } from "../../../src/design/tokens";
+import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
-import { DEFAULT_INTERVALS } from "../../../src/schedule";
 import { rescheduleAll } from "../../../src/notify";
 
-const TYPES = Object.keys(DEFAULT_INTERVALS);
+// The six people actually log. Everything else lives behind "Other".
+const COMMON = [
+  "Oil Change",
+  "Tire Rotation",
+  "Brake Inspection",
+  "Air Filter",
+  "Inspection",
+  "Other",
+];
+
+const WHEN = [
+  { label: "Today", days: 0 },
+  { label: "Yesterday", days: 1 },
+];
 
 export default function LogService() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const [type, setType] = useState(TYPES[0]);
-  const [odometer, setOdometer] = useState("");
+  const vehicle = getVehicle(id);
+
+  const [type, setType] = useState("Oil Change");
+  const [daysAgo, setDaysAgo] = useState(0);
+  // Prefilled so the user edits three digits instead of typing six. This field
+  // gets autofocus, not the type chips — the chips are already answered.
+  const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
 
   async function onSave() {
     try {
+      const performed = new Date();
+      performed.setDate(performed.getDate() - daysAgo);
       addRecord({
         vehicle_id: id,
         service_type: type,
-        performed_at: new Date().toISOString(),
+        performed_at: performed.toISOString(),
         odometer: odometer ? Number(odometer) : undefined,
         cost: cost ? Number(cost) : undefined,
         notes: notes.trim() || undefined,
       });
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       await rescheduleAll();
       router.back();
     } catch (e) {
       // Never clear the form on failure. The user's typing is the thing we protect.
-      setError("Could not save. Your entry is still here — try again.");
+      setError("Could not save. Your entry is still here. Try again.");
     }
   }
 
   return (
-    <Screen title="Log service">
+    <Screen title="Log a service">
       <Card>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>Service</Text>
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>WHAT</Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-          {TYPES.map((t) => (
-            <Pressable
-              key={t}
-              onPress={() => setType(t)}
-              style={{
-                paddingHorizontal: tokens.space.sm,
-                paddingVertical: 6,
-                borderRadius: tokens.radius.sm,
-                borderWidth: 1,
-                borderColor: t === type ? tokens.color.accent : tokens.color.border,
-                backgroundColor: t === type ? tokens.color.accent + "22" : "transparent",
-              }}
-            >
-              <Text style={{ ...tokens.text.caption, color: tokens.color.text }}>{t}</Text>
-            </Pressable>
+          {COMMON.map((t) => (
+            <Chip key={t} label={t} selected={t === type} onPress={() => setType(t)} />
           ))}
         </View>
       </Card>
       <Card>
-        <Field label="Mileage" value={odometer} onChangeText={setOdometer} keyboardType="numeric" />
-        <Field label="Cost" value={cost} onChangeText={setCost} keyboardType="numeric" />
-        <Field label="Notes" value={notes} onChangeText={setNotes} />
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>WHEN</Text>
+        <View style={{ flexDirection: "row", gap: tokens.space.sm }}>
+          {WHEN.map((w) => (
+            <Chip
+              key={w.label}
+              label={w.label}
+              selected={daysAgo === w.days}
+              onPress={() => setDaysAgo(w.days)}
+            />
+          ))}
+        </View>
       </Card>
-      {error ? <Text style={{ color: tokens.color.due }}>{error}</Text> : null}
+      <Card>
+        <Field
+          label="Odometer"
+          value={odometer}
+          onChangeText={setOdometer}
+          keyboardType="numeric"
+          autoFocus
+        />
+        <Field label="Cost (optional)" value={cost} onChangeText={setCost} keyboardType="numeric" />
+        <Field label="Notes (optional)" value={notes} onChangeText={setNotes} />
+      </Card>
+      {error ? <Text style={{ ...tokens.text.body, color: tokens.color.due }}>{error}</Text> : null}
       <Button label="Save" onPress={onSave} />
     </Screen>
   );
 }
 ```
+
+Target for this screen: **under 15 seconds from cold, two taps and one number.** What that costs:
+
+- Six chips, not a thirteen-item wall and not a picker wheel. `Other` opens the full
+  `DEFAULT_INTERVALS` list with a search field.
+- `Today` is preselected because people log a service the day it happened. `Pick a date…` opens the
+  system date picker for the rest.
+- **Save is enabled from first render.** Every required field has a valid default. A disabled primary
+  button on an untouched form teaches the user the form is work.
+- Success haptic on save, then the Garage or detail row updates with the new next-due line visible.
+  Seeing the consequence immediately is the whole product in one interaction, and "did that actually
+  save" is the precise anxiety the competitors created.
+
+`Chip` is a new design-system component. Add it to Task 2:
+`<Chip label: string, selected: boolean, onPress: () => void>` — `radius.pill`, 44pt minimum hit
+height, bone border and bone-tinted fill when selected, `border` color when not.
 
 - [ ] **Step 5: Settings screen**
 
@@ -1805,12 +1996,160 @@ Run every item in one sitting on hardware:
 4. Export CSV → share sheet opens → file contains the record
 5. Enable reminders → confirm a notification schedules
 6. Delete and reinstall the app → confirm records are gone (expected: this is a local-only app, and it is why export exists)
+7. Log a service, then trigger a write failure → the form still holds every value the user typed
+
+Item 7 is not optional polish. "Entered data is never discarded on error" is the behavior this whole
+app exists to displace, and it is the one thing in the smoke pass that cannot be verified by reading
+the code. Force it by temporarily throwing inside `addRecord`.
 
 - [ ] **Step 7: Commit**
 
 ```bash
 git add app
 git commit -m "feat: add garage, vehicle, log service, and settings screens"
+```
+
+---
+
+## Task 9.5: Onboarding
+
+Full rationale, screen copy, and the research behind it:
+`specs/2026-08-01-glovebox-ui-ux-and-onboarding.md` §3 and §4. This task is the build order.
+
+It comes after Task 9 rather than before it because onboarding lands the user in the Garage, and the
+Garage has to exist to be landed in.
+
+**The rule that governs every screen here: each one writes a real row.** Competitor reviews name
+forced setup as a top complaint alongside data loss. A six-screen flow is only survivable if none of
+those screens exist to build a mood. No goal quiz, no fake "building your plan" loader, no invented
+user counts, no five-star quotes from people who do not exist. The product's pitch is that the
+competitors are not honest about durability; the flow cannot open by being dishonest about anything.
+
+Target: **first service logged inside 60 seconds of first launch.**
+
+**Files:**
+- Create: `src/onboarding/state.ts`, `app/onboarding/_layout.tsx`, `welcome.tsx`, `vehicle.tsx`,
+  `odometer.tsx`, `service.tsx`, `ready.tsx`, `reminders.tsx`
+- Modify: `app/_layout.tsx` (route guard)
+- Test: `tests/onboarding-state.test.ts`
+
+**Interfaces:**
+- Consumes: `createVehicle` (5), `addRecord` (5), `nextDue`/`DEFAULT_INTERVALS` (4),
+  `requestPermission` (7), `presentPaywall` (8), `app_state` (3)
+- Produces:
+  - `isOnboarded(): boolean`
+  - `setOnboardingStep(step: string): void` / `getOnboardingStep(): string | null`
+  - `completeOnboarding(): void`
+
+- [ ] **Step 1: Onboarding state over `app_state`**
+
+`src/onboarding/state.ts` reads and writes two keys, `onboarding_complete` and `onboarding_step`.
+Keep the key/value logic pure over an injected `exec`/`get` pair the same way `applyMigrations` is,
+so it is testable in Node without the device driver.
+
+The step key is what makes a force-quit mid-flow recoverable: the user resumes where they left off
+with their partial vehicle intact, rather than starting over or, worse, ending up with two vehicles.
+
+- [ ] **Step 2: Route guard**
+
+In `app/_layout.tsx`, after `getDb()`, redirect to `/onboarding/welcome` when `isOnboarded()` is
+false, resuming at `getOnboardingStep()` when one is recorded. The guard runs once on mount. Do not
+put it in a `useEffect` that depends on route state — that produces a redirect loop.
+
+- [ ] **Step 3: Screen 1, welcome**
+
+Headline "Your service records, kept forever." Subline "On this phone. No account, no server,
+nothing to log out of." One button, "Set up my car". No login link, because there is none. No skip,
+because there is nothing yet to skip. No beta or version badge.
+
+If no photographic asset exists at build time, ship type-only. A stock car photo reads as a template
+and undoes the credibility the copy is buying.
+
+- [ ] **Step 4: Screen 2, the car**
+
+Nickname autofocused, keyboard up on arrival. Year / make / model as one row of three small optional
+inputs, visually subordinate. Calls `createVehicle`. **Skip creates a vehicle named "My car"** and
+continues, because a user with a vehicle row can use the app and a user without one cannot.
+
+Do not build a make/model dropdown tree or a VIN decoder. Both are non-goals in the spec, and a
+three-level dropdown is the exact setup burden being displaced.
+
+- [ ] **Step 5: Screen 3, the odometer**
+
+One large numeric input, `text.numeric`, keypad up on arrival. One line of explanation underneath:
+"Used to work out what is due by mileage, not just by date." An unexplained number field mid-flow is
+where people quit. Skip states its own consequence in caption text: "Then reminders will use dates
+only."
+
+- [ ] **Step 6: Screen 4, last service**
+
+Chip grid of the six common types. Selecting one advances immediately, with no Continue button, to a
+one-tap date question: `Just now` / `Last month` / `3 months ago` / `6 months ago` / `Pick a date…` /
+`Not sure`. Normalizes to a date and calls `addRecord`, defaulting the odometer to screen 3's value.
+
+`Not sure` skips the record. The flow still works; the service is then treated as due now, which is
+the safe direction to be wrong in.
+
+This is the personalization question the consumer-subscription pattern calls for, and unlike that
+pattern's version, the answer becomes a row in `service_records`.
+
+- [ ] **Step 7: Screen 5, the aha**
+
+Runs `nextDue` on what the user just entered and shows the result:
+
+```
+Oil change          due Sep 2, 2026 · 89,210 mi
+Tire rotation       not logged yet
+Brake inspection    not logged yet
+
+Whichever comes first, date or mileage.
+```
+
+Real value, computed from their own car, roughly 40 seconds after install. It also teaches the dual
+date/mileage model that no competitor communicates clearly, without a tutorial screen. The unlogged
+services are shown on purpose: they show the shape of the thing and invite the next log.
+
+No progress bar and no "analyzing your vehicle". The computation genuinely is instant.
+
+- [ ] **Step 8: Screen 6, reminder soft-ask**
+
+"Want a reminder when it is due?" with the exact frequency stated: "One notification per service, on
+the day it comes due. Nothing else, ever." `Remind me` calls `requestPermission`; `Not now` does not.
+
+The soft-ask is not decoration. A denied iOS prompt is permanent, and firing it cold collapses opt-in
+below 30%. `Not now` must not re-prompt on next launch — Settings offers it again whenever the user
+wants it, and the Garage due badges cover the gap meanwhile.
+
+- [ ] **Step 9: Screen 7, the paywall**
+
+Call `presentPaywall()`, not `presentPaywallIfNeeded()`. The latter is right at the add-vehicle gate
+in Task 9; here the intent is to show the offer exactly once regardless of state.
+
+Then `completeOnboarding()` and replace the route with the Garage — which now already contains a
+vehicle and a service record, so the user never meets an empty state.
+
+Paywall content is built in the RevenueCat dashboard, spec'd in
+`specs/2026-08-01-glovebox-ui-ux-and-onboarding.md` §5. Non-negotiables: close button visible on
+arrival (a hidden dismiss is an App Review 3.1.2 risk and converts worse anyway), annual preselected,
+two options only, Restore / Terms / Privacy present, and the line "Export is free forever, with or
+without Pro." stays on it permanently.
+
+- [ ] **Step 10: Device pass**
+
+Delete the app between runs; onboarding is first-launch-only and a stale `app_state` row will hide
+every bug in it.
+
+1. Fresh install → full flow → land in Garage with the vehicle and record already present
+2. Fresh install → skip every skippable screen → still land in a usable app with one vehicle
+3. Force-quit on screen 4 → reopen → resumes at screen 4, one vehicle exists, not two
+4. Decline the notification prompt → Garage still shows due badges
+5. Dismiss the paywall → free tier fully usable, export works
+
+- [ ] **Step 11: Commit**
+
+```bash
+git add app/onboarding src/onboarding tests/onboarding-state.test.ts app/_layout.tsx
+git commit -m "feat: add first-launch onboarding ending in the paywall"
 ```
 
 ---
@@ -1841,9 +2180,9 @@ Do not hand-type this into the ASC web UI. Values are copied verbatim from Globa
 
 ```bash
 asc metadata set --bundle-id com.idea6.carmaintenancelog --locale en-US \
-  --name "Car Maintenance Log Reminder" \
-  --subtitle "Service records kept forever" \
-  --keywords "oil,change,vehicle,auto,repair,mileage,odometer,tire,rotation,due,history,records,mechanic,car care"
+  --name "Glovebox: Car Maintenance Log" \
+  --subtitle "Service Reminders & Repair Log" \
+  --keywords "tracker,vehicle,auto,oil,change,mileage,odometer,tire,rotation,due,history,records,mechanic,brake"
 ```
 
 - [ ] **Step 3: Write the description**
@@ -1939,6 +2278,8 @@ Spec coverage check against `2026-08-01-car-maintenance-log-design.md`:
 | `notify` isolated from business logic | 7 |
 | Interval defaults sane without setup | 4 (`DEFAULT_INTERVALS`) — closes the open risk named in the spec |
 | Metadata with verified char counts | 10 |
+| App usable within seconds of install, no account | 9.5 (onboarding writes real data, never asks for one) |
+| Design system exists before any screen | 2, revised against the UI/UX spec |
 
 Two spec items intentionally deferred, both flagged rather than silently dropped:
 
