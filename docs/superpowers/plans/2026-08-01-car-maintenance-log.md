@@ -1131,7 +1131,7 @@ Never gated. This is the backup story and the trust signal.
   - `toCsv(rows: CsvRow[]): string` where `CsvRow = { vehicle_name, service_type, performed_at, odometer?, cost?, notes?, deleted_at? }`
   - `exportAndShare(): Promise<void>`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `tests/csv.test.ts`:
 
@@ -1186,7 +1186,7 @@ test("marks soft-deleted rows instead of omitting them", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1194,7 +1194,7 @@ npx jest tests/csv.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement the pure serializer**
+- [x] **Step 3: Implement the pure serializer**
 
 `src/export/csv.ts`:
 
@@ -1236,7 +1236,7 @@ export function toCsv(rows: CsvRow[]): string {
 }
 ```
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1244,7 +1244,7 @@ npx jest tests/csv.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the share wrapper**
+- [x] **Step 5: Write the share wrapper**
 
 `src/export/share.ts`:
 
@@ -1270,7 +1270,7 @@ export async function exportAndShare(): Promise<void> {
 
 Note: `expo-file-system` in SDK 54+ exports the `File`/`Directory` API by default; the old `writeAsStringAsync` helpers moved to `expo-file-system/legacy` and throw a deprecation error if imported from the root. If your installed SDK predates 54, import `{ writeAsStringAsync, cacheDirectory }` from `expo-file-system` instead and write to `` `${cacheDirectory}car-maintenance-${stamp}.csv` ``.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/export tests/csv.test.ts
