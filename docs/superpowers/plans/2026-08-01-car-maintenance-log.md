@@ -1487,7 +1487,7 @@ Three screens, no more. Every screen uses only Task 2 components.
 - Consumes: everything from Tasks 2-8
 - Produces: the shipping app
 
-- [ ] **Step 1: Garage screen**
+- [x] **Step 1: Garage screen**
 
 `app/index.tsx`:
 
@@ -1575,7 +1575,7 @@ export default function Garage() {
 }
 ```
 
-- [ ] **Step 2: Add vehicle screen**
+- [x] **Step 2: Add vehicle screen**
 
 `app/vehicle/new.tsx`:
 
@@ -1620,7 +1620,7 @@ export default function NewVehicle() {
 }
 ```
 
-- [ ] **Step 3: Vehicle detail screen**
+- [x] **Step 3: Vehicle detail screen**
 
 `app/vehicle/[id].tsx`:
 
@@ -1674,7 +1674,7 @@ export default function VehicleDetail() {
 }
 ```
 
-- [ ] **Step 4: Log service screen — the core action**
+- [x] **Step 4: Log service screen — the core action**
 
 `app/vehicle/[id]/log.tsx`:
 
@@ -1755,7 +1755,7 @@ export default function LogService() {
 }
 ```
 
-- [ ] **Step 5: Settings screen**
+- [x] **Step 5: Settings screen**
 
 `app/settings.tsx`:
 
@@ -1808,7 +1808,7 @@ Run every item in one sitting on hardware:
 5. Enable reminders → confirm a notification schedules
 6. Delete and reinstall the app → confirm records are gone (expected: this is a local-only app, and it is why export exists)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add app
