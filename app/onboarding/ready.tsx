@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, Text } from "react-native";
 import { useRouter } from "expo-router";
 import { Button } from "../../src/design/Button";
@@ -9,6 +10,7 @@ import { listVehicles } from "../../src/db/vehicles";
 import { listRecords } from "../../src/db/records";
 import { nextDue, DEFAULT_INTERVALS } from "../../src/schedule";
 import { setOnboardingStep } from "../../src/onboarding";
+import { maybeRequestReview } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 const HEADLINE_TYPES = ["Oil Change", "Tire Rotation", "Brake Inspection"];
@@ -20,6 +22,22 @@ export default function OnboardingReady() {
   // empty list is a crash on the one screen whose whole job is reassurance.
   const vehicle = listVehicles()[0] ?? null;
   const records = vehicle ? listRecords(vehicle.id) : [];
+
+  // The one moment in the flow worth spending the ask on: the user has entered
+  // a vehicle, an odometer reading and a real service, and this screen has just
+  // handed them back a due date they did not have to work out. It fires here
+  // rather than on Continue so the prompt lands over the payoff instead of
+  // stacking on top of the notification ask and the paywall two taps later.
+  //
+  // The delay is for the push transition. A StoreKit modal requested mid-
+  // animation is a modal presented onto a view controller that is still moving,
+  // which iOS drops on the floor.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      void maybeRequestReview({ recordCount: records.length });
+    }, 900);
+    return () => clearTimeout(t);
+  }, [records.length]);
 
   function onContinue() {
     setOnboardingStep("reminders");
