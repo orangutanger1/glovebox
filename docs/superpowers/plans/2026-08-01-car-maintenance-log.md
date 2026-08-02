@@ -1556,7 +1556,7 @@ Three screens, no more. Every screen uses only Task 2 components.
 - Consumes: everything from Tasks 2-8
 - Produces: the shipping app
 
-- [ ] **Step 1: Garage screen**
+- [x] **Step 1: Garage screen**
 
 `app/index.tsx`:
 
@@ -1693,7 +1693,7 @@ Two deliberate departures from a first-instinct layout:
 
 No `Badge` is rendered for an `ok` vehicle. The status colors have to keep meaning something.
 
-- [ ] **Step 2: Add vehicle screen**
+- [x] **Step 2: Add vehicle screen**
 
 `app/vehicle/new.tsx`:
 
@@ -1738,7 +1738,7 @@ export default function NewVehicle() {
 }
 ```
 
-- [ ] **Step 3: Vehicle detail screen**
+- [x] **Step 3: Vehicle detail screen**
 
 `app/vehicle/[id].tsx`:
 
@@ -1826,7 +1826,7 @@ Swipe-left on a history row calls `softDeleteRecord` and shows an undo affordanc
 backed by `undoDelete` clearing `deleted_at`. Because the undo is in the database and not in an
 in-memory stack, it survives the app being killed inside that window.
 
-- [ ] **Step 4: Log service screen — the core action**
+- [x] **Step 4: Log service screen — the core action**
 
 `app/vehicle/[id]/log.tsx`:
 
@@ -1952,7 +1952,7 @@ Target for this screen: **under 15 seconds from cold, two taps and one number.**
 `<Chip label: string, selected: boolean, onPress: () => void>` — `radius.pill`, 44pt minimum hit
 height, bone border and bone-tinted fill when selected, `border` color when not.
 
-- [ ] **Step 5: Settings screen**
+- [x] **Step 5: Settings screen**
 
 `app/settings.tsx`:
 
