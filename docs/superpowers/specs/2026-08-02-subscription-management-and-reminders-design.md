@@ -11,9 +11,9 @@ who turns on reminders.
 **Subscriptions are a one-way door.** `presentPaywall` wraps
 `RevenueCatUI.presentPaywallIfNeeded({ requiredEntitlementIdentifier: "pro" })`,
 which returns `NOT_PRESENTED` once the `pro` entitlement is active. Every route
-to the store is that one function, so a Pro subscriber cannot switch between
-monthly and annual, cannot cancel from inside the app, and cannot see what they
-are paying for. Replaying onboarding does not help — the paywall step there
+to the store is that one function, so a Pro subscriber cannot cancel from inside
+the app and cannot see what they are paying for.
+Replaying onboarding does not help — the paywall step there
 calls the same function and silently shows nothing. Settings offers only
 "Restore purchases".
 
@@ -35,24 +35,29 @@ gates.
 
 Use RevenueCat's Customer Center (`RevenueCatUI.presentCustomerCenter()`,
 available in the installed `react-native-purchases-ui@10.6.0`). It is a native
-sheet covering cancel, change plan, refund request, and missing purchase. Its
-contents are configured in the RevenueCat dashboard, so there is no plan-picker
-UI to build or keep in sync with the offering.
+sheet covering cancel, refund request, and missing purchase. Its contents are
+configured in the RevenueCat dashboard, so there is no UI to build here.
 
 Rejected: deep-linking to iOS Settings via `showManageSubscriptions()` — throws
-the user out of the app with no plan comparison. Rejected: a hand-built
-in-app plan screen — most work, and it would have to reimplement store
-cross-grade rules that Customer Center already handles.
+the user out of the app. Rejected: a hand-built in-app subscription screen —
+most work, and it would have to reimplement store rules Customer Center already
+handles.
 
-The `default` offering already carries both `pro_monthly` and `pro_annual` on
-app `app774f157580`, so change-plans has something to change between.
+**Switching between monthly and annual is out of scope.** It needs
+`pro_monthly` and `pro_annual` live in App Store Connect before RevenueCat will
+offer them as change-plan targets, and both currently sit at
+`store_status: MISSING_METADATA`. The CHANGE_PLANS path exists in the published
+Customer Center config with no products behind it; it should be removed from
+that config until the products are live, so subscribers are not shown a dead
+row. Nothing in the app changes when it is added back later — Customer Center
+picks it up from the dashboard.
 
 ### Behaviour
 
 Pro subscribers never see the paywall again. Gated actions (Add vehicle, Service
 intervals) simply work, and replaying onboarding skips the sell — Apple's review
 guidelines take a dim view of selling someone a subscription they already own.
-Plan changes happen only through Customer Center.
+Cancelling and refunds happen only through Customer Center.
 
 The Settings subscription row is state-dependent:
 
@@ -187,11 +192,19 @@ configured: the MANAGEMENT screen carries all four paths — `MISSING_PURCHASE`,
 `pro_annual` exist on the App Store app `app774f157580`.
 
 Two gaps remain, neither of them code, and neither reachable through the
-RevenueCat MCP tools — both need the dashboard by hand:
+RevenueCat MCP tools — both need the dashboard by hand. The page is not in the
+project's left nav; it is at
+`app.revenuecat.com/projects/projf0d996da/customer-center`.
 
-- `customer_center.change_plans` is `[]`. The CHANGE_PLANS path renders, but
-  with no products listed there is nothing to switch to. Add `pro_monthly` and
-  `pro_annual` to it, or monthly↔annual switching stays unavailable — the
-  headline reason this work exists.
+- `customer_center.change_plans` is `[]`, and the dashboard offers nothing to
+  put in it: RevenueCat holds no synced store data for the two products —
+  `subscription.duration` is null on both and each reports
+  `store_status: MISSING_METADATA` — so there is nothing for a change-plan
+  picker to list. Plan switching is deferred (see Approach); remove the
+  CHANGE_PLANS path from the published config so it does not render as a dead
+  row.
 - `customer_center.support.email` is `""`, so the support path has no
   destination.
+
+Both products do sit in App Store Connect subscription group "Pro", so nothing
+blocks plan switching later beyond getting them live.
