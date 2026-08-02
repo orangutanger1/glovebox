@@ -31,7 +31,8 @@
   "submit": {
     "production": {
       "ios": {
-        "bundleIdentifier": "com.idea6.carmaintenancelog"
+        "bundleIdentifier": "com.idea6.carmaintenancelog",
+        "ascAppId": "6797103341"
       }
     }
   }
