@@ -2153,7 +2153,7 @@ every bug in it.
 4. Decline the notification prompt → Garage still shows due badges
 5. Dismiss the paywall → free tier fully usable, export works
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add app/onboarding src/onboarding tests/onboarding-state.test.ts app/_layout.tsx
