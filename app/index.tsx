@@ -12,6 +12,7 @@ import { listVehicles, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
 import { nextDue, dueStatus, DEFAULT_INTERVALS } from "../src/schedule";
 import { isPro, presentPaywall } from "../src/purchases";
+import { recordReviewEvent } from "../src/review";
 
 type Summary = { status: "due" | "soon" | "ok"; label: string; detail: string };
 
@@ -80,6 +81,11 @@ export default function Garage() {
     if (vehicles.length >= 1 && !(await isPro())) {
       const purchased = await presentPaywall();
       if (!purchased) return;
+      // Paying is the strongest thing a user can say about an app, and it is
+      // worth the most for the longest. Recorded only — the ask itself waits
+      // for a later completed action, because a rating prompt stacked on top
+      // of a purchase confirmation is two modals about money in a row.
+      recordReviewEvent("purchase");
     }
     router.push("/vehicle/new");
   }

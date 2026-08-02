@@ -46,6 +46,19 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
       );
     `,
   },
+  {
+    version: 3,
+    sql: `
+      CREATE TABLE IF NOT EXISTS review_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        kind TEXT NOT NULL,
+        at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_review_events_at
+        ON review_events (at DESC);
+    `,
+  },
 ];
 
 /**

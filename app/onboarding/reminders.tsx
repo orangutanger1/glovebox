@@ -6,6 +6,7 @@ import { tokens } from "../../src/design/tokens";
 import { requestPermission, rescheduleAll } from "../../src/notify";
 import { presentPaywall } from "../../src/purchases";
 import { completeOnboarding } from "../../src/onboarding";
+import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 export default function OnboardingReminders() {
@@ -18,7 +19,11 @@ export default function OnboardingReminders() {
     if (busy) return;
     setBusy(true);
     try {
-      await presentPaywall();
+      // Recorded, never acted on. Nothing in onboarding may ask for a rating —
+      // App Store Review Guideline 5.6.3 treats soliciting one before the user
+      // has meaningfully used the app as manipulating the App Store, and Apple
+      // rejects for it. This only banks the signal for a later happy moment.
+      if (await presentPaywall()) recordReviewEvent("purchase");
     } catch {
       // A paywall that fails to present — no API key in the build, no network,
       // products not yet fetchable from the store — must not strand the user.

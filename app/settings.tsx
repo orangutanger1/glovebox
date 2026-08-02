@@ -9,6 +9,7 @@ import { exportAndShare } from "../src/export/share";
 import { restore } from "../src/purchases";
 import { requestPermission } from "../src/notify";
 import { resetOnboarding } from "../src/onboarding";
+import { recordReviewEvent, maybeRequestReview } from "../src/review";
 
 export default function Settings() {
   const router = useRouter();
@@ -20,6 +21,11 @@ export default function Settings() {
   async function onExport() {
     try {
       await exportAndShare();
+      // Someone who just pulled their whole history out has proved the
+      // durability promise to themselves. That is the app at its most
+      // convincing, so it counts as much as logging a service.
+      recordReviewEvent("export");
+      setTimeout(() => void maybeRequestReview(), 1200);
     } catch {
       setMsg("Could not open the share sheet. Your records are unchanged.");
     }
