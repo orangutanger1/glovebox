@@ -7,12 +7,14 @@ export function Field({
   onChangeText,
   keyboardType = "default",
   placeholder,
+  autoFocus,
 }: {
   label: string;
   value: string;
   onChangeText: (s: string) => void;
   keyboardType?: "default" | "numeric";
   placeholder?: string;
+  autoFocus?: boolean;
 }) {
   return (
     <View style={{ gap: tokens.space.xs }}>
@@ -22,6 +24,7 @@ export function Field({
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         placeholder={placeholder}
+        autoFocus={autoFocus}
         placeholderTextColor={tokens.color.textMuted}
         style={{
           ...tokens.text.body,

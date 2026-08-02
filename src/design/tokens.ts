@@ -20,6 +20,6 @@ export const tokens = {
     heading: { fontSize: 20, fontWeight: "600" as const, lineHeight: 25 },
     body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
     caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
-    numeric: { fontSize: 17, fontVariant: ["tabular-nums"] as const },
+    numeric: { fontSize: 17, fontVariant: ["tabular-nums"] as ("tabular-nums")[] },
   },
 };
