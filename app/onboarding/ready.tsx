@@ -5,21 +5,23 @@ import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
 import { ListRow } from "../../src/design/ListRow";
 import { tokens } from "../../src/design/tokens";
-import { listVehicles } from "../../src/db/vehicles";
+import { getVehicle } from "../../src/db/vehicles";
 import { listRecords } from "../../src/db/records";
 import { nextDue } from "../../src/schedule";
 import { getIntervals } from "../../src/db/intervals";
-import { setOnboardingStep } from "../../src/onboarding";
+import { setOnboardingStep, getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 const HEADLINE_TYPES = ["Oil Change", "Tire Rotation", "Brake Inspection"];
 
 export default function OnboardingReady() {
   const router = useRouter();
-  // Every path into this screen creates a vehicle first, including Skip — but
-  // a resumed onboarding step is persisted state, and reading `[0].id` off an
-  // empty list is a crash on the one screen whose whole job is reassurance.
-  const vehicle = listVehicles()[0] ?? null;
+  // Every path into this screen creates a vehicle first — but a resumed
+  // onboarding step is persisted state, and the car it names can have been
+  // deleted since. Reading fields off null is a crash on the one screen whose
+  // whole job is reassurance.
+  const ownedId = getOnboardingVehicleId();
+  const vehicle = ownedId ? getVehicle(ownedId) : null;
   const records = vehicle ? listRecords(vehicle.id) : [];
   const intervals = getIntervals();
 

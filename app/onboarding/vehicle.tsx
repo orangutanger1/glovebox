@@ -5,8 +5,12 @@ import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
-import { createVehicle, listVehicles, updateVehicleIdentity } from "../../src/db/vehicles";
-import { setOnboardingStep } from "../../src/onboarding";
+import { createVehicle, getVehicle, updateVehicleIdentity } from "../../src/db/vehicles";
+import {
+  setOnboardingStep,
+  getOnboardingVehicleId,
+  setOnboardingVehicleId,
+} from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { parseNumber, vehicleDisplayName } from "../../src/format";
 
@@ -64,10 +68,13 @@ export default function OnboardingVehicle() {
     // screen, which is the point at which a second car makes one useful.
     const identity = { name: vehicleDisplayName(parts), ...parts };
     // Stepping back to this screen and forward again must correct the car, not
-    // add a second one to the garage.
-    const existing = listVehicles()[0];
+    // add a second one to the garage — but only the car this run of onboarding
+    // created. Reaching for the first vehicle in the garage instead is how
+    // "Replay onboarding" came to rename a car the user had owned for a year.
+    const ownedId = getOnboardingVehicleId();
+    const existing = ownedId ? getVehicle(ownedId) : null;
     if (existing) updateVehicleIdentity(existing.id, identity);
-    else createVehicle(identity);
+    else setOnboardingVehicleId(createVehicle(identity).id);
 
     setOnboardingStep("odometer");
     router.push("/onboarding/odometer");

@@ -4,9 +4,9 @@ import { useRouter } from "expo-router";
 import { Chip } from "../../src/design/Chip";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
-import { listVehicles } from "../../src/db/vehicles";
+import { getVehicle } from "../../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
-import { setOnboardingStep } from "../../src/onboarding";
+import { setOnboardingStep, getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 const TYPES = [
@@ -41,12 +41,16 @@ export default function OnboardingService() {
   function onContinue() {
     if (!valid) return;
     const daysAgo = WHEN.find((w) => w.label === when)!.daysAgo;
-    const vehicle = listVehicles()[0];
+    const ownedId = getOnboardingVehicleId();
+    const vehicle = ownedId ? getVehicle(ownedId) : null;
 
     if (vehicle && daysAgo !== null) {
       const serviceType = type === "Something else" ? "Other" : type;
       // Stepping back into this screen and answering again must correct the
-      // record, not stack a second one on the same service.
+      // record, not stack a second one on the same service. Scoped to the car
+      // this run created: against the first vehicle in the garage, a replay
+      // tombstoned a real oil-change history the user could not get back from
+      // inside the app.
       for (const r of listRecords(vehicle.id)) {
         if (r.service_type === serviceType) softDeleteRecord(r.id);
       }
