@@ -109,6 +109,7 @@ export default function RootLayout() {
           options={{ headerShown: false, gestureEnabled: false }}
         />
         <Stack.Screen name="settings" options={{ title: "Settings", headerTitle: "" }} />
+        <Stack.Screen name="intervals" options={{ title: "Service intervals", headerTitle: "" }} />
         <Stack.Screen name="vehicle/new" options={{ title: "Add vehicle", headerTitle: "" }} />
         {/* The one screen with no body title: it names the vehicle in the
             header instead, set from the row in the screen itself. */}

@@ -2,7 +2,8 @@ import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { listVehicles } from "../db/vehicles";
 import { listRecords } from "../db/records";
-import { nextDue, DEFAULT_INTERVALS } from "../schedule";
+import { nextDue } from "../schedule";
+import { getIntervals } from "../db/intervals";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -28,6 +29,8 @@ export async function rescheduleAll(): Promise<void> {
 
   await Notifications.cancelAllScheduledNotificationsAsync();
 
+  const intervals = getIntervals();
+
   for (const vehicle of listVehicles()) {
     const records = listRecords(vehicle.id);
     const latestByType = new Map<string, (typeof records)[number]>();
@@ -36,7 +39,7 @@ export async function rescheduleAll(): Promise<void> {
     }
 
     for (const [type, record] of latestByType) {
-      const interval = DEFAULT_INTERVALS[type];
+      const interval = intervals[type];
       if (!interval) continue;
       const { dueAt } = nextDue({
         lastPerformedAt: record.performed_at,

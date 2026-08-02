@@ -10,7 +10,8 @@ import { Badge } from "../src/design/Badge";
 import { tokens } from "../src/design/tokens";
 import { listVehicles, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
-import { nextDue, dueStatus, DEFAULT_INTERVALS } from "../src/schedule";
+import { nextDue, dueStatus } from "../src/schedule";
+import { getIntervals } from "../src/db/intervals";
 import { isPro, presentPaywall } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
 
@@ -26,13 +27,14 @@ function summarize(vehicle: Vehicle): Summary {
   const seen = new Set<string>();
   const now = new Date().toISOString();
   const rank = { due: 2, soon: 1, ok: 0 } as const;
+  const intervals = getIntervals();
 
   let best: Summary | null = null;
 
   for (const r of records) {
     if (seen.has(r.service_type)) continue;
     seen.add(r.service_type);
-    const interval = DEFAULT_INTERVALS[r.service_type];
+    const interval = intervals[r.service_type];
     if (!interval) continue;
     const due = nextDue({
       lastPerformedAt: r.performed_at,
