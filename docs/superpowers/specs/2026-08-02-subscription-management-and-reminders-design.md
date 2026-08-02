@@ -178,8 +178,20 @@ Device-only, verified on a TestFlight build:
   plausible next date — the check that defect 1 is actually fixed.
 - Deleting a vehicle drops its reminders from the count.
 
-## Open items for planning
+## Dashboard state
 
-- Customer Center must be configured in the RevenueCat dashboard for project
-  `projf0d996da` before the button does anything useful. Verify the config and
-  its change-plan option; enable it if absent.
+Checked against project `projf0d996da` on 2026-08-02. Customer Center is
+configured: the MANAGEMENT screen carries all four paths — `MISSING_PURCHASE`,
+`CHANGE_PLANS`, `CANCEL` (behind a feedback survey with a retention offer), and
+`REFUND_REQUEST` — plus a `NO_ACTIVE` screen. Both `pro_monthly` and
+`pro_annual` exist on the App Store app `app774f157580`.
+
+Two gaps remain, neither of them code, and neither reachable through the
+RevenueCat MCP tools — both need the dashboard by hand:
+
+- `customer_center.change_plans` is `[]`. The CHANGE_PLANS path renders, but
+  with no products listed there is nothing to switch to. Add `pro_monthly` and
+  `pro_annual` to it, or monthly↔annual switching stays unavailable — the
+  headline reason this work exists.
+- `customer_center.support.email` is `""`, so the support path has no
+  destination.

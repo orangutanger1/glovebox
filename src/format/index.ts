@@ -72,6 +72,11 @@ export function dateFromParts(p: DateParts): Date {
   return new Date(p.year, p.month - 1, p.day, 12, 0, 0, 0);
 }
 
+/** "Sep 14" — for dates shown beside a label rather than in a record. */
+export function shortDate(iso: string): string {
+  return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
 export function partsFromDate(d: Date): DateParts {
   return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };
 }
