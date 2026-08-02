@@ -1,9 +1,12 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Swipeable } from "react-native-gesture-handler";
 import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
 import { Button } from "../../src/design/Button";
+import { Gauge } from "../../src/design/Gauge";
+import { Glass } from "../../src/design/Glass";
+import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
@@ -55,6 +58,12 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
 
 const UNDO_WINDOW_MS = 8000;
 
+function SectionLegend({ children }: { children: string }) {
+  return (
+    <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>{children}</Text>
+  );
+}
+
 export default function VehicleDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
@@ -69,6 +78,14 @@ export default function VehicleDetail() {
   }, [id]);
 
   useFocusEffect(refresh);
+
+  // Without this the pending timer fires after the screen is gone and sets
+  // state on an unmounted component.
+  useEffect(() => {
+    return () => {
+      if (undoTimer.current) clearTimeout(undoTimer.current);
+    };
+  }, []);
 
   function onDelete(recordId: string) {
     softDeleteRecord(recordId);
@@ -87,47 +104,62 @@ export default function VehicleDetail() {
   }
 
   const due = vehicle ? dueItems(vehicle, records) : [];
+  const spec = [vehicle?.year, vehicle?.make, vehicle?.model].filter(Boolean).join(" ");
+  const lastService = records[0];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }} edges={["bottom"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
       <FlatList
         data={records}
         keyExtractor={(r) => r.id}
-        contentContainerStyle={{ padding: tokens.space.md, gap: tokens.space.xs }}
+        contentContainerStyle={{
+          padding: tokens.space.md,
+          paddingBottom: tokens.space.xxl + tokens.space.xl,
+          gap: tokens.space.xs,
+        }}
         ListHeaderComponent={
-          <View style={{ gap: tokens.space.xs, paddingBottom: tokens.space.md }}>
-            <Text style={{ ...tokens.text.title, ...tokens.text.numeric, color: tokens.color.text }}>
-              {vehicle?.odometer ? `${vehicle.odometer.toLocaleString()} mi` : "No mileage yet"}
-            </Text>
-            <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-              {[vehicle?.year, vehicle?.make, vehicle?.model].filter(Boolean).join(" ") || " "}
-            </Text>
+          <View style={{ gap: tokens.space.md, paddingBottom: tokens.space.md }}>
+            {/* The cluster: everything the driver wants without scrolling. */}
+            <Panel>
+              <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
+                <View
+                  style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}
+                >
+                  <Gauge
+                    legend="Odometer"
+                    value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "—"}
+                    unit={vehicle?.odometer ? "mi" : undefined}
+                  />
+                  <Gauge
+                    legend="Last service"
+                    value={lastService ? lastService.performed_at.slice(0, 10) : "—"}
+                    align="right"
+                  />
+                </View>
+                {spec ? (
+                  <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+                    {spec}
+                  </Text>
+                ) : null}
+              </View>
+            </Panel>
 
             {due.length > 0 ? (
-              <View style={{ paddingTop: tokens.space.lg, gap: tokens.space.xs }}>
-                <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-                  DUE NOW
-                </Text>
+              <View style={{ gap: tokens.space.xs }}>
+                <SectionLegend>Due now</SectionLegend>
                 {due.map((d) => (
                   <ListRow
                     key={d.type}
                     title={d.type}
                     subtitle={d.line}
-                    right={<Badge label={d.status === "due" ? "Due" : "Soon"} tone={d.status} />}
+                    status={d.status === "due" ? "overdue" : "soon"}
+                    right={<Badge label={d.status === "due" ? "Overdue" : "Soon"} tone={d.status} />}
                   />
                 ))}
               </View>
             ) : null}
 
-            <Text
-              style={{
-                ...tokens.text.caption,
-                color: tokens.color.textMuted,
-                paddingTop: tokens.space.lg,
-              }}
-            >
-              HISTORY
-            </Text>
+            <SectionLegend>History</SectionLegend>
           </View>
         }
         ListEmptyComponent={
@@ -142,12 +174,13 @@ export default function VehicleDetail() {
                 onPress={() => onDelete(item.id)}
                 style={{
                   justifyContent: "center",
+                  marginLeft: tokens.space.sm,
                   paddingHorizontal: tokens.space.md,
-                  backgroundColor: tokens.color.due,
+                  backgroundColor: tokens.color.red,
                   borderRadius: tokens.radius.sm,
                 }}
               >
-                <Text style={{ ...tokens.text.body, color: tokens.color.text }}>Delete</Text>
+                <Text style={{ ...tokens.text.legend, color: tokens.color.white }}>Delete</Text>
               </Pressable>
             )}
           >
@@ -155,34 +188,43 @@ export default function VehicleDetail() {
               title={item.service_type}
               subtitle={`${item.performed_at.slice(0, 10)}${
                 item.odometer ? ` · ${item.odometer.toLocaleString()} mi` : ""
-              }`}
+              }${item.cost ? ` · $${item.cost.toLocaleString()}` : ""}`}
+              status="ok"
             />
           </Swipeable>
         )}
       />
-      {undoId ? (
-        <Pressable
-          onPress={onUndo}
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: tokens.space.md,
-            padding: tokens.space.md,
-            backgroundColor: tokens.color.surfaceAlt,
-            borderRadius: tokens.radius.md,
-          }}
-        >
-          <Text style={{ ...tokens.text.body, color: tokens.color.text }}>Service deleted</Text>
-          <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.accent }}>
-            Undo
-          </Text>
-        </Pressable>
-      ) : (
-        <View style={{ padding: tokens.space.md }}>
+
+      {/* The undo bar sits above the action rather than replacing it — losing
+          the primary button for eight seconds after a delete is its own bug. */}
+      <Glass edge="top">
+        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+          {undoId ? (
+            <Pressable onPress={onUndo}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: tokens.space.md,
+                  borderRadius: tokens.radius.sm,
+                  backgroundColor: tokens.color.redWash,
+                  borderWidth: 1,
+                  borderColor: tokens.color.red,
+                }}
+              >
+                <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                  Service deleted
+                </Text>
+                <Text style={{ ...tokens.text.legend, fontSize: 14, color: tokens.color.white }}>
+                  Undo
+                </Text>
+              </View>
+            </Pressable>
+          ) : null}
           <Button label="Log a service" onPress={() => router.push(`/vehicle/${id}/log`)} />
         </View>
-      )}
+      </Glass>
     </SafeAreaView>
   );
 }

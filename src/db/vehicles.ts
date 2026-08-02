@@ -21,9 +21,14 @@ export function listVehicles(): Vehicle[] {
   );
 }
 
+/** Tombstoned vehicles are invisible here, the same as in listVehicles — a
+ *  stale route or deep link must not resurrect one. */
 export function getVehicle(vehicleId: string): Vehicle | null {
   return (
-    getDb().getFirstSync<Vehicle>("SELECT * FROM vehicles WHERE id = ?", [vehicleId]) ?? null
+    getDb().getFirstSync<Vehicle>(
+      "SELECT * FROM vehicles WHERE id = ? AND deleted_at IS NULL",
+      [vehicleId]
+    ) ?? null
   );
 }
 
