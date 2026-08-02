@@ -37,6 +37,15 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
         ON service_records (vehicle_id, performed_at DESC);
     `,
   },
+  {
+    version: 2,
+    sql: `
+      CREATE TABLE IF NOT EXISTS app_state (
+        key TEXT PRIMARY KEY NOT NULL,
+        value TEXT
+      );
+    `,
+  },
 ];
 
 /**

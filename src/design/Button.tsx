@@ -7,6 +7,13 @@ const BG = {
   danger: tokens.color.due,
 };
 
+// Bone fill needs dark text. Getting this wrong ships an unreadable primary button.
+const FG = {
+  primary: tokens.color.onAccent,
+  secondary: tokens.color.text,
+  danger: tokens.color.text,
+};
+
 export function Button({
   label,
   onPress,
@@ -24,13 +31,14 @@ export function Button({
       disabled={disabled}
       style={({ pressed }) => ({
         backgroundColor: BG[variant],
-        opacity: disabled ? 0.4 : pressed ? 0.7 : 1,
+        opacity: disabled ? 0.4 : 1,
+        transform: [{ scale: pressed ? 0.98 : 1 }],
         borderRadius: tokens.radius.md,
-        paddingVertical: 14,
+        paddingVertical: 16,
         alignItems: "center",
       })}
     >
-      <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>
+      <Text style={{ ...tokens.text.body, fontWeight: "600", color: FG[variant] }}>
         {label}
       </Text>
     </Pressable>

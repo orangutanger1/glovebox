@@ -316,7 +316,7 @@ Written before any screen. Restyling screens later is pure rework, and the user 
   - `<Badge label: string, tone: 'due'|'soon'|'ok'>` — `ok` exists for completeness; screens do not render it
   - `<Chip label: string, selected: boolean, onPress: () => void>` — pill, 44pt min hit height
 
-- [ ] **Step 1: Write the tokens**
+- [x] **Step 1: Write the tokens**
 
 `src/design/tokens.ts`:
 
@@ -363,7 +363,7 @@ Dark-first because the app is used in garages and driveways. Rationale for every
 Body is 17pt, the iOS default, not 16. Every screen must survive Dynamic Type at the largest
 accessibility size without clipping — this app's audience skews older than average.
 
-- [ ] **Step 2: Write Screen, Card, and Badge**
+- [x] **Step 2: Write Screen, Card, and Badge**
 
 `src/design/Screen.tsx`:
 
@@ -437,7 +437,7 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
 }
 ```
 
-- [ ] **Step 3: Write Button, Field, and ListRow**
+- [x] **Step 3: Write Button, Field, and ListRow**
 
 These use `Pressable` and `View` from `react-native` with the `style` prop rather than `className`. NativeWind's `cssInterop` drops `className` on animated and third-party components on device while working fine in the simulator, producing unstyled screens that only appear broken on real hardware. Using `style` for core components sidesteps the whole class of bug.
 
@@ -601,7 +601,7 @@ This task is the product. The "all my service dates became Jan 1, 0001" bug that
   - `applyMigrations(exec: (sql: string) => void, currentVersion: number): number` — pure orchestration, returns new version
   - `getDb(): SQLiteDatabase` — opens, migrates safely, returns the handle
 
-- [ ] **Step 1: Write the failing migration test**
+- [x] **Step 1: Write the failing migration test**
 
 `tests/migrations.test.ts`:
 
@@ -653,7 +653,7 @@ test("no migration contains a destructive statement", () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails**
+- [x] **Step 2: Run it and confirm it fails**
 
 Add to `package.json`: `"scripts": { "test": "jest" }` and a `jest.config.js`:
 
@@ -668,7 +668,7 @@ npx jest tests/migrations.test.ts
 
 Expected: FAIL — `Cannot find module '../src/db/schema'`.
 
-- [ ] **Step 3: Write the schema**
+- [x] **Step 3: Write the schema**
 
 `src/db/schema.ts`:
 
@@ -746,7 +746,7 @@ like, and shipping the second one before launch proves the runner works on a pop
 
 `performed_at` is stored as a full ISO-8601 string, never a Unix epoch integer and never a locale-formatted string. The Jan 1, 0001 class of bug comes from a numeric zero-value date being reinterpreted after a schema change.
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 ```bash
 npx jest tests/migrations.test.ts
@@ -754,7 +754,7 @@ npx jest tests/migrations.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the client with pre-migration backup**
+- [x] **Step 5: Write the client with pre-migration backup**
 
 `src/db/client.ts`:
 
@@ -832,7 +832,7 @@ Pure functions, zero I/O, exhaustively tested. This is where correctness actuall
   - `nextDue(input: { lastPerformedAt: string; lastOdometer?: number; interval: { months?: number; miles?: number } }): { dueAt?: string; dueOdometer?: number }`
   - `dueStatus(input: { dueAt?: string; dueOdometer?: number; now: string; odometer?: number }): 'due' | 'soon' | 'ok'`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/schedule.test.ts`:
 
@@ -912,7 +912,7 @@ test("every default interval specifies months or miles", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -920,7 +920,7 @@ npx jest tests/schedule.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `src/schedule/index.ts`:
 
@@ -998,7 +998,7 @@ export function dueStatus(input: {
 
 Whichever comes first — date or mileage — wins. That matches how manufacturers actually specify service and is what users expect.
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -1033,7 +1033,7 @@ git commit -m "feat: add service interval and due-status calculation"
   - `softDeleteRecord(id: string): void`
   - `allRecordsForExport(): (ServiceRecord & { vehicle_name: string })[]`
 
-- [ ] **Step 1: Write the vehicle module**
+- [x] **Step 1: Write the vehicle module**
 
 `src/db/vehicles.ts`:
 
@@ -1085,7 +1085,7 @@ export function createVehicle(v: {
 }
 ```
 
-- [ ] **Step 2: Write the record module, append-only**
+- [x] **Step 2: Write the record module, append-only**
 
 `src/db/records.ts`:
 
@@ -1197,7 +1197,7 @@ Never gated. This is the backup story and the trust signal.
   - `toCsv(rows: CsvRow[]): string` where `CsvRow = { vehicle_name, service_type, performed_at, odometer?, cost?, notes?, deleted_at? }`
   - `exportAndShare(): Promise<void>`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `tests/csv.test.ts`:
 
@@ -1252,7 +1252,7 @@ test("marks soft-deleted rows instead of omitting them", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1260,7 +1260,7 @@ npx jest tests/csv.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement the pure serializer**
+- [x] **Step 3: Implement the pure serializer**
 
 `src/export/csv.ts`:
 
@@ -1302,7 +1302,7 @@ export function toCsv(rows: CsvRow[]): string {
 }
 ```
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1310,7 +1310,7 @@ npx jest tests/csv.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the share wrapper**
+- [x] **Step 5: Write the share wrapper**
 
 `src/export/share.ts`:
 
@@ -1356,7 +1356,7 @@ git commit -m "feat: add always-free CSV export with share sheet"
   - `requestPermission(): Promise<boolean>`
   - `rescheduleAll(): Promise<void>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/notify/index.ts`:
 
@@ -1451,7 +1451,7 @@ git commit -m "feat: schedule service-due notifications"
   - `presentPaywall(): Promise<boolean>` — resolves true if the user now has `pro`
   - `restore(): Promise<boolean>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/purchases/index.ts`:
 
@@ -1497,7 +1497,7 @@ export async function restore(): Promise<boolean> {
 
 Build the paywall itself in the RevenueCat dashboard using their Paywall editor, not in code. It is remote-configurable, so pricing and copy change without an App Store review cycle.
 
-- [ ] **Step 2: Wire the root layout**
+- [x] **Step 2: Wire the root layout**
 
 `app/_layout.tsx`:
 
