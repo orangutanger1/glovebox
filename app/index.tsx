@@ -74,21 +74,35 @@ function summarize(vehicle: Vehicle): Summary {
 export default function Garage() {
   const router = useRouter();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [msg, setMsg] = useState("");
 
   useFocusEffect(useCallback(() => setVehicles(listVehicles()), []));
 
   async function onAdd() {
     // Paywall before the form, never after. Making someone fill in a form and
     // then telling them it costs money is the worst version of this moment.
-    if (vehicles.length >= 1 && !(await isPro())) {
-      const purchased = await presentPaywall();
-      if (!purchased) return;
-      // Paying is the strongest thing a user can say about an app, and it is
-      // worth the most for the longest. Recorded only — the ask itself waits
-      // for a later completed action, because a rating prompt stacked on top
-      // of a purchase confirmation is two modals about money in a row.
-      recordReviewEvent("purchase");
+    //
+    // Wrapped for the same reason Settings wraps its copy of this gate:
+    // `presentPaywall` rejects when RevenueCat has no products to show — no
+    // API key in the build, no network, StoreKit still fetching — and an
+    // unhandled rejection here is a button that does nothing and says nothing.
+    if (vehicles.length >= 1) {
+      try {
+        if (!(await isPro())) {
+          const purchased = await presentPaywall();
+          if (!purchased) return;
+          // Paying is the strongest thing a user can say about an app, and it
+          // is worth the most for the longest. Recorded only — the ask itself
+          // waits for a later completed action, because a rating prompt stacked
+          // on top of a purchase confirmation is two modals about money in a row.
+          recordReviewEvent("purchase");
+        }
+      } catch {
+        setMsg("Could not reach the store. Try again on a better connection.");
+        return;
+      }
     }
+    setMsg("");
     router.push("/vehicle/new");
   }
 
@@ -106,6 +120,9 @@ export default function Garage() {
       title="Garage"
       footer={
         <>
+          {msg ? (
+            <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
+          ) : null}
           {single ? <Button label="Log a service" onPress={onLog} /> : null}
           <Button
             label="Add vehicle"

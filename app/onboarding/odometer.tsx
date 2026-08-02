@@ -6,8 +6,8 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { OdometerRoll, randomOdometerReading } from "../../src/design/OdometerRoll";
 import { tokens } from "../../src/design/tokens";
-import { listVehicles, setOdometerIfHigher } from "../../src/db/vehicles";
-import { setOnboardingStep } from "../../src/onboarding";
+import { getVehicle, setOdometerIfHigher } from "../../src/db/vehicles";
+import { setOnboardingStep, getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { parseNumber } from "../../src/format";
 
@@ -23,7 +23,8 @@ export default function OnboardingOdometer() {
 
   function onContinue() {
     if (!valid) return;
-    const vehicle = listVehicles()[0];
+    const ownedId = getOnboardingVehicleId();
+    const vehicle = ownedId ? getVehicle(ownedId) : null;
     // The placeholder on this very field shows "84,210", so a user copying its
     // format produced NaN and silently lost their reading.
     if (vehicle) setOdometerIfHigher(vehicle.id, miles);

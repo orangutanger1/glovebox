@@ -1,4 +1,3 @@
-import * as StoreReview from "expo-store-review";
 import { getDb } from "../db/client";
 import {
   shouldRequestReview,
@@ -7,6 +6,27 @@ import {
   type ReviewEvent,
   type ReviewEventKind,
 } from "./state";
+
+/**
+ * Loaded on use, never at import.
+ *
+ * `expo-store-review` resolves its native module the moment the module is
+ * evaluated, so a top-level import throws "Cannot find native module
+ * 'ExpoStoreReview'" in any binary compiled before the package was added — and
+ * because this module is reached from the root layout, that throw took the
+ * whole app down at boot with no screen and no recoverable state. Two builds
+ * share a runtime version whenever the app version does not change, so that is
+ * not a hypothetical: an OTA update carrying this file lands on the previous
+ * native build and bricks it.
+ *
+ * Deferring the require moves the failure inside `maybeRequestReview`, where it
+ * is already caught, and the worst outcome becomes a rating prompt that does
+ * not appear.
+ */
+function loadStoreReview(): typeof import("expo-store-review") {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require("expo-store-review");
+}
 
 function dbGet(key: string): string | null {
   const row = getDb().getFirstSync<{ value: string | null }>(
@@ -80,6 +100,8 @@ export async function maybeRequestReview(): Promise<void> {
       askCount: Number.isFinite(askCount) ? askCount : 0,
     };
     if (!shouldRequestReview(state, new Date())) return;
+
+    const StoreReview = loadStoreReview();
     if (!(await StoreReview.hasAction())) return;
 
     dbSet(REVIEW_LAST_ASKED_KEY, new Date().toISOString());
