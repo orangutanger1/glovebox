@@ -49,6 +49,27 @@ export function createVehicle(v: {
   return row;
 }
 
+/**
+ * Never deletes, same as softDeleteRecord: a tombstone hides the vehicle from
+ * the garage and from getVehicle, while the rows stay on disk and keep showing
+ * up in the CSV export. Losing a car's whole history to one mis-tap is the
+ * worst outcome this app has, so the data survives the gesture.
+ *
+ * The service records are left untouched. They are already unreachable through
+ * a hidden vehicle, and leaving them intact is what makes an undelete a single
+ * UPDATE rather than a reconstruction.
+ */
+export function softDeleteVehicle(vehicleId: string): void {
+  getDb().runSync("UPDATE vehicles SET deleted_at = ? WHERE id = ?", [
+    new Date().toISOString(),
+    vehicleId,
+  ]);
+}
+
+export function undoDeleteVehicle(vehicleId: string): void {
+  getDb().runSync("UPDATE vehicles SET deleted_at = NULL WHERE id = ?", [vehicleId]);
+}
+
 /** Same guarded high-water-mark update addRecord already relies on — never lowers a reading. */
 export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
   getDb().runSync(

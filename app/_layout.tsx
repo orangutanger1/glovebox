@@ -71,17 +71,36 @@ export default function RootLayout() {
           headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: tokens.color.text },
           headerShadowVisible: false,
           contentStyle: { backgroundColor: tokens.color.housing },
+          // A chevron with no label. The default label is the previous route's
+          // title, which is how the back button came to read "index".
+          headerBackButtonDisplayMode: "minimal",
         }}
       >
+        {/* Screens built on <Screen> already print their own title in the body,
+            so the header title is blanked rather than repeating it two lines
+            up. Every screen still gets a `title` for the accessibility label —
+            without one the route pattern shows through, which is where
+            "vehicle/[id]" was coming from. */}
         <Stack.Screen
           name="index"
           options={{
+            title: "Garage",
+            headerTitle: "",
             headerRight: () => (
               <Pressable onPress={() => router.push("/settings")} hitSlop={12}>
                 <Text style={{ fontSize: 20, color: tokens.color.text }}>⚙︎</Text>
               </Pressable>
             ),
           }}
+        />
+        <Stack.Screen name="settings" options={{ title: "Settings", headerTitle: "" }} />
+        <Stack.Screen name="vehicle/new" options={{ title: "Add vehicle", headerTitle: "" }} />
+        {/* The one screen with no body title: it names the vehicle in the
+            header instead, set from the row in the screen itself. */}
+        <Stack.Screen name="vehicle/[id]" options={{ title: "Vehicle" }} />
+        <Stack.Screen
+          name="vehicle/[id]/log"
+          options={{ title: "Log a service", headerTitle: "" }}
         />
       </Stack>
     </GestureHandlerRootView>

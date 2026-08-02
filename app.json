@@ -50,6 +50,9 @@
         "projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
       }
     },
-    "owner": "mayfield"
+    "owner": "mayfield",
+    "updates": {
+      "url": "https://u.expo.dev/fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
+    }
   }
 }

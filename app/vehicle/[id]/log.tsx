@@ -11,7 +11,7 @@ import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
-import { parseNumber } from "../../../src/format";
+import { parseNumber, parseDateInput } from "../../../src/format";
 
 // The six people actually log. Everything else lives behind "Other".
 const COMMON = [
@@ -28,13 +28,19 @@ const WHEN = [
   { label: "Yesterday", days: 1 },
 ];
 
+// The two chips cover the common case in one tap; anything older is typed.
+// Sentinel rather than a magic number of days, so "custom" can never collide
+// with a real offset.
+const CUSTOM = "custom";
+
 export default function LogService() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const vehicle = getVehicle(id);
 
   const [type, setType] = useState("Oil Change");
-  const [daysAgo, setDaysAgo] = useState(0);
+  const [daysAgo, setDaysAgo] = useState<number | typeof CUSTOM>(0);
+  const [dateText, setDateText] = useState("");
   // Prefilled so the user edits three digits instead of typing six. This field
   // gets autofocus, not the type chips — the chips are already answered.
   const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
@@ -48,9 +54,24 @@ export default function LogService() {
     setSaving(true);
     setError("");
 
-    try {
-      const performed = new Date();
+    let performed: Date;
+    if (daysAgo === CUSTOM) {
+      const parsed = parseDateInput(dateText);
+      if (!parsed) {
+        // Both rejections named, because "invalid date" leaves the user
+        // retyping the same thing: the shape may be fine and the day still
+        // impossible, or the date may simply not have happened yet.
+        setError("Enter a past date as MM/DD/YYYY — 3/14/2026.");
+        setSaving(false);
+        return;
+      }
+      performed = parsed;
+    } else {
+      performed = new Date();
       performed.setDate(performed.getDate() - daysAgo);
+    }
+
+    try {
       addRecord({
         vehicle_id: id,
         service_type: type,
@@ -96,7 +117,7 @@ export default function LogService() {
       </Card>
       <Card>
         <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>When</Text>
-        <View style={{ flexDirection: "row", gap: tokens.space.sm }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
           {WHEN.map((w) => (
             <Chip
               key={w.label}
@@ -105,7 +126,20 @@ export default function LogService() {
               onPress={() => setDaysAgo(w.days)}
             />
           ))}
+          <Chip
+            label="Other date"
+            selected={daysAgo === CUSTOM}
+            onPress={() => setDaysAgo(CUSTOM)}
+          />
         </View>
+        {daysAgo === CUSTOM ? (
+          <Field
+            label="Date"
+            value={dateText}
+            onChangeText={setDateText}
+            placeholder="MM/DD/YYYY"
+          />
+        ) : null}
       </Card>
       <Card>
         <Field

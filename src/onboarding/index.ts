@@ -32,3 +32,14 @@ export function setOnboardingStep(step: string): void {
 export function completeOnboarding(): void {
   dbSet(ONBOARDING_COMPLETE_KEY, "true");
 }
+
+/**
+ * Puts the flags back to first-launch so the flow can be walked again from
+ * Settings. Vehicles and records are deliberately untouched — this replays the
+ * screens, it does not wipe the app, and a "replay" that silently deleted a
+ * year of history would be the worst button in the product.
+ */
+export function resetOnboarding(): void {
+  dbSet(ONBOARDING_COMPLETE_KEY, "false");
+  dbSet(ONBOARDING_STEP_KEY, "welcome");
+}

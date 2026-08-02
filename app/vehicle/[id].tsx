@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import { Alert, View, Text, FlatList, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Swipeable } from "react-native-gesture-handler";
-import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
 import { Button } from "../../src/design/Button";
 import { Gauge } from "../../src/design/Gauge";
 import { Glass } from "../../src/design/Glass";
@@ -10,7 +10,7 @@ import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { getVehicle, type Vehicle } from "../../src/db/vehicles";
+import { getVehicle, softDeleteVehicle, type Vehicle } from "../../src/db/vehicles";
 import {
   listRecords,
   softDeleteRecord,
@@ -95,6 +95,31 @@ export default function VehicleDetail() {
     undoTimer.current = setTimeout(() => setUndoId(null), UNDO_WINDOW_MS);
   }
 
+  // Two steps on purpose: this is the one action that takes a whole history
+  // out of the app at once, so it asks by name and the destructive choice is
+  // never the default button. The row is tombstoned, not dropped, so the
+  // records stay in the CSV export.
+  function onDeleteVehicle() {
+    if (!vehicle) return;
+    Alert.alert(
+      `Delete ${vehicle.name}?`,
+      "It leaves your garage along with its service history. Records already exported stay in that file.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            softDeleteVehicle(vehicle.id);
+            // replace, not back: the detail screen for a hidden vehicle would
+            // render an empty cluster if it were left on the stack.
+            router.replace("/");
+          },
+        },
+      ]
+    );
+  }
+
   function onUndo() {
     if (!undoId) return;
     undoDelete(undoId);
@@ -109,6 +134,9 @@ export default function VehicleDetail() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
+      {/* The header is the only place the vehicle is named, so it is set from
+          the row rather than left as the route pattern. */}
+      <Stack.Screen options={{ title: vehicle?.name ?? "Vehicle" }} />
       <FlatList
         data={records}
         keyExtractor={(r) => r.id}
@@ -166,6 +194,13 @@ export default function VehicleDetail() {
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
             No service logged yet. Log the last thing you had done.
           </Text>
+        }
+        ListFooterComponent={
+          vehicle ? (
+            <View style={{ paddingTop: tokens.space.xl }}>
+              <Button label="Delete vehicle" variant="danger" onPress={onDeleteVehicle} />
+            </View>
+          ) : null
         }
         renderItem={({ item }) => (
           <Swipeable
