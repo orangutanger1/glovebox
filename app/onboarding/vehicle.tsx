@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Field } from "../../src/design/Field";
@@ -38,7 +38,15 @@ export default function OnboardingVehicle() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }}>
-      <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg }}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, padding: tokens.space.md, gap: tokens.space.lg }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
         <Pressable onPress={onSkip} style={{ alignSelf: "flex-end" }}>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>Skip</Text>
         </Pressable>
@@ -59,7 +67,8 @@ export default function OnboardingVehicle() {
         </View>
         <View style={{ flex: 1 }} />
         <Button label="Continue" onPress={onContinue} />
-      </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
