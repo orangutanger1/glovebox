@@ -56,7 +56,7 @@ export default function OnboardingService() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
       <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg }}>
         <Pressable onPress={onSkip} style={{ alignSelf: "flex-end" }}>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>Skip</Text>

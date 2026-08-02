@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
-import { Text } from "react-native";
+import { View, Text } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
+import { Gauge } from "../src/design/Gauge";
 import { ListRow } from "../src/design/ListRow";
 import { Badge } from "../src/design/Badge";
 import { tokens } from "../src/design/tokens";
@@ -12,20 +13,20 @@ import { listRecords } from "../src/db/records";
 import { nextDue, dueStatus, DEFAULT_INTERVALS } from "../src/schedule";
 import { isPro, presentPaywall } from "../src/purchases";
 
+type Summary = { status: "due" | "soon" | "ok"; label: string; detail: string };
+
 /**
- * The worst status across a vehicle's tracked services, plus the sentence that
+ * The worst status across a vehicle's tracked services, plus the readout that
  * explains it. A magnitude ("400 mi over") is more use at a glance than a date
  * the reader has to subtract from today.
  */
-function summarize(vehicle: Vehicle): { status: "due" | "soon" | "ok"; line: string } {
+function summarize(vehicle: Vehicle): Summary {
   const records = listRecords(vehicle.id);
   const seen = new Set<string>();
   const now = new Date().toISOString();
-  let best: { status: "due" | "soon" | "ok"; line: string } = {
-    status: "ok",
-    line: "Nothing logged yet",
-  };
   const rank = { due: 2, soon: 1, ok: 0 } as const;
+
+  let best: Summary | null = null;
 
   for (const r of records) {
     if (seen.has(r.service_type)) continue;
@@ -38,21 +39,31 @@ function summarize(vehicle: Vehicle): { status: "due" | "soon" | "ok"; line: str
       interval,
     });
     const status = dueStatus({ ...due, now, odometer: vehicle.odometer });
-    if (best.line !== "Nothing logged yet" && rank[status] <= rank[best.status]) continue;
+    if (best && rank[status] <= rank[best.status]) continue;
 
     const milesOver =
       due.dueOdometer !== undefined && vehicle.odometer !== undefined
         ? vehicle.odometer - due.dueOdometer
         : undefined;
-    const line =
+    const detail =
       status === "due" && milesOver !== undefined && milesOver > 0
-        ? `${r.service_type}, ${milesOver.toLocaleString()} mi over`
+        ? `${milesOver.toLocaleString()} mi over`
         : status === "due"
-          ? `${r.service_type} is due`
-          : status === "soon"
-            ? `${r.service_type} due soon`
-            : `Next: ${r.service_type}`;
-    best = { status, line };
+          ? "due now"
+          : due.dueAt
+            ? new Date(due.dueAt).toLocaleDateString()
+            : status === "soon"
+              ? "due soon"
+              : "on schedule";
+    best = { status, label: r.service_type, detail };
+  }
+
+  // No record carries a known interval — say that, rather than claiming
+  // nothing was logged when the user may have logged plenty.
+  if (!best) {
+    return records.length > 0
+      ? { status: "ok", label: "No schedule yet", detail: "logged, not tracked" }
+      : { status: "ok", label: "Nothing logged", detail: "add a service" };
   }
   return best;
 }
@@ -73,47 +84,84 @@ export default function Garage() {
     router.push("/vehicle/new");
   }
 
-  // One vehicle: skip the picker and go straight to logging.
+  // One vehicle: skip the picker and go straight to logging. With several,
+  // the user has to say which car — sending them to the first vehicle's detail
+  // screen silently picked one for them.
   function onLog() {
     if (vehicles.length === 1) router.push(`/vehicle/${vehicles[0].id}/log`);
-    else if (vehicles.length > 1) router.push(`/vehicle/${vehicles[0].id}`);
   }
 
+  const single = vehicles.length === 1;
+
   return (
-    <Screen title="Garage">
+    <Screen
+      title="Garage"
+      footer={
+        <>
+          {single ? <Button label="Log a service" onPress={onLog} /> : null}
+          <Button
+            label="Add vehicle"
+            variant={vehicles.length > 0 ? "secondary" : "primary"}
+            onPress={onAdd}
+          />
+        </>
+      }
+    >
       {vehicles.length === 0 ? (
         <Card>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            No vehicles. Add one to start logging.
+            No vehicles yet. Add one and Glovebox starts keeping its records.
           </Text>
         </Card>
       ) : (
-        <Card>
-          {vehicles.map((v) => {
-            const { status, line } = summarize(v);
-            const miles = v.odometer ? `${v.odometer.toLocaleString()} mi · ` : "";
-            return (
-              <ListRow
-                key={v.id}
-                title={v.name}
-                subtitle={`${miles}${line}`}
-                right={
-                  status === "ok" ? null : (
-                    <Badge label={status === "due" ? "Due" : "Soon"} tone={status} />
-                  )
-                }
-                onPress={() => router.push(`/vehicle/${v.id}`)}
-              />
-            );
-          })}
-        </Card>
+        vehicles.map((v) => {
+          const s = summarize(v);
+          return (
+            <Card key={v.id} status={s.status === "due" ? "overdue" : undefined}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>{v.name}</Text>
+                {s.status === "ok" ? null : (
+                  <Badge label={s.status === "due" ? "Overdue" : "Due soon"} tone={s.status} />
+                )}
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  paddingTop: tokens.space.xs,
+                }}
+              >
+                <Gauge
+                  legend={s.label}
+                  value={s.detail}
+                  lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
+                />
+                <Gauge
+                  legend="Odometer"
+                  value={v.odometer ? v.odometer.toLocaleString() : "—"}
+                  unit={v.odometer ? "mi" : undefined}
+                  align="right"
+                />
+              </View>
+
+              <View style={{ paddingTop: tokens.space.xs }}>
+                <ListRow
+                  title={single ? "Open history" : "Open and log a service"}
+                  onPress={() => router.push(`/vehicle/${v.id}`)}
+                />
+              </View>
+            </Card>
+          );
+        })
       )}
-      {vehicles.length > 0 ? <Button label="Log a service" onPress={onLog} /> : null}
-      <Button
-        label="Add vehicle"
-        variant={vehicles.length > 0 ? "secondary" : "primary"}
-        onPress={onAdd}
-      />
     </Screen>
   );
 }

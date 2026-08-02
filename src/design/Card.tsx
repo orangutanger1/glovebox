@@ -1,19 +1,26 @@
 import { View } from "react-native";
+import { Panel } from "./Surface";
 import { tokens } from "./tokens";
 
-export function Card({ children }: { children: React.ReactNode }) {
+/**
+ * A metal faceplate. `status="overdue"` adds the red stripe down the left edge
+ * — the card-level equivalent of a lit lamp, readable at arm's length.
+ */
+export function Card({
+  children,
+  status,
+}: {
+  children: React.ReactNode;
+  status?: "overdue";
+}) {
   return (
-    <View
-      style={{
-        backgroundColor: tokens.color.surface,
-        borderRadius: tokens.radius.md,
-        borderWidth: 1,
-        borderColor: tokens.color.border,
-        padding: tokens.space.md,
-        gap: tokens.space.sm,
-      }}
-    >
-      {children}
-    </View>
+    <Panel>
+      <View style={{ flexDirection: "row" }}>
+        {status === "overdue" ? (
+          <View style={{ width: 3, backgroundColor: tokens.color.red }} />
+        ) : null}
+        <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.sm }}>{children}</View>
+      </View>
+    </Panel>
   );
 }

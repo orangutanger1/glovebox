@@ -7,6 +7,7 @@ import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { listVehicles, setOdometerIfHigher } from "../../src/db/vehicles";
 import { setOnboardingStep } from "../../src/onboarding";
+import { parseNumber } from "../../src/format";
 
 export default function OnboardingOdometer() {
   const router = useRouter();
@@ -23,14 +24,17 @@ export default function OnboardingOdometer() {
 
   function onContinue() {
     const vehicle = listVehicles()[0];
-    if (vehicle && odometer) {
-      setOdometerIfHigher(vehicle.id, Number(odometer));
+    // The placeholder on this very field shows "84,210", so a user copying its
+    // format produced NaN and silently lost their reading.
+    const miles = parseNumber(odometer);
+    if (vehicle && miles !== undefined) {
+      setOdometerIfHigher(vehicle.id, miles);
     }
     advance();
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

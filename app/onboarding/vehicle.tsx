@@ -7,6 +7,7 @@ import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { createVehicle } from "../../src/db/vehicles";
 import { setOnboardingStep } from "../../src/onboarding";
+import { parseNumber } from "../../src/format";
 
 export default function OnboardingVehicle() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function OnboardingVehicle() {
   function onContinue() {
     createVehicle({
       name: name.trim() || "My car",
-      year: year ? Number(year) : undefined,
+      year: parseNumber(year),
       make: make.trim() || undefined,
       model: model.trim() || undefined,
     });
@@ -37,7 +38,7 @@ export default function OnboardingVehicle() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

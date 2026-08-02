@@ -11,6 +11,7 @@ import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
+import { parseNumber } from "../../../src/format";
 
 // The six people actually log. Everything else lives behind "Other".
 const COMMON = [
@@ -40,8 +41,13 @@ export default function LogService() {
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   async function onSave() {
+    if (saving) return;
+    setSaving(true);
+    setError("");
+
     try {
       const performed = new Date();
       performed.setDate(performed.getDate() - daysAgo);
@@ -49,23 +55,39 @@ export default function LogService() {
         vehicle_id: id,
         service_type: type,
         performed_at: performed.toISOString(),
-        odometer: odometer ? Number(odometer) : undefined,
-        cost: cost ? Number(cost) : undefined,
+        odometer: parseNumber(odometer),
+        cost: parseNumber(cost),
         notes: notes.trim() || undefined,
       });
-      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      await rescheduleAll();
-      router.back();
-    } catch (e) {
+    } catch {
       // Never clear the form on failure. The user's typing is the thing we protect.
       setError("Could not save. Your entry is still here. Try again.");
+      setSaving(false);
+      return;
     }
+
+    // The record is already committed. Everything past this point is a nicety,
+    // and a notification that fails to schedule must never be reported to the
+    // user as a lost service record.
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
+    rescheduleAll().catch(() => {});
+    router.back();
   }
 
   return (
-    <Screen title="Log a service">
+    <Screen
+      title="Log a service"
+      footer={
+        <>
+          {error ? (
+            <Text style={{ ...tokens.text.body, color: tokens.color.red }}>{error}</Text>
+          ) : null}
+          <Button label="Save" onPress={onSave} disabled={saving} />
+        </>
+      }
+    >
       <Card>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>WHAT</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>What</Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
           {COMMON.map((t) => (
             <Chip key={t} label={t} selected={t === type} onPress={() => setType(t)} />
@@ -73,7 +95,7 @@ export default function LogService() {
         </View>
       </Card>
       <Card>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>WHEN</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>When</Text>
         <View style={{ flexDirection: "row", gap: tokens.space.sm }}>
           {WHEN.map((w) => (
             <Chip
@@ -96,8 +118,6 @@ export default function LogService() {
         <Field label="Cost (optional)" value={cost} onChangeText={setCost} keyboardType="numeric" />
         <Field label="Notes (optional)" value={notes} onChangeText={setNotes} />
       </Card>
-      {error ? <Text style={{ ...tokens.text.body, color: tokens.color.due }}>{error}</Text> : null}
-      <Button label="Save" onPress={onSave} />
     </Screen>
   );
 }
