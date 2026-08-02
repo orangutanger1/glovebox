@@ -406,7 +406,7 @@ Built in the RevenueCat dashboard so copy and price change without a review cycl
 
   ┌──────────────────────────────────────┐
   │  Yearly        $19.99/yr   BEST VALUE│  ← preselected
-  │  7 days free, then $1.67/mo          │
+  │  3 days free, then $1.67/mo          │
   ├──────────────────────────────────────┤
   │  Monthly       $2.99/mo              │
   └──────────────────────────────────────┘
@@ -432,7 +432,7 @@ Rules:
 
 ## 6. Actions this creates
 
-1. **Add a 7-day free trial to `pro_annual` in App Store Connect.** The benchmark that justifies end-of-onboarding placement is specifically *onboarding paywall plus trial*; the products as configured in Task 0 have no introductory offer, so the flow would ship without the thing that makes the placement work.
+1. ~~Add a free trial to `pro_annual`.~~ **Done.** 3-day free trial created via `asc` across all 174 availability territories on 2026-08-01. The benchmark justifying end-of-onboarding placement is specifically *onboarding paywall plus trial*; without an introductory offer the flow would have shipped missing the thing that makes the placement work.
 2. **Migration v2: `app_state` table** (`key TEXT PRIMARY KEY, value TEXT`) for the onboarding-complete flag and resume point. Additive, per the migration constraint.
 3. **Revise Task 2 Step 1 tokens** to §1.1 of this document before any screen is written, per the plan's own "design system exists before any screen" constraint.
 4. **Revise Task 9 Step 1**: Garage primary action becomes "Log a service"; "Add vehicle" becomes the secondary; settings moves to a nav-bar gear.
