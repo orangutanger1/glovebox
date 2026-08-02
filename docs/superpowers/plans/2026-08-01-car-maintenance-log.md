@@ -38,7 +38,7 @@ These are calendar time, not work time. Every one of them has blocked a submissi
 - [ ] **Create RevenueCat account**, add an iOS app with the same bundle ID, and note the public SDK key (starts `appl_`).
 - [ ] **Create the subscription products in ASC** — `pro_annual` and `pro_monthly`. New IAP products sit in "Waiting for Review" and can take a day to become fetchable.
 - [ ] **In RevenueCat: create entitlement `pro`, attach both products to it, create the `default` offering, attach the products to the offering.** Products not attached to an offering do not appear in the paywall even when everything else is correct.
-- [ ] **Publish a privacy policy URL and a terms URL.** Required at submission. A GitHub Pages page is acceptable.
+- [x] **Publish a privacy policy URL and a terms URL.** Required at submission. Hosted as GitHub gist Markdown files. Privacy: `https://gist.github.com/orangutanger1/ce492daa25c4acdbc7db49068c33ce3f/raw/473d9af8d5d1594e990aaa5d33fd581234b9ec58/PrivacyPolicy.md`. Terms: `https://gist.github.com/orangutanger1/ce492daa25c4acdbc7db49068c33ce3f/raw/473d9af8d5d1594e990aaa5d33fd581234b9ec58/TermsOfUse.md`.
 - [ ] **Generate an ASC API key** (Users and Access → Integrations → App Store Connect API), download the `.p8` — it can only be downloaded once.
 
 ---
