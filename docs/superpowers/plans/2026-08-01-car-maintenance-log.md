@@ -28,7 +28,7 @@
   - Title (29/30): `Glovebox: Car Maintenance Log`
   - Subtitle (30/30): `Service Reminders & Repair Log`
   - Keywords (97/100): `tracker,vehicle,auto,oil,change,mileage,odometer,tire,rotation,due,history,records,mechanic,brake`
-  - Keywords/description not yet pushed to ASC — no app version exists until the Task 1 build. Push via `asc metadata` once it does.
+  - Keywords, description, and promotional text are **already live in ASC** for en-US and en-GB (verified 2026-08-01 via `asc apps info view --app 6797103341`). An app version exists in `PREPARE_FOR_SUBMISSION`. Task 10 Steps 2 and 3 are therefore already done; re-check rather than re-push.
 
 ---
 
@@ -42,13 +42,21 @@ These are calendar time, not work time. Every one of them has blocked a submissi
 - [x] **Create RevenueCat account**, add an iOS app with the same bundle ID, and note the public SDK key (starts `appl_`). Project `car` (`projf0d996da`), app `app774f157580`. Public key: `appl_GiAzQPouJjtKKsPOqTuiHrwGlxg` — goes into EAS env as `EXPO_PUBLIC_RC_IOS_KEY` in Task 1 Step 6.
 - [x] **Create the subscription products in ASC** — `pro_annual` ($19.99/yr) and `pro_monthly` ($2.99/mo), subscription group "Pro" (id `22280869`), USA territory only for now. New IAP products sit in "Waiting for Review" and can take a day to become fetchable.
 - [x] **In RevenueCat: create entitlement `pro`, attach both products to it, create the `default` offering, attach the products to the offering.** Entitlement `entlf1943f9d49`, products `prodc7916d3637`/`prodac00001316` attached to `pro` and to the `$rc_monthly`/`$rc_annual` packages in the existing `default` offering.
-- [ ] **Add a 7-day free trial to `pro_annual` in ASC** (Subscriptions → Pro → `pro_annual` →
-  Introductory Offer → Free Trial, 1 week, USA). The benchmark that justifies putting the paywall at
-  the end of onboarding is specifically *onboarding paywall plus trial*: that combination converts at
-  1.35% on average, the highest of any placement-and-trial pairing, and roughly 90% of trial starts
-  happen on Day 0. Without an intro offer the placement ships without the thing that makes it work.
-  Introductory offers need review, so file this with the Task 0 lead-time items, not later.
-- [ ] **Publish a privacy policy URL and a terms URL.** Required at submission. A GitHub Pages page is acceptable.
+- [x] **3-day free trial on `pro_annual`** — created via `asc`, 174 territories (all of the
+  subscription's current availability), `THREE_DAYS` / `FREE_TRIAL`, 1 period, starting 2026-08-01,
+  no end date. The benchmark justifying an end-of-onboarding paywall is specifically *onboarding
+  paywall plus trial*: 1.35% average conversion, the highest of any placement-and-trial pairing, with
+  roughly 90% of trial starts landing on Day 0. Command, for the record:
+
+  ```bash
+  asc subscriptions offers introductory create --subscription-id 6797106382 \
+    --all-territories --offer-duration THREE_DAYS --offer-mode FREE_TRIAL --number-of-periods 1
+  ```
+
+  Note for anyone reading the line above about USA-only territories: the annual subscription's actual
+  availability is 174 territories, not USA. The trial follows availability.
+- [x] **Privacy policy URL and terms URL published.** Both live in the en-US and en-GB App Store
+  descriptions; support URL is a Google Form. Verified via `asc apps info view --app 6797103341`.
 - [x] **Generate an ASC API key** (Users and Access → Integrations → App Store Connect API) — `AuthKey_V7S2585B32.p8`, already configured as the `asc` CLI's default profile (`tour`).
 - [x] **Upload the RevenueCat In-App Purchase (subscription) key** — `SubscriptionKey_28X2Y7B56J.p8` (via `/mnt/c/Users/matth/Downloads/`), issuer `06130c95-276e-4817-bc39-53abadf44e67` (same Apple team as the `asc` API key). Also pushed the ASC API key itself for product imports. Both `app_store_connect_api_key_configured` and `subscription_key_configured` now `true` on RC app `app774f157580`.
 
@@ -113,7 +121,7 @@ Every native dependency the app will ever need is installed **now**, before the 
 - Consumes: nothing
 - Produces: a running dev client on a physical iPhone; `npx expo start --dev-client` connects to it.
 
-- [ ] **Step 1: Scaffold the project**
+- [x] **Step 1: Scaffold the project**
 
 ```bash
 cd /home/myen/idea6
@@ -122,7 +130,7 @@ npx create-expo-app@latest . --template expo-template-blank-typescript
 
 Answer yes to overwriting nothing — the repo already has `docs/` and `research/`, which the template will leave alone.
 
-- [ ] **Step 2: Install every native dependency in one pass**
+- [x] **Step 2: Install every native dependency in one pass**
 
 `npx expo install` (not `npm install`) resolves the versions matching your Expo SDK. Never hand-pin these.
 
@@ -143,7 +151,7 @@ Dev-only dependencies (no native layer, safe to `npm install`):
 npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 ```
 
-- [ ] **Step 3: Configure `app.json`**
+- [x] **Step 3: Configure `app.json`**
 
 ```json
 {
@@ -178,7 +186,7 @@ npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 
 `ITSAppUsesNonExemptEncryption: false` is set now because omitting it triggers an export-compliance question on every single submission.
 
-- [ ] **Step 4: Configure NativeWind**
+- [x] **Step 4: Configure NativeWind**
 
 `tailwind.config.js`:
 
@@ -213,7 +221,7 @@ module.exports = function (api) {
 @tailwind utilities;
 ```
 
-- [ ] **Step 5: Set up EAS and register your device**
+- [x] **Step 5: Set up EAS and register your device**
 
 ```bash
 npm install -g eas-cli
@@ -253,7 +261,7 @@ eas device:create
 }
 ```
 
-- [ ] **Step 6: Set the RevenueCat key in EAS env before building**
+- [x] **Step 6: Set the RevenueCat key in EAS env before building**
 
 The key is baked into the binary at build time. A build cut before the key exists produces an app whose paywall is permanently empty, and no OTA update can fix it.
 
@@ -262,7 +270,7 @@ eas env:create --name EXPO_PUBLIC_RC_IOS_KEY --value "appl_YOUR_KEY_HERE" \
   --environment development --environment preview --environment production
 ```
 
-- [ ] **Step 7: Cut the one development build**
+- [x] **Step 7: Cut the one development build**
 
 ```bash
 eas build --profile development --platform ios
@@ -270,7 +278,7 @@ eas build --profile development --platform ios
 
 This takes 20-30 minutes. Do Task 2's design token work while it runs — it is pure TypeScript and needs no build.
 
-- [ ] **Step 8: Install and verify**
+- [x] **Step 8: Install and verify**
 
 Install the build on the registered device, then:
 
@@ -280,7 +288,7 @@ npx expo start --dev-client
 
 Expected: the app opens on the device and hot-reloads on save.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -2174,7 +2182,8 @@ asc doctor
 
 Expected: `asc doctor` reports authenticated with no errors.
 
-- [ ] **Step 2: Push metadata from the terminal**
+- [x] **Step 2: Push metadata from the terminal** — already live in en-US and en-GB as of 2026-08-01.
+Verify with `asc apps info view --app 6797103341` rather than re-pushing. Kept here for the record:
 
 Do not hand-type this into the ASC web UI. Values are copied verbatim from Global Constraints and their character counts are already verified.
 
@@ -2185,7 +2194,9 @@ asc metadata set --bundle-id com.idea6.carmaintenancelog --locale en-US \
   --keywords "tracker,vehicle,auto,oil,change,mileage,odometer,tire,rotation,due,history,records,mechanic,brake"
 ```
 
-- [ ] **Step 3: Write the description**
+- [x] **Step 3: Write the description** — already live. The shipped en-US copy is longer than the
+draft below and adds a "WHO IT'S FOR" section plus the privacy policy and terms links. Treat ASC as
+the source of truth for description copy, not this block.
 
 The first three lines are what shows before "more", and they should answer the complaint that drove this whole build.
 
