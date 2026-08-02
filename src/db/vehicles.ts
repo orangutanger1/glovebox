@@ -50,6 +50,26 @@ export function createVehicle(v: {
 }
 
 /**
+ * Rewrites what a vehicle IS, leaving odometer, history and created_at alone.
+ *
+ * Onboarding needs this: stepping back to the vehicle screen and forward again
+ * used to run createVehicle a second time, so a user who corrected a typo ended
+ * up with two cars in their garage.
+ */
+export function updateVehicleIdentity(
+  vehicleId: string,
+  v: { name: string; make?: string; model?: string; year?: number }
+): void {
+  getDb().runSync("UPDATE vehicles SET name = ?, make = ?, model = ?, year = ? WHERE id = ?", [
+    v.name,
+    v.make ?? null,
+    v.model ?? null,
+    v.year ?? null,
+    vehicleId,
+  ]);
+}
+
+/**
  * Never deletes, same as softDeleteRecord: a tombstone hides the vehicle from
  * the garage and from getVehicle, while the rows stay on disk and keep showing
  * up in the CSV export. Losing a car's whole history to one mis-tap is the

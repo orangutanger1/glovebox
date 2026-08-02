@@ -27,6 +27,8 @@ export function Field({
   keyboardType = "default",
   placeholder,
   autoFocus,
+  error,
+  onBlur,
 }: {
   label: string;
   value: string;
@@ -34,6 +36,10 @@ export function Field({
   keyboardType?: "default" | "numeric";
   placeholder?: string;
   autoFocus?: boolean;
+  /** Shown under the field, in red. A field that silently refuses a value
+   *  leaves the user retyping it, so every rejection has to be said out loud. */
+  error?: string;
+  onBlur?: () => void;
 }) {
   const [focused, setFocused] = useState(false);
 
@@ -46,7 +52,13 @@ export function Field({
   return (
     <View style={{ gap: tokens.space.xs }}>
       <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{label}</Text>
-      <Well focused={focused}>
+      <Well
+        focused={focused}
+        // Red is reserved for overdue and destructive — a rejected value is
+        // the third. The border carries it so the eye lands on the field, not
+        // only on the sentence under it.
+        style={error ? { borderColor: tokens.color.red } : undefined}
+      >
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -54,7 +66,10 @@ export function Field({
           placeholder={placeholder}
           autoFocus={autoFocus}
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          onBlur={() => {
+            setFocused(false);
+            onBlur?.();
+          }}
           placeholderTextColor={tokens.color.textFaint}
           selectionColor={tokens.color.white}
           inputAccessoryViewID={needsAccessory ? accessoryId : undefined}
@@ -66,6 +81,9 @@ export function Field({
           }}
         />
       </Well>
+      {error ? (
+        <Text style={{ ...tokens.text.caption, color: tokens.color.red }}>{error}</Text>
+      ) : null}
       {needsAccessory ? (
         <InputAccessoryView nativeID={accessoryId}>
           <View

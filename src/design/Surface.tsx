@@ -1,6 +1,32 @@
-import { View, type ViewStyle, type StyleProp } from "react-native";
+import { View, Image, type ViewStyle, type StyleProp } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { tokens } from "./tokens";
+
+const METAL = require("../../assets/onboarding/metal.jpg");
+
+/**
+ * The brushed-aluminium grain every metal face carries.
+ *
+ * A two-stop vertical gradient is what a faceplate looks like in a spec, not
+ * in life — the eye reads a perfectly smooth ramp as plastic. Six percent of a
+ * real brush texture is below the threshold of "there is a photo here" and
+ * above the threshold of "this is a machined surface", which is the whole
+ * point. It tiles, so one 512px file covers every surface at every size.
+ */
+function Grain() {
+  return (
+    <View
+      pointerEvents="none"
+      style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+    >
+      <Image
+        source={METAL}
+        resizeMode="repeat"
+        style={{ width: "100%", height: "100%", opacity: 0.06 }}
+      />
+    </View>
+  );
+}
 
 /**
  * The two surface primitives every control is built from.
@@ -58,6 +84,7 @@ export function Raised({
           style,
         ]}
       >
+        <Grain />
         {children}
       </LinearGradient>
     </View>
@@ -128,6 +155,7 @@ export function Panel({
           style,
         ]}
       >
+        <Grain />
         {children}
       </LinearGradient>
     </View>

@@ -7,11 +7,12 @@ import { Card } from "../../../src/design/Card";
 import { Chip } from "../../../src/design/Chip";
 import { Field } from "../../../src/design/Field";
 import { Button } from "../../../src/design/Button";
+import { DateWheel } from "../../../src/design/DateWheel";
 import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
-import { parseNumber, parseDateInput } from "../../../src/format";
+import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
 
 // The six people actually log. Everything else lives behind "Other".
 const COMMON = [
@@ -40,7 +41,9 @@ export default function LogService() {
 
   const [type, setType] = useState("Oil Change");
   const [daysAgo, setDaysAgo] = useState<number | typeof CUSTOM>(0);
-  const [dateText, setDateText] = useState("");
+  // Opens on today, so the wheels start somewhere true and the user rolls back
+  // from it rather than building a date from nothing.
+  const [customDate, setCustomDate] = useState(() => partsFromDate(new Date()));
   // Prefilled so the user edits three digits instead of typing six. This field
   // gets autofocus, not the type chips — the chips are already answered.
   const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
@@ -56,16 +59,9 @@ export default function LogService() {
 
     let performed: Date;
     if (daysAgo === CUSTOM) {
-      const parsed = parseDateInput(dateText);
-      if (!parsed) {
-        // Both rejections named, because "invalid date" leaves the user
-        // retyping the same thing: the shape may be fine and the day still
-        // impossible, or the date may simply not have happened yet.
-        setError("Enter a past date as MM/DD/YYYY — 3/14/2026.");
-        setSaving(false);
-        return;
-      }
-      performed = parsed;
+      // No validation branch left: the wheels cannot be parked on a date that
+      // doesn't exist or hasn't happened.
+      performed = dateFromParts(customDate);
     } else {
       performed = new Date();
       performed.setDate(performed.getDate() - daysAgo);
@@ -133,12 +129,7 @@ export default function LogService() {
           />
         </View>
         {daysAgo === CUSTOM ? (
-          <Field
-            label="Date"
-            value={dateText}
-            onChangeText={setDateText}
-            placeholder="MM/DD/YYYY"
-          />
+          <DateWheel value={customDate} onChange={setCustomDate} />
         ) : null}
       </Card>
       <Card>

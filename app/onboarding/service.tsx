@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text } from "react-native";
 import { useRouter } from "expo-router";
 import { Chip } from "../../src/design/Chip";
+import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { listVehicles } from "../../src/db/vehicles";
-import { addRecord } from "../../src/db/records";
+import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
 import { setOnboardingStep } from "../../src/onboarding";
+import { OnboardingScreen } from "../../src/onboarding/Screen";
 
 const TYPES = [
   "Oil Change",
@@ -17,8 +18,8 @@ const TYPES = [
   "Something else",
 ];
 
-// Approximate answers are allowed. "Not sure" skips the record entirely — the
-// safe direction to be wrong in, since the app then treats the service as due now.
+// Approximate answers are allowed. "Not sure" logs no record — the safe
+// direction to be wrong in, since the app then treats the service as due now.
 const WHEN: { label: string; daysAgo: number | null }[] = [
   { label: "Just now", daysAgo: 0 },
   { label: "Last month", daysAgo: 30 },
@@ -30,70 +31,79 @@ const WHEN: { label: string; daysAgo: number | null }[] = [
 export default function OnboardingService() {
   const router = useRouter();
   const [type, setType] = useState<string | null>(null);
+  const [when, setWhen] = useState<string | null>(null);
 
-  function advance() {
-    setOnboardingStep("ready");
-    router.push("/onboarding/ready");
-  }
+  // Both halves of the answer are required. The chips used to advance the
+  // screen on tap, which meant a mis-tap committed a service record and moved
+  // the flow on, with no route back to the screen that wrote it.
+  const valid = type !== null && when !== null;
 
-  function onSkip() {
-    advance();
-  }
+  function onContinue() {
+    if (!valid) return;
+    const daysAgo = WHEN.find((w) => w.label === when)!.daysAgo;
+    const vehicle = listVehicles()[0];
 
-  function onPickWhen(daysAgo: number | null) {
-    if (type !== null && daysAgo !== null) {
-      const vehicle = listVehicles()[0];
+    if (vehicle && daysAgo !== null) {
+      const serviceType = type === "Something else" ? "Other" : type;
+      // Stepping back into this screen and answering again must correct the
+      // record, not stack a second one on the same service.
+      for (const r of listRecords(vehicle.id)) {
+        if (r.service_type === serviceType) softDeleteRecord(r.id);
+      }
       const performed = new Date();
       performed.setDate(performed.getDate() - daysAgo);
       addRecord({
         vehicle_id: vehicle.id,
-        service_type: type === "Something else" ? "Other" : type,
+        service_type: serviceType,
         performed_at: performed.toISOString(),
         odometer: vehicle.odometer,
       });
     }
-    advance();
+
+    setOnboardingStep("ready");
+    router.push("/onboarding/ready");
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
-      <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.lg }}>
-        <Pressable onPress={onSkip} style={{ alignSelf: "flex-end" }}>
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>Skip</Text>
-        </Pressable>
-
-        {type === null ? (
-          <>
-            <Text style={{ ...tokens.text.title, color: tokens.color.text }}>
-              What did you last get done?
-            </Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-              {TYPES.map((t) => (
-                <Chip key={t} label={t} selected={false} onPress={() => setType(t)} />
-              ))}
-            </View>
-            <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-              Tap one. You can log the rest anytime.
-            </Text>
-          </>
-        ) : (
-          <>
-            <Text style={{ ...tokens.text.title, color: tokens.color.text }}>
-              When was the {type.toLowerCase()}?
-            </Text>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-              {WHEN.map((w) => (
-                <Chip
-                  key={w.label}
-                  label={w.label}
-                  selected={false}
-                  onPress={() => onPickWhen(w.daysAgo)}
-                />
-              ))}
-            </View>
-          </>
-        )}
+    <OnboardingScreen
+      step={3}
+      title="What did you last get done?"
+      subtitle="Close enough is fine — you can correct it later."
+      footer={<Button label="Continue" onPress={onContinue} disabled={!valid} />}
+    >
+      <View style={{ gap: tokens.space.sm }}>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>Service</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
+          {TYPES.map((t) => (
+            <Chip key={t} label={t} selected={type === t} onPress={() => setType(t)} />
+          ))}
+        </View>
       </View>
-    </SafeAreaView>
+
+      {/* The "when" half only appears once there is something to date. Both
+          question and answer now stay on screen together, so the user can see
+          what they picked instead of the title mutating out from under them. */}
+      {type ? (
+        <View style={{ gap: tokens.space.sm }}>
+          <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+            {`When was the ${type === "Something else" ? "service" : type.toLowerCase()}?`}
+          </Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
+            {WHEN.map((w) => (
+              <Chip
+                key={w.label}
+                label={w.label}
+                selected={when === w.label}
+                onPress={() => setWhen(w.label)}
+              />
+            ))}
+          </View>
+        </View>
+      ) : (
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+          Pick one. You can log the rest anytime.
+        </Text>
+      )}
+    </OnboardingScreen>
   );
 }
