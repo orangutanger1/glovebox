@@ -7,7 +7,8 @@ import { ListRow } from "../../src/design/ListRow";
 import { tokens } from "../../src/design/tokens";
 import { listVehicles } from "../../src/db/vehicles";
 import { listRecords } from "../../src/db/records";
-import { nextDue, DEFAULT_INTERVALS } from "../../src/schedule";
+import { nextDue } from "../../src/schedule";
+import { getIntervals } from "../../src/db/intervals";
 import { setOnboardingStep } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 
@@ -20,6 +21,7 @@ export default function OnboardingReady() {
   // empty list is a crash on the one screen whose whole job is reassurance.
   const vehicle = listVehicles()[0] ?? null;
   const records = vehicle ? listRecords(vehicle.id) : [];
+  const intervals = getIntervals();
 
   function onContinue() {
     setOnboardingStep("reminders");
@@ -32,7 +34,7 @@ export default function OnboardingReady() {
     const due = nextDue({
       lastPerformedAt: record.performed_at,
       lastOdometer: record.odometer,
-      interval: DEFAULT_INTERVALS[type],
+      interval: intervals[type],
     });
     const parts: string[] = [];
     if (due.dueAt) parts.push(new Date(due.dueAt).toLocaleDateString());

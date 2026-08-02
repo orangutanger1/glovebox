@@ -17,7 +17,8 @@ import {
   undoDelete,
   type ServiceRecord,
 } from "../../src/db/records";
-import { nextDue, dueStatus, DEFAULT_INTERVALS } from "../../src/schedule";
+import { nextDue, dueStatus } from "../../src/schedule";
+import { getIntervals } from "../../src/db/intervals";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -25,11 +26,12 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
   const seen = new Set<string>();
   const now = new Date().toISOString();
   const items: DueItem[] = [];
+  const intervals = getIntervals();
 
   for (const r of records) {
     if (seen.has(r.service_type)) continue;
     seen.add(r.service_type);
-    const interval = DEFAULT_INTERVALS[r.service_type];
+    const interval = intervals[r.service_type];
     if (!interval) continue;
     const due = nextDue({
       lastPerformedAt: r.performed_at,

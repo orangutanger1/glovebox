@@ -14,6 +14,37 @@ export const DEFAULT_INTERVALS: Record<string, { months?: number; miles?: number
   "Other": { months: 12 },
 };
 
+export type Interval = { months?: number; miles?: number };
+
+/**
+ * The intervals actually in force: the shipped defaults, with the user's own
+ * numbers laid over them.
+ *
+ * Pure over its inputs so the merge is testable in Node — only the reading of
+ * the overrides is device-bound.
+ *
+ * An override replaces a service's interval outright rather than merging field
+ * by field. Someone who sets an oil change to 10,000 miles and clears the month
+ * figure means "by mileage only"; a field-wise merge would leave the default
+ * 6 months underneath and keep marking the car due on a date the user
+ * deliberately removed.
+ *
+ * Overrides may name a service that has no default. That is the point of
+ * "and more" — a type the app never shipped an opinion about still gets one
+ * once the user gives it a number.
+ */
+export function mergeIntervals(
+  defaults: Record<string, Interval>,
+  overrides: Record<string, Interval>
+): Record<string, Interval> {
+  const out: Record<string, Interval> = { ...defaults };
+  for (const [type, interval] of Object.entries(overrides)) {
+    if (interval.months === undefined && interval.miles === undefined) continue;
+    out[type] = interval;
+  }
+  return out;
+}
+
 function addMonths(iso: string, months: number): string {
   const d = new Date(iso);
   const day = d.getUTCDate();

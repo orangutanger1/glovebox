@@ -6,7 +6,7 @@ import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
 import { tokens } from "../src/design/tokens";
 import { exportAndShare } from "../src/export/share";
-import { restore } from "../src/purchases";
+import { restore, isPro, presentPaywall } from "../src/purchases";
 import { requestPermission } from "../src/notify";
 import { resetOnboarding } from "../src/onboarding";
 import { recordReviewEvent, maybeRequestReview } from "../src/review";
@@ -37,6 +37,23 @@ export default function Settings() {
     } catch {
       setMsg("Could not ask for notification permission.");
     }
+  }
+
+  // Gated before the screen, the same way Add vehicle is: showing someone a
+  // full interval editor and only refusing at Save is the version of this that
+  // wastes their time.
+  async function onIntervals() {
+    try {
+      if (!(await isPro())) {
+        const purchased = await presentPaywall();
+        if (!purchased) return;
+        recordReviewEvent("purchase");
+      }
+    } catch {
+      setMsg("Could not reach the store. Try again on a better connection.");
+      return;
+    }
+    router.push("/intervals");
   }
 
   async function onRestore() {
@@ -76,6 +93,7 @@ export default function Settings() {
         </Text>
       </Card>
       <Button label="Export all records (CSV)" onPress={onExport} />
+      <Button label="Service intervals" variant="secondary" onPress={onIntervals} />
       <Button label="Enable reminders" variant="secondary" onPress={onReminders} />
       <Button label="Restore purchases" variant="secondary" onPress={onRestore} />
       <Button label="Replay onboarding" variant="secondary" onPress={onReplayOnboarding} />
