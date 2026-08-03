@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "Glovebox",
+    "slug": "car-maintenance-log",
+    "scheme": "carmaintenancelog",
+    "version": "1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "ios"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.idea6.carmaintenancelog",
+      "supportsTablet": false,
+      "buildNumber": "9",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-notifications",
+        {
+          "iosDisplayInForeground": true
+        }
+      ],
+      "expo-updates",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "backgroundColor": "#0F1113",
+          "imageWidth": 160,
+          "resizeMode": "contain"
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
+      }
+    },
+    "owner": "mayfield",
+    "updates": {
+      "url": "https://u.expo.dev/fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
+    }
+  }
+}
