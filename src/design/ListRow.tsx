@@ -1,0 +1,87 @@
+import { Pressable, View, Text } from "react-native";
+import { tokens } from "./tokens";
+
+/**
+ * A slot milled into the faceplate. Rows are inset wells rather than raised
+ * cards so a list reads as one panel with grooves in it, not a stack of
+ * floating tiles.
+ *
+ * `status="overdue"` lights the row: red stripe on the left, title at full
+ * weight. Healthy rows recede into muted text — health is expressed by weight
+ * and light, not by a green.
+ */
+export function ListRow({
+  title,
+  subtitle,
+  right,
+  onPress,
+  status,
+}: {
+  title: string;
+  subtitle?: string;
+  right?: React.ReactNode;
+  onPress?: () => void;
+  status?: "overdue" | "soon" | "ok";
+}) {
+  const dim = status === "ok";
+
+  return (
+    <Pressable onPress={onPress} disabled={!onPress}>
+      {({ pressed }) => (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            borderRadius: tokens.radius.sm,
+            backgroundColor: pressed ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.18)",
+            borderWidth: 1,
+            borderTopColor: tokens.color.edge,
+            borderLeftColor: tokens.color.edge,
+            borderRightColor: tokens.color.edge,
+            borderBottomColor: tokens.color.hairline,
+            overflow: "hidden",
+          }}
+        >
+          {status === "overdue" ? (
+            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: tokens.color.red }} />
+          ) : null}
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: tokens.space.sm,
+              paddingHorizontal: tokens.space.md,
+              paddingVertical: tokens.space.sm + 2,
+            }}
+          >
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text
+                style={{
+                  ...tokens.text.body,
+                  fontWeight: dim ? "400" : "600",
+                  color: dim ? tokens.color.textMuted : tokens.color.text,
+                }}
+              >
+                {title}
+              </Text>
+              {subtitle ? (
+                <Text
+                  style={{
+                    ...tokens.text.caption,
+                    ...tokens.text.numeric,
+                    color: tokens.color.textMuted,
+                  }}
+                >
+                  {subtitle}
+                </Text>
+              ) : null}
+            </View>
+            {right}
+          </View>
+        </View>
+      )}
+    </Pressable>
+  );
+}

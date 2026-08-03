@@ -121,7 +121,7 @@ Every native dependency the app will ever need is installed **now**, before the 
 - Consumes: nothing
 - Produces: a running dev client on a physical iPhone; `npx expo start --dev-client` connects to it.
 
-- [ ] **Step 1: Scaffold the project**
+- [x] **Step 1: Scaffold the project**
 
 ```bash
 cd /home/myen/idea6
@@ -130,7 +130,7 @@ npx create-expo-app@latest . --template expo-template-blank-typescript
 
 Answer yes to overwriting nothing — the repo already has `docs/` and `research/`, which the template will leave alone.
 
-- [ ] **Step 2: Install every native dependency in one pass**
+- [x] **Step 2: Install every native dependency in one pass**
 
 `npx expo install` (not `npm install`) resolves the versions matching your Expo SDK. Never hand-pin these.
 
@@ -151,7 +151,7 @@ Dev-only dependencies (no native layer, safe to `npm install`):
 npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 ```
 
-- [ ] **Step 3: Configure `app.json`**
+- [x] **Step 3: Configure `app.json`**
 
 ```json
 {
@@ -186,7 +186,7 @@ npm install -D jest jest-expo @types/jest better-sqlite3 @types/better-sqlite3
 
 `ITSAppUsesNonExemptEncryption: false` is set now because omitting it triggers an export-compliance question on every single submission.
 
-- [ ] **Step 4: Configure NativeWind**
+- [x] **Step 4: Configure NativeWind**
 
 `tailwind.config.js`:
 
@@ -221,7 +221,7 @@ module.exports = function (api) {
 @tailwind utilities;
 ```
 
-- [ ] **Step 5: Set up EAS and register your device**
+- [x] **Step 5: Set up EAS and register your device**
 
 ```bash
 npm install -g eas-cli
@@ -261,7 +261,7 @@ eas device:create
 }
 ```
 
-- [ ] **Step 6: Set the RevenueCat key in EAS env before building**
+- [x] **Step 6: Set the RevenueCat key in EAS env before building**
 
 The key is baked into the binary at build time. A build cut before the key exists produces an app whose paywall is permanently empty, and no OTA update can fix it.
 
@@ -270,7 +270,7 @@ eas env:create --name EXPO_PUBLIC_RC_IOS_KEY --value "appl_YOUR_KEY_HERE" \
   --environment development --environment preview --environment production
 ```
 
-- [ ] **Step 7: Cut the one development build**
+- [x] **Step 7: Cut the one development build**
 
 ```bash
 eas build --profile development --platform ios
@@ -278,7 +278,7 @@ eas build --profile development --platform ios
 
 This takes 20-30 minutes. Do Task 2's design token work while it runs — it is pure TypeScript and needs no build.
 
-- [ ] **Step 8: Install and verify**
+- [x] **Step 8: Install and verify**
 
 Install the build on the registered device, then:
 
@@ -288,7 +288,7 @@ npx expo start --dev-client
 
 Expected: the app opens on the device and hot-reloads on save.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
@@ -316,7 +316,7 @@ Written before any screen. Restyling screens later is pure rework, and the user 
   - `<Badge label: string, tone: 'due'|'soon'|'ok'>` — `ok` exists for completeness; screens do not render it
   - `<Chip label: string, selected: boolean, onPress: () => void>` — pill, 44pt min hit height
 
-- [ ] **Step 1: Write the tokens**
+- [x] **Step 1: Write the tokens**
 
 `src/design/tokens.ts`:
 
@@ -363,7 +363,7 @@ Dark-first because the app is used in garages and driveways. Rationale for every
 Body is 17pt, the iOS default, not 16. Every screen must survive Dynamic Type at the largest
 accessibility size without clipping — this app's audience skews older than average.
 
-- [ ] **Step 2: Write Screen, Card, and Badge**
+- [x] **Step 2: Write Screen, Card, and Badge**
 
 `src/design/Screen.tsx`:
 
@@ -437,7 +437,7 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
 }
 ```
 
-- [ ] **Step 3: Write Button, Field, and ListRow**
+- [x] **Step 3: Write Button, Field, and ListRow**
 
 These use `Pressable` and `View` from `react-native` with the `style` prop rather than `className`. NativeWind's `cssInterop` drops `className` on animated and third-party components on device while working fine in the simulator, producing unstyled screens that only appear broken on real hardware. Using `style` for core components sidesteps the whole class of bug.
 
@@ -601,7 +601,7 @@ This task is the product. The "all my service dates became Jan 1, 0001" bug that
   - `applyMigrations(exec: (sql: string) => void, currentVersion: number): number` — pure orchestration, returns new version
   - `getDb(): SQLiteDatabase` — opens, migrates safely, returns the handle
 
-- [ ] **Step 1: Write the failing migration test**
+- [x] **Step 1: Write the failing migration test**
 
 `tests/migrations.test.ts`:
 
@@ -653,7 +653,7 @@ test("no migration contains a destructive statement", () => {
 });
 ```
 
-- [ ] **Step 2: Run it and confirm it fails**
+- [x] **Step 2: Run it and confirm it fails**
 
 Add to `package.json`: `"scripts": { "test": "jest" }` and a `jest.config.js`:
 
@@ -668,7 +668,7 @@ npx jest tests/migrations.test.ts
 
 Expected: FAIL — `Cannot find module '../src/db/schema'`.
 
-- [ ] **Step 3: Write the schema**
+- [x] **Step 3: Write the schema**
 
 `src/db/schema.ts`:
 
@@ -746,7 +746,7 @@ like, and shipping the second one before launch proves the runner works on a pop
 
 `performed_at` is stored as a full ISO-8601 string, never a Unix epoch integer and never a locale-formatted string. The Jan 1, 0001 class of bug comes from a numeric zero-value date being reinterpreted after a schema change.
 
-- [ ] **Step 4: Run the tests and confirm they pass**
+- [x] **Step 4: Run the tests and confirm they pass**
 
 ```bash
 npx jest tests/migrations.test.ts
@@ -754,7 +754,7 @@ npx jest tests/migrations.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the client with pre-migration backup**
+- [x] **Step 5: Write the client with pre-migration backup**
 
 `src/db/client.ts`:
 
@@ -832,7 +832,7 @@ Pure functions, zero I/O, exhaustively tested. This is where correctness actuall
   - `nextDue(input: { lastPerformedAt: string; lastOdometer?: number; interval: { months?: number; miles?: number } }): { dueAt?: string; dueOdometer?: number }`
   - `dueStatus(input: { dueAt?: string; dueOdometer?: number; now: string; odometer?: number }): 'due' | 'soon' | 'ok'`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/schedule.test.ts`:
 
@@ -912,7 +912,7 @@ test("every default interval specifies months or miles", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -920,7 +920,7 @@ npx jest tests/schedule.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `src/schedule/index.ts`:
 
@@ -998,7 +998,7 @@ export function dueStatus(input: {
 
 Whichever comes first — date or mileage — wins. That matches how manufacturers actually specify service and is what users expect.
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/schedule.test.ts
@@ -1033,7 +1033,7 @@ git commit -m "feat: add service interval and due-status calculation"
   - `softDeleteRecord(id: string): void`
   - `allRecordsForExport(): (ServiceRecord & { vehicle_name: string })[]`
 
-- [ ] **Step 1: Write the vehicle module**
+- [x] **Step 1: Write the vehicle module**
 
 `src/db/vehicles.ts`:
 
@@ -1085,7 +1085,7 @@ export function createVehicle(v: {
 }
 ```
 
-- [ ] **Step 2: Write the record module, append-only**
+- [x] **Step 2: Write the record module, append-only**
 
 `src/db/records.ts`:
 
@@ -1197,7 +1197,7 @@ Never gated. This is the backup story and the trust signal.
   - `toCsv(rows: CsvRow[]): string` where `CsvRow = { vehicle_name, service_type, performed_at, odometer?, cost?, notes?, deleted_at? }`
   - `exportAndShare(): Promise<void>`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `tests/csv.test.ts`:
 
@@ -1252,7 +1252,7 @@ test("marks soft-deleted rows instead of omitting them", () => {
 });
 ```
 
-- [ ] **Step 2: Run and confirm failure**
+- [x] **Step 2: Run and confirm failure**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1260,7 +1260,7 @@ npx jest tests/csv.test.ts
 
 Expected: FAIL — module not found.
 
-- [ ] **Step 3: Implement the pure serializer**
+- [x] **Step 3: Implement the pure serializer**
 
 `src/export/csv.ts`:
 
@@ -1302,7 +1302,7 @@ export function toCsv(rows: CsvRow[]): string {
 }
 ```
 
-- [ ] **Step 4: Run and confirm pass**
+- [x] **Step 4: Run and confirm pass**
 
 ```bash
 npx jest tests/csv.test.ts
@@ -1310,7 +1310,7 @@ npx jest tests/csv.test.ts
 
 Expected: 4 passing.
 
-- [ ] **Step 5: Write the share wrapper**
+- [x] **Step 5: Write the share wrapper**
 
 `src/export/share.ts`:
 
@@ -1356,7 +1356,7 @@ git commit -m "feat: add always-free CSV export with share sheet"
   - `requestPermission(): Promise<boolean>`
   - `rescheduleAll(): Promise<void>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/notify/index.ts`:
 
@@ -1451,7 +1451,7 @@ git commit -m "feat: schedule service-due notifications"
   - `presentPaywall(): Promise<boolean>` — resolves true if the user now has `pro`
   - `restore(): Promise<boolean>`
 
-- [ ] **Step 1: Implement**
+- [x] **Step 1: Implement**
 
 `src/purchases/index.ts`:
 
@@ -1497,7 +1497,7 @@ export async function restore(): Promise<boolean> {
 
 Build the paywall itself in the RevenueCat dashboard using their Paywall editor, not in code. It is remote-configurable, so pricing and copy change without an App Store review cycle.
 
-- [ ] **Step 2: Wire the root layout**
+- [x] **Step 2: Wire the root layout**
 
 `app/_layout.tsx`:
 
@@ -1556,7 +1556,7 @@ Three screens, no more. Every screen uses only Task 2 components.
 - Consumes: everything from Tasks 2-8
 - Produces: the shipping app
 
-- [ ] **Step 1: Garage screen**
+- [x] **Step 1: Garage screen**
 
 `app/index.tsx`:
 
@@ -1693,7 +1693,7 @@ Two deliberate departures from a first-instinct layout:
 
 No `Badge` is rendered for an `ok` vehicle. The status colors have to keep meaning something.
 
-- [ ] **Step 2: Add vehicle screen**
+- [x] **Step 2: Add vehicle screen**
 
 `app/vehicle/new.tsx`:
 
@@ -1738,7 +1738,7 @@ export default function NewVehicle() {
 }
 ```
 
-- [ ] **Step 3: Vehicle detail screen**
+- [x] **Step 3: Vehicle detail screen**
 
 `app/vehicle/[id].tsx`:
 
@@ -1826,7 +1826,7 @@ Swipe-left on a history row calls `softDeleteRecord` and shows an undo affordanc
 backed by `undoDelete` clearing `deleted_at`. Because the undo is in the database and not in an
 in-memory stack, it survives the app being killed inside that window.
 
-- [ ] **Step 4: Log service screen — the core action**
+- [x] **Step 4: Log service screen — the core action**
 
 `app/vehicle/[id]/log.tsx`:
 
@@ -1952,7 +1952,7 @@ Target for this screen: **under 15 seconds from cold, two taps and one number.**
 `<Chip label: string, selected: boolean, onPress: () => void>` — `radius.pill`, 44pt minimum hit
 height, bone border and bone-tinted fill when selected, `border` color when not.
 
-- [ ] **Step 5: Settings screen**
+- [x] **Step 5: Settings screen**
 
 `app/settings.tsx`:
 
@@ -2010,7 +2010,7 @@ Item 7 is not optional polish. "Entered data is never discarded on error" is the
 app exists to displace, and it is the one thing in the smoke pass that cannot be verified by reading
 the code. Force it by temporarily throwing inside `addRecord`.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add app
@@ -2049,7 +2049,7 @@ Target: **first service logged inside 60 seconds of first launch.**
   - `setOnboardingStep(step: string): void` / `getOnboardingStep(): string | null`
   - `completeOnboarding(): void`
 
-- [ ] **Step 1: Onboarding state over `app_state`**
+- [x] **Step 1: Onboarding state over `app_state`**
 
 `src/onboarding/state.ts` reads and writes two keys, `onboarding_complete` and `onboarding_step`.
 Keep the key/value logic pure over an injected `exec`/`get` pair the same way `applyMigrations` is,
@@ -2058,13 +2058,13 @@ so it is testable in Node without the device driver.
 The step key is what makes a force-quit mid-flow recoverable: the user resumes where they left off
 with their partial vehicle intact, rather than starting over or, worse, ending up with two vehicles.
 
-- [ ] **Step 2: Route guard**
+- [x] **Step 2: Route guard**
 
 In `app/_layout.tsx`, after `getDb()`, redirect to `/onboarding/welcome` when `isOnboarded()` is
 false, resuming at `getOnboardingStep()` when one is recorded. The guard runs once on mount. Do not
 put it in a `useEffect` that depends on route state — that produces a redirect loop.
 
-- [ ] **Step 3: Screen 1, welcome**
+- [x] **Step 3: Screen 1, welcome**
 
 Headline "Your service records, kept forever." Subline "On this phone. No account, no server,
 nothing to log out of." One button, "Set up my car". No login link, because there is none. No skip,
@@ -2073,7 +2073,7 @@ because there is nothing yet to skip. No beta or version badge.
 If no photographic asset exists at build time, ship type-only. A stock car photo reads as a template
 and undoes the credibility the copy is buying.
 
-- [ ] **Step 4: Screen 2, the car**
+- [x] **Step 4: Screen 2, the car**
 
 Nickname autofocused, keyboard up on arrival. Year / make / model as one row of three small optional
 inputs, visually subordinate. Calls `createVehicle`. **Skip creates a vehicle named "My car"** and
@@ -2082,14 +2082,14 @@ continues, because a user with a vehicle row can use the app and a user without 
 Do not build a make/model dropdown tree or a VIN decoder. Both are non-goals in the spec, and a
 three-level dropdown is the exact setup burden being displaced.
 
-- [ ] **Step 5: Screen 3, the odometer**
+- [x] **Step 5: Screen 3, the odometer**
 
 One large numeric input, `text.numeric`, keypad up on arrival. One line of explanation underneath:
 "Used to work out what is due by mileage, not just by date." An unexplained number field mid-flow is
 where people quit. Skip states its own consequence in caption text: "Then reminders will use dates
 only."
 
-- [ ] **Step 6: Screen 4, last service**
+- [x] **Step 6: Screen 4, last service**
 
 Chip grid of the six common types. Selecting one advances immediately, with no Continue button, to a
 one-tap date question: `Just now` / `Last month` / `3 months ago` / `6 months ago` / `Pick a date…` /
@@ -2101,7 +2101,7 @@ the safe direction to be wrong in.
 This is the personalization question the consumer-subscription pattern calls for, and unlike that
 pattern's version, the answer becomes a row in `service_records`.
 
-- [ ] **Step 7: Screen 5, the aha**
+- [x] **Step 7: Screen 5, the aha**
 
 Runs `nextDue` on what the user just entered and shows the result:
 
@@ -2119,7 +2119,7 @@ services are shown on purpose: they show the shape of the thing and invite the n
 
 No progress bar and no "analyzing your vehicle". The computation genuinely is instant.
 
-- [ ] **Step 8: Screen 6, reminder soft-ask**
+- [x] **Step 8: Screen 6, reminder soft-ask**
 
 "Want a reminder when it is due?" with the exact frequency stated: "One notification per service, on
 the day it comes due. Nothing else, ever." `Remind me` calls `requestPermission`; `Not now` does not.
@@ -2128,7 +2128,7 @@ The soft-ask is not decoration. A denied iOS prompt is permanent, and firing it 
 below 30%. `Not now` must not re-prompt on next launch — Settings offers it again whenever the user
 wants it, and the Garage due badges cover the gap meanwhile.
 
-- [ ] **Step 9: Screen 7, the paywall**
+- [x] **Step 9: Screen 7, the paywall**
 
 Call `presentPaywall()`, not `presentPaywallIfNeeded()`. The latter is right at the add-vehicle gate
 in Task 9; here the intent is to show the offer exactly once regardless of state.
@@ -2153,7 +2153,7 @@ every bug in it.
 4. Decline the notification prompt → Garage still shows due badges
 5. Dismiss the paywall → free tier fully usable, export works
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add app/onboarding src/onboarding tests/onboarding-state.test.ts app/_layout.tsx
