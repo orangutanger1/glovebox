@@ -296,10 +296,32 @@ Tests: `onboarding-flow`, `onboarding-plan`, `onboarding-pain`,
 `onboarding-run` (walks the quiz through real SQLite and asserts the findings),
 `winback-state`, plus answer parsing in `onboarding-state`.
 
-App Store Connect: `pro_annual_standard` (6797750757) created — see §6.
-Outstanding there: an App Review screenshot, then submission.
+App Store Connect: `pro_annual_standard` (6797750757) created — see §6 — and
+its App Review screenshot uploaded, so it now sits at `READY_TO_SUBMIT`. It has
+never been submitted: it is the only item in review submission
+`40cf456a-74a4-4bce-9784-2a96e9d4e0ce`, which is still a draft. Build 10
+carries this flow and is `VALID` in App Store Connect and in TestFlight, but is
+attached to nothing — version 1.0 has been `WAITING_FOR_REVIEW` since 8/2 with
+build **9**, the old flow, attached. Putting build 10 in front of review means
+cancelling that submission, attaching build 10, folding in
+`pro_annual_standard` and resubmitting; the first paywall sells that product,
+so the two cannot ship separately.
 
-RevenueCat dashboard, outstanding: current offering = `pro_monthly` +
-`pro_annual_standard` with a paywall; offering `discount` = `pro_annual` with a
-paywall; optionally a custom feedback row and a promotional offer on the
-Customer Center cancel path.
+RevenueCat dashboard, done: current offering `default` = `$rc_monthly`
+(`pro_monthly`) + `$rc_annual` (`pro_annual_standard`), and offering `discount`
+= `$rc_annual` (`pro_annual`). Both have published paywalls. The `pro`
+entitlement carries all three products, so the standard annual unlocks Pro.
+
+The swap on `$rc_annual` is the load-bearing part: that package shipped holding
+`pro_annual`, the product with the introductory offer, which would have handed
+the trial away from the *first* paywall and left the second with nothing to
+sell. Store product, not paywall copy, is what decides that — see §6.
+
+Two leftovers from project creation remain in `default`, both harmless on iOS
+and neither worth an irreversible delete: the Test Store products inside the
+monthly and annual packages, and a `$rc_lifetime` package holding only a Test
+Store product. No App Store product backs lifetime, so the package resolves to
+nothing and the package is dropped on a real device.
+
+Still optional: a custom feedback row and a promotional offer on the Customer
+Center cancel path.
