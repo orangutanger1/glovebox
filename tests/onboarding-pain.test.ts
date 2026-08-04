@@ -1,0 +1,71 @@
+import { buildPlan } from "../src/onboarding/plan";
+import { painCards, PAIN_CARD_COUNT } from "../src/onboarding/pain";
+import type { Answers } from "../src/onboarding/state";
+
+const INTERVALS = {
+  "Oil Change": { months: 6, miles: 5000 },
+  "Tire Rotation": { months: 6, miles: 6000 },
+  "Brake Inspection": { months: 12, miles: 12000 },
+};
+
+const NOW = new Date("2026-08-03T12:00:00");
+
+function daysAgo(n: number): string {
+  const d = new Date(NOW);
+  d.setDate(d.getDate() - n);
+  return d.toISOString();
+}
+
+function cardsFor(answers: Answers, records: Parameters<typeof buildPlan>[0]["records"] = []) {
+  const plan = buildPlan({ odometer: 80000, records, intervals: INTERVALS, answers, now: NOW });
+  return painCards({ plan, answers, vehicleName: "2019 Honda Civic" });
+}
+
+test("always exactly three, even from an abandoned quiz", () => {
+  expect(cardsFor({})).toHaveLength(PAIN_CARD_COUNT);
+  expect(cardsFor({ tracking: "memory", worries: ["bills", "missed", "records", "resale", "upsell"] }))
+    .toHaveLength(PAIN_CARD_COUNT);
+});
+
+test("never repeats a finding", () => {
+  const ids = cardsFor({ tracking: "receipts", worries: ["records", "bills"] }).map((c) => c.id);
+  expect(new Set(ids).size).toBe(ids.length);
+});
+
+test("the same answers always produce the same three cards", () => {
+  const answers: Answers = { tracking: "dealer", worries: ["upsell"] };
+  expect(cardsFor(answers).map((c) => c.id)).toEqual(cardsFor(answers).map((c) => c.id));
+});
+
+test("what the user said they use today gets its own card", () => {
+  expect(cardsFor({ tracking: "spreadsheet" }).map((c) => c.id)).toContain("spreadsheet");
+  expect(cardsFor({ tracking: "dealer" }).map((c) => c.id)).toContain("dealer");
+});
+
+test("an overdue count leads, and counts only services with history", () => {
+  const cards = cardsFor({ tracking: "memory" }, [
+    { service_type: "Oil Change", performed_at: daysAgo(400), odometer: 70000 },
+  ]);
+  expect(cards[0].id).toBe("overdue");
+  // Two other services have never been logged; they are the "blind" card, not
+  // part of the overdue count.
+  expect(cards[0].headline).toBe("One service is already overdue");
+});
+
+test("with no history there is nothing to call overdue", () => {
+  const ids = cardsFor({ tracking: "memory" }).map((c) => c.id);
+  expect(ids).not.toContain("overdue");
+  expect(ids).toContain("blind");
+});
+
+test("the blind card counts what has nothing on file", () => {
+  const card = cardsFor({}).find((c) => c.id === "blind")!;
+  expect(card.headline).toBe("3 of 3 services have nothing on file");
+});
+
+test("every card carries the answer to itself", () => {
+  for (const card of cardsFor({ tracking: "nothing", worries: ["resale"] })) {
+    expect(card.fix.length).toBeGreaterThan(0);
+    expect(card.legend.length).toBeGreaterThan(0);
+  }
+});

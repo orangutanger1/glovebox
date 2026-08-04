@@ -6,14 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StepLamps } from "../design/StepLamps";
 import { tokens } from "../design/tokens";
 import { setOnboardingStep } from ".";
-
-/** Welcome is the hook and sits outside the count; these are the five steps
- *  that ask the user for something. */
-export const ONBOARDING_STEPS = 5;
-
-/** The flow in order, welcome first. Step N's screen is `FLOW[N]`, so the
- *  screen behind it is `FLOW[N - 1]` — the one thing a Back control needs. */
-const FLOW = ["welcome", "vehicle", "odometer", "service", "ready", "reminders"];
+import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
 
 /**
  * The frame every onboarding screen after the hook is built in.
@@ -25,34 +18,54 @@ const FLOW = ["welcome", "vehicle", "odometer", "service", "ready", "reminders"]
  * object being stepped through. Every screen now gets the same gutter, the
  * same header band, the same title position and the same footer.
  *
- * The header band is a legend and a lamp row, which is the same pairing the
- * gauges use: a small uppercase label naming a value, and the value itself.
+ * The screen names its own route rather than its index. It is the only thing
+ * it can know for certain about itself, and everything else — where Back goes,
+ * whether this is a quiz question and which one — is derived from the flow
+ * array. Reordering the flow used to mean renumbering every screen in it.
  *
- * There is no Skip and no per-step telltale. Skip existed so a user could
- * arrive in the app with a "My car" stub and no mileage — a garage entry that
- * looks broken and that nothing in the app can act on. The glyphs were PNGs
- * decoded per screen, so they popped in a beat after the title had already
- * laid out, which read as a stutter on every single step.
+ * Progress is shown on the quiz and nowhere else. The six questions are steps,
+ * and a step count is the difference between an interview and an interrogation.
+ * The screens after them are a read-through: putting "11 / 17" above a finding
+ * about the user's own car invites them to measure how much is left rather
+ * than read it, and there is nothing to measure anyway, since the flow can end
+ * at the paywall.
+ *
+ * There is no Skip. Skip existed so a user could arrive in the app with a
+ * "My car" stub and no mileage — a garage entry that looks broken and that
+ * nothing in the app can act on.
  */
 export function OnboardingScreen({
-  step,
+  route,
   title,
   subtitle,
+  legend,
   footer,
   children,
   center = false,
+  tone = "housing",
+  onBack,
 }: {
-  step: number;
+  route: OnboardingRoute;
   title: string;
   subtitle?: string;
+  /** Overrides the quiz counter. Used by the paged symptoms screen. */
+  legend?: ReactNode;
   footer?: ReactNode;
   children?: ReactNode;
   /** Screens with nothing to fill the middle read better optically centred
    *  than pinned under the title. */
   center?: boolean;
+  /** `alarm` washes the housing red. Reserved for the symptoms screens, which
+   *  are the app's only sustained warning state. */
+  tone?: "housing" | "alarm";
+  /** Handles Back inside the screen instead of leaving it. The symptoms pager
+   *  is three cards on one route, and a Back that abandoned all three because
+   *  the user wanted to re-read the first is a Back the user stops pressing. */
+  onBack?: () => void;
 }) {
   const router = useRouter();
-  const previous = FLOW[step - 1];
+  const previous = previousRoute(route);
+  const quiz = quizStep(route);
 
   /**
    * The flow was forward-only: a wrong year typed on step 1 could not be
@@ -60,7 +73,11 @@ export function OnboardingScreen({
    * drew a back control. The persisted step is rewound too, so quitting after
    * going back reopens the screen the user was actually looking at.
    */
-  function onBack() {
+  function goBack() {
+    if (onBack) {
+      onBack();
+      return;
+    }
     if (!previous) return;
     setOnboardingStep(previous);
     // `back()` keeps the screen behind us alive with its state; `replace` is
@@ -77,7 +94,11 @@ export function OnboardingScreen({
           the top light is a gradient in code, which also costs nothing. */}
       <LinearGradient
         pointerEvents="none"
-        colors={["rgba(255,255,255,0.05)", "transparent"]}
+        colors={
+          tone === "alarm"
+            ? [tokens.color.redWash, "transparent"]
+            : ["rgba(255,255,255,0.05)", "transparent"]
+        }
         style={{ position: "absolute", top: 0, left: 0, right: 0, height: 260 }}
       />
       <KeyboardAvoidingView
@@ -102,8 +123,8 @@ export function OnboardingScreen({
               minHeight: 28,
             }}
           >
-            {previous ? (
-              <Pressable onPress={onBack} hitSlop={12} accessibilityRole="button">
+            {previous || onBack ? (
+              <Pressable onPress={goBack} hitSlop={12} accessibilityRole="button">
                 {({ pressed }) => (
                   <Text
                     style={{
@@ -116,10 +137,16 @@ export function OnboardingScreen({
                 )}
               </Pressable>
             ) : null}
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-              {`Step ${step} / ${ONBOARDING_STEPS}`}
-            </Text>
-            <StepLamps step={step} total={ONBOARDING_STEPS} />
+            {legend ?? (
+              quiz ? (
+                <>
+                  <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+                    {`Question ${quiz.step} / ${quiz.total}`}
+                  </Text>
+                  <StepLamps step={quiz.step} total={quiz.total} />
+                </>
+              ) : null
+            )}
           </View>
 
           {center ? <View style={{ flex: 1 }} /> : null}

@@ -1,37 +1,41 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
-import { useRouter } from "expo-router";
-import { Chip } from "../../src/design/Chip";
+import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
+import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle } from "../../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
-import { setOnboardingStep, getOnboardingVehicleId } from "../../src/onboarding";
+import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { useAdvance } from "../../src/onboarding/nav";
 
 const TYPES = [
-  "Oil Change",
-  "Tire Rotation",
-  "Brake Inspection",
-  "Air Filter",
-  "Inspection",
-  "Something else",
-];
+  { value: "Oil Change", label: "Oil Change" },
+  { value: "Tire Rotation", label: "Tire Rotation" },
+  { value: "Brake Inspection", label: "Brake Inspection" },
+  { value: "Air Filter", label: "Air Filter" },
+  { value: "Inspection", label: "Inspection" },
+  { value: "Something else", label: "Something else" },
+] as const;
+
+type ServiceChoice = (typeof TYPES)[number]["value"];
 
 // Approximate answers are allowed. "Not sure" logs no record — the safe
 // direction to be wrong in, since the app then treats the service as due now.
-const WHEN: { label: string; daysAgo: number | null }[] = [
-  { label: "Just now", daysAgo: 0 },
-  { label: "Last month", daysAgo: 30 },
-  { label: "3 months ago", daysAgo: 90 },
-  { label: "6 months ago", daysAgo: 180 },
-  { label: "Not sure", daysAgo: null },
-];
+const WHEN = [
+  { value: "Just now", label: "Just now", daysAgo: 0 },
+  { value: "Last month", label: "Last month", daysAgo: 30 },
+  { value: "3 months ago", label: "3 months ago", daysAgo: 90 },
+  { value: "6 months ago", label: "6 months ago", daysAgo: 180 },
+  { value: "Not sure", label: "Not sure", daysAgo: null },
+] as const;
+
+type WhenChoice = (typeof WHEN)[number]["value"];
 
 export default function OnboardingService() {
-  const router = useRouter();
-  const [type, setType] = useState<string | null>(null);
-  const [when, setWhen] = useState<string | null>(null);
+  const advance = useAdvance("service");
+  const [type, setType] = useState<ServiceChoice | null>(null);
+  const [when, setWhen] = useState<WhenChoice | null>(null);
 
   // Both halves of the answer are required. The chips used to advance the
   // screen on tap, which meant a mis-tap committed a service record and moved
@@ -40,7 +44,7 @@ export default function OnboardingService() {
 
   function onContinue() {
     if (!valid) return;
-    const daysAgo = WHEN.find((w) => w.label === when)!.daysAgo;
+    const daysAgo = WHEN.find((w) => w.value === when)!.daysAgo;
     const ownedId = getOnboardingVehicleId();
     const vehicle = ownedId ? getVehicle(ownedId) : null;
 
@@ -64,45 +68,28 @@ export default function OnboardingService() {
       });
     }
 
-    setOnboardingStep("ready");
-    router.push("/onboarding/ready");
+    advance();
   }
 
   return (
     <OnboardingScreen
-      step={3}
+      route="service"
       title="What did you last get done?"
       subtitle="Close enough is fine — you can correct it later."
       footer={<Button label="Continue" onPress={onContinue} disabled={!valid} />}
     >
-      <View style={{ gap: tokens.space.sm }}>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>Service</Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-          {TYPES.map((t) => (
-            <Chip key={t} label={t} selected={type === t} onPress={() => setType(t)} />
-          ))}
-        </View>
-      </View>
+      <ChipRow legend="Service" options={TYPES} selected={type ? [type] : []} onPress={setType} />
 
       {/* The "when" half only appears once there is something to date. Both
           question and answer now stay on screen together, so the user can see
           what they picked instead of the title mutating out from under them. */}
       {type ? (
-        <View style={{ gap: tokens.space.sm }}>
-          <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-            {`When was the ${type === "Something else" ? "service" : type.toLowerCase()}?`}
-          </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-            {WHEN.map((w) => (
-              <Chip
-                key={w.label}
-                label={w.label}
-                selected={when === w.label}
-                onPress={() => setWhen(w.label)}
-              />
-            ))}
-          </View>
-        </View>
+        <ChipRow
+          legend={`When was the ${type === "Something else" ? "service" : type.toLowerCase()}?`}
+          options={WHEN}
+          selected={when ? [when] : []}
+          onPress={setWhen}
+        />
       ) : (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
           Pick one. You can log the rest anytime.

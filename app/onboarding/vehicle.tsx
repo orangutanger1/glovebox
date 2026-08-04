@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { View, Text } from "react-native";
-import { useRouter } from "expo-router";
 import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
 import { createVehicle, getVehicle, updateVehicleIdentity } from "../../src/db/vehicles";
-import {
-  setOnboardingStep,
-  getOnboardingVehicleId,
-  setOnboardingVehicleId,
-} from "../../src/onboarding";
+import { getOnboardingVehicleId, setOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { useAdvance } from "../../src/onboarding/nav";
 import { parseNumber, vehicleDisplayName } from "../../src/format";
 
 /** A model year, not a number. 1900 rules out a mistyped odometer reading in
@@ -20,7 +16,7 @@ const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear() + 2;
 
 export default function OnboardingVehicle() {
-  const router = useRouter();
+  const advance = useAdvance("vehicle");
   const [year, setYear] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
@@ -76,13 +72,12 @@ export default function OnboardingVehicle() {
     if (existing) updateVehicleIdentity(existing.id, identity);
     else setOnboardingVehicleId(createVehicle(identity).id);
 
-    setOnboardingStep("odometer");
-    router.push("/onboarding/odometer");
+    advance();
   }
 
   return (
     <OnboardingScreen
-      step={1}
+      route="vehicle"
       title="What are you driving?"
       footer={<Button label="Continue" onPress={onContinue} />}
     >

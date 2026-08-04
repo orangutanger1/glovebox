@@ -1,18 +1,18 @@
 import { useMemo, useState } from "react";
 import { View, Text } from "react-native";
-import { useRouter } from "expo-router";
 import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { OdometerRoll, randomOdometerReading } from "../../src/design/OdometerRoll";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle, setOdometerIfHigher } from "../../src/db/vehicles";
-import { setOnboardingStep, getOnboardingVehicleId } from "../../src/onboarding";
+import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { useAdvance } from "../../src/onboarding/nav";
 import { parseNumber } from "../../src/format";
 
 export default function OnboardingOdometer() {
-  const router = useRouter();
+  const advance = useAdvance("odometer");
   const [odometer, setOdometer] = useState("");
   // Drawn once per mount, not per render — the drums must not re-roll every
   // time the user types a digit into the field below them.
@@ -28,13 +28,12 @@ export default function OnboardingOdometer() {
     // The placeholder on this very field shows "84,210", so a user copying its
     // format produced NaN and silently lost their reading.
     if (vehicle) setOdometerIfHigher(vehicle.id, miles);
-    setOnboardingStep("service");
-    router.push("/onboarding/service");
+    advance();
   }
 
   return (
     <OnboardingScreen
-      step={2}
+      route="odometer"
       title="How many miles on it?"
       footer={<Button label="Continue" onPress={onContinue} disabled={!valid} />}
     >

@@ -37,4 +37,4 @@ We may update these terms from time to time. Continued use of the app after a ch
 
 ## Contact
 
-Questions about these terms: REPLACE_WITH_SUPPORT_EMAIL
+Questions about these terms: matthew.yen09@gmail.com

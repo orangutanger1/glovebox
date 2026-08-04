@@ -242,6 +242,15 @@ The non-competitor pattern worth borrowing is the personalization-question flow 
 
 ## 4. Glovebox onboarding flow
 
+> **Superseded by `2026-08-03-onboarding-conversion-flow-design.md`.** The
+> six-screen setup flow below shipped and was replaced by a quiz → findings →
+> plan → offer structure. Principles 1, 2 and 4 carry over unchanged and are
+> the reason the new flow computes its results rather than staging them.
+> Principle 3 is gone: there is no Skip, because a skipped question produced a
+> garage entry nothing in the app could act on. Principle 5 is gone with it —
+> the first service is still logged inside the first minute, but the flow no
+> longer ends there. Sections 1 to 3 below still describe the app.
+
 **Principles**
 1. **Every screen produces a durable record.** Nothing exists to build mood. This is what keeps a 6-screen flow from becoming the setup burden the reviews complain about.
 2. **No account, and say so out loud on screen 1.** It is the differentiator and it is also a reason to keep going.

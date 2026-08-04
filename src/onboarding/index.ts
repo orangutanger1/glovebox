@@ -1,9 +1,12 @@
 import { getDb } from "../db/client";
 import {
   readOnboardingState,
+  parseAnswers,
   ONBOARDING_COMPLETE_KEY,
   ONBOARDING_STEP_KEY,
   ONBOARDING_VEHICLE_KEY,
+  ONBOARDING_ANSWERS_KEY,
+  type Answers,
 } from "./state";
 
 function dbGet(key: string): string | null {
@@ -55,6 +58,25 @@ export function setOnboardingVehicleId(vehicleId: string): void {
 }
 
 /**
+ * The quiz answers that have nowhere else to live. Read on every screen after
+ * the quiz, so it is a whole-object read rather than a key per answer: three
+ * `app_state` rows to keep in step is three chances for a resumed flow to hold
+ * half an opinion.
+ */
+export function getAnswers(): Answers {
+  return parseAnswers(dbGet(ONBOARDING_ANSWERS_KEY));
+}
+
+/**
+ * Merges rather than replaces. Each question owns one field and knows nothing
+ * about the others; stepping back and changing one answer must not blank the
+ * two after it.
+ */
+export function setAnswers(patch: Answers): void {
+  dbSet(ONBOARDING_ANSWERS_KEY, JSON.stringify({ ...getAnswers(), ...patch }));
+}
+
+/**
  * Puts the flags back to first-launch so the flow can be walked again from
  * Settings. Vehicles and records are deliberately untouched — this replays the
  * screens, it does not wipe the app, and a "replay" that silently deleted a
@@ -64,6 +86,11 @@ export function resetOnboarding(): void {
   dbSet(ONBOARDING_COMPLETE_KEY, "false");
   dbSet(ONBOARDING_STEP_KEY, "welcome");
   // Cleared, not carried over: the replay writes a new car, so the previous
-  // run's vehicle must stop being the one every step edits.
-  getDb().runSync("DELETE FROM app_state WHERE key = ?", [ONBOARDING_VEHICLE_KEY]);
+  // run's vehicle must stop being the one every step edits — and the previous
+  // run's answers must stop describing it, or the replay opens on a symptoms
+  // screen built from a quiz this user has not taken yet.
+  getDb().runSync("DELETE FROM app_state WHERE key IN (?, ?)", [
+    ONBOARDING_VEHICLE_KEY,
+    ONBOARDING_ANSWERS_KEY,
+  ]);
 }

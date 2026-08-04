@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/coding-agent/src/config/mcp-schema.json",
+  "mcpServers": {
+    "revenuecat": {
+      "type": "http",
+      "url": "https://mcp.revenuecat.ai/mcp",
+      "headers": {
+        "Authorization": "!printf 'Bearer %s' \"${REVENUECAT_V2_KEY:-$(cat \"$HOME/.omp/revenuecat.key\" 2>/dev/null)}\""
+      }
+    }
+  }
+}

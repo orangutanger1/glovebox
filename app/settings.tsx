@@ -8,6 +8,7 @@ import { tokens } from "../src/design/tokens";
 import { shortDate } from "../src/format";
 import { exportAndShare } from "../src/export/share";
 import { restore, isPro, presentPaywall, presentCustomerCenter } from "../src/purchases";
+import { openFeedback } from "../src/feedback";
 import { useIsPro } from "../src/purchases/useIsPro";
 import { requestPermission, rescheduleAll, reminderStatus, type ReminderStatus } from "../src/notify";
 import { resetOnboarding } from "../src/onboarding";
@@ -121,12 +122,28 @@ export default function Settings() {
     }
   }
 
-  // Cancelling, switching between monthly and annual, and asking for a refund
-  // all live in here. The entitlement listener behind useIsPro picks up
-  // whatever happened inside the sheet, so there is nothing to refresh after.
+  /**
+   * Cancelling, switching between monthly and annual, and asking for a refund
+   * all live in here. The entitlement listener behind useIsPro picks up
+   * whatever happened inside the sheet, so there is nothing to refresh after.
+   *
+   * It is also the app's only exit interview. RevenueCat's cancel path can
+   * carry a custom row and a promotional offer, both configured in the
+   * dashboard — point the row at the feedback form and a leaving subscriber
+   * gets the same two things the win-back screen offers a leaving free user.
+   * A custom URL is handed to the app to open; RevenueCat does not open it.
+   */
   async function onManageSubscription() {
     try {
-      await presentCustomerCenter();
+      await presentCustomerCenter({
+        onManagementOptionSelected: ({ url }) => {
+          if (url) void openFeedback(url);
+        },
+        onPromotionalOfferSucceeded: () => {
+          recordReviewEvent("purchase");
+          setMsg("That offer is applied. Nothing else to do.");
+        },
+      });
     } catch {
       setMsg("Could not open subscription settings. Try again on a better connection.");
     }

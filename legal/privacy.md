@@ -36,4 +36,4 @@ If this policy ever changes — for example, if a future version adds an optiona
 
 ## Contact
 
-Questions about this policy: REPLACE_WITH_SUPPORT_EMAIL
+Questions about this policy: matthew.yen09@gmail.com

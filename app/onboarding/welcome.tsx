@@ -2,16 +2,15 @@ import { useEffect, useRef } from "react";
 import { View, Text, Image, Animated, Easing } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
-import { setOnboardingStep } from "../../src/onboarding";
+import { useAdvance } from "../../src/onboarding/nav";
 
 const LIGHT = require("../../assets/onboarding/light.jpeg");
 const LIGHT_RATIO = 1242 / 1663;
 
 export default function Welcome() {
-  const router = useRouter();
+  const advance = useAdvance("welcome");
   // One driver. The cluster bulb-check flash used to run here and read as a
   // rendering fault rather than an ignition: a red bloom that appears, dies,
   // and appears again inside the first second is indistinguishable from a bug.
@@ -26,11 +25,6 @@ export default function Welcome() {
       useNativeDriver: true,
     }).start();
   }, [content]);
-
-  function onNext() {
-    setOnboardingStep("vehicle");
-    router.push("/onboarding/vehicle");
-  }
 
   return (
     <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>
@@ -87,7 +81,7 @@ export default function Welcome() {
           </Text>
 
           <View style={{ gap: tokens.space.sm }}>
-            <Button label="Set up my car" onPress={onNext} />
+            <Button label="Start" onPress={advance} />
             {/* Demoted from the headline slot: it answers an objection the
                 user has not formed yet on the first screen. */}
             <Text
