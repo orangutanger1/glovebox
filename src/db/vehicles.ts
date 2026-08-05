@@ -97,3 +97,17 @@ export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
     [odometer, vehicleId, odometer]
   );
 }
+
+/**
+ * Sets the reading to exactly what was given, up or down.
+ *
+ * Only onboarding uses this, and only for the question that asks for the
+ * reading directly. Everywhere else a mileage arrives attached to a service
+ * that happened, so the high-water rule is right: a job logged at 40,000 on a
+ * car showing 84,000 must not wind the dash back. Here the number IS the dash,
+ * and a user who stepped back to fix a fat-fingered 842,100 was being told the
+ * field had accepted a correction that the guard then threw away.
+ */
+export function setOdometerReading(vehicleId: string, odometer: number): void {
+  getDb().runSync("UPDATE vehicles SET odometer = ? WHERE id = ?", [odometer, vehicleId]);
+}

@@ -91,7 +91,7 @@ export default function Welcome() {
                 textAlign: "center",
               }}
             >
-              Stays on this phone. No account, no server, nothing to log out of.
+              Everything stays on this phone, with no account and nothing to log out of.
             </Text>
           </View>
         </Animated.View>

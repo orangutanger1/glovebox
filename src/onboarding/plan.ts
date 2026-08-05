@@ -54,6 +54,28 @@ export type Plan = {
   projectedOdometer?: number;
 };
 
+/** The rate every projection in the flow is made at, from the one answer that
+ *  states it. Shared so the quiz and the plan cannot pick different numbers. */
+export function milesPerYearFor(answers: Answers): number {
+  return answers.drive ? MILES_PER_YEAR[answers.drive] : UNSTATED_MILES_PER_YEAR;
+}
+
+/**
+ * What the odometer read `daysAgo` days ago, at the stated rate.
+ *
+ * The quiz asks for today's reading and then asks when the last service was.
+ * Filing that service at today's mileage says a car serviced six months ago
+ * has not moved since, which pushes its next mileage-due point a full interval
+ * past where it actually falls: an oil change logged "6 months ago" on a
+ * 12,500 mi/year car came due 5,000 miles from today instead of ~1,750.
+ *
+ * Never negative, and never above the reading it is counted back from.
+ */
+export function odometerDaysAgo(odometer: number, milesPerYear: number, daysAgo: number): number {
+  const driven = (milesPerYear * Math.max(0, daysAgo)) / 365;
+  return Math.max(0, Math.round(odometer - driven));
+}
+
 const RANK = { due: 0, soon: 1, ok: 2 };
 
 export function buildPlan(input: {
@@ -65,9 +87,7 @@ export function buildPlan(input: {
 }): Plan {
   const now = input.now ?? new Date();
   const nowIso = now.toISOString();
-  const milesPerYear = input.answers.drive
-    ? MILES_PER_YEAR[input.answers.drive]
-    : UNSTATED_MILES_PER_YEAR;
+  const milesPerYear = milesPerYearFor(input.answers);
 
   const items: PlanItem[] = [];
   for (const [type, interval] of Object.entries(input.intervals)) {
@@ -163,4 +183,26 @@ export function planItemLine(item: PlanItem): string {
   }
   if (item.dueOdometer !== undefined) parts.push(`${item.dueOdometer.toLocaleString()} mi`);
   return parts.join(" · ") || "No interval set";
+}
+
+/**
+ * The soonest service still ahead of the user.
+ *
+ * The results screen and the paywall summary both print "the next one", and
+ * both used to take the first dated row out of `plan.items`. That list is
+ * sorted worst-first, so on any car with something overdue "next up" was the
+ * most overdue thing on it: a date in the past, printed under a label that
+ * promises the future.
+ *
+ * Undefined when nothing is dated in the future, which the callers say in
+ * words rather than printing a date that has already been and gone.
+ */
+export function nextUp(plan: Plan, now: Date = new Date()): PlanItem | undefined {
+  const nowIso = now.toISOString();
+  let soonest: PlanItem | undefined;
+  for (const item of plan.items) {
+    if (item.dueAt === undefined || item.dueAt <= nowIso) continue;
+    if (!soonest || item.dueAt < soonest.dueAt!) soonest = item;
+  }
+  return soonest;
 }

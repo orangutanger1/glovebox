@@ -20,7 +20,7 @@ import { useAdvance } from "../../src/onboarding/nav";
 const FEATURES: { title: string; subtitle: string; pro?: boolean }[] = [
   {
     title: "Every service, kept forever",
-    subtitle: "Date, mileage, cost and notes. Deleted rows are tombstoned, never dropped.",
+    subtitle: "Date, mileage, cost and notes, with deleted rows tombstoned rather than dropped.",
   },
   {
     title: "Due by date and by mileage",
@@ -28,11 +28,11 @@ const FEATURES: { title: string; subtitle: string; pro?: boolean }[] = [
   },
   {
     title: "One reminder per service",
-    subtitle: "On the day it comes due. Nothing else, ever.",
+    subtitle: "On the day it comes due, and nothing else ever.",
   },
   {
     title: "Export everything as CSV",
-    subtitle: "Free forever, for everyone. Your records are never hostage to a subscription.",
+    subtitle: "Free forever for everyone, so your records are never hostage to a subscription.",
   },
   {
     title: "More than one vehicle",
@@ -53,7 +53,7 @@ export default function OnboardingFeatures() {
     <OnboardingScreen
       route="features"
       title="What you are getting."
-      subtitle="No account. No server. Everything lives in one file on this phone."
+      subtitle="Everything lives in one file on this phone, with no account and no server."
       footer={<Button label="Continue" onPress={advance} />}
     >
       <Panel>

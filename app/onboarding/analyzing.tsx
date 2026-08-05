@@ -2,15 +2,21 @@ import { useEffect, useMemo, useState } from "react";
 import { View, Text } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
+import { ProgressBar } from "../../src/design/ProgressBar";
 import { tokens } from "../../src/design/tokens";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
 
-/** Long enough to read one line before the next arrives, short enough that the
- *  screen is gone in under two seconds. */
-const LINE_MS = 420;
-const HANDOFF_MS = 600;
+/**
+ * Long enough to read a line and look at it, rather than to watch four of them
+ * flash past. The first pass was 420ms a line and the whole screen was gone
+ * inside two seconds, which is not a pause between a question and an answer,
+ * it is a flicker.
+ */
+const LINE_MS = 950;
+/** The beat after the last line, which is the one that carries the finding. */
+const HANDOFF_MS = 1400;
 
 /**
  * The pause between the last question and the answer.
@@ -22,9 +28,12 @@ const HANDOFF_MS = 600;
  * distrust the numbers on the very next screen.
  *
  * So the work is real and the screen shows it happening. Each line is a value
- * that was actually computed from what the user typed — the car, the intervals
+ * that was actually computed from what the user typed: the car, the intervals
  * applied to it, the projection from the mileage rate they picked, the count
- * that comes out. The delay is the reading time for four lines, not a stall.
+ * that comes out. The bar under them is honest about what it measures. It runs
+ * for exactly as long as the readout takes to finish, which is the wait it is
+ * describing, and it moves at a constant rate because nothing about the wait
+ * accelerates.
  *
  * It replaces itself rather than pushing, so Back from the results lands on
  * the last question instead of bouncing off a screen that immediately moves
@@ -109,6 +118,13 @@ export default function OnboardingAnalyzing() {
               </View>
             );
           })}
+
+          <View style={{ gap: tokens.space.sm }}>
+            <ProgressBar duration={lines.length * LINE_MS + HANDOFF_MS} />
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+              {shown >= lines.length ? "Done" : `Reading ${shown + 1} of ${lines.length}`}
+            </Text>
+          </View>
         </View>
       </Panel>
     </OnboardingScreen>

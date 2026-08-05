@@ -28,8 +28,22 @@ test("is onboarded once the completion key is set", () => {
 });
 
 test("answers survive a round trip", () => {
-  const answers = { drive: "high", tracking: "receipts", worries: ["bills", "upsell"] } as const;
+  const answers = {
+    drive: "high",
+    tracking: "receipts",
+    worries: ["bills", "upsell"],
+    service: "Oil Change",
+    serviceWhen: "3 months ago",
+  } as const;
   expect(parseAnswers(JSON.stringify(answers))).toEqual(answers);
+});
+
+test("a service answer the chips cannot produce is dropped", () => {
+  expect(parseAnswers('{"service":"Rebuild the gearbox","serviceWhen":"last decade"}')).toEqual({});
+  expect(parseAnswers('{"service":"Air Filter","serviceWhen":"Not sure"}')).toEqual({
+    service: "Air Filter",
+    serviceWhen: "Not sure",
+  });
 });
 
 test("a blob written by another version of the app degrades instead of throwing", () => {

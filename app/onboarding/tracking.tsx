@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
-import { setAnswers } from "../../src/onboarding";
+import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import type { TrackingAnswer } from "../../src/onboarding/state";
@@ -25,7 +25,11 @@ const OPTIONS: readonly { value: TrackingAnswer; label: string }[] = [
  */
 export default function OnboardingTracking() {
   const advance = useAdvance("tracking");
-  const [tracking, setTracking] = useState<TrackingAnswer | null>(null);
+  // Filled from what was already answered, so Back and Continue return the
+  // user to their own choice instead of an empty row of chips.
+  const [tracking, setTracking] = useState<TrackingAnswer | null>(
+    () => getAnswers().tracking ?? null
+  );
 
   function onContinue() {
     if (!tracking) return;
@@ -47,8 +51,7 @@ export default function OnboardingTracking() {
         onPress={setTracking}
       />
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        Whatever you pick, Glovebox exports everything you log as a CSV. It is free, and it stays
-        free, so this is never the last app your records live in.
+        Whatever you pick, Glovebox exports everything you log as a CSV for free.
       </Text>
     </OnboardingScreen>
   );

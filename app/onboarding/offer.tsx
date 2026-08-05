@@ -44,7 +44,7 @@ export default function OnboardingOffer() {
       route="offer"
       center
       title={`Try it for ${TRIAL_DAYS} days.`}
-      subtitle={`You have seen the price and said no, which is a fair answer. So don't pay yet — take ${TRIAL_DAYS} days of Pro for nothing, and decide once your car has actually told you something. This is the only screen the trial appears on.`}
+      subtitle={`Take ${TRIAL_DAYS} days of Pro for nothing and decide once your car has actually told you something.`}
       footer={
         <>
           <Button label={`Start my ${TRIAL_DAYS} free days`} onPress={onSeeOffer} disabled={busy} />
@@ -61,8 +61,7 @@ export default function OnboardingOffer() {
       }
     >
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        Cancel in Settings before it ends and you pay nothing. Either way your plan is saved, your
-        records are yours, and the free app is the whole app for one car.
+        Cancel in Settings before it ends and you pay nothing.
       </Text>
     </OnboardingScreen>
   );

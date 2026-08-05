@@ -164,12 +164,12 @@ export default function VehicleDetail() {
                 >
                   <Gauge
                     legend="Odometer"
-                    value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "—"}
+                    value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "Not set"}
                     unit={vehicle?.odometer ? "mi" : undefined}
                   />
                   <Gauge
                     legend="Last service"
-                    value={lastService ? lastService.performed_at.slice(0, 10) : "—"}
+                    value={lastService ? lastService.performed_at.slice(0, 10) : "None yet"}
                     align="right"
                   />
                 </View>

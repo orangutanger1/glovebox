@@ -13,7 +13,7 @@ import { useAdvance } from "../../src/onboarding/nav";
  * A quiz that starts without one is the pattern people have learned to close.
  * Naming the three things up front costs a tap and buys the six questions
  * after it, and the third line is the differentiator the app leads with
- * everywhere else — there is no account, so there is nowhere for any of this
+ * everywhere else: there is no account, so there is nowhere for any of this
  * to be sent.
  */
 const ASKS = [
@@ -23,7 +23,7 @@ const ASKS = [
   },
   {
     title: "How you drive it",
-    subtitle: "Miles a year — it is what turns a mileage interval into a date",
+    subtitle: "Miles a year, which is what turns a mileage interval into a date",
   },
   {
     title: "What you are trying to avoid",
@@ -37,9 +37,9 @@ export default function OnboardingIntro() {
   return (
     <OnboardingScreen
       route="intro"
-      title="Six questions about the car."
-      subtitle="About a minute. Every answer changes something the app computes — and none of them leave this phone."
-      footer={<Button label="Start" onPress={advance} />}
+      title="Six questions about your car."
+      subtitle="About a minute, and none of your answers leave this phone."
+      footer={<Button label="Get started" onPress={advance} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>

@@ -126,7 +126,7 @@ export default function RootLayout() {
           Glovebox could not open your records.
         </Text>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textAlign: "center" }}>
-          Nothing was deleted — the database was restored to its last good state. Reopen the app.
+          Nothing was deleted, and the database was restored to its last good state. Reopen the app.
           If this keeps happening, contact support before reinstalling, because reinstalling is what
           would actually lose the records.
         </Text>

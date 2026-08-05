@@ -85,8 +85,8 @@ export default function OnboardingPlan() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {remaining > 0 ? `Plus ${remaining} more, further out. ` : ""}
-        One notification per service, on the day it comes due. Nothing else, ever.
+        {remaining > 0 ? `Plus ${remaining} more further out, and one ` : "One "}
+        notification per service on the day it comes due.
       </Text>
     </OnboardingScreen>
   );

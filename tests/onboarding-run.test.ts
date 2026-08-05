@@ -24,7 +24,7 @@ jest.mock("../src/db/client", () => {
   };
 });
 
-import { createVehicle, getVehicle, setOdometerIfHigher, updateVehicleIdentity } from "../src/db/vehicles";
+import { createVehicle, getVehicle, setOdometerReading, updateVehicleIdentity } from "../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../src/db/records";
 import {
   getAnswers,
@@ -34,7 +34,8 @@ import {
   resetOnboarding,
 } from "../src/onboarding";
 import { readFindings } from "../src/onboarding/usePlan";
-import { MILES_PER_YEAR } from "../src/onboarding/plan";
+import { MILES_PER_YEAR, milesPerYearFor, odometerDaysAgo } from "../src/onboarding/plan";
+import type { ServiceTypeAnswer } from "../src/onboarding/state";
 
 /** What `app/onboarding/vehicle.tsx` does on Continue. */
 function answerVehicle(name: string, year: number) {
@@ -45,25 +46,41 @@ function answerVehicle(name: string, year: number) {
   else setOnboardingVehicleId(createVehicle(identity).id);
 }
 
-/** What `app/onboarding/service.tsx` does on Continue. */
-function answerService(type: string, daysAgo: number) {
+/**
+ * What `app/onboarding/service.tsx` does on Continue.
+ *
+ * The record is dated noon local and filed at the mileage the car was showing
+ * then, counted back from today's reading at the rate the previous question
+ * established. Both the type now chosen and the type answered last time are
+ * cleared first, so changing the answer corrects the run's one record instead
+ * of leaving the old service behind.
+ */
+function answerService(type: ServiceTypeAnswer, daysAgo: number | null) {
   const vehicle = getVehicle(getOnboardingVehicleId()!)!;
+  const answeredBefore = getAnswers().service;
   for (const r of listRecords(vehicle.id)) {
-    if (r.service_type === type) softDeleteRecord(r.id);
+    if (r.service_type === type || r.service_type === answeredBefore) softDeleteRecord(r.id);
   }
-  const performed = new Date();
-  performed.setDate(performed.getDate() - daysAgo);
-  addRecord({
-    vehicle_id: vehicle.id,
-    service_type: type,
-    performed_at: performed.toISOString(),
-    odometer: vehicle.odometer,
-  });
+  if (daysAgo !== null) {
+    const performed = new Date();
+    performed.setDate(performed.getDate() - daysAgo);
+    performed.setHours(12, 0, 0, 0);
+    addRecord({
+      vehicle_id: vehicle.id,
+      service_type: type,
+      performed_at: performed.toISOString(),
+      odometer:
+        vehicle.odometer === undefined
+          ? undefined
+          : odometerDaysAgo(vehicle.odometer, milesPerYearFor(getAnswers()), daysAgo),
+    });
+  }
+  setAnswers({ service: type });
 }
 
 function walkTheQuiz() {
   answerVehicle("2019 Honda Civic", 2019);
-  setOdometerIfHigher(getOnboardingVehicleId()!, 84210);
+  setOdometerReading(getOnboardingVehicleId()!, 84210);
   setAnswers({ drive: "high" });
   answerService("Oil Change", 400);
   setAnswers({ tracking: "memory" });
@@ -80,7 +97,12 @@ test("the quiz produces a plan built from the answers, not from defaults", () =>
 
   expect(vehicle?.odometer).toBe(84210);
   expect(vehicleName).toBe("2019 Honda Civic");
-  expect(answers).toEqual({ drive: "high", tracking: "memory", worries: ["bills", "resale"] });
+  expect(answers).toEqual({
+    drive: "high",
+    tracking: "memory",
+    worries: ["bills", "resale"],
+    service: "Oil Change",
+  });
 
   expect(plan.milesPerYear).toBe(MILES_PER_YEAR.high);
   expect(plan.projectedOdometer).toBe(84210 + MILES_PER_YEAR.high);
@@ -116,6 +138,7 @@ test("a changed attitude answer does not blank the ones around it", () => {
     drive: "high",
     tracking: "spreadsheet",
     worries: ["bills", "resale"],
+    service: "Oil Change",
   });
 });
 
@@ -148,4 +171,54 @@ test("a vehicle deleted between launches leaves the findings screens standing", 
   expect(vehicle).toBeNull();
   expect(plan.odometer).toBeUndefined();
   expect(plan.items.every((i) => !i.logged)).toBe(true);
+});
+
+test("a mistyped odometer can be corrected downwards", () => {
+  walkTheQuiz();
+  // The high-water guard belongs on mileage that arrives attached to a service.
+  // This field is the dash reading itself, and stepping back to fix an extra
+  // digit has to actually change it.
+  setOdometerReading(getOnboardingVehicleId()!, 8421);
+  expect(readFindings().vehicle?.odometer).toBe(8421);
+});
+
+test("changing which service was logged does not leave the first one behind", () => {
+  walkTheQuiz();
+  answerService("Air Filter", 30);
+
+  const records = listRecords(getOnboardingVehicleId()!);
+  expect(records.map((r) => r.service_type)).toEqual(["Air Filter"]);
+  const { plan } = readFindings();
+  expect(plan.logged).toBe(1);
+  expect(plan.items.find((i) => i.type === "Oil Change")?.logged).toBe(false);
+});
+
+test("answering \"not sure\" takes back a date already given", () => {
+  walkTheQuiz();
+  answerService("Oil Change", null);
+
+  expect(listRecords(getOnboardingVehicleId()!)).toHaveLength(0);
+  expect(readFindings().plan.logged).toBe(0);
+});
+
+test("a service is filed at the mileage the car was showing when it happened", () => {
+  answerVehicle("2019 Honda Civic", 2019);
+  setOdometerReading(getOnboardingVehicleId()!, 84210);
+  setAnswers({ drive: "high" });
+  answerService("Oil Change", 180);
+
+  // 12,500 mi a year for half a year is ~6,164 miles ago, so the oil change
+  // was done around 78,046 and the next one falls due 5,000 miles after that,
+  // which is behind today's reading. Filing it at 84,210 instead claimed the
+  // car had not moved since and put the next change 5,000 miles from today.
+  const back = odometerDaysAgo(84210, MILES_PER_YEAR.high, 180);
+  expect(back).toBe(78046);
+  const [record] = listRecords(getOnboardingVehicleId()!);
+  expect(record.odometer).toBe(back);
+  // Noon local, the same as every other date this app writes.
+  expect(new Date(record.performed_at).getHours()).toBe(12);
+
+  const oil = readFindings().plan.items.find((i) => i.type === "Oil Change")!;
+  expect(oil.dueOdometer).toBe(back + 5000);
+  expect(oil.status).toBe("due");
 });

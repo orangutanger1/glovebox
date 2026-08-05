@@ -32,14 +32,44 @@ export const DRIVE_ANSWERS = ["low", "average", "high", "very_high"] as const;
 export const TRACKING_ANSWERS = ["memory", "receipts", "spreadsheet", "dealer", "nothing"] as const;
 export const WORRY_ANSWERS = ["bills", "missed", "records", "resale", "upsell"] as const;
 
+/**
+ * The two halves of "what did you last get done?".
+ *
+ * That answer already lands in `service_records`, so persisting it here looks
+ * like a duplicate. It is not: the record is a service on a date, and it
+ * cannot say which chips produced it. "Not sure" writes no record at all, and
+ * a record dated ninety days ago could equally have come from "3 months ago"
+ * or from a later edit. Stepping back onto that screen has to show the user
+ * their own two taps, so the taps are what is stored.
+ */
+export const SERVICE_TYPES = [
+  "Oil Change",
+  "Tire Rotation",
+  "Brake Inspection",
+  "Air Filter",
+  "Inspection",
+  "Something else",
+] as const;
+export const SERVICE_WHEN = [
+  "Just now",
+  "Last month",
+  "3 months ago",
+  "6 months ago",
+  "Not sure",
+] as const;
+
 export type DriveAnswer = (typeof DRIVE_ANSWERS)[number];
 export type TrackingAnswer = (typeof TRACKING_ANSWERS)[number];
 export type WorryAnswer = (typeof WORRY_ANSWERS)[number];
+export type ServiceTypeAnswer = (typeof SERVICE_TYPES)[number];
+export type ServiceWhenAnswer = (typeof SERVICE_WHEN)[number];
 
 export type Answers = {
   drive?: DriveAnswer;
   tracking?: TrackingAnswer;
   worries?: WorryAnswer[];
+  service?: ServiceTypeAnswer;
+  serviceWhen?: ServiceWhenAnswer;
 };
 
 /**
@@ -70,6 +100,12 @@ export function parseAnswers(raw: string | null): Answers {
     // two users who picked the same set get the same screens after it.
     const picked = WORRY_ANSWERS.filter((w) => (record.worries as unknown[]).includes(w));
     if (picked.length > 0) out.worries = picked;
+  }
+  if (SERVICE_TYPES.includes(record.service as ServiceTypeAnswer)) {
+    out.service = record.service as ServiceTypeAnswer;
+  }
+  if (SERVICE_WHEN.includes(record.serviceWhen as ServiceWhenAnswer)) {
+    out.serviceWhen = record.serviceWhen as ServiceWhenAnswer;
   }
   return out;
 }

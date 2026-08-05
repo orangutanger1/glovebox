@@ -171,7 +171,7 @@ export default function Garage() {
                 />
                 <Gauge
                   legend="Odometer"
-                  value={v.odometer ? v.odometer.toLocaleString() : "—"}
+                  value={v.odometer ? v.odometer.toLocaleString() : "Not set"}
                   unit={v.odometer ? "mi" : undefined}
                   align="right"
                 />

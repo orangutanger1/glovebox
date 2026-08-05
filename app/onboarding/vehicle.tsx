@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { View, Text } from "react-native";
 import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
@@ -17,10 +17,25 @@ const MAX_YEAR = new Date().getFullYear() + 2;
 
 export default function OnboardingVehicle() {
   const advance = useAdvance("vehicle");
-  const [year, setYear] = useState("");
-  const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
-  // Errors are held back until the field is left or Continue is pressed —
+
+  /**
+   * The car this run of onboarding has already written, if the user is here a
+   * second time.
+   *
+   * Going back is a real move in this flow, and Continue pushes a fresh copy
+   * of the next screen rather than waking the old one, so nothing typed here
+   * survived in component state. The answer does survive in the database,
+   * which is the only copy that matters, so the fields are filled from it.
+   */
+  const saved = useMemo(() => {
+    const ownedId = getOnboardingVehicleId();
+    return ownedId ? getVehicle(ownedId) : null;
+  }, []);
+
+  const [year, setYear] = useState(saved?.year ? String(saved.year) : "");
+  const [make, setMake] = useState(saved?.make ?? "");
+  const [model, setModel] = useState(saved?.model ?? "");
+  // Errors are held back until the field is left or Continue is pressed:
   // "1" on the way to "1998" is not a mistake and must not be shouted at.
   const [yearTouched, setYearTouched] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -32,7 +47,7 @@ export default function OnboardingVehicle() {
   };
 
   // Every field is required. Skip used to be the way past this screen and it
-  // wrote a vehicle called "My car" with no year, make, model or mileage — a
+  // wrote a vehicle called "My car" with no year, make, model or mileage: a
   // garage entry that looks broken and that the schedule cannot reason about.
   const yearOk = parts.year !== undefined && parts.year >= MIN_YEAR && parts.year <= MAX_YEAR;
   const valid = yearOk && parts.make !== undefined && parts.model !== undefined;
@@ -43,9 +58,9 @@ export default function OnboardingVehicle() {
   const yearMessage = (() => {
     if (!year.trim()) return "Enter the model year.";
     if (parts.year === undefined || !/^\d+$/.test(year.trim())) {
-      return "Year must be four digits — 2014.";
+      return "Year must be four digits, like 2014.";
     }
-    if (parts.year < MIN_YEAR) return `Year must be ${MIN_YEAR} or later — 2014, not ${year.trim()}.`;
+    if (parts.year < MIN_YEAR) return `Year must be ${MIN_YEAR} or later, not ${year.trim()}.`;
     if (parts.year > MAX_YEAR) return `Year can't be later than ${MAX_YEAR}.`;
     return "";
   })();
@@ -59,12 +74,12 @@ export default function OnboardingVehicle() {
     }
     // There is no separate name field any more: the name IS the parts. Asking
     // for both meant the user typed "Civic" twice, and year/make/model were
-    // then rendered nowhere — `name` is the only field the garage list and the
+    // then rendered nowhere. `name` is the only field the garage list and the
     // vehicle header ever show. A nickname is offered later, from the vehicle
     // screen, which is the point at which a second car makes one useful.
     const identity = { name: vehicleDisplayName(parts), ...parts };
     // Stepping back to this screen and forward again must correct the car, not
-    // add a second one to the garage — but only the car this run of onboarding
+    // add a second one to the garage, but only the car this run of onboarding
     // created. Reaching for the first vehicle in the garage instead is how
     // "Replay onboarding" came to rename a car the user had owned for a year.
     const ownedId = getOnboardingVehicleId();
@@ -89,7 +104,7 @@ export default function OnboardingVehicle() {
             onChangeText={setYear}
             keyboardType="numeric"
             placeholder="2014"
-            autoFocus
+            autoFocus={saved === null}
             onBlur={() => setYearTouched(true)}
             error={showYearError ? yearMessage : undefined}
           />
@@ -117,12 +132,12 @@ export default function OnboardingVehicle() {
       </Panel>
 
       {/* Year and Make/Model used to sit in three equal columns, which squeezed
-          "Model" to a few characters on a small phone. Year gets its own row —
-          it is a four-digit readout, not a word. */}
+          "Model" to a few characters on a small phone. Year gets its own row,
+          because it is a four-digit readout rather than a word. */}
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {valid
-          ? `Saved as "${vehicleDisplayName(parts)}". You can rename it later.`
-          : "Year, make and model — all three, so reminders can name the car."}
+          ? `Saved as "${vehicleDisplayName(parts)}", and you can rename it later.`
+          : "Year, make and model, so reminders can name the car."}
       </Text>
     </OnboardingScreen>
   );

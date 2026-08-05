@@ -5,7 +5,7 @@ import { Gauge } from "../../src/design/Gauge";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { planItemLine } from "../../src/onboarding/plan";
+import { nextUp, planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -33,13 +33,23 @@ export default function OnboardingResults() {
   const { vehicleName, plan } = useOnboardingFindings();
 
   const pastDue = plan.items.filter((i) => i.status === "due" && i.logged).length;
-  const next = plan.items.find((i) => i.dueAt !== undefined);
+  // The soonest thing still ahead, which is not the head of `plan.items`: that
+  // list is sorted worst-first, so on a car with anything overdue it is the
+  // most overdue row and its date is in the past.
+  const upcoming = nextUp(plan);
+  // `plan.dueNow` folds in every service that has never been logged, and
+  // "eleven services are overdue" to somebody who has told us about one of
+  // them is our model talking, not their car. The headline counts only what
+  // has a history behind it; the gauges below carry the rest, next to the
+  // "on file" count that explains where the difference comes from.
   const title =
     pastDue > 0
       ? `${pastDue === 1 ? "One service is" : `${pastDue} services are`} already overdue.`
-      : plan.soon > 0
-        ? "Nothing is overdue yet."
-        : "Nothing is overdue, and nothing is close.";
+      : plan.dueNow > 0
+        ? "Nothing you have logged is overdue."
+        : plan.soon > 0
+          ? "Nothing is overdue yet."
+          : "Nothing is overdue, and nothing is close.";
 
   return (
     <OnboardingScreen
@@ -75,9 +85,9 @@ export default function OnboardingResults() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {next?.dueAt
-          ? `Whichever comes first, date or mileage. The next one lands ${new Date(next.dueAt).toLocaleDateString()}.`
-          : "Whichever comes first, date or mileage."}
+        {upcoming?.dueAt
+          ? `The next one lands ${new Date(upcoming.dueAt).toLocaleDateString()}, whichever comes first by date or by mileage.`
+          : "Every service is counted down by date and by mileage, whichever comes first."}
       </Text>
     </OnboardingScreen>
   );

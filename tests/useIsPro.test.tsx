@@ -6,17 +6,19 @@ import TestRenderer, { act } from "react-test-renderer";
 
 type Listener = (info: { entitlements: { active: Record<string, unknown> } }) => void;
 
-const listeners: Listener[] = [];
-let customerInfo: Promise<{ entitlements: { active: Record<string, unknown> } }>;
+// Prefixed `mock` so babel-jest allows the hoisted factory below to close over
+// them; without the prefix the module factory is rejected outright.
+const mockListeners: Listener[] = [];
+let mockCustomerInfo: Promise<{ entitlements: { active: Record<string, unknown> } }>;
 
 jest.mock("react-native-purchases", () => ({
   __esModule: true,
   default: {
-    getCustomerInfo: () => customerInfo,
-    addCustomerInfoUpdateListener: (l: Listener) => listeners.push(l),
+    getCustomerInfo: () => mockCustomerInfo,
+    addCustomerInfoUpdateListener: (l: Listener) => mockListeners.push(l),
     removeCustomerInfoUpdateListener: (l: Listener) => {
-      const i = listeners.indexOf(l);
-      if (i >= 0) listeners.splice(i, 1);
+      const i = mockListeners.indexOf(l);
+      if (i >= 0) mockListeners.splice(i, 1);
       return i >= 0;
     },
   },
@@ -46,15 +48,15 @@ async function renderHook() {
 }
 
 beforeEach(() => {
-  listeners.length = 0;
-  customerInfo = Promise.resolve(FREE);
+  mockListeners.length = 0;
+  mockCustomerInfo = Promise.resolve(FREE);
 });
 
 test("starts unknown before the entitlement resolves", async () => {
   // Never `false` first: rendering the free rows in that gap shows a paying
   // subscriber an advert for what they already bought.
   let resolve!: (v: typeof FREE) => void;
-  customerInfo = new Promise((r) => (resolve = r));
+  mockCustomerInfo = new Promise((r) => (resolve = r));
 
   const seen: (boolean | null)[] = [];
   function Probe() {
@@ -73,7 +75,7 @@ test("starts unknown before the entitlement resolves", async () => {
 });
 
 test("resolves to true for an active entitlement", async () => {
-  customerInfo = Promise.resolve(PRO);
+  mockCustomerInfo = Promise.resolve(PRO);
   const { seen } = await renderHook();
   expect(seen[seen.length - 1]).toBe(true);
 });
@@ -84,25 +86,25 @@ test("resolves to false without one", async () => {
 });
 
 test("treats an unreachable store as not Pro rather than hanging on null", async () => {
-  customerInfo = Promise.reject(new Error("offline"));
+  mockCustomerInfo = Promise.reject(new Error("offline"));
   const { seen } = await renderHook();
   expect(seen[seen.length - 1]).toBe(false);
 });
 
 test("follows a cancellation made inside the Customer Center sheet", async () => {
-  customerInfo = Promise.resolve(PRO);
+  mockCustomerInfo = Promise.resolve(PRO);
   const { seen } = await renderHook();
   expect(seen[seen.length - 1]).toBe(true);
 
   await act(async () => {
-    listeners.forEach((l) => l(FREE));
+    mockListeners.forEach((l) => l(FREE));
   });
   expect(seen[seen.length - 1]).toBe(false);
 });
 
 test("removes its listener on unmount", async () => {
   const { unmount } = await renderHook();
-  expect(listeners).toHaveLength(1);
+  expect(mockListeners).toHaveLength(1);
   unmount();
-  expect(listeners).toHaveLength(0);
+  expect(mockListeners).toHaveLength(0);
 });

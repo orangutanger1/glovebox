@@ -1,4 +1,11 @@
-import { buildPlan, planItemLine, MILES_PER_YEAR, UNSTATED_MILES_PER_YEAR } from "../src/onboarding/plan";
+import {
+  buildPlan,
+  nextUp,
+  odometerDaysAgo,
+  planItemLine,
+  MILES_PER_YEAR,
+  UNSTATED_MILES_PER_YEAR,
+} from "../src/onboarding/plan";
 
 const INTERVALS = {
   "Oil Change": { months: 6, miles: 5000 },
@@ -123,6 +130,47 @@ test("worst first, and undated rows sink under dated ones", () => {
   expect(plan.items.map((i) => i.type)).toEqual(["Oil Change", "Spark Plugs", "Registration"]);
   expect(plan.items[0].status).toBe("due");
   expect(plan.items[2].status).toBe("ok");
+});
+
+test("the next one up is the soonest ahead, not the worst behind", () => {
+  const plan = buildPlan({
+    odometer: 80100,
+    records: [
+      // Overdue by a year, so it sorts to the top of the list and its date is
+      // in the past. "Next up" printed that date for as long as it was taken
+      // off the head of `plan.items`.
+      { service_type: "Oil Change", performed_at: daysAgo(400), odometer: 70000 },
+      { service_type: "Registration", performed_at: daysAgo(10) },
+    ],
+    intervals: INTERVALS,
+    answers: {},
+    now: NOW,
+  });
+
+  const ahead = nextUp(plan, NOW);
+  expect(ahead?.type).toBe("Registration");
+  expect(new Date(ahead!.dueAt!).getTime()).toBeGreaterThan(NOW.getTime());
+});
+
+test("nothing dated in the future means no next one, rather than a date behind us", () => {
+  const plan = buildPlan({
+    odometer: 80100,
+    records: [{ service_type: "Oil Change", performed_at: daysAgo(400), odometer: 70000 }],
+    intervals: INTERVALS,
+    answers: {},
+    now: NOW,
+  });
+  expect(nextUp(plan, NOW)).toBeUndefined();
+});
+
+test("mileage is counted back to when a service actually happened", () => {
+  // Half a year at 12,500 a year is a little over 6,000 miles, and the reading
+  // the user typed is today's.
+  expect(odometerDaysAgo(84210, 12500, 180)).toBe(78046);
+  expect(odometerDaysAgo(84210, 12500, 0)).toBe(84210);
+  // A car with fewer miles on it than the rate would have put behind it cannot
+  // have a negative odometer.
+  expect(odometerDaysAgo(500, 12500, 365)).toBe(0);
 });
 
 test("the shared line marks a projection as an estimate and says when there is nothing", () => {

@@ -25,7 +25,7 @@ export default function OnboardingHelp() {
     <OnboardingScreen
       route="help"
       title="All three are the same problem."
-      subtitle="Nothing is written down in a form that can warn you. That is the whole of what Glovebox does."
+      subtitle="Nothing is written down in a form that can warn you, which is the whole of what Glovebox does."
       footer={<Button label="Continue" onPress={advance} />}
     >
       <Panel>

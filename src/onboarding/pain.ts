@@ -50,8 +50,8 @@ const STATIC: Record<Exclude<PainId, "overdue" | "blind">, Omit<PainCard, "id">>
     legend: "From memory",
     headline: "The only copy is in your head",
     body:
-      "You said you go by memory. Memory holds up right until the question is " +
-      "\u201cwhen exactly?\u201d \u2014 at the counter, at resale, or with a light on at 70.",
+      "You said you go by memory. Memory holds up right until the question " +
+      "\u201cwhen exactly?\u201d is asked at the counter, at resale, or with a light on at 70.",
     fix: "Every service you log is written to this phone and stays there. No account to lose it behind.",
   },
   nothing: {
@@ -82,8 +82,8 @@ const STATIC: Record<Exclude<PainId, "overdue" | "blind">, Omit<PainCard, "id">>
     legend: "At the shop",
     headline: "The shop\u2019s records are the shop\u2019s",
     body:
-      "Complete right up until you change shops, move, or sell the car \u2014 and visible to the " +
-      "person writing your estimate, not to you.",
+      "Complete right up until you change shops, move, or sell the car, and visible to the " +
+      "person writing your estimate rather than to you.",
     fix: "Your own copy, on your own phone, exportable whenever you want it.",
   },
   bills: {
@@ -106,7 +106,7 @@ const STATIC: Record<Exclude<PainId, "overdue" | "blind">, Omit<PainCard, "id">>
     legend: "The proof",
     headline: "Unproven service is unperformed service",
     body:
-      "A warranty claim, a resale, an argument with a shop \u2014 every one of them asks for the " +
+      "A warranty claim, a resale, an argument with a shop: every one of them asks for the " +
       "record, not for your recollection of it.",
     fix: "A dated log you can export as CSV. Free forever, for everyone, subscriber or not.",
   },
@@ -181,8 +181,8 @@ export function painCards(input: {
         legend: "Past due",
         headline: pastDue === 1 ? "One service is already overdue" : `${pastDue} services are already overdue`,
         body:
-          `On your ${input.vehicleName}, today. Nothing on the dashboard is going to mention it ` +
-          "\u2014 the light comes on after the damage, not before it.",
+          `On your ${input.vehicleName}, today. Nothing on the dashboard is going to mention it, ` +
+          "because the light comes on after the damage rather than before it.",
         fix: "Every service counted down by date and by mileage, and flagged before the number goes negative.",
       });
       continue;

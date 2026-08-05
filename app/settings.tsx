@@ -88,10 +88,10 @@ export default function Settings() {
 
   function reminderLabel(): string {
     if (!reminders || reminders.permission === "undetermined") return "Enable reminders";
-    if (reminders.permission === "denied") return "Reminders blocked — open iOS Settings";
-    if (reminders.count === 0) return "Reminders on — nothing due yet";
+    if (reminders.permission === "denied") return "Reminders blocked, open iOS Settings";
+    if (reminders.count === 0) return "Reminders on, nothing due yet";
     const next = reminders.nextAt ? `, next ${shortDate(reminders.nextAt)}` : "";
-    return `Reminders on — ${reminders.count} scheduled${next}`;
+    return `Reminders on, ${reminders.count} scheduled${next}`;
   }
 
   // Gated before the screen, the same way Add vehicle is: showing someone a
@@ -181,8 +181,8 @@ export default function Settings() {
     <Screen title="Settings">
       <Card>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-          Your records live on this phone only. No account, no server. Export any time — export is
-          never gated.
+          Your records live on this phone only. No account, no server. Export any time, because
+          export is never gated.
         </Text>
       </Card>
       <Button label="Export all records (CSV)" onPress={onExport} />

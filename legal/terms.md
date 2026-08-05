@@ -1,4 +1,4 @@
-# Terms of Use — Glovebox
+# Terms of Use for Glovebox
 
 *Effective: August 1, 2026*
 
@@ -17,7 +17,7 @@ The free tier includes one vehicle, unlimited service records, reminders, and CS
 - Pro subscriptions (monthly or yearly) automatically renew unless auto-renew is turned off at least 24 hours before the end of the current period.
 - Your Apple ID account is charged for renewal within 24 hours prior to the end of the current period, at the price you agreed to at purchase.
 - You can manage or cancel your subscription any time in your Apple ID account settings; the app does not process payments or cancellations directly.
-- No refunds are issued by us directly — refund requests are handled by Apple per their App Store policies.
+- No refunds are issued by us directly, and refund requests are handled by Apple per their App Store policies.
 
 ## Your data, your responsibility
 

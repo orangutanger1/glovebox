@@ -12,15 +12,21 @@ import { useAdvance } from "../../src/onboarding/nav";
  *
  * Glovebox has not shipped, so it has no ratings, no user count and no
  * testimonials, and the version of this screen that invents them is the one
- * thing the product cannot come back from — every other screen in this flow is
+ * thing the product cannot come back from: every other screen in this flow is
  * asking the user to believe a number. What it does have is the reason it was
- * built: 1,715 real reviews of the apps they would otherwise be using, pulled
- * from the App Store and still sitting in the repo.
+ * built, which is 1,715 real reviews of the apps they would otherwise be
+ * using, pulled from the App Store and still sitting in the repo.
  *
  * Nothing is quoted. Those reviews were written about somebody else's app, and
  * printing the words would be borrowing the reviewer as much as the evidence.
  * The tallies are the claim, and the label on each one says exactly what it
  * counts: a mention, not a verdict.
+ *
+ * Continue is gated on reaching the bottom. This is the only screen in the
+ * flow whose whole content is the argument rather than a summary of it, and a
+ * user who taps past the fourth tally has been shown evidence they did not
+ * read. The button says which of the two states it is in, because a control
+ * that is disabled for a reason the user cannot see is a broken control.
  */
 export default function OnboardingReviews() {
   const advance = useAdvance("reviews");
@@ -29,8 +35,14 @@ export default function OnboardingReviews() {
     <OnboardingScreen
       route="reviews"
       title="This app exists because of these."
-      subtitle={`${REVIEW_EVIDENCE.total.toLocaleString()} App Store reviews of the ${REVIEW_EVIDENCE.apps} apps that already do this. ${REVIEW_EVIDENCE.negative} of them are one to three stars.`}
-      footer={<Button label="Continue" onPress={advance} />}
+      subtitle={`${REVIEW_EVIDENCE.negative} of the ${REVIEW_EVIDENCE.total.toLocaleString()} App Store reviews of the ${REVIEW_EVIDENCE.apps} apps that already do this are one to three stars.`}
+      footer={({ atBottom }) => (
+        <Button
+          label={atBottom ? "Continue" : "Scroll to read all four"}
+          onPress={advance}
+          disabled={!atBottom}
+        />
+      )}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
@@ -47,9 +59,8 @@ export default function OnboardingReviews() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
-        Counted from the one-to-three-star reviews in research/reviews.json. A review can mention
-        more than one thing. None of them are about Glovebox — it has not shipped yet, so it has no
-        ratings to show you and is not going to borrow anyone else&apos;s.
+        Counted from the one to three star reviews of other apps in research/reviews.json, so none
+        of them are about Glovebox.
       </Text>
     </OnboardingScreen>
   );

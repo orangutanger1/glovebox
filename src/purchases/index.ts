@@ -35,7 +35,7 @@ export const ENTITLEMENT = "pro";
 export function initPurchases(): void {
   const apiKey = process.env.EXPO_PUBLIC_RC_IOS_KEY;
   if (!apiKey) {
-    console.warn("EXPO_PUBLIC_RC_IOS_KEY missing — paywall will be empty");
+    console.warn("EXPO_PUBLIC_RC_IOS_KEY missing, paywall will be empty");
     return;
   }
   Purchases.setLogLevel(__DEV__ ? LOG_LEVEL.DEBUG : LOG_LEVEL.ERROR);

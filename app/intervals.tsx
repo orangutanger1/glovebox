@@ -90,8 +90,8 @@ export default function Intervals() {
       >
         <Card>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            Due whichever comes first. Leave a box empty to ignore it — miles only, or months only,
-            is a valid schedule. Clear both to go back to the default ({describe(fallback)}).
+            Due whichever comes first. Leave a box empty to ignore it, so miles only or months
+            only is a valid schedule. Clear both to go back to the default ({describe(fallback)}).
           </Text>
         </Card>
         <Card>
@@ -106,7 +106,7 @@ export default function Intervals() {
     <Screen title="Service intervals">
       <Card>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-          How often each service comes due. Change any of them to match your own car — the manual,
+          How often each service comes due. Change any of them to match your own car, the manual,
           the climate you drive in, or how hard you use it.
         </Text>
       </Card>

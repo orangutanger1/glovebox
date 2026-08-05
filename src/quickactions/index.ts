@@ -30,7 +30,7 @@ export function quickActionItems(canTrial: boolean): QuickActions.Action[] {
     items.push({
       id: QUICK_ACTION_TRIAL,
       title: "Try Pro free",
-      subtitle: `${TRIAL_DAYS} days, then it renews. Cancel anytime.`,
+      subtitle: `${TRIAL_DAYS} days, then it renews unless you cancel`,
       // SF Symbols rather than a branded glyph: these sit directly above
       // Apple's own rows, and anything off-weight looks like a mistake.
       icon: "symbol:gift",

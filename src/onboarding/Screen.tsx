@@ -1,5 +1,15 @@
-import type { ReactNode } from "react";
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Pressable } from "react-native";
+import { useCallback, useRef, useState, type ReactNode } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
@@ -50,7 +60,10 @@ export function OnboardingScreen({
   subtitle?: string;
   /** Overrides the quiz counter. Used by the paged symptoms screen. */
   legend?: ReactNode;
-  footer?: ReactNode;
+  /** A function instead of a node gates the footer on reading: it is called
+   *  with `atBottom`, which is false until the user has scrolled to the end of
+   *  the content (and true from the start when there is nothing to scroll). */
+  footer?: ReactNode | ((state: { atBottom: boolean }) => ReactNode);
   children?: ReactNode;
   /** Screens with nothing to fill the middle read better optically centred
    *  than pinned under the title. */
@@ -66,6 +79,60 @@ export function OnboardingScreen({
   const router = useRouter();
   const previous = previousRoute(route);
   const quiz = quizStep(route);
+
+  /**
+   * Whether the content has been read to the end. Only wired up for a screen
+   * that asks for it, so every other screen keeps a scroll handler-free
+   * ScrollView.
+   *
+   * A gated screen starts closed and is opened by the first measurement, which
+   * arrives with the first layout. Starting open would leave the control live
+   * for the frames before anything has been measured, which is exactly the tap
+   * an impatient user gets in first.
+   */
+  const gated = typeof footer === "function";
+  const [atBottom, setAtBottom] = useState(!gated);
+  const viewportHeight = useRef(0);
+  const contentHeight = useRef(0);
+  const offsetY = useRef(0);
+
+  // A tolerance is required in both directions: content one pixel taller than
+  // the viewport is not something to scroll, and iOS rubber-banding means the
+  // final offset is rarely exactly the bottom. Nothing is decided until both
+  // heights are in, or the half-measured state (a viewport and no content)
+  // reads as "there is nothing to scroll" and opens the gate immediately.
+  const settle = useCallback(() => {
+    if (contentHeight.current === 0 || viewportHeight.current === 0) return;
+    const room = contentHeight.current - viewportHeight.current;
+    setAtBottom(room <= 8 || offsetY.current >= room - 24);
+  }, []);
+
+  const onScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
+      offsetY.current = contentOffset.y;
+      contentHeight.current = contentSize.height;
+      viewportHeight.current = layoutMeasurement.height;
+      settle();
+    },
+    [settle]
+  );
+
+  const onScrollLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      viewportHeight.current = event.nativeEvent.layout.height;
+      settle();
+    },
+    [settle]
+  );
+
+  const onContentSizeChange = useCallback(
+    (_width: number, height: number) => {
+      contentHeight.current = height;
+      settle();
+    },
+    [settle]
+  );
 
   /**
    * The flow was forward-only: a wrong year typed on step 1 could not be
@@ -114,6 +181,10 @@ export function OnboardingScreen({
           }}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
+          scrollEventThrottle={16}
+          onScroll={gated ? onScroll : undefined}
+          onLayout={gated ? onScrollLayout : undefined}
+          onContentSizeChange={gated ? onContentSizeChange : undefined}
         >
           <View
             style={{
@@ -172,7 +243,7 @@ export function OnboardingScreen({
               gap: tokens.space.sm,
             }}
           >
-            {footer}
+            {gated ? (footer as (state: { atBottom: boolean }) => ReactNode)({ atBottom }) : footer}
           </View>
         ) : null}
       </KeyboardAvoidingView>

@@ -5,7 +5,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { OdometerRoll, randomOdometerReading } from "../../src/design/OdometerRoll";
 import { tokens } from "../../src/design/tokens";
-import { getVehicle, setOdometerIfHigher } from "../../src/db/vehicles";
+import { getVehicle, setOdometerReading } from "../../src/db/vehicles";
 import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -13,8 +13,17 @@ import { parseNumber } from "../../src/format";
 
 export default function OnboardingOdometer() {
   const advance = useAdvance("odometer");
-  const [odometer, setOdometer] = useState("");
-  // Drawn once per mount, not per render — the drums must not re-roll every
+  // Read once, at mount. Stepping back from the next question and forward
+  // again lands on a new copy of this screen, and it has to show the reading
+  // the user already gave rather than an empty field.
+  const saved = useMemo(() => {
+    const ownedId = getOnboardingVehicleId();
+    return ownedId ? getVehicle(ownedId) : null;
+  }, []);
+  const [odometer, setOdometer] = useState(
+    saved?.odometer === undefined ? "" : String(saved.odometer)
+  );
+  // Drawn once per mount, not per render: the drums must not re-roll every
   // time the user types a digit into the field below them.
   const demo = useMemo(() => randomOdometerReading(), []);
 
@@ -25,9 +34,11 @@ export default function OnboardingOdometer() {
     if (!valid) return;
     const ownedId = getOnboardingVehicleId();
     const vehicle = ownedId ? getVehicle(ownedId) : null;
-    // The placeholder on this very field shows "84,210", so a user copying its
+    // Set outright rather than as a high-water mark. This field is the dash
+    // reading itself, so a user who came back to fix an extra digit has to be
+    // able to lower it. The placeholder shows "84,210", so a user copying its
     // format produced NaN and silently lost their reading.
-    if (vehicle) setOdometerIfHigher(vehicle.id, miles);
+    if (vehicle) setOdometerReading(vehicle.id, miles);
     advance();
   }
 
@@ -40,9 +51,9 @@ export default function OnboardingOdometer() {
       <Panel>
         {/* Drums above the field the user is about to type into: the screen
             shows the thing it is asking them to go and read, and shows it
-            moving. This was a dimmed photograph — static, decoded a frame
-            late, and faded to half strength so it would stop out-shouting the
-            only interactive element on the screen. */}
+            moving. This was a dimmed photograph: static, decoded a frame late,
+            and faded to half strength so it would stop out-shouting the only
+            interactive element on the screen. */}
         <OdometerRoll value={demo} />
         <View style={{ padding: tokens.space.md }}>
           <Field
@@ -51,13 +62,12 @@ export default function OnboardingOdometer() {
             onChangeText={setOdometer}
             keyboardType="numeric"
             placeholder="84,210"
-            autoFocus
+            autoFocus={saved?.odometer === undefined}
           />
         </View>
       </Panel>
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        Used to work out what is due by mileage, not just by date. A rough number is fine — you can
-        correct it any time you log a service.
+        A rough number is fine, and it is what dates the services that come due by mileage.
       </Text>
     </OnboardingScreen>
   );
