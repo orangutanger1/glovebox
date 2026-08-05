@@ -57,11 +57,6 @@ export default function OnboardingReviews() {
           ))}
         </View>
       </Panel>
-
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
-        Counted from the one to three star reviews of other apps in research/reviews.json, so none
-        of them are about Glovebox.
-      </Text>
     </OnboardingScreen>
   );
 }

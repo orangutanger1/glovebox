@@ -8,9 +8,16 @@
  *
  * The shape here is the conversion structure the product was modelled on:
  * quiz, then a computed result, then the cost of the problem, then the answer
- * to it, then evidence, then the plan, then the offer — with a second, cheaper
- * offer for the user who walks away from the first. Every screen after the
+ * to it, then evidence, then the plan, then the offer. Every screen after the
  * quiz is built from the user's own answers, so none of it is a feature tour.
+ *
+ * The tail is a ladder, and the order of it is the whole conversion argument.
+ * "paywall" asks for money and offers no way past itself except the sheet.
+ * "offer" catches the user who closed that sheet and gives them the trial,
+ * which is worth more here than it is up front: a trial shown first is handed
+ * to everyone who would have paid outright. "free" catches the user who
+ * closed that one too, and is the first screen in the flow that mentions
+ * starting for nothing. Nobody sees a free door before both prices.
  *
  * One ordered array is the whole navigation model: Back is the entry before
  * you, Continue is the entry after you, and no screen hard-codes the name of
@@ -18,7 +25,6 @@
  */
 export const FLOW = [
   "welcome",
-  "intro",
   // The quiz. Six questions, all of which change what the app computes.
   "vehicle",
   "odometer",
@@ -36,6 +42,7 @@ export const FLOW = [
   "plan",
   "paywall",
   "offer",
+  "free",
 ] as const;
 
 export type OnboardingRoute = (typeof FLOW)[number];
@@ -91,6 +98,10 @@ export function quizStep(route: OnboardingRoute): { step: number; total: number 
 const RETIRED: Record<string, OnboardingRoute> = {
   ready: "analyzing",
   reminders: "plan",
+  // The contract screen. It listed what the six questions would ask, which is
+  // a screen the user pays a tap for to be told they are about to be asked
+  // something. Removed; an install parked on it resumes at the first question.
+  intro: "vehicle",
 };
 
 /** Where a relaunch resumes. Anything unrecognised restarts the flow. */

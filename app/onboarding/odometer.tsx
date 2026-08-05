@@ -20,9 +20,10 @@ export default function OnboardingOdometer() {
     const ownedId = getOnboardingVehicleId();
     return ownedId ? getVehicle(ownedId) : null;
   }, []);
-  const [odometer, setOdometer] = useState(
-    saved?.odometer === undefined ? "" : String(saved.odometer)
-  );
+  // `== null`, not `=== undefined`: SQLite hands back a JSON null for a row
+  // that has never had a reading, and `String(null)` put the literal text
+  // "null" in the field on the first pass through this question.
+  const [odometer, setOdometer] = useState(saved?.odometer == null ? "" : String(saved.odometer));
   // Drawn once per mount, not per render: the drums must not re-roll every
   // time the user types a digit into the field below them.
   const demo = useMemo(() => randomOdometerReading(), []);
@@ -62,7 +63,7 @@ export default function OnboardingOdometer() {
             onChangeText={setOdometer}
             keyboardType="numeric"
             placeholder="84,210"
-            autoFocus={saved?.odometer === undefined}
+            autoFocus={saved?.odometer == null}
           />
         </View>
       </Panel>

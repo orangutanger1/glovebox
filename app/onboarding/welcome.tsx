@@ -81,7 +81,7 @@ export default function Welcome() {
           </Text>
 
           <View style={{ gap: tokens.space.sm }}>
-            <Button label="Start" onPress={advance} />
+            <Button label="Get started" onPress={advance} />
             {/* Demoted from the headline slot: it answers an objection the
                 user has not formed yet on the first screen. */}
             <Text

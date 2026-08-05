@@ -1,4 +1,5 @@
 import { getDb } from "./client";
+import { row, rows } from "./row";
 
 export type Vehicle = {
   id: string;
@@ -16,19 +17,20 @@ function id() {
 }
 
 export function listVehicles(): Vehicle[] {
-  return getDb().getAllSync<Vehicle>(
-    "SELECT * FROM vehicles WHERE deleted_at IS NULL ORDER BY created_at ASC"
+  return rows(
+    getDb().getAllSync<Vehicle>(
+      "SELECT * FROM vehicles WHERE deleted_at IS NULL ORDER BY created_at ASC"
+    )
   );
 }
 
 /** Tombstoned vehicles are invisible here, the same as in listVehicles — a
  *  stale route or deep link must not resurrect one. */
 export function getVehicle(vehicleId: string): Vehicle | null {
-  return (
-    getDb().getFirstSync<Vehicle>(
-      "SELECT * FROM vehicles WHERE id = ? AND deleted_at IS NULL",
-      [vehicleId]
-    ) ?? null
+  return row(
+    getDb().getFirstSync<Vehicle>("SELECT * FROM vehicles WHERE id = ? AND deleted_at IS NULL", [
+      vehicleId,
+    ])
   );
 }
 

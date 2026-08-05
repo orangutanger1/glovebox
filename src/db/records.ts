@@ -1,4 +1,5 @@
 import { getDb } from "./client";
+import { rows } from "./row";
 
 export type ServiceRecord = {
   id: string;
@@ -19,11 +20,13 @@ function id() {
 }
 
 export function listRecords(vehicleId: string): ServiceRecord[] {
-  return getDb().getAllSync<ServiceRecord>(
-    `SELECT * FROM service_records
-     WHERE vehicle_id = ? AND deleted_at IS NULL
-     ORDER BY performed_at DESC`,
-    [vehicleId]
+  return rows(
+    getDb().getAllSync<ServiceRecord>(
+      `SELECT * FROM service_records
+       WHERE vehicle_id = ? AND deleted_at IS NULL
+       ORDER BY performed_at DESC`,
+      [vehicleId]
+    )
   );
 }
 
@@ -71,10 +74,12 @@ export function undoDelete(recordId: string): void {
 
 /** Includes soft-deleted rows: export must never lose anything. */
 export function allRecordsForExport(): (ServiceRecord & { vehicle_name: string })[] {
-  return getDb().getAllSync<ServiceRecord & { vehicle_name: string }>(
-    `SELECT r.*, v.name AS vehicle_name
-     FROM service_records r
-     JOIN vehicles v ON v.id = r.vehicle_id
-     ORDER BY v.name ASC, r.performed_at DESC`
+  return rows(
+    getDb().getAllSync<ServiceRecord & { vehicle_name: string }>(
+      `SELECT r.*, v.name AS vehicle_name
+       FROM service_records r
+       JOIN vehicles v ON v.id = r.vehicle_id
+       ORDER BY v.name ASC, r.performed_at DESC`
+    )
   );
 }

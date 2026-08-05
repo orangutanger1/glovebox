@@ -29,6 +29,27 @@ export function useAdvance(from: OnboardingRoute, mode: "push" | "replace" = "pu
 }
 
 /**
+ * A jump to a named screen, for the one place a screen has a choice about
+ * where it goes next: the paywall sends a dismissal to the trial offer, but
+ * sends a paywall that could not present at all past it, because there is
+ * nothing to reconsider and a second sheet would fail the same way.
+ *
+ * Everything else uses `useAdvance`. A second hard-coded route name is the
+ * cost of the branch and is worth paying once; a third would mean the flow
+ * array has stopped being the navigation model.
+ */
+export function useGoTo(): (route: OnboardingRoute) => void {
+  const router = useRouter();
+  return useCallback(
+    (route: OnboardingRoute) => {
+      setOnboardingStep(route);
+      router.push(`/onboarding/${route}` as never);
+    },
+    [router]
+  );
+}
+
+/**
  * The only exit. `replace`, not `push`: the garage must not have seventeen
  * onboarding screens behind it for a back-swipe to walk into.
  */

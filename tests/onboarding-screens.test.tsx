@@ -45,7 +45,7 @@ jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
 
 import { createVehicle } from "../src/db/vehicles";
 import { setAnswers, setOnboardingVehicleId } from "../src/onboarding";
-import OnboardingIntro from "../app/onboarding/intro";
+import OnboardingFree from "../app/onboarding/free";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
@@ -94,10 +94,18 @@ afterEach(() => {
   });
 });
 
-test("the first screen asks about your car and offers to get started", () => {
-  const found = texts(render(OnboardingIntro));
-  expect(found).toContain("Six questions about your car.");
-  expect(found).toContain("Get started");
+test("the last screen offers the free start, and nothing before it does", () => {
+  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  setOnboardingVehicleId(car.id);
+
+  const free = texts(render(OnboardingFree));
+  expect(free).toContain("Start with the free app");
+
+  // The paywall used to carry the same link under its button, which handed a
+  // free start to every user who had not yet seen a price.
+  const paywall = texts(render(OnboardingPaywall)).join(" ");
+  expect(paywall).not.toMatch(/free app/i);
+  expect(texts(render(OnboardingPaywall))).toContain("See Glovebox Pro");
 });
 
 test("no screen in the flow prints an em or en dash", () => {
@@ -112,7 +120,6 @@ test("no screen in the flow prints an em or en dash", () => {
   setAnswers({ drive: "average", tracking: "dealer", worries: ["records", "upsell"] });
 
   const screens = [
-    OnboardingIntro,
     OnboardingVehicle,
     OnboardingOdometer,
     OnboardingDrive,
@@ -127,6 +134,7 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingPlan,
     OnboardingPaywall,
     OnboardingOffer,
+    OnboardingFree,
   ];
 
   for (const Screen of screens) {
@@ -156,6 +164,15 @@ test("a question stepped back into comes back filled in", () => {
     .findAll((n) => Array.isArray(n.props.selected))
     .map((n) => n.props.selected as string[]);
   expect(selected.some((s) => s.includes("high"))).toBe(true);
+});
+
+test("the odometer question starts empty on a car that has no reading yet", () => {
+  // The column is NULL for a vehicle created by the question before this one,
+  // and the field used to open with the literal text "null" in it.
+  const car = createVehicle({ name: "2019 Honda Civic", year: 2019 });
+  setOnboardingVehicleId(car.id);
+  expect(values(render(OnboardingOdometer))).toContain("");
+  expect(values(render(OnboardingOdometer))).not.toContain("null");
 });
 
 test("the evidence screen will not let you continue until you have scrolled it", () => {

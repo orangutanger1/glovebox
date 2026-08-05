@@ -5,7 +5,7 @@ import { tokens } from "../../src/design/tokens";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
-import { useFinish } from "../../src/onboarding/nav";
+import { useAdvance, useFinish } from "../../src/onboarding/nav";
 
 /**
  * The one retry, and the last screen in the flow.
@@ -24,9 +24,14 @@ import { useFinish } from "../../src/onboarding/nav";
  * price and the disclosure Apple requires, and repeating a number here would
  * be wrong the moment somebody edits the offering.
  *
- * Both controls end onboarding. There is no third ask.
+ * A purchase ends onboarding. Declining does not: it advances to the free
+ * landing, which is where the app finally says the word "free" out loud, with
+ * the four things that are free forever listed on it. That screen is the exit,
+ * and it is the third of three, so nobody reaches it without having been shown
+ * both a price and a trial first.
  */
 export default function OnboardingOffer() {
+  const advance = useAdvance("offer");
   const finish = useFinish();
   const [busy, setBusy] = useState(false);
 
@@ -35,8 +40,12 @@ export default function OnboardingOffer() {
     setBusy(true);
     if ((await presentOffering(DISCOUNT_OFFERING)) === "purchased") {
       recordReviewEvent("purchase");
+      finish();
+      return;
     }
-    finish();
+    // Dismissed, or the offering could not be presented. Either way the trial
+    // was not started, and the free landing is the only thing left to say.
+    advance();
   }
 
   return (
@@ -49,12 +58,12 @@ export default function OnboardingOffer() {
         <>
           <Button label={`Start my ${TRIAL_DAYS} free days`} onPress={onSeeOffer} disabled={busy} />
           <Pressable
-            onPress={finish}
+            onPress={advance}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
             <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              No thanks, take me in
+              No thanks, show me the free app
             </Text>
           </Pressable>
         </>

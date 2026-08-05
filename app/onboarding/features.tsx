@@ -4,6 +4,7 @@ import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
+import { FEATURES } from "../../src/onboarding/features";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 
@@ -17,35 +18,6 @@ import { useAdvance } from "../../src/onboarding/nav";
  * after they had committed to the app. A user who reads "free" against four of
  * six rows and then sees a price has been told the truth in the right order.
  */
-const FEATURES: { title: string; subtitle: string; pro?: boolean }[] = [
-  {
-    title: "Every service, kept forever",
-    subtitle: "Date, mileage, cost and notes, with deleted rows tombstoned rather than dropped.",
-  },
-  {
-    title: "Due by date and by mileage",
-    subtitle: "Whichever comes first, counted from the intervals for each service.",
-  },
-  {
-    title: "One reminder per service",
-    subtitle: "On the day it comes due, and nothing else ever.",
-  },
-  {
-    title: "Export everything as CSV",
-    subtitle: "Free forever for everyone, so your records are never hostage to a subscription.",
-  },
-  {
-    title: "More than one vehicle",
-    subtitle: "The whole garage, each with its own schedule.",
-    pro: true,
-  },
-  {
-    title: "Your own service intervals",
-    subtitle: "Override any of them when the manual disagrees with the defaults.",
-    pro: true,
-  },
-];
-
 export default function OnboardingFeatures() {
   const advance = useAdvance("features");
 
