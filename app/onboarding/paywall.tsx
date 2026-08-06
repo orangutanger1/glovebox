@@ -4,6 +4,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
 import { tokens } from "../../src/design/tokens";
+import { formatDate, formatNumber, t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, hasOffering, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
@@ -69,26 +70,30 @@ export default function OnboardingPaywall() {
   return (
     <OnboardingScreen
       route="paywall"
-      title="Your garage is ready."
-      subtitle="The plan below is yours either way, and Pro is the rest of the garage plus your own intervals."
-      footer={<Button label="See Glovebox Pro" onPress={onSeeOffer} disabled={busy} />}
+      title={t("offer.paywall.title")}
+      subtitle={t("offer.paywall.subtitle")}
+      footer={<Button label={t("offer.paywall.cta")} onPress={onSeeOffer} disabled={busy} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge legend="Vehicle" value={vehicleName} />
+            <Gauge legend={t("offer.paywall.vehicle")} value={vehicleName} />
             <Gauge
-              legend="Scheduled"
-              value={String(plan.items.length)}
-              unit="services"
+              legend={t("offer.paywall.scheduled")}
+              value={formatNumber(plan.items.length)}
+              unit={t("offer.paywall.services", { count: plan.items.length })}
               align="right"
             />
           </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge legend="Due now" value={String(plan.dueNow)} lamp={plan.dueNow > 0} />
             <Gauge
-              legend="Next up"
-              value={next?.dueAt ? new Date(next.dueAt).toLocaleDateString() : "None"}
+              legend={t("offer.paywall.dueNow")}
+              value={formatNumber(plan.dueNow)}
+              lamp={plan.dueNow > 0}
+            />
+            <Gauge
+              legend={t("offer.paywall.nextUp")}
+              value={next?.dueAt ? formatDate(next.dueAt) : t("offer.paywall.none")}
               align="right"
             />
           </View>
@@ -96,8 +101,7 @@ export default function OnboardingPaywall() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        One car, unlimited history and CSV export are free forever, including after a cancelled
-        subscription.
+        {t("offer.paywall.caption")}
       </Text>
     </OnboardingScreen>
   );

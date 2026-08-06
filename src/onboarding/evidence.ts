@@ -1,3 +1,5 @@
+import { t } from "../i18n";
+
 /**
  * The social-proof beat, done without any.
  *
@@ -27,19 +29,29 @@ export const REVIEW_EVIDENCE = {
   apps: 9,
   /** Of those, how many are one to three stars. */
   negative: 691,
-  /** Theme tallies over the negative subset. A review can hit more than one. */
+  /**
+   * Theme tallies over the negative subset. A review can hit more than one.
+   *
+   * The id is the theme's name in `research/reviews.py`, and it is what keeps a
+   * count tied to the words for it and to Glovebox's answer: those are copy and
+   * live in the catalog, while the tally is a fact about the corpus.
+   */
   themes: [
-    { count: 179, label: "lost records, failed syncs, no way to get the data out" },
-    { count: 87, label: "the price, the paywall, or what it turned out to cost" },
-    { count: 83, label: "an account and a login before anything worked" },
-    { count: 59, label: "crashes, freezes, and files that would not open" },
+    { id: "records", count: 179 },
+    { id: "price", count: 87 },
+    { id: "account", count: 83 },
+    { id: "crashes", count: 59 },
   ],
 } as const;
 
-/** What Glovebox does about each tally, in the same order. */
-export const EVIDENCE_ANSWERS = [
-  "SQLite on your phone. Export to CSV, free forever.",
-  "Free tier is a whole usable app. One car, unlimited history.",
-  "No account. There is nothing to log into.",
-  "Deleted records are tombstoned, never dropped.",
-] as const;
+export type ReviewThemeId = (typeof REVIEW_EVIDENCE.themes)[number]["id"];
+
+/** What the tally counts, in the reader's language. */
+export function reviewThemeLabel(id: ReviewThemeId): string {
+  return t(`evidence.${id}.label`);
+}
+
+/** What Glovebox does about that tally. */
+export function evidenceAnswer(id: ReviewThemeId): string {
+  return t(`evidence.${id}.answer`);
+}

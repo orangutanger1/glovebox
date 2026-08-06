@@ -5,7 +5,13 @@ import {
   clampDateParts,
   dateFromParts,
   daysInMonth,
+  shortDate,
 } from "../src/format";
+import { setLanguage } from "../src/i18n";
+
+// `vehicleDisplayName`'s fallback and `shortDate` both read the catalog now,
+// so the English strings asserted below are only right with English in force.
+beforeAll(() => setLanguage("en"));
 
 describe("parseNumber", () => {
   it("accepts the grouped format the odometer placeholder itself shows", () => {
@@ -174,6 +180,16 @@ describe("dateFromParts", () => {
     expect([d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours()]).toEqual([
       2026, 3, 14, 12,
     ]);
+  });
+});
+
+describe("shortDate", () => {
+  it("is the locale formatter, not a slice of the ISO string", () => {
+    // Three screens used to print `2026-09-14`, which reads as a date in no
+    // country and as a database column in every one. The name still lives here
+    // because the screens import it from this module; the implementation is the
+    // i18n one.
+    expect(shortDate("2026-09-14T12:00:00.000Z")).toBe("Sep 14");
   });
 });
 

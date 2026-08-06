@@ -1,4 +1,5 @@
 import { getDb } from "../db/client";
+import { getState, setState } from "../db/state";
 import {
   shouldRequestReview,
   REVIEW_LAST_ASKED_KEY,
@@ -26,22 +27,6 @@ import {
 function loadStoreReview(): typeof import("expo-store-review") {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require("expo-store-review");
-}
-
-function dbGet(key: string): string | null {
-  const row = getDb().getFirstSync<{ value: string | null }>(
-    "SELECT value FROM app_state WHERE key = ?",
-    [key]
-  );
-  return row?.value ?? null;
-}
-
-function dbSet(key: string, value: string): void {
-  getDb().runSync(
-    `INSERT INTO app_state (key, value) VALUES (?, ?)
-     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
-    [key, value]
-  );
 }
 
 /**
@@ -93,10 +78,10 @@ function recentEvents(): ReviewEvent[] {
  */
 export async function maybeRequestReview(): Promise<void> {
   try {
-    const askCount = Number(dbGet(REVIEW_ASK_COUNT_KEY) ?? "0");
+    const askCount = Number(getState(REVIEW_ASK_COUNT_KEY) ?? "0");
     const state = {
       events: recentEvents(),
-      lastAskedAt: dbGet(REVIEW_LAST_ASKED_KEY),
+      lastAskedAt: getState(REVIEW_LAST_ASKED_KEY),
       askCount: Number.isFinite(askCount) ? askCount : 0,
     };
     if (!shouldRequestReview(state, new Date())) return;
@@ -104,8 +89,8 @@ export async function maybeRequestReview(): Promise<void> {
     const StoreReview = loadStoreReview();
     if (!(await StoreReview.hasAction())) return;
 
-    dbSet(REVIEW_LAST_ASKED_KEY, new Date().toISOString());
-    dbSet(REVIEW_ASK_COUNT_KEY, String(state.askCount + 1));
+    setState(REVIEW_LAST_ASKED_KEY, new Date().toISOString());
+    setState(REVIEW_ASK_COUNT_KEY, String(state.askCount + 1));
     await StoreReview.requestReview();
   } catch {
     // A rating prompt is the least important thing on screen. It never breaks

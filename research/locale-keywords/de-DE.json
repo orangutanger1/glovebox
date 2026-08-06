@@ -1,0 +1,286 @@
+{
+ "country": "DE",
+ "lang": "de_de",
+ "terms": {
+  "ace car tycoon-wartungsmeister": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "alex autopflege": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "auto war": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "auto wartung": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "auto wartung logbuch tanken km": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "auto werkstatt": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "auto-wartung": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "autolog - wartungs‑logbuch": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "autologg fahrtenbuch 2.0": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "autopflege crm - buff": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "autopflege shop": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "bruun inspektion ped category": {
+   "seeds": [
+    "inspektion auto"
+   ]
+  },
+  "carlog - auto wartung logger": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "carlulu lite - autopflege und reparatur": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "carlulupro - autopflege": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "ccf autopflege": {
+   "seeds": [
+    "auto pflege"
+   ]
+  },
+  "check24": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "deutsches fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "digitales fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "easy werkstatt": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "fahrten aufzeichnen": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "fahrtenbuch kilometerzähler": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "fahrtenbuch kostenlos": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "fahrtenbuch von driversnote": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "feldkarten – gps-inspektion": {
+   "seeds": [
+    "inspektion auto"
+   ]
+  },
+  "kfz fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "kfz wartung": {
+   "seeds": [
+    "kfz wartung"
+   ]
+  },
+  "kfz werkstattapp": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "mercedes-benz fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "miles kilometers converter": {
+   "seeds": [
+    "kilometerstand"
+   ]
+  },
+  "miles to kilometers": {
+   "seeds": [
+    "kilometerstand"
+   ]
+  },
+  "motorly – auto wartung & tüv": {
+   "seeds": [
+    "auto wartung"
+   ]
+  },
+  "mpg to kilometers per liters": {
+   "seeds": [
+    "kilometerstand"
+   ]
+  },
+  "powersystem inspektion": {
+   "seeds": [
+    "inspektion auto"
+   ]
+  },
+  "property360, inspektion": {
+   "seeds": [
+    "inspektion auto"
+   ]
+  },
+  "qreport - inspektion": {
+   "seeds": [
+    "inspektion auto"
+   ]
+  },
+  "scheck": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheck allwetteranlage gmbh & co kg": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheck club": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheck in": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheck in center": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheckheft": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "scheckkartenleser": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "sportscheck": {
+   "seeds": [
+    "scheckheft"
+   ]
+  },
+  "vimcar fahrtenbuch": {
+   "seeds": [
+    "fahrtenbuch"
+   ]
+  },
+  "wartungsapp deosa": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "wartungsplaner": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "wartungsplaner – haus & auto": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "wartungstutzriem": {
+   "seeds": [
+    "wartungsheft"
+   ]
+  },
+  "werkstatt": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "werkstatt restaurants": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "werkstatt spiel": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "werkstattplaner": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "werkstattstar": {
+   "seeds": [
+    "werkstatt"
+   ]
+  },
+  "ölwechsel": {
+   "seeds": [
+    "olwechsel"
+   ]
+  }
+ }
+}

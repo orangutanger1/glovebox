@@ -20,6 +20,10 @@ import {
 import { nextDue, dueStatus } from "../../src/schedule";
 import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
+import { t, formatNumber, formatDate } from "../../src/i18n";
+import { getDistanceUnit } from "../../src/units";
+import { formatDistance, distanceUnitLabel } from "../../src/units/format";
+import { serviceName } from "../../src/schedule/names";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -28,6 +32,7 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
   const now = new Date().toISOString();
   const items: DueItem[] = [];
   const intervals = getIntervals();
+  const unit = getDistanceUnit();
 
   for (const r of records) {
     if (seen.has(r.service_type)) continue;
@@ -39,27 +44,42 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
       lastOdometer: r.odometer,
       interval,
     });
-    const status = dueStatus({ ...due, now, odometer: vehicle.odometer });
+    const status = dueStatus({ ...due, now, odometer: vehicle.odometer, unit });
     if (status === "ok") continue;
 
-    const milesOver =
+    const overBy =
       due.dueOdometer !== undefined && vehicle.odometer !== undefined
         ? vehicle.odometer - due.dueOdometer
         : undefined;
     const line =
-      status === "due" && milesOver !== undefined && milesOver > 0
-        ? `${milesOver.toLocaleString()} mi over`
+      status === "due" && overBy !== undefined && overBy > 0
+        ? t("vehicle.over", { distance: formatDistance(overBy, unit) })
         : due.dueAt
-          ? `due ${new Date(due.dueAt).toLocaleDateString()}`
+          ? t("vehicle.dueOn", { date: formatDate(due.dueAt) })
           : status === "due"
-            ? "due now"
-            : "due soon";
+            ? t("vehicle.dueNow")
+            : t("vehicle.dueSoon");
     items.push({ type: r.service_type, status, line });
   }
   return items;
 }
 
 const UNDO_WINDOW_MS = 8000;
+
+/**
+ * The facts a history row can carry, as one message per combination: the middot
+ * is punctuation a translator has to be able to change, and only a whole
+ * message can be reordered for a language that reads them in another order.
+ */
+function recordSubtitle(record: ServiceRecord): string {
+  const date = formatDate(record.performed_at);
+  const distance = record.odometer ? formatDistance(record.odometer) : undefined;
+  const cost = record.cost ? `$${record.cost.toLocaleString()}` : undefined;
+  if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
+  if (distance) return t("vehicle.row.dateDistance", { date, distance });
+  if (cost) return t("vehicle.row.dateCost", { date, cost });
+  return date;
+}
 
 function SectionLegend({ children }: { children: string }) {
   return (
@@ -109,12 +129,12 @@ export default function VehicleDetail() {
   function onDeleteVehicle() {
     if (!vehicle) return;
     Alert.alert(
-      `Delete ${vehicle.name}?`,
-      "It leaves your garage along with its service history. Records already exported stay in that file.",
+      t("vehicle.delete.title", { name: vehicle.name }),
+      t("vehicle.delete.body"),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("vehicle.delete.cancel"), style: "cancel" },
         {
-          text: "Delete",
+          text: t("vehicle.delete.confirm"),
           style: "destructive",
           onPress: () => {
             softDeleteVehicle(vehicle.id);
@@ -145,7 +165,7 @@ export default function VehicleDetail() {
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
       {/* The header is the only place the vehicle is named, so it is set from
           the row rather than left as the route pattern. */}
-      <Stack.Screen options={{ title: vehicle?.name ?? "Vehicle" }} />
+      <Stack.Screen options={{ title: vehicle?.name ?? t("vehicle.title") }} />
       <FlatList
         data={records}
         keyExtractor={(r) => r.id}
@@ -163,13 +183,21 @@ export default function VehicleDetail() {
                   style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}
                 >
                   <Gauge
-                    legend="Odometer"
-                    value={vehicle?.odometer ? vehicle.odometer.toLocaleString() : "Not set"}
-                    unit={vehicle?.odometer ? "mi" : undefined}
+                    legend={t("vehicle.odometer")}
+                    value={
+                      vehicle?.odometer
+                        ? formatNumber(vehicle.odometer)
+                        : t("vehicle.odometer.notSet")
+                    }
+                    unit={vehicle?.odometer ? distanceUnitLabel() : undefined}
                   />
                   <Gauge
-                    legend="Last service"
-                    value={lastService ? lastService.performed_at.slice(0, 10) : "None yet"}
+                    legend={t("vehicle.lastService")}
+                    value={
+                      lastService
+                        ? formatDate(lastService.performed_at)
+                        : t("vehicle.lastService.none")
+                    }
                     align="right"
                   />
                 </View>
@@ -183,31 +211,36 @@ export default function VehicleDetail() {
 
             {due.length > 0 ? (
               <View style={{ gap: tokens.space.xs }}>
-                <SectionLegend>Due now</SectionLegend>
+                <SectionLegend>{t("vehicle.due")}</SectionLegend>
                 {due.map((d) => (
                   <ListRow
                     key={d.type}
-                    title={d.type}
+                    title={serviceName(d.type)}
                     subtitle={d.line}
                     status={d.status === "due" ? "overdue" : "soon"}
-                    right={<Badge label={d.status === "due" ? "Overdue" : "Soon"} tone={d.status} />}
+                    right={
+                      <Badge
+                        label={d.status === "due" ? t("vehicle.badge.overdue") : t("vehicle.badge.soon")}
+                        tone={d.status}
+                      />
+                    }
                   />
                 ))}
               </View>
             ) : null}
 
-            <SectionLegend>History</SectionLegend>
+            <SectionLegend>{t("vehicle.history")}</SectionLegend>
           </View>
         }
         ListEmptyComponent={
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            No service logged yet. Log the last thing you had done.
+            {t("vehicle.history.empty")}
           </Text>
         }
         ListFooterComponent={
           vehicle ? (
             <View style={{ paddingTop: tokens.space.xl }}>
-              <Button label="Delete vehicle" variant="danger" onPress={onDeleteVehicle} />
+              <Button label={t("vehicle.deleteVehicle")} variant="danger" onPress={onDeleteVehicle} />
             </View>
           ) : null
         }
@@ -224,15 +257,15 @@ export default function VehicleDetail() {
                   borderRadius: tokens.radius.sm,
                 }}
               >
-                <Text style={{ ...tokens.text.legend, color: tokens.color.white }}>Delete</Text>
+                <Text style={{ ...tokens.text.legend, color: tokens.color.white }}>
+                  {t("vehicle.swipe.delete")}
+                </Text>
               </Pressable>
             )}
           >
             <ListRow
-              title={item.service_type}
-              subtitle={`${item.performed_at.slice(0, 10)}${
-                item.odometer ? ` · ${item.odometer.toLocaleString()} mi` : ""
-              }${item.cost ? ` · $${item.cost.toLocaleString()}` : ""}`}
+              title={serviceName(item.service_type)}
+              subtitle={recordSubtitle(item)}
               status="ok"
             />
           </Swipeable>
@@ -258,15 +291,15 @@ export default function VehicleDetail() {
                 }}
               >
                 <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
-                  Service deleted
+                  {t("vehicle.serviceDeleted")}
                 </Text>
                 <Text style={{ ...tokens.text.legend, fontSize: 14, color: tokens.color.white }}>
-                  Undo
+                  {t("vehicle.undo")}
                 </Text>
               </View>
             </Pressable>
           ) : null}
-          <Button label="Log a service" onPress={() => router.push(`/vehicle/${id}/log`)} />
+          <Button label={t("vehicle.logService")} onPress={() => router.push(`/vehicle/${id}/log`)} />
         </View>
       </Glass>
     </SafeAreaView>

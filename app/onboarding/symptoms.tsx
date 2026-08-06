@@ -6,6 +6,7 @@ import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { StepLamps } from "../../src/design/StepLamps";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
 import { setOnboardingStep } from "../../src/onboarding";
 import { previousRoute } from "../../src/onboarding/flow";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -60,7 +61,9 @@ export default function OnboardingSymptoms() {
       title={card.headline}
       footer={
         <Button
-          label={index < cards.length - 1 ? "Continue" : "So what do I do"}
+          label={t(
+            index < cards.length - 1 ? "onboardingC.symptoms.next" : "onboardingC.symptoms.last"
+          )}
           onPress={onContinue}
         />
       }

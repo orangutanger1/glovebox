@@ -1,0 +1,21 @@
+{
+ "country": "PL",
+ "lang": "pl_pl",
+ "terms": {
+  "moje audi": {
+   "seeds": [
+    "moje auto"
+   ]
+  },
+  "moje auto": {
+   "seeds": [
+    "moje auto"
+   ]
+  },
+  "moje autoškola": {
+   "seeds": [
+    "moje auto"
+   ]
+  }
+ }
+}

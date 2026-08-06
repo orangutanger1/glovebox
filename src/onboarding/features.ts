@@ -1,3 +1,5 @@
+import { t } from "../i18n";
+
 /**
  * What the app does, and which half of it costs money.
  *
@@ -7,35 +9,33 @@
  * drifted between the two would be a promise made before the paywall and
  * withdrawn after it.
  */
-export type Feature = { title: string; subtitle: string; pro?: boolean };
+export type FeatureId = (typeof ROWS)[number]["id"];
 
-export const FEATURES: readonly Feature[] = [
-  {
-    title: "Every service, kept forever",
-    subtitle: "Date, mileage, cost and notes, with deleted rows tombstoned rather than dropped.",
-  },
-  {
-    title: "Due by date and by mileage",
-    subtitle: "Whichever comes first, counted from the intervals for each service.",
-  },
-  {
-    title: "One reminder per service",
-    subtitle: "On the day it comes due, and nothing else ever.",
-  },
-  {
-    title: "Export everything as CSV",
-    subtitle: "Free forever for everyone, so your records are never hostage to a subscription.",
-  },
-  {
-    title: "More than one vehicle",
-    subtitle: "The whole garage, each with its own schedule.",
-    pro: true,
-  },
-  {
-    title: "Your own service intervals",
-    subtitle: "Override any of them when the manual disagrees with the defaults.",
-    pro: true,
-  },
-];
+export type Feature = { id: FeatureId; title: string; subtitle: string; pro?: boolean };
 
-export const FREE_FEATURES: readonly Feature[] = FEATURES.filter((f) => !f.pro);
+/**
+ * The gating, which is a product decision, kept here; the words, which are a
+ * translation, kept in the catalog under each id. Reading them at call time
+ * rather than at import is what lets a row be written in the language the
+ * screen is actually rendering in.
+ */
+const ROWS = [
+  { id: "history" },
+  { id: "due" },
+  { id: "reminders" },
+  { id: "export" },
+  { id: "garage", pro: true },
+  { id: "intervals", pro: true },
+] as const;
+
+export function features(): Feature[] {
+  return ROWS.map((row) => ({
+    ...row,
+    title: t(`features.${row.id}.title`),
+    subtitle: t(`features.${row.id}.subtitle`),
+  }));
+}
+
+export function freeFeatures(): Feature[] {
+  return features().filter((f) => !f.pro);
+}

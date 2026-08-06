@@ -1,0 +1,316 @@
+{
+ "country": "MX",
+ "lang": "es_mx",
+ "terms": {
+  "+ kilometraje lite": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "astraea - bitácora cósmica": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitacora": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitacora - personal voice diary": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitacora de obra": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitacora llc": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitacora.io": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitácora de km de driversnote": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitácora de peritaje": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitácora digital": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "bitácora digital móvil": {
+   "seeds": [
+    "bitacora auto"
+   ]
+  },
+  "cambio de aceite sintético": {
+   "seeds": [
+    "cambio de aceite"
+   ]
+  },
+  "contador de kilometraje": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "contar kilómetros": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "correr kilometros": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "cuenta kilometros": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "driveely – gastos del coche": {
+   "seeds": [
+    "gastos del carro"
+   ]
+  },
+  "informe de servicio jw": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "kilometraje": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometraje auto - mi vehículo": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometraje tracker": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometrajepro": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometros": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometros corridos": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometros recorridos": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilometros recorridos gratis": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "kilómetros por hora": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "mantenimiento - nextpack": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "mantenimiento de plantas pm-ps": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "mantenimiento del coche": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "mantenimiento del coche game": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "mantenimiento del hogar": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "mantenimiento gph": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "marcador de kilometraje": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "medidor de kilometraje": {
+   "seeds": [
+    "kilometraje"
+   ]
+  },
+  "moto mantenimiento": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "servicio": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio a domicilio": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio al contribuyente": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio apple": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio de administracion tributaria": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio de agua y drenaje monterrey": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio de uber": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "servicio wifi": {
+   "seeds": [
+    "servicio auto"
+   ]
+  },
+  "simply auto-mantenimiento auto": {
+   "seeds": [
+    "mantenimiento auto"
+   ]
+  },
+  "sistema de taller mecánico": {
+   "seeds": [
+    "taller mecanico"
+   ]
+  },
+  "taller mecanico": {
+   "seeds": [
+    "taller mecanico"
+   ]
+  },
+  "verifica": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verifica ine": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificacion": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación de autenticidad": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación de plagio": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación de seguridad wifi": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación de teléfono": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación tempsms virtual": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación triple gordo": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificación vehicular": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificador": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificador de billetes": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificador de precios": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificador google": {
+   "seeds": [
+    "verificacion"
+   ]
+  },
+  "verificador sat": {
+   "seeds": [
+    "verificacion"
+   ]
+  }
+ }
+}

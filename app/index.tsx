@@ -14,6 +14,10 @@ import { nextDue, dueStatus } from "../src/schedule";
 import { getIntervals } from "../src/db/intervals";
 import { isPro, presentPaywall } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
+import { t, formatNumber, formatDate } from "../src/i18n";
+import { getDistanceUnit } from "../src/units";
+import { formatDistance, distanceUnitLabel } from "../src/units/format";
+import { serviceName } from "../src/schedule/names";
 
 type Summary = { status: "due" | "soon" | "ok"; label: string; detail: string };
 
@@ -28,6 +32,7 @@ function summarize(vehicle: Vehicle): Summary {
   const now = new Date().toISOString();
   const rank = { due: 2, soon: 1, ok: 0 } as const;
   const intervals = getIntervals();
+  const unit = getDistanceUnit();
 
   let best: Summary | null = null;
 
@@ -41,32 +46,40 @@ function summarize(vehicle: Vehicle): Summary {
       lastOdometer: r.odometer,
       interval,
     });
-    const status = dueStatus({ ...due, now, odometer: vehicle.odometer });
+    const status = dueStatus({ ...due, now, odometer: vehicle.odometer, unit });
     if (best && rank[status] <= rank[best.status]) continue;
 
-    const milesOver =
+    const overBy =
       due.dueOdometer !== undefined && vehicle.odometer !== undefined
         ? vehicle.odometer - due.dueOdometer
         : undefined;
     const detail =
-      status === "due" && milesOver !== undefined && milesOver > 0
-        ? `${milesOver.toLocaleString()} mi over`
+      status === "due" && overBy !== undefined && overBy > 0
+        ? t("garage.over", { distance: formatDistance(overBy, unit) })
         : status === "due"
-          ? "due now"
+          ? t("garage.dueNow")
           : due.dueAt
-            ? new Date(due.dueAt).toLocaleDateString()
+            ? formatDate(due.dueAt)
             : status === "soon"
-              ? "due soon"
-              : "on schedule";
-    best = { status, label: r.service_type, detail };
+              ? t("garage.dueSoon")
+              : t("garage.onSchedule");
+    best = { status, label: serviceName(r.service_type), detail };
   }
 
   // No record carries a known interval — say that, rather than claiming
   // nothing was logged when the user may have logged plenty.
   if (!best) {
     return records.length > 0
-      ? { status: "ok", label: "No schedule yet", detail: "logged, not tracked" }
-      : { status: "ok", label: "Nothing logged", detail: "add a service" };
+      ? {
+          status: "ok",
+          label: t("garage.noSchedule"),
+          detail: t("garage.noSchedule.detail"),
+        }
+      : {
+          status: "ok",
+          label: t("garage.nothingLogged"),
+          detail: t("garage.nothingLogged.detail"),
+        };
   }
   return best;
 }
@@ -98,7 +111,7 @@ export default function Garage() {
           recordReviewEvent("purchase");
         }
       } catch {
-        setMsg("Could not reach the store. Try again on a better connection.");
+        setMsg(t("garage.storeUnreachable"));
         return;
       }
     }
@@ -117,15 +130,15 @@ export default function Garage() {
 
   return (
     <Screen
-      title="Garage"
+      title={t("garage.title")}
       footer={
         <>
           {msg ? (
             <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
           ) : null}
-          {single ? <Button label="Log a service" onPress={onLog} /> : null}
+          {single ? <Button label={t("garage.logService")} onPress={onLog} /> : null}
           <Button
-            label="Add vehicle"
+            label={t("garage.addVehicle")}
             variant={vehicles.length > 0 ? "secondary" : "primary"}
             onPress={onAdd}
           />
@@ -135,7 +148,7 @@ export default function Garage() {
       {vehicles.length === 0 ? (
         <Card>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            No vehicles yet. Add one and Glovebox starts keeping its records.
+            {t("garage.empty")}
           </Text>
         </Card>
       ) : (
@@ -152,7 +165,10 @@ export default function Garage() {
               >
                 <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>{v.name}</Text>
                 {s.status === "ok" ? null : (
-                  <Badge label={s.status === "due" ? "Overdue" : "Due soon"} tone={s.status} />
+                  <Badge
+                    label={s.status === "due" ? t("garage.badge.overdue") : t("garage.badge.dueSoon")}
+                    tone={s.status}
+                  />
                 )}
               </View>
 
@@ -170,16 +186,18 @@ export default function Garage() {
                   lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
                 />
                 <Gauge
-                  legend="Odometer"
-                  value={v.odometer ? v.odometer.toLocaleString() : "Not set"}
-                  unit={v.odometer ? "mi" : undefined}
+                  legend={t("garage.odometer")}
+                  value={
+                    v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")
+                  }
+                  unit={v.odometer ? distanceUnitLabel() : undefined}
                   align="right"
                 />
               </View>
 
               <View style={{ paddingTop: tokens.space.xs }}>
                 <ListRow
-                  title={single ? "Open history" : "Open and log a service"}
+                  title={single ? t("garage.openHistory") : t("garage.openAndLog")}
                   onPress={() => router.push(`/vehicle/${v.id}`)}
                 />
               </View>

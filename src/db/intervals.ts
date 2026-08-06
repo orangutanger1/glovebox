@@ -1,5 +1,7 @@
 import { getDb } from "./client";
-import { DEFAULT_INTERVALS, mergeIntervals, type Interval } from "../schedule";
+import { defaultIntervals, mergeIntervals, inspectionMonthsFor, type Interval } from "../schedule";
+import { getDistanceUnit } from "../units";
+import { deviceRegion } from "../i18n/device";
 
 /**
  * Custom service intervals — the second half of Pro.
@@ -12,49 +14,60 @@ import { DEFAULT_INTERVALS, mergeIntervals, type Interval } from "../schedule";
  * whose entire content is reproducible from the UI.
  */
 export function listIntervalOverrides(): Record<string, Interval> {
-  const rows = getDb().getAllSync<{ service_type: string; months: number | null; miles: number | null }>(
-    "SELECT service_type, months, miles FROM service_intervals"
-  );
+  const rows = getDb().getAllSync<{
+    service_type: string;
+    months: number | null;
+    distance: number | null;
+  }>("SELECT service_type, months, distance FROM service_intervals");
   const out: Record<string, Interval> = {};
   for (const row of rows) {
     out[row.service_type] = {
       months: row.months ?? undefined,
-      miles: row.miles ?? undefined,
+      distance: row.distance ?? undefined,
     };
   }
   return out;
 }
 
 /**
- * What every screen should schedule against. Call this instead of reading
- * DEFAULT_INTERVALS directly — a screen still reading the defaults is a screen
- * that quietly ignores what the user paid to change.
+ * The shipped defaults for this phone: the user's unit, and the inspection
+ * cadence of the market they are actually in.
+ */
+export function getDefaultIntervals(): Record<string, Interval> {
+  return defaultIntervals(getDistanceUnit(), inspectionMonthsFor(deviceRegion()));
+}
+
+/**
+ * What every screen should schedule against. Call this instead of reading the
+ * defaults directly — a screen still reading the defaults is a screen that
+ * quietly ignores what the user paid to change.
  */
 export function getIntervals(): Record<string, Interval> {
+  const defaults = getDefaultIntervals();
   try {
-    return mergeIntervals(DEFAULT_INTERVALS, listIntervalOverrides());
+    return mergeIntervals(defaults, listIntervalOverrides());
   } catch {
     // A due date computed from the shipped defaults is wrong in the user's
     // terms but still useful. A crashed garage screen is not.
-    return DEFAULT_INTERVALS;
+    return defaults;
   }
 }
 
 /**
  * Stores one service's interval. Passing neither figure clears the override
- * instead of storing a service that is never due — "no months and no miles"
+ * instead of storing a service that is never due — "no months and no distance"
  * is how the form says "put this back to normal", and it is the only way the
  * UI can express a reset.
  */
 export function setInterval(serviceType: string, interval: Interval): void {
-  if (interval.months === undefined && interval.miles === undefined) {
+  if (interval.months === undefined && interval.distance === undefined) {
     clearInterval(serviceType);
     return;
   }
   getDb().runSync(
-    `INSERT INTO service_intervals (service_type, months, miles) VALUES (?, ?, ?)
-     ON CONFLICT(service_type) DO UPDATE SET months = excluded.months, miles = excluded.miles`,
-    [serviceType, interval.months ?? null, interval.miles ?? null]
+    `INSERT INTO service_intervals (service_type, months, distance) VALUES (?, ?, ?)
+     ON CONFLICT(service_type) DO UPDATE SET months = excluded.months, distance = excluded.distance`,
+    [serviceType, interval.months ?? null, interval.distance ?? null]
   );
 }
 

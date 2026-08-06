@@ -9,6 +9,7 @@ import { getOnboardingVehicleId, setOnboardingVehicleId } from "../../src/onboar
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { parseNumber, vehicleDisplayName } from "../../src/format";
+import { t } from "../../src/i18n";
 
 /** A model year, not a number. 1900 rules out a mistyped odometer reading in
  *  this field; +2 allows next year's cars, which are on sale this year. */
@@ -56,16 +57,20 @@ export default function OnboardingVehicle() {
   // and nothing on screen said why, so "09" or "78" read as a dead button.
   // Continue is now always pressable and answers with the reason.
   const yearMessage = (() => {
-    if (!year.trim()) return "Enter the model year.";
+    if (!year.trim()) return t("onboardingA.vehicle.yearMissing");
     if (parts.year === undefined || !/^\d+$/.test(year.trim())) {
-      return "Year must be four digits, like 2014.";
+      return t("onboardingA.vehicle.yearDigits");
     }
-    if (parts.year < MIN_YEAR) return `Year must be ${MIN_YEAR} or later, not ${year.trim()}.`;
-    if (parts.year > MAX_YEAR) return `Year can't be later than ${MAX_YEAR}.`;
+    // Years are passed as strings: a model year is a label, not a quantity, and
+    // `t` groups the numbers it is handed — "1,900" is not a year.
+    if (parts.year < MIN_YEAR) {
+      return t("onboardingA.vehicle.yearMin", { min: String(MIN_YEAR), value: year.trim() });
+    }
+    if (parts.year > MAX_YEAR) return t("onboardingA.vehicle.yearMax", { max: String(MAX_YEAR) });
     return "";
   })();
   const showYearError = (yearTouched || submitted) && yearMessage !== "";
-  const missingMessage = "Required.";
+  const missingMessage = t("onboardingA.vehicle.required");
 
   function onContinue() {
     if (!valid) {
@@ -93,17 +98,17 @@ export default function OnboardingVehicle() {
   return (
     <OnboardingScreen
       route="vehicle"
-      title="What are you driving?"
-      footer={<Button label="Continue" onPress={onContinue} />}
+      title={t("onboardingA.vehicle.title")}
+      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           <Field
-            label="Year"
+            label={t("onboardingA.vehicle.year")}
             value={year}
             onChangeText={setYear}
             keyboardType="numeric"
-            placeholder="2014"
+            placeholder={t("onboardingA.vehicle.yearPlaceholder")}
             autoFocus={saved === null}
             onBlur={() => setYearTouched(true)}
             error={showYearError ? yearMessage : undefined}
@@ -111,19 +116,19 @@ export default function OnboardingVehicle() {
           <View style={{ flexDirection: "row", gap: tokens.space.md }}>
             <View style={{ flex: 1 }}>
               <Field
-                label="Make"
+                label={t("onboardingA.vehicle.make")}
                 value={make}
                 onChangeText={setMake}
-                placeholder="Honda"
+                placeholder={t("onboardingA.vehicle.makePlaceholder")}
                 error={submitted && parts.make === undefined ? missingMessage : undefined}
               />
             </View>
             <View style={{ flex: 1 }}>
               <Field
-                label="Model"
+                label={t("onboardingA.vehicle.model")}
                 value={model}
                 onChangeText={setModel}
-                placeholder="Civic"
+                placeholder={t("onboardingA.vehicle.modelPlaceholder")}
                 error={submitted && parts.model === undefined ? missingMessage : undefined}
               />
             </View>
@@ -136,8 +141,8 @@ export default function OnboardingVehicle() {
           because it is a four-digit readout rather than a word. */}
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {valid
-          ? `Saved as "${vehicleDisplayName(parts)}", and you can rename it later.`
-          : "Year, make and model, so reminders can name the car."}
+          ? t("onboardingA.vehicle.saved", { name: vehicleDisplayName(parts) })
+          : t("onboardingA.vehicle.hint")}
       </Text>
     </OnboardingScreen>
   );

@@ -5,25 +5,30 @@ import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle } from "../../src/db/vehicles";
 import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
-import { MILES_PER_YEAR } from "../../src/onboarding/plan";
+import { DISTANCE_PER_YEAR } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import type { DriveAnswer } from "../../src/onboarding/state";
+import { t } from "../../src/i18n";
+import { getDistanceUnit } from "../../src/units";
+import { distanceUnitLabel, formatDistance } from "../../src/units/format";
 
 /** Ranges, not a slider. Nobody knows their annual mileage to the mile, and a
  *  slider would ask them to pretend they do. */
-const OPTIONS: readonly { value: DriveAnswer; label: string }[] = [
-  { value: "low", label: "Under 5,000" },
-  { value: "average", label: "5,000 to 10,000" },
-  { value: "high", label: "10,000 to 15,000" },
-  { value: "very_high", label: "Over 15,000" },
-];
+const OPTIONS: readonly DriveAnswer[] = ["low", "average", "high", "very_high"];
 
 export default function OnboardingDrive() {
   const advance = useAdvance("drive");
   // Persisted, so Back and Continue show the answer already given rather than
   // an unselected row of chips.
   const [drive, setDrive] = useState<DriveAnswer | null>(() => getAnswers().drive ?? null);
+  // The ranges a metric driver is offered are round metric numbers rather than
+  // converted ones, so the label comes from the unit and not from a conversion.
+  const unit = getDistanceUnit();
+  const options = useMemo(
+    () => OPTIONS.map((value) => ({ value, label: t(`onboardingA.drive.${value}.${unit}`) })),
+    [unit]
+  );
 
   const odometer = useMemo(() => {
     const ownedId = getOnboardingVehicleId();
@@ -39,13 +44,13 @@ export default function OnboardingDrive() {
   return (
     <OnboardingScreen
       route="drive"
-      title="How far do you drive it?"
-      subtitle="Roughly, since this is the number that turns a mileage interval into a date."
-      footer={<Button label="Continue" onPress={onContinue} disabled={!drive} />}
+      title={t("onboardingA.drive.title")}
+      subtitle={t("onboardingA.drive.subtitle")}
+      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!drive} />}
     >
       <ChipRow
-        legend="Miles a year"
-        options={OPTIONS}
+        legend={t("onboardingA.drive.legend", { unit: distanceUnitLabel(unit) })}
+        options={options}
         selected={drive ? [drive] : []}
         onPress={setDrive}
       />
@@ -55,8 +60,10 @@ export default function OnboardingDrive() {
           possible proof that the questions are not decorative. */}
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {drive && odometer !== undefined
-          ? `At that rate this car reads about ${(odometer + MILES_PER_YEAR[drive]).toLocaleString()} mi this time next year.`
-          : "Used to date the services that come due by mileage rather than by the calendar."}
+          ? t("onboardingA.drive.projection", {
+              distance: formatDistance(odometer + DISTANCE_PER_YEAR[unit][drive], unit),
+            })
+          : t("onboardingA.drive.caption")}
       </Text>
     </OnboardingScreen>
   );

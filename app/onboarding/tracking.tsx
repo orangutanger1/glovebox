@@ -1,20 +1,23 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
-import type { TrackingAnswer } from "../../src/onboarding/state";
+import { TRACKING_ANSWERS, type TrackingAnswer } from "../../src/onboarding/state";
 
-const OPTIONS: readonly { value: TrackingAnswer; label: string }[] = [
-  { value: "memory", label: "Memory" },
-  { value: "receipts", label: "Receipts in the car" },
-  { value: "spreadsheet", label: "A spreadsheet" },
-  { value: "dealer", label: "My shop keeps it" },
-  { value: "nothing", label: "Nothing at all" },
-];
+/** The answers are what gets stored and read back by the screens after this
+ *  one, so the copy hangs off them rather than the other way round. */
+const LABEL_KEYS: Record<TrackingAnswer, string> = {
+  memory: "onboardingB.tracking.memory",
+  receipts: "onboardingB.tracking.receipts",
+  spreadsheet: "onboardingB.tracking.spreadsheet",
+  dealer: "onboardingB.tracking.dealer",
+  nothing: "onboardingB.tracking.nothing",
+};
 
 /**
  * The one question with no right answer, and the one that decides most of what
@@ -31,6 +34,13 @@ export default function OnboardingTracking() {
     () => getAnswers().tracking ?? null
   );
 
+  // Built at render rather than at import, so the labels are in the language
+  // that is active now and not the one loaded when this file was imported.
+  const options = useMemo(
+    () => TRACKING_ANSWERS.map((value) => ({ value, label: t(LABEL_KEYS[value]) })),
+    []
+  );
+
   function onContinue() {
     if (!tracking) return;
     setAnswers({ tracking });
@@ -40,18 +50,20 @@ export default function OnboardingTracking() {
   return (
     <OnboardingScreen
       route="tracking"
-      title="How do you keep track today?"
-      subtitle="Whatever it is, it is more than most people do."
-      footer={<Button label="Continue" onPress={onContinue} disabled={!tracking} />}
+      title={t("onboardingB.tracking.title")}
+      subtitle={t("onboardingB.tracking.subtitle")}
+      footer={
+        <Button label={t("onboardingB.continue")} onPress={onContinue} disabled={!tracking} />
+      }
     >
       <ChipRow
-        legend="Today"
-        options={OPTIONS}
+        legend={t("onboardingB.tracking.legend")}
+        options={options}
         selected={tracking ? [tracking] : []}
         onPress={setTracking}
       />
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        Whatever you pick, Glovebox exports everything you log as a CSV for free.
+        {t("onboardingB.tracking.caption")}
       </Text>
     </OnboardingScreen>
   );

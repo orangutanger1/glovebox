@@ -41,6 +41,11 @@ export const WORRY_ANSWERS = ["bills", "missed", "records", "resale", "upsell"] 
  * a record dated ninety days ago could equally have come from "3 months ago"
  * or from a later edit. Stepping back onto that screen has to show the user
  * their own two taps, so the taps are what is stored.
+ *
+ * Both lists are persisted answer values, so they stay in English forever and
+ * are never translated in place. The words a reader sees come from the screen
+ * that renders the chips: a service type through `serviceName()`, and the
+ * "when" chips from that screen's own catalog keys.
  */
 export const SERVICE_TYPES = [
   "Oil Change",

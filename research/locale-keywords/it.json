@@ -1,0 +1,361 @@
+{
+ "country": "IT",
+ "lang": "it_it",
+ "terms": {
+  "[official] atomy shop": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "autodoc club-manutenzione auto": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "calendario scadenze": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "cambio": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio capelli": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio capelli gratis": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio colore capelli": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio colore capelli gratis": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio moneta": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio valuta": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio valuta gratis": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio voce": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "cambio voce in chiamata": {
+   "seeds": [
+    "cambio olio"
+   ]
+  },
+  "chilometraggio tracciatrice": {
+   "seeds": [
+    "chilometraggio"
+   ]
+  },
+  "controlla revisione": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "controllo revisione": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "controllo revisione auto": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "dispensa scadenze": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "driveely – spese auto": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "gestione scadenze": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "manutenzione auto": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione auto game": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione bici": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione casa e garanzia": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione moto": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione moto - iron": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione piscina": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "manutenzione piscine": {
+   "seeds": [
+    "manutenzione auto"
+   ]
+  },
+  "official cambridge guide ielts": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "official rimini pass": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina 25": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina capelli": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina del barbiere": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina del panino": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina del panino rimini": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina dell&#39;hamburger": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina s.r.l.": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina street": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officina studenti": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "officine courmayeur": {
+   "seeds": [
+    "officina"
+   ]
+  },
+  "quiz revisione patente 2018": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "quiz revisione patente 2026": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "revisione": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "revisione auto": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "revisione moto": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "scadenze": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze - stop agli sprechi": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze alimenti": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze auto": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze cibo": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze frigo": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "scadenze pagamenti": {
+   "seeds": [
+    "scadenze auto"
+   ]
+  },
+  "spese": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese auto": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese auto ia – spese": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese condivise": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese facili": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese familiari": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese giornaliere": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese giornaliere 3": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese mensili": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese mensili gratis": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese sotto controllo": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "spese viaggio": {
+   "seeds": [
+    "spese auto"
+   ]
+  },
+  "tagliando auto": {
+   "seeds": [
+    "tagliando auto"
+   ]
+  },
+  "traccia il mio chilometraggio": {
+   "seeds": [
+    "chilometraggio"
+   ]
+  },
+  "traccia my chilometraggio": {
+   "seeds": [
+    "chilometraggio"
+   ]
+  },
+  "tracker del chilometraggio": {
+   "seeds": [
+    "chilometraggio"
+   ]
+  },
+  "verifica revisione": {
+   "seeds": [
+    "revisione auto"
+   ]
+  },
+  "verifica revisione auto": {
+   "seeds": [
+    "revisione auto"
+   ]
+  }
+ }
+}

@@ -5,8 +5,11 @@ import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle } from "../../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
+import { t } from "../../src/i18n";
+import { serviceName } from "../../src/schedule/names";
+import { getDistanceUnit } from "../../src/units";
 import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
-import { milesPerYearFor, odometerDaysAgo } from "../../src/onboarding/plan";
+import { distancePerYearFor, odometerDaysAgo } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import {
@@ -15,8 +18,6 @@ import {
   type ServiceTypeAnswer,
   type ServiceWhenAnswer,
 } from "../../src/onboarding/state";
-
-const TYPES = SERVICE_TYPES.map((value) => ({ value, label: value }));
 
 // Approximate answers are allowed. "Not sure" logs no record, which is the
 // safe direction to be wrong in, since the app then treats the service as due
@@ -29,7 +30,13 @@ const DAYS_AGO: Record<ServiceWhenAnswer, number | null> = {
   "Not sure": null,
 };
 
-const WHEN = SERVICE_WHEN.map((value) => ({ value, label: value }));
+const WHEN_KEYS: Record<ServiceWhenAnswer, string> = {
+  "Just now": "onboardingB.service.ago.now",
+  "Last month": "onboardingB.service.ago.lastMonth",
+  "3 months ago": "onboardingB.service.ago.months3",
+  "6 months ago": "onboardingB.service.ago.months6",
+  "Not sure": "onboardingB.service.ago.notSure",
+};
 
 /** "Something else" is a chip, not a service. It lands in the same catch-all
  *  bucket the log form uses, and the plan leaves that bucket out of the list. */
@@ -47,6 +54,25 @@ export default function OnboardingService() {
   // screen on tap, which meant a mis-tap committed a service record and moved
   // the flow on, with no route back to the screen that wrote it.
   const valid = type !== null && when !== null;
+
+  // Built at render rather than at import: both label sets are copy, and a
+  // module-level const would freeze whichever language was active when this
+  // file was first pulled in.
+  const types = useMemo(
+    () =>
+      SERVICE_TYPES.map((value) => ({
+        value,
+        label:
+          value === "Something else"
+            ? t("onboardingB.service.somethingElse")
+            : serviceName(value),
+      })),
+    []
+  );
+  const whens = useMemo(
+    () => SERVICE_WHEN.map((value) => ({ value, label: t(WHEN_KEYS[value]) })),
+    []
+  );
 
   function onContinue() {
     if (!valid) return;
@@ -85,7 +111,11 @@ export default function OnboardingService() {
           odometer:
             vehicle.odometer === undefined
               ? undefined
-              : odometerDaysAgo(vehicle.odometer, milesPerYearFor(saved), daysAgo),
+              : odometerDaysAgo(
+                  vehicle.odometer,
+                  distancePerYearFor(saved, getDistanceUnit()),
+                  daysAgo
+                ),
         });
       }
     }
@@ -97,25 +127,34 @@ export default function OnboardingService() {
   return (
     <OnboardingScreen
       route="service"
-      title="What did you last get done?"
-      subtitle="Close enough is fine because you can correct it later."
-      footer={<Button label="Continue" onPress={onContinue} disabled={!valid} />}
+      title={t("onboardingB.service.title")}
+      subtitle={t("onboardingB.service.subtitle")}
+      footer={<Button label={t("onboardingB.continue")} onPress={onContinue} disabled={!valid} />}
     >
-      <ChipRow legend="Service" options={TYPES} selected={type ? [type] : []} onPress={setType} />
+      <ChipRow
+        legend={t("onboardingB.service.legend")}
+        options={types}
+        selected={type ? [type] : []}
+        onPress={setType}
+      />
 
       {/* The "when" half only appears once there is something to date. Both
           question and answer now stay on screen together, so the user can see
           what they picked instead of the title mutating out from under them. */}
       {type ? (
         <ChipRow
-          legend={`When was the ${type === "Something else" ? "service" : type.toLowerCase()}?`}
-          options={WHEN}
+          legend={
+            type === "Something else"
+              ? t("onboardingB.service.whenOther")
+              : t("onboardingB.service.when", { service: serviceName(type) })
+          }
+          options={whens}
           selected={when ? [when] : []}
           onPress={setWhen}
         />
       ) : (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-          Pick one, and you can log the rest anytime.
+          {t("onboardingB.service.caption")}
         </Text>
       )}
     </OnboardingScreen>

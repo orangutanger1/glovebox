@@ -20,10 +20,31 @@ import {
   syncQuickActions,
 } from "../src/quickactions";
 import { tokens } from "../src/design/tokens";
+import { getLanguage, initLanguage, t } from "../src/i18n";
+import { bootLanguage } from "../src/i18n/preference";
+import { subscribeLocaleChanged } from "../src/i18n/epoch";
+import { initDistanceUnit } from "../src/units";
+
+/**
+ * The phone's language, resolved before the first component renders.
+ *
+ * Module scope rather than an effect because the fatal-database screen and the
+ * stack's own titles call `t` during that first render, and a stored preference
+ * cannot be read yet — `getDb()` may be about to throw, which is the one case
+ * this screen exists for. The preference is applied a moment later in the boot
+ * effect, which remounts the tree if it disagrees with the phone.
+ */
+initLanguage(null);
 
 export default function RootLayout() {
   const router = useRouter();
   const [fatal, setFatal] = useState<string | null>(null);
+  // Bumped when the language or the unit changes, and used as the tree's key:
+  // every screen then rebuilds its sentences instead of keeping the ones it
+  // formatted in the previous language.
+  const [localeEpoch, setLocaleEpoch] = useState(0);
+
+  useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
   /**
    * Home-screen menu taps, including the one that cold-launched the app.
@@ -60,6 +81,15 @@ export default function RootLayout() {
       setFatal(String(e));
       return;
     }
+
+    // Both settings live in the database, so this is the first moment either
+    // can be honoured. The unit is read into memory here so no gauge has to
+    // touch SQLite while it renders; the language only forces a remount when
+    // the stored choice disagrees with the phone's, which is the one case where
+    // strings are already on the glass in the wrong language.
+    const fromPhone = getLanguage();
+    if (bootLanguage() !== fromPhone) setLocaleEpoch((n) => n + 1);
+    initDistanceUnit();
     initPurchases();
     // Weakest of the happiness signals and forgotten within a day. It is here
     // so that coming back repeatedly counts for something, never so that it
@@ -123,12 +153,10 @@ export default function RootLayout() {
       >
         <StatusBar style="light" />
         <Text style={{ ...tokens.text.heading, color: tokens.color.text, textAlign: "center" }}>
-          Glovebox could not open your records.
+          {t("layout.fatal.title")}
         </Text>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textAlign: "center" }}>
-          Nothing was deleted, and the database was restored to its last good state. Reopen the app.
-          If this keeps happening, contact support before reinstalling, because reinstalling is what
-          would actually lose the records.
+          {t("layout.fatal.body")}
         </Text>
         <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>
           {fatal}
@@ -141,6 +169,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="light" />
       <Stack
+        key={localeEpoch}
         screenOptions={{
           headerStyle: { backgroundColor: tokens.color.housing },
           headerTintColor: tokens.color.text,
@@ -160,7 +189,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Garage",
+            title: t("layout.garage"),
             headerTitle: "",
             headerRight: () => (
               <Pressable onPress={() => router.push("/settings")} hitSlop={12}>
@@ -186,15 +215,16 @@ export default function RootLayout() {
             housing, not a page. */}
         <Stack.Screen name="winback" options={{ headerShown: false }} />
         <Stack.Screen name="trial" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ title: "Settings", headerTitle: "" }} />
-        <Stack.Screen name="intervals" options={{ title: "Service intervals", headerTitle: "" }} />
-        <Stack.Screen name="vehicle/new" options={{ title: "Add vehicle", headerTitle: "" }} />
+        <Stack.Screen name="settings" options={{ title: t("layout.settings"), headerTitle: "" }} />
+        <Stack.Screen name="intervals" options={{ title: t("layout.intervals"), headerTitle: "" }} />
+        <Stack.Screen name="language" options={{ title: t("language.title"), headerTitle: "" }} />
+        <Stack.Screen name="vehicle/new" options={{ title: t("layout.addVehicle"), headerTitle: "" }} />
         {/* The one screen with no body title: it names the vehicle in the
             header instead, set from the row in the screen itself. */}
-        <Stack.Screen name="vehicle/[id]" options={{ title: "Vehicle" }} />
+        <Stack.Screen name="vehicle/[id]" options={{ title: t("layout.vehicle") }} />
         <Stack.Screen
           name="vehicle/[id]/log"
-          options={{ title: "Log a service", headerTitle: "" }}
+          options={{ title: t("layout.logService"), headerTitle: "" }}
         />
       </Stack>
     </GestureHandlerRootView>

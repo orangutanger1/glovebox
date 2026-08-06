@@ -34,8 +34,21 @@ import {
   resetOnboarding,
 } from "../src/onboarding";
 import { readFindings } from "../src/onboarding/usePlan";
-import { MILES_PER_YEAR, milesPerYearFor, odometerDaysAgo } from "../src/onboarding/plan";
+import { DISTANCE_PER_YEAR, distancePerYearFor, odometerDaysAgo } from "../src/onboarding/plan";
+import { setLanguage } from "../src/i18n";
+import { getDistanceUnit } from "../src/units";
 import type { ServiceTypeAnswer } from "../src/onboarding/state";
+
+/**
+ * A fresh install with no stored unit reads as miles — the unit every install
+ * from before the setting existed collected its numbers in. The whole walk
+ * below is therefore a mile walk, and it says so once here rather than
+ * hard-coding "mi" at each call.
+ */
+const UNIT = "mi";
+
+// The cards and the vehicle fallback are catalog copy.
+beforeAll(() => setLanguage("en"));
 
 /** What `app/onboarding/vehicle.tsx` does on Continue. */
 function answerVehicle(name: string, year: number) {
@@ -72,7 +85,7 @@ function answerService(type: ServiceTypeAnswer, daysAgo: number | null) {
       odometer:
         vehicle.odometer === undefined
           ? undefined
-          : odometerDaysAgo(vehicle.odometer, milesPerYearFor(getAnswers()), daysAgo),
+          : odometerDaysAgo(vehicle.odometer, distancePerYearFor(getAnswers(), UNIT), daysAgo),
     });
   }
   setAnswers({ service: type });
@@ -104,8 +117,12 @@ test("the quiz produces a plan built from the answers, not from defaults", () =>
     service: "Oil Change",
   });
 
-  expect(plan.milesPerYear).toBe(MILES_PER_YEAR.high);
-  expect(plan.projectedOdometer).toBe(84210 + MILES_PER_YEAR.high);
+  // The flow ran in miles, and the plan says so rather than leaving the caller
+  // to guess which table its numbers came out of.
+  expect(getDistanceUnit()).toBe(UNIT);
+  expect(plan.unit).toBe(UNIT);
+  expect(plan.distancePerYear).toBe(DISTANCE_PER_YEAR[UNIT].high);
+  expect(plan.projectedOdometer).toBe(84210 + DISTANCE_PER_YEAR[UNIT].high);
   // One service logged, and it was logged more than a year ago against a
   // 5,000-mile interval, so it is the overdue one.
   expect(plan.logged).toBe(1);
@@ -211,7 +228,7 @@ test("a service is filed at the mileage the car was showing when it happened", (
   // was done around 78,046 and the next one falls due 5,000 miles after that,
   // which is behind today's reading. Filing it at 84,210 instead claimed the
   // car had not moved since and put the next change 5,000 miles from today.
-  const back = odometerDaysAgo(84210, MILES_PER_YEAR.high, 180);
+  const back = odometerDaysAgo(84210, DISTANCE_PER_YEAR[UNIT].high, 180);
   expect(back).toBe(78046);
   const [record] = listRecords(getOnboardingVehicleId()!);
   expect(record.odometer).toBe(back);

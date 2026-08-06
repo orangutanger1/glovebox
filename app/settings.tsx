@@ -5,7 +5,16 @@ import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
 import { tokens } from "../src/design/tokens";
-import { shortDate } from "../src/format";
+import { t, formatShortDate, getLanguage } from "../src/i18n";
+import { LANGUAGE_NAMES } from "../src/i18n/names";
+import { notifyLocaleChanged } from "../src/i18n/epoch";
+import {
+  changeDistanceUnit,
+  convertDistance,
+  getDistanceUnit,
+  type DistanceUnit,
+} from "../src/units";
+import { distanceUnitLabel, formatDistance } from "../src/units/format";
 import { exportAndShare } from "../src/export/share";
 import { restore, isPro, presentPaywall, presentCustomerCenter } from "../src/purchases";
 import { openFeedback } from "../src/feedback";
@@ -55,7 +64,7 @@ export default function Settings() {
       recordReviewEvent("export");
       setTimeout(() => void maybeRequestReview(), 1200);
     } catch {
-      setMsg("Could not open the share sheet. Your records are unchanged.");
+      setMsg(t("settings.export.error"));
     }
   }
 
@@ -66,9 +75,7 @@ export default function Settings() {
     if (reminders?.permission === "denied") {
       // Nothing else can be done in-app: once iOS has a hard denial recorded,
       // requestPermissionsAsync returns denied without ever prompting again.
-      Linking.openSettings().catch(() =>
-        setMsg("Open iOS Settings › Glovebox › Notifications to turn reminders back on.")
-      );
+      Linking.openSettings().catch(() => setMsg(t("settings.reminders.openSettings")));
       return;
     }
 
@@ -76,22 +83,29 @@ export default function Settings() {
       if (reminders?.permission === "granted" || (await requestPermission())) {
         await rescheduleAll();
         await refreshReminders();
-        setMsg("Reminders scheduled.");
+        setMsg(t("settings.reminders.scheduled"));
       } else {
         await refreshReminders();
-        setMsg("Reminders denied. You can turn them on in iOS Settings.");
+        setMsg(t("settings.reminders.denied"));
       }
     } catch {
-      setMsg("Could not ask for notification permission.");
+      setMsg(t("settings.reminders.error"));
     }
   }
 
+  // The next date is a second whole message rather than a suffix on the first:
+  // where it lands in the sentence is the translator's decision, not ours.
   function reminderLabel(): string {
-    if (!reminders || reminders.permission === "undetermined") return "Enable reminders";
-    if (reminders.permission === "denied") return "Reminders blocked, open iOS Settings";
-    if (reminders.count === 0) return "Reminders on, nothing due yet";
-    const next = reminders.nextAt ? `, next ${shortDate(reminders.nextAt)}` : "";
-    return `Reminders on, ${reminders.count} scheduled${next}`;
+    if (!reminders || reminders.permission === "undetermined") return t("settings.reminders.enable");
+    if (reminders.permission === "denied") return t("settings.reminders.blocked");
+    if (reminders.count === 0) return t("settings.reminders.none");
+    if (reminders.nextAt) {
+      return t("settings.reminders.onNext", {
+        count: reminders.count,
+        date: formatShortDate(reminders.nextAt),
+      });
+    }
+    return t("settings.reminders.on", { count: reminders.count });
   }
 
   // Gated before the screen, the same way Add vehicle is: showing someone a
@@ -105,7 +119,7 @@ export default function Settings() {
         recordReviewEvent("purchase");
       }
     } catch {
-      setMsg("Could not reach the store. Try again on a better connection.");
+      setMsg(t("settings.store.error"));
       return;
     }
     router.push("/intervals");
@@ -115,10 +129,10 @@ export default function Settings() {
     try {
       if (await presentPaywall()) {
         recordReviewEvent("purchase");
-        setMsg("Pro is on. Thank you.");
+        setMsg(t("settings.pro.on"));
       }
     } catch {
-      setMsg("Could not reach the store. Try again on a better connection.");
+      setMsg(t("settings.store.error"));
     }
   }
 
@@ -141,19 +155,19 @@ export default function Settings() {
         },
         onPromotionalOfferSucceeded: () => {
           recordReviewEvent("purchase");
-          setMsg("That offer is applied. Nothing else to do.");
+          setMsg(t("settings.offer.applied"));
         },
       });
     } catch {
-      setMsg("Could not open subscription settings. Try again on a better connection.");
+      setMsg(t("settings.manage.error"));
     }
   }
 
   async function onRestore() {
     try {
-      setMsg((await restore()) ? "Pro restored." : "No purchase found.");
+      setMsg((await restore()) ? t("settings.restore.done") : t("settings.restore.none"));
     } catch {
-      setMsg("Could not reach the store. Try again on a better connection.");
+      setMsg(t("settings.store.error"));
     }
   }
 
@@ -161,16 +175,46 @@ export default function Settings() {
   // it leaves every vehicle and record alone and adds one more vehicle on the
   // way through, which the confirmation says out loud before anything happens.
   function onReplayOnboarding() {
+    Alert.alert(t("settings.replay.title"), t("settings.replay.body"), [
+      { text: t("settings.replay.cancel"), style: "cancel" },
+      {
+        text: t("settings.replay.confirm"),
+        onPress: () => {
+          resetOnboarding();
+          router.replace("/onboarding/welcome");
+        },
+      },
+    ]);
+  }
+
+  /**
+   * Switching units rewrites every stored reading, so the confirmation says the
+   * number out loud before anything moves.
+   *
+   * The alternative — relabelling the digits and leaving them alone — would turn
+   * a 51,771 mi car into a 51,771 km car and bring its next oil change due 5,000
+   * kilometres later than it should. An app that promises an honest log cannot
+   * quietly change what its numbers mean.
+   */
+  function onUnits() {
+    const from = getDistanceUnit();
+    const to: DistanceUnit = from === "mi" ? "km" : "mi";
     Alert.alert(
-      "Replay onboarding?",
-      "Your vehicles and records are kept. Walking the flow again adds another vehicle, which you can delete afterwards.",
+      t("settings.units.title", { unit: distanceUnitLabel(to) }),
+      t("settings.units.body", {
+        from: distanceUnitLabel(from),
+        to: distanceUnitLabel(to),
+        example: formatDistance(convertDistance(50000, from, to), to),
+      }),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("settings.units.cancel"), style: "cancel" },
         {
-          text: "Replay",
+          text: t("settings.units.confirm"),
           onPress: () => {
-            resetOnboarding();
-            router.replace("/onboarding/welcome");
+            changeDistanceUnit(to);
+            // Every gauge, chip and due line on the stack was formatted in the
+            // old unit; the remount is what rebuilds them.
+            notifyLocaleChanged();
           },
         },
       ]
@@ -178,28 +222,37 @@ export default function Settings() {
   }
 
   return (
-    <Screen title="Settings">
+    <Screen title={t("settings.title")}>
       <Card>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-          Your records live on this phone only. No account, no server. Export any time, because
-          export is never gated.
+          {t("settings.privacy")}
         </Text>
       </Card>
-      <Button label="Export all records (CSV)" onPress={onExport} />
-      <Button label="Service intervals" variant="secondary" onPress={onIntervals} />
+      <Button label={t("settings.export")} onPress={onExport} />
+      <Button label={t("settings.intervals")} variant="secondary" onPress={onIntervals} />
       <Button label={reminderLabel()} variant="secondary" onPress={onReminders} />
       {/* Held back until the entitlement resolves. Rendering the free rows in
           the meantime shows a paying subscriber an advert for what they already
           bought. */}
       {pro === true ? (
-        <Button label="Manage subscription" variant="secondary" onPress={onManageSubscription} />
+        <Button label={t("settings.manage")} variant="secondary" onPress={onManageSubscription} />
       ) : pro === false ? (
         <>
-          <Button label="Upgrade to Pro" variant="secondary" onPress={onUpgrade} />
-          <Button label="Restore purchases" variant="secondary" onPress={onRestore} />
+          <Button label={t("settings.upgrade")} variant="secondary" onPress={onUpgrade} />
+          <Button label={t("settings.restore")} variant="secondary" onPress={onRestore} />
         </>
       ) : null}
-      <Button label="Replay onboarding" variant="secondary" onPress={onReplayOnboarding} />
+      <Button
+        label={t("settings.units", { unit: distanceUnitLabel() })}
+        variant="secondary"
+        onPress={onUnits}
+      />
+      <Button
+        label={t("settings.language", { language: LANGUAGE_NAMES[getLanguage()] })}
+        variant="secondary"
+        onPress={() => router.push("/language")}
+      />
+      <Button label={t("settings.replay")} variant="secondary" onPress={onReplayOnboarding} />
       {msg ? (
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
       ) : null}

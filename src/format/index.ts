@@ -1,3 +1,5 @@
+import { t } from "../i18n";
+
 /**
  * Parsing for numbers the user typed by hand.
  *
@@ -38,7 +40,7 @@ export function vehicleDisplayName(v: {
   const parts = [v.year?.toString(), v.make?.trim(), v.model?.trim()].filter(
     (p): p is string => Boolean(p)
   );
-  return parts.length > 0 ? parts.join(" ") : "My car";
+  return parts.length > 0 ? parts.join(" ") : t("system.vehicle.fallback");
 }
 
 export type DateParts = { year: number; month: number; day: number };
@@ -72,10 +74,10 @@ export function dateFromParts(p: DateParts): Date {
   return new Date(p.year, p.month - 1, p.day, 12, 0, 0, 0);
 }
 
-/** "Sep 14" — for dates shown beside a label rather than in a record. */
-export function shortDate(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric" });
-}
+/** "Sep 14" — for dates shown beside a label rather than in a record. The name
+ *  stays here because screens already import it from this module; the date logic
+ *  lives with the rest of the locale formatting. */
+export { formatShortDate as shortDate } from "../i18n";
 
 export function partsFromDate(d: Date): DateParts {
   return { year: d.getFullYear(), month: d.getMonth() + 1, day: d.getDate() };

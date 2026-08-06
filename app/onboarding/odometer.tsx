@@ -10,6 +10,9 @@ import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { parseNumber } from "../../src/format";
+import { t } from "../../src/i18n";
+import { getDistanceUnit } from "../../src/units";
+import { distanceUnitLabel } from "../../src/units/format";
 
 export default function OnboardingOdometer() {
   const advance = useAdvance("odometer");
@@ -28,8 +31,9 @@ export default function OnboardingOdometer() {
   // time the user types a digit into the field below them.
   const demo = useMemo(() => randomOdometerReading(), []);
 
-  const miles = parseNumber(odometer);
-  const valid = miles !== undefined && miles >= 0;
+  const unit = getDistanceUnit();
+  const reading = parseNumber(odometer);
+  const valid = reading !== undefined && reading >= 0;
 
   function onContinue() {
     if (!valid) return;
@@ -37,17 +41,17 @@ export default function OnboardingOdometer() {
     const vehicle = ownedId ? getVehicle(ownedId) : null;
     // Set outright rather than as a high-water mark. This field is the dash
     // reading itself, so a user who came back to fix an extra digit has to be
-    // able to lower it. The placeholder shows "84,210", so a user copying its
-    // format produced NaN and silently lost their reading.
-    if (vehicle) setOdometerReading(vehicle.id, miles);
+    // able to lower it. The placeholder is a grouped reading, so a user copying
+    // its format produced NaN and silently lost their reading.
+    if (vehicle) setOdometerReading(vehicle.id, reading);
     advance();
   }
 
   return (
     <OnboardingScreen
       route="odometer"
-      title="How many miles on it?"
-      footer={<Button label="Continue" onPress={onContinue} disabled={!valid} />}
+      title={t(`onboardingA.odometer.title.${unit}`)}
+      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!valid} />}
     >
       <Panel>
         {/* Drums above the field the user is about to type into: the screen
@@ -58,17 +62,17 @@ export default function OnboardingOdometer() {
         <OdometerRoll value={demo} />
         <View style={{ padding: tokens.space.md }}>
           <Field
-            label="Odometer"
+            label={t("onboardingA.odometer.field", { unit: distanceUnitLabel(unit) })}
             value={odometer}
             onChangeText={setOdometer}
             keyboardType="numeric"
-            placeholder="84,210"
+            placeholder={t(`onboardingA.odometer.placeholder.${unit}`)}
             autoFocus={saved?.odometer == null}
           />
         </View>
       </Panel>
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        A rough number is fine, and it is what dates the services that come due by mileage.
+        {t("onboardingA.odometer.caption")}
       </Text>
     </OnboardingScreen>
   );

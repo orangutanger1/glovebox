@@ -5,6 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { useAdvance } from "../../src/onboarding/nav";
+import { t } from "../../src/i18n";
 
 const LIGHT = require("../../assets/onboarding/light.jpeg");
 const LIGHT_RATIO = 1242 / 1663;
@@ -77,11 +78,11 @@ export default function Welcome() {
               color: tokens.color.text,
             }}
           >
-            Never guess when your last oil change was.
+            {t("onboardingA.welcome.headline")}
           </Text>
 
           <View style={{ gap: tokens.space.sm }}>
-            <Button label="Get started" onPress={advance} />
+            <Button label={t("onboardingA.welcome.start")} onPress={advance} />
             {/* Demoted from the headline slot: it answers an objection the
                 user has not formed yet on the first screen. */}
             <Text
@@ -91,7 +92,7 @@ export default function Welcome() {
                 textAlign: "center",
               }}
             >
-              Everything stays on this phone, with no account and nothing to log out of.
+              {t("onboardingA.welcome.privacy")}
             </Text>
           </View>
         </Animated.View>

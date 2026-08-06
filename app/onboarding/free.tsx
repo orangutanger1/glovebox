@@ -4,7 +4,8 @@ import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { FREE_FEATURES } from "../../src/onboarding/features";
+import { t } from "../../src/i18n";
+import { freeFeatures } from "../../src/onboarding/features";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useFinish } from "../../src/onboarding/nav";
@@ -35,26 +36,25 @@ export default function OnboardingFree() {
   return (
     <OnboardingScreen
       route="free"
-      title="Start in free mode."
-      subtitle={`Your ${vehicleName} and its ${plan.items.length} scheduled services are already saved on this phone. Free mode keeps all of it.`}
-      footer={<Button label="Start with the free app" onPress={finish} />}
+      title={t("offer.free.title")}
+      subtitle={t("offer.free.subtitle", { count: plan.items.length, vehicle: vehicleName })}
+      footer={<Button label={t("offer.free.cta")} onPress={finish} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
-          {FREE_FEATURES.map((feature) => (
+          {freeFeatures().map((feature) => (
             <ListRow
-              key={feature.title}
+              key={feature.id}
               title={feature.title}
               subtitle={feature.subtitle}
-              right={<Badge label="Free" tone="ok" />}
+              right={<Badge label={t("offer.badge.free")} tone="ok" />}
             />
           ))}
         </View>
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        One car, no account, no ads and no trial running in the background. Pro adds the rest of
-        the garage and your own intervals whenever you want it, from Settings.
+        {t("offer.free.caption")}
       </Text>
     </OnboardingScreen>
   );

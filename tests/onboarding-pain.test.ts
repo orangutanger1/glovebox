@@ -1,11 +1,37 @@
+import Database from "better-sqlite3";
+
+/**
+ * The cards quote formatted distances, and the formatter reads the stored
+ * unit, so this import graph reaches `src/db/client` and through it
+ * `expo-sqlite` — an ES module this runner cannot parse. The plan built below
+ * states its unit; the database is here only to keep the graph resolvable.
+ */
+jest.mock("../src/db/client", () => {
+  const db = new Database(":memory:");
+  const { applyMigrations } = jest.requireActual("../src/db/schema");
+  applyMigrations((sql: string) => db.exec(sql), 0);
+  return {
+    getDb: () => ({
+      runSync: (sql: string, params: unknown[] = []) => db.prepare(sql).run(...params),
+      getFirstSync: (sql: string, params: unknown[] = []) => db.prepare(sql).get(...params) ?? null,
+      getAllSync: (sql: string, params: unknown[] = []) => db.prepare(sql).all(...params),
+    }),
+  };
+});
+
 import { buildPlan } from "../src/onboarding/plan";
 import { painCards, PAIN_CARD_COUNT } from "../src/onboarding/pain";
+import { setLanguage } from "../src/i18n";
 import type { Answers } from "../src/onboarding/state";
 
+// Every headline below is catalog copy, so it is only the copy asserted here
+// while English is the language in force.
+beforeAll(() => setLanguage("en"));
+
 const INTERVALS = {
-  "Oil Change": { months: 6, miles: 5000 },
-  "Tire Rotation": { months: 6, miles: 6000 },
-  "Brake Inspection": { months: 12, miles: 12000 },
+  "Oil Change": { months: 6, distance: 5000 },
+  "Tire Rotation": { months: 6, distance: 6000 },
+  "Brake Inspection": { months: 12, distance: 12000 },
 };
 
 const NOW = new Date("2026-08-03T12:00:00");
@@ -17,7 +43,14 @@ function daysAgo(n: number): string {
 }
 
 function cardsFor(answers: Answers, records: Parameters<typeof buildPlan>[0]["records"] = []) {
-  const plan = buildPlan({ odometer: 80000, records, intervals: INTERVALS, answers, now: NOW });
+  const plan = buildPlan({
+    odometer: 80000,
+    records,
+    intervals: INTERVALS,
+    answers,
+    unit: "mi",
+    now: NOW,
+  });
   return painCards({ plan, answers, vehicleName: "2019 Honda Civic" });
 }
 

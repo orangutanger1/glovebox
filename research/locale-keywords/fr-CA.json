@@ -1,0 +1,101 @@
+{
+ "country": "CA",
+ "lang": "fr_ca",
+ "terms": {
+  "emx - entretien motocross/quad": {
+   "seeds": [
+    "entretien auto"
+   ]
+  },
+  "entretien plantes": {
+   "seeds": [
+    "entretien auto"
+   ]
+  },
+  "garage": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage band": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage band ringtone": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage canada": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage clothing": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage door opener": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage ringtones": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage ringtones for iphone": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage sale": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "garage sale locator": {
+   "seeds": [
+    "garage"
+   ]
+  },
+  "jeux de mécanique": {
+   "seeds": [
+    "mécanicien"
+   ]
+  },
+  "kilometrage": {
+   "seeds": [
+    "kilométrage"
+   ]
+  },
+  "lync - entretien ménager": {
+   "seeds": [
+    "entretien auto"
+   ]
+  },
+  "pilote dépenses": {
+   "seeds": [
+    "dépenses auto"
+   ]
+  },
+  "sma service mécanique": {
+   "seeds": [
+    "mécanicien"
+   ]
+  },
+  "splitee - partage des dépenses": {
+   "seeds": [
+    "dépenses auto"
+   ]
+  },
+  "suivi kilometrage": {
+   "seeds": [
+    "kilométrage"
+   ]
+  }
+ }
+}

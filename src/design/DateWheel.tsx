@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Well } from "./Surface";
 import { tokens } from "./tokens";
 import { clampDateParts, daysInMonth, type DateParts } from "../format";
+import { getLanguage } from "../i18n";
 
 /**
  * A three-drum date picker: month, day, year.
@@ -31,10 +32,22 @@ const ITEM_HEIGHT = 40;
 const VISIBLE = 5;
 const PAD = ((VISIBLE - 1) / 2) * ITEM_HEIGHT;
 
-const MONTHS = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-];
+/**
+ * The month drum reads in the reader's language, and `short` is the form that
+ * keeps doing so inside a fixed 84pt column — the full names ("September",
+ * "Februar") do not fit the drum at readout size. Memoised per language because
+ * this is rebuilt on every render of the picker.
+ */
+const monthLabels: Record<string, string[]> = {};
+
+function months(language: string): string[] {
+  // Mid-month in UTC: the formatter applies the device time zone, and the 1st
+  // would slide into the previous month for anyone west of Greenwich.
+  monthLabels[language] ??= Array.from({ length: 12 }, (_, i) =>
+    new Intl.DateTimeFormat(language, { month: "short" }).format(new Date(Date.UTC(2024, i, 15)))
+  );
+  return monthLabels[language];
+}
 
 function Drum({
   items,
@@ -133,6 +146,9 @@ export function DateWheel({
     () => Array.from({ length: daysInMonth(value.year, value.month) }, (_, i) => String(i + 1)),
     [value.year, value.month]
   );
+  // Not memoised here: `months` already caches per language, and reading the
+  // language at render is what lets a switch in Settings reach the drum.
+  const monthNames = months(getLanguage());
 
   // One funnel for all three drums: any move can make the date impossible
   // (Jan 31 → Feb) or push it into the future (last year → this year, in a
@@ -162,7 +178,7 @@ export function DateWheel({
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <Drum
-            items={MONTHS}
+            items={monthNames}
             index={value.month - 1}
             onIndex={(i) => set({ month: i + 1 })}
             width={84}

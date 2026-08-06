@@ -1,0 +1,286 @@
+{
+ "country": "AU",
+ "lang": "en_au",
+ "terms": {
+  "addigo service report": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "car expenses - shlucker": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "car expenses tracker": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "car log universal": {
+   "seeds": [
+    "car log book"
+   ]
+  },
+  "car maintenance": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance book": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance log - glovebox": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance reminders": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance studio": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker - mpg": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car mileage tracker": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "car oil change tracker": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "car service 2.0": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service book": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service book - auto log": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service journal australia": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service logbook australia": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service mechanic simulator": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service station parking": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service tracker - autozis": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car services log": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "carflo - car expense tracker": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "cbre gws service request": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "chapincity car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "chesapeake service requests": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "codriver – car expense tracker": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "crown service request": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "driveely – car expense tracker": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "ev car log-trip charge log": {
+   "seeds": [
+    "car log book"
+   ]
+  },
+  "free mileage tracker": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "fuel monitor service reminder": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "mileage": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage by hnry": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage logbook": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage plus": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracker": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracking apps": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mrf vehicle maintenance": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "my car expense": {
+   "seeds": [
+    "car expenses"
+   ]
+  },
+  "oil change reminder": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "rego reminder australia": {
+   "seeds": [
+    "rego remind"
+   ]
+  },
+  "rego reporting": {
+   "seeds": [
+    "rego remind"
+   ]
+  },
+  "revvy - vehicle maintenance": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "ride log - vehicle maintenance": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "service report": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "service report - ln-ex": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "service report 2026": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "service – restaurant booking": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "simple car log": {
+   "seeds": [
+    "car log book"
+   ]
+  },
+  "synthetic oil change log": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "texada service & rental": {
+   "seeds": [
+    "service remind"
+   ]
+  },
+  "vehicle maintenance & tracker": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "vehicle maintenance manager": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "vehicle maintenance tracker": {
+   "seeds": [
+    "vehicle maintenance"
+   ]
+  },
+  "zus - save car expenses": {
+   "seeds": [
+    "car expenses"
+   ]
+  }
+ }
+}

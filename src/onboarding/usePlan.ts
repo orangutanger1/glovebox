@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import { t } from "../i18n";
+import { getDistanceUnit } from "../units";
 import { getVehicle, type Vehicle } from "../db/vehicles";
 import { listRecords } from "../db/records";
 import { getIntervals } from "../db/intervals";
@@ -9,8 +11,8 @@ import type { Answers } from "./state";
 
 export type OnboardingFindings = {
   vehicle: Vehicle | null;
-  /** Always a usable noun. "car" when the row is gone, so copy never reads
-   *  "On your null, today." */
+  /** Always a usable noun. A plain word for a car when the row is gone, so
+   *  copy never reads "On your null, today." */
   vehicleName: string;
   plan: Plan;
   answers: Answers;
@@ -34,13 +36,14 @@ export type OnboardingFindings = {
 export function readFindings(): OnboardingFindings {
   const ownedId = getOnboardingVehicleId();
   const vehicle = ownedId ? getVehicle(ownedId) : null;
-  const vehicleName = vehicle?.name ?? "car";
+  const vehicleName = vehicle?.name ?? t("pain.vehicleFallback");
   const answers = getAnswers();
   const plan = buildPlan({
     odometer: vehicle?.odometer,
     records: vehicle ? listRecords(vehicle.id) : [],
     intervals: getIntervals(),
     answers,
+    unit: getDistanceUnit(),
   });
   return { vehicle, vehicleName, plan, answers, cards: painCards({ plan, answers, vehicleName }) };
 }

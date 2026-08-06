@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -52,25 +53,29 @@ export default function OnboardingOffer() {
     <OnboardingScreen
       route="offer"
       center
-      title={`Try it for ${TRIAL_DAYS} days.`}
-      subtitle={`Take ${TRIAL_DAYS} days of Pro for nothing and decide once your car has actually told you something.`}
+      title={t("offer.trial.title", { count: TRIAL_DAYS })}
+      subtitle={t("offer.trial.subtitle", { count: TRIAL_DAYS })}
       footer={
         <>
-          <Button label={`Start my ${TRIAL_DAYS} free days`} onPress={onSeeOffer} disabled={busy} />
+          <Button
+            label={t("offer.trial.cta", { count: TRIAL_DAYS })}
+            onPress={onSeeOffer}
+            disabled={busy}
+          />
           <Pressable
             onPress={advance}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
             <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              No thanks, show me the free app
+              {t("offer.trial.decline")}
             </Text>
           </Pressable>
         </>
       }
     >
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        Cancel in Settings before it ends and you pay nothing.
+        {t("offer.trial.caption")}
       </Text>
     </OnboardingScreen>
   );

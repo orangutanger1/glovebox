@@ -3,6 +3,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -24,9 +25,9 @@ export default function OnboardingHelp() {
   return (
     <OnboardingScreen
       route="help"
-      title="All three are the same problem."
-      subtitle="Nothing is written down in a form that can warn you, which is the whole of what Glovebox does."
-      footer={<Button label="Continue" onPress={advance} />}
+      title={t("onboardingC.help.title")}
+      subtitle={t("onboardingC.help.subtitle")}
+      footer={<Button label={t("onboardingC.help.continue")} onPress={advance} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>

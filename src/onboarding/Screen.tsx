@@ -15,6 +15,7 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { StepLamps } from "../design/StepLamps";
 import { tokens } from "../design/tokens";
+import { t } from "../i18n";
 import { setOnboardingStep } from ".";
 import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
 
@@ -203,7 +204,7 @@ export function OnboardingScreen({
                       color: pressed ? tokens.color.white : tokens.color.textMuted,
                     }}
                   >
-                    {"‹ Back"}
+                    {`‹ ${t("onboardingC.back")}`}
                   </Text>
                 )}
               </Pressable>
@@ -212,7 +213,7 @@ export function OnboardingScreen({
               quiz ? (
                 <>
                   <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-                    {`Question ${quiz.step} / ${quiz.total}`}
+                    {t("onboardingC.question", { step: quiz.step, total: quiz.total })}
                   </Text>
                   <StepLamps step={quiz.step} total={quiz.total} />
                 </>

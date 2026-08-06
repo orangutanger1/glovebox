@@ -1,0 +1,588 @@
+{
+ "country": "GB",
+ "lang": "en_gb",
+ "terms": {
+  "auto mechanic car repair": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "auto mileage logbook tracker": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "beyond oil chef": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "cafu fuel & car service to you": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car assistant -service history": {
+   "seeds": [
+    "service history"
+   ]
+  },
+  "car learning": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car learning game": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car lease": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car led": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car link 2.0": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car linko": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car lock": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logbook": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car loger": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logo": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logo game": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logo quiz": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logo quiz - trivia games": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logo quiz 2020": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car logos quiz 2.0": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car lyrics": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "car maintenance": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance book": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance log - glovebox": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance passport": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance reminders": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker - mpg": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car mot reminder": {
+   "seeds": [
+    "mot remind"
+   ]
+  },
+  "car oil change tracker": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "car reg check": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car registration search": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car rental": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car rental booking apps": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car rental london": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair & damage": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair and wash !": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair center 3d": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair game": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair garage games for kids and toddlers 2": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair shop simulator": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car repair!": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car restoration": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car rev": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car revving": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service 2.0": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service book - auto log": {
+   "seeds": [
+    "car service",
+    "service book"
+   ]
+  },
+  "car service history": {
+   "seeds": [
+    "car service",
+    "service history"
+   ]
+  },
+  "car service mechanic simulator": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service station parking": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "casebo - car service book": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "chapincity car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "cheap car repair": {
+   "seeds": [
+    "car repair"
+   ]
+  },
+  "costa oil - oil change records": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "digital service book": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "easy business mileage logger": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "express car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "fixit service booking": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "fuelmate garage locator": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage band": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage band free": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage clothing": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage clothing uk": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage logic": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage matters": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage ringtones": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garage ringtones for iphone": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "garageband ringtone": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "growth garage llc": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "guess the car logo": {
+   "seeds": [
+    "car log"
+   ]
+  },
+  "mileage calculator": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage log from google maps": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage log trip & tax tracker": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage log+  trip log tracker": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage logbook": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage logbook for tax": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage logs": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage record": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage track": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage tracker": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage tracker by everlance": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage tracker by mileiq": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage tracker free": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage tracker uk": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "mileage+": {
+   "seeds": [
+    "mileage log"
+   ]
+  },
+  "milecare vehicle service log": {
+   "seeds": [
+    "vehicle service"
+   ]
+  },
+  "mot reminder": {
+   "seeds": [
+    "mot remind"
+   ]
+  },
+  "mot reminders & mot history uk": {
+   "seeds": [
+    "mot remind"
+   ]
+  },
+  "mw vehicle services ltd": {
+   "seeds": [
+    "vehicle service"
+   ]
+  },
+  "my garage log": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "my service book": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "nano service booking": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "oil change history": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "oil change reminder": {
+   "seeds": [
+    "oil change"
+   ]
+  },
+  "parker car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "quick service - book a taxi": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "real garage life": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "revlog - vehicle service log": {
+   "seeds": [
+    "vehicle service"
+   ]
+  },
+  "service agency": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service booking": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service booster": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service channel": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service channel provider": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service m8": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service market": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service mate": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service now": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service now mobile": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service nsw": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "service victoria": {
+   "seeds": [
+    "service book"
+   ]
+  },
+  "stadium garage ltd": {
+   "seeds": [
+    "garage log"
+   ]
+  },
+  "vehicle service": {
+   "seeds": [
+    "vehicle service"
+   ]
+  },
+  "vehicle service group italy s.r.l.": {
+   "seeds": [
+    "vehicle service"
+   ]
+  },
+  "well service bop quiz": {
+   "seeds": [
+    "service book"
+   ]
+  }
+ }
+}

@@ -14,8 +14,14 @@ import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
 import { recordReviewEvent, maybeRequestReview } from "../../../src/review";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
+import { t } from "../../../src/i18n";
+import { getDistanceUnit } from "../../../src/units";
+import { distanceUnitLabel } from "../../../src/units/format";
+import { serviceOptions } from "../../../src/schedule/names";
 
-// The six people actually log. Everything else lives behind "Other".
+// The six people actually log. Everything else lives behind "Other". These are
+// the stored identifiers, not the chip copy: the label comes from the schedule
+// catalog so this list never has to hold a second, drifting copy of it.
 const COMMON = [
   "Oil Change",
   "Tire Rotation",
@@ -26,8 +32,8 @@ const COMMON = [
 ];
 
 const WHEN = [
-  { label: "Today", days: 0 },
-  { label: "Yesterday", days: 1 },
+  { key: "vehicleForms.log.today", days: 0 },
+  { key: "vehicleForms.log.yesterday", days: 1 },
 ];
 
 // The two chips cover the common case in one tap; anything older is typed.
@@ -40,7 +46,8 @@ export default function LogService() {
   const router = useRouter();
   const vehicle = getVehicle(id);
 
-  const [type, setType] = useState("Oil Change");
+  // The first chip is the default, so the two cannot drift apart.
+  const [type, setType] = useState(COMMON[0]);
   const [daysAgo, setDaysAgo] = useState<number | typeof CUSTOM>(0);
   // Opens on today, so the wheels start somewhere true and the user rolls back
   // from it rather than building a date from nothing.
@@ -52,6 +59,9 @@ export default function LogService() {
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+
+  const unit = getDistanceUnit();
+  const services = serviceOptions().filter((s) => COMMON.includes(s.type));
 
   async function onSave() {
     if (saving) return;
@@ -79,7 +89,7 @@ export default function LogService() {
       });
     } catch {
       // Never clear the form on failure. The user's typing is the thing we protect.
-      setError("Could not save. Your entry is still here. Try again.");
+      setError(t("vehicleForms.log.error"));
       setSaving(false);
       return;
     }
@@ -101,37 +111,46 @@ export default function LogService() {
 
   return (
     <Screen
-      title="Log a service"
+      title={t("vehicleForms.log.title")}
       footer={
         <>
           {error ? (
             <Text style={{ ...tokens.text.body, color: tokens.color.red }}>{error}</Text>
           ) : null}
-          <Button label="Save" onPress={onSave} disabled={saving} />
+          <Button label={t("vehicleForms.log.save")} onPress={onSave} disabled={saving} />
         </>
       }
     >
       <Card>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>What</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+          {t("vehicleForms.log.what")}
+        </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-          {COMMON.map((t) => (
-            <Chip key={t} label={t} selected={t === type} onPress={() => setType(t)} />
+          {services.map((s) => (
+            <Chip
+              key={s.type}
+              label={s.label}
+              selected={s.type === type}
+              onPress={() => setType(s.type)}
+            />
           ))}
         </View>
       </Card>
       <Card>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>When</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+          {t("vehicleForms.log.when")}
+        </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
           {WHEN.map((w) => (
             <Chip
-              key={w.label}
-              label={w.label}
+              key={w.key}
+              label={t(w.key)}
               selected={daysAgo === w.days}
               onPress={() => setDaysAgo(w.days)}
             />
           ))}
           <Chip
-            label="Other date"
+            label={t("vehicleForms.log.otherDate")}
             selected={daysAgo === CUSTOM}
             onPress={() => setDaysAgo(CUSTOM)}
           />
@@ -142,14 +161,19 @@ export default function LogService() {
       </Card>
       <Card>
         <Field
-          label="Odometer"
+          label={t("vehicleForms.log.odometer", { unit: distanceUnitLabel(unit) })}
           value={odometer}
           onChangeText={setOdometer}
           keyboardType="numeric"
           autoFocus
         />
-        <Field label="Cost (optional)" value={cost} onChangeText={setCost} keyboardType="numeric" />
-        <Field label="Notes (optional)" value={notes} onChangeText={setNotes} />
+        <Field
+          label={t("vehicleForms.log.cost")}
+          value={cost}
+          onChangeText={setCost}
+          keyboardType="numeric"
+        />
+        <Field label={t("vehicleForms.log.notes")} value={notes} onChangeText={setNotes} />
       </Card>
     </Screen>
   );

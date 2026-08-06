@@ -4,6 +4,8 @@ import { listVehicles } from "../db/vehicles";
 import { listRecords } from "../db/records";
 import { nextDue } from "../schedule";
 import { getIntervals } from "../db/intervals";
+import { serviceName } from "../schedule/names";
+import { formatDate, t } from "../i18n";
 import { selectReminders, type Reminder } from "./select";
 
 Notifications.setNotificationHandler({
@@ -77,8 +79,11 @@ export async function rescheduleAll(): Promise<void> {
   for (const reminder of selectReminders(collectReminders(), Date.now())) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: `${reminder.vehicleName}: ${reminder.serviceType} due`,
-        body: `Last done ${reminder.lastPerformedAt.slice(0, 10)}.`,
+        title: t("system.notify.title", {
+          vehicle: reminder.vehicleName,
+          service: serviceName(reminder.serviceType),
+        }),
+        body: t("system.notify.body", { date: formatDate(reminder.lastPerformedAt) }),
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(reminder.dueAt) },
     });

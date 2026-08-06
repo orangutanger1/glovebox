@@ -45,6 +45,8 @@ jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
 
 import { createVehicle } from "../src/db/vehicles";
 import { setAnswers, setOnboardingVehicleId } from "../src/onboarding";
+import { setLanguage } from "../src/i18n";
+import { setDistanceUnit } from "../src/units";
 import OnboardingFree from "../app/onboarding/free";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
@@ -61,6 +63,17 @@ import OnboardingFeatures from "../app/onboarding/features";
 import OnboardingPlan from "../app/onboarding/plan";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
+
+/**
+ * Every screen below renders catalog copy and formatted distances, so the
+ * English sentences and the "mi" readings asserted here are only what the
+ * glass says once the language and the unit are the ones being asserted. A
+ * test worker inherits neither from a phone.
+ */
+beforeAll(() => {
+  setLanguage("en");
+  setDistanceUnit("mi");
+});
 
 const mounted: TestRenderer.ReactTestRenderer[] = [];
 

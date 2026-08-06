@@ -59,6 +59,17 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
         ON review_events (at DESC);
     `,
   },
+  // The column held miles because the app only had miles. It now holds whatever
+  // unit the user reads (see `app_state.distance_unit`), so the name was a
+  // standing lie about the contents — and the one thing a maintenance log cannot
+  // afford is a number whose unit you have to guess. A rename rather than a new
+  // column: every existing value is already correct, only its label was wrong.
+  {
+    version: 4,
+    sql: `
+      ALTER TABLE service_intervals RENAME COLUMN miles TO distance;
+    `,
+  },
 ];
 
 /**

@@ -5,6 +5,9 @@ import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
+import { getDistanceUnit } from "../../src/units";
+import { serviceName } from "../../src/schedule/names";
 import { requestPermission, rescheduleAll } from "../../src/notify";
 import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -12,6 +15,14 @@ import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
 
 const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
+
+/** The status is a state name the schedule computes, not copy — it reaches the
+ *  faceplate through a key so no language is stuck with the English word. */
+const STATUS_LABEL = {
+  due: "offer.plan.status.due",
+  soon: "offer.plan.status.soon",
+  ok: "offer.plan.status.ok",
+} as const;
 
 /** The whole schedule is real, but a screen with twelve rows on it is a
  *  document, not a plan. The rest is one line of arithmetic underneath. */
@@ -51,21 +62,24 @@ export default function OnboardingPlan() {
   }
 
   const remaining = plan.items.length - SHOWN;
+  const unit = getDistanceUnit();
 
   return (
     <OnboardingScreen
       route="plan"
-      title="Here is the plan."
-      subtitle={`${plan.items.length} services on a schedule for your ${vehicleName}, counted by date and by mileage.`}
+      title={t("offer.plan.title")}
+      subtitle={t("offer.plan.subtitle", { count: plan.items.length, vehicle: vehicleName })}
       footer={
         <>
-          <Button label="Turn on reminders" onPress={onRemindMe} disabled={busy} />
+          <Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />
           <Pressable
             onPress={advance}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>Not now</Text>
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+              {t("offer.plan.decline")}
+            </Text>
           </Pressable>
         </>
       }
@@ -75,18 +89,17 @@ export default function OnboardingPlan() {
           {plan.items.slice(0, SHOWN).map((item) => (
             <ListRow
               key={item.type}
-              title={item.type}
-              subtitle={planItemLine(item)}
+              title={serviceName(item.type)}
+              subtitle={planItemLine(item, unit)}
               status={ROW_STATUS[item.status]}
-              right={<Badge label={item.status} tone={item.status} />}
+              right={<Badge label={t(STATUS_LABEL[item.status])} tone={item.status} />}
             />
           ))}
         </View>
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {remaining > 0 ? `Plus ${remaining} more further out, and one ` : "One "}
-        notification per service on the day it comes due.
+        {remaining > 0 ? t("offer.plan.noteMore", { count: remaining }) : t("offer.plan.note")}
       </Text>
     </OnboardingScreen>
   );

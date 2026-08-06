@@ -6,6 +6,7 @@ import { Button } from "../src/design/Button";
 import { ListRow } from "../src/design/ListRow";
 import { Panel } from "../src/design/Surface";
 import { tokens } from "../src/design/tokens";
+import { t } from "../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../src/purchases";
 import { openFeedback } from "../src/feedback";
 import { recordReviewEvent } from "../src/review";
@@ -50,11 +51,11 @@ export default function Winback() {
 
   return (
     <Screen
-      title="You stopped logging."
+      title={t("offer.winback.title")}
       footer={
         <>
           <Button
-            label={`Start my ${TRIAL_DAYS} free days`}
+            label={t("offer.trial.cta", { count: TRIAL_DAYS })}
             onPress={onStartTrial}
             disabled={busy}
           />
@@ -64,22 +65,21 @@ export default function Winback() {
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
             <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              Just take me to my garage
+              {t("offer.winback.decline")}
             </Text>
           </Pressable>
         </>
       }
     >
       <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-        Your records are exactly where you left them. Nothing expired, nothing was deleted, and
-        nothing needs setting up again.
+        {t("offer.winback.body")}
       </Text>
 
       <Panel>
         <View style={{ padding: tokens.space.md }}>
           <ListRow
-            title="Tell us what went wrong"
-            subtitle="A short form, opens in Safari"
+            title={t("offer.winback.feedback")}
+            subtitle={t("offer.winback.feedbackNote")}
             onPress={() => void openFeedback()}
             right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
           />
@@ -87,7 +87,7 @@ export default function Winback() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {`Or give it one more go: ${TRIAL_DAYS} days of Pro, free. Cancel before they end and you pay nothing.`}
+        {t("offer.winback.caption", { count: TRIAL_DAYS })}
       </Text>
     </Screen>
   );

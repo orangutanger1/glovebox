@@ -1,0 +1,238 @@
+{
+ "country": "FR",
+ "lang": "fr_fr",
+ "terms": {
+  "appli kilométrage": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "application kilométrage": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "carnet entretien auto & km": {
+   "seeds": [
+    "carnet entretien"
+   ]
+  },
+  "carnet entretien voiture": {
+   "seeds": [
+    "carnet entretien",
+    "entretien voiture"
+   ]
+  },
+  "city abondoned garage auction": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "compteur de kilométrage": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "entretien voiture": {
+   "seeds": [
+    "entretien voiture"
+   ]
+  },
+  "entretien voiture - myautolog": {
+   "seeds": [
+    "entretien voiture"
+   ]
+  },
+  "garage": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage auto": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage band": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage band gratuit": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage bang": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage bank": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage bend": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage ringtones": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage ringtones for iphone": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage ringtones gratuit": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "garage simulator": {
+   "seeds": [
+    "garage auto"
+   ]
+  },
+  "kilometrage": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometrage velo": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometrage voiture": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometre": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometre a pied": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometre course": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometre heure": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilometre velo": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilomètres": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilomètres heure": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "kilométrage": {
+   "seeds": [
+    "kilometrage"
+   ]
+  },
+  "motorly – entretien voiture": {
+   "seeds": [
+    "entretien voiture"
+   ]
+  },
+  "rappel vidange": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "reparation voiture": {
+   "seeds": [
+    "reparation voiture"
+   ]
+  },
+  "réparation voiture de sport": {
+   "seeds": [
+    "reparation voiture"
+   ]
+  },
+  "révision voitures d&#39;amérique": {
+   "seeds": [
+    "revision voiture"
+   ]
+  },
+  "suivi entretien voiture": {
+   "seeds": [
+    "entretien voiture",
+    "suivi entretien"
+   ]
+  },
+  "vidanama": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidance ai, créateur de vidéos": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidange camping car": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidani": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidanova mobile banking": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidanta resorts": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidantaworld": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidantaworld golf": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "vidanto": {
+   "seeds": [
+    "vidange"
+   ]
+  },
+  "voiture suivi & entretient": {
+   "seeds": [
+    "suivi entretien"
+   ]
+  }
+ }
+}

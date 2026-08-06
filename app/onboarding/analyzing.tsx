@@ -4,6 +4,8 @@ import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { ProgressBar } from "../../src/design/ProgressBar";
 import { tokens } from "../../src/design/tokens";
+import { t } from "../../src/i18n";
+import { formatDistance } from "../../src/units/format";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -47,18 +49,25 @@ export default function OnboardingAnalyzing() {
     const out = [
       plan.odometer === undefined
         ? vehicleName
-        : `${vehicleName} at ${plan.odometer.toLocaleString()} mi`,
-      `${plan.items.length} service intervals applied`,
+        : t("onboardingB.analyzing.odometer", {
+            vehicle: vehicleName,
+            distance: formatDistance(plan.odometer, plan.unit),
+          }),
+      t("onboardingB.analyzing.intervals", { count: plan.items.length }),
     ];
+    const rate = formatDistance(plan.distancePerYear, plan.unit);
     out.push(
       plan.projectedOdometer === undefined
-        ? `${plan.milesPerYear.toLocaleString()} mi a year`
-        : `${plan.milesPerYear.toLocaleString()} mi a year, so ${plan.projectedOdometer.toLocaleString()} mi by next year`
+        ? t("onboardingB.analyzing.rate", { distance: rate })
+        : t("onboardingB.analyzing.rateProjected", {
+            distance: rate,
+            projected: formatDistance(plan.projectedOdometer, plan.unit),
+          })
     );
     out.push(
       plan.dueNow === 0
-        ? "Nothing needs attention today"
-        : `${plan.dueNow} need attention, ${plan.soon} coming up`
+        ? t("onboardingB.analyzing.clear")
+        : t("onboardingB.analyzing.due", { count: plan.dueNow, soon: plan.soon })
     );
     return out;
   }, [plan, vehicleName]);
@@ -75,7 +84,7 @@ export default function OnboardingAnalyzing() {
   }, [shown, lines.length, advance]);
 
   return (
-    <OnboardingScreen route="analyzing" center title="Working out the schedule.">
+    <OnboardingScreen route="analyzing" center title={t("onboardingB.analyzing.title")}>
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           {lines.map((line, i) => {
@@ -122,7 +131,9 @@ export default function OnboardingAnalyzing() {
           <View style={{ gap: tokens.space.sm }}>
             <ProgressBar duration={lines.length * LINE_MS + HANDOFF_MS} />
             <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-              {shown >= lines.length ? "Done" : `Reading ${shown + 1} of ${lines.length}`}
+              {shown >= lines.length
+                ? t("onboardingB.analyzing.done")
+                : t("onboardingB.analyzing.progress", { index: shown + 1, total: lines.length })}
             </Text>
           </View>
         </View>

@@ -1,4 +1,5 @@
 import { getDb } from "../db/client";
+import { getState, setState } from "../db/state";
 import {
   readOnboardingState,
   parseAnswers,
@@ -9,36 +10,20 @@ import {
   type Answers,
 } from "./state";
 
-function dbGet(key: string): string | null {
-  const row = getDb().getFirstSync<{ value: string | null }>(
-    "SELECT value FROM app_state WHERE key = ?",
-    [key]
-  );
-  return row?.value ?? null;
-}
-
-function dbSet(key: string, value: string): void {
-  getDb().runSync(
-    `INSERT INTO app_state (key, value) VALUES (?, ?)
-     ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
-    [key, value]
-  );
-}
-
 export function isOnboarded(): boolean {
-  return readOnboardingState(dbGet).isOnboarded;
+  return readOnboardingState(getState).isOnboarded;
 }
 
 export function getOnboardingStep(): string | null {
-  return readOnboardingState(dbGet).step;
+  return readOnboardingState(getState).step;
 }
 
 export function setOnboardingStep(step: string): void {
-  dbSet(ONBOARDING_STEP_KEY, step);
+  setState(ONBOARDING_STEP_KEY, step);
 }
 
 export function completeOnboarding(): void {
-  dbSet(ONBOARDING_COMPLETE_KEY, "true");
+  setState(ONBOARDING_COMPLETE_KEY, "true");
 }
 
 /**
@@ -50,11 +35,11 @@ export function completeOnboarding(): void {
  * first launch has always had.
  */
 export function getOnboardingVehicleId(): string | null {
-  return dbGet(ONBOARDING_VEHICLE_KEY);
+  return getState(ONBOARDING_VEHICLE_KEY);
 }
 
 export function setOnboardingVehicleId(vehicleId: string): void {
-  dbSet(ONBOARDING_VEHICLE_KEY, vehicleId);
+  setState(ONBOARDING_VEHICLE_KEY, vehicleId);
 }
 
 /**
@@ -64,7 +49,7 @@ export function setOnboardingVehicleId(vehicleId: string): void {
  * half an opinion.
  */
 export function getAnswers(): Answers {
-  return parseAnswers(dbGet(ONBOARDING_ANSWERS_KEY));
+  return parseAnswers(getState(ONBOARDING_ANSWERS_KEY));
 }
 
 /**
@@ -73,7 +58,7 @@ export function getAnswers(): Answers {
  * two after it.
  */
 export function setAnswers(patch: Answers): void {
-  dbSet(ONBOARDING_ANSWERS_KEY, JSON.stringify({ ...getAnswers(), ...patch }));
+  setState(ONBOARDING_ANSWERS_KEY, JSON.stringify({ ...getAnswers(), ...patch }));
 }
 
 /**
@@ -83,8 +68,8 @@ export function setAnswers(patch: Answers): void {
  * year of history would be the worst button in the product.
  */
 export function resetOnboarding(): void {
-  dbSet(ONBOARDING_COMPLETE_KEY, "false");
-  dbSet(ONBOARDING_STEP_KEY, "welcome");
+  setState(ONBOARDING_COMPLETE_KEY, "false");
+  setState(ONBOARDING_STEP_KEY, "welcome");
   // Cleared, not carried over: the replay writes a new car, so the previous
   // run's vehicle must stop being the one every step edits — and the previous
   // run's answers must stop describing it, or the replay opens on a symptoms

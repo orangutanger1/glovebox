@@ -4,7 +4,8 @@ import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { FEATURES } from "../../src/onboarding/features";
+import { t } from "../../src/i18n";
+import { features } from "../../src/onboarding/features";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 
@@ -24,18 +25,23 @@ export default function OnboardingFeatures() {
   return (
     <OnboardingScreen
       route="features"
-      title="What you are getting."
-      subtitle="Everything lives in one file on this phone, with no account and no server."
-      footer={<Button label="Continue" onPress={advance} />}
+      title={t("offer.features.title")}
+      subtitle={t("offer.features.subtitle")}
+      footer={<Button label={t("offer.features.cta")} onPress={advance} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
-          {FEATURES.map((feature) => (
+          {features().map((feature) => (
             <ListRow
-              key={feature.title}
+              key={feature.id}
               title={feature.title}
               subtitle={feature.subtitle}
-              right={<Badge label={feature.pro ? "Pro" : "Free"} tone={feature.pro ? "soon" : "ok"} />}
+              right={
+                <Badge
+                  label={t(feature.pro ? "offer.badge.pro" : "offer.badge.free")}
+                  tone={feature.pro ? "soon" : "ok"}
+                />
+              }
             />
           ))}
         </View>

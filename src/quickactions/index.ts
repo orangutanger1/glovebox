@@ -1,5 +1,6 @@
 import * as QuickActions from "expo-quick-actions";
 import { TRIAL_DAYS } from "../purchases";
+import { t } from "../i18n";
 
 /**
  * The home-screen long-press menu.
@@ -29,8 +30,8 @@ export function quickActionItems(canTrial: boolean): QuickActions.Action[] {
   if (canTrial) {
     items.push({
       id: QUICK_ACTION_TRIAL,
-      title: "Try Pro free",
-      subtitle: `${TRIAL_DAYS} days, then it renews unless you cancel`,
+      title: t("system.quickaction.trial.title"),
+      subtitle: t("system.quickaction.trial.subtitle", { count: TRIAL_DAYS }),
       // SF Symbols rather than a branded glyph: these sit directly above
       // Apple's own rows, and anything off-weight looks like a mistake.
       icon: "symbol:gift",
@@ -38,8 +39,8 @@ export function quickActionItems(canTrial: boolean): QuickActions.Action[] {
   }
   items.push({
     id: QUICK_ACTION_FEEDBACK,
-    title: "Send feedback",
-    subtitle: "Tell us what went wrong",
+    title: t("system.quickaction.feedback.title"),
+    subtitle: t("system.quickaction.feedback.subtitle"),
     icon: "symbol:envelope",
   });
   return items;

@@ -1,0 +1,432 @@
+{
+ "country": "CA",
+ "lang": "en_ca",
+ "terms": {
+  "20-20 car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "aracpro - vehicle logbook": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "ato vehicle logbook": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "autocards - vehicle log": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "autosist - car maintenance log": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "beepster - car care buddy": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "cafu fuel & car service to you": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "calgary winter club": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "car assistant -service history": {
+   "seeds": [
+    "service history"
+   ]
+  },
+  "car camera": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car camping": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car care": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car care fuel & service log": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car care inc.": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car cast": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "car cave - car maintenance log": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "car chronicle maintenance log": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "car maintenance": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance book": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance game": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance log - glovebox": {
+   "seeds": [
+    "car maintenance",
+    "maintenance log"
+   ]
+  },
+  "car maintenance reminders": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker - axel": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car maintenance tracker - mpg": {
+   "seeds": [
+    "car maintenance"
+   ]
+  },
+  "car repair": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair and wash !": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair center 3d": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair game": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair games. mechanic.": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair garage games for kids and toddlers 2": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair shop simulator": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair tracker": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car repair!": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service 2.0": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service book - auto log": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service mechanic simulator": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service station parking": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car service tracker - autozis": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "car services log": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "carfax canada car care": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "carfax car care": {
+   "seeds": [
+    "car care"
+   ]
+  },
+  "chapincity car service": {
+   "seeds": [
+    "car service"
+   ]
+  },
+  "cheap car repair": {
+   "seeds": [
+    "car repair log"
+   ]
+  },
+  "costa oil - oil change records": {
+   "seeds": [
+    "oil change remind"
+   ]
+  },
+  "driveledger – vehicle logbook": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "eternal winter": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "maintenance": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "maintenance care": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "maintenance iq": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "maintenance iq by yardi": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "maintenance logs": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "maintenance planner": {
+   "seeds": [
+    "maintenance log"
+   ]
+  },
+  "mileage": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage iq": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage log": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage logbook": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage plus": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracker": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracker by driversnote": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracker by mileiq": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "mileage tracker canada": {
+   "seeds": [
+    "mileage"
+   ]
+  },
+  "milecare vehicle service log": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "oil change reminder": {
+   "seeds": [
+    "oil change remind"
+   ]
+  },
+  "repo vehicle photos": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "the dunes golf & winter club": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "vehicle games": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle info": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle leasing system": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle loancalc": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle log": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle log vault": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle logger": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle maintenance tracker": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle masters": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "vehicle speed": {
+   "seeds": [
+    "vehicle log"
+   ]
+  },
+  "winter": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter fireplace": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter snow globe": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter sports mania": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter survival": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter tiles matching": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter time with warm dressup": {
+   "seeds": [
+    "winter tire"
+   ]
+  },
+  "winter world games 2026": {
+   "seeds": [
+    "winter tire"
+   ]
+  }
+ }
+}

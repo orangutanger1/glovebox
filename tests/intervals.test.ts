@@ -1,7 +1,7 @@
-import { mergeIntervals, nextDue, DEFAULT_INTERVALS, type Interval } from "../src/schedule";
+import { mergeIntervals, nextDue, defaultIntervals, type Interval } from "../src/schedule";
 
 const DEFAULTS: Record<string, Interval> = {
-  "Oil Change": { months: 6, miles: 5000 },
+  "Oil Change": { months: 6, distance: 5000 },
   "Wiper Blades": { months: 12 },
 };
 
@@ -10,14 +10,14 @@ test("with no overrides the shipped defaults are what is in force", () => {
 });
 
 test("an override replaces one service and leaves the rest alone", () => {
-  const merged = mergeIntervals(DEFAULTS, { "Oil Change": { months: 12, miles: 10000 } });
-  expect(merged["Oil Change"]).toEqual({ months: 12, miles: 10000 });
+  const merged = mergeIntervals(DEFAULTS, { "Oil Change": { months: 12, distance: 10000 } });
+  expect(merged["Oil Change"]).toEqual({ months: 12, distance: 10000 });
   expect(merged["Wiper Blades"]).toEqual({ months: 12 });
 });
 
-test("dropping the month figure means by mileage only, not the default months", () => {
-  const merged = mergeIntervals(DEFAULTS, { "Oil Change": { miles: 10000 } });
-  expect(merged["Oil Change"]).toEqual({ miles: 10000 });
+test("dropping the month figure means by distance only, not the default months", () => {
+  const merged = mergeIntervals(DEFAULTS, { "Oil Change": { distance: 10000 } });
+  expect(merged["Oil Change"]).toEqual({ distance: 10000 });
   expect(merged["Oil Change"].months).toBeUndefined();
 });
 
@@ -28,18 +28,25 @@ test("an empty override is ignored rather than making a service never due", () =
 });
 
 test("a service the app ships no opinion about can still be given one", () => {
-  const merged = mergeIntervals(DEFAULTS, { "Timing Belt": { miles: 90000 } });
-  expect(merged["Timing Belt"]).toEqual({ miles: 90000 });
+  const merged = mergeIntervals(DEFAULTS, { "Timing Belt": { distance: 90000 } });
+  expect(merged["Timing Belt"]).toEqual({ distance: 90000 });
 });
 
 test("merging never mutates the defaults", () => {
-  const before = JSON.parse(JSON.stringify(DEFAULT_INTERVALS));
-  mergeIntervals(DEFAULT_INTERVALS, { "Oil Change": { months: 99 } });
-  expect(DEFAULT_INTERVALS).toEqual(before);
+  // Both unit tables, because each is a separate module-level object and a
+  // merge that wrote through would corrupt whichever one the user reads in.
+  for (const unit of ["mi", "km"] as const) {
+    const defaults = defaultIntervals(unit);
+    const before = JSON.parse(JSON.stringify(defaults));
+    mergeIntervals(defaults, { "Oil Change": { months: 99 } });
+    expect(defaults).toEqual(before);
+    // And the next caller still gets the shipped table, not the merged one.
+    expect(defaultIntervals(unit)).toEqual(before);
+  }
 });
 
 test("a custom interval actually moves the due date", () => {
-  const custom = mergeIntervals(DEFAULTS, { "Oil Change": { months: 12, miles: 10000 } });
+  const custom = mergeIntervals(DEFAULTS, { "Oil Change": { months: 12, distance: 10000 } });
   const due = nextDue({
     lastPerformedAt: "2026-01-15T12:00:00.000Z",
     lastOdometer: 50000,

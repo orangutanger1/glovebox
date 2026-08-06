@@ -5,6 +5,10 @@ import { Gauge } from "../../src/design/Gauge";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
+import { formatDate, formatNumber, t } from "../../src/i18n";
+import { serviceName } from "../../src/schedule/names";
+import { getDistanceUnit } from "../../src/units";
+import { formatDistance } from "../../src/units/format";
 import { nextUp, planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
@@ -17,6 +21,14 @@ const SHOWN = 4;
 /** The list row's red stripe is keyed to "overdue"; the plan calls the same
  *  state "due", which is what the badge prints. One map, stated once. */
 const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
+
+/** The badge prints a word, the plan branches on an identifier, and the two
+ *  cannot be the same string once the word is translated. */
+const BADGE_KEY = {
+  due: "onboardingC.results.status.due",
+  soon: "onboardingC.results.status.soon",
+  ok: "onboardingC.results.status.ok",
+} as const;
 
 /**
  * The payoff. Everything above the fold here is the user's own car, computed
@@ -31,6 +43,7 @@ const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
 export default function OnboardingResults() {
   const advance = useAdvance("results");
   const { vehicleName, plan } = useOnboardingFindings();
+  const unit = getDistanceUnit();
 
   const pastDue = plan.items.filter((i) => i.status === "due" && i.logged).length;
   // The soonest thing still ahead, which is not the head of `plan.items`: that
@@ -44,28 +57,38 @@ export default function OnboardingResults() {
   // "on file" count that explains where the difference comes from.
   const title =
     pastDue > 0
-      ? `${pastDue === 1 ? "One service is" : `${pastDue} services are`} already overdue.`
+      ? t("onboardingC.results.overdue", { count: pastDue })
       : plan.dueNow > 0
-        ? "Nothing you have logged is overdue."
+        ? t("onboardingC.results.noneLogged")
         : plan.soon > 0
-          ? "Nothing is overdue yet."
-          : "Nothing is overdue, and nothing is close.";
+          ? t("onboardingC.results.noneYet")
+          : t("onboardingC.results.clear");
 
   return (
     <OnboardingScreen
       route="results"
       title={title}
-      subtitle={`Worked out for your ${vehicleName} from ${plan.milesPerYear.toLocaleString()} miles a year and what you have logged.`}
-      footer={<Button label="Continue" onPress={advance} />}
+      subtitle={t("onboardingC.results.subtitle", {
+        vehicle: vehicleName,
+        distance: formatDistance(plan.distancePerYear, unit),
+      })}
+      footer={<Button label={t("onboardingC.results.continue")} onPress={advance} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge legend="Due now" value={String(plan.dueNow)} lamp={plan.dueNow > 0} />
-            <Gauge legend="Soon" value={String(plan.soon)} />
             <Gauge
-              legend="On file"
-              value={`${plan.logged} / ${plan.items.length}`}
+              legend={t("onboardingC.results.dueNow")}
+              value={formatNumber(plan.dueNow)}
+              lamp={plan.dueNow > 0}
+            />
+            <Gauge legend={t("onboardingC.results.soon")} value={formatNumber(plan.soon)} />
+            <Gauge
+              legend={t("onboardingC.results.onFile")}
+              value={t("onboardingC.results.onFileValue", {
+                logged: plan.logged,
+                total: plan.items.length,
+              })}
               align="right"
             />
           </View>
@@ -74,10 +97,10 @@ export default function OnboardingResults() {
             {plan.items.slice(0, SHOWN).map((item) => (
               <ListRow
                 key={item.type}
-                title={item.type}
-                subtitle={planItemLine(item)}
+                title={serviceName(item.type)}
+                subtitle={planItemLine(item, unit)}
                 status={ROW_STATUS[item.status]}
-                right={<Badge label={item.status} tone={item.status} />}
+                right={<Badge label={t(BADGE_KEY[item.status])} tone={item.status} />}
               />
             ))}
           </View>
@@ -86,8 +109,8 @@ export default function OnboardingResults() {
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {upcoming?.dueAt
-          ? `The next one lands ${new Date(upcoming.dueAt).toLocaleDateString()}, whichever comes first by date or by mileage.`
-          : "Every service is counted down by date and by mileage, whichever comes first."}
+          ? t("onboardingC.results.next", { date: formatDate(upcoming.dueAt) })
+          : t("onboardingC.results.countdown")}
       </Text>
     </OnboardingScreen>
   );

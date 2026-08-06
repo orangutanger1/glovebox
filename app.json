@@ -15,12 +15,31 @@
       "supportsTablet": false,
       "buildNumber": "10",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleLocalizations": [
+          "en",
+          "en-GB",
+          "en-AU",
+          "en-CA",
+          "de",
+          "fr",
+          "fr-CA",
+          "it",
+          "es",
+          "es-MX",
+          "pt-BR",
+          "nl",
+          "sv",
+          "pl",
+          "ja",
+          "ko"
+        ]
       }
     },
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      "expo-localization",
       [
         "expo-notifications",
         {

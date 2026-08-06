@@ -3,7 +3,12 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
 import { tokens } from "../../src/design/tokens";
-import { EVIDENCE_ANSWERS, REVIEW_EVIDENCE } from "../../src/onboarding/evidence";
+import { formatNumber, t } from "../../src/i18n";
+import {
+  REVIEW_EVIDENCE,
+  evidenceAnswer,
+  reviewThemeLabel,
+} from "../../src/onboarding/evidence";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 
@@ -34,11 +39,15 @@ export default function OnboardingReviews() {
   return (
     <OnboardingScreen
       route="reviews"
-      title="This app exists because of these."
-      subtitle={`${REVIEW_EVIDENCE.negative} of the ${REVIEW_EVIDENCE.total.toLocaleString()} App Store reviews of the ${REVIEW_EVIDENCE.apps} apps that already do this are one to three stars.`}
+      title={t("onboardingC.reviews.title")}
+      subtitle={t("onboardingC.reviews.subtitle", {
+        count: REVIEW_EVIDENCE.negative,
+        total: REVIEW_EVIDENCE.total,
+        apps: REVIEW_EVIDENCE.apps,
+      })}
       footer={({ atBottom }) => (
         <Button
-          label={atBottom ? "Continue" : "Scroll to read all four"}
+          label={t(atBottom ? "onboardingC.reviews.continue" : "onboardingC.reviews.scroll")}
           onPress={advance}
           disabled={!atBottom}
         />
@@ -46,12 +55,17 @@ export default function OnboardingReviews() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
-          {REVIEW_EVIDENCE.themes.map((theme, i) => (
-            <View key={theme.label} style={{ gap: tokens.space.xs }}>
-              <Gauge legend="Reviews mentioning" value={String(theme.count)} />
-              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{theme.label}</Text>
+          {REVIEW_EVIDENCE.themes.map((theme) => (
+            <View key={theme.id} style={{ gap: tokens.space.xs }}>
+              <Gauge
+                legend={t("onboardingC.reviews.mentioning")}
+                value={formatNumber(theme.count)}
+              />
+              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                {reviewThemeLabel(theme.id)}
+              </Text>
               <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-                {EVIDENCE_ANSWERS[i]}
+                {evidenceAnswer(theme.id)}
               </Text>
             </View>
           ))}
