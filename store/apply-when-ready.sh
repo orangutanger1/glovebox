@@ -49,6 +49,13 @@ if [ "${1:-}" = "--dry-run" ]; then
   exec asc metadata apply --app "$APP_ID" --version "$VERSION" --dir "$DIR" --dry-run
 fi
 
+# Twice, on purpose. The first pass has no remote localization to write into for a
+# new locale, so it creates the empty version localization and reports the fields
+# as added while storing none of them - observed live: fifteen locales came back
+# with a name and subtitle but a zero-length description. The second pass sees the
+# rows and fills them. It is idempotent, so a run that needed only one pass writes
+# nothing the second time.
+asc metadata apply --app "$APP_ID" --version "$VERSION" --dir "$DIR"
 asc metadata apply --app "$APP_ID" --version "$VERSION" --dir "$DIR"
 echo
 echo "pushed. now check what Apple actually stored:"
