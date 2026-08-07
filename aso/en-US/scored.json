@@ -1,0 +1,831 @@
+{
+	"generatedAt": "2026-08-07T19:27:17.302Z",
+	"locale": "en-US",
+	"scored": [
+		{
+			"keyword": "service link",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 23,
+			"maxRatings": 19986,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"opportunity": 86,
+			"top3": [
+				{
+					"name": "ServiceLink for Business",
+					"id": 6768877250,
+					"ratings": 22,
+					"stars": 4.81818,
+					"seller": "JESUS SANCHEZ"
+				},
+				{
+					"name": "ServiceLink Flex",
+					"id": 1469121716,
+					"ratings": 23,
+					"stars": 1.91304,
+					"seller": "BP Systematic Computer Services Corporation"
+				},
+				{
+					"name": "EXOS Signing Agent",
+					"id": 1185106464,
+					"ratings": 63,
+					"stars": 2.5873,
+					"seller": "SERVICELINK INC."
+				}
+			]
+		},
+		{
+			"keyword": "servicelink flex",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 38,
+			"maxRatings": 19986,
+			"weakAppsTop10": 9,
+			"paidTop10": 0,
+			"opportunity": 80,
+			"top3": [
+				{
+					"name": "ServiceLink Flex",
+					"id": 1469121716,
+					"ratings": 23,
+					"stars": 1.91304,
+					"seller": "BP Systematic Computer Services Corporation"
+				},
+				{
+					"name": "SalesLink Flex",
+					"id": 1459147715,
+					"ratings": 2,
+					"stars": 5,
+					"seller": "BP Systematic Computer Services Corporation"
+				},
+				{
+					"name": "Salesforce Field Service",
+					"id": 1163307568,
+					"ratings": 19986,
+					"stars": 4.63569,
+					"seller": "salesforce.com"
+				}
+			]
+		},
+		{
+			"keyword": "oil change reminder",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 13,
+			"maxRatings": 2870,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"opportunity": 79,
+			"top3": [
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 172,
+					"stars": 4.45349,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "Car oil change tracker",
+					"id": 6749332409,
+					"ratings": 1,
+					"stars": 1,
+					"seller": "FatimaH Deeb"
+				},
+				{
+					"name": "Valvoline Instant Oil Change",
+					"id": 1334640896,
+					"ratings": 2258,
+					"stars": 4.62622,
+					"seller": "Valvoline, LLC"
+				}
+			]
+		},
+		{
+			"keyword": "service titan field",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 54,
+			"maxRatings": 19986,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"opportunity": 76,
+			"top3": [
+				{
+					"name": "ServiceTitan Field",
+					"id": 1629928933,
+					"ratings": 4417,
+					"stars": 3.39348,
+					"seller": "ServiceTitan Inc."
+				},
+				{
+					"name": "ServiceTitan Field Pro",
+					"id": 6670176800,
+					"ratings": 87,
+					"stars": 3.94253,
+					"seller": "Siro Technologies Inc"
+				},
+				{
+					"name": "Titan GPS FieldDocs",
+					"id": 1499715165,
+					"ratings": 4,
+					"stars": 4.75,
+					"seller": "Certified Tracking Solutions Inc."
+				}
+			]
+		},
+		{
+			"keyword": "free car maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 54,
+			"maxRatings": 125652,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"opportunity": 76,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652,
+					"stars": 4.8402,
+					"seller": "CARFAX, Inc."
+				}
+			]
+		},
+		{
+			"keyword": "service fusion",
+			"results": 10,
+			"exactTitleMatches": 2,
+			"medianRatings": 34,
+			"maxRatings": 1421,
+			"weakAppsTop10": 9,
+			"paidTop10": 0,
+			"opportunity": 75,
+			"top3": [
+				{
+					"name": "Service Fusion By EverPro",
+					"id": 6740150212,
+					"ratings": 18,
+					"stars": 2.33333,
+					"seller": "Service Fusion, Inc."
+				},
+				{
+					"name": "Service Fusion",
+					"id": 1042544405,
+					"ratings": 1421,
+					"stars": 4.5686,
+					"seller": "Service Fusion, Inc."
+				},
+				{
+					"name": "FusionPay",
+					"id": 6478971529,
+					"ratings": 5,
+					"stars": 2,
+					"seller": "Service Fusion, Inc."
+				}
+			]
+		},
+		{
+			"keyword": "service logistics go",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 178,
+			"maxRatings": 13394,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"opportunity": 75,
+			"top3": [
+				{
+					"name": "Porter - Logistics Service App",
+					"id": 1109398410,
+					"ratings": 1994,
+					"stars": 4.85154,
+					"seller": "Resfeber Labs Private Limited"
+				},
+				{
+					"name": "GOFO DRIVER",
+					"id": 6473001076,
+					"ratings": 178,
+					"stars": 2.85955,
+					"seller": "GOFO INC."
+				},
+				{
+					"name": "GoShare: Deliver, Move, LTL",
+					"id": 977871324,
+					"ratings": 13394,
+					"stars": 4.77751,
+					"seller": "GoShare Inc."
+				}
+			]
+		},
+		{
+			"keyword": "service channel provider",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 298,
+			"maxRatings": 3415653,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"opportunity": 74,
+			"top3": [
+				{
+					"name": "ServiceChannel Provider",
+					"id": 1181414929,
+					"ratings": 123,
+					"stars": 1.69106,
+					"seller": "ServiceChannel"
+				},
+				{
+					"name": "ServiceChannel",
+					"id": 880643250,
+					"ratings": 745,
+					"stars": 4.69395,
+					"seller": "ServiceChannel"
+				},
+				{
+					"name": "My Spectrum",
+					"id": 942608209,
+					"ratings": 3415653,
+					"stars": 4.78706,
+					"seller": "Charter Communications Operating, LLC"
+				}
+			]
+		},
+		{
+			"keyword": "service titan",
+			"results": 6,
+			"exactTitleMatches": 0,
+			"medianRatings": 101,
+			"maxRatings": 4417,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"opportunity": 73,
+			"top3": [
+				{
+					"name": "ServiceTitan Mobile",
+					"id": 1037989976,
+					"ratings": 1634,
+					"stars": 2.96634,
+					"seller": "ServiceTitan Inc."
+				},
+				{
+					"name": "ServiceTitan Field",
+					"id": 1629928933,
+					"ratings": 4417,
+					"stars": 3.39348,
+					"seller": "ServiceTitan Inc."
+				},
+				{
+					"name": "ServiceTitan Field Pro",
+					"id": 6670176800,
+					"ratings": 87,
+					"stars": 3.94253,
+					"seller": "Siro Technologies Inc"
+				}
+			]
+		},
+		{
+			"keyword": "car maintenance reminder",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 87,
+			"maxRatings": 125652,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"opportunity": 73,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652,
+					"stars": 4.8402,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				}
+			]
+		},
+		{
+			"keyword": "servicenow events",
+			"results": 4,
+			"exactTitleMatches": 1,
+			"medianRatings": 155,
+			"maxRatings": 2477,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"opportunity": 70,
+			"top3": [
+				{
+					"name": "ServiceNow Events",
+					"id": 6448200797,
+					"ratings": 273,
+					"stars": 4.77289,
+					"seller": "ServiceNow Inc."
+				},
+				{
+					"name": "ServiceNow Agent",
+					"id": 1446951408,
+					"ratings": 2477,
+					"stars": 4.58216,
+					"seller": "ServiceNow Inc."
+				},
+				{
+					"name": "My ServiceNow",
+					"id": 6448995293,
+					"ratings": 37,
+					"stars": 4.67568,
+					"seller": "ServiceNow Mobile Publishing"
+				}
+			]
+		},
+		{
+			"keyword": "field service lightning",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 201,
+			"maxRatings": 350221,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"opportunity": 68,
+			"top3": [
+				{
+					"name": "Salesforce Field Service",
+					"id": 1163307568,
+					"ratings": 19986,
+					"stars": 4.63569,
+					"seller": "salesforce.com"
+				},
+				{
+					"name": "Salesforce",
+					"id": 404249815,
+					"ratings": 350221,
+					"stars": 4.75268,
+					"seller": "salesforce.com"
+				},
+				{
+					"name": "Field Lightning Scanner",
+					"id": 1582771220,
+					"ratings": 1,
+					"stars": 5,
+					"seller": "SPAR Solutions LLC."
+				}
+			]
+		},
+		{
+			"keyword": "car maintenance log",
+			"results": 10,
+			"exactTitleMatches": 5,
+			"medianRatings": 50,
+			"maxRatings": 125652,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"opportunity": 55,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652,
+					"stars": 4.8402,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 172,
+					"stars": 4.45349,
+					"seller": "Sebastien Gamache"
+				}
+			]
+		},
+		{
+			"keyword": "car maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 3,
+			"medianRatings": 114,
+			"maxRatings": 125652,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"opportunity": 55,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652,
+					"stars": 4.8402,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Fuelly: MPG & Service Tracker",
+					"id": 295905460,
+					"ratings": 29331,
+					"stars": 4.73758,
+					"seller": "Fuelly, LLC"
+				}
+			]
+		},
+		{
+			"keyword": "service finance company, llc",
+			"results": 7,
+			"exactTitleMatches": 0,
+			"medianRatings": 1441,
+			"maxRatings": 25702,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"opportunity": 55,
+			"top3": [
+				{
+					"name": "Service Finance Borrower App",
+					"id": 1572527871,
+					"ratings": 71,
+					"stars": 1.38028,
+					"seller": "SERVICE FINANCE COMPANY, LLC"
+				},
+				{
+					"name": "Service Finance Dealer App",
+					"id": 962933342,
+					"ratings": 130,
+					"stars": 2.05385,
+					"seller": "SERVICE FINANCE COMPANY, LLC"
+				},
+				{
+					"name": "CFC Mobile Access",
+					"id": 1248074910,
+					"ratings": 8987,
+					"stars": 4.34739,
+					"seller": "Continental Finance Company, LLC"
+				}
+			]
+		},
+		{
+			"keyword": "servicenow",
+			"results": 8,
+			"exactTitleMatches": 5,
+			"medianRatings": 32,
+			"maxRatings": 2477,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"opportunity": 54,
+			"top3": [
+				{
+					"name": "ServiceNow Agent",
+					"id": 1446951408,
+					"ratings": 2477,
+					"stars": 4.58216,
+					"seller": "ServiceNow Inc."
+				},
+				{
+					"name": "Now Mobile",
+					"id": 1469616608,
+					"ratings": 2267,
+					"stars": 4.71945,
+					"seller": "ServiceNow Inc."
+				},
+				{
+					"name": "My ServiceNow",
+					"id": 6448995293,
+					"ratings": 37,
+					"stars": 4.67568,
+					"seller": "ServiceNow Mobile Publishing"
+				}
+			]
+		},
+		{
+			"keyword": "milecare vehicle service log",
+			"results": 8,
+			"exactTitleMatches": 1,
+			"medianRatings": 1513,
+			"maxRatings": 125652,
+			"weakAppsTop10": 4,
+			"paidTop10": 1,
+			"opportunity": 53,
+			"top3": [
+				{
+					"name": "MileCare Vehicle Service Log",
+					"id": 6791766501,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Nunung Kusniati"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Mileage Tracker by Driversnote",
+					"id": 924418916,
+					"ratings": 38207,
+					"stars": 4.78368,
+					"seller": "Driversnote ApS"
+				}
+			]
+		},
+		{
+			"keyword": "service channel",
+			"results": 4,
+			"exactTitleMatches": 0,
+			"medianRatings": 11095,
+			"maxRatings": 25800,
+			"weakAppsTop10": 2,
+			"paidTop10": 0,
+			"opportunity": 52,
+			"top3": [
+				{
+					"name": "ServiceChannel",
+					"id": 880643250,
+					"ratings": 745,
+					"stars": 4.69395,
+					"seller": "ServiceChannel"
+				},
+				{
+					"name": "ServiceChannel Provider",
+					"id": 1181414929,
+					"ratings": 123,
+					"stars": 1.69106,
+					"seller": "ServiceChannel"
+				},
+				{
+					"name": "Hole19: Golf GPS Range Finder",
+					"id": 794462227,
+					"ratings": 21445,
+					"stars": 4.74204,
+					"seller": "Stat Track Technologies - Servicos Tecnologicos para o Desporto, Lda."
+				}
+			]
+		},
+		{
+			"keyword": "poolstop service log",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 1807,
+			"maxRatings": 98338,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"opportunity": 52,
+			"top3": [
+				{
+					"name": "PoolStop Service Log",
+					"id": 6793426917,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Shlomo Eydelstin"
+				},
+				{
+					"name": "Skimmer Pro",
+					"id": 1249069756,
+					"ratings": 3271,
+					"stars": 4.6041,
+					"seller": "Skimmer, LLC"
+				},
+				{
+					"name": "Pool Service Software",
+					"id": 986000636,
+					"ratings": 32,
+					"stars": 4.34375,
+					"seller": "Pool Service Software, LLC"
+				}
+			]
+		},
+		{
+			"keyword": "stormstop service ledger",
+			"results": 9,
+			"exactTitleMatches": 1,
+			"medianRatings": 2282,
+			"maxRatings": 15090,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"opportunity": 49,
+			"top3": [
+				{
+					"name": "StormStop Service Ledger",
+					"id": 6793653829,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Shlomo Eydelstin"
+				},
+				{
+					"name": "Ledger Wallet™ crypto app",
+					"id": 1361671700,
+					"ratings": 15090,
+					"stars": 4.85341,
+					"seller": "Ledger SAS"
+				},
+				{
+					"name": "Solflare: Solana Crypto Wallet",
+					"id": 1580902717,
+					"ratings": 9682,
+					"stars": 4.84145,
+					"seller": "SOLRISE RESEARCH LTD"
+				}
+			]
+		},
+		{
+			"keyword": "car maintenance",
+			"results": 10,
+			"exactTitleMatches": 4,
+			"medianRatings": 605,
+			"maxRatings": 125652,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"opportunity": 45,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652,
+					"stars": 4.8402,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 172,
+					"stars": 4.45349,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870,
+					"stars": 4.34842,
+					"seller": "Hai Nguyen"
+				}
+			]
+		},
+		{
+			"keyword": "piano technician service log",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 15395,
+			"maxRatings": 807972,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"opportunity": 38,
+			"top3": [
+				{
+					"name": "Piano Technician Service Log",
+					"id": 6794619368,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "SHINOBU MIYAHIRA"
+				},
+				{
+					"name": "Piano Keyboard & Music Tiles",
+					"id": 694133630,
+					"ratings": 46785,
+					"stars": 4.56313,
+					"seller": "Gismart Ltd"
+				},
+				{
+					"name": "Piano by Yousician",
+					"id": 1469033443,
+					"ratings": 22500,
+					"stars": 4.66892,
+					"seller": "Yousician Ltd"
+				}
+			]
+		},
+		{
+			"keyword": "service credit union",
+			"results": 9,
+			"exactTitleMatches": 2,
+			"medianRatings": 8618,
+			"maxRatings": 814870,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"opportunity": 36,
+			"top3": [
+				{
+					"name": "Service CU Mobile Banking",
+					"id": 420732323,
+					"ratings": 11068,
+					"stars": 4.79933,
+					"seller": "Service Credit Union"
+				},
+				{
+					"name": "Service Credit Union",
+					"id": 6450793402,
+					"ratings": 2,
+					"stars": 3,
+					"seller": "Service Credit Union (Green Bay)"
+				},
+				{
+					"name": "Service One CU",
+					"id": 1091387231,
+					"ratings": 3116,
+					"stars": 4.84274,
+					"seller": "Service One Credit Union, Inc."
+				}
+			]
+		},
+		{
+			"keyword": "pianovisit service log",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 17471,
+			"maxRatings": 807972,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"opportunity": 29,
+			"top3": [
+				{
+					"name": "PianoVisit Service Log",
+					"id": 6793833278,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Shlomo Eydelstin"
+				},
+				{
+					"name": "OnlinePianist: Piano Songs",
+					"id": 642104967,
+					"ratings": 8974,
+					"stars": 4.34678,
+					"seller": "OnlinePianist N.T LTD"
+				},
+				{
+					"name": "Skoove: Learn to Play Piano",
+					"id": 1160668178,
+					"ratings": 21863,
+					"stars": 4.5829,
+					"seller": "Learnfield GmbH"
+				}
+			]
+		},
+		{
+			"keyword": "services",
+			"results": 7,
+			"exactTitleMatches": 5,
+			"medianRatings": 37844,
+			"maxRatings": 570183,
+			"weakAppsTop10": 0,
+			"paidTop10": 0,
+			"opportunity": 3,
+			"top3": [
+				{
+					"name": "Planning Center Services",
+					"id": 327370808,
+					"ratings": 2152,
+					"stars": 3.74535,
+					"seller": "Ministry Centered Technologies"
+				},
+				{
+					"name": "Thumbtack: Home Service Pros",
+					"id": 852703300,
+					"ratings": 456616,
+					"stars": 4.89013,
+					"seller": "Thumbtack, Inc."
+				},
+				{
+					"name": "Fiverr - Freelance Services",
+					"id": 346080608,
+					"ratings": 570183,
+					"stars": 4.91697,
+					"seller": "Fiverr International Ltd."
+				}
+			]
+		}
+	]
+}

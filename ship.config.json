@@ -1,0 +1,61 @@
+{
+	"name": "Glovebox",
+	"bundleId": "com.idea6.carmaintenancelog",
+	"version": "1.0",
+	"appDir": ".",
+	"asc": {
+		"appId": "6797103341",
+		"profile": null,
+		"primaryLocale": "en-US",
+		"platform": "IOS"
+	},
+	"eas": {
+		"projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6",
+		"owner": "mayfield",
+		"profile": "production",
+		"platform": "ios",
+		"channel": "production"
+	},
+	"store": {
+		"dir": "store",
+		"locales": [
+			"de-DE",
+			"en-AU",
+			"en-CA",
+			"en-GB",
+			"es-ES",
+			"es-MX",
+			"fr-CA",
+			"fr-FR",
+			"it",
+			"ja",
+			"ko",
+			"nl-NL",
+			"pl",
+			"pt-BR",
+			"sv"
+		]
+	},
+	"revenuecat": {
+		"projectId": null,
+		"appId": null,
+		"entitlement": "pro",
+		"keyEnv": "EXPO_PUBLIC_RC_IOS_KEY"
+	},
+	"ads": {
+		"orgId": null,
+		"dir": "aso/asa"
+	},
+	"aso": {
+		"dir": "aso",
+		"markets": [
+			"us"
+		],
+		"seeds": []
+	},
+	"legal": {
+		"privacyUrl": "https://gist.github.com/orangutanger1/ce492daa25c4acdbc7db49068c33ce3f/raw/473d9af8d5d1594e990aaa5d33fd581234b9ec58/PrivacyPolicy.md",
+		"supportUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdexUO3CC7gRVfWoTn4ENPryIUFjvagXetQ0hlAK4lc61qOEA/viewform?usp=publish-editor",
+		"marketingUrl": null
+	}
+}

@@ -48,7 +48,17 @@
     "android": "APP_VARIANT=development expo start --android",
     "ios": "APP_VARIANT=development expo start --ios",
     "web": "expo start --web",
-    "test": "jest"
+    "test": "jest",
+    "ship": "ship",
+    "ship:doctor": "ship doctor",
+    "ship:status": "ship status",
+    "ship:preflight": "ship preflight",
+    "ship:meta": "ship meta",
+    "ship:aso": "ship aso",
+    "ship:build": "ship build",
+    "ship:submit": "ship submit",
+    "ship:ota": "ship ota",
+    "ship:release": "ship release"
   },
   "private": true
 }

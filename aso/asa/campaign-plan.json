@@ -1,0 +1,460 @@
+{
+	"generatedAt": "2026-08-07T19:27:28.088Z",
+	"source": "/home/myen/glovebox/aso/en-US/scored.json",
+	"locale": "en-US",
+	"market": "US",
+	"app": {
+		"name": "Glovebox",
+		"bundleId": "com.idea6.carmaintenancelog",
+		"appId": "6797103341"
+	},
+	"org": null,
+	"currency": "USD",
+	"campaign": {
+		"name": "Glovebox · Exact · US",
+		"dailyBudget": 10,
+		"totalBudget": 300,
+		"countriesOrRegions": [
+			"US"
+		],
+		"supplySources": [
+			"APPSTORE_SEARCH_RESULTS"
+		],
+		"billingEvent": "TAPS",
+		"adChannelType": "SEARCH"
+	},
+	"bidding": {
+		"startingBid": 0.3,
+		"derivation": "perKeywordDailyBudget / 5 taps, clamped to [0.30, 2.00]"
+	},
+	"adGroups": [
+		{
+			"name": "EX · service link",
+			"keyword": "service link",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 86,
+			"medianRatings": 23,
+			"weakAppsTop10": 8,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "ServiceLink for Business",
+					"id": 6768877250,
+					"ratings": 22
+				},
+				{
+					"name": "ServiceLink Flex",
+					"id": 1469121716,
+					"ratings": 23
+				},
+				{
+					"name": "EXOS Signing Agent",
+					"id": 1185106464,
+					"ratings": 63
+				}
+			]
+		},
+		{
+			"name": "EX · servicelink flex",
+			"keyword": "servicelink flex",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 80,
+			"medianRatings": 38,
+			"weakAppsTop10": 9,
+			"exactTitleMatches": 1,
+			"incumbents": [
+				{
+					"name": "ServiceLink Flex",
+					"id": 1469121716,
+					"ratings": 23
+				},
+				{
+					"name": "SalesLink Flex",
+					"id": 1459147715,
+					"ratings": 2
+				},
+				{
+					"name": "Salesforce Field Service",
+					"id": 1163307568,
+					"ratings": 19986
+				}
+			]
+		},
+		{
+			"name": "EX · oil change reminder",
+			"keyword": "oil change reminder",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 79,
+			"medianRatings": 13,
+			"weakAppsTop10": 8,
+			"exactTitleMatches": 1,
+			"incumbents": [
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 172
+				},
+				{
+					"name": "Car oil change tracker",
+					"id": 6749332409,
+					"ratings": 1
+				},
+				{
+					"name": "Valvoline Instant Oil Change",
+					"id": 1334640896,
+					"ratings": 2258
+				}
+			]
+		},
+		{
+			"name": "EX · service titan field",
+			"keyword": "service titan field",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 76,
+			"medianRatings": 54,
+			"weakAppsTop10": 7,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "ServiceTitan Field",
+					"id": 1629928933,
+					"ratings": 4417
+				},
+				{
+					"name": "ServiceTitan Field Pro",
+					"id": 6670176800,
+					"ratings": 87
+				},
+				{
+					"name": "Titan GPS FieldDocs",
+					"id": 1499715165,
+					"ratings": 4
+				}
+			]
+		},
+		{
+			"name": "EX · free car maintenance tracker",
+			"keyword": "free car maintenance tracker",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 76,
+			"medianRatings": 54,
+			"weakAppsTop10": 7,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652
+				}
+			]
+		},
+		{
+			"name": "EX · service fusion",
+			"keyword": "service fusion",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 75,
+			"medianRatings": 34,
+			"weakAppsTop10": 9,
+			"exactTitleMatches": 2,
+			"incumbents": [
+				{
+					"name": "Service Fusion By EverPro",
+					"id": 6740150212,
+					"ratings": 18
+				},
+				{
+					"name": "Service Fusion",
+					"id": 1042544405,
+					"ratings": 1421
+				},
+				{
+					"name": "FusionPay",
+					"id": 6478971529,
+					"ratings": 5
+				}
+			]
+		},
+		{
+			"name": "EX · service logistics go",
+			"keyword": "service logistics go",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 75,
+			"medianRatings": 178,
+			"weakAppsTop10": 7,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "Porter - Logistics Service App",
+					"id": 1109398410,
+					"ratings": 1994
+				},
+				{
+					"name": "GOFO DRIVER",
+					"id": 6473001076,
+					"ratings": 178
+				},
+				{
+					"name": "GoShare: Deliver, Move, LTL",
+					"id": 977871324,
+					"ratings": 13394
+				}
+			]
+		},
+		{
+			"name": "EX · service channel provider",
+			"keyword": "service channel provider",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 74,
+			"medianRatings": 298,
+			"weakAppsTop10": 7,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "ServiceChannel Provider",
+					"id": 1181414929,
+					"ratings": 123
+				},
+				{
+					"name": "ServiceChannel",
+					"id": 880643250,
+					"ratings": 745
+				},
+				{
+					"name": "My Spectrum",
+					"id": 942608209,
+					"ratings": 3415653
+				}
+			]
+		},
+		{
+			"name": "EX · service titan",
+			"keyword": "service titan",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 73,
+			"medianRatings": 101,
+			"weakAppsTop10": 4,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "ServiceTitan Mobile",
+					"id": 1037989976,
+					"ratings": 1634
+				},
+				{
+					"name": "ServiceTitan Field",
+					"id": 1629928933,
+					"ratings": 4417
+				},
+				{
+					"name": "ServiceTitan Field Pro",
+					"id": 6670176800,
+					"ratings": 87
+				}
+			]
+		},
+		{
+			"name": "EX · car maintenance reminder",
+			"keyword": "car maintenance reminder",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 73,
+			"medianRatings": 87,
+			"weakAppsTop10": 8,
+			"exactTitleMatches": 1,
+			"incumbents": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870
+				}
+			]
+		},
+		{
+			"name": "EX · servicenow events",
+			"keyword": "servicenow events",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 70,
+			"medianRatings": 155,
+			"weakAppsTop10": 3,
+			"exactTitleMatches": 1,
+			"incumbents": [
+				{
+					"name": "ServiceNow Events",
+					"id": 6448200797,
+					"ratings": 273
+				},
+				{
+					"name": "ServiceNow Agent",
+					"id": 1446951408,
+					"ratings": 2477
+				},
+				{
+					"name": "My ServiceNow",
+					"id": 6448995293,
+					"ratings": 37
+				}
+			]
+		},
+		{
+			"name": "EX · field service lightning",
+			"keyword": "field service lightning",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 68,
+			"medianRatings": 201,
+			"weakAppsTop10": 6,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "Salesforce Field Service",
+					"id": 1163307568,
+					"ratings": 19986
+				},
+				{
+					"name": "Salesforce",
+					"id": 404249815,
+					"ratings": 350221
+				},
+				{
+					"name": "Field Lightning Scanner",
+					"id": 1582771220,
+					"ratings": 1
+				}
+			]
+		},
+		{
+			"name": "EX · car maintenance log",
+			"keyword": "car maintenance log",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 55,
+			"medianRatings": 50,
+			"weakAppsTop10": 8,
+			"exactTitleMatches": 5,
+			"incumbents": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 172
+				}
+			]
+		},
+		{
+			"name": "EX · car maintenance tracker",
+			"keyword": "car maintenance tracker",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 55,
+			"medianRatings": 114,
+			"weakAppsTop10": 6,
+			"exactTitleMatches": 3,
+			"incumbents": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 125652
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2870
+				},
+				{
+					"name": "Fuelly: MPG & Service Tracker",
+					"id": 295905460,
+					"ratings": 29331
+				}
+			]
+		},
+		{
+			"name": "EX · service finance company, llc",
+			"keyword": "service finance company, llc",
+			"matchType": "EXACT",
+			"defaultBidAmount": 0.3,
+			"dailyBudget": 0.67,
+			"opportunity": 55,
+			"medianRatings": 1441,
+			"weakAppsTop10": 3,
+			"exactTitleMatches": 0,
+			"incumbents": [
+				{
+					"name": "Service Finance Borrower App",
+					"id": 1572527871,
+					"ratings": 71
+				},
+				{
+					"name": "Service Finance Dealer App",
+					"id": 962933342,
+					"ratings": 130
+				},
+				{
+					"name": "CFC Mobile Access",
+					"id": 1248074910,
+					"ratings": 8987
+				}
+			]
+		}
+	],
+	"killRule": {
+		"window": "7 days",
+		"condition": "spend > monthlyRevenuePerSubscriber AND conversions === 0",
+		"monthlyRevenuePerSubscriber": 4.99,
+		"thresholdPerKeyword": 4.99,
+		"action": "pause the keyword",
+		"rationale": "A keyword that burns $4.99 — one month of subscription revenue — without a single conversion has already lost money on the best case it will ever have. Pause it; do not \"give it more data\"."
+	}
+}

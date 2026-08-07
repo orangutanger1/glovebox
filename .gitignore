@@ -43,3 +43,7 @@ yarn-error.*
 # Claude Code
 .claude/worktrees/
 .claude/scheduled_tasks.lock
+
+# shipkit
+.asc/reports/
+aso/**/candidates.json
