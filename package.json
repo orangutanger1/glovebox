@@ -49,16 +49,16 @@
     "ios": "APP_VARIANT=development expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-    "ship": "ship",
-    "ship:doctor": "ship doctor",
-    "ship:status": "ship status",
-    "ship:preflight": "ship preflight",
-    "ship:meta": "ship meta",
-    "ship:aso": "ship aso",
-    "ship:build": "ship build",
-    "ship:submit": "ship submit",
-    "ship:ota": "ship ota",
-    "ship:release": "ship release"
+"ship": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship",
+  "ship:doctor": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship doctor",
+  "ship:status": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship status",
+  "ship:preflight": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship preflight",
+  "ship:meta": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship meta",
+  "ship:aso": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship aso",
+  "ship:build": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship build",
+  "ship:submit": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship submit",
+  "ship:ota": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship ota",
+  "ship:release": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship release"
   },
   "private": true
 }

@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://mcp.revenuecat.ai/mcp",
       "headers": {
-        "Authorization": "!printf 'Bearer %s' \"${REVENUECAT_V2_KEY:-$(cat \"$HOME/.omp/revenuecat.key\" 2>/dev/null)}\""
+        "Authorization": "!printf 'Bearer %s' \"$(cat \"$HOME/.omp/revenuecat/car.key\" 2>/dev/null)\""
       }
     },
     "astro": {
