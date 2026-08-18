@@ -1,0 +1,47 @@
+{
+  "de-DE": {
+    "name": "Pro (monatlich)"
+  },
+  "en-AU": {
+    "name": "Pro (Monthly)"
+  },
+  "en-CA": {
+    "name": "Pro (Monthly)"
+  },
+  "en-GB": {
+    "name": "Pro (Monthly)"
+  },
+  "es-ES": {
+    "name": "Pro (mensual)"
+  },
+  "es-MX": {
+    "name": "Pro (mensual)"
+  },
+  "fr-CA": {
+    "name": "Pro (mensuel)"
+  },
+  "fr-FR": {
+    "name": "Pro (mensuel)"
+  },
+  "it": {
+    "name": "Pro (mensile)"
+  },
+  "ja": {
+    "name": "Pro (月額)"
+  },
+  "ko": {
+    "name": "Pro (월간)"
+  },
+  "nl-NL": {
+    "name": "Pro (maandelijks)"
+  },
+  "pl": {
+    "name": "Pro (miesięcznie)"
+  },
+  "pt-BR": {
+    "name": "Pro (mensal)"
+  },
+  "sv": {
+    "name": "Pro (månatlig)"
+  }
+}
