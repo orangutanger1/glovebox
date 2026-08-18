@@ -104,8 +104,12 @@ labelled miles.
   (`enGB`, `enAU`, `enCA`, `frCA`, `esMX`) are **overlays** holding only the keys
   whose wording differs, so a fix to the base language reaches them.
 - `t(key, vars)` interpolates `{name}` placeholders and selects plurals through
-  `Intl.PluralRules`, which is why Polish gets its four forms and Japanese its
-  one without either being special-cased.
+  `src/i18n/plural.ts`, a CLDR rule table keyed by shipped language, which is why
+  Polish gets its four forms and Japanese its one without either being
+  special-cased. It is a table and not `Intl.PluralRules` because that
+  constructor does not exist on iOS: Hermes ships `Collator`, `DateTimeFormat`
+  and `NumberFormat` on Apple platforms and nothing else, and calling it crashed
+  build 1.0(11) on launch, which is what App Review rejected it for.
 - Dates and numbers go through `Intl.DateTimeFormat` / `NumberFormat`, and every
   distance goes through `formatDistance`, so "51 771 km" is grouped the way the
   reader's language groups it.
@@ -118,12 +122,16 @@ labelled miles.
   techniczny, 車検, 정기검사, Roadworthy, or Safety Inspection, each with the
   cadence that market actually runs.
 
-Two tests defend this. `tests/i18n.test.ts` checks the machinery. 
+Three tests defend this. `tests/i18n.test.ts` checks the machinery.
 `tests/localization-smoke.test.ts` renders **every key in every language** at
 eight plural counts with every placeholder filled, and fails on an unfilled
 `{placeholder}`, an empty render, a key that renders as itself, or a base
 language quietly serving the English sentence. The allowlist of legitimately
 identical strings is enumerated in that file with a reason per entry.
+`tests/plural.test.ts` grades the rule table against Node's own CLDR data for
+every shipped language, and the whole suite now runs through
+`tests/hermes-runtime.js`, which deletes the Intl constructors iOS does not have
+so that reaching for one fails here instead of in review.
 
 ---
 

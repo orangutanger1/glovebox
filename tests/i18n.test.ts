@@ -18,6 +18,11 @@ import { serviceName } from "../src/schedule/names";
 const BASE: Language[] = ["de", "fr", "it", "es", "pt-BR", "nl", "sv", "pl", "ja", "ko"];
 const OVERLAY: Language[] = ["en-GB", "en-AU", "en-CA", "fr-CA", "es-MX"];
 
+/** Node's CLDR data, parked by tests/hermes-runtime.js before it removed the
+ *  constructors iOS does not have. Unchecked cast: nothing to validate. */
+const ICU = (globalThis as unknown as { ICU: { PluralRules: typeof Intl.PluralRules } }).ICU
+  .PluralRules;
+
 const placeholders = (entry: Entry): string[] => {
   const values = typeof entry === "string" ? [entry] : Object.values(entry);
   const names = new Set<string>();
@@ -92,7 +97,7 @@ describe("every shipped language", () => {
       expect(typeof entry).not.toBe("string");
       if (typeof entry === "string") continue;
       expect(entry.other).toBeTruthy();
-      const allowed = new Intl.PluralRules(language).resolvedOptions().pluralCategories;
+      const allowed = new ICU(language).resolvedOptions().pluralCategories;
       expect(Object.keys(entry).filter((c) => !allowed.includes(c as Intl.LDMLPluralRule))).toEqual(
         []
       );

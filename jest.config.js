@@ -23,11 +23,17 @@ module.exports = {
       preset: "ts-jest",
       testEnvironment: "node",
       testMatch: ["<rootDir>/tests/**/*.test.ts"],
+      // Both projects run with the device's Intl surface, not Node's. See
+      // tests/hermes-runtime.js: the gap between the two is what got 1.0(11)
+      // rejected. `setupFilesAfterEnv` rather than `setupFiles` so it adds to
+      // what jest-expo's preset already installs instead of replacing it.
+      setupFilesAfterEnv: ["<rootDir>/tests/hermes-runtime.js"],
     },
     {
       displayName: "screens",
       preset: "jest-expo",
       testMatch: ["<rootDir>/tests/**/*.test.tsx"],
+      setupFilesAfterEnv: ["<rootDir>/tests/hermes-runtime.js"],
     },
   ],
 };

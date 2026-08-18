@@ -1,40 +1,14 @@
 import { deviceLanguageTags } from "./device";
 import { en } from "./catalog/en";
 import { CATALOGS } from "./catalog";
+import { LANGUAGES, type Language } from "./languages";
+import { selectPlural } from "./plural";
 import type { Entry, Fragment } from "./catalog/types";
 
 export type { Entry, Fragment } from "./catalog/types";
 
-/**
- * Every language the app ships, in the order a tie is broken.
- *
- * The regional entries are not decoration. `en-GB`, `en-AU` and `en-CA` exist
- * because a British owner books an MOT and puts petrol in, an Australian books
- * a log book service and checks his tyres, and both read "gas" and "inspection"
- * as somebody else's app. `fr-CA` and `es-MX` are here for the same reason
- * ("char" and "carro", not "voiture" and "coche"). They are overlays: a handful
- * of keys over the base language, not a second full translation.
- */
-export const LANGUAGES = [
-  "en",
-  "en-GB",
-  "en-AU",
-  "en-CA",
-  "de",
-  "fr",
-  "fr-CA",
-  "it",
-  "es",
-  "es-MX",
-  "pt-BR",
-  "nl",
-  "sv",
-  "pl",
-  "ja",
-  "ko",
-] as const;
-
-export type Language = (typeof LANGUAGES)[number];
+export { LANGUAGES };
+export type { Language };
 
 /**
  * Languages whose speakers we ship a near neighbour to rather than nothing.
@@ -122,8 +96,6 @@ export function formatNumber(value: number): string {
   return numberFormats[key].format(value);
 }
 
-const pluralRules: Record<string, Intl.PluralRules> = {};
-
 /**
  * Interpolation, in the one syntax the catalog uses: `{name}` placeholders.
  *
@@ -151,8 +123,7 @@ export function t(key: string, vars?: Vars): string {
   if (typeof entry === "string") return fill(entry, vars);
 
   const count = typeof vars?.count === "number" ? vars.count : 0;
-  pluralRules[active] ??= new Intl.PluralRules(active);
-  const category = pluralRules[active].select(count);
+  const category = selectPlural(active, count);
   return fill(entry[category] ?? entry.other, vars);
 }
 
@@ -188,7 +159,7 @@ export function formatDate(iso: string): string {
 /** Test seam: drops the memoised Intl objects so a language switch inside one
  *  process cannot answer with the previous locale's formatter. */
 export function resetFormatters(): void {
-  for (const map of [numberFormats, pluralRules, dateFormats] as Record<string, unknown>[]) {
+  for (const map of [numberFormats, dateFormats] as Record<string, unknown>[]) {
     for (const key of Object.keys(map)) delete map[key];
   }
 }
