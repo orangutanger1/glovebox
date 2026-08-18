@@ -1,47 +1,62 @@
 {
   "de-DE": {
-    "name": "Pro (monatlich)"
+    "name": "Pro (monatlich)",
+    "description": "Unbegrenzte Fahrzeuge und eigene Service-Intervalle"
   },
   "en-AU": {
-    "name": "Pro (Monthly)"
+    "name": "Pro (Monthly)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "en-CA": {
-    "name": "Pro (Monthly)"
+    "name": "Pro (Monthly)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "en-GB": {
-    "name": "Pro (Monthly)"
+    "name": "Pro (Monthly)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "es-ES": {
-    "name": "Pro (mensual)"
+    "name": "Pro (mensual)",
+    "description": "Vehículos ilimitados e intervalos a medida"
   },
   "es-MX": {
-    "name": "Pro (mensual)"
+    "name": "Pro (mensual)",
+    "description": "Vehículos ilimitados e intervalos a medida"
   },
   "fr-CA": {
-    "name": "Pro (mensuel)"
+    "name": "Pro (mensuel)",
+    "description": "Véhicules illimités, intervalles personnalisés"
   },
   "fr-FR": {
-    "name": "Pro (mensuel)"
+    "name": "Pro (mensuel)",
+    "description": "Véhicules illimités, intervalles personnalisés"
   },
   "it": {
-    "name": "Pro (mensile)"
+    "name": "Pro (mensile)",
+    "description": "Veicoli illimitati e intervalli personalizzati"
   },
   "ja": {
-    "name": "Pro (月額)"
+    "name": "Pro (月額)",
+    "description": "無制限の車両登録とカスタム整備間隔"
   },
   "ko": {
-    "name": "Pro (월간)"
+    "name": "Pro (월간)",
+    "description": "차량 무제한 등록과 맞춤 정비 주기"
   },
   "nl-NL": {
-    "name": "Pro (maandelijks)"
+    "name": "Pro (maandelijks)",
+    "description": "Onbeperkt voertuigen en eigen service-intervallen"
   },
   "pl": {
-    "name": "Pro (miesięcznie)"
+    "name": "Pro (miesięcznie)",
+    "description": "Nielimitowane pojazdy i własne interwały serwisowe"
   },
   "pt-BR": {
-    "name": "Pro (mensal)"
+    "name": "Pro (mensal)",
+    "description": "Veículos ilimitados e intervalos personalizados"
   },
   "sv": {
-    "name": "Pro (månatlig)"
+    "name": "Pro (månatlig)",
+    "description": "Obegränsat med bilar och egna serviceintervall"
   }
 }

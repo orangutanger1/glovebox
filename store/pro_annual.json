@@ -1,47 +1,62 @@
 {
   "de-DE": {
-    "name": "Pro (jährlich)"
+    "name": "Pro (jährlich)",
+    "description": "Unbegrenzte Fahrzeuge und eigene Service-Intervalle"
   },
   "en-AU": {
-    "name": "Pro (Annual)"
+    "name": "Pro (Annual)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "en-CA": {
-    "name": "Pro (Annual)"
+    "name": "Pro (Annual)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "en-GB": {
-    "name": "Pro (Annual)"
+    "name": "Pro (Annual)",
+    "description": "Unlimited vehicles and custom service intervals"
   },
   "es-ES": {
-    "name": "Pro (anual)"
+    "name": "Pro (anual)",
+    "description": "Vehículos ilimitados e intervalos a medida"
   },
   "es-MX": {
-    "name": "Pro (anual)"
+    "name": "Pro (anual)",
+    "description": "Vehículos ilimitados e intervalos a medida"
   },
   "fr-CA": {
-    "name": "Pro (annuel)"
+    "name": "Pro (annuel)",
+    "description": "Véhicules illimités, intervalles personnalisés"
   },
   "fr-FR": {
-    "name": "Pro (annuel)"
+    "name": "Pro (annuel)",
+    "description": "Véhicules illimités, intervalles personnalisés"
   },
   "it": {
-    "name": "Pro (annuale)"
+    "name": "Pro (annuale)",
+    "description": "Veicoli illimitati e intervalli personalizzati"
   },
   "ja": {
-    "name": "Pro (年額)"
+    "name": "Pro (年額)",
+    "description": "無制限の車両登録とカスタム整備間隔"
   },
   "ko": {
-    "name": "Pro (연간)"
+    "name": "Pro (연간)",
+    "description": "차량 무제한 등록과 맞춤 정비 주기"
   },
   "nl-NL": {
-    "name": "Pro (jaarlijks)"
+    "name": "Pro (jaarlijks)",
+    "description": "Onbeperkt voertuigen en eigen service-intervallen"
   },
   "pl": {
-    "name": "Pro (rocznie)"
+    "name": "Pro (rocznie)",
+    "description": "Nielimitowane pojazdy i własne interwały serwisowe"
   },
   "pt-BR": {
-    "name": "Pro (anual)"
+    "name": "Pro (anual)",
+    "description": "Veículos ilimitados e intervalos personalizados"
   },
   "sv": {
-    "name": "Pro (årlig)"
+    "name": "Pro (årlig)",
+    "description": "Obegränsat med bilar och egna serviceintervall"
   }
 }
