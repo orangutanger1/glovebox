@@ -37,8 +37,8 @@
 		]
 	},
 	"revenuecat": {
-		"projectId": null,
-		"appId": null,
+		"projectId": "projf0d996da",
+		"appId": "app774f157580",
 		"entitlement": "pro",
 		"keyEnv": "EXPO_PUBLIC_RC_IOS_KEY"
 	},
@@ -56,6 +56,7 @@
 	"legal": {
 		"privacyUrl": "https://gist.github.com/orangutanger1/ce492daa25c4acdbc7db49068c33ce3f/raw/473d9af8d5d1594e990aaa5d33fd581234b9ec58/PrivacyPolicy.md",
 		"supportUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdexUO3CC7gRVfWoTn4ENPryIUFjvagXetQ0hlAK4lc61qOEA/viewform?usp=publish-editor",
-		"marketingUrl": null
+		"marketingUrl": null,
+		"euTrader": true
 	}
 }
