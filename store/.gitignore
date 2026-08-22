@@ -1,0 +1,5 @@
+# Derived, not authored: `ship shots render` rebuilds every one of these from
+# screenshots-raw/ + screenshot-captions.json + figma-geometry.json + fonts/,
+# which are committed. 96 PNGs at 1242x2688 is 86MB of history for bytes a
+# deterministic renderer reproduces in under a minute.
+screenshots/

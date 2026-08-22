@@ -1,0 +1,225 @@
+{
+  "source": {
+    "figmaFile": "X1bc9mBhr5AjDYJcwdlV3q",
+    "figmaUrl": "https://www.figma.com/design/X1bc9mBhr5AjDYJcwdlV3q/car?node-id=1862-3458",
+    "page": "01 iPhone 13",
+    "extractedFrom": "Figma layers panel (text layers are named after their content)",
+    "originalCaptions": [
+      "Your car's maintenance log.",
+      "Log a service in 15 seconds.",
+      "Know before it's overdue.",
+      "Set up in under a minute",
+      "Take your data anywhere.",
+      "Every car in one glovebox."
+    ],
+    "originalTagline": "Your records can't disappear. Car maintenance log and reminders. No account, no server."
+  },
+  "notes": {
+    "caption6": "Source read 'Every car in one glovebox.' - a pun on the retired brand name. After the rebrand to Wrenchy that reads as a stale product name in a six-word headline, so captions now say 'one place'. The long store descriptions still use the glove-compartment metaphor on purpose; there it is an image, not a name.",
+    "lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - re-check line wrapping in Figma for de-DE, nl-NL and pl, which run longest.",
+    "inspectionTerms": "Captions deliberately avoid inspection names (MOT/TÜV/ITV/車検), which differ per market and are already carried by each locale's subtitle.",
+    "apostrophe": "Captions use the typographic apostrophe U+2019, matching the Figma source (“Your car’s”) and the live English screenshots. An ASCII \"'\" renders as a straight vertical tick in Cambay and reads as a typo at 128px."
+  },
+  "frames": [
+    "ScreenShotAppStore1",
+    "ScreenShotAppStore2",
+    "ScreenShotAppStore3",
+    "ScreenShotAppStore4",
+    "ScreenShotAppStore5",
+    "ScreenShotAppStore6"
+  ],
+  "locales": {
+    "de-DE": {
+      "tagline": "Deine Einträge können nicht verschwinden. Wartungsheft und Erinnerungen. Kein Konto, kein Server.",
+      "captions": {
+        "ScreenShotAppStore1": "Das Scheckheft deines Autos.",
+        "ScreenShotAppStore2": "Service in 15 Sekunden notiert.",
+        "ScreenShotAppStore3": "Wissen, bevor es überfällig ist.",
+        "ScreenShotAppStore4": "In unter einer Minute startklar",
+        "ScreenShotAppStore5": "Deine Daten, überall dabei.",
+        "ScreenShotAppStore6": "Alle Autos an einem Ort."
+      },
+      "maxLen": 32
+    },
+    "en-AU": {
+      "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
+      "captions": {
+        "ScreenShotAppStore1": "Your car’s service log.",
+        "ScreenShotAppStore2": "Log a service in 15 seconds.",
+        "ScreenShotAppStore3": "Know before it’s overdue.",
+        "ScreenShotAppStore4": "Set up in under a minute",
+        "ScreenShotAppStore5": "Take your data anywhere.",
+        "ScreenShotAppStore6": "Every car in one place."
+      },
+      "maxLen": 28
+    },
+    "en-CA": {
+      "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
+      "captions": {
+        "ScreenShotAppStore1": "Your car’s service log.",
+        "ScreenShotAppStore2": "Log a service in 15 seconds.",
+        "ScreenShotAppStore3": "Know before it’s overdue.",
+        "ScreenShotAppStore4": "Set up in under a minute",
+        "ScreenShotAppStore5": "Take your data anywhere.",
+        "ScreenShotAppStore6": "Every car in one place."
+      },
+      "maxLen": 28
+    },
+    "en-GB": {
+      "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
+      "captions": {
+        "ScreenShotAppStore1": "Your car’s service history.",
+        "ScreenShotAppStore2": "Log a service in 15 seconds.",
+        "ScreenShotAppStore3": "Know before it’s overdue.",
+        "ScreenShotAppStore4": "Set up in under a minute",
+        "ScreenShotAppStore5": "Take your data anywhere.",
+        "ScreenShotAppStore6": "Every car in one place."
+      },
+      "maxLen": 28
+    },
+    "en-US": {
+      "tagline": "Your records can’t disappear. Car maintenance log and reminders. No account, no server.",
+      "captions": {
+        "ScreenShotAppStore1": "Your car’s maintenance log.",
+        "ScreenShotAppStore2": "Log a service in 15 seconds.",
+        "ScreenShotAppStore3": "Know before it’s overdue.",
+        "ScreenShotAppStore4": "Set up in under a minute",
+        "ScreenShotAppStore5": "Take your data anywhere.",
+        "ScreenShotAppStore6": "Every car in one place."
+      },
+      "maxLen": 28
+    },
+    "es-ES": {
+      "tagline": "Tu historial no puede desaparecer. Mantenimiento y avisos. Sin cuenta, sin servidor.",
+      "captions": {
+        "ScreenShotAppStore1": "El historial de tu coche.",
+        "ScreenShotAppStore2": "Anota un servicio en 15 segundos.",
+        "ScreenShotAppStore3": "Entérate antes de que venza.",
+        "ScreenShotAppStore4": "Listo en menos de un minuto",
+        "ScreenShotAppStore5": "Llévate tus datos a donde sea.",
+        "ScreenShotAppStore6": "Todos tus coches en un sitio."
+      },
+      "maxLen": 33
+    },
+    "es-MX": {
+      "tagline": "Tu historial no puede desaparecer. Mantenimiento y recordatorios. Sin cuenta, sin servidor.",
+      "captions": {
+        "ScreenShotAppStore1": "La bitácora de tu auto.",
+        "ScreenShotAppStore2": "Anota un servicio en 15 segundos.",
+        "ScreenShotAppStore3": "Entérate antes de que se venza.",
+        "ScreenShotAppStore4": "Listo en menos de un minuto",
+        "ScreenShotAppStore5": "Llévate tus datos a donde sea.",
+        "ScreenShotAppStore6": "Todos tus autos en un lugar."
+      },
+      "maxLen": 33
+    },
+    "fr-CA": {
+      "tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
+      "captions": {
+        "ScreenShotAppStore1": "Le carnet d’entretien de l’auto.",
+        "ScreenShotAppStore2": "Un entretien noté en 15 secondes.",
+        "ScreenShotAppStore3": "Sachez-le avant l’échéance.",
+        "ScreenShotAppStore4": "Prêt en moins d’une minute",
+        "ScreenShotAppStore5": "Vos données vous suivent partout.",
+        "ScreenShotAppStore6": "Toutes vos autos réunies."
+      },
+      "maxLen": 33
+    },
+    "fr-FR": {
+      "tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
+      "captions": {
+        "ScreenShotAppStore1": "Le carnet d’entretien auto.",
+        "ScreenShotAppStore2": "Un entretien noté en 15 secondes.",
+        "ScreenShotAppStore3": "Sachez-le avant l’échéance.",
+        "ScreenShotAppStore4": "Prêt en moins d’une minute",
+        "ScreenShotAppStore5": "Vos données vous suivent partout.",
+        "ScreenShotAppStore6": "Toutes vos voitures réunies."
+      },
+      "maxLen": 33
+    },
+    "it": {
+      "tagline": "Il tuo storico non può sparire. Manutenzione e promemoria. Nessun account, nessun server.",
+      "captions": {
+        "ScreenShotAppStore1": "Il libretto della tua auto.",
+        "ScreenShotAppStore2": "Un tagliando in 15 secondi.",
+        "ScreenShotAppStore3": "Sappilo prima che scada.",
+        "ScreenShotAppStore4": "Pronto in meno di un minuto",
+        "ScreenShotAppStore5": "Porta i tuoi dati con te.",
+        "ScreenShotAppStore6": "Tutte le auto in un posto."
+      },
+      "maxLen": 27
+    },
+    "ja": {
+      "tagline": "記録は消えません。整備記録とリマインダー。アカウントなし、サーバーなし。",
+      "captions": {
+        "ScreenShotAppStore1": "愛車の整備記録。",
+        "ScreenShotAppStore2": "整備の記録は15秒。",
+        "ScreenShotAppStore3": "期限切れの前に、気づく。",
+        "ScreenShotAppStore4": "設定は1分もかからない",
+        "ScreenShotAppStore5": "データはいつでも持ち出せる。",
+        "ScreenShotAppStore6": "何台でも、ひとつにまとめて。"
+      },
+      "maxLen": 14
+    },
+    "ko": {
+      "tagline": "기록은 사라지지 않습니다. 정비 기록과 알림. 계정 없음, 서버 없음.",
+      "captions": {
+        "ScreenShotAppStore1": "내 차의 정비 기록.",
+        "ScreenShotAppStore2": "정비 기록은 15초면 끝.",
+        "ScreenShotAppStore3": "기한이 지나기 전에 알림.",
+        "ScreenShotAppStore4": "설정은 1분도 안 걸려요",
+        "ScreenShotAppStore5": "내 데이터를 어디로든.",
+        "ScreenShotAppStore6": "모든 차를 한 곳에."
+      },
+      "maxLen": 14
+    },
+    "nl-NL": {
+      "tagline": "Je gegevens kunnen niet verdwijnen. Onderhoud en herinneringen. Geen account, geen server.",
+      "captions": {
+        "ScreenShotAppStore1": "Het onderhoudsboekje van je auto.",
+        "ScreenShotAppStore2": "Een beurt in 15 seconden.",
+        "ScreenShotAppStore3": "Weet het voordat het te laat is.",
+        "ScreenShotAppStore4": "Klaar in minder dan een minuut",
+        "ScreenShotAppStore5": "Neem je data overal mee.",
+        "ScreenShotAppStore6": "Al je auto’s op één plek."
+      },
+      "maxLen": 33
+    },
+    "pl": {
+      "tagline": "Twoje wpisy nie mogą zniknąć. Serwis i przypomnienia. Bez konta, bez serwera.",
+      "captions": {
+        "ScreenShotAppStore1": "Książka serwisowa Twojego auta.",
+        "ScreenShotAppStore2": "Zapisz serwis w 15 sekund.",
+        "ScreenShotAppStore3": "Wiedz, zanim minie termin.",
+        "ScreenShotAppStore4": "Gotowe w niecałą minutę",
+        "ScreenShotAppStore5": "Zabierz swoje dane wszędzie.",
+        "ScreenShotAppStore6": "Wszystkie auta w jednym miejscu."
+      },
+      "maxLen": 32
+    },
+    "pt-BR": {
+      "tagline": "Seu histórico não pode desaparecer. Manutenção e lembretes. Sem conta, sem servidor.",
+      "captions": {
+        "ScreenShotAppStore1": "O histórico do seu carro.",
+        "ScreenShotAppStore2": "Uma revisão em 15 segundos.",
+        "ScreenShotAppStore3": "Saiba antes de atrasar.",
+        "ScreenShotAppStore4": "Pronto em menos de um minuto",
+        "ScreenShotAppStore5": "Leve seus dados para onde quiser.",
+        "ScreenShotAppStore6": "Todos os carros em um só lugar."
+      },
+      "maxLen": 33
+    },
+    "sv": {
+      "tagline": "Dina uppgifter kan inte försvinna. Service och påminnelser. Inget konto, ingen server.",
+      "captions": {
+        "ScreenShotAppStore1": "Bilens digitala servicebok.",
+        "ScreenShotAppStore2": "Logga en service på 15 sekunder.",
+        "ScreenShotAppStore3": "Vet innan det är försenat.",
+        "ScreenShotAppStore4": "Klart på under en minut",
+        "ScreenShotAppStore5": "Ta med dina data överallt.",
+        "ScreenShotAppStore6": "Alla bilar på ett ställe."
+      },
+      "maxLen": 32
+    }
+  }
+}

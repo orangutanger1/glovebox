@@ -38,8 +38,10 @@
     "@types/jest": "^29.5.14",
     "@types/react": "~19.2.2",
     "better-sqlite3": "^13.0.2",
+    "fontkit": "^2.0.4",
     "jest": "~29.7.0",
     "jest-expo": "^57.0.3",
+    "sharp": "^0.35.3",
     "ts-jest": "^29.4.12",
     "typescript": "~6.0.3"
   },
@@ -49,16 +51,16 @@
     "ios": "APP_VARIANT=development expo start --ios",
     "web": "expo start --web",
     "test": "jest",
-"ship": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship",
-  "ship:doctor": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship doctor",
-  "ship:status": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship status",
-  "ship:preflight": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship preflight",
-  "ship:meta": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship meta",
-  "ship:aso": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship aso",
-  "ship:build": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship build",
-  "ship:submit": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship submit",
-  "ship:ota": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship ota",
-  "ship:release": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship release"
+    "ship": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship",
+    "ship:doctor": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship doctor",
+    "ship:status": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship status",
+    "ship:preflight": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship preflight",
+    "ship:meta": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship meta",
+    "ship:aso": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship aso",
+    "ship:build": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship build",
+    "ship:submit": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship submit",
+    "ship:ota": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship ota",
+    "ship:release": "[ -f .revenuecat.env ] && . ./.revenuecat.env; ship release"
   },
   "private": true
 }

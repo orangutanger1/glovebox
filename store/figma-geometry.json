@@ -1,0 +1,130 @@
+{
+	"_comment": "Screenshot design spec, read by `ship shots capture|render|verify`. caption-band mode: the finished 1242x2688 composites Apple already serves are the base, and only the caption band is repainted per locale. Geometry is committed rather than re-derived because Figma's render endpoint is quota-limited on the starter plan.",
+	"mode": "caption-band",
+	"displayType": "IPHONE_65",
+	"canvas": {
+		"w": 1242,
+		"h": 2688
+	},
+	"source": {
+		"figmaFile": "X1bc9mBhr5AjDYJcwdlV3q",
+		"page": "01 iPhone 13",
+		"frameIds": {
+			"ScreenShotAppStore1": "1862:3458"
+		},
+		"_frameIdsNote": "Only frame 1's node id survived the original extraction. `ship shots figma --export <ids>` needs explicit ids for the rest; the drift check does not, since it reads the file version.",
+		"note": "Cached from the Figma REST node tree. /v1/images 429s after a handful of calls on the starter plan, so the mockup pixels cannot be re-exported on demand — which is why this app repaints Apple's composites instead of rebuilding them."
+	},
+	"raw": "screenshots-raw",
+	"captions": "screenshot-captions.json",
+	"base": {
+		"sourceLocale": "en-US",
+		"country": "us",
+		"_note": "Downloaded by `ship shots capture` from the public App Store lookup endpoint — the live English composites, at the spec canvas size."
+	},
+	"fonts": {
+		"default": "fonts/Cambay-Bold.ttf",
+		"byLocale": {
+			"ja": {
+				"file": "fonts/NotoSansJP.ttf",
+				"variation": {
+					"wght": 700
+				}
+			},
+			"ko": {
+				"file": "fonts/NotoSansKR.ttf",
+				"variation": {
+					"wght": 700
+				}
+			}
+		},
+		"_note": "Cambay covers Latin and Devanagari only, so ja/ko fall back to Noto Sans. Both Noto files are variable: without the explicit wght they open on Regular and every CJK caption renders lighter and narrower than the design."
+	},
+	"type": {
+		"size": 128,
+		"lineHeight": 160,
+		"colour": "#FFFFFF",
+		"wrap": "greedy",
+		"targetMinSize": 72,
+		"minSize": 72,
+		"step": 4,
+		"extraLines": 1,
+		"_note": "Greedy, not balanced, and inside each frame's own Figma box width — because that is what Figma does. A balanced wrap reads better in isolation but breaks lines where the designer did not: it split frame 2 as 'Log a service / in 15 seconds.' where Figma had 'Log a service in 15 / seconds.'"
+	},
+	"band": {
+		"inkTolerance": 26,
+		"flatMin": 0.85,
+		"pad": 8,
+		"clearance": 4,
+		"_note": "The licence for this mode: in all six frames the caption sits on flat background, separated from the mockup — ~94% one solid colour, the remaining 6% being the caption glyphs. flatMin turns that property into a gate, so a redesign that puts artwork in the band fails the render instead of destroying it."
+	},
+	"frames": [
+		{
+			"key": "ScreenShotAppStore1",
+			"base": "ScreenShotAppStore1.png",
+			"mockTop": 595,
+			"mockH": 2251,
+			"caption": {
+				"x": 98,
+				"y": 176,
+				"w": 1045
+			}
+		},
+		{
+			"key": "ScreenShotAppStore2",
+			"base": "ScreenShotAppStore2.png",
+			"mockTop": -164,
+			"mockH": 2251,
+			"caption": {
+				"x": 30,
+				"y": 2222,
+				"w": 1182
+			}
+		},
+		{
+			"key": "ScreenShotAppStore3",
+			"base": "ScreenShotAppStore3.png",
+			"mockTop": 595,
+			"mockH": 2251,
+			"caption": {
+				"x": 165,
+				"y": 128,
+				"w": 909
+			}
+		},
+		{
+			"key": "ScreenShotAppStore4",
+			"base": "ScreenShotAppStore4.png",
+			"mockTop": 595,
+			"mockH": 2251,
+			"caption": {
+				"x": 165,
+				"y": 128,
+				"w": 909
+			}
+		},
+		{
+			"key": "ScreenShotAppStore5",
+			"base": "ScreenShotAppStore5.png",
+			"mockTop": 595,
+			"mockH": 2251,
+			"caption": {
+				"x": 23,
+				"y": 128,
+				"w": 1181
+			}
+		},
+		{
+			"key": "ScreenShotAppStore6",
+			"base": "ScreenShotAppStore6.png",
+			"mockTop": 595,
+			"mockH": 2251,
+			"caption": {
+				"x": 214,
+				"y": 129,
+				"w": 813
+			},
+			"captionChanged": "Source read 'Every car in one glovebox.' — a pun on the retired brand name. The live image still shows it; the caption now says 'one place', so this frame cannot be calibrated against the ink width Apple is serving."
+		}
+	]
+}
