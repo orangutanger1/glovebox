@@ -60,46 +60,57 @@
 	},
 	"frames": [
 		{
+			"key": "ScreenShotAppStore3",
+			"base": "ScreenShotAppStore3.png",
+			"mockTop": 602,
+			"mockH": 2086,
+			"caption": {
+				"x": 165,
+				"y": 182,
+				"w": 909
+			}
+		},
+		{
+			"key": "ScreenShotAppStore6",
+			"base": "ScreenShotAppStore6.png",
+			"mockTop": 612,
+			"mockH": 2076,
+			"caption": {
+				"x": 214,
+				"y": 173,
+				"w": 813
+			}
+		},
+		{
 			"key": "ScreenShotAppStore1",
 			"base": "ScreenShotAppStore1.png",
-			"mockTop": 595,
-			"mockH": 2251,
+			"mockTop": 583,
+			"mockH": 2105,
 			"caption": {
 				"x": 98,
-				"y": 176,
+				"y": 180,
 				"w": 1045
 			}
 		},
 		{
 			"key": "ScreenShotAppStore2",
 			"base": "ScreenShotAppStore2.png",
-			"mockTop": -164,
-			"mockH": 2251,
+			"mockTop": 501,
+			"mockH": 2187,
 			"caption": {
-				"x": 30,
-				"y": 2222,
-				"w": 1182
-			}
-		},
-		{
-			"key": "ScreenShotAppStore3",
-			"base": "ScreenShotAppStore3.png",
-			"mockTop": 595,
-			"mockH": 2251,
-			"caption": {
-				"x": 165,
-				"y": 128,
-				"w": 909
+				"x": 206,
+				"y": 138,
+				"w": 830
 			}
 		},
 		{
 			"key": "ScreenShotAppStore4",
 			"base": "ScreenShotAppStore4.png",
 			"mockTop": 595,
-			"mockH": 2251,
+			"mockH": 2093,
 			"caption": {
-				"x": 165,
-				"y": 128,
+				"x": 166,
+				"y": 141,
 				"w": 909
 			}
 		},
@@ -107,24 +118,13 @@
 			"key": "ScreenShotAppStore5",
 			"base": "ScreenShotAppStore5.png",
 			"mockTop": 595,
-			"mockH": 2251,
+			"mockH": 2093,
 			"caption": {
-				"x": 23,
-				"y": 128,
-				"w": 1181
+				"x": 166,
+				"y": 144,
+				"w": 909
 			}
-		},
-		{
-			"key": "ScreenShotAppStore6",
-			"base": "ScreenShotAppStore6.png",
-			"mockTop": 595,
-			"mockH": 2251,
-			"caption": {
-				"x": 214,
-				"y": 129,
-				"w": 813
-			},
-			"captionChanged": "Source read 'Every car in one glovebox.' — a pun on the retired brand name. The live image still shows it; the caption now says 'one place', so this frame cannot be calibrated against the ink width Apple is serving."
 		}
-	]
+	],
+	"_framesNote": "Six frames, in App Store order. Frames 1-4 are the August 2026 re-authored art; frames 5-6 (ScreenShotAppStore4 = onboarding step 1/5, ScreenShotAppStore5 = onboarding step 4/5 summary) were re-authored on the same art later and appended, which is why their keys again sit out of z-order. The base composites were re-authored outside Figma, so the frame keys no longer track the old Figma z-order: the array order is the shipped order and each key is kept only because 16 locales of calibrated caption copy hang off it. Key to what the art shows: ScreenShotAppStore3 = vehicle detail with an overdue oil change, ScreenShotAppStore6 = the garage list, ScreenShotAppStore1 = full service history, ScreenShotAppStore2 = the log sheet. mockTop/mockH are measured off the art; every caption sits above the mockup, where frame 2 previously carried it below. The near-black band background was snapped to #000000 in the raw art on frames 1-4, because upscaling left per-pixel noise that dropped band flatness under the 0.85 gate on every frame; frames 5-6 arrive already flat at #454A50."
 }
