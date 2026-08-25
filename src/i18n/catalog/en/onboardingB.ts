@@ -74,5 +74,4 @@ export const onboardingB: Fragment = {
   },
   "onboardingB.analyzing.done": "Done",
   "onboardingB.analyzing.progress": "Reading {index} of {total}",
-  "onboardingB.analyzing.skip": "Tap anywhere to skip.",
 };

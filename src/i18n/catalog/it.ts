@@ -139,18 +139,18 @@ export const it: Fragment = {
       "Ne arrivano altri {count} più avanti, con una notifica per tagliando il giorno in cui scade.",
   },
 
-  "offer.paywall.title": "Il tuo garage è pronto.",
+  "offer.paywall.title": "Le auto non avvisano. Questo sì.",
   "offer.paywall.subtitle":
-    "Il piano qui sotto è tuo in ogni caso, e Pro è il resto del garage più i tuoi intervalli.",
-  "offer.paywall.cta": "Scopri Wrenchy Pro",
-  "offer.paywall.vehicle": "Veicolo",
-  "offer.paywall.scheduled": "In programma",
+    "Ogni tagliando e ogni lettura del contachilometri, a libretto. Il meccanico vede uno storico, non un’ipotesi.",
+  "offer.paywall.cta": "Mettere l’auto a libretto",
+  "offer.paywall.vehicle": "A libretto",
+  "offer.paywall.scheduled": "Ora seguiti",
   "offer.paywall.services": { one: "tagliando", other: "tagliandi" },
-  "offer.paywall.dueNow": "Da fare ora",
-  "offer.paywall.nextUp": "Il prossimo",
+  "offer.paywall.dueNow": "In ritardo oggi",
+  "offer.paywall.nextUp": "Prossimo avviso",
   "offer.paywall.none": "Nessuno",
   "offer.paywall.caption":
-    "Un'auto, storico illimitato ed esportazione CSV sono gratis per sempre, anche dopo aver disdetto l'abbonamento.",
+    "Tutto quello che hai appena impostato è già salvato su questo telefono. Nessun account, nessun server, niente che parta da qui.",
 
   "offer.trial.title": { one: "Provalo per {count} giorno.", other: "Provalo per {count} giorni." },
   "offer.trial.subtitle": {
@@ -161,16 +161,6 @@ export const it: Fragment = {
   "offer.trial.cta": { one: "Attiva {count} giorno gratis", other: "Attiva {count} giorni gratis" },
   "offer.trial.decline": "No grazie, mostrami l'app gratuita",
   "offer.trial.caption": "Disdici dalle Impostazioni prima della fine e non paghi nulla.",
-
-  "offer.free.title": "Inizia in modalità gratuita.",
-  "offer.free.subtitle": {
-    one: "La tua {vehicle} con {count} tagliando programmato è già salvata su questo telefono. La modalità gratuita tiene tutto.",
-    other:
-      "La tua {vehicle} con {count} tagliandi programmati è già salvata su questo telefono. La modalità gratuita tiene tutto.",
-  },
-  "offer.free.cta": "Inizia con l'app gratuita",
-  "offer.free.caption":
-    "Un'auto, nessun account, nessuna pubblicità e nessuna prova che gira di nascosto. Pro aggiunge il resto del garage e i tuoi intervalli quando vuoi, dalle Impostazioni.",
 
   "offer.winback.title": "Hai smesso di registrare.",
   "offer.winback.decline": "Portami solo al mio garage",
@@ -193,21 +183,11 @@ export const it: Fragment = {
 
   "onboardingA.vehicle.title": "Cosa guidi?",
   "onboardingA.vehicle.year": "Anno",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Marca",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Modello",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Inserisci l'anno del modello.",
-  "onboardingA.vehicle.yearDigits": "L'anno deve avere quattro cifre, come 2014.",
-  "onboardingA.vehicle.yearMin": "L'anno deve essere {min} o successivo, non {value}.",
-  "onboardingA.vehicle.yearMax": "L'anno non può essere successivo a {max}.",
   "onboardingA.vehicle.required": "Obbligatorio.",
   "onboardingA.vehicle.saved": "Salvata come «{name}», e puoi rinominarla più tardi.",
-  "onboardingA.vehicle.yearOlder": "Più vecchia",
-  "onboardingA.vehicle.makeSearch": "Cerca la marca",
-  "onboardingA.vehicle.makeOther": "Altra",
-  "onboardingA.vehicle.makeNone": "Nessun risultato. Tocca Altra e scrivila.",
   "onboardingA.vehicle.modelOptional": "Modello (facoltativo)",
   "onboardingA.vehicle.hint":
     "Anno e marca, così i promemoria possono chiamare l'auto per nome. Il modello è facoltativo.",
@@ -219,9 +199,6 @@ export const it: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Va bene un numero approssimativo, ed è quello che data i tagliandi che scadono per chilometri.",
-  "onboardingA.odometer.later": "Lo aggiungo dopo",
-  "onboardingA.odometer.laterCaption":
-    "Non sei vicino all'auto? Possiamo partire da circa {distance} per un'auto di questa età, segnato come stima finché non inserisci un valore.",
 
   "onboardingA.drive.title": "Quanto la guidi?",
   "onboardingA.drive.subtitle":
@@ -297,7 +274,6 @@ export const it: Fragment = {
   },
   "onboardingB.analyzing.done": "Fatto",
   "onboardingB.analyzing.progress": "Lettura {index} di {total}",
-  "onboardingB.analyzing.skip": "Tocca in qualsiasi punto per saltare.",
 
   "onboardingC.back": "Indietro",
   "onboardingC.question": "Domanda {step} / {total}",

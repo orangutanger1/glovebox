@@ -10,7 +10,7 @@ import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
-import { useAdvance, useFinish, useGoTo } from "../../src/onboarding/nav";
+import { useAdvance, useFinish } from "../../src/onboarding/nav";
 
 /**
  * The offer, at the end of onboarding, which is where it converts.
@@ -21,21 +21,17 @@ import { useAdvance, useFinish, useGoTo } from "../../src/onboarding/nav";
  * user who closes the sheet has to land somewhere, and landing back in the
  * garage means the second offer can never be made.
  *
- * There is one control. The "Start with the free app" link that used to sit
- * under it let a user leave without ever seeing a price, which is the cheapest
- * possible way to lose the sale: it is a free door offered before the offer.
- * Free is still the honest end of this flow and it is still two taps away, but
- * it is reached by declining the price and then declining the trial, and the
- * screen that names it comes after both. Nothing here traps the user; the
- * sheet closes on a swipe and every dismissal path continues the flow.
- *
- * Everything above the button is the user's own plan restated. No countdown,
- * no "87% of users choose annual", nothing on this screen that would not
- * survive being checked.
+ * There is one control, and no free door. The "Start with the free app" link
+ * that used to sit under it, and the free-mode landing that later replaced it
+ * at the end of the flow, both spent the app's last screen selling the version
+ * that earns nothing: a user shown a page of what is free forever has been
+ * talked out of the trial they were one tap from. Declining both asks now ends
+ * onboarding in the garage, with the plan they built already in it. Nothing
+ * here traps the user; the sheet closes on a swipe and every dismissal path
+ * finishes the flow.
  */
 export default function OnboardingPaywall() {
   const advance = useAdvance("paywall");
-  const goTo = useGoTo();
   const finish = useFinish();
   const { vehicleName, plan } = useOnboardingFindings();
   const [busy, setBusy] = useState(false);
@@ -61,10 +57,9 @@ export default function OnboardingPaywall() {
     // paywall that could not present — no API key in the build, no network,
     // products not yet fetchable — has shown the user nothing to reconsider,
     // and the trial sheet would fail on the same missing offering, so that
-    // user goes straight to the free landing instead of tapping a second
-    // button that does nothing.
+    // user goes to the garage rather than tapping a second dead button.
     if (outcome === "dismissed" && (await hasOffering(DISCOUNT_OFFERING))) advance();
-    else goTo("free");
+    else finish("free");
   }
 
   return (

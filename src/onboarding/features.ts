@@ -3,10 +3,9 @@ import { t } from "../i18n";
 /**
  * What the app does, and which half of it costs money.
  *
- * One list, because two screens read from it and they must not disagree. The
- * features screen shows all of it with a Free/Pro badge on every row; the free
- * landing at the end of the flow shows only the free rows, and a row that
- * drifted between the two would be a promise made before the paywall and
+ * One list, read by the features screen, which shows every row with a Free/Pro
+ * badge on it. It is a product decision written once: a row that said Free on
+ * one screen and Pro on another would be a promise made before the paywall and
  * withdrawn after it.
  */
 export type FeatureId = (typeof ROWS)[number]["id"];
@@ -34,8 +33,4 @@ export function features(): Feature[] {
     title: t(`features.${row.id}.title`),
     subtitle: t(`features.${row.id}.subtitle`),
   }));
-}
-
-export function freeFeatures(): Feature[] {
-  return features().filter((f) => !f.pro);
 }

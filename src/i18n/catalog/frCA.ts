@@ -117,8 +117,8 @@ export const frCA: Fragment = {
     other:
       "Prenez {count} jours de Pro pour rien et décidez quand votre auto vous aura dit quelque chose.",
   },
-  "offer.paywall.caption":
-    "Une auto, l’historique illimité et l’export CSV sont gratuits pour toujours, même après un abonnement annulé.",
-  "offer.free.caption":
-    "Une auto, pas de compte, pas de pub et aucun essai qui roule en arrière-plan. Pro ajoute le reste du garage et vos propres intervalles quand vous voulez, depuis les Réglages.",
+  // "voiture" is the base French word; Québec says "auto", and the paywall
+  // headline and its button are the two places the noun is spoken aloud.
+  "offer.paywall.title": "Les autos ne préviennent pas. Ceci, oui.",
+  "offer.paywall.cta": "Consigner mon auto",
 };

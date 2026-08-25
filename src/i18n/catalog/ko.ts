@@ -152,18 +152,18 @@ export const ko: Fragment = {
       "여기에 더 뒤로 {count}건이 있고, 정비마다 기한이 되는 날 알림 한 번이에요.",
   },
 
-  "offer.paywall.title": "차고가 준비됐어요.",
+  "offer.paywall.title": "차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
   "offer.paywall.subtitle":
-    "아래 계획은 어느 쪽을 골라도 그대로 쓸 수 있고, Pro는 차고의 나머지와 나만의 주기예요.",
-  "offer.paywall.cta": "Wrenchy Pro 보기",
-  "offer.paywall.vehicle": "차량",
-  "offer.paywall.scheduled": "일정 등록",
+    "정비와 주행거리 기록이 모두 남아요. 정비소는 추측이 아니라 기록을 봅니다.",
+  "offer.paywall.cta": "내 차 기록으로 남기기",
+  "offer.paywall.vehicle": "기록 완료",
+  "offer.paywall.scheduled": "관리 시작",
   "offer.paywall.services": { other: "건" },
-  "offer.paywall.dueNow": "지금 기한",
-  "offer.paywall.nextUp": "다음 차례",
+  "offer.paywall.dueNow": "기한 지남",
+  "offer.paywall.nextUp": "다음 알림",
   "offer.paywall.none": "없음",
   "offer.paywall.caption":
-    "차 한 대, 무제한 기록, CSV 내보내기는 구독을 해지한 뒤에도 영구 무료예요.",
+    "지금 설정한 내용은 이미 이 휴대폰에 저장돼 있어요. 계정도, 서버도 없고 어디로도 전송되지 않아요.",
 
   "offer.trial.title": { other: "{count}일 동안 써 보세요." },
   "offer.trial.subtitle": {
@@ -173,15 +173,6 @@ export const ko: Fragment = {
   "offer.trial.cta": { other: "무료 {count}일 시작하기" },
   "offer.trial.decline": "괜찮아요, 무료 앱으로 볼게요",
   "offer.trial.caption": "끝나기 전에 설정에서 해지하면 한 푼도 안 나가요.",
-
-  "offer.free.title": "무료 모드로 시작해요.",
-  "offer.free.subtitle": {
-    other:
-      "{vehicle}, 그리고 일정에 올린 정비 {count}건은 이미 이 휴대폰에 저장돼 있어요. 무료 모드에서도 전부 그대로예요.",
-  },
-  "offer.free.cta": "무료 앱으로 시작하기",
-  "offer.free.caption":
-    "차 한 대, 계정 없음, 광고 없음, 백그라운드에서 도는 체험도 없음. Pro는 차고의 나머지와 나만의 주기를 더해 주고, 원할 때 설정에서 켜면 돼요.",
 
   "offer.winback.title": "기록이 멈춰 있어요.",
   "offer.winback.decline": "그냥 차고로 갈게요",
@@ -204,21 +195,11 @@ export const ko: Fragment = {
 
   "onboardingA.vehicle.title": "어떤 차를 타세요?",
   "onboardingA.vehicle.year": "연식",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "제조사",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "모델",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "연식을 입력해 주세요.",
-  "onboardingA.vehicle.yearDigits": "연식은 2014처럼 네 자리여야 해요.",
-  "onboardingA.vehicle.yearMin": "연식은 {min} 이후여야 해요(입력값: {value}).",
-  "onboardingA.vehicle.yearMax": "연식은 {max}보다 늦을 수 없어요.",
   "onboardingA.vehicle.required": "필수예요.",
   "onboardingA.vehicle.saved": '저장했어요: "{name}". 이름은 나중에 바꿀 수 있어요.',
-  "onboardingA.vehicle.yearOlder": "그 이전",
-  "onboardingA.vehicle.makeSearch": "제조사 검색",
-  "onboardingA.vehicle.makeOther": "기타",
-  "onboardingA.vehicle.makeNone": "결과가 없어요. 기타를 눌러 직접 입력하세요.",
   "onboardingA.vehicle.modelOptional": "모델(선택)",
   "onboardingA.vehicle.hint": "연식과 제조사. 알림이 차 이름을 부를 수 있게요. 모델은 선택이에요.",
 
@@ -229,9 +210,6 @@ export const ko: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "대략이어도 괜찮아요. 주행거리로 기한이 오는 정비는 이 숫자로 계산해요.",
-  "onboardingA.odometer.later": "나중에 입력할게요",
-  "onboardingA.odometer.laterCaption":
-    "차에서 멀리 있나요? 이 연식이면 약 {distance}부터 시작할 수 있고, 실제 값을 넣을 때까지 추정치로 표시해요.",
 
   "onboardingA.drive.title": "한 해에 얼마나 타세요?",
   "onboardingA.drive.subtitle":
@@ -303,7 +281,6 @@ export const ko: Fragment = {
   },
   "onboardingB.analyzing.done": "완료",
   "onboardingB.analyzing.progress": "{total}개 중 {index}개 확인",
-  "onboardingB.analyzing.skip": "아무 곳이나 누르면 넘어가요.",
 
   // onboardingC
   "onboardingC.back": "뒤로",

@@ -156,18 +156,18 @@ export const fr: Fragment = {
       "Plus {count} autres plus loin, et une notification par entretien le jour de l'échéance.",
   },
 
-  "offer.paywall.title": "Votre garage est prêt.",
+  "offer.paywall.title": "Les voitures ne préviennent pas. Ceci, oui.",
   "offer.paywall.subtitle":
-    "Le programme ci-dessous est à vous dans tous les cas, et Pro y ajoute le reste du garage plus vos propres intervalles.",
-  "offer.paywall.cta": "Voir Wrenchy Pro",
-  "offer.paywall.vehicle": "Véhicule",
-  "offer.paywall.scheduled": "Programmés",
+    "Chaque entretien et chaque relevé du compteur, consignés. Le garagiste voit un carnet, pas une supposition.",
+  "offer.paywall.cta": "Consigner ma voiture",
+  "offer.paywall.vehicle": "Consigné",
+  "offer.paywall.scheduled": "Suivis",
   "offer.paywall.services": { one: "entretien", other: "entretiens" },
-  "offer.paywall.dueNow": "À faire",
-  "offer.paywall.nextUp": "Prochain",
+  "offer.paywall.dueNow": "En retard",
+  "offer.paywall.nextUp": "Prochaine alerte",
   "offer.paywall.none": "Aucun",
   "offer.paywall.caption":
-    "Une voiture, historique illimité et export CSV sont gratuits pour toujours, y compris après un abonnement résilié.",
+    "Tout ce que vous venez de configurer est déjà enregistré sur ce téléphone. Pas de compte, pas de serveur, rien n’est envoyé.",
 
   "offer.trial.title": { one: "Essayez {count} jour.", other: "Essayez {count} jours." },
   "offer.trial.subtitle": {
@@ -181,16 +181,6 @@ export const fr: Fragment = {
   },
   "offer.trial.decline": "Non merci, montrez-moi l'app gratuite",
   "offer.trial.caption": "Résiliez dans les Réglages avant la fin et vous ne payez rien.",
-
-  "offer.free.title": "Commencer en mode gratuit.",
-  "offer.free.subtitle": {
-    one: "Votre {vehicle} et {count} entretien programmé sont déjà enregistrés sur ce téléphone. Le mode gratuit garde tout.",
-    other:
-      "Votre {vehicle} et ses {count} entretiens programmés sont déjà enregistrés sur ce téléphone. Le mode gratuit garde tout.",
-  },
-  "offer.free.cta": "Commencer avec l'app gratuite",
-  "offer.free.caption":
-    "Une voiture, aucun compte, aucune publicité et aucun essai qui tourne en fond. Pro ajoute le reste du garage et vos propres intervalles quand vous voulez, depuis les Réglages.",
 
   "offer.winback.title": "Vous avez arrêté de noter.",
   "offer.winback.decline": "Emmenez-moi juste à mon garage",
@@ -214,22 +204,12 @@ export const fr: Fragment = {
 
   "onboardingA.vehicle.title": "Qu'est-ce que vous conduisez\u00a0?",
   "onboardingA.vehicle.year": "Année",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Marque",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Modèle",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Indiquez l'année du modèle.",
-  "onboardingA.vehicle.yearDigits": "L'année doit avoir quatre chiffres, comme 2014.",
-  "onboardingA.vehicle.yearMin": "L'année doit être {min} ou plus récente, pas {value}.",
-  "onboardingA.vehicle.yearMax": "L'année ne peut pas dépasser {max}.",
   "onboardingA.vehicle.required": "Obligatoire.",
   "onboardingA.vehicle.saved":
     "Enregistré sous «\u00a0{name}\u00a0», et vous pourrez le renommer plus tard.",
-  "onboardingA.vehicle.yearOlder": "Plus ancien",
-  "onboardingA.vehicle.makeSearch": "Rechercher une marque",
-  "onboardingA.vehicle.makeOther": "Autre",
-  "onboardingA.vehicle.makeNone": "Aucun résultat. Touchez Autre pour la saisir.",
   "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
   "onboardingA.vehicle.hint":
     "L'année et la marque, pour que les rappels nomment la voiture. Le modèle est facultatif.",
@@ -241,9 +221,6 @@ export const fr: Fragment = {
   "onboardingA.odometer.placeholder.km": "135\u202f600",
   "onboardingA.odometer.caption":
     "Un ordre de grandeur suffit, et c'est ce qui date les entretiens dont l'échéance se compte en distance.",
-  "onboardingA.odometer.later": "Je le ferai plus tard",
-  "onboardingA.odometer.laterCaption":
-    "Loin de la voiture\u00a0? On peut partir d'environ {distance} pour une voiture de cet âge, marqué comme estimation jusqu'à ce que vous entriez un relevé.",
 
   "onboardingA.drive.title": "Combien roulez-vous avec\u00a0?",
   "onboardingA.drive.subtitle":
@@ -318,7 +295,6 @@ export const fr: Fragment = {
   },
   "onboardingB.analyzing.done": "Terminé",
   "onboardingB.analyzing.progress": "Relevé {index} sur {total}",
-  "onboardingB.analyzing.skip": "Touchez n'importe où pour passer.",
 
   // onboardingC
   "onboardingC.back": "Retour",

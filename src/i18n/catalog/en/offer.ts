@@ -1,8 +1,8 @@
 import type { Fragment } from "../types";
 
 /**
- * The end of onboarding — features, plan, paywall, trial, free landing — plus
- * the winback launch, which makes the same trial offer to a returning user.
+ * The end of onboarding — features, plan, paywall, trial — plus the winback
+ * launch, which makes the same trial offer to a returning user.
  *
  * They share one namespace because they share one argument: the two screens
  * that name the trial must say the same number of days in the same words, and
@@ -40,18 +40,18 @@ export const offer: Fragment = {
       "Plus {count} more further out, and one notification per service on the day it comes due.",
   },
 
-  "offer.paywall.title": "Your garage is ready.",
+  "offer.paywall.title": "Cars don’t warn you. This does.",
   "offer.paywall.subtitle":
-    "The plan below is yours either way, and Pro is the rest of the garage plus your own intervals.",
-  "offer.paywall.cta": "See Wrenchy Pro",
-  "offer.paywall.vehicle": "Vehicle",
-  "offer.paywall.scheduled": "Scheduled",
+    "Every service and every odometer reading, on record. The mechanic sees a log, not a guess.",
+  "offer.paywall.cta": "Keep my car on record",
+  "offer.paywall.vehicle": "On record",
+  "offer.paywall.scheduled": "Now tracked",
   "offer.paywall.services": { one: "service", other: "services" },
-  "offer.paywall.dueNow": "Due now",
-  "offer.paywall.nextUp": "Next up",
+  "offer.paywall.dueNow": "Overdue today",
+  "offer.paywall.nextUp": "Next warning",
   "offer.paywall.none": "None",
   "offer.paywall.caption":
-    "One car, unlimited history and CSV export are free forever, including after a cancelled subscription.",
+    "Everything you just set up is already saved on this phone. No account, no server, nothing sent anywhere.",
 
   "offer.trial.title": { one: "Try it for {count} day.", other: "Try it for {count} days." },
   "offer.trial.subtitle": {
@@ -62,16 +62,6 @@ export const offer: Fragment = {
   "offer.trial.cta": { one: "Start my {count} free day", other: "Start my {count} free days" },
   "offer.trial.decline": "No thanks, show me the free app",
   "offer.trial.caption": "Cancel in Settings before it ends and you pay nothing.",
-
-  "offer.free.title": "Start in free mode.",
-  "offer.free.subtitle": {
-    one: "Your {vehicle} and its {count} scheduled service are already saved on this phone. Free mode keeps all of it.",
-    other:
-      "Your {vehicle} and its {count} scheduled services are already saved on this phone. Free mode keeps all of it.",
-  },
-  "offer.free.cta": "Start with the free app",
-  "offer.free.caption":
-    "One car, no account, no ads and no trial running in the background. Pro adds the rest of the garage and your own intervals whenever you want it, from Settings.",
 
   "offer.winback.title": "You stopped logging.",
   "offer.winback.decline": "Just take me to my garage",

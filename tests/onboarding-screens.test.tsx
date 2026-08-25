@@ -42,18 +42,29 @@ jest.mock("react-native-purchases-ui", () => ({
   PAYWALL_RESULT: {},
 }));
 jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
+// The plan screen fires the iOS permission prompt on its own button now, and
+// the year drum clicks. Neither native module exists under the test renderer.
+jest.mock("expo-notifications", () => ({
+  requestPermissionsAsync: jest.fn(async () => ({ status: "granted" })),
+  getPermissionsAsync: jest.fn(async () => ({ status: "granted" })),
+  getAllScheduledNotificationsAsync: jest.fn(async () => []),
+  cancelAllScheduledNotificationsAsync: jest.fn(async () => {}),
+  scheduleNotificationAsync: jest.fn(async () => "id"),
+  setNotificationHandler: jest.fn(),
+  AndroidImportance: { DEFAULT: 3 },
+  SchedulableTriggerInputTypes: { DATE: "date" },
+}));
+jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 
-import { createVehicle, getVehicle } from "../src/db/vehicles";
+import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";
 import {
   getOnboardingVehicleId,
   resetOnboarding,
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../src/onboarding/estimate";
 import { setLanguage } from "../src/i18n";
 import { setDistanceUnit } from "../src/units";
-import OnboardingFree from "../app/onboarding/free";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
@@ -69,6 +80,10 @@ import OnboardingFeatures from "../app/onboarding/features";
 import OnboardingPlan from "../app/onboarding/plan";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
+
+/** Where the year drum opens, which is `app/onboarding/vehicle.tsx`'s own
+ *  default: the average car on the road is about twelve years old. */
+const DEFAULT_YEAR = new Date().getFullYear() + 1 - 12;
 
 /**
  * Every screen below renders catalog copy and formatted distances, so the
@@ -123,19 +138,28 @@ function press(tree: TestRenderer.ReactTestRenderer, label: string): void {
   act(() => target[0].props.onPress());
 }
 
+/** Types into the field carrying this label. */
+function type(tree: TestRenderer.ReactTestRenderer, label: string, text: string): void {
+  const target = tree.root.findAll((n) => n.props.label === label && n.props.onChangeText);
+  if (target.length === 0) throw new Error(`no field is labelled "${label}"`);
+  act(() => target[0].props.onChangeText(text));
+}
+
 /**
- * Taps the innermost pressable whose own text is `label`.
+ * Turns the year drum `detents` rows down from where it opened.
  *
- * The flow's secondary actions ("I'll add it later", "Not now") are text in a
- * Pressable rather than a Button, so they carry no label prop to find them by.
- * Innermost, because an enclosing pressable contains the same string.
+ * The drum is a snapping ScrollView, so the only thing a test can do to it is
+ * what a finger does: land it on an offset and let it commit. 40 is the row
+ * height the wheel is laid out on.
  */
-function pressText(tree: TestRenderer.ReactTestRenderer, label: string): void {
-  const matches = tree.root
-    .findAll((n) => typeof n.props.onPress === "function")
-    .filter((n) => stringsIn(n).includes(label));
-  if (matches.length === 0) throw new Error(`nothing pressable says "${label}"`);
-  act(() => matches[matches.length - 1].props.onPress());
+function spin(tree: TestRenderer.ReactTestRenderer, detents: number): void {
+  const drum = tree.root.findAll((n) => n.props.snapToInterval === 40)[0];
+  const from = drum.props.contentOffset.y as number;
+  act(() =>
+    drum.props.onMomentumScrollEnd({
+      nativeEvent: { contentOffset: { y: from + detents * 40 } },
+    })
+  );
 }
 
 afterEach(() => {
@@ -159,18 +183,22 @@ beforeEach(() => {
   resetOnboarding();
 });
 
-test("the last screen offers the free start, and nothing before it does", () => {
+test("nothing in the flow sells the free tier", () => {
   const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
   setOnboardingVehicleId(car.id);
 
-  const free = texts(render(OnboardingFree));
-  expect(free).toContain("Start with the free app");
-
-  // The paywall used to carry the same link under its button, which handed a
-  // free start to every user who had not yet seen a price.
+  // The paywall used to carry a "Start with the free app" link under its
+  // button, and the flow used to end on a whole screen of what costs nothing.
+  // Both handed a free start to a user who was one tap from a trial.
   const paywall = texts(render(OnboardingPaywall)).join(" ");
   expect(paywall).not.toMatch(/free app/i);
-  expect(texts(render(OnboardingPaywall))).toContain("See Wrenchy Pro");
+  expect(paywall).not.toMatch(/free forever/i);
+  // The trial's decline still names the free app, because that is where it
+  // sends the user: the garage, with no screen in between selling free mode.
+  expect(texts(render(OnboardingOffer)).join(" ")).not.toMatch(/free mode|free forever/i);
+  // The button names an outcome. "See Wrenchy Pro" described navigation, which
+  // is the one thing a paywall CTA must never spend itself on.
+  expect(texts(render(OnboardingPaywall))).toContain("Keep my car on record");
 });
 
 test("no screen in the flow prints an em or en dash", () => {
@@ -199,7 +227,6 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingPlan,
     OnboardingPaywall,
     OnboardingOffer,
-    OnboardingFree,
   ];
 
   for (const Screen of screens) {
@@ -219,58 +246,69 @@ test("a question stepped back into comes back filled in", () => {
   setOnboardingVehicleId(car.id);
   setAnswers({ drive: "high" });
 
-  // Year and make are chips now, so they come back as selections rather than
-  // as field values. The model is the one part still typed.
+  // The year is a drum and the two words are fields, so the round trip is read
+  // off the caption the screen prints from all three.
   const vehicle = render(OnboardingVehicle);
-  expect(selections(vehicle)).toEqual(expect.arrayContaining(["2019", "Honda"]));
-  expect(values(vehicle)).toContain("Civic");
+  expect(values(vehicle)).toEqual(expect.arrayContaining(["Honda", "Civic"]));
+  expect(texts(vehicle).join(" ")).toContain('Saved as "2019 Honda Civic"');
 
   expect(values(render(OnboardingOdometer))).toContain("84210");
   expect(selections(render(OnboardingDrive))).toContain("high");
 });
 
-test("the car can be answered without touching the keyboard", () => {
-  // The whole point of the rewrite: a year off the chip row, a make off the
-  // chip row, no model, and the screen moves on.
+test("the car is one typed word away from answered", () => {
+  // The year is already on the drum, the model is optional, so a make is the
+  // whole remaining cost of this screen.
   const tree = render(OnboardingVehicle);
-  press(tree, "2019");
-  press(tree, "Toyota");
+  type(tree, "Make", "Toyota");
   press(tree, "Continue");
 
   expect(navigated).toContain("/onboarding/odometer");
   const saved = getVehicle(getOnboardingVehicleId()!)!;
-  expect(saved.name).toBe("2019 Toyota");
+  expect(saved.year).toBe(DEFAULT_YEAR);
+  expect(saved.name).toBe(`${DEFAULT_YEAR} Toyota`);
   expect(saved.model).toBeUndefined();
 });
 
-test("an unnamed model does not block the car, but an unnamed make does", () => {
+test("the make is the one answer the car cannot go without", () => {
   const tree = render(OnboardingVehicle);
   press(tree, "Continue");
   // Continue is always pressable and answers with the reason, rather than
-  // sitting there dead the way the make and model fields used to make it.
-  expect(texts(tree)).toContain("Enter the model year.");
-  expect(navigated).not.toContain("/onboarding/odometer");
-
-  press(tree, "2019");
-  press(tree, "Continue");
+  // sitting there dead the way the three required fields used to make it.
   expect(texts(tree)).toContain("Required.");
   expect(navigated).not.toContain("/onboarding/odometer");
+
+  type(tree, "Make", "Honda");
+  press(tree, "Continue");
+  expect(navigated).toContain("/onboarding/odometer");
 });
 
-test("the make list can be filtered, and has a door out of itself", () => {
+test("the year comes off a drum, and never off a keyboard", () => {
   const tree = render(OnboardingVehicle);
-  const filter = tree.root.findAll((n) => n.props.label === "Search makes")[0];
+  // The chip row of twenty-six years, and before it the numeric field with
+  // four error messages behind it, are both gone.
+  expect(tree.root.findAll((n) => n.props.keyboardType === "numeric")).toHaveLength(0);
 
-  // Substring, not prefix: somebody typing "benz" means Mercedes-Benz.
-  act(() => filter.props.onChangeText("benz"));
-  expect(texts(tree)).toContain("Mercedes-Benz");
-  expect(texts(tree)).not.toContain("Toyota");
+  // Three detents down the drum is three model years older than the default.
+  spin(tree, 3);
+  type(tree, "Make", "Toyota");
+  press(tree, "Continue");
+  expect(getVehicle(getOnboardingVehicleId()!)!.year).toBe(DEFAULT_YEAR - 3);
+});
 
-  act(() => filter.props.onChangeText("Rolls"));
-  expect(texts(tree)).toContain("No match. Tap Other to type it in.");
-  press(tree, "Other");
-  // "Other" reveals the free-text field the chips replaced.
-  expect(tree.root.findAll((n) => n.props.label === "Make").length).toBe(1);
+test("a replay re-describes the car in the garage instead of adding one", () => {
+  // Walking onboarding again was the way past the one-car limit: the garage's
+  // Add button gated on Pro, and this screen wrote a row without asking.
+  const before = listVehicles().length;
+  const car = createVehicle({ name: "2014 Ford", year: 2014, make: "Ford" });
+
+  const tree = render(OnboardingVehicle);
+  type(tree, "Make", "Honda");
+  press(tree, "Continue");
+
+  expect(listVehicles()).toHaveLength(before + 1);
+  expect(getVehicle(car.id)!.make).toBe("Honda");
+  expect(getOnboardingVehicleId()).toBe(car.id);
 });
 
 test("the odometer question starts empty on a car that has no reading yet", () => {
@@ -282,20 +320,25 @@ test("the odometer question starts empty on a car that has no reading yet", () =
   expect(values(render(OnboardingOdometer))).not.toContain("null");
 });
 
-test("the odometer can be deferred, and what it stores is marked as a guess", () => {
+test("the odometer cannot be deferred, and takes a real reading", () => {
   const car = createVehicle({ name: "2019 Toyota", year: 2019, make: "Toyota" });
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
-  // The estimate is offered before it is accepted.
-  expect(texts(tree).join(" ")).toMatch(/marked as an estimate/);
-  pressText(tree, "I'll add it later");
+  // The deferral stored the model year times the national average and flagged
+  // it as a guess, which is the number the whole schedule is built on.
+  expect(texts(tree).join(" ")).not.toMatch(/add it later/i);
+  const cont = () => tree.root.findAll((n) => n.props.label === "Continue")[0];
+  expect(cont().props.disabled).toBe(true);
+
+  type(tree, "Odometer (mi)", "84210");
+  expect(cont().props.disabled).toBe(false);
+  press(tree, "Continue");
 
   expect(navigated).toContain("/onboarding/drive");
   const saved = getVehicle(car.id)!;
-  const expected = estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR.mi)!;
-  expect(saved.odometer).toBe(expected);
-  expect(saved.odometer_estimated).toBe(1);
+  expect(saved.odometer).toBe(84210);
+  expect(saved.odometer_estimated).toBeUndefined();
 });
 
 test("the evidence screen will not let you continue until you have scrolled it", () => {
@@ -380,21 +423,19 @@ test("the loader draws a bar and holds the screen for the whole readout", () => 
   jest.useRealTimers();
 });
 
-test("a tap anywhere on the loader goes straight to the findings", () => {
+test("the loader cannot be skipped", () => {
   jest.useFakeTimers();
   const tree = render(OnboardingAnalyzing);
-  expect(texts(tree)).toContain("Tap anywhere to skip.");
 
-  // The body pressable is the one carrying the readout; the header's is Back.
-  pressText(tree, "Working out the schedule.");
-  expect(navigated).toContain("replace:/onboarding/results");
-
-  // And the timer that was already running must not replace the route twice.
-  const replacements = navigated.filter((n) => n === "replace:/onboarding/results").length;
-  act(() => {
-    jest.advanceTimersByTime(5000);
-  });
-  expect(navigated.filter((n) => n === "replace:/onboarding/results")).toHaveLength(replacements);
+  // It used to invite a tap past itself, which told the user the four readings
+  // the next six screens argue from were not worth reading.
+  expect(texts(tree).join(" ")).not.toMatch(/skip/i);
+  expect(
+    tree.root
+      .findAll((n) => typeof n.props.onPress === "function")
+      .filter((n) => stringsIn(n).includes("Working out the schedule."))
+  ).toHaveLength(0);
+  expect(navigated).not.toContain("replace:/onboarding/results");
   jest.useRealTimers();
 });
 

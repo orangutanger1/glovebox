@@ -10,7 +10,7 @@ import {
 
 test("the flow is a single chain with a start and an end", () => {
   expect(previousRoute("welcome")).toBeNull();
-  expect(nextRoute("free")).toBeNull();
+  expect(nextRoute("offer")).toBeNull();
 
   const walked = ["welcome"];
   let at = nextRoute("welcome");
@@ -36,16 +36,21 @@ test("every quiz screen is numbered and no other screen is", () => {
   }
 });
 
-test("the free door comes after both offers, never before them", () => {
-  // The order is the conversion argument: a free start printed anywhere above
-  // the paywall is taken by everyone who would otherwise have paid.
-  expect(FLOW.indexOf("free")).toBeGreaterThan(FLOW.indexOf("offer"));
+test("the flow ends on the second ask, with no free door after it", () => {
+  // The order is the conversion argument: a free start printed anywhere in the
+  // flow is taken by everyone who would otherwise have paid, and it was last
+  // printed on a whole screen of its own after both asks.
+  expect(FLOW[FLOW.length - 1]).toBe("offer");
+  expect(FLOW).not.toContain("free");
   expect(FLOW.indexOf("offer")).toBeGreaterThan(FLOW.indexOf("paywall"));
 });
 
 test("a resume point from a version that shipped different screens still lands somewhere", () => {
   expect(resumeRoute("ready")).toBe("analyzing");
   expect(resumeRoute("reminders")).toBe("plan");
+  // Parked on the free landing by an older build: the trial is the last thing
+  // left worth asking, and declining it now ends the flow.
+  expect(resumeRoute("free")).toBe("offer");
   expect(resumeRoute("intro")).toBe("vehicle");
   expect(resumeRoute("a-screen-that-never-existed")).toBe("welcome");
   expect(resumeRoute(null)).toBe("welcome");

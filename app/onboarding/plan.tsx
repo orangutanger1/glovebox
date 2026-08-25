@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
@@ -7,7 +8,8 @@ import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
-import { setNotifyIntent } from "../../src/notify/intent";
+import { requestPermission, rescheduleAll } from "../../src/notify";
+import { hasAskedNotifyPermission, markAskedNotifyPermission } from "../../src/notify/prompt";
 import { trackNotificationPermission } from "../../src/analytics";
 import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -37,31 +39,51 @@ const SHOWN = 6;
  * own screen is context-free by construction. Here the user is looking at six
  * dated services when they are asked whether they want to be told about them.
  *
- * What the screen no longer does is fire the system prompt. That happened here,
- * one screen before the money ask, so the iOS alert landed on a user who was
- * about to be shown a price and the two modal decisions queued up behind each
- * other. Both buttons now record an intention and move on; the garage acts on
- * it once onboarding is over. The user's choice is unchanged, and so is the
- * context they make it in.
+ * The prompt fires here, on the tap. It was briefly deferred to the first mount
+ * of the garage, on the theory that a system modal one screen ahead of the
+ * money ask was one modal too many; what that produced was a user tapping
+ * "Turn on reminders", being shown nothing at all, and then meeting the iOS
+ * alert three screens later after the paywall, on a screen they had not asked
+ * anything from. The permission belongs to the button that promises it.
  *
- * "Not now" is a real answer and does not re-ask, from here or from the
- * garage. Reminders are half the product, and nagging for them is the other
- * half of the reviews this app was written against.
+ * "Not now" is a real answer and nothing re-asks: the garage does not ask, and
+ * Settings only asks when the user taps the reminders row themselves.
+ * Reminders are half the product, and nagging for them is the other half of
+ * the reviews this app was written against.
  */
 export default function OnboardingPlan() {
   const advance = useAdvance("plan");
   const { vehicleName, plan } = useOnboardingFindings();
+  const [busy, setBusy] = useState(false);
 
-  function onRemindMe() {
-    setNotifyIntent("yes");
+  async function onRemindMe() {
+    if (busy) return;
+    setBusy(true);
+    // Stamped before the prompt is awaited: iOS shows its alert once per
+    // install, and a force quit with it on the glass must not buy a second one.
+    const first = !hasAskedNotifyPermission();
+    markAskedNotifyPermission();
+    try {
+      if (first) {
+        const granted = await requestPermission();
+        trackNotificationPermission(granted ? "granted" : "denied");
+        // The service the quiz already logged has a due date; without this it
+        // gets no notification until some later cold start, because the launch
+        // that scheduled reminders ran before permission existed.
+        if (granted) await rescheduleAll();
+      }
+    } catch {
+      // Unavailable, which is not a denial and is not the user's answer
+      // either. The app works without notifications.
+    }
     advance();
   }
 
   function onDecline() {
-    setNotifyIntent("no");
-    // The real outcome for this user, reported from the place it happened.
-    // Nothing will ever ask them again, so there is no later event to wait
-    // for and no system answer to attribute this to.
+    // "Not now" spends nothing: iOS grants one prompt and this user has not
+    // been shown it, so Settings can still offer reminders on a later tap.
+    // Reported from here, because this is the real outcome for this user and
+    // no system answer will ever arrive to attribute it to.
     trackNotificationPermission("deferred");
     advance();
   }
@@ -76,9 +98,10 @@ export default function OnboardingPlan() {
       subtitle={t("offer.plan.subtitle", { count: plan.items.length, vehicle: vehicleName })}
       footer={
         <>
-          <Button label={t("offer.plan.cta")} onPress={onRemindMe} />
+          <Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />
           <Pressable
             onPress={onDecline}
+            disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
             <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>

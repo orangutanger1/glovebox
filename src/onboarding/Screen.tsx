@@ -57,7 +57,6 @@ export function OnboardingScreen({
   center = false,
   tone = "housing",
   onBack,
-  onTap,
 }: {
   route: OnboardingRoute;
   title: string;
@@ -90,10 +89,6 @@ export function OnboardingScreen({
    *  is three cards on one route, and a Back that abandoned all three because
    *  the user wanted to re-read the first is a Back the user stops pressing. */
   onBack?: () => void;
-  /** A tap anywhere on the screen body. For `analyzing`, which is the one
-   *  screen in the flow the user cannot otherwise hurry: a readout that is
-   *  still going when the reader has finished reading it is a wait. */
-  onTap?: () => void;
 }) {
   const router = useRouter();
   const previous = previousRoute(route);
@@ -199,8 +194,7 @@ export function OnboardingScreen({
     else router.replace(`/onboarding/${previous}` as never);
   }
 
-  // The title, the screen's own content, and the space around them. Held in one
-  // node so `onTap` can wrap the lot without the layout being written twice.
+  // The title, the screen's own content, and the space around them.
   const body = (
     <>
       {center ? <View style={{ flex: 1 }} /> : null}
@@ -285,15 +279,7 @@ export function OnboardingScreen({
             )}
           </View>
 
-          {/* The header row stays outside the tap target: a screen you can tap
-              to move forward must not swallow the control that goes back. */}
-          {onTap ? (
-            <Pressable onPress={onTap} style={{ flexGrow: 1, gap: tokens.space.lg }}>
-              {body}
-            </Pressable>
-          ) : (
-            body
-          )}
+          {body}
         </ScrollView>
 
         {footer ? (

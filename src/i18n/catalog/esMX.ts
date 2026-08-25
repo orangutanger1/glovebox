@@ -43,21 +43,18 @@ export const esMX: Fragment = {
 
   "offer.features.subtitle":
     "Todo vive en un solo archivo en este celular, sin cuenta y sin servidor.",
+  "offer.paywall.title": "Los carros no avisan. Esto sí.",
+  "offer.paywall.subtitle":
+    "Cada mantenimiento y cada lectura del odómetro, registrados. El taller ve un historial, no una suposición.",
+  "offer.paywall.cta": "Dejar mi carro registrado",
   "offer.paywall.caption":
-    "Un carro, historial sin límite y exportación a CSV son gratis para siempre, incluso después de cancelar la suscripción.",
+    "Todo lo que acabas de configurar ya está guardado en este celular. Sin cuenta, sin servidor, nada sale de aquí.",
   "offer.trial.subtitle": {
     one: "Llévate {count} día de Pro sin pagar nada y decide cuando tu carro ya te haya dicho algo.",
     other:
       "Llévate {count} días de Pro sin pagar nada y decide cuando tu carro ya te haya dicho algo.",
   },
   "offer.trial.caption": "Cancela en Configuración antes de que termine y no pagas nada.",
-  "offer.free.subtitle": {
-    one: "Tu {vehicle} y su {count} mantenimiento programado ya están guardados en este celular. El modo gratis conserva todo.",
-    other:
-      "Tu {vehicle} y sus {count} mantenimientos programados ya están guardados en este celular. El modo gratis conserva todo.",
-  },
-  "offer.free.caption":
-    "Un carro, sin cuenta, sin anuncios y sin ninguna prueba corriendo en segundo plano. Pro agrega el resto del garaje y tus propios intervalos cuando quieras, desde Configuración.",
   "offer.winback.title": "Dejaste de registrar.",
 
   "onboardingA.welcome.privacy":

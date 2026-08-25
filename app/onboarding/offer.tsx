@@ -6,7 +6,7 @@ import { t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
-import { useAdvance, useFinish } from "../../src/onboarding/nav";
+import { useFinish } from "../../src/onboarding/nav";
 
 /**
  * The one retry, and the last screen in the flow.
@@ -25,14 +25,14 @@ import { useAdvance, useFinish } from "../../src/onboarding/nav";
  * price and the disclosure Apple requires, and repeating a number here would
  * be wrong the moment somebody edits the offering.
  *
- * A purchase ends onboarding. Declining does not: it advances to the free
- * landing, which is where the app finally says the word "free" out loud, with
- * the four things that are free forever listed on it. That screen is the exit,
- * and it is the third of three, so nobody reaches it without having been shown
- * both a price and a trial first.
+ * A purchase ends onboarding, and so does declining: the flow finishes in the
+ * garage with the car and the plan the quiz built already in it. It used to
+ * advance to a "start in free mode" landing, which spent the last screen of
+ * the funnel listing what costs nothing to a user who had just been within one
+ * tap of a trial. The free tier is what the app does when nobody pays; it is
+ * not something to sell.
  */
 export default function OnboardingOffer() {
-  const advance = useAdvance("offer");
   const finish = useFinish();
   const [busy, setBusy] = useState(false);
 
@@ -45,8 +45,8 @@ export default function OnboardingOffer() {
       return;
     }
     // Dismissed, or the offering could not be presented. Either way the trial
-    // was not started, and the free landing is the only thing left to say.
-    advance();
+    // was not started, and there is nothing further to ask.
+    finish("free");
   }
 
   return (
@@ -63,7 +63,7 @@ export default function OnboardingOffer() {
             disabled={busy}
           />
           <Pressable
-            onPress={advance}
+            onPress={() => finish("free")}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >

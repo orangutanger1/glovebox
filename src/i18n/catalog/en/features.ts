@@ -1,11 +1,10 @@
 import type { Fragment } from "../types";
 
 /**
- * The feature list, read by the features screen and by the free landing.
+ * The feature list, read by the features screen.
  *
- * Keyed by feature id rather than by position so the two screens, which show
- * overlapping subsets of the same list, cannot end up describing one row two
- * ways.
+ * Keyed by feature id rather than by position, so a row cannot be described
+ * one way in the list and another in the badge beside it.
  */
 export const features: Fragment = {
   "features.history.title": "Every service, kept forever",

@@ -265,21 +265,11 @@ export const nl: Fragment = {
 
   "onboardingA.vehicle.title": "Wat rijd je?",
   "onboardingA.vehicle.year": "Bouwjaar",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Merk",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Model",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Vul het bouwjaar in.",
-  "onboardingA.vehicle.yearDigits": "Het bouwjaar moet vier cijfers hebben, zoals 2014.",
-  "onboardingA.vehicle.yearMin": "Het bouwjaar moet {min} of later zijn, niet {value}.",
-  "onboardingA.vehicle.yearMax": "Het bouwjaar kan niet later zijn dan {max}.",
   "onboardingA.vehicle.required": "Verplicht.",
   "onboardingA.vehicle.saved": 'Bewaard als "{name}", en je kunt het later hernoemen.',
-  "onboardingA.vehicle.yearOlder": "Ouder",
-  "onboardingA.vehicle.makeSearch": "Merk zoeken",
-  "onboardingA.vehicle.makeOther": "Anders",
-  "onboardingA.vehicle.makeNone": "Geen resultaat. Tik op Anders en typ het zelf.",
   "onboardingA.vehicle.modelOptional": "Model (optioneel)",
   "onboardingA.vehicle.hint":
     "Bouwjaar en merk, zodat herinneringen de auto bij naam noemen. Het model is optioneel.",
@@ -291,9 +281,6 @@ export const nl: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Een ruwe schatting is prima, en het is het getal dat bepaalt wanneer onderhoud op afstand aan de beurt is.",
-  "onboardingA.odometer.later": "Vul ik later in",
-  "onboardingA.odometer.laterCaption":
-    "Niet bij de auto? We beginnen met ongeveer {distance} voor een auto van deze leeftijd, gemarkeerd als schatting tot je een stand invult.",
 
   "onboardingA.drive.title": "Hoeveel rijd je ermee?",
   "onboardingA.drive.subtitle":
@@ -368,7 +355,6 @@ export const nl: Fragment = {
   },
   "onboardingB.analyzing.done": "Klaar",
   "onboardingB.analyzing.progress": "Meting {index} van {total}",
-  "onboardingB.analyzing.skip": "Tik ergens om over te slaan.",
 
   // onboardingC
   "onboardingC.back": "Terug",
@@ -564,18 +550,18 @@ export const nl: Fragment = {
       "Plus nog {count} verderop, en één melding per onderhoud op de dag dat het aan de beurt is.",
   },
 
-  "offer.paywall.title": "Je garage staat klaar.",
+  "offer.paywall.title": "Auto’s waarschuwen niet. Dit wel.",
   "offer.paywall.subtitle":
-    "Het plan hieronder is sowieso van jou, en Pro is de rest van de garage plus je eigen intervallen.",
-  "offer.paywall.cta": "Bekijk Wrenchy Pro",
-  "offer.paywall.vehicle": "Voertuig",
-  "offer.paywall.scheduled": "Ingepland",
+    "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd. De garage ziet een boekje, geen gok.",
+  "offer.paywall.cta": "Mijn auto vastleggen",
+  "offer.paywall.vehicle": "Vastgelegd",
+  "offer.paywall.scheduled": "Nu gevolgd",
   "offer.paywall.services": { one: "onderhoudsbeurt", other: "onderhoudsbeurten" },
-  "offer.paywall.dueNow": "Nu aan de beurt",
-  "offer.paywall.nextUp": "Hierna",
+  "offer.paywall.dueNow": "Vandaag te laat",
+  "offer.paywall.nextUp": "Volgende waarschuwing",
   "offer.paywall.none": "Geen",
   "offer.paywall.caption":
-    "Eén auto, onbeperkte historie en CSV-export zijn voor altijd gratis, ook na een opgezegd abonnement.",
+    "Alles wat je net hebt ingesteld staat al op deze telefoon. Geen account, geen server, niets gaat weg.",
 
   "offer.trial.title": { one: "Probeer het {count} dag.", other: "Probeer het {count} dagen." },
   "offer.trial.subtitle": {
@@ -588,16 +574,6 @@ export const nl: Fragment = {
   },
   "offer.trial.decline": "Nee bedankt, laat de gratis app zien",
   "offer.trial.caption": "Zeg op in Instellingen voordat het afloopt en je betaalt niets.",
-
-  "offer.free.title": "Begin in de gratis modus.",
-  "offer.free.subtitle": {
-    one: "Je {vehicle} en de {count} ingeplande onderhoudsbeurt staan al op deze telefoon. De gratis modus houdt alles.",
-    other:
-      "Je {vehicle} en de {count} ingeplande onderhoudsbeurten staan al op deze telefoon. De gratis modus houdt alles.",
-  },
-  "offer.free.cta": "Begin met de gratis app",
-  "offer.free.caption":
-    "Eén auto, geen account, geen advertenties en geen proefperiode die op de achtergrond doorloopt. Pro voegt de rest van de garage en je eigen intervallen toe wanneer je maar wilt, vanuit Instellingen.",
 
   "offer.winback.title": "Je bent gestopt met vastleggen.",
   "offer.winback.decline": "Breng me gewoon naar mijn garage",

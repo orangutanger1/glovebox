@@ -139,18 +139,18 @@ export const ja: Fragment = {
     other: "さらに先の{count}件も含め、整備ごとに期限の当日に通知が1回届きます。",
   },
 
-  "offer.paywall.title": "ガレージの準備ができました。",
+  "offer.paywall.title": "車は警告してくれません。これがします。",
   "offer.paywall.subtitle":
-    "下の予定表はどちらを選んでもあなたのものです。Proで増えるのは、残りのガレージと自分の整備間隔です。",
-  "offer.paywall.cta": "Wrenchy Proを見る",
-  "offer.paywall.vehicle": "車両",
-  "offer.paywall.scheduled": "予定済み",
+    "整備も走行距離の記録も、すべて残ります。整備工場が見るのは記録で、当て推量ではありません。",
+  "offer.paywall.cta": "愛車を記録に残す",
+  "offer.paywall.vehicle": "記録済み",
+  "offer.paywall.scheduled": "監視中",
   "offer.paywall.services": { other: "件" },
-  "offer.paywall.dueNow": "期限到来",
-  "offer.paywall.nextUp": "次の予定",
+  "offer.paywall.dueNow": "期限切れ",
+  "offer.paywall.nextUp": "次の警告",
   "offer.paywall.none": "なし",
   "offer.paywall.caption":
-    "1台、履歴無制限、CSV書き出しは永久に無料です。解約したあとも変わりません。",
+    "いま設定した内容は、すでにこの端末に保存されています。アカウントなし、サーバーなし、外部への送信もありません。",
 
   "offer.trial.title": { other: "{count}日間試してみる。" },
   "offer.trial.subtitle": {
@@ -159,15 +159,6 @@ export const ja: Fragment = {
   "offer.trial.cta": { other: "{count}日間の無料期間を始める" },
   "offer.trial.decline": "結構です。無料版を見せてください",
   "offer.trial.caption": "終了前に設定から解約すれば、料金はかかりません。",
-
-  "offer.free.title": "無料モードで始めます。",
-  "offer.free.subtitle": {
-    other:
-      "{vehicle}と、予定に入った整備{count}件は、すでにこの端末に保存されています。無料モードでもすべて残ります。",
-  },
-  "offer.free.cta": "無料版で始める",
-  "offer.free.caption":
-    "1台、アカウントなし、広告なし、裏で走る体験期間もありません。残りのガレージと自分の整備間隔は、必要になったときに設定からProで追加できます。",
 
   "offer.winback.title": "記録が止まっています。",
   "offer.winback.decline": "ガレージへ進む",
@@ -190,21 +181,11 @@ export const ja: Fragment = {
 
   "onboardingA.vehicle.title": "どの車に乗っていますか？",
   "onboardingA.vehicle.year": "年式",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "メーカー",
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
-  "onboardingA.vehicle.model": "車種",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
-  "onboardingA.vehicle.yearMissing": "年式を入力してください。",
-  "onboardingA.vehicle.yearDigits": "年式は2014のように4桁で入力してください。",
-  "onboardingA.vehicle.yearMin": "年式は{min}年以降にしてください。{value}は使えません。",
-  "onboardingA.vehicle.yearMax": "年式は{max}年より後にはできません。",
   "onboardingA.vehicle.required": "必須です。",
   "onboardingA.vehicle.saved": "「{name}」として保存しました。名前は後から変更できます。",
-  "onboardingA.vehicle.yearOlder": "それ以前",
-  "onboardingA.vehicle.makeSearch": "メーカーを検索",
-  "onboardingA.vehicle.makeOther": "その他",
-  "onboardingA.vehicle.makeNone": "該当なし。「その他」から入力できます。",
   "onboardingA.vehicle.modelOptional": "車種（任意）",
   "onboardingA.vehicle.hint": "年式とメーカー。通知で車名を出すために使います。車種は任意です。",
 
@@ -215,8 +196,6 @@ export const ja: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "だいたいで構いません。距離で期限が来る整備の日付は、この数字から出します。",
-  "onboardingA.odometer.later": "あとで入力する",
-  "onboardingA.odometer.laterCaption": "車のそばにいませんか。この年式なら約{distance}から始められます。実際の値を入れるまでは推定として扱います。",
 
   "onboardingA.drive.title": "年間どのくらい走りますか？",
   "onboardingA.drive.subtitle":
@@ -283,7 +262,6 @@ export const ja: Fragment = {
   "onboardingB.analyzing.due": { other: "{count}件が要対応、{soon}件が間近" },
   "onboardingB.analyzing.done": "完了",
   "onboardingB.analyzing.progress": "{total}件中{index}件目を読み込み中",
-  "onboardingB.analyzing.skip": "どこでもタップでスキップします。",
 
   // onboardingC
   "onboardingC.back": "戻る",

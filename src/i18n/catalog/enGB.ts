@@ -40,11 +40,6 @@ export const enGB: Fragment = {
   "vehicle.delete.body":
     "It leaves your list of cars along with its service history. Records already exported stay in that file.",
   "features.garage.subtitle": "Every car you own, each with its own schedule.",
-  "offer.paywall.title": "Your car is set up.",
-  "offer.paywall.subtitle":
-    "The plan below is yours either way, and Pro is room for the rest of your cars plus your own intervals.",
-  "offer.free.caption":
-    "One car, no account, no ads and no trial running in the background. Pro adds room for the rest of your cars and your own intervals whenever you want it, from Settings.",
   "offer.winback.decline": "Just take me to my cars",
 
   // "Garage" as the workshop, which is where American English said "shop". A UK

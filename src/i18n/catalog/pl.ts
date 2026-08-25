@@ -174,18 +174,18 @@ export const pl: Fragment = {
       "Plus {count} kolejnego dalej w czasie oraz jedno powiadomienie na serwis w dniu, w którym wypada termin.",
   },
 
-  "offer.paywall.title": "Twój garaż jest gotowy.",
+  "offer.paywall.title": "Samochody nie ostrzegają. Ta aplikacja owszem.",
   "offer.paywall.subtitle":
-    "Plan poniżej i tak jest twój, a Pro to reszta garażu plus własne interwały.",
-  "offer.paywall.cta": "Zobacz Wrenchy Pro",
-  "offer.paywall.vehicle": "Pojazd",
-  "offer.paywall.scheduled": "W planie",
+    "Każdy serwis i każdy stan licznika zostają zapisane. Mechanik widzi książkę, a nie domysły.",
+  "offer.paywall.cta": "Zapisuj mój samochód",
+  "offer.paywall.vehicle": "Zapisany",
+  "offer.paywall.scheduled": "Pod kontrolą",
   "offer.paywall.services": { one: "serwis", few: "serwisy", many: "serwisów", other: "serwisu" },
-  "offer.paywall.dueNow": "Na teraz",
-  "offer.paywall.nextUp": "Następny",
+  "offer.paywall.dueNow": "Zaległe dziś",
+  "offer.paywall.nextUp": "Następne ostrzeżenie",
   "offer.paywall.none": "Brak",
   "offer.paywall.caption":
-    "Jeden samochód, nieograniczona historia i eksport CSV są za darmo na zawsze, także po anulowaniu subskrypcji.",
+    "Wszystko, co właśnie ustawiłeś, jest już zapisane w tym telefonie. Bez konta, bez serwera, nic nie wychodzi na zewnątrz.",
 
   "offer.trial.title": {
     one: "Wypróbuj przez {count} dzień.",
@@ -207,18 +207,6 @@ export const pl: Fragment = {
   },
   "offer.trial.decline": "Nie, dziękuję, pokaż darmową wersję",
   "offer.trial.caption": "Anuluj w Ustawieniach przed końcem, a nic nie zapłacisz.",
-
-  "offer.free.title": "Zacznij w trybie darmowym.",
-  "offer.free.subtitle": {
-    one: "{vehicle} i {count} zaplanowany serwis są już zapisane w tym telefonie. Tryb darmowy zachowuje wszystko.",
-    few: "{vehicle} i {count} zaplanowane serwisy są już zapisane w tym telefonie. Tryb darmowy zachowuje wszystko.",
-    many: "{vehicle} i {count} zaplanowanych serwisów są już zapisane w tym telefonie. Tryb darmowy zachowuje wszystko.",
-    other:
-      "{vehicle} i {count} zaplanowanego serwisu są już zapisane w tym telefonie. Tryb darmowy zachowuje wszystko.",
-  },
-  "offer.free.cta": "Zacznij z darmową wersją",
-  "offer.free.caption":
-    "Jeden samochód, bez konta, bez reklam i bez okresu próbnego chodzącego w tle. Pro dodaje resztę garażu i własne interwały, kiedy tylko zechcesz, z poziomu Ustawień.",
 
   "offer.winback.title": "Dawno nic nie zapisujesz.",
   "offer.winback.decline": "Po prostu przejdź do garażu",
@@ -244,21 +232,11 @@ export const pl: Fragment = {
 
   "onboardingA.vehicle.title": "Czym jeździsz?",
   "onboardingA.vehicle.year": "Rocznik",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Marka",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Model",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Podaj rocznik.",
-  "onboardingA.vehicle.yearDigits": "Rocznik musi mieć cztery cyfry, na przykład 2014.",
-  "onboardingA.vehicle.yearMin": "Rocznik musi być {min} lub późniejszy, nie {value}.",
-  "onboardingA.vehicle.yearMax": "Rocznik nie może być późniejszy niż {max}.",
   "onboardingA.vehicle.required": "Wymagane.",
   "onboardingA.vehicle.saved": "Zapisane jako „{name}”, nazwę możesz zmienić później.",
-  "onboardingA.vehicle.yearOlder": "Starszy",
-  "onboardingA.vehicle.makeSearch": "Szukaj marki",
-  "onboardingA.vehicle.makeOther": "Inna",
-  "onboardingA.vehicle.makeNone": "Brak wyników. Dotknij Inna i wpisz ją.",
   "onboardingA.vehicle.modelOptional": "Model (opcjonalnie)",
   "onboardingA.vehicle.hint":
     "Rocznik i marka, żeby przypomnienia mogły nazwać samochód. Model jest opcjonalny.",
@@ -270,9 +248,6 @@ export const pl: Fragment = {
   "onboardingA.odometer.placeholder.km": "135 600",
   "onboardingA.odometer.caption":
     "Wystarczy przybliżona liczba — to ona datuje serwisy, których termin liczy się przebiegiem.",
-  "onboardingA.odometer.later": "Dodam później",
-  "onboardingA.odometer.laterCaption":
-    "Nie jesteś przy samochodzie? Możemy zacząć od około {distance} dla auta w tym wieku, oznaczone jako szacunek, dopóki nie podasz odczytu.",
 
   "onboardingA.drive.title": "Ile nim jeździsz?",
   "onboardingA.drive.subtitle":
@@ -351,7 +326,6 @@ export const pl: Fragment = {
   },
   "onboardingB.analyzing.done": "Gotowe",
   "onboardingB.analyzing.progress": "Odczyt {index} z {total}",
-  "onboardingB.analyzing.skip": "Dotknij w dowolnym miejscu, aby pominąć.",
 
   // onboardingC
   "onboardingC.back": "Wstecz",

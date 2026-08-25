@@ -146,18 +146,18 @@ export const es: Fragment = {
       "Y {count} más a largo plazo, con una notificación por mantenimiento el día en que vence.",
   },
 
-  "offer.paywall.title": "Tu garaje está listo.",
+  "offer.paywall.title": "Los coches no avisan. Esto sí.",
   "offer.paywall.subtitle":
-    "El plan de abajo es tuyo en cualquier caso, y Pro es el resto del garaje más tus propios intervalos.",
-  "offer.paywall.cta": "Ver Wrenchy Pro",
-  "offer.paywall.vehicle": "Vehículo",
-  "offer.paywall.scheduled": "Programados",
+    "Cada mantenimiento y cada lectura del cuentakilómetros, registrados. El taller ve un historial, no una suposición.",
+  "offer.paywall.cta": "Dejar mi coche registrado",
+  "offer.paywall.vehicle": "Registrado",
+  "offer.paywall.scheduled": "Ya vigilados",
   "offer.paywall.services": { one: "mantenimiento", other: "mantenimientos" },
-  "offer.paywall.dueNow": "Vence ya",
-  "offer.paywall.nextUp": "Siguiente",
+  "offer.paywall.dueNow": "Vencidos hoy",
+  "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Ninguno",
   "offer.paywall.caption":
-    "Un coche, historial ilimitado y exportación a CSV son gratis para siempre, incluso después de cancelar la suscripción.",
+    "Todo lo que acabas de configurar ya está guardado en este móvil. Sin cuenta, sin servidor, nada sale de aquí.",
 
   "offer.trial.title": { one: "Pruébalo {count} día.", other: "Pruébalo {count} días." },
   "offer.trial.subtitle": {
@@ -171,16 +171,6 @@ export const es: Fragment = {
   },
   "offer.trial.decline": "No, gracias, quiero la app gratuita",
   "offer.trial.caption": "Cancela en Ajustes antes de que acabe y no pagas nada.",
-
-  "offer.free.title": "Empieza en modo gratuito.",
-  "offer.free.subtitle": {
-    one: "Tu {vehicle} y su {count} mantenimiento programado ya están guardados en este móvil. El modo gratuito lo conserva todo.",
-    other:
-      "Tu {vehicle} y sus {count} mantenimientos programados ya están guardados en este móvil. El modo gratuito lo conserva todo.",
-  },
-  "offer.free.cta": "Empezar con la app gratuita",
-  "offer.free.caption":
-    "Un coche, sin cuenta, sin anuncios y sin ninguna prueba corriendo de fondo. Pro añade el resto del garaje y tus propios intervalos cuando quieras, desde Ajustes.",
 
   "offer.winback.title": "Has dejado de registrar.",
   "offer.winback.decline": "Llévame a mi garaje",
@@ -204,21 +194,11 @@ export const es: Fragment = {
 
   "onboardingA.vehicle.title": "¿Qué coche conduces?",
   "onboardingA.vehicle.year": "Año",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Marca",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Modelo",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Introduce el año del modelo.",
-  "onboardingA.vehicle.yearDigits": "El año tiene que tener cuatro cifras, como 2014.",
-  "onboardingA.vehicle.yearMin": "El año tiene que ser {min} o posterior, no {value}.",
-  "onboardingA.vehicle.yearMax": "El año no puede ser posterior a {max}.",
   "onboardingA.vehicle.required": "Obligatorio.",
   "onboardingA.vehicle.saved": "Guardado como «{name}», y puedes cambiarle el nombre más tarde.",
-  "onboardingA.vehicle.yearOlder": "Más antiguo",
-  "onboardingA.vehicle.makeSearch": "Buscar marca",
-  "onboardingA.vehicle.makeOther": "Otra",
-  "onboardingA.vehicle.makeNone": "Sin resultados. Toca Otra y escríbela.",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
   "onboardingA.vehicle.hint":
     "Año y marca, para que los recordatorios puedan nombrar el coche. El modelo es opcional.",
@@ -230,9 +210,6 @@ export const es: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Un número aproximado sirve, y es lo que fecha los mantenimientos que vencen por distancia.",
-  "onboardingA.odometer.later": "Lo añado después",
-  "onboardingA.odometer.laterCaption":
-    "¿No estás junto al coche? Podemos partir de unos {distance} para un coche de esta edad, marcado como estimación hasta que introduzcas una lectura.",
 
   "onboardingA.drive.title": "¿Cuánto conduces al año?",
   "onboardingA.drive.subtitle":
@@ -306,7 +283,6 @@ export const es: Fragment = {
   },
   "onboardingB.analyzing.done": "Listo",
   "onboardingB.analyzing.progress": "Leyendo {index} de {total}",
-  "onboardingB.analyzing.skip": "Toca en cualquier parte para saltar.",
 
   // onboardingC
   "onboardingC.back": "Atrás",

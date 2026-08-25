@@ -15,9 +15,10 @@
  * "paywall" asks for money and offers no way past itself except the sheet.
  * "offer" catches the user who closed that sheet and gives them the trial,
  * which is worth more here than it is up front: a trial shown first is handed
- * to everyone who would have paid outright. "free" catches the user who
- * closed that one too, and is the first screen in the flow that mentions
- * starting for nothing. Nobody sees a free door before both prices.
+ * to everyone who would have paid outright. A user who closes that one too has
+ * declined twice and is taken to the garage, because the flow has nothing left
+ * to sell and a screen advertising the free tier is not an ask, it is a
+ * consolation the app pays for in conversions.
  *
  * One ordered array is the whole navigation model: Back is the entry before
  * you, Continue is the entry after you, and no screen hard-codes the name of
@@ -42,7 +43,6 @@ export const FLOW = [
   "plan",
   "paywall",
   "offer",
-  "free",
 ] as const;
 
 export type OnboardingRoute = (typeof FLOW)[number];
@@ -102,6 +102,10 @@ const RETIRED: Record<string, OnboardingRoute> = {
   // a screen the user pays a tap for to be told they are about to be asked
   // something. Removed; an install parked on it resumes at the first question.
   intro: "vehicle",
+  // The free-mode landing, which used to be the last screen. An install parked
+  // on it resumes on the trial offer: it is the last thing left worth asking,
+  // and its own decline now ends the flow.
+  free: "offer",
 };
 
 /** Where a relaunch resumes. Anything unrecognised restarts the flow. */

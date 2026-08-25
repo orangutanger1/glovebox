@@ -147,18 +147,18 @@ export const sv: Fragment = {
     other: "Dessutom {count} till längre fram, och en notis per service den dag den ska göras.",
   },
 
-  "offer.paywall.title": "Ditt garage är klart.",
+  "offer.paywall.title": "Bilar varnar inte. Det här gör det.",
   "offer.paywall.subtitle":
-    "Planen nedan är din oavsett, och Pro är resten av garaget plus dina egna intervall.",
-  "offer.paywall.cta": "Se Wrenchy Pro",
-  "offer.paywall.vehicle": "Fordon",
-  "offer.paywall.scheduled": "Schemalagt",
+    "Varje service och varje mätarställning hamnar på pränt. Verkstaden ser en servicebok, inte en gissning.",
+  "offer.paywall.cta": "Håll bilen på pränt",
+  "offer.paywall.vehicle": "På pränt",
+  "offer.paywall.scheduled": "Nu bevakat",
   "offer.paywall.services": { one: "servicepunkt", other: "servicepunkter" },
-  "offer.paywall.dueNow": "Dags nu",
-  "offer.paywall.nextUp": "Nästa",
+  "offer.paywall.dueNow": "Försenat i dag",
+  "offer.paywall.nextUp": "Nästa varning",
   "offer.paywall.none": "Ingen",
   "offer.paywall.caption":
-    "En bil, obegränsad historik och CSV-export är gratis för alltid, även efter ett uppsagt abonnemang.",
+    "Allt du just ställt in ligger redan i den här telefonen. Inget konto, ingen server, inget skickas vidare.",
 
   "offer.trial.title": { one: "Testa i {count} dag.", other: "Testa i {count} dagar." },
   "offer.trial.subtitle": {
@@ -172,16 +172,6 @@ export const sv: Fragment = {
   },
   "offer.trial.decline": "Nej tack, visa gratisappen",
   "offer.trial.caption": "Säg upp i Inställningar innan den tar slut, då betalar du ingenting.",
-
-  "offer.free.title": "Börja i gratisläget.",
-  "offer.free.subtitle": {
-    one: "Din {vehicle} och dess {count} schemalagda servicepunkt är redan sparade i den här telefonen. Gratisläget behåller allt.",
-    other:
-      "Din {vehicle} och dess {count} schemalagda servicepunkter är redan sparade i den här telefonen. Gratisläget behåller allt.",
-  },
-  "offer.free.cta": "Börja med gratisappen",
-  "offer.free.caption":
-    "En bil, inget konto, inga annonser och ingen provperiod som tickar i bakgrunden. Pro lägger till resten av garaget och dina egna intervall när du vill, från Inställningar.",
 
   "offer.winback.title": "Du slutade logga.",
   "offer.winback.decline": "Ta mig bara till garaget",
@@ -204,21 +194,11 @@ export const sv: Fragment = {
 
   "onboardingA.vehicle.title": "Vad kör du?",
   "onboardingA.vehicle.year": "Årsmodell",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Märke",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Modell",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Ange årsmodell.",
-  "onboardingA.vehicle.yearDigits": "Årsmodellen ska vara fyra siffror, till exempel 2014.",
-  "onboardingA.vehicle.yearMin": "Årsmodellen måste vara {min} eller senare, inte {value}.",
-  "onboardingA.vehicle.yearMax": "Årsmodellen kan inte vara senare än {max}.",
   "onboardingA.vehicle.required": "Obligatoriskt.",
   "onboardingA.vehicle.saved": "Sparad som \u201D{name}\u201D, och du kan byta namn senare.",
-  "onboardingA.vehicle.yearOlder": "Äldre",
-  "onboardingA.vehicle.makeSearch": "Sök märke",
-  "onboardingA.vehicle.makeOther": "Annat",
-  "onboardingA.vehicle.makeNone": "Ingen träff. Tryck på Annat och skriv själv.",
   "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
   "onboardingA.vehicle.hint":
     "Årsmodell och märke, så att påminnelserna kan nämna bilen. Modellen är valfri.",
@@ -230,9 +210,6 @@ export const sv: Fragment = {
   "onboardingA.odometer.placeholder.km": "135\u00A0600",
   "onboardingA.odometer.caption":
     "En ungefärlig siffra räcker, och det är den som sätter datum på allt som ska göras efter sträcka.",
-  "onboardingA.odometer.later": "Jag fyller i det sen",
-  "onboardingA.odometer.laterCaption":
-    "Inte vid bilen? Vi kan börja på ungefär {distance} för en bil av den åldern, markerat som en uppskattning tills du fyller i ett värde.",
 
   "onboardingA.drive.title": "Hur långt kör du den?",
   "onboardingA.drive.subtitle":
@@ -305,7 +282,6 @@ export const sv: Fragment = {
   },
   "onboardingB.analyzing.done": "Klart",
   "onboardingB.analyzing.progress": "Läser {index} av {total}",
-  "onboardingB.analyzing.skip": "Tryck var som helst för att hoppa över.",
 
   "onboardingC.back": "Tillbaka",
   "onboardingC.question": "Fråga {step} / {total}",

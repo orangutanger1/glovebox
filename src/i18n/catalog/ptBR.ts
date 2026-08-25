@@ -137,18 +137,18 @@ export const ptBR: Fragment = {
     other: "Mais {count} lá na frente, e uma notificação por serviço no dia em que ele vence.",
   },
 
-  "offer.paywall.title": "A sua garagem está pronta.",
+  "offer.paywall.title": "Carros não avisam. Isto avisa.",
   "offer.paywall.subtitle":
-    "O plano abaixo é seu de qualquer jeito, e o Pro é o resto da garagem mais os seus próprios intervalos.",
-  "offer.paywall.cta": "Ver o Wrenchy Pro",
-  "offer.paywall.vehicle": "Veículo",
-  "offer.paywall.scheduled": "Programados",
+    "Cada serviço e cada leitura do odômetro ficam registrados. O mecânico vê um histórico, não um chute.",
+  "offer.paywall.cta": "Deixar meu carro registrado",
+  "offer.paywall.vehicle": "Registrado",
+  "offer.paywall.scheduled": "Agora vigiados",
   "offer.paywall.services": { one: "serviço", other: "serviços" },
-  "offer.paywall.dueNow": "Vence agora",
-  "offer.paywall.nextUp": "Próximo",
+  "offer.paywall.dueNow": "Atrasados hoje",
+  "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Nenhum",
   "offer.paywall.caption":
-    "Um carro, histórico ilimitado e exportação em CSV são grátis para sempre, inclusive depois de cancelar a assinatura.",
+    "Tudo o que você acabou de configurar já está salvo neste telefone. Sem conta, sem servidor, nada sai daqui.",
 
   "offer.trial.title": { one: "Teste por {count} dia.", other: "Teste por {count} dias." },
   "offer.trial.subtitle": {
@@ -162,16 +162,6 @@ export const ptBR: Fragment = {
   },
   "offer.trial.decline": "Não, quero ver o app grátis",
   "offer.trial.caption": "Cancele nos Ajustes antes de acabar e você não paga nada.",
-
-  "offer.free.title": "Comece no modo grátis.",
-  "offer.free.subtitle": {
-    one: "O seu {vehicle} e o {count} serviço programado dele já estão salvos neste celular. O modo grátis mantém tudo.",
-    other:
-      "O seu {vehicle} e os {count} serviços programados dele já estão salvos neste celular. O modo grátis mantém tudo.",
-  },
-  "offer.free.cta": "Começar com o app grátis",
-  "offer.free.caption":
-    "Um carro, sem conta, sem anúncios e sem teste rodando em segundo plano. O Pro adiciona o resto da garagem e os seus próprios intervalos quando você quiser, pelos Ajustes.",
 
   "offer.winback.title": "Você parou de registrar.",
   "offer.winback.decline": "Só me leve para a minha garagem",
@@ -194,21 +184,11 @@ export const ptBR: Fragment = {
 
   "onboardingA.vehicle.title": "O que você dirige?",
   "onboardingA.vehicle.year": "Ano",
-  "onboardingA.vehicle.yearPlaceholder": "2014",
   "onboardingA.vehicle.make": "Marca",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  "onboardingA.vehicle.model": "Modelo",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.yearMissing": "Informe o ano do modelo.",
-  "onboardingA.vehicle.yearDigits": "O ano tem que ter quatro dígitos, como 2014.",
-  "onboardingA.vehicle.yearMin": "O ano tem que ser {min} ou depois, não {value}.",
-  "onboardingA.vehicle.yearMax": "O ano não pode ser depois de {max}.",
   "onboardingA.vehicle.required": "Obrigatório.",
   "onboardingA.vehicle.saved": 'Salvo como "{name}", e você pode renomear depois.',
-  "onboardingA.vehicle.yearOlder": "Mais antigo",
-  "onboardingA.vehicle.makeSearch": "Buscar marca",
-  "onboardingA.vehicle.makeOther": "Outra",
-  "onboardingA.vehicle.makeNone": "Nenhum resultado. Toque em Outra e escreva.",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
   "onboardingA.vehicle.hint":
     "Ano e marca, para os lembretes dizerem qual é o carro. O modelo é opcional.",
@@ -220,9 +200,6 @@ export const ptBR: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Um número aproximado já serve, e é ele que dá data aos serviços que vencem por distância.",
-  "onboardingA.odometer.later": "Adiciono depois",
-  "onboardingA.odometer.laterCaption":
-    "Longe do carro? Podemos partir de cerca de {distance} para um carro dessa idade, marcado como estimativa até você informar um valor.",
 
   "onboardingA.drive.title": "Quanto você roda com ele?",
   "onboardingA.drive.subtitle":
@@ -296,7 +273,6 @@ export const ptBR: Fragment = {
   },
   "onboardingB.analyzing.done": "Pronto",
   "onboardingB.analyzing.progress": "Leitura {index} de {total}",
-  "onboardingB.analyzing.skip": "Toque em qualquer lugar para pular.",
 
   "onboardingC.back": "Voltar",
   "onboardingC.question": "Pergunta {step} / {total}",
