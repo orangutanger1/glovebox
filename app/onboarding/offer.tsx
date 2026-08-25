@@ -41,7 +41,7 @@ export default function OnboardingOffer() {
     setBusy(true);
     if ((await presentOffering(DISCOUNT_OFFERING)) === "purchased") {
       recordReviewEvent("purchase");
-      finish();
+      finish("trial");
       return;
     }
     // Dismissed, or the offering could not be presented. Either way the trial

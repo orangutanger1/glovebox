@@ -7,6 +7,7 @@ import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackQuizAnswer } from "../../src/analytics";
 import { WORRY_ANSWERS, type WorryAnswer } from "../../src/onboarding/state";
 
 const LABEL_KEYS: Record<WorryAnswer, string> = {
@@ -17,6 +18,17 @@ const LABEL_KEYS: Record<WorryAnswer, string> = {
   upsell: "onboardingB.worry.upsell",
 };
 
+/**
+ * The last question, and the one that used to open on a dead button.
+ *
+ * Continue was disabled until something was picked, which put a refusal on the
+ * final step of the quiz for the entirely reasonable answer "none of these
+ * bother me especially". Nothing downstream needed the refusal: `painCards`
+ * reads an empty worry set as no preference and fills the three cards from the
+ * user's own plan and their tracking answer, which are facts about their car
+ * rather than a mood. An empty answer is an answer, and it is now allowed to
+ * be one.
+ */
 export default function OnboardingWorry() {
   const advance = useAdvance("worry");
   // The last question, and the one most likely to be revisited: it decides
@@ -37,11 +49,14 @@ export default function OnboardingWorry() {
   }
 
   function onContinue() {
-    if (worries.length === 0) return;
     // Stored in the question's order rather than the tap order: the findings
     // screen reads down this list, and two users who picked the same three
-    // things should be shown the same three things.
-    setAnswers({ worries: WORRY_ANSWERS.filter((w) => worries.includes(w)) });
+    // things should be shown the same three things. An empty list is written as
+    // one and read back as "not answered", which is exactly what it means: no
+    // strong preference, so the cards come from the car.
+    const chosen = WORRY_ANSWERS.filter((w) => worries.includes(w));
+    setAnswers({ worries: chosen });
+    trackQuizAnswer("worry", { worries: chosen });
     advance();
   }
 
@@ -50,17 +65,13 @@ export default function OnboardingWorry() {
       route="worry"
       title={t("onboardingB.worry.title")}
       subtitle={t("onboardingB.worry.subtitle")}
-      footer={
-        <Button
-          label={t("onboardingB.continue")}
-          onPress={onContinue}
-          disabled={worries.length === 0}
-        />
-      }
+      footer={<Button label={t("onboardingB.continue")} onPress={onContinue} />}
     >
       <ChipRow options={options} selected={worries} onPress={toggle} />
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("onboardingB.worry.caption")}
+        {worries.length === 0
+          ? t("onboardingB.worry.optional")
+          : t("onboardingB.worry.caption")}
       </Text>
     </OnboardingScreen>
   );

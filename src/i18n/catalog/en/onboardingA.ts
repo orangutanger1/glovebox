@@ -28,11 +28,20 @@ export const onboardingA: Fragment = {
   "onboardingA.vehicle.title": "What are you driving?",
   "onboardingA.vehicle.year": "Year",
   "onboardingA.vehicle.yearPlaceholder": "2014",
+  // The chip past the end of the row. Twenty-six model years cover most of the
+  // cars on the road; this is the one that hands the rest a keyboard.
+  "onboardingA.vehicle.yearOlder": "Older",
   "onboardingA.vehicle.make": "Make",
   // Corolla and its maker outsell every other car on the planet, so the example
   // is a car the reader has seen wherever they are reading this.
   "onboardingA.vehicle.makePlaceholder": "Toyota",
+  "onboardingA.vehicle.makeSearch": "Search makes",
+  "onboardingA.vehicle.makeOther": "Other",
+  "onboardingA.vehicle.makeNone": "No match. Tap Other to type it in.",
   "onboardingA.vehicle.model": "Model",
+  // The one part of the car nothing but the name reads, so it says out loud
+  // that it can be left alone. "2019 Toyota" is a car in a garage list.
+  "onboardingA.vehicle.modelOptional": "Model (optional)",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
   "onboardingA.vehicle.yearMissing": "Enter the model year.",
   "onboardingA.vehicle.yearDigits": "Year must be four digits, like 2014.",
@@ -40,7 +49,7 @@ export const onboardingA: Fragment = {
   "onboardingA.vehicle.yearMax": "Year can't be later than {max}.",
   "onboardingA.vehicle.required": "Required.",
   "onboardingA.vehicle.saved": 'Saved as "{name}", and you can rename it later.',
-  "onboardingA.vehicle.hint": "Year, make and model, so reminders can name the car.",
+  "onboardingA.vehicle.hint": "Year and make, so reminders can name the car. The model is optional.",
 
   "onboardingA.odometer.title.mi": "How many miles on it?",
   "onboardingA.odometer.title.km": "How many kilometres on it?",
@@ -49,6 +58,11 @@ export const onboardingA: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "A rough number is fine, and it is what dates the services that come due by distance.",
+  "onboardingA.odometer.later": "I'll add it later",
+  // Offered before it is accepted: a user handing the app permission to guess
+  // is owed the guess. The word "estimate" is the point of the sentence.
+  "onboardingA.odometer.laterCaption":
+    "Not near the car? We can start from about {distance} for a car this old, marked as an estimate until you give us a reading.",
 
   "onboardingA.drive.title": "How far do you drive it?",
   "onboardingA.drive.subtitle":

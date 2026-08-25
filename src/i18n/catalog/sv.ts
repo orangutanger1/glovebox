@@ -64,7 +64,7 @@ export const sv: Fragment = {
   "garage.title": "Garaget",
   "garage.logService": "Logga en service",
   "garage.addVehicle": "Lägg till fordon",
-  "garage.empty": "Inga fordon än. Lägg till ett och Glovebox börjar föra dess historik.",
+  "garage.empty": "Inga fordon än. Lägg till ett och Wrenchy börjar föra dess historik.",
   "garage.storeUnreachable": "Kunde inte nå App Store. Försök igen med bättre uppkoppling.",
 
   "garage.badge.overdue": "Försenad",
@@ -72,6 +72,7 @@ export const sv: Fragment = {
 
   "garage.odometer": "Mätarställning",
   "garage.odometer.notSet": "Inte angiven",
+  "garage.odometer.estimated": "Mätarställning (ca)",
 
   "garage.over": "{distance} över",
   "garage.dueNow": "dags nu",
@@ -109,7 +110,7 @@ export const sv: Fragment = {
 
   "language.title": "Språk",
   "language.intro":
-    "Glovebox följer din telefon om du inte väljer ett språk här. Servicenamnen använder de ord verkstäderna använder på det språket.",
+    "Wrenchy följer din telefon om du inte väljer ett språk här. Servicenamnen använder de ord verkstäderna använder på det språket.",
   "language.system": "System",
 
   "layout.garage": "Garaget",
@@ -118,7 +119,7 @@ export const sv: Fragment = {
   "layout.addVehicle": "Lägg till fordon",
   "layout.vehicle": "Fordon",
   "layout.logService": "Logga en service",
-  "layout.fatal.title": "Glovebox kunde inte öppna dina uppgifter.",
+  "layout.fatal.title": "Wrenchy kunde inte öppna dina uppgifter.",
   "layout.fatal.body":
     "Ingenting har raderats, och databasen återställdes till sitt senast fungerande läge. Öppna appen igen. Om det fortsätter hända, kontakta supporten innan du installerar om, för det är ominstallationen som faktiskt skulle förlora uppgifterna.",
 
@@ -149,7 +150,7 @@ export const sv: Fragment = {
   "offer.paywall.title": "Ditt garage är klart.",
   "offer.paywall.subtitle":
     "Planen nedan är din oavsett, och Pro är resten av garaget plus dina egna intervall.",
-  "offer.paywall.cta": "Se Glovebox Pro",
+  "offer.paywall.cta": "Se Wrenchy Pro",
   "offer.paywall.vehicle": "Fordon",
   "offer.paywall.scheduled": "Schemalagt",
   "offer.paywall.services": { one: "servicepunkt", other: "servicepunkter" },
@@ -214,7 +215,13 @@ export const sv: Fragment = {
   "onboardingA.vehicle.yearMax": "Årsmodellen kan inte vara senare än {max}.",
   "onboardingA.vehicle.required": "Obligatoriskt.",
   "onboardingA.vehicle.saved": "Sparad som \u201D{name}\u201D, och du kan byta namn senare.",
-  "onboardingA.vehicle.hint": "Årsmodell, märke och modell, så att påminnelserna kan nämna bilen.",
+  "onboardingA.vehicle.yearOlder": "Äldre",
+  "onboardingA.vehicle.makeSearch": "Sök märke",
+  "onboardingA.vehicle.makeOther": "Annat",
+  "onboardingA.vehicle.makeNone": "Ingen träff. Tryck på Annat och skriv själv.",
+  "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
+  "onboardingA.vehicle.hint":
+    "Årsmodell och märke, så att påminnelserna kan nämna bilen. Modellen är valfri.",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
   "onboardingA.odometer.title.km": "Hur många kilometer står den på?",
@@ -223,6 +230,9 @@ export const sv: Fragment = {
   "onboardingA.odometer.placeholder.km": "135\u00A0600",
   "onboardingA.odometer.caption":
     "En ungefärlig siffra räcker, och det är den som sätter datum på allt som ska göras efter sträcka.",
+  "onboardingA.odometer.later": "Jag fyller i det sen",
+  "onboardingA.odometer.laterCaption":
+    "Inte vid bilen? Vi kan börja på ungefär {distance} för en bil av den åldern, markerat som en uppskattning tills du fyller i ett värde.",
 
   "onboardingA.drive.title": "Hur långt kör du den?",
   "onboardingA.drive.subtitle":
@@ -249,6 +259,7 @@ export const sv: Fragment = {
   "onboardingB.service.caption": "Välj en, resten kan du logga när som helst.",
   "onboardingB.service.when": "När gjordes {service}?",
   "onboardingB.service.whenOther": "När gjordes servicen?",
+  "onboardingB.service.whenPending": "När var det?",
   "onboardingB.service.somethingElse": "Något annat",
   "onboardingB.service.ago.now": "Precis nu",
   "onboardingB.service.ago.lastMonth": "Förra månaden",
@@ -260,7 +271,7 @@ export const sv: Fragment = {
   "onboardingB.tracking.subtitle": "Vad det än är, är det mer än de flesta gör.",
   "onboardingB.tracking.legend": "I dag",
   "onboardingB.tracking.caption":
-    "Vad du än väljer exporterar Glovebox allt du loggar som CSV, gratis.",
+    "Vad du än väljer exporterar Wrenchy allt du loggar som CSV, gratis.",
   "onboardingB.tracking.memory": "Minnet",
   "onboardingB.tracking.receipts": "Kvitton i bilen",
   "onboardingB.tracking.spreadsheet": "Ett kalkylblad",
@@ -276,6 +287,8 @@ export const sv: Fragment = {
   "onboardingB.worry.records": "Tappa historiken",
   "onboardingB.worry.resale": "Andrahandsvärdet",
   "onboardingB.worry.upsell": "Onödiga extrajobb",
+  "onboardingB.worry.optional":
+    "Allt är valfritt. Hoppa över, och nästa skärm byggs bara på din bil.",
 
   "onboardingB.analyzing.title": "Räknar ut schemat.",
   "onboardingB.analyzing.odometer": "{vehicle} på {distance}",
@@ -292,6 +305,7 @@ export const sv: Fragment = {
   },
   "onboardingB.analyzing.done": "Klart",
   "onboardingB.analyzing.progress": "Läser {index} av {total}",
+  "onboardingB.analyzing.skip": "Tryck var som helst för att hoppa över.",
 
   "onboardingC.back": "Tillbaka",
   "onboardingC.question": "Fråga {step} / {total}",
@@ -322,7 +336,7 @@ export const sv: Fragment = {
 
   "onboardingC.help.title": "Alla tre är samma problem.",
   "onboardingC.help.subtitle":
-    "Ingenting är skrivet ner i en form som kan varna dig, och det är precis det Glovebox gör.",
+    "Ingenting är skrivet ner i en form som kan varna dig, och det är precis det Wrenchy gör.",
   "onboardingC.help.continue": "Fortsätt",
 
   "onboardingC.reviews.title": "Den här appen finns på grund av de här.",
@@ -351,7 +365,7 @@ export const sv: Fragment = {
     other: "{count} av {total} servicepunkter saknar uppgifter",
   },
   "pain.blind.body":
-    "Glovebox kan inte bevisa något appen aldrig har sett, och det kan inte du heller. Tills något annat sägs behandlas var och en av dem som att den ska göras.",
+    "Wrenchy kan inte bevisa något appen aldrig har sett, och det kan inte du heller. Tills något annat sägs behandlas var och en av dem som att den ska göras.",
   "pain.blind.fix": "Logga en och hela dess schema startar. Trettio sekunder styck, en gång.",
 
   "pain.memory.legend": "Ur minnet",
@@ -471,7 +485,7 @@ export const sv: Fragment = {
   "settings.reminders.denied": "Påminnelser nekade. Du kan slå på dem i Inställningar.",
   "settings.reminders.error": "Kunde inte begära tillstånd för notiser.",
   "settings.reminders.openSettings":
-    "Öppna Inställningar › Glovebox › Notiser för att slå på påminnelserna igen.",
+    "Öppna Inställningar › Wrenchy › Notiser för att slå på påminnelserna igen.",
 
   "settings.manage": "Hantera abonnemang",
   "settings.manage.error":
@@ -522,6 +536,7 @@ export const sv: Fragment = {
 
   "vehicle.odometer": "Mätarställning",
   "vehicle.odometer.notSet": "Inte angiven",
+  "vehicle.odometer.estimated": "Mätarställning (ca)",
   "vehicle.lastService": "Senaste service",
   "vehicle.lastService.none": "Ingen än",
 

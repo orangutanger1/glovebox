@@ -1,7 +1,7 @@
 import type { Fragment } from "../types";
 
 /**
- * The review themes and Glovebox's answer to each, for the reviews screen.
+ * The review themes and Wrenchy's answer to each, for the reviews screen.
  *
  * A label is what the tally beside it counts, so it has to stay a description
  * of other people's complaints rather than become a claim of our own; the

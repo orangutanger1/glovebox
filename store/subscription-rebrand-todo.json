@@ -1,0 +1,11 @@
+{
+  "_comment": "Subscription display names that the rebrand could not reach, recorded because they are customer-facing and Apple will not let the API change them yet.",
+  "finding": "pro_annual_standard has 16 localizations still reading 'Glovebox Pro (Annual)'. pro_annual and pro_monthly localizations are already 'Wrenchy Pro' - only this one product was missed. store/pro_annual_standard.json in this repo already holds the correct localized names; they were simply never applied to App Store Connect.",
+  "whyItMatters": "src/purchases/index.ts:12 documents that the *default* offering deliberately sells the no-introductory-offer products - that is pro_annual_standard. So this is the product on the first paywall a new user sees, and it is branded with the old name.",
+  "blocker": "asc subscriptions localizations update -> HTTP 409: 'Cannot edit SubscriptionLocalization when it is in ACTIVE state'. All three subscriptions are state=APPROVED, so their localizations are locked the same way a READY_FOR_SALE version locks name/description. Changing them requires an App Store Connect subscription-review submission, not an API write.",
+  "remedy": [
+    "In App Store Connect, edit the pro_annual_standard display name per locale (values are in store/pro_annual_standard.json) - this moves the subscription to 'Ready to Submit' and it is reviewed alongside an app version.",
+    "The three internal reference names ('Glovebox Pro (Annual)', 'Glovebox Pro (Annual, no trial)', 'Glovebox Pro (Monthly)') are ASC-internal only, never shown to users, but worth renaming in the same pass so `ship submit` stops printing the old brand."
+  ],
+  "notBlockingRelease": "1.0.1 passed `asc validate` and was submitted for review with these outstanding; the subscription promotional-image findings are warnings, not blockers."
+}

@@ -3,11 +3,13 @@ import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
 import { tokens } from "../../src/design/tokens";
-import { getVehicle } from "../../src/db/vehicles";
+import { getVehicle, setOdometerEstimate } from "../../src/db/vehicles";
 import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
 import { DISTANCE_PER_YEAR } from "../../src/onboarding/plan";
+import { estimateOdometer } from "../../src/onboarding/estimate";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackQuizAnswer } from "../../src/analytics";
 import type { DriveAnswer } from "../../src/onboarding/state";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
@@ -30,14 +32,26 @@ export default function OnboardingDrive() {
     [unit]
   );
 
-  const odometer = useMemo(() => {
+  const vehicle = useMemo(() => {
     const ownedId = getOnboardingVehicleId();
-    return (ownedId ? getVehicle(ownedId) : null)?.odometer;
+    return ownedId ? getVehicle(ownedId) : null;
   }, []);
+  const odometer = vehicle?.odometer;
 
   function onContinue() {
     if (!drive) return;
     setAnswers({ drive });
+    // The previous question may have estimated the reading from the model year
+    // and the national average. This is the answer that average was standing in
+    // for, so the estimate is recomputed at the rate the user just gave: the
+    // arithmetic is two multiplications and it is the difference between "an
+    // average car of this age" and "a car of this age driven the way you drive".
+    // Only an estimate is touched. A reading the user typed is theirs.
+    if (vehicle?.odometer_estimated) {
+      const refined = estimateOdometer(vehicle.year, DISTANCE_PER_YEAR[unit][drive]);
+      if (refined !== undefined) setOdometerEstimate(vehicle.id, refined);
+    }
+    trackQuizAnswer("drive", { drive });
     advance();
   }
 

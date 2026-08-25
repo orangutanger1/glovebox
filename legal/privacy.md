@@ -1,12 +1,12 @@
-# Privacy Policy for Glovebox
+# Privacy Policy for Wrenchy
 
 *Effective: August 1, 2026*
 
-Glovebox is built so that your maintenance records never leave your phone unless you choose to export them. This policy explains exactly what that means.
+Wrenchy is built so that your maintenance records never leave your phone unless you choose to export them. This policy explains exactly what that means.
 
 ## What we collect
 
-Nothing. Glovebox has no account system, no login, and no analytics SDK. We, the developer, do not collect, receive, transmit, or have any access to your vehicle names, service records, mileage, costs, notes, or any other data you enter into the app.
+Nothing. Wrenchy has no account system, no login, and no analytics SDK. We, the developer, do not collect, receive, transmit, or have any access to your vehicle names, service records, mileage, costs, notes, or any other data you enter into the app.
 
 ## Where your data lives
 
@@ -14,7 +14,7 @@ All records are stored in a local database on your device only. There is no serv
 
 ## Third-party services
 
-Glovebox uses one third-party service, RevenueCat, solely to process optional Pro subscription purchases:
+Wrenchy uses one third-party service, RevenueCat, solely to process optional Pro subscription purchases:
 
 - RevenueCat receives an anonymous device/app identifier and your purchase/subscription status from Apple's App Store, in order to unlock Pro features on your device.
 - RevenueCat does not receive any of your vehicle or service record data, and that data never leaves your device.
@@ -28,7 +28,7 @@ If you enable service reminders, they are scheduled locally on your device using
 
 ## Children's privacy
 
-Glovebox is not directed at children and does not knowingly collect information from anyone, including children, because it does not collect information from anyone at all.
+Wrenchy is not directed at children and does not knowingly collect information from anyone, including children, because it does not collect information from anyone at all.
 
 ## Changes to this policy
 

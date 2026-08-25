@@ -1,460 +1,1508 @@
 {
-	"generatedAt": "2026-08-07T19:27:28.088Z",
+	"generatedAt": "2026-08-25T04:47:38.193Z",
 	"source": "/home/myen/glovebox/aso/en-US/scored.json",
 	"locale": "en-US",
 	"market": "US",
 	"app": {
-		"name": "Glovebox",
+		"name": "Wrenchy",
 		"bundleId": "com.idea6.carmaintenancelog",
 		"appId": "6797103341"
 	},
-	"org": null,
+	"org": "23259140",
 	"currency": "USD",
-	"campaign": {
-		"name": "Glovebox · Exact · US",
-		"dailyBudget": 10,
-		"totalBudget": 300,
-		"countriesOrRegions": [
-			"US"
-		],
-		"supplySources": [
-			"APPSTORE_SEARCH_RESULTS"
-		],
-		"billingEvent": "TAPS",
-		"adChannelType": "SEARCH"
+	"params": {
+		"budget": 10,
+		"split": {
+			"exact": 0.5,
+			"discovery": 0.25,
+			"competitor": 0.15,
+			"brand": 0.1
+		},
+		"top": 15,
+		"minVolume": 0,
+		"subPrice": 2.33,
+		"retentionMonths": 12,
+		"bidding": {
+			"seed": 0.35,
+			"min": 0.3,
+			"max": 2,
+			"source": "realised CPT",
+			"observedCpt": 0.35,
+			"derivation": "$0.35 (realised CPT) × (0.75 + demand/200), clamped to [$0.30, $2.00]"
+		},
+		"killRule": {
+			"targetCpi": 1.1,
+			"source": "ads.targetCpi",
+			"wasteThreshold": 2.2,
+			"minTaps": 6,
+			"baselineInstallRate": 0.4,
+			"confidence": 0.95,
+			"breakeven": 27.96,
+			"retentionMonths": 12,
+			"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+			"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+		}
+	},
+	"budget": {
+		"requested": 10,
+		"daily": 10,
+		"monthly": 300,
+		"split": {
+			"exact": 5,
+			"discovery": 2.5,
+			"competitor": 1.5,
+			"brand": 1
+		},
+		"ratio": {
+			"exact": 0.5,
+			"discovery": 0.25,
+			"competitor": 0.15,
+			"brand": 0.1
+		},
+		"derivation": "default 50/25/15/10 exact/discovery/competitor/brand, overridable with --split; a skipped campaign redistributes its share",
+		"scope": "campaign — Apple Search Ads has no ad-group budget"
+	},
+	"targeting": {
+		"minVolume": 0,
+		"considered": 23,
+		"eligible": 23,
+		"dropped": 0,
+		"exactTerms": [
+			"oil change reminder",
+			"auto maintenance log",
+			"free car maintenance tracker",
+			"auto maintenance tracker",
+			"vehicle maintenance log",
+			"fuel monitor service reminder",
+			"vehicle maintenance tracker",
+			"car maintenance reminder",
+			"car maintenance tracker",
+			"car maintenance log",
+			"car service tracker",
+			"vehicle maintenance journal",
+			"vehicle maintenance",
+			"auto maintenance",
+			"auto maintenance fuel diary"
+		]
 	},
 	"bidding": {
-		"startingBid": 0.3,
-		"derivation": "perKeywordDailyBudget / 5 taps, clamped to [0.30, 2.00]"
+		"seed": 0.35,
+		"min": 0.3,
+		"max": 2,
+		"source": "realised CPT",
+		"observedCpt": 0.35,
+		"derivation": "$0.35 (realised CPT) × (0.75 + demand/200), clamped to [$0.30, $2.00]",
+		"distinctBids": 6,
+		"range": [
+			0.37,
+			0.44
+		]
 	},
-	"adGroups": [
-		{
-			"name": "EX · service link",
-			"keyword": "service link",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 86,
-			"medianRatings": 23,
-			"weakAppsTop10": 8,
-			"exactTitleMatches": 0,
-			"incumbents": [
+	"monetisation": {
+		"available": true,
+		"project": "projf0d996da",
+		"keySource": "ambient",
+		"raw": {
+			"project": "projf0d996da",
+			"period": "P0D",
+			"customers": 32,
+			"trials": 0,
+			"subscriptions": 0,
+			"revenue": 0,
+			"mrr": 0,
+			"metrics": [
 				{
-					"name": "ServiceLink for Business",
-					"id": 6768877250,
-					"ratings": 22
+					"description": "In total",
+					"id": "active_trials",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "Active Trials",
+					"object": "overview_metric",
+					"period": "P0D",
+					"unit": "#",
+					"value": 0
 				},
 				{
-					"name": "ServiceLink Flex",
-					"id": 1469121716,
-					"ratings": 23
+					"description": "In total",
+					"id": "active_subscriptions",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "Active Subscriptions",
+					"object": "overview_metric",
+					"period": "P0D",
+					"unit": "#",
+					"value": 0
 				},
 				{
-					"name": "EXOS Signing Agent",
-					"id": 1185106464,
-					"ratings": 63
+					"description": "Monthly Recurring Revenue",
+					"id": "mrr",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "MRR",
+					"object": "overview_metric",
+					"period": "P28D",
+					"unit": "$",
+					"value": 0
+				},
+				{
+					"description": "Last 28 days",
+					"id": "revenue",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "Revenue",
+					"object": "overview_metric",
+					"period": "P28D",
+					"unit": "$",
+					"value": 0
+				},
+				{
+					"description": "Last 28 days",
+					"id": "new_customers",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "New Customers",
+					"object": "overview_metric",
+					"period": "P28D",
+					"unit": "#",
+					"value": 32
+				},
+				{
+					"description": "Last 28 days",
+					"id": "active_users",
+					"last_updated_at": null,
+					"last_updated_at_iso8601": null,
+					"name": "Active Users",
+					"object": "overview_metric",
+					"period": "P28D",
+					"unit": "#",
+					"value": 32
 				}
 			]
 		},
+		"customers": 32,
+		"trials": 0,
+		"subscriptions": 0,
+		"revenue": 0,
+		"mrr": 0,
+		"installToPaid": 0,
+		"trialRate": 0,
+		"ltvPerInstall": 0,
+		"modelledLtv": 0,
+		"proven": false,
+		"cpiCeiling": null,
+		"label": "research cap",
+		"verdict": "32 customer(s), 0 trial(s), 0 subscription(s), $0.00 revenue, $0.00 MRR — nothing has monetised, so no CPI is profitable"
+	},
+	"campaigns": [
 		{
-			"name": "EX · servicelink flex",
-			"keyword": "servicelink flex",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 80,
-			"medianRatings": 38,
-			"weakAppsTop10": 9,
-			"exactTitleMatches": 1,
-			"incumbents": [
+			"role": "exact",
+			"name": "Wrenchy · Exact · US",
+			"dailyBudget": 5,
+			"totalBudget": 150,
+			"countriesOrRegions": [
+				"US"
+			],
+			"supplySources": [
+				"APPSTORE_SEARCH_RESULTS"
+			],
+			"billingEvent": "TAPS",
+			"adChannelType": "SEARCH",
+			"adGroups": [
 				{
-					"name": "ServiceLink Flex",
-					"id": 1469121716,
-					"ratings": 23
+					"name": "EX · oil change reminder",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "oil change reminder",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303538551",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "oil change reminder",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 88,
+					"competition": 80,
+					"opportunity": 70,
+					"medianRatings": 9,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Car Maintenance Reminders",
+							"id": 1617869280,
+							"ratings": 172
+						},
+						{
+							"name": "Car oil change tracker",
+							"id": 6749332409,
+							"ratings": 1
+						},
+						{
+							"name": "Oil Change Reminder",
+							"id": 6794923439,
+							"ratings": 1
+						}
+					],
+					"apple": {
+						"id": "2150517194",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · oil change reminder",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				},
 				{
-					"name": "SalesLink Flex",
-					"id": 1459147715,
-					"ratings": 2
+					"name": "EX · auto maintenance log",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "auto maintenance log",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303538792",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "auto maintenance log",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 88,
+					"competition": 78,
+					"opportunity": 69,
+					"medianRatings": 117,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 0,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "MyAutoLog: Car Maintenance Log",
+							"id": 6748665282,
+							"ratings": 61
+						}
+					],
+					"apple": {
+						"id": "2150518326",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · auto maintenance log",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				},
 				{
-					"name": "Salesforce Field Service",
-					"id": 1163307568,
-					"ratings": 19986
+					"name": "EX · free car maintenance tracker",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "free car maintenance tracker",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303530331",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "free car maintenance tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 77,
+					"competition": 89,
+					"opportunity": 69,
+					"medianRatings": 3,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 0,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2886
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126227
+						},
+						{
+							"name": "Maintenance: Car Tracker",
+							"id": 6778065486,
+							"ratings": 0
+						}
+					],
+					"apple": {
+						"id": "2150518428",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · free car maintenance tracker",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · auto maintenance tracker",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "auto maintenance tracker",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303537604",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "auto maintenance tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 88,
+					"competition": 75,
+					"opportunity": 66,
+					"medianRatings": 83,
+					"weakAppsTop10": 7,
+					"exactTitleMatches": 0,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "MyAutoLog: Car Maintenance Log",
+							"id": 6748665282,
+							"ratings": 61
+						}
+					],
+					"apple": {
+						"id": "2150517741",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · auto maintenance tracker",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · vehicle maintenance log",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "vehicle maintenance log",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303534965",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "vehicle maintenance log",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"competition": 74,
+					"opportunity": 60,
+					"medianRatings": 72,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "Vehicle Maintenance Log: VML",
+							"id": 6744715294,
+							"ratings": 7
+						}
+					],
+					"apple": {
+						"id": "2150514620",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · vehicle maintenance log",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · fuel monitor service reminder",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "fuel monitor service reminder",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303538743",
+								"syncedAt": "2026-08-25T04:47:58.876Z",
+								"text": "fuel monitor service reminder",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 88,
+					"competition": 62,
+					"opportunity": 55,
+					"medianRatings": 427,
+					"weakAppsTop10": 5,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Fuel Monitor Service Reminder",
+							"id": 1568656727,
+							"ratings": 2
+						},
+						{
+							"name": "Fuelly: MPG & Service Tracker",
+							"id": 295905460,
+							"ratings": 29392
+						},
+						{
+							"name": "Fuel Pass BD",
+							"id": 6764436418,
+							"ratings": 0
+						}
+					],
+					"apple": {
+						"id": "2150517786",
+						"syncedAt": "2026-08-25T04:47:58.876Z",
+						"name": "EX · fuel monitor service reminder",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · vehicle maintenance tracker",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "vehicle maintenance tracker",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303538048",
+								"syncedAt": "2026-08-25T04:47:59.632Z",
+								"text": "vehicle maintenance tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 88,
+					"competition": 60,
+					"opportunity": 53,
+					"medianRatings": 610,
+					"weakAppsTop10": 6,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "Vehicle Service Manager",
+							"id": 6737859842,
+							"ratings": 26
+						}
+					],
+					"apple": {
+						"id": "2150516805",
+						"syncedAt": "2026-08-25T04:47:59.632Z",
+						"name": "EX · vehicle maintenance tracker",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · car maintenance reminder",
+					"defaultBidAmount": 0.39,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "car maintenance reminder",
+							"matchType": "EXACT",
+							"bid": 0.39,
+							"apple": {
+								"id": "2303534118",
+								"syncedAt": "2026-08-25T04:48:00.935Z",
+								"text": "car maintenance reminder",
+								"matchType": "EXACT",
+								"bidAmount": 0.39,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 70,
+					"competition": 73,
+					"opportunity": 51,
+					"medianRatings": 92,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Car Maintenance Reminders",
+							"id": 1617869280,
+							"ratings": 172
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126227
+						},
+						{
+							"name": "Car Maintenance Tracker: CarIQ",
+							"id": 6759081863,
+							"ratings": 2
+						}
+					],
+					"apple": {
+						"id": "2150518178",
+						"syncedAt": "2026-08-25T04:48:00.935Z",
+						"name": "EX · car maintenance reminder",
+						"defaultBidAmount": 0.39,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · car maintenance tracker",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "car maintenance tracker",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303538319",
+								"syncedAt": "2026-08-25T04:48:02.392Z",
+								"text": "car maintenance tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 90,
+					"competition": 57,
+					"opportunity": 51,
+					"medianRatings": 263,
+					"weakAppsTop10": 6,
+					"exactTitleMatches": 2,
+					"incumbents": [
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126227
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2886
+						},
+						{
+							"name": "Car Maintenance Reminders",
+							"id": 1617869280,
+							"ratings": 172
+						}
+					],
+					"apple": {
+						"id": "2150516214",
+						"syncedAt": "2026-08-25T04:48:02.392Z",
+						"name": "EX · car maintenance tracker",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · car maintenance log",
+					"defaultBidAmount": 0.42,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "car maintenance log",
+							"matchType": "EXACT",
+							"bid": 0.42,
+							"apple": {
+								"id": "2303530030",
+								"syncedAt": "2026-08-25T04:48:03.811Z",
+								"text": "car maintenance log",
+								"matchType": "EXACT",
+								"bidAmount": 0.42,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 90,
+					"competition": 55,
+					"opportunity": 50,
+					"medianRatings": 53,
+					"weakAppsTop10": 8,
+					"exactTitleMatches": 5,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2886
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126227
+						},
+						{
+							"name": "Car Maintenance Reminders",
+							"id": 1617869280,
+							"ratings": 172
+						}
+					],
+					"apple": {
+						"id": "2150518379",
+						"syncedAt": "2026-08-25T04:48:03.811Z",
+						"name": "EX · car maintenance log",
+						"defaultBidAmount": 0.42,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · car service tracker",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "car service tracker",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303537143",
+								"syncedAt": "2026-08-25T04:48:05.281Z",
+								"text": "car service tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"competition": 59,
+					"opportunity": 48,
+					"medianRatings": 109,
+					"weakAppsTop10": 7,
+					"exactTitleMatches": 3,
+					"incumbents": [
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "Fuelly: MPG & Service Tracker",
+							"id": 295905460,
+							"ratings": 29392
+						}
+					],
+					"apple": {
+						"id": "2150517399",
+						"syncedAt": "2026-08-25T04:48:05.281Z",
+						"name": "EX · car service tracker",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · vehicle maintenance journal",
+					"defaultBidAmount": 0.38,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "vehicle maintenance journal",
+							"matchType": "EXACT",
+							"bid": 0.38,
+							"apple": {
+								"id": "2303526383",
+								"syncedAt": "2026-08-25T04:48:06.712Z",
+								"text": "vehicle maintenance journal",
+								"matchType": "EXACT",
+								"bidAmount": 0.38,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 67,
+					"competition": 63,
+					"opportunity": 42,
+					"medianRatings": 879,
+					"weakAppsTop10": 6,
+					"exactTitleMatches": 0,
+					"incumbents": [
+						{
+							"name": "Car Maintenance Tracker: CarIQ",
+							"id": 6759081863,
+							"ratings": 2
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						}
+					],
+					"apple": {
+						"id": "2150518575",
+						"syncedAt": "2026-08-25T04:48:06.712Z",
+						"name": "EX · vehicle maintenance journal",
+						"defaultBidAmount": 0.38,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · vehicle maintenance",
+					"defaultBidAmount": 0.39,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "vehicle maintenance",
+							"matchType": "EXACT",
+							"bid": 0.39,
+							"apple": {
+								"id": "2303536480",
+								"syncedAt": "2026-08-25T04:48:08.211Z",
+								"text": "vehicle maintenance",
+								"matchType": "EXACT",
+								"bidAmount": 0.39,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 74,
+					"competition": 55,
+					"opportunity": 41,
+					"medianRatings": 610,
+					"weakAppsTop10": 6,
+					"exactTitleMatches": 2,
+					"incumbents": [
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "Vehicle Service Manager",
+							"id": 6737859842,
+							"ratings": 26
+						}
+					],
+					"apple": {
+						"id": "2150518233",
+						"syncedAt": "2026-08-25T04:48:08.211Z",
+						"name": "EX · vehicle maintenance",
+						"defaultBidAmount": 0.39,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · auto maintenance",
+					"defaultBidAmount": 0.39,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "auto maintenance",
+							"matchType": "EXACT",
+							"bid": 0.39,
+							"apple": {
+								"id": "2303537118",
+								"syncedAt": "2026-08-25T04:48:09.724Z",
+								"text": "auto maintenance",
+								"matchType": "EXACT",
+								"bidAmount": 0.39,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 74,
+					"competition": 54,
+					"opportunity": 40,
+					"medianRatings": 1007,
+					"weakAppsTop10": 5,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "MyAutoLog: Car Maintenance Log",
+							"id": 6748665282,
+							"ratings": 61
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						}
+					],
+					"apple": {
+						"id": "2150517242",
+						"syncedAt": "2026-08-25T04:48:09.724Z",
+						"name": "EX · auto maintenance",
+						"defaultBidAmount": 0.39,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
+				},
+				{
+					"name": "EX · auto maintenance fuel diary",
+					"defaultBidAmount": 0.37,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "auto maintenance fuel diary",
+							"matchType": "EXACT",
+							"bid": 0.37,
+							"apple": {
+								"id": "2303537894",
+								"syncedAt": "2026-08-25T04:48:11.138Z",
+								"text": "auto maintenance fuel diary",
+								"matchType": "EXACT",
+								"bidAmount": 0.37,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 60,
+					"competition": 59,
+					"opportunity": 35,
+					"medianRatings": 727,
+					"weakAppsTop10": 6,
+					"exactTitleMatches": 1,
+					"incumbents": [
+						{
+							"name": "Auto Maintenance Fuel Diary",
+							"id": 6772425311,
+							"ratings": 0
+						},
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						},
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						}
+					],
+					"apple": {
+						"id": "2150516700",
+						"syncedAt": "2026-08-25T04:48:11.138Z",
+						"name": "EX · auto maintenance fuel diary",
+						"defaultBidAmount": 0.37,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				}
-			]
+			],
+			"negativeKeywords": [],
+			"rationale": "One ad group per keyword, for creative control: an ad group is the smallest object that can carry its own Custom Product Page and its own bid. Budget is set on the campaign — Apple has no ad-group budget.",
+			"apple": {
+				"id": "2144507320",
+				"syncedAt": "2026-08-25T04:47:58.875Z",
+				"name": "Wrenchy · Exact · US",
+				"dailyBudget": 5,
+				"status": "ENABLED"
+			}
 		},
 		{
-			"name": "EX · oil change reminder",
-			"keyword": "oil change reminder",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 79,
-			"medianRatings": 13,
-			"weakAppsTop10": 8,
-			"exactTitleMatches": 1,
-			"incumbents": [
+			"role": "discovery",
+			"name": "Wrenchy · Discovery · US",
+			"dailyBudget": 2.5,
+			"totalBudget": 75,
+			"countriesOrRegions": [
+				"US"
+			],
+			"supplySources": [
+				"APPSTORE_SEARCH_RESULTS"
+			],
+			"billingEvent": "TAPS",
+			"adChannelType": "SEARCH",
+			"adGroups": [
 				{
-					"name": "Car Maintenance Reminders",
-					"id": 1617869280,
-					"ratings": 172
-				},
-				{
-					"name": "Car oil change tracker",
-					"id": 6749332409,
-					"ratings": 1
-				},
-				{
-					"name": "Valvoline Instant Oil Change",
-					"id": 1334640896,
-					"ratings": 2258
+					"name": "DISC · US",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": true,
+					"keywords": [
+						{
+							"text": "oil change reminder",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536512",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "oil change reminder",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "auto maintenance log",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536513",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "auto maintenance log",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "free car maintenance tracker",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536514",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "free car maintenance tracker",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "auto maintenance tracker",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536515",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "auto maintenance tracker",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "vehicle maintenance log",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536516",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "vehicle maintenance log",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "fuel monitor service reminder",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536517",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "fuel monitor service reminder",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "vehicle maintenance tracker",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536518",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "vehicle maintenance tracker",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "car maintenance reminder",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536519",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "car maintenance reminder",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "car maintenance tracker",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536520",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "car maintenance tracker",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "car maintenance log",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536521",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "car maintenance log",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "car service tracker",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536522",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "car service tracker",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "vehicle maintenance journal",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536523",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "vehicle maintenance journal",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "vehicle maintenance",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536524",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "vehicle maintenance",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "auto maintenance",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536525",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "auto maintenance",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "auto maintenance fuel diary",
+							"matchType": "BROAD",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536526",
+								"syncedAt": "2026-08-25T04:48:14.636Z",
+								"text": "auto maintenance fuel diary",
+								"matchType": "BROAD",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"apple": {
+						"id": "2150516353",
+						"syncedAt": "2026-08-25T04:48:14.636Z",
+						"name": "DISC · US",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": true,
+						"status": "ENABLED"
+					}
 				}
-			]
+			],
+			"negativeKeywords": [
+				{
+					"text": "oil change reminder",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "auto maintenance log",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "free car maintenance tracker",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "auto maintenance tracker",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "vehicle maintenance log",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "fuel monitor service reminder",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "vehicle maintenance tracker",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "car maintenance reminder",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "car maintenance tracker",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "car maintenance log",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "car service tracker",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "vehicle maintenance journal",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "vehicle maintenance",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "auto maintenance",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "auto maintenance fuel diary",
+					"matchType": "EXACT"
+				},
+				{
+					"text": "wrenchy",
+					"matchType": "EXACT"
+				}
+			],
+			"rationale": "Broad match plus Search Match, with every Exact term negated so the two cannot cannibalise each other.",
+			"apple": {
+				"id": "2144513765",
+				"syncedAt": "2026-08-25T04:48:13.317Z",
+				"name": "Wrenchy · Discovery · US",
+				"dailyBudget": 2.5,
+				"status": "ENABLED"
+			}
 		},
 		{
-			"name": "EX · service titan field",
-			"keyword": "service titan field",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 76,
-			"medianRatings": 54,
-			"weakAppsTop10": 7,
-			"exactTitleMatches": 0,
-			"incumbents": [
+			"role": "competitor",
+			"name": "Wrenchy · Competitor · US",
+			"dailyBudget": 1.5,
+			"totalBudget": 45,
+			"countriesOrRegions": [
+				"US"
+			],
+			"supplySources": [
+				"APPSTORE_SEARCH_RESULTS"
+			],
+			"billingEvent": "TAPS",
+			"adChannelType": "SEARCH",
+			"adGroups": [
 				{
-					"name": "ServiceTitan Field",
-					"id": 1629928933,
-					"ratings": 4417
+					"name": "COMP · vehicle maintenance tracker",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "vehicle maintenance tracker",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303538159",
+								"syncedAt": "2026-08-25T04:48:16.954Z",
+								"text": "vehicle maintenance tracker",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"incumbents": [
+						{
+							"name": "Vehicle Maintenance Tracker",
+							"id": 1315913699,
+							"ratings": 2887
+						}
+					],
+					"apple": {
+						"id": "2150516851",
+						"syncedAt": "2026-08-25T04:48:16.954Z",
+						"name": "COMP · vehicle maintenance tracker",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				},
 				{
-					"name": "ServiceTitan Field Pro",
-					"id": 6670176800,
-					"ratings": 87
+					"name": "COMP · carfax car care",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "carfax car care",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303527085",
+								"syncedAt": "2026-08-25T04:48:18.276Z",
+								"text": "carfax car care",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"incumbents": [
+						{
+							"name": "CARFAX Car Care",
+							"id": 552472249,
+							"ratings": 126247
+						}
+					],
+					"apple": {
+						"id": "2150518027",
+						"syncedAt": "2026-08-25T04:48:18.276Z",
+						"name": "COMP · carfax car care",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				},
 				{
-					"name": "Titan GPS FieldDocs",
-					"id": 1499715165,
-					"ratings": 4
+					"name": "COMP · myautolog",
+					"defaultBidAmount": 0.4,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "myautolog",
+							"matchType": "EXACT",
+							"bid": 0.4,
+							"apple": {
+								"id": "2303536527",
+								"syncedAt": "2026-08-25T04:48:19.581Z",
+								"text": "myautolog",
+								"matchType": "EXACT",
+								"bidAmount": 0.4,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 81,
+					"incumbents": [
+						{
+							"name": "MyAutoLog: Car Maintenance Log",
+							"id": 6748665282,
+							"ratings": 61
+						}
+					],
+					"apple": {
+						"id": "2150517001",
+						"syncedAt": "2026-08-25T04:48:19.581Z",
+						"name": "COMP · myautolog",
+						"defaultBidAmount": 0.4,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				}
-			]
+			],
+			"negativeKeywords": [
+				{
+					"text": "wrenchy",
+					"matchType": "EXACT"
+				}
+			],
+			"rationale": "Exact match on the apps you are compared to; your own name is negated here so Brand keeps that traffic at its own price.",
+			"apple": {
+				"id": "2144514455",
+				"syncedAt": "2026-08-25T04:48:15.432Z",
+				"name": "Wrenchy · Competitor · US",
+				"dailyBudget": 1.5,
+				"status": "ENABLED"
+			}
 		},
 		{
-			"name": "EX · free car maintenance tracker",
-			"keyword": "free car maintenance tracker",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 76,
-			"medianRatings": 54,
-			"weakAppsTop10": 7,
-			"exactTitleMatches": 0,
-			"incumbents": [
+			"role": "brand",
+			"name": "Wrenchy · Brand · US",
+			"dailyBudget": 1,
+			"totalBudget": 30,
+			"countriesOrRegions": [
+				"US"
+			],
+			"supplySources": [
+				"APPSTORE_SEARCH_RESULTS"
+			],
+			"billingEvent": "TAPS",
+			"adChannelType": "SEARCH",
+			"adGroups": [
 				{
-					"name": "Vehicle Maintenance Tracker",
-					"id": 1315913699,
-					"ratings": 2870
-				},
-				{
-					"name": "Car Maintenance Tracker: CarIQ",
-					"id": 6759081863,
-					"ratings": 2
-				},
-				{
-					"name": "CARFAX Car Care",
-					"id": 552472249,
-					"ratings": 125652
+					"name": "BRAND · wrenchy",
+					"defaultBidAmount": 0.44,
+					"automatedKeywordsOptIn": false,
+					"keywords": [
+						{
+							"text": "wrenchy",
+							"matchType": "EXACT",
+							"bid": 0.44,
+							"apple": {
+								"id": "2303536701",
+								"syncedAt": "2026-08-25T04:48:21.114Z",
+								"text": "wrenchy",
+								"matchType": "EXACT",
+								"bidAmount": 0.44,
+								"status": "ACTIVE"
+							}
+						},
+						{
+							"text": "wrenchy",
+							"matchType": "BROAD",
+							"bid": 0.44,
+							"apple": {
+								"id": "2303536702",
+								"syncedAt": "2026-08-25T04:48:21.114Z",
+								"text": "wrenchy",
+								"matchType": "BROAD",
+								"bidAmount": 0.44,
+								"status": "ACTIVE"
+							}
+						}
+					],
+					"demand": 100,
+					"apple": {
+						"id": "2150517787",
+						"syncedAt": "2026-08-25T04:48:21.114Z",
+						"name": "BRAND · wrenchy",
+						"defaultBidAmount": 0.44,
+						"automatedKeywordsOptIn": false,
+						"status": "ENABLED"
+					}
 				}
-			]
-		},
-		{
-			"name": "EX · service fusion",
-			"keyword": "service fusion",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 75,
-			"medianRatings": 34,
-			"weakAppsTop10": 9,
-			"exactTitleMatches": 2,
-			"incumbents": [
-				{
-					"name": "Service Fusion By EverPro",
-					"id": 6740150212,
-					"ratings": 18
-				},
-				{
-					"name": "Service Fusion",
-					"id": 1042544405,
-					"ratings": 1421
-				},
-				{
-					"name": "FusionPay",
-					"id": 6478971529,
-					"ratings": 5
-				}
-			]
-		},
-		{
-			"name": "EX · service logistics go",
-			"keyword": "service logistics go",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 75,
-			"medianRatings": 178,
-			"weakAppsTop10": 7,
-			"exactTitleMatches": 0,
-			"incumbents": [
-				{
-					"name": "Porter - Logistics Service App",
-					"id": 1109398410,
-					"ratings": 1994
-				},
-				{
-					"name": "GOFO DRIVER",
-					"id": 6473001076,
-					"ratings": 178
-				},
-				{
-					"name": "GoShare: Deliver, Move, LTL",
-					"id": 977871324,
-					"ratings": 13394
-				}
-			]
-		},
-		{
-			"name": "EX · service channel provider",
-			"keyword": "service channel provider",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 74,
-			"medianRatings": 298,
-			"weakAppsTop10": 7,
-			"exactTitleMatches": 0,
-			"incumbents": [
-				{
-					"name": "ServiceChannel Provider",
-					"id": 1181414929,
-					"ratings": 123
-				},
-				{
-					"name": "ServiceChannel",
-					"id": 880643250,
-					"ratings": 745
-				},
-				{
-					"name": "My Spectrum",
-					"id": 942608209,
-					"ratings": 3415653
-				}
-			]
-		},
-		{
-			"name": "EX · service titan",
-			"keyword": "service titan",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 73,
-			"medianRatings": 101,
-			"weakAppsTop10": 4,
-			"exactTitleMatches": 0,
-			"incumbents": [
-				{
-					"name": "ServiceTitan Mobile",
-					"id": 1037989976,
-					"ratings": 1634
-				},
-				{
-					"name": "ServiceTitan Field",
-					"id": 1629928933,
-					"ratings": 4417
-				},
-				{
-					"name": "ServiceTitan Field Pro",
-					"id": 6670176800,
-					"ratings": 87
-				}
-			]
-		},
-		{
-			"name": "EX · car maintenance reminder",
-			"keyword": "car maintenance reminder",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 73,
-			"medianRatings": 87,
-			"weakAppsTop10": 8,
-			"exactTitleMatches": 1,
-			"incumbents": [
-				{
-					"name": "CARFAX Car Care",
-					"id": 552472249,
-					"ratings": 125652
-				},
-				{
-					"name": "Car Maintenance Tracker: CarIQ",
-					"id": 6759081863,
-					"ratings": 2
-				},
-				{
-					"name": "Vehicle Maintenance Tracker",
-					"id": 1315913699,
-					"ratings": 2870
-				}
-			]
-		},
-		{
-			"name": "EX · servicenow events",
-			"keyword": "servicenow events",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 70,
-			"medianRatings": 155,
-			"weakAppsTop10": 3,
-			"exactTitleMatches": 1,
-			"incumbents": [
-				{
-					"name": "ServiceNow Events",
-					"id": 6448200797,
-					"ratings": 273
-				},
-				{
-					"name": "ServiceNow Agent",
-					"id": 1446951408,
-					"ratings": 2477
-				},
-				{
-					"name": "My ServiceNow",
-					"id": 6448995293,
-					"ratings": 37
-				}
-			]
-		},
-		{
-			"name": "EX · field service lightning",
-			"keyword": "field service lightning",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 68,
-			"medianRatings": 201,
-			"weakAppsTop10": 6,
-			"exactTitleMatches": 0,
-			"incumbents": [
-				{
-					"name": "Salesforce Field Service",
-					"id": 1163307568,
-					"ratings": 19986
-				},
-				{
-					"name": "Salesforce",
-					"id": 404249815,
-					"ratings": 350221
-				},
-				{
-					"name": "Field Lightning Scanner",
-					"id": 1582771220,
-					"ratings": 1
-				}
-			]
-		},
-		{
-			"name": "EX · car maintenance log",
-			"keyword": "car maintenance log",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 55,
-			"medianRatings": 50,
-			"weakAppsTop10": 8,
-			"exactTitleMatches": 5,
-			"incumbents": [
-				{
-					"name": "CARFAX Car Care",
-					"id": 552472249,
-					"ratings": 125652
-				},
-				{
-					"name": "Vehicle Maintenance Tracker",
-					"id": 1315913699,
-					"ratings": 2870
-				},
-				{
-					"name": "Car Maintenance Reminders",
-					"id": 1617869280,
-					"ratings": 172
-				}
-			]
-		},
-		{
-			"name": "EX · car maintenance tracker",
-			"keyword": "car maintenance tracker",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 55,
-			"medianRatings": 114,
-			"weakAppsTop10": 6,
-			"exactTitleMatches": 3,
-			"incumbents": [
-				{
-					"name": "CARFAX Car Care",
-					"id": 552472249,
-					"ratings": 125652
-				},
-				{
-					"name": "Vehicle Maintenance Tracker",
-					"id": 1315913699,
-					"ratings": 2870
-				},
-				{
-					"name": "Fuelly: MPG & Service Tracker",
-					"id": 295905460,
-					"ratings": 29331
-				}
-			]
-		},
-		{
-			"name": "EX · service finance company, llc",
-			"keyword": "service finance company, llc",
-			"matchType": "EXACT",
-			"defaultBidAmount": 0.3,
-			"dailyBudget": 0.67,
-			"opportunity": 55,
-			"medianRatings": 1441,
-			"weakAppsTop10": 3,
-			"exactTitleMatches": 0,
-			"incumbents": [
-				{
-					"name": "Service Finance Borrower App",
-					"id": 1572527871,
-					"ratings": 71
-				},
-				{
-					"name": "Service Finance Dealer App",
-					"id": 962933342,
-					"ratings": 130
-				},
-				{
-					"name": "CFC Mobile Access",
-					"id": 1248074910,
-					"ratings": 8987
-				}
-			]
+			],
+			"negativeKeywords": [],
+			"rationale": "Your own name is the cheapest tap you will ever buy, and the one a competitor buys if you do not.",
+			"apple": {
+				"id": "2144514548",
+				"syncedAt": "2026-08-25T04:48:20.213Z",
+				"name": "Wrenchy · Brand · US",
+				"dailyBudget": 1,
+				"status": "ENABLED"
+			}
 		}
 	],
 	"killRule": {
-		"window": "7 days",
-		"condition": "spend > monthlyRevenuePerSubscriber AND conversions === 0",
-		"monthlyRevenuePerSubscriber": 4.99,
-		"thresholdPerKeyword": 4.99,
-		"action": "pause the keyword",
-		"rationale": "A keyword that burns $4.99 — one month of subscription revenue — without a single conversion has already lost money on the best case it will ever have. Pause it; do not \"give it more data\"."
-	}
+		"targetCpi": 1.1,
+		"source": "ads.targetCpi",
+		"wasteThreshold": 2.2,
+		"minTaps": 6,
+		"baselineInstallRate": 0.4,
+		"confidence": 0.95,
+		"breakeven": 27.96,
+		"retentionMonths": 12,
+		"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+		"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+	},
+	"syncedAt": "2026-08-25T04:48:21.739Z",
+	"syncedOrg": "23259140"
 }

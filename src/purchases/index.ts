@@ -1,5 +1,6 @@
 import Purchases, { LOG_LEVEL, type PurchasesOffering } from "react-native-purchases";
 import RevenueCatUI, { PAYWALL_RESULT, type CustomerCenterCallbacks } from "react-native-purchases-ui";
+import { track } from "../analytics";
 
 /**
  * The offering that carries the free trial, and the only one that does.
@@ -40,6 +41,13 @@ export function initPurchases(): void {
   }
   Purchases.setLogLevel(__DEV__ ? LOG_LEVEL.DEBUG : LOG_LEVEL.ERROR);
   Purchases.configure({ apiKey });
+  // Without this, every Apple Search Ads install lands in RevenueCat as
+  // organic: the AdServices attribution token is what carries campaign, ad
+  // group and keyword. It is the only way to tie subscription revenue back to
+  // a keyword, so keyword-level ROAS is unmeasurable until it is called.
+  // iOS-only and best-effort — a rejected/absent token is not an error worth
+  // surfacing to the user.
+  Purchases.enableAdServicesAttributionTokenCollection().catch(() => {});
 }
 
 export async function isPro(): Promise<boolean> {
@@ -73,22 +81,47 @@ export type PaywallOutcome = "purchased" | "dismissed" | "unavailable";
  * and a screen that renders nothing is a dead end.
  */
 export async function presentOffering(identifier?: string): Promise<PaywallOutcome> {
+  const offering = identifier ?? "current";
   try {
     const params: { offering?: PurchasesOffering } = {};
     if (identifier) {
-      const offering = await offeringFor(identifier);
-      if (!offering) return "unavailable";
-      params.offering = offering;
+      const resolved = await offeringFor(identifier);
+      if (!resolved) {
+        // Distinct from a dismissal on purpose: this is a configuration fault,
+        // and counting it as a decline would understate the paywall's real
+        // conversion rate by however many builds shipped with it broken.
+        track("paywall_unavailable", { offering });
+        return "unavailable";
+      }
+      params.offering = resolved;
     }
+    // Intent, not evidence. `paywall_shown` has always been emitted here, one
+    // line before the sheet is asked for, so it counts attempts — including
+    // the ones where RevenueCatUI never renders anything. It stays where it is
+    // so the existing funnel keeps comparing to itself.
+    track("paywall_shown", { offering });
+    const asked = Date.now();
     const result = await RevenueCatUI.presentPaywall(params);
-    if (result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED) {
-      return "purchased";
-    }
-    return result === PAYWALL_RESULT.CANCELLED ? "dismissed" : "unavailable";
+    // Evidence. Only reachable once the sheet has actually come back, so
+    // `shown` minus `presented` is the number of paywalls that failed to
+    // appear at all — previously indistinguishable from a decline. `ms` is
+    // what separates a real decision from a sheet that returned instantly:
+    // a StoreKit checkout the user cancelled takes seconds, a paywall that
+    // could not load takes none.
+    track("paywall_presented", { offering, result, ms: Date.now() - asked });
+    const outcome: PaywallOutcome =
+      result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED
+        ? "purchased"
+        : result === PAYWALL_RESULT.CANCELLED
+          ? "dismissed"
+          : "unavailable";
+    track("paywall_closed", { offering, outcome, result });
+    return outcome;
   } catch {
     // No API key in the build, no network, products not yet fetchable from the
     // store. The flow must not strand the user on a screen whose only control
     // just threw.
+    track("paywall_unavailable", { offering });
     return "unavailable";
   }
 }

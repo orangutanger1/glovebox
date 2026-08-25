@@ -13,10 +13,15 @@ export function Chip({
   label,
   selected,
   onPress,
+  disabled = false,
 }: {
   label: string;
   selected: boolean;
   onPress: () => void;
+  /** Drawn as a control that is not live yet, rather than hidden. A row that
+   *  appears once the row above it is answered changes the shape of the
+   *  question after the user has already read it. */
+  disabled?: boolean;
 }) {
   function handlePress() {
     Haptics.selectionAsync().catch(() => {});
@@ -24,14 +29,17 @@ export function Chip({
   }
 
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable onPress={handlePress} disabled={disabled} accessibilityState={{ disabled }}>
       {({ pressed }) => (
         <View
           style={{
             borderRadius: tokens.radius.pill,
             backgroundColor: tokens.color.edgeSolid,
-            paddingBottom: pressed ? tokens.material.edgePressed : 2,
-            marginTop: pressed ? tokens.material.pressTravel : 0,
+            paddingBottom: pressed && !disabled ? tokens.material.edgePressed : 2,
+            marginTop: pressed && !disabled ? tokens.material.pressTravel : 0,
+            // Dimmed as one object, face and edge together: fading only the
+            // label leaves a live-looking chip with unreadable text in it.
+            opacity: disabled ? 0.4 : 1,
           }}
         >
           <LinearGradient

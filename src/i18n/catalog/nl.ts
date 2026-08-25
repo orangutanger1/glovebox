@@ -29,7 +29,7 @@ export const nl: Fragment = {
   "garage.logService": "Onderhoud vastleggen",
   "garage.addVehicle": "Voertuig toevoegen",
   "garage.empty":
-    "Nog geen voertuigen. Voeg er een toe, dan begint Glovebox de administratie bij te houden.",
+    "Nog geen voertuigen. Voeg er een toe, dan begint Wrenchy de administratie bij te houden.",
   "garage.storeUnreachable":
     "De store is niet bereikbaar. Probeer het opnieuw met een betere verbinding.",
 
@@ -38,6 +38,7 @@ export const nl: Fragment = {
 
   "garage.odometer": "Kilometerstand",
   "garage.odometer.notSet": "Niet ingevuld",
+  "garage.odometer.estimated": "Kilometerstand (schatting)",
 
   "garage.over": "{distance} overschreden",
   "garage.dueNow": "nu aan de beurt",
@@ -57,6 +58,7 @@ export const nl: Fragment = {
 
   "vehicle.odometer": "Kilometerstand",
   "vehicle.odometer.notSet": "Niet ingevuld",
+  "vehicle.odometer.estimated": "Kilometerstand (schatting)",
   "vehicle.lastService": "Laatste onderhoud",
   "vehicle.lastService.none": "Nog niets",
 
@@ -116,7 +118,7 @@ export const nl: Fragment = {
   "layout.addVehicle": "Voertuig toevoegen",
   "layout.vehicle": "Voertuig",
   "layout.logService": "Onderhoud vastleggen",
-  "layout.fatal.title": "Glovebox kon je administratie niet openen.",
+  "layout.fatal.title": "Wrenchy kon je administratie niet openen.",
   "layout.fatal.body":
     "Er is niets verwijderd en de database is teruggezet naar de laatste goede versie. Open de app opnieuw. Blijft dit gebeuren, neem dan contact op met support voordat je opnieuw installeert, want opnieuw installeren is wat de gegevens echt kwijtmaakt.",
 
@@ -128,7 +130,7 @@ export const nl: Fragment = {
   // language
   "language.title": "Taal",
   "language.intro":
-    "Glovebox volgt je telefoon, tenzij je hier een taal kiest. De namen van het onderhoud gebruiken de woorden die garages in die taal gebruiken.",
+    "Wrenchy volgt je telefoon, tenzij je hier een taal kiest. De namen van het onderhoud gebruiken de woorden die garages in die taal gebruiken.",
   "language.system": "Systeem",
 
   // system
@@ -187,7 +189,7 @@ export const nl: Fragment = {
   "settings.reminders.denied": "Herinneringen geweigerd. Je kunt ze aanzetten in iOS-instellingen.",
   "settings.reminders.error": "Kon geen toestemming voor meldingen vragen.",
   "settings.reminders.openSettings":
-    "Open iOS-instellingen › Glovebox › Berichtgeving om herinneringen weer aan te zetten.",
+    "Open iOS-instellingen › Wrenchy › Berichtgeving om herinneringen weer aan te zetten.",
 
   "settings.manage": "Abonnement beheren",
   "settings.manage.error":
@@ -274,8 +276,13 @@ export const nl: Fragment = {
   "onboardingA.vehicle.yearMax": "Het bouwjaar kan niet later zijn dan {max}.",
   "onboardingA.vehicle.required": "Verplicht.",
   "onboardingA.vehicle.saved": 'Bewaard als "{name}", en je kunt het later hernoemen.',
+  "onboardingA.vehicle.yearOlder": "Ouder",
+  "onboardingA.vehicle.makeSearch": "Merk zoeken",
+  "onboardingA.vehicle.makeOther": "Anders",
+  "onboardingA.vehicle.makeNone": "Geen resultaat. Tik op Anders en typ het zelf.",
+  "onboardingA.vehicle.modelOptional": "Model (optioneel)",
   "onboardingA.vehicle.hint":
-    "Bouwjaar, merk en model, zodat herinneringen de auto bij naam noemen.",
+    "Bouwjaar en merk, zodat herinneringen de auto bij naam noemen. Het model is optioneel.",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",
   "onboardingA.odometer.title.km": "Hoeveel kilometer staat erop?",
@@ -284,6 +291,9 @@ export const nl: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Een ruwe schatting is prima, en het is het getal dat bepaalt wanneer onderhoud op afstand aan de beurt is.",
+  "onboardingA.odometer.later": "Vul ik later in",
+  "onboardingA.odometer.laterCaption":
+    "Niet bij de auto? We beginnen met ongeveer {distance} voor een auto van deze leeftijd, gemarkeerd als schatting tot je een stand invult.",
 
   "onboardingA.drive.title": "Hoeveel rijd je ermee?",
   "onboardingA.drive.subtitle":
@@ -311,6 +321,7 @@ export const nl: Fragment = {
   "onboardingB.service.caption": "Kies er een, en de rest kun je altijd nog vastleggen.",
   "onboardingB.service.when": "{service}: wanneer was dat?",
   "onboardingB.service.whenOther": "Wanneer was dat onderhoud?",
+  "onboardingB.service.whenPending": "Wanneer was dat?",
   "onboardingB.service.somethingElse": "Iets anders",
   "onboardingB.service.ago.now": "Zojuist",
   "onboardingB.service.ago.lastMonth": "Vorige maand",
@@ -322,7 +333,7 @@ export const nl: Fragment = {
   "onboardingB.tracking.subtitle": "Wat het ook is, het is meer dan de meeste mensen doen.",
   "onboardingB.tracking.legend": "Nu",
   "onboardingB.tracking.caption":
-    "Wat je ook kiest, Glovebox exporteert alles wat je vastlegt gratis als CSV.",
+    "Wat je ook kiest, Wrenchy exporteert alles wat je vastlegt gratis als CSV.",
   "onboardingB.tracking.memory": "Uit mijn hoofd",
   "onboardingB.tracking.receipts": "Bonnetjes in de auto",
   "onboardingB.tracking.spreadsheet": "Een spreadsheet",
@@ -339,6 +350,8 @@ export const nl: Fragment = {
   "onboardingB.worry.records": "De administratie kwijtraken",
   "onboardingB.worry.resale": "Restwaarde",
   "onboardingB.worry.upsell": "Onnodig werk",
+  "onboardingB.worry.optional":
+    "Allemaal optioneel. Sla het over en het volgende scherm komt alleen uit je auto.",
 
   "onboardingB.analyzing.title": "Het schema wordt berekend.",
   "onboardingB.analyzing.odometer": "{vehicle} op {distance}",
@@ -355,6 +368,7 @@ export const nl: Fragment = {
   },
   "onboardingB.analyzing.done": "Klaar",
   "onboardingB.analyzing.progress": "Meting {index} van {total}",
+  "onboardingB.analyzing.skip": "Tik ergens om over te slaan.",
 
   // onboardingC
   "onboardingC.back": "Terug",
@@ -387,7 +401,7 @@ export const nl: Fragment = {
 
   "onboardingC.help.title": "Alle drie zijn hetzelfde probleem.",
   "onboardingC.help.subtitle":
-    "Er staat niets opgeschreven in een vorm die je kan waarschuwen, en dat is precies wat Glovebox doet.",
+    "Er staat niets opgeschreven in een vorm die je kan waarschuwen, en dat is precies wat Wrenchy doet.",
   "onboardingC.help.continue": "Verder",
 
   "onboardingC.reviews.title": "Deze app bestaat vanwege deze reviews.",
@@ -417,7 +431,7 @@ export const nl: Fragment = {
     other: "Van {count} van de {total} onderhoudsbeurten is niets vastgelegd",
   },
   "pain.blind.body":
-    "Glovebox kan niet bewijzen wat het nooit heeft gezien, en jij ook niet. Tot het tegendeel blijkt, geldt elk daarvan als aan de beurt.",
+    "Wrenchy kan niet bewijzen wat het nooit heeft gezien, en jij ook niet. Tot het tegendeel blijkt, geldt elk daarvan als aan de beurt.",
   "pain.blind.fix":
     "Leg er een vast en het hele schema begint te lopen. Dertig seconden per stuk, eenmalig.",
 
@@ -553,7 +567,7 @@ export const nl: Fragment = {
   "offer.paywall.title": "Je garage staat klaar.",
   "offer.paywall.subtitle":
     "Het plan hieronder is sowieso van jou, en Pro is de rest van de garage plus je eigen intervallen.",
-  "offer.paywall.cta": "Bekijk Glovebox Pro",
+  "offer.paywall.cta": "Bekijk Wrenchy Pro",
   "offer.paywall.vehicle": "Voertuig",
   "offer.paywall.scheduled": "Ingepland",
   "offer.paywall.services": { one: "onderhoudsbeurt", other: "onderhoudsbeurten" },

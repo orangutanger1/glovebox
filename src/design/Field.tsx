@@ -29,6 +29,7 @@ export function Field({
   autoFocus,
   error,
   onBlur,
+  onFocus,
 }: {
   label: string;
   value: string;
@@ -40,6 +41,10 @@ export function Field({
    *  leaves the user retyping it, so every rejection has to be said out loud. */
   error?: string;
   onBlur?: () => void;
+  /** Fired when the user commits to typing here. Onboarding reports it: a
+   *  keyboard opening is the expensive event in a flow whose whole problem was
+   *  how much of it had to be typed. */
+  onFocus?: () => void;
 }) {
   const [focused, setFocused] = useState(false);
 
@@ -65,7 +70,10 @@ export function Field({
           keyboardType={keyboardType}
           placeholder={placeholder}
           autoFocus={autoFocus}
-          onFocus={() => setFocused(true)}
+          onFocus={() => {
+            setFocused(true);
+            onFocus?.();
+          }}
           onBlur={() => {
             setFocused(false);
             onBlur?.();

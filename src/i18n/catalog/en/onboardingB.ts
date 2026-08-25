@@ -21,6 +21,9 @@ export const onboardingB: Fragment = {
   // clause plus a lowercased identifier.
   "onboardingB.service.when": "When was the {service}?",
   "onboardingB.service.whenOther": "When was the service?",
+  // The legend on the half of the question that is drawn before it is live, so
+  // the two-part shape of the screen is visible before the first tap.
+  "onboardingB.service.whenPending": "When was it?",
   "onboardingB.service.somethingElse": "Something else",
   "onboardingB.service.ago.now": "Just now",
   "onboardingB.service.ago.lastMonth": "Last month",
@@ -32,7 +35,7 @@ export const onboardingB: Fragment = {
   "onboardingB.tracking.subtitle": "Whatever it is, it is more than most people do.",
   "onboardingB.tracking.legend": "Today",
   "onboardingB.tracking.caption":
-    "Whatever you pick, Glovebox exports everything you log as a CSV for free.",
+    "Whatever you pick, Wrenchy exports everything you log as a CSV for free.",
   "onboardingB.tracking.memory": "Memory",
   "onboardingB.tracking.receipts": "Receipts in the car",
   "onboardingB.tracking.spreadsheet": "A spreadsheet",
@@ -49,6 +52,10 @@ export const onboardingB: Fragment = {
   "onboardingB.worry.records": "Losing the records",
   "onboardingB.worry.resale": "Resale value",
   "onboardingB.worry.upsell": "Getting upsold",
+  // The last question is not a requirement. An empty answer means no strong
+  // preference, and the findings are built from the car instead.
+  "onboardingB.worry.optional":
+    "All optional. Skip it and the next screen is built from your car alone.",
 
   "onboardingB.analyzing.title": "Working out the schedule.",
   "onboardingB.analyzing.odometer": "{vehicle} at {distance}",
@@ -67,4 +74,5 @@ export const onboardingB: Fragment = {
   },
   "onboardingB.analyzing.done": "Done",
   "onboardingB.analyzing.progress": "Reading {index} of {total}",
+  "onboardingB.analyzing.skip": "Tap anywhere to skip.",
 };

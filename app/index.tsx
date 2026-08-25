@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
@@ -14,6 +14,13 @@ import { nextDue, dueStatus } from "../src/schedule";
 import { getIntervals } from "../src/db/intervals";
 import { isPro, presentPaywall } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
+import { requestPermission, rescheduleAll } from "../src/notify";
+import {
+  getNotifyIntent,
+  hasAskedNotifyPermission,
+  markAskedNotifyPermission,
+} from "../src/notify/intent";
+import { trackNotificationPermission } from "../src/analytics";
 import { t, formatNumber, formatDate } from "../src/i18n";
 import { getDistanceUnit } from "../src/units";
 import { formatDistance, distanceUnitLabel } from "../src/units/format";
@@ -90,6 +97,42 @@ export default function Garage() {
   const [msg, setMsg] = useState("");
 
   useFocusEffect(useCallback(() => setVehicles(listVehicles()), []));
+
+  /**
+   * The notification permission, asked here rather than during onboarding.
+   *
+   * The plan screen collected the answer next to the six dated services that
+   * make it mean something, and left it at that: firing the iOS alert there put
+   * a system modal one screen in front of the paywall. This is the first mount
+   * of the garage after that choice, which is the first moment in the app's
+   * life when nothing else is being asked of the user.
+   *
+   * Three rules, all of them enforced by the two flags rather than by where
+   * this runs. A user who said "Not now" is never asked, because iOS spends
+   * its one prompt whether or not the answer was a considered one. The prompt
+   * is stamped as asked before it is awaited, so a mount, a crash or a
+   * force-quit mid-alert cannot produce a second one. And the outcome is
+   * reported from here, where the system actually answers, rather than guessed
+   * at from the intention recorded two screens ago.
+   */
+  useEffect(() => {
+    if (getNotifyIntent() !== "yes" || hasAskedNotifyPermission()) return;
+    markAskedNotifyPermission();
+    void (async () => {
+      try {
+        const granted = await requestPermission();
+        trackNotificationPermission(granted ? "granted" : "denied");
+        // Reminders are scheduled at launch, but at the launch that mattered
+        // permission had not been granted yet and rescheduleAll bailed out.
+        // Without this the service logged during onboarding gets no
+        // notification until some later cold start.
+        if (granted) await rescheduleAll();
+      } catch {
+        // Unavailable, which is not the same as denied and is not the user's
+        // answer either. The app works without notifications.
+      }
+    })();
+  }, []);
 
   async function onAdd() {
     // Paywall before the form, never after. Making someone fill in a form and
@@ -185,11 +228,18 @@ export default function Garage() {
                   value={s.detail}
                   lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
                 />
+                {/* An estimate says so in the legend rather than beside the
+                    number: the readout is a distance and the parenthesis would
+                    read as part of it. A reading the app worked out from the
+                    model year is still worth showing, and is not worth showing
+                    as though somebody had read it off the dash. */}
                 <Gauge
-                  legend={t("garage.odometer")}
-                  value={
-                    v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")
+                  legend={
+                    v.odometer && v.odometer_estimated
+                      ? t("garage.odometer.estimated")
+                      : t("garage.odometer")
                   }
+                  value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
                   unit={v.odometer ? distanceUnitLabel() : undefined}
                   align="right"
                 />

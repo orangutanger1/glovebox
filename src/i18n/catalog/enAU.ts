@@ -31,7 +31,7 @@ export const enAU: Fragment = {
   // A car sits in a garage here; it gets fixed at a workshop, by a mechanic —
   // and this app already calls the vehicle list the Garage.
   "language.intro":
-    "Glovebox follows your phone unless you pick a language here. Service names use the words mechanics use in that language.",
+    "Wrenchy follows your phone unless you pick a language here. Service names use the words mechanics use in that language.",
 
   // A workshop, or your mechanic — never a "shop".
   "onboardingB.tracking.dealer": "My mechanic keeps it",

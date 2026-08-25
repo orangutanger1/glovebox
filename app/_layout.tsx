@@ -7,6 +7,7 @@ import * as QuickActions from "expo-quick-actions";
 import { useQuickActionCallback } from "expo-quick-actions/hooks";
 import { getDb } from "../src/db/client";
 import { DISCOUNT_OFFERING, hasOffering, initPurchases, isPro } from "../src/purchases";
+import { identifyFromPurchases, initAnalytics } from "../src/analytics";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { resumeRoute } from "../src/onboarding/flow";
@@ -91,6 +92,9 @@ export default function RootLayout() {
     if (bootLanguage() !== fromPhone) setLocaleEpoch((n) => n + 1);
     initDistanceUnit();
     initPurchases();
+    // After `initPurchases`, so the RevenueCat app user id exists to key on.
+    initAnalytics();
+    identifyFromPurchases().catch(() => {});
     // Weakest of the happiness signals and forgotten within a day. It is here
     // so that coming back repeatedly counts for something, never so that it
     // can trigger an ask on its own.

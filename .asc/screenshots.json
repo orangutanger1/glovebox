@@ -1,0 +1,876 @@
+{
+	"generatedAt": "2026-08-22T01:46:52.344Z",
+	"app": "Wrenchy",
+	"root": "store/screenshots",
+	"locales": [
+		{
+			"locale": "de-DE",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/de-DE/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 775043,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 739766,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 778580,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560811,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 747249,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950911,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "en-AU",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/en-AU/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 768230,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 741485,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 769566,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560594,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 750932,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950402,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "en-CA",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/en-CA/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 768230,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 741485,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 769566,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560594,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 750932,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950402,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "en-GB",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/en-GB/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 771783,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 741485,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 769566,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560594,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 750932,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950402,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "en-US",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/en-US/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 772074,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 741485,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 769566,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560594,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 750932,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950402,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "es-ES",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/es-ES/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 767202,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 744332,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 765148,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 561285,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 751902,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 952599,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "es-MX",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/es-MX/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 767217,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 744332,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 768955,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 561285,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 751902,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 952530,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "fr-CA",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/fr-CA/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 768297,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 736671,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 770004,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 562522,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 756129,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 950656,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "fr-FR",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/fr-FR/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 766807,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 736671,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 770004,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 562522,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 756129,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 955836,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "it",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/it/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 765604,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 738367,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 766535,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 558623,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 744671,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 945932,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "ja",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/ja/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 772920,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 745092,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 784591,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 578719,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 768174,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 968073,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "ko",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/ko/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 761824,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 729028,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 762734,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 557491,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 739854,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 939561,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "nl-NL",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/nl-NL/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 774116,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 733407,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 769623,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 562166,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 747198,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 952532,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "pl",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/pl/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 782308,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 738244,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 764617,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 566739,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 758026,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 962518,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "pt-BR",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/pt-BR/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 772162,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 741997,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 764423,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 566826,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 754811,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 957722,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		},
+		{
+			"locale": "sv",
+			"groups": [
+				{
+					"displayType": "IPHONE_65",
+					"dir": "store/screenshots/sv/IPHONE_65",
+					"count": 6,
+					"files": [
+						{
+							"file": "01-ScreenShotAppStore1.png",
+							"bytes": 774024,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "02-ScreenShotAppStore2.png",
+							"bytes": 743416,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "03-ScreenShotAppStore3.png",
+							"bytes": 767139,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "04-ScreenShotAppStore4.png",
+							"bytes": 560694,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore5.png",
+							"bytes": 747268,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "06-ScreenShotAppStore6.png",
+							"bytes": 947267,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						}
+					]
+				}
+			]
+		}
+	],
+	"totals": {
+		"locales": 16,
+		"groups": 16,
+		"files": 96
+	}
+}

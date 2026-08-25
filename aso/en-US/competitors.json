@@ -1,0 +1,76 @@
+{
+	"generatedAt": "2026-08-22T01:01:54.921Z",
+	"locale": "en-US",
+	"market": {
+		"country": "US",
+		"lang": "en_us"
+	},
+	"ids": [
+		"1315913699",
+		"552472249",
+		"6748665282"
+	],
+	"apps": [
+		{
+			"id": 1315913699,
+			"name": "Vehicle Maintenance Tracker",
+			"seller": "Hai Nguyen",
+			"ratings": 2887,
+			"stars": 4.33391,
+			"price": 0,
+			"genre": "Utilities"
+		},
+		{
+			"id": 552472249,
+			"name": "CARFAX Car Care",
+			"seller": "CARFAX, Inc.",
+			"ratings": 126247,
+			"stars": 4.84023,
+			"price": 0,
+			"genre": "Lifestyle"
+		},
+		{
+			"id": 6748665282,
+			"name": "MyAutoLog: Car Maintenance Log",
+			"seller": "Tapronix LLC",
+			"ratings": 61,
+			"stars": 4.93443,
+			"price": 0,
+			"genre": "Finance"
+		}
+	],
+	"vocabulary": [
+		{
+			"word": "car",
+			"apps": 2
+		},
+		{
+			"word": "maintenance",
+			"apps": 2
+		},
+		{
+			"word": "care",
+			"apps": 1
+		},
+		{
+			"word": "carfax",
+			"apps": 1
+		},
+		{
+			"word": "log",
+			"apps": 1
+		},
+		{
+			"word": "myautolog",
+			"apps": 1
+		},
+		{
+			"word": "tracker",
+			"apps": 1
+		},
+		{
+			"word": "vehicle",
+			"apps": 1
+		}
+	]
+}

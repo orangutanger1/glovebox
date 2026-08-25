@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Chip } from "./Chip";
 import { tokens } from "./tokens";
 
@@ -17,28 +17,54 @@ export function ChipRow<T extends string>({
   options,
   selected,
   onPress,
+  scroll = false,
+  disabled = false,
 }: {
   legend?: string;
   options: readonly { value: T; label: string }[];
   /** Every selected value. Single-answer questions pass an array of one. */
   selected: readonly T[];
   onPress: (value: T) => void;
+  /** One scrolling line instead of a wrapping block. For the answer sets that
+   *  are long but ordered — twenty-six model years wrap into six rows of
+   *  identical four-digit numbers, which is a wall rather than a control. */
+  scroll?: boolean;
+  /** The whole row is drawn but not live. Used where the second half of a
+   *  two-part question has to be visible before the first half is answered. */
+  disabled?: boolean;
 }) {
+  const chips = options.map((o) => (
+    <Chip
+      key={o.value}
+      label={o.label}
+      selected={selected.includes(o.value)}
+      onPress={() => onPress(o.value)}
+      disabled={disabled}
+    />
+  ));
+
   return (
     <View style={{ gap: tokens.space.sm }}>
       {legend ? (
         <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>{legend}</Text>
       ) : null}
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
-        {options.map((o) => (
-          <Chip
-            key={o.value}
-            label={o.label}
-            selected={selected.includes(o.value)}
-            onPress={() => onPress(o.value)}
-          />
-        ))}
-      </View>
+      {scroll ? (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          // The chips are inside the screen's vertical ScrollView; without
+          // this the outer one claims the gesture and the row cannot be moved.
+          nestedScrollEnabled
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flexDirection: "row", gap: tokens.space.sm }}
+        >
+          {chips}
+        </ScrollView>
+      ) : (
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
+          {chips}
+        </View>
+      )}
     </View>
   );
 }

@@ -13,6 +13,8 @@ export const vehicle: Fragment = {
 
   "vehicle.odometer": "Odometer",
   "vehicle.odometer.notSet": "Not set",
+  /** A reading estimated from the model year, never presented as a reading. */
+  "vehicle.odometer.estimated": "Odometer (est.)",
   "vehicle.lastService": "Last service",
   "vehicle.lastService.none": "None yet",
 

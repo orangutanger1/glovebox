@@ -60,6 +60,21 @@ test("always exactly three, even from an abandoned quiz", () => {
     .toHaveLength(PAIN_CARD_COUNT);
 });
 
+test("an empty worry set is no preference, not an empty screen", () => {
+  // The last question no longer blocks on an answer, so this is what the
+  // screens after it are handed when somebody taps straight past it.
+  const cards = cardsFor({ tracking: "memory", worries: [] });
+  expect(cards).toHaveLength(PAIN_CARD_COUNT);
+  // What they use today, what has nothing on file, then the fixed tail. Every
+  // one of them a fact rather than a worry the user never claimed.
+  expect(cards.map((c) => c.id)).toEqual(["memory", "blind", "bills"]);
+  for (const card of cards) {
+    expect(card.headline.length).toBeGreaterThan(0);
+    expect(card.body.length).toBeGreaterThan(0);
+    expect(card.fix.length).toBeGreaterThan(0);
+  }
+});
+
 test("never repeats a finding", () => {
   const ids = cardsFor({ tracking: "receipts", worries: ["records", "bills"] }).map((c) => c.id);
   expect(new Set(ids).size).toBe(ids.length);

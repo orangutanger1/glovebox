@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useRouter } from "expo-router";
 import { completeOnboarding, setOnboardingStep } from ".";
+import { track } from "../analytics";
 import { nextRoute, type OnboardingRoute } from "./flow";
 
 /**
@@ -52,11 +53,24 @@ export function useGoTo(): (route: OnboardingRoute) => void {
 /**
  * The only exit. `replace`, not `push`: the garage must not have seventeen
  * onboarding screens behind it for a back-swipe to walk into.
+ *
+ * The caller names why it is leaving, because that is the difference the
+ * revenue question turns on. A completion event with no reason counts a user
+ * who subscribed, a user who started a trial and a user who declined twice as
+ * the same outcome, which is how thirty-two installs and no subscribers looked
+ * like a mystery rather than a paywall nobody accepted. Still one exit path:
+ * the reason is an argument, not a second function.
  */
-export function useFinish(): () => void {
+export function useFinish(): (exit: "paid" | "trial" | "free") => void {
   const router = useRouter();
-  return useCallback(() => {
-    completeOnboarding();
-    router.replace("/");
-  }, [router]);
+  return useCallback(
+    (exit: "paid" | "trial" | "free") => {
+      // The denominator for every drop-off rate: the count of users who
+      // reached the garage at all, now split by what they agreed to on the way.
+      track("onboarding_completed", { exit });
+      completeOnboarding();
+      router.replace("/");
+    },
+    [router]
+  );
 }

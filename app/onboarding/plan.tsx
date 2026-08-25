@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
@@ -8,7 +7,8 @@ import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
-import { requestPermission, rescheduleAll } from "../../src/notify";
+import { setNotifyIntent } from "../../src/notify/intent";
+import { trackNotificationPermission } from "../../src/analytics";
 import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
@@ -37,27 +37,32 @@ const SHOWN = 6;
  * own screen is context-free by construction. Here the user is looking at six
  * dated services when they are asked whether they want to be told about them.
  *
- * "Not now" is a real answer and does not re-ask. Reminders are half the
- * product, and nagging for them is the other half of the reviews this app was
- * written against.
+ * What the screen no longer does is fire the system prompt. That happened here,
+ * one screen before the money ask, so the iOS alert landed on a user who was
+ * about to be shown a price and the two modal decisions queued up behind each
+ * other. Both buttons now record an intention and move on; the garage acts on
+ * it once onboarding is over. The user's choice is unchanged, and so is the
+ * context they make it in.
+ *
+ * "Not now" is a real answer and does not re-ask, from here or from the
+ * garage. Reminders are half the product, and nagging for them is the other
+ * half of the reviews this app was written against.
  */
 export default function OnboardingPlan() {
   const advance = useAdvance("plan");
   const { vehicleName, plan } = useOnboardingFindings();
-  const [busy, setBusy] = useState(false);
 
-  async function onRemindMe() {
-    if (busy) return;
-    setBusy(true);
-    try {
-      // Reminders are scheduled at launch, but at launch permission had not
-      // been granted yet and rescheduleAll bailed out. Without this call the
-      // service just logged during onboarding gets no notification until some
-      // later cold start.
-      if (await requestPermission()) await rescheduleAll();
-    } catch {
-      // Denied or unavailable. The app works without notifications.
-    }
+  function onRemindMe() {
+    setNotifyIntent("yes");
+    advance();
+  }
+
+  function onDecline() {
+    setNotifyIntent("no");
+    // The real outcome for this user, reported from the place it happened.
+    // Nothing will ever ask them again, so there is no later event to wait
+    // for and no system answer to attribute this to.
+    trackNotificationPermission("deferred");
     advance();
   }
 
@@ -71,10 +76,9 @@ export default function OnboardingPlan() {
       subtitle={t("offer.plan.subtitle", { count: plan.items.length, vehicle: vehicleName })}
       footer={
         <>
-          <Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />
+          <Button label={t("offer.plan.cta")} onPress={onRemindMe} />
           <Pressable
-            onPress={advance}
-            disabled={busy}
+            onPress={onDecline}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
             <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>

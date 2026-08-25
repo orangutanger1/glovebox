@@ -33,6 +33,7 @@ yarn-error.*
 # local env files
 .env*.local
 .revenuecat.env
+.posthog.env
 
 # typescript
 *.tsbuildinfo
@@ -47,4 +48,7 @@ yarn-error.*
 
 # shipkit
 .asc/reports/
+.asc/cache/
+.asc/config.json
+.asc/native-lock.json
 aso/**/candidates.json

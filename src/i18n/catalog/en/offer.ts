@@ -43,7 +43,7 @@ export const offer: Fragment = {
   "offer.paywall.title": "Your garage is ready.",
   "offer.paywall.subtitle":
     "The plan below is yours either way, and Pro is the rest of the garage plus your own intervals.",
-  "offer.paywall.cta": "See Glovebox Pro",
+  "offer.paywall.cta": "See Wrenchy Pro",
   "offer.paywall.vehicle": "Vehicle",
   "offer.paywall.scheduled": "Scheduled",
   "offer.paywall.services": { one: "service", other: "services" },

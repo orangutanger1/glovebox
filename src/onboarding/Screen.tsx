@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import { StepLamps } from "../design/StepLamps";
 import { tokens } from "../design/tokens";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
+import { track } from "../analytics";
 import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
 
 /**
@@ -51,10 +52,12 @@ export function OnboardingScreen({
   subtitle,
   legend,
   footer,
+  gateTimeoutMs,
   children,
   center = false,
   tone = "housing",
   onBack,
+  onTap,
 }: {
   route: OnboardingRoute;
   title: string;
@@ -63,8 +66,19 @@ export function OnboardingScreen({
   legend?: ReactNode;
   /** A function instead of a node gates the footer on reading: it is called
    *  with `atBottom`, which is false until the user has scrolled to the end of
-   *  the content (and true from the start when there is nothing to scroll). */
-  footer?: ReactNode | ((state: { atBottom: boolean }) => ReactNode);
+   *  the content (and true from the start when there is nothing to scroll),
+   *  and `unlocked`, which is `atBottom` or the nudge timeout having elapsed. */
+  footer?: ReactNode | ((state: { atBottom: boolean; unlocked: boolean }) => ReactNode);
+  /**
+   * How long a gated screen stays shut before it opens anyway, in ms.
+   *
+   * Opt-in per screen rather than global, and the whole reason it exists is
+   * that the gate was a blocker. A user who has decided is not persuaded by a
+   * dead button; they are taught that the app argues with taps. The label
+   * still asks for the scroll after this elapses, so the affordance survives
+   * and only the refusal goes away.
+   */
+  gateTimeoutMs?: number;
   children?: ReactNode;
   /** Screens with nothing to fill the middle read better optically centred
    *  than pinned under the title. */
@@ -76,10 +90,23 @@ export function OnboardingScreen({
    *  is three cards on one route, and a Back that abandoned all three because
    *  the user wanted to re-read the first is a Back the user stops pressing. */
   onBack?: () => void;
+  /** A tap anywhere on the screen body. For `analyzing`, which is the one
+   *  screen in the flow the user cannot otherwise hurry: a readout that is
+   *  still going when the reader has finished reading it is a wait. */
+  onTap?: () => void;
 }) {
   const router = useRouter();
   const previous = previousRoute(route);
   const quiz = quizStep(route);
+
+  // One event per screen arrival, emitted from the frame rather than from each
+  // of the eighteen screens: the funnel has to stay complete when a screen is
+  // added, and it will not if adding one means remembering to instrument it.
+  // `route` is the only identity a screen knows about itself, which is exactly
+  // what the funnel needs to order its steps.
+  useEffect(() => {
+    track("onboarding_step_viewed", { route, quiz_step: quiz?.step ?? null });
+  }, [route, quiz?.step]);
 
   /**
    * Whether the content has been read to the end. Only wired up for a screen
@@ -96,6 +123,24 @@ export function OnboardingScreen({
   const viewportHeight = useRef(0);
   const contentHeight = useRef(0);
   const offsetY = useRef(0);
+
+  /**
+   * The nudge. A gated screen that has been on the glass for `gateTimeoutMs`
+   * stops refusing, whether or not the content was scrolled.
+   *
+   * The gate was written to stop a user tapping past an argument they had not
+   * read. What it actually did was hand the most impatient users a dead
+   * control at the exact moment the flow was asking them for trust, which
+   * costs more than the paragraph it protected. The timer only ever unlocks:
+   * `atBottom` is still reported separately, so the button can go on asking
+   * for the scroll while no longer standing in the way of it.
+   */
+  const [nudged, setNudged] = useState(false);
+  useEffect(() => {
+    if (!gated || gateTimeoutMs === undefined) return;
+    const timer = setTimeout(() => setNudged(true), gateTimeoutMs);
+    return () => clearTimeout(timer);
+  }, [gated, gateTimeoutMs]);
 
   // A tolerance is required in both directions: content one pixel taller than
   // the viewport is not something to scroll, and iOS rubber-banding means the
@@ -153,6 +198,25 @@ export function OnboardingScreen({
     if (router.canGoBack()) router.back();
     else router.replace(`/onboarding/${previous}` as never);
   }
+
+  // The title, the screen's own content, and the space around them. Held in one
+  // node so `onTap` can wrap the lot without the layout being written twice.
+  const body = (
+    <>
+      {center ? <View style={{ flex: 1 }} /> : null}
+
+      <View style={{ gap: tokens.space.sm }}>
+        <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
+        {subtitle ? (
+          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
+        ) : null}
+      </View>
+
+      {children}
+
+      <View style={{ flex: 1 }} />
+    </>
+  );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
@@ -221,18 +285,15 @@ export function OnboardingScreen({
             )}
           </View>
 
-          {center ? <View style={{ flex: 1 }} /> : null}
-
-          <View style={{ gap: tokens.space.sm }}>
-            <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
-            {subtitle ? (
-              <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
-            ) : null}
-          </View>
-
-          {children}
-
-          <View style={{ flex: 1 }} />
+          {/* The header row stays outside the tap target: a screen you can tap
+              to move forward must not swallow the control that goes back. */}
+          {onTap ? (
+            <Pressable onPress={onTap} style={{ flexGrow: 1, gap: tokens.space.lg }}>
+              {body}
+            </Pressable>
+          ) : (
+            body
+          )}
         </ScrollView>
 
         {footer ? (
@@ -244,7 +305,12 @@ export function OnboardingScreen({
               gap: tokens.space.sm,
             }}
           >
-            {gated ? (footer as (state: { atBottom: boolean }) => ReactNode)({ atBottom }) : footer}
+            {gated
+              ? (footer as (state: { atBottom: boolean; unlocked: boolean }) => ReactNode)({
+                  atBottom,
+                  unlocked: atBottom || nudged,
+                })
+              : footer}
           </View>
         ) : null}
       </KeyboardAvoidingView>

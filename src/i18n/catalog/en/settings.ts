@@ -45,7 +45,7 @@ export const settings: Fragment = {
   "settings.reminders.denied": "Reminders denied. You can turn them on in iOS Settings.",
   "settings.reminders.error": "Could not ask for notification permission.",
   "settings.reminders.openSettings":
-    "Open iOS Settings › Glovebox › Notifications to turn reminders back on.",
+    "Open iOS Settings › Wrenchy › Notifications to turn reminders back on.",
 
   "settings.manage": "Manage subscription",
   "settings.manage.error": "Could not open subscription settings. Try again on a better connection.",

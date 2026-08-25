@@ -13,7 +13,7 @@ export const garage: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Log a service",
   "garage.addVehicle": "Add vehicle",
-  "garage.empty": "No vehicles yet. Add one and Glovebox starts keeping its records.",
+  "garage.empty": "No vehicles yet. Add one and Wrenchy starts keeping its records.",
   "garage.storeUnreachable": "Could not reach the store. Try again on a better connection.",
 
   "garage.badge.overdue": "Overdue",
@@ -21,6 +21,10 @@ export const garage: Fragment = {
 
   "garage.odometer": "Odometer",
   "garage.odometer.notSet": "Not set",
+  // The same gauge, on a reading the app worked out from the model year rather
+  // than one the owner read off the dash. Said in the legend, not next to the
+  // number, which is a distance and would read as part of it.
+  "garage.odometer.estimated": "Odometer (est.)",
 
   // `{distance}` arrives already formatted and already carrying the reader's
   // unit, so this message never mentions one.

@@ -70,6 +70,19 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
       ALTER TABLE service_intervals RENAME COLUMN miles TO distance;
     `,
   },
+  // An odometer reading the app worked out rather than one the user read off
+  // the dash. Onboarding lets them say "I'll add it later" instead of stopping
+  // at a mandatory number, which means the garage is now holding two kinds of
+  // reading and has to be able to tell them apart: an estimate is labelled as
+  // one everywhere it is shown, and the first real number that arrives clears
+  // the flag. A nullable column rather than a default, so every row written
+  // before this migration reads as "not an estimate", which is what it is.
+  {
+    version: 5,
+    sql: `
+      ALTER TABLE vehicles ADD COLUMN odometer_estimated INTEGER;
+    `,
+  },
 ];
 
 /**

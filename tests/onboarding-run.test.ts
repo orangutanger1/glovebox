@@ -24,7 +24,13 @@ jest.mock("../src/db/client", () => {
   };
 });
 
-import { createVehicle, getVehicle, setOdometerReading, updateVehicleIdentity } from "../src/db/vehicles";
+import {
+  createVehicle,
+  getVehicle,
+  setOdometerEstimate,
+  setOdometerReading,
+  updateVehicleIdentity,
+} from "../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../src/db/records";
 import {
   getAnswers,
@@ -35,6 +41,8 @@ import {
 } from "../src/onboarding";
 import { readFindings } from "../src/onboarding/usePlan";
 import { DISTANCE_PER_YEAR, distancePerYearFor, odometerDaysAgo } from "../src/onboarding/plan";
+import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../src/onboarding/estimate";
+import { vehicleDisplayName } from "../src/format";
 import { setLanguage } from "../src/i18n";
 import { getDistanceUnit } from "../src/units";
 import type { ServiceTypeAnswer } from "../src/onboarding/state";
@@ -238,4 +246,100 @@ test("a service is filed at the mileage the car was showing when it happened", (
   const oil = readFindings().plan.items.find((i) => i.type === "Oil Change")!;
   expect(oil.dueOdometer).toBe(back + 5000);
   expect(oil.status).toBe("due");
+});
+
+/**
+ * What `app/onboarding/vehicle.tsx` does on Continue for a user who tapped a
+ * year and a make and left the model alone. The model is optional now: nothing
+ * but the name reads it, and the name is a car without it.
+ */
+function answerVehicleWithoutModel(year: number, make: string) {
+  const parts = { year, make };
+  setOnboardingVehicleId(createVehicle({ name: vehicleDisplayName(parts), ...parts }).id);
+}
+
+test("a car with no model is still a car with a name", () => {
+  answerVehicleWithoutModel(2019, "Toyota");
+  setOdometerReading(getOnboardingVehicleId()!, 84210);
+  setAnswers({ drive: "high", tracking: "memory" });
+
+  const { vehicle, vehicleName, plan, cards } = readFindings();
+  expect(vehicle?.model).toBeUndefined();
+  // Not the "My car" fallback, and not a name with a hole in it.
+  expect(vehicleName).toBe("2019 Toyota");
+  expect(plan.items.length).toBeGreaterThan(0);
+  expect(cards).toHaveLength(3);
+  for (const card of cards) {
+    expect(card.headline.length).toBeGreaterThan(0);
+    expect(card.body.length).toBeGreaterThan(0);
+  }
+});
+
+test("a deferred odometer is stored as an estimate and the plan still builds", () => {
+  answerVehicleWithoutModel(2019, "Toyota");
+  const id = getOnboardingVehicleId()!;
+
+  // What "I'll add it later" does: age times the national average, rounded so
+  // the readout cannot be mistaken for a reading.
+  const estimate = estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR[UNIT])!;
+  expect(estimate).toBe(
+    Math.round(((new Date().getFullYear() - 2019) * AVERAGE_DISTANCE_PER_YEAR[UNIT]) / 500) * 500
+  );
+  setOdometerEstimate(id, estimate);
+
+  const { vehicle, plan } = readFindings();
+  expect(vehicle?.odometer).toBe(estimate);
+  // The flag is what every gauge in the app reads to label it as arithmetic.
+  expect(vehicle?.odometer_estimated).toBe(1);
+  expect(plan.odometer).toBe(estimate);
+  expect(plan.projectedOdometer).toBe(estimate + plan.distancePerYear);
+});
+
+test("the annual mileage answer refines the estimate rather than replacing it", () => {
+  answerVehicleWithoutModel(2019, "Toyota");
+  const id = getOnboardingVehicleId()!;
+  setOdometerEstimate(id, estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR[UNIT])!);
+
+  // What `drive` does on Continue when the reading it is about is a guess.
+  const refined = estimateOdometer(2019, DISTANCE_PER_YEAR[UNIT].low)!;
+  setOdometerEstimate(id, refined);
+
+  expect(refined).toBeLessThan(estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR[UNIT])!);
+  expect(getVehicle(id)!.odometer).toBe(refined);
+  expect(getVehicle(id)!.odometer_estimated).toBe(1);
+});
+
+test("a reading from a person retires the estimate, whichever way it arrives", () => {
+  answerVehicleWithoutModel(2019, "Toyota");
+  const id = getOnboardingVehicleId()!;
+
+  setOdometerEstimate(id, 90000);
+  setOdometerReading(id, 84210);
+  expect(getVehicle(id)!.odometer).toBe(84210);
+  expect(getVehicle(id)!.odometer_estimated).toBeUndefined();
+
+  setOdometerEstimate(id, 90000);
+  setAnswers({ drive: "high" });
+  addRecord({
+    vehicle_id: id,
+    service_type: "Oil Change",
+    performed_at: new Date().toISOString(),
+    odometer: 95000,
+  });
+  expect(getVehicle(id)!.odometer).toBe(95000);
+  expect(getVehicle(id)!.odometer_estimated).toBeUndefined();
+});
+
+test("picking no worries reads as no preference, not as an empty screen", () => {
+  walkTheQuiz();
+  // What `worry` now writes when nothing is selected. An empty list reads back
+  // as "not answered", which is what it means.
+  setAnswers({ worries: [] });
+
+  const { answers, cards } = readFindings();
+  expect(answers.worries).toBeUndefined();
+  // Overdue oil change, then what they said they use today, then what has
+  // nothing on file. Three facts about the car, none of them about a worry.
+  expect(cards.map((c) => c.id)).toEqual(["overdue", "memory", "blind"]);
+  for (const card of cards) expect(card.fix.length).toBeGreaterThan(0);
 });

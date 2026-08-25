@@ -54,7 +54,7 @@ export default function OnboardingPaywall() {
       // has meaningfully used the app as manipulating the App Store, and Apple
       // rejects for it. This only banks the signal for a later happy moment.
       recordReviewEvent("purchase");
-      finish();
+      finish("paid");
       return;
     }
     // A dismissal is the whole reason the trial exists, so it goes there. A

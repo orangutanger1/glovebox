@@ -68,8 +68,8 @@ export default function Welcome() {
         >
           {/* Bigger than `hero`: this is the one line on the one screen whose
               whole job is to land the problem before anything is asked. The
-              "Glovebox" legend above it is gone — it named the app to someone
-              who had just tapped its icon, and cost the headline its air. */}
+              wordmark that used to sit above it is gone — it named the app to
+              someone who had just tapped its icon, and cost the headline its air. */}
           <Text
             style={{
               ...tokens.text.hero,

@@ -5,7 +5,7 @@ import { t } from "../i18n";
  *
  * The structure this flow follows puts a reviews screen between the pitch and
  * the plan, and for a good reason: nobody believes an app describing itself.
- * The usual contents are a five-star wall and a user count, and Glovebox has
+ * The usual contents are a five-star wall and a user count, and Wrenchy has
  * neither — it has not shipped. Inventing them would be the one thing the
  * product cannot survive, since the entire pitch is that your records are
  * safe here because nothing about this app is a trick.
@@ -33,7 +33,7 @@ export const REVIEW_EVIDENCE = {
    * Theme tallies over the negative subset. A review can hit more than one.
    *
    * The id is the theme's name in `research/reviews.py`, and it is what keeps a
-   * count tied to the words for it and to Glovebox's answer: those are copy and
+   * count tied to the words for it and to Wrenchy's answer: those are copy and
    * live in the catalog, while the tally is a fact about the corpus.
    */
   themes: [
@@ -51,7 +51,7 @@ export function reviewThemeLabel(id: ReviewThemeId): string {
   return t(`evidence.${id}.label`);
 }
 
-/** What Glovebox does about that tally. */
+/** What Wrenchy does about that tally. */
 export function evidenceAnswer(id: ReviewThemeId): string {
   return t(`evidence.${id}.answer`);
 }

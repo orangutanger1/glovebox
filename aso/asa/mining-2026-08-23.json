@@ -1,0 +1,18 @@
+{
+	"generatedAt": "2026-08-23T23:48:03.917Z",
+	"locale": "en-US",
+	"org": "23259140",
+	"source": "asc ads reports search-terms (2026-08-23 → 2026-08-23)",
+	"window": {
+		"from": "2026-08-23",
+		"to": "2026-08-23"
+	},
+	"targetCpi": 1.5,
+	"wasteThreshold": 3,
+	"rows": 0,
+	"negatives": [],
+	"promotions": [],
+	"converting": [],
+	"asoGap": [],
+	"applied": null
+}

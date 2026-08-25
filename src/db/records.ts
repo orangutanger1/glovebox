@@ -52,8 +52,13 @@ export function addRecord(r: {
      row.cost ?? null, row.notes ?? null, row.revision, row.created_at]
   );
   if (r.odometer !== undefined) {
+    // Clears `odometer_estimated` alongside: a reading attached to a service
+    // that actually happened retires whatever the app had estimated from the
+    // model year, and a gauge must stop calling it an estimate the moment it
+    // stops being one.
     getDb().runSync(
-      "UPDATE vehicles SET odometer = ? WHERE id = ? AND (odometer IS NULL OR odometer < ?)",
+      `UPDATE vehicles SET odometer = ?, odometer_estimated = NULL
+       WHERE id = ? AND (odometer IS NULL OR odometer < ?)`,
       [r.odometer, r.vehicle_id, r.odometer]
     );
   }

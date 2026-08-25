@@ -40,7 +40,7 @@ export type PainCard = {
   legend: string;
   headline: string;
   body: string;
-  /** What Glovebox does about it. Read by the screen after the symptoms. */
+  /** What Wrenchy does about it. Read by the screen after the symptoms. */
   fix: string;
 };
 

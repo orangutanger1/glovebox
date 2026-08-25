@@ -42,7 +42,7 @@ export const onboardingC: Fragment = {
 
   "onboardingC.help.title": "All three are the same problem.",
   "onboardingC.help.subtitle":
-    "Nothing is written down in a form that can warn you, which is the whole of what Glovebox does.",
+    "Nothing is written down in a form that can warn you, which is the whole of what Wrenchy does.",
   "onboardingC.help.continue": "Continue",
 
   "onboardingC.reviews.title": "This app exists because of these.",

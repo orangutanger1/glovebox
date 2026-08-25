@@ -56,7 +56,7 @@ export const es: Fragment = {
   "garage.title": "Garaje",
   "garage.logService": "Registrar mantenimiento",
   "garage.addVehicle": "Añadir vehículo",
-  "garage.empty": "Todavía no hay vehículos. Añade uno y Glovebox empieza a guardar su historial.",
+  "garage.empty": "Todavía no hay vehículos. Añade uno y Wrenchy empieza a guardar su historial.",
   "garage.storeUnreachable":
     "No se ha podido conectar con la App Store. Inténtalo con mejor conexión.",
 
@@ -65,6 +65,7 @@ export const es: Fragment = {
 
   "garage.odometer": "Cuentakilómetros",
   "garage.odometer.notSet": "Sin definir",
+  "garage.odometer.estimated": "Cuentakilómetros (est.)",
 
   "garage.over": "{distance} de retraso",
   "garage.dueNow": "vence ya",
@@ -104,7 +105,7 @@ export const es: Fragment = {
   // language
   "language.title": "Idioma",
   "language.intro":
-    "Glovebox sigue el idioma de tu móvil salvo que elijas uno aquí. Los nombres de los mantenimientos usan las palabras que se usan en los talleres de ese idioma.",
+    "Wrenchy sigue el idioma de tu móvil salvo que elijas uno aquí. Los nombres de los mantenimientos usan las palabras que se usan en los talleres de ese idioma.",
   "language.system": "Sistema",
 
   // layout
@@ -114,7 +115,7 @@ export const es: Fragment = {
   "layout.addVehicle": "Añadir vehículo",
   "layout.vehicle": "Vehículo",
   "layout.logService": "Registrar un mantenimiento",
-  "layout.fatal.title": "Glovebox no ha podido abrir tus registros.",
+  "layout.fatal.title": "Wrenchy no ha podido abrir tus registros.",
   "layout.fatal.body":
     "No se ha borrado nada y la base de datos se ha restaurado a su último estado correcto. Vuelve a abrir la app. Si sigue pasando, contacta con soporte antes de reinstalar, porque reinstalar es lo que sí perdería los registros.",
 
@@ -148,7 +149,7 @@ export const es: Fragment = {
   "offer.paywall.title": "Tu garaje está listo.",
   "offer.paywall.subtitle":
     "El plan de abajo es tuyo en cualquier caso, y Pro es el resto del garaje más tus propios intervalos.",
-  "offer.paywall.cta": "Ver Glovebox Pro",
+  "offer.paywall.cta": "Ver Wrenchy Pro",
   "offer.paywall.vehicle": "Vehículo",
   "offer.paywall.scheduled": "Programados",
   "offer.paywall.services": { one: "mantenimiento", other: "mantenimientos" },
@@ -214,8 +215,13 @@ export const es: Fragment = {
   "onboardingA.vehicle.yearMax": "El año no puede ser posterior a {max}.",
   "onboardingA.vehicle.required": "Obligatorio.",
   "onboardingA.vehicle.saved": "Guardado como «{name}», y puedes cambiarle el nombre más tarde.",
+  "onboardingA.vehicle.yearOlder": "Más antiguo",
+  "onboardingA.vehicle.makeSearch": "Buscar marca",
+  "onboardingA.vehicle.makeOther": "Otra",
+  "onboardingA.vehicle.makeNone": "Sin resultados. Toca Otra y escríbela.",
+  "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
   "onboardingA.vehicle.hint":
-    "Año, marca y modelo, para que los recordatorios puedan nombrar el coche.",
+    "Año y marca, para que los recordatorios puedan nombrar el coche. El modelo es opcional.",
 
   "onboardingA.odometer.title.mi": "¿Cuántas millas tiene?",
   "onboardingA.odometer.title.km": "¿Cuántos kilómetros tiene?",
@@ -224,6 +230,9 @@ export const es: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Un número aproximado sirve, y es lo que fecha los mantenimientos que vencen por distancia.",
+  "onboardingA.odometer.later": "Lo añado después",
+  "onboardingA.odometer.laterCaption":
+    "¿No estás junto al coche? Podemos partir de unos {distance} para un coche de esta edad, marcado como estimación hasta que introduzcas una lectura.",
 
   "onboardingA.drive.title": "¿Cuánto conduces al año?",
   "onboardingA.drive.subtitle":
@@ -251,6 +260,7 @@ export const es: Fragment = {
   "onboardingB.service.caption": "Elige uno; el resto lo puedes registrar cuando quieras.",
   "onboardingB.service.when": "{service}: ¿cuándo fue?",
   "onboardingB.service.whenOther": "¿Cuándo fue el mantenimiento?",
+  "onboardingB.service.whenPending": "¿Cuándo fue?",
   "onboardingB.service.somethingElse": "Otra cosa",
   "onboardingB.service.ago.now": "Ahora mismo",
   "onboardingB.service.ago.lastMonth": "El mes pasado",
@@ -262,7 +272,7 @@ export const es: Fragment = {
   "onboardingB.tracking.subtitle": "Sea como sea, es más de lo que hace la mayoría.",
   "onboardingB.tracking.legend": "Ahora",
   "onboardingB.tracking.caption":
-    "Elijas lo que elijas, Glovebox exporta gratis en CSV todo lo que registres.",
+    "Elijas lo que elijas, Wrenchy exporta gratis en CSV todo lo que registres.",
   "onboardingB.tracking.memory": "De memoria",
   "onboardingB.tracking.receipts": "Facturas en el coche",
   "onboardingB.tracking.spreadsheet": "Una hoja de cálculo",
@@ -278,6 +288,8 @@ export const es: Fragment = {
   "onboardingB.worry.records": "Perder los registros",
   "onboardingB.worry.resale": "Valor de reventa",
   "onboardingB.worry.upsell": "Que me cuelen extras",
+  "onboardingB.worry.optional":
+    "Todo es opcional. Sáltalo y la siguiente pantalla se construye solo con tu coche.",
 
   "onboardingB.analyzing.title": "Calculando el calendario.",
   "onboardingB.analyzing.odometer": "{vehicle} con {distance}",
@@ -294,6 +306,7 @@ export const es: Fragment = {
   },
   "onboardingB.analyzing.done": "Listo",
   "onboardingB.analyzing.progress": "Leyendo {index} de {total}",
+  "onboardingB.analyzing.skip": "Toca en cualquier parte para saltar.",
 
   // onboardingC
   "onboardingC.back": "Atrás",
@@ -326,7 +339,7 @@ export const es: Fragment = {
 
   "onboardingC.help.title": "Los tres son el mismo problema.",
   "onboardingC.help.subtitle":
-    "Nada está anotado de una forma que pueda avisarte, y eso es todo lo que hace Glovebox.",
+    "Nada está anotado de una forma que pueda avisarte, y eso es todo lo que hace Wrenchy.",
   "onboardingC.help.continue": "Continuar",
 
   "onboardingC.reviews.title": "Esta app existe por esto.",
@@ -356,7 +369,7 @@ export const es: Fragment = {
     other: "{count} de {total} mantenimientos no tienen nada registrado",
   },
   "pain.blind.body":
-    "Glovebox no puede demostrar lo que nunca ha visto, y tú tampoco. Hasta que algo diga lo contrario, todos se tratan como vencidos.",
+    "Wrenchy no puede demostrar lo que nunca ha visto, y tú tampoco. Hasta que algo diga lo contrario, todos se tratan como vencidos.",
   "pain.blind.fix":
     "Registra uno y arranca todo su calendario. Treinta segundos cada uno, una sola vez.",
 
@@ -483,7 +496,7 @@ export const es: Fragment = {
   "settings.reminders.denied": "Recordatorios denegados. Puedes activarlos en Ajustes de iOS.",
   "settings.reminders.error": "No se ha podido pedir permiso para las notificaciones.",
   "settings.reminders.openSettings":
-    "Abre Ajustes de iOS › Glovebox › Notificaciones para volver a activar los recordatorios.",
+    "Abre Ajustes de iOS › Wrenchy › Notificaciones para volver a activar los recordatorios.",
 
   "settings.manage": "Gestionar suscripción",
   "settings.manage.error":
@@ -538,6 +551,7 @@ export const es: Fragment = {
 
   "vehicle.odometer": "Cuentakilómetros",
   "vehicle.odometer.notSet": "Sin definir",
+  "vehicle.odometer.estimated": "Cuentakilómetros (est.)",
   "vehicle.lastService": "Último mantenimiento",
   "vehicle.lastService.none": "Ninguno aún",
 

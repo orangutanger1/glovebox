@@ -7,6 +7,7 @@ import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackQuizAnswer } from "../../src/analytics";
 import { TRACKING_ANSWERS, type TrackingAnswer } from "../../src/onboarding/state";
 
 /** The answers are what gets stored and read back by the screens after this
@@ -44,6 +45,7 @@ export default function OnboardingTracking() {
   function onContinue() {
     if (!tracking) return;
     setAnswers({ tracking });
+    trackQuizAnswer("tracking", { tracking });
     advance();
   }
 

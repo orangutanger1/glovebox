@@ -67,7 +67,7 @@ export const ko: Fragment = {
   "garage.title": "차고",
   "garage.logService": "정비 기록하기",
   "garage.addVehicle": "차량 추가",
-  "garage.empty": "아직 차량이 없어요. 한 대 추가하면 Glovebox가 차계부를 쓰기 시작해요.",
+  "garage.empty": "아직 차량이 없어요. 한 대 추가하면 Wrenchy가 차계부를 쓰기 시작해요.",
   "garage.storeUnreachable": "스토어에 연결하지 못했어요. 통신이 잘 되는 곳에서 다시 시도해 주세요.",
 
   "garage.badge.overdue": "기한 초과",
@@ -75,6 +75,7 @@ export const ko: Fragment = {
 
   "garage.odometer": "주행거리",
   "garage.odometer.notSet": "미입력",
+  "garage.odometer.estimated": "주행거리(추정)",
 
   "garage.over": "{distance} 초과",
   "garage.dueNow": "지금 기한",
@@ -112,7 +113,7 @@ export const ko: Fragment = {
   // language
   "language.title": "언어",
   "language.intro":
-    "여기서 언어를 고르지 않으면 Glovebox는 휴대폰 설정을 따라가요. 정비 이름은 그 언어의 정비소에서 쓰는 말로 나와요.",
+    "여기서 언어를 고르지 않으면 Wrenchy는 휴대폰 설정을 따라가요. 정비 이름은 그 언어의 정비소에서 쓰는 말로 나와요.",
   "language.system": "시스템",
 
   // layout
@@ -122,7 +123,7 @@ export const ko: Fragment = {
   "layout.addVehicle": "차량 추가",
   "layout.vehicle": "차량",
   "layout.logService": "정비 기록하기",
-  "layout.fatal.title": "Glovebox가 기록을 열지 못했어요.",
+  "layout.fatal.title": "Wrenchy가 기록을 열지 못했어요.",
   "layout.fatal.body":
     "삭제된 것은 없고, 데이터베이스는 마지막 정상 상태로 되돌렸어요. 앱을 다시 열어 주세요. 계속 이러면 재설치하기 전에 먼저 문의해 주세요. 기록이 실제로 사라지는 건 재설치 쪽이에요.",
 
@@ -154,7 +155,7 @@ export const ko: Fragment = {
   "offer.paywall.title": "차고가 준비됐어요.",
   "offer.paywall.subtitle":
     "아래 계획은 어느 쪽을 골라도 그대로 쓸 수 있고, Pro는 차고의 나머지와 나만의 주기예요.",
-  "offer.paywall.cta": "Glovebox Pro 보기",
+  "offer.paywall.cta": "Wrenchy Pro 보기",
   "offer.paywall.vehicle": "차량",
   "offer.paywall.scheduled": "일정 등록",
   "offer.paywall.services": { other: "건" },
@@ -214,7 +215,12 @@ export const ko: Fragment = {
   "onboardingA.vehicle.yearMax": "연식은 {max}보다 늦을 수 없어요.",
   "onboardingA.vehicle.required": "필수예요.",
   "onboardingA.vehicle.saved": '저장했어요: "{name}". 이름은 나중에 바꿀 수 있어요.',
-  "onboardingA.vehicle.hint": "연식, 제조사, 모델. 알림이 차 이름을 부를 수 있게요.",
+  "onboardingA.vehicle.yearOlder": "그 이전",
+  "onboardingA.vehicle.makeSearch": "제조사 검색",
+  "onboardingA.vehicle.makeOther": "기타",
+  "onboardingA.vehicle.makeNone": "결과가 없어요. 기타를 눌러 직접 입력하세요.",
+  "onboardingA.vehicle.modelOptional": "모델(선택)",
+  "onboardingA.vehicle.hint": "연식과 제조사. 알림이 차 이름을 부를 수 있게요. 모델은 선택이에요.",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
   "onboardingA.odometer.title.km": "주행거리가 몇 킬로미터예요?",
@@ -223,6 +229,9 @@ export const ko: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "대략이어도 괜찮아요. 주행거리로 기한이 오는 정비는 이 숫자로 계산해요.",
+  "onboardingA.odometer.later": "나중에 입력할게요",
+  "onboardingA.odometer.laterCaption":
+    "차에서 멀리 있나요? 이 연식이면 약 {distance}부터 시작할 수 있고, 실제 값을 넣을 때까지 추정치로 표시해요.",
 
   "onboardingA.drive.title": "한 해에 얼마나 타세요?",
   "onboardingA.drive.subtitle":
@@ -250,6 +259,7 @@ export const ko: Fragment = {
   "onboardingB.service.caption": "하나만 고르면 돼요. 나머지는 언제든 기록할 수 있어요.",
   "onboardingB.service.when": "{service}, 언제였어요?",
   "onboardingB.service.whenOther": "그 정비는 언제였어요?",
+  "onboardingB.service.whenPending": "언제였어요?",
   "onboardingB.service.somethingElse": "그 외",
   "onboardingB.service.ago.now": "방금",
   "onboardingB.service.ago.lastMonth": "지난달",
@@ -261,7 +271,7 @@ export const ko: Fragment = {
   "onboardingB.tracking.subtitle": "무엇이든, 대부분의 사람보다는 하고 있는 거예요.",
   "onboardingB.tracking.legend": "현재",
   "onboardingB.tracking.caption":
-    "무엇을 고르든, Glovebox는 기록한 걸 전부 무료로 CSV로 내보내요.",
+    "무엇을 고르든, Wrenchy는 기록한 걸 전부 무료로 CSV로 내보내요.",
   "onboardingB.tracking.memory": "기억",
   "onboardingB.tracking.receipts": "차 안 영수증",
   "onboardingB.tracking.spreadsheet": "스프레드시트",
@@ -278,6 +288,7 @@ export const ko: Fragment = {
   "onboardingB.worry.records": "기록 분실",
   "onboardingB.worry.resale": "중고차 가치",
   "onboardingB.worry.upsell": "과잉 정비 권유",
+  "onboardingB.worry.optional": "모두 선택이에요. 건너뛰어도 다음 화면은 당신의 차만으로 만들어져요.",
 
   "onboardingB.analyzing.title": "일정을 계산하고 있어요.",
   "onboardingB.analyzing.odometer": "{vehicle}, {distance}",
@@ -292,6 +303,7 @@ export const ko: Fragment = {
   },
   "onboardingB.analyzing.done": "완료",
   "onboardingB.analyzing.progress": "{total}개 중 {index}개 확인",
+  "onboardingB.analyzing.skip": "아무 곳이나 누르면 넘어가요.",
 
   // onboardingC
   "onboardingC.back": "뒤로",
@@ -323,7 +335,7 @@ export const ko: Fragment = {
 
   "onboardingC.help.title": "셋 다 같은 문제예요.",
   "onboardingC.help.subtitle":
-    "경고해 줄 수 있는 형태로 아무것도 적혀 있지 않다는 것. Glovebox가 하는 일이 딱 그거예요.",
+    "경고해 줄 수 있는 형태로 아무것도 적혀 있지 않다는 것. Wrenchy가 하는 일이 딱 그거예요.",
   "onboardingC.help.continue": "계속",
 
   "onboardingC.reviews.title": "이 앱은 이것들 때문에 있어요.",
@@ -350,7 +362,7 @@ export const ko: Fragment = {
     other: "정비 {total}건 중 {count}건은 기록이 없어요",
   },
   "pain.blind.body":
-    "Glovebox는 본 적 없는 걸 증명할 수 없고, 그건 나도 마찬가지예요. 아니라는 게 확인되기 전까지는 전부 기한이 된 것으로 봐요.",
+    "Wrenchy는 본 적 없는 걸 증명할 수 없고, 그건 나도 마찬가지예요. 아니라는 게 확인되기 전까지는 전부 기한이 된 것으로 봐요.",
   "pain.blind.fix": "하나만 기록하면 그 정비의 일정이 시작돼요. 한 건에 30초, 한 번만요.",
 
   "pain.memory.legend": "기억으로",
@@ -470,7 +482,7 @@ export const ko: Fragment = {
   "settings.reminders.denied": "알림이 거부됐어요. iOS 설정에서 켤 수 있어요.",
   "settings.reminders.error": "알림 권한을 요청하지 못했어요.",
   "settings.reminders.openSettings":
-    "iOS 설정 › Glovebox › 알림에서 알림을 다시 켜 주세요.",
+    "iOS 설정 › Wrenchy › 알림에서 알림을 다시 켜 주세요.",
 
   "settings.manage": "구독 관리",
   "settings.manage.error": "구독 설정을 열지 못했어요. 통신이 잘 되는 곳에서 다시 시도해 주세요.",
@@ -522,6 +534,7 @@ export const ko: Fragment = {
 
   "vehicle.odometer": "주행거리",
   "vehicle.odometer.notSet": "미입력",
+  "vehicle.odometer.estimated": "주행거리(추정)",
   "vehicle.lastService": "마지막 정비",
   "vehicle.lastService.none": "아직 없음",
 

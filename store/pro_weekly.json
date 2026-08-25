@@ -1,0 +1,62 @@
+{
+  "de-DE": {
+    "name": "Pro (wöchentlich)",
+    "description": "Unbegrenzte Fahrzeuge und eigene Service-Intervalle"
+  },
+  "en-AU": {
+    "name": "Pro (Weekly)",
+    "description": "Unlimited vehicles and custom service intervals"
+  },
+  "en-CA": {
+    "name": "Pro (Weekly)",
+    "description": "Unlimited vehicles and custom service intervals"
+  },
+  "en-GB": {
+    "name": "Pro (Weekly)",
+    "description": "Unlimited vehicles and custom service intervals"
+  },
+  "es-ES": {
+    "name": "Pro (semanal)",
+    "description": "Vehículos ilimitados e intervalos a medida"
+  },
+  "es-MX": {
+    "name": "Pro (semanal)",
+    "description": "Vehículos ilimitados e intervalos a medida"
+  },
+  "fr-CA": {
+    "name": "Pro (hebdomadaire)",
+    "description": "Véhicules illimités, intervalles personnalisés"
+  },
+  "fr-FR": {
+    "name": "Pro (hebdomadaire)",
+    "description": "Véhicules illimités, intervalles personnalisés"
+  },
+  "it": {
+    "name": "Pro (settimanale)",
+    "description": "Veicoli illimitati e intervalli personalizzati"
+  },
+  "ja": {
+    "name": "Pro (週額)",
+    "description": "無制限の車両登録とカスタム整備間隔"
+  },
+  "ko": {
+    "name": "Pro (주간)",
+    "description": "차량 무제한 등록과 맞춤 정비 주기"
+  },
+  "nl-NL": {
+    "name": "Pro (wekelijks)",
+    "description": "Onbeperkt voertuigen en eigen service-intervallen"
+  },
+  "pl": {
+    "name": "Pro (tygodniowo)",
+    "description": "Nielimitowane pojazdy i własne interwały serwisowe"
+  },
+  "pt-BR": {
+    "name": "Pro (semanal)",
+    "description": "Veículos ilimitados e intervalos personalizados"
+  },
+  "sv": {
+    "name": "Pro (veckovis)",
+    "description": "Obegränsat med bilar och egna serviceintervall"
+  }
+}

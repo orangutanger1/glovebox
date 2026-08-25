@@ -1,7 +1,7 @@
 {
-	"name": "Glovebox",
+	"name": "Wrenchy",
 	"bundleId": "com.idea6.carmaintenancelog",
-	"version": "1.0",
+	"version": "1.0.2",
 	"appDir": ".",
 	"asc": {
 		"appId": "6797103341",
@@ -11,7 +11,7 @@
 	},
 	"eas": {
 		"projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6",
-		"owner": "mayfield",
+		"owner": "nakodan-capital",
 		"profile": "production",
 		"platform": "ios",
 		"channel": "production"
@@ -23,6 +23,7 @@
 			"en-AU",
 			"en-CA",
 			"en-GB",
+			"en-US",
 			"es-ES",
 			"es-MX",
 			"fr-CA",
@@ -43,8 +44,11 @@
 		"keyEnv": "EXPO_PUBLIC_RC_IOS_KEY"
 	},
 	"ads": {
-		"orgId": null,
-		"dir": "aso/asa"
+		"orgId": "23259140",
+		"dir": "aso/asa",
+		"subPrice": 2.33,
+		"retentionMonths": 12,
+		"targetCpi": 1.1
 	},
 	"aso": {
 		"dir": "aso",

@@ -13,9 +13,15 @@ import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 
 /**
+ * How long Continue insists on the scroll before it stops standing in the way.
+ * Short enough to be about the tap rather than about reading time.
+ */
+const NUDGE_MS = 2000;
+
+/**
  * The social-proof beat, with no social proof.
  *
- * Glovebox has not shipped, so it has no ratings, no user count and no
+ * Wrenchy has not shipped, so it has no ratings, no user count and no
  * testimonials, and the version of this screen that invents them is the one
  * thing the product cannot come back from: every other screen in this flow is
  * asking the user to believe a number. What it does have is the reason it was
@@ -27,11 +33,14 @@ import { useAdvance } from "../../src/onboarding/nav";
  * The tallies are the claim, and the label on each one says exactly what it
  * counts: a mention, not a verdict.
  *
- * Continue is gated on reaching the bottom. This is the only screen in the
- * flow whose whole content is the argument rather than a summary of it, and a
- * user who taps past the fourth tally has been shown evidence they did not
- * read. The button says which of the two states it is in, because a control
- * that is disabled for a reason the user cannot see is a broken control.
+ * Continue asks for the scroll and then stops insisting. This is the only
+ * screen in the flow whose whole content is the argument rather than a summary
+ * of it, so the label still says which of the two states it is in and the
+ * scroll is still the thing being asked for. What it no longer does is refuse:
+ * a disabled button on the one screen whose job is to earn trust taught the
+ * most impatient users that the app argues back, and they are the users this
+ * screen exists for. The label does not change when the timeout elapses,
+ * because nothing about the argument has.
  */
 export default function OnboardingReviews() {
   const advance = useAdvance("reviews");
@@ -45,11 +54,12 @@ export default function OnboardingReviews() {
         total: REVIEW_EVIDENCE.total,
         apps: REVIEW_EVIDENCE.apps,
       })}
-      footer={({ atBottom }) => (
+      gateTimeoutMs={NUDGE_MS}
+      footer={({ atBottom, unlocked }) => (
         <Button
           label={t(atBottom ? "onboardingC.reviews.continue" : "onboardingC.reviews.scroll")}
           onPress={advance}
-          disabled={!atBottom}
+          disabled={!unlocked}
         />
       )}
     >

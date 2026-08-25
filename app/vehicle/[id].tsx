@@ -183,7 +183,11 @@ export default function VehicleDetail() {
                   style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}
                 >
                   <Gauge
-                    legend={t("vehicle.odometer")}
+                    legend={
+                      vehicle?.odometer && vehicle.odometer_estimated
+                        ? t("vehicle.odometer.estimated")
+                        : t("vehicle.odometer")
+                    }
                     value={
                       vehicle?.odometer
                         ? formatNumber(vehicle.odometer)

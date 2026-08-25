@@ -37,7 +37,7 @@ export const esMX: Fragment = {
     "Cada cuándo toca cada mantenimiento. Cambia el que quieras para que empate con tu carro, con el manual, con el clima en el que manejas o con lo duro que lo usas.",
 
   "language.intro":
-    "Glovebox sigue tu celular a menos que elijas un idioma aquí. Los nombres de los mantenimientos usan las palabras que usa un taller en ese idioma.",
+    "Wrenchy sigue tu celular a menos que elijas un idioma aquí. Los nombres de los mantenimientos usan las palabras que usa un taller en ese idioma.",
 
   "layout.settings": "Configuración",
 
@@ -138,7 +138,7 @@ export const esMX: Fragment = {
   "settings.reminders.denied":
     "Rechazaste los recordatorios. Puedes activarlos en Configuración de iOS.",
   "settings.reminders.openSettings":
-    "Abre Configuración de iOS › Glovebox › Notificaciones para volver a activar los recordatorios.",
+    "Abre Configuración de iOS › Wrenchy › Notificaciones para volver a activar los recordatorios.",
   "settings.manage": "Administrar suscripción",
   "settings.manage.error":
     "No se pudo abrir la configuración de la suscripción. Vuelve a intentarlo con mejor conexión.",

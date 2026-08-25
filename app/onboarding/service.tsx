@@ -12,6 +12,7 @@ import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboar
 import { distancePerYearFor, odometerDaysAgo } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackQuizAnswer } from "../../src/analytics";
 import {
   SERVICE_TYPES,
   SERVICE_WHEN,
@@ -121,6 +122,7 @@ export default function OnboardingService() {
     }
 
     setAnswers({ service: type, serviceWhen: when });
+    trackQuizAnswer("service", { service: recordType(type), when });
     advance();
   }
 
@@ -138,25 +140,29 @@ export default function OnboardingService() {
         onPress={setType}
       />
 
-      {/* The "when" half only appears once there is something to date. Both
-          question and answer now stay on screen together, so the user can see
-          what they picked instead of the title mutating out from under them. */}
-      {type ? (
-        <ChipRow
-          legend={
-            type === "Something else"
+      {/* Rendered from mount, dimmed until there is something to date. The row
+          used to appear only after a type was picked, which meant one screen
+          silently required two answers: the user answered the question they
+          could see, reached for Continue, and found a second question in the
+          space the button had been. A control that is visibly not live yet is
+          the shape of the question stated up front. */}
+      <ChipRow
+        legend={
+          type === null
+            ? t("onboardingB.service.whenPending")
+            : type === "Something else"
               ? t("onboardingB.service.whenOther")
               : t("onboardingB.service.when", { service: serviceName(type) })
-          }
-          options={whens}
-          selected={when ? [when] : []}
-          onPress={setWhen}
-        />
-      ) : (
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-          {t("onboardingB.service.caption")}
-        </Text>
-      )}
+        }
+        options={whens}
+        selected={when ? [when] : []}
+        onPress={setWhen}
+        disabled={type === null}
+      />
+
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+        {t("onboardingB.service.caption")}
+      </Text>
     </OnboardingScreen>
   );
 }

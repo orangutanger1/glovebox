@@ -10,6 +10,6 @@ import type { Fragment } from "../types";
 export const language: Fragment = {
   "language.title": "Language",
   "language.intro":
-    "Glovebox follows your phone unless you pick a language here. Service names use the words garages use in that language.",
+    "Wrenchy follows your phone unless you pick a language here. Service names use the words garages use in that language.",
   "language.system": "System",
 };

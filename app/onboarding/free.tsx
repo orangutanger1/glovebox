@@ -38,7 +38,7 @@ export default function OnboardingFree() {
       route="free"
       title={t("offer.free.title")}
       subtitle={t("offer.free.subtitle", { count: plan.items.length, vehicle: vehicleName })}
-      footer={<Button label={t("offer.free.cta")} onPress={finish} />}
+      footer={<Button label={t("offer.free.cta")} onPress={() => finish("free")} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>

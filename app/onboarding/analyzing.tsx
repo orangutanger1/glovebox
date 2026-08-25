@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
@@ -11,14 +11,16 @@ import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
 
 /**
- * Long enough to read a line and look at it, rather than to watch four of them
- * flash past. The first pass was 420ms a line and the whole screen was gone
- * inside two seconds, which is not a pause between a question and an answer,
- * it is a flicker.
+ * Long enough to read a line, not long enough to wait for one. The first pass
+ * was 420ms and the whole screen was gone inside two seconds, which is a
+ * flicker; the second was 950ms a line plus a 1,400ms handoff, which is 5.2
+ * seconds of a user holding a phone waiting for arithmetic that finished
+ * before the screen mounted. 650 and 700 put the whole readout a little over
+ * three seconds, and a tap anywhere ends it immediately.
  */
-const LINE_MS = 950;
+const LINE_MS = 650;
 /** The beat after the last line, which is the one that carries the finding. */
-const HANDOFF_MS = 1400;
+const HANDOFF_MS = 700;
 
 /**
  * The pause between the last question and the answer.
@@ -40,6 +42,13 @@ const HANDOFF_MS = 1400;
  * It replaces itself rather than pushing, so Back from the results lands on
  * the last question instead of bouncing off a screen that immediately moves
  * forward again.
+ *
+ * A tap anywhere ends it. Everything on this screen was computed before it
+ * mounted, so every millisecond of it is presentation: a user who has read the
+ * four lines is owed the next screen rather than the rest of an animation, and
+ * the one screen in the flow with no control on it was the one screen the user
+ * could not hurry. The bar is still honest, because the timings it draws are
+ * still the timings it would have taken.
  */
 export default function OnboardingAnalyzing() {
   const advance = useAdvance("analyzing", "replace");
@@ -74,17 +83,31 @@ export default function OnboardingAnalyzing() {
 
   const [shown, setShown] = useState(0);
 
+  // The timer and the tap must not both land. `advance` here is a `replace`,
+  // and replacing twice puts the results screen on the stack over itself.
+  const left = useRef(false);
+  const leave = useCallback(() => {
+    if (left.current) return;
+    left.current = true;
+    advance();
+  }, [advance]);
+
   useEffect(() => {
     const done = shown >= lines.length;
     const timer = setTimeout(
-      () => (done ? advance() : setShown((n) => n + 1)),
+      () => (done ? leave() : setShown((n) => n + 1)),
       done ? HANDOFF_MS : LINE_MS
     );
     return () => clearTimeout(timer);
-  }, [shown, lines.length, advance]);
+  }, [shown, lines.length, leave]);
 
   return (
-    <OnboardingScreen route="analyzing" center title={t("onboardingB.analyzing.title")}>
+    <OnboardingScreen
+      route="analyzing"
+      center
+      title={t("onboardingB.analyzing.title")}
+      onTap={leave}
+    >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           {lines.map((line, i) => {
@@ -138,6 +161,13 @@ export default function OnboardingAnalyzing() {
           </View>
         </View>
       </Panel>
+
+      {/* Said out loud, because a tap target with nothing on it is not a
+          control. Below the panel rather than inside it: the readout is the
+          screen, and this is an instruction about the screen. */}
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+        {t("onboardingB.analyzing.skip")}
+      </Text>
     </OnboardingScreen>
   );
 }

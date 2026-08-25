@@ -22,7 +22,7 @@ module.exports = ({ config }) => {
 
   return {
     ...config,
-    name: "Glovebox (dev)",
+    name: "Wrenchy (dev)",
     scheme: `${config.scheme}dev`,
     ios: {
       ...config.ios,

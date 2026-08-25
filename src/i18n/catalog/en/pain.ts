@@ -27,7 +27,7 @@ export const pain: Fragment = {
     other: "{count} of {total} services have nothing on file",
   },
   "pain.blind.body":
-    "Glovebox cannot prove what it has never seen, and neither can you. Until something says otherwise, every one of them is treated as due.",
+    "Wrenchy cannot prove what it has never seen, and neither can you. Until something says otherwise, every one of them is treated as due.",
   "pain.blind.fix": "Log one and its whole schedule starts. Thirty seconds each, once.",
 
   "pain.memory.legend": "From memory",

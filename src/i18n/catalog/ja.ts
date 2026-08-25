@@ -58,7 +58,7 @@ export const ja: Fragment = {
   "garage.title": "ガレージ",
   "garage.logService": "整備を記録",
   "garage.addVehicle": "車を追加",
-  "garage.empty": "まだ車がありません。追加すると、Gloveboxが整備記録を付け始めます。",
+  "garage.empty": "まだ車がありません。追加すると、Wrenchyが整備記録を付け始めます。",
   "garage.storeUnreachable": "ストアに接続できませんでした。電波の良い場所でやり直してください。",
 
   "garage.badge.overdue": "期限切れ",
@@ -66,6 +66,7 @@ export const ja: Fragment = {
 
   "garage.odometer": "走行距離",
   "garage.odometer.notSet": "未設定",
+  "garage.odometer.estimated": "走行距離（推定）",
 
   "garage.over": "{distance}超過",
   "garage.dueNow": "期限到来",
@@ -101,7 +102,7 @@ export const ja: Fragment = {
   // language
   "language.title": "言語",
   "language.intro":
-    "ここで選ばない限り、Gloveboxは端末の言語に従います。整備の名前には、その言語の整備工場が使う言葉を出します。",
+    "ここで選ばない限り、Wrenchyは端末の言語に従います。整備の名前には、その言語の整備工場が使う言葉を出します。",
   "language.system": "端末に合わせる",
 
   // layout
@@ -111,7 +112,7 @@ export const ja: Fragment = {
   "layout.addVehicle": "車を追加",
   "layout.vehicle": "車両",
   "layout.logService": "整備を記録",
-  "layout.fatal.title": "Gloveboxが整備記録を開けませんでした。",
+  "layout.fatal.title": "Wrenchyが整備記録を開けませんでした。",
   "layout.fatal.body":
     "削除されたものはありません。データベースは最後に正常だった状態に戻しました。アプリを開き直してください。これが続く場合は、再インストールする前にサポートへご連絡ください。記録を実際に失う原因になるのは、その再インストールです。",
 
@@ -141,7 +142,7 @@ export const ja: Fragment = {
   "offer.paywall.title": "ガレージの準備ができました。",
   "offer.paywall.subtitle":
     "下の予定表はどちらを選んでもあなたのものです。Proで増えるのは、残りのガレージと自分の整備間隔です。",
-  "offer.paywall.cta": "Glovebox Proを見る",
+  "offer.paywall.cta": "Wrenchy Proを見る",
   "offer.paywall.vehicle": "車両",
   "offer.paywall.scheduled": "予定済み",
   "offer.paywall.services": { other: "件" },
@@ -200,7 +201,12 @@ export const ja: Fragment = {
   "onboardingA.vehicle.yearMax": "年式は{max}年より後にはできません。",
   "onboardingA.vehicle.required": "必須です。",
   "onboardingA.vehicle.saved": "「{name}」として保存しました。名前は後から変更できます。",
-  "onboardingA.vehicle.hint": "年式・メーカー・車種。通知で車名を出すために使います。",
+  "onboardingA.vehicle.yearOlder": "それ以前",
+  "onboardingA.vehicle.makeSearch": "メーカーを検索",
+  "onboardingA.vehicle.makeOther": "その他",
+  "onboardingA.vehicle.makeNone": "該当なし。「その他」から入力できます。",
+  "onboardingA.vehicle.modelOptional": "車種（任意）",
+  "onboardingA.vehicle.hint": "年式とメーカー。通知で車名を出すために使います。車種は任意です。",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
   "onboardingA.odometer.title.km": "走行距離は何キロですか？",
@@ -209,6 +215,8 @@ export const ja: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "だいたいで構いません。距離で期限が来る整備の日付は、この数字から出します。",
+  "onboardingA.odometer.later": "あとで入力する",
+  "onboardingA.odometer.laterCaption": "車のそばにいませんか。この年式なら約{distance}から始められます。実際の値を入れるまでは推定として扱います。",
 
   "onboardingA.drive.title": "年間どのくらい走りますか？",
   "onboardingA.drive.subtitle":
@@ -235,6 +243,7 @@ export const ja: Fragment = {
   "onboardingB.service.caption": "1つ選んでください。残りはいつでも記録できます。",
   "onboardingB.service.when": "{service}はいつですか？",
   "onboardingB.service.whenOther": "その整備はいつですか？",
+  "onboardingB.service.whenPending": "いつでしたか？",
   "onboardingB.service.somethingElse": "その他",
   "onboardingB.service.ago.now": "つい最近",
   "onboardingB.service.ago.lastMonth": "先月",
@@ -246,7 +255,7 @@ export const ja: Fragment = {
   "onboardingB.tracking.subtitle": "どれであっても、多くの人より進んでいます。",
   "onboardingB.tracking.legend": "現状",
   "onboardingB.tracking.caption":
-    "どれを選んでも、記録したものはGloveboxが無料でCSVに書き出します。",
+    "どれを選んでも、記録したものはWrenchyが無料でCSVに書き出します。",
   "onboardingB.tracking.memory": "記憶",
   "onboardingB.tracking.receipts": "車内の伝票",
   "onboardingB.tracking.spreadsheet": "表計算ソフト",
@@ -263,6 +272,7 @@ export const ja: Fragment = {
   "onboardingB.worry.records": "整備記録の紛失",
   "onboardingB.worry.resale": "売却時の価値",
   "onboardingB.worry.upsell": "余計な追加整備",
+  "onboardingB.worry.optional": "すべて任意です。飛ばしても、次の画面はあなたの車だけから作られます。",
 
   "onboardingB.analyzing.title": "予定表を組み立てています。",
   "onboardingB.analyzing.odometer": "{vehicle}、{distance}",
@@ -273,6 +283,7 @@ export const ja: Fragment = {
   "onboardingB.analyzing.due": { other: "{count}件が要対応、{soon}件が間近" },
   "onboardingB.analyzing.done": "完了",
   "onboardingB.analyzing.progress": "{total}件中{index}件目を読み込み中",
+  "onboardingB.analyzing.skip": "どこでもタップでスキップします。",
 
   // onboardingC
   "onboardingC.back": "戻る",
@@ -302,7 +313,7 @@ export const ja: Fragment = {
 
   "onboardingC.help.title": "3つとも同じ問題です。",
   "onboardingC.help.subtitle":
-    "警告を出せる形で何も書き留められていない、ということです。Gloveboxがやるのは、そこだけです。",
+    "警告を出せる形で何も書き留められていない、ということです。Wrenchyがやるのは、そこだけです。",
   "onboardingC.help.continue": "続ける",
 
   "onboardingC.reviews.title": "このアプリは、これらがあって生まれました。",
@@ -325,7 +336,7 @@ export const ja: Fragment = {
   "pain.blind.legend": "記録なし",
   "pain.blind.headline": { other: "{total}件中{count}件の整備に記録がありません" },
   "pain.blind.body":
-    "Gloveboxは見ていないものを証明できませんし、あなたにも証明できません。何か記録が入るまで、そのすべてを期限が来たものとして扱います。",
+    "Wrenchyは見ていないものを証明できませんし、あなたにも証明できません。何か記録が入るまで、そのすべてを期限が来たものとして扱います。",
   "pain.blind.fix": "1件記録すれば、その整備の予定が動き出します。1件30秒、一度だけです。",
 
   "pain.memory.legend": "記憶頼り",
@@ -442,7 +453,7 @@ export const ja: Fragment = {
   "settings.reminders.denied": "通知が許可されませんでした。iOSの設定からオンにできます。",
   "settings.reminders.error": "通知の許可を求められませんでした。",
   "settings.reminders.openSettings":
-    "iOSの設定 › Glovebox › 通知 を開くと、通知をオンに戻せます。",
+    "iOSの設定 › Wrenchy › 通知 を開くと、通知をオンに戻せます。",
 
   "settings.manage": "サブスクリプションを管理",
   "settings.manage.error":
@@ -495,6 +506,7 @@ export const ja: Fragment = {
 
   "vehicle.odometer": "走行距離",
   "vehicle.odometer.notSet": "未設定",
+  "vehicle.odometer.estimated": "走行距離（推定）",
   "vehicle.lastService": "前回の整備",
   "vehicle.lastService.none": "まだありません",
 
