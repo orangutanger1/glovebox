@@ -2261,9 +2261,11 @@ git tag v1.0.0
 
 ## After v1 ships
 
-Iterate with `eas update` (OTA), not new builds. Every dependency in Task 1 Step 2 is already native-installed, so copy changes, layout fixes, new service types, and interval tweaks all ship instantly without review.
+Iterate with `npm run ota -- --message "what changed"` (OTA), not new builds. Every dependency in Task 1 Step 2 is already native-installed, so copy changes, layout fixes, new service types, and interval tweaks all ship instantly without review.
 
-Cut a new native build only for a new native module or an SDK upgrade. Before every `eas update`, diff `package.json` against the last build — an OTA that references a native module absent from installed builds crashes on launch.
+Never run `eas update` or `ship ota` by hand. `EXPO_PUBLIC_*` values are inlined into the bundle at publish time, and a publish without `--environment production` ships a bundle with none of them: on 2026-08-25 that left RevenueCat unconfigured, which is a native `fatalError` on the paywall button, and took the analytics key with it so nothing reported the crash. `scripts/ota.mjs` exports under the EAS environment, greps the bundle for every key the app cannot run without, and refuses to publish if one failed to inline. See `docs/superpowers/specs/2026-08-26-ota-environment-incident.md`.
+
+Cut a new native build only for a new native module or an SDK upgrade. `npm run ota` refuses when the native graph has drifted, which is the same check by a different name — an OTA that references a native module absent from installed builds crashes on launch.
 
 Once there is a week of install data, pull real search-term impressions:
 

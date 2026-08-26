@@ -67,7 +67,8 @@
     "eas:build": "[ -f .revenuecat.env ] && . ./.revenuecat.env; node scripts/eas-build.mjs",
     "eas:status": "node scripts/eas-build.mjs --status --live",
     "eas:accounts": "node scripts/eas-accounts.mjs",
-    "eas:switch": "node scripts/eas-switch.mjs"
+    "eas:switch": "node scripts/eas-switch.mjs",
+    "ota": "node scripts/ota.mjs"
   },
   "private": true
 }
