@@ -7,7 +7,7 @@ import * as QuickActions from "expo-quick-actions";
 import { useQuickActionCallback } from "expo-quick-actions/hooks";
 import { getDb } from "../src/db/client";
 import { DISCOUNT_OFFERING, hasOffering, initPurchases, isPro } from "../src/purchases";
-import { identifyFromPurchases, initAnalytics } from "../src/analytics";
+import { identifyFromPurchases, initAnalytics, reportFatals } from "../src/analytics";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { resumeRoute } from "../src/onboarding/flow";
@@ -94,6 +94,9 @@ export default function RootLayout() {
     initPurchases();
     // After `initPurchases`, so the RevenueCat app user id exists to key on.
     initAnalytics();
+    // Immediately after the client exists: a crash before this line is one
+    // nobody will ever see the stack for.
+    reportFatals();
     identifyFromPurchases().catch(() => {});
     // Weakest of the happiness signals and forgotten within a day. It is here
     // so that coming back repeatedly counts for something, never so that it

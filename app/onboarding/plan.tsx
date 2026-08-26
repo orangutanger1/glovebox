@@ -8,8 +8,7 @@ import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
-import { requestPermission, rescheduleAll } from "../../src/notify";
-import { hasAskedNotifyPermission, markAskedNotifyPermission } from "../../src/notify/prompt";
+import { canAskPermission, requestPermission, rescheduleAll } from "../../src/notify";
 import { trackNotificationPermission } from "../../src/analytics";
 import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -46,6 +45,11 @@ const SHOWN = 6;
  * alert three screens later after the paywall, on a screen they had not asked
  * anything from. The permission belongs to the button that promises it.
  *
+ * Whether to ask is iOS's answer, not a flag this app keeps. The flag was the
+ * second half of that bug: builds that deferred the prompt still stamped it, so
+ * the tap that was supposed to raise the alert skipped the request entirely and
+ * the button stayed silent forever.
+ *
  * "Not now" is a real answer and nothing re-asks: the garage does not ask, and
  * Settings only asks when the user taps the reminders row themselves.
  * Reminders are half the product, and nagging for them is the other half of
@@ -59,18 +63,21 @@ export default function OnboardingPlan() {
   async function onRemindMe() {
     if (busy) return;
     setBusy(true);
-    // Stamped before the prompt is awaited: iOS shows its alert once per
-    // install, and a force quit with it on the glass must not buy a second one.
-    const first = !hasAskedNotifyPermission();
-    markAskedNotifyPermission();
     try {
-      if (first) {
+      // Asked of iOS immediately before the request, so the alert appears on
+      // this tap or the system has already refused to show one.
+      if (await canAskPermission()) {
         const granted = await requestPermission();
         trackNotificationPermission(granted ? "granted" : "denied");
         // The service the quiz already logged has a due date; without this it
         // gets no notification until some later cold start, because the launch
         // that scheduled reminders ran before permission existed.
         if (granted) await rescheduleAll();
+      } else {
+        // Already granted, or hard-denied in a way no prompt can revisit. Both
+        // are outcomes the funnel has to see, and neither is a decision made
+        // here, so reminders are simply rebuilt against whatever iOS allows.
+        await rescheduleAll();
       }
     } catch {
       // Unavailable, which is not a denial and is not the user's answer

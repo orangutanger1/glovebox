@@ -85,6 +85,79 @@ export function track(event: string, properties?: Props): void {
 }
 
 /**
+ * Every crash the JavaScript side can still describe.
+ *
+ * In a release build an unhandled JS exception is not a red box, it is
+ * `RCTFatal`: the process is killed and the user sees the app close on a tap
+ * with no message, which is indistinguishable from a native crash and equally
+ * undebuggable from the outside. PostHog persists its queue before it flushes,
+ * so an event captured here survives the termination and arrives on the next
+ * launch — which is the only way a crash on someone else's phone becomes a
+ * stack trace here.
+ *
+ * The previous handler is called afterwards, always. Swallowing the fatal would
+ * leave the app running on a broken state it has already lost track of, which
+ * is worse than the crash.
+ */
+export function reportFatals(): void {
+  const utils = globalErrorUtils();
+  if (!utils || installed) return;
+  installed = true;
+  const previous = utils.getGlobalHandler?.();
+  utils.setGlobalHandler((error, isFatal) => {
+    track("js_error", {
+      message: errorField(error, "message") ?? String(error),
+      // Truncated: the frames near the throw are the ones that name the bug,
+      // and PostHog rejects properties past a size no stack needs.
+      stack: (errorField(error, "stack") ?? "").slice(0, 4000),
+      fatal: isFatal === true,
+    });
+    previous?.(error, isFatal);
+  });
+}
+
+type ErrorUtilsLike = {
+  getGlobalHandler?: () => ((error: unknown, isFatal?: boolean) => void) | undefined;
+  setGlobalHandler: (handler: (error: unknown, isFatal?: boolean) => void) => void;
+};
+
+/**
+ * React Native's own crash hook, which is a global rather than a module and is
+ * absent under the test renderer and on web. Narrowed rather than asserted:
+ * what is thrown at this boundary is by definition whatever went wrong.
+ */
+function globalErrorUtils(): ErrorUtilsLike | null {
+  const utils: unknown = Reflect.get(globalThis, "ErrorUtils");
+  if (!utils || typeof utils !== "object") return null;
+  const set: unknown = Reflect.get(utils, "setGlobalHandler");
+  if (typeof set !== "function") return null;
+  const get: unknown = Reflect.get(utils, "getGlobalHandler");
+  return {
+    setGlobalHandler: (handler) => void set.call(utils, handler),
+    getGlobalHandler:
+      typeof get === "function"
+        ? () => {
+            const previous: unknown = get.call(utils);
+            // Checked as callable; its parameter list is React Native's, not
+            // something this file can prove.
+            return typeof previous === "function"
+              ? (previous as (error: unknown, isFatal?: boolean) => void)
+              : undefined;
+          }
+        : undefined,
+  };
+}
+
+/** A string field off a thrown value, when the thrown value has one. */
+function errorField(error: unknown, field: "message" | "stack"): string | undefined {
+  if (!error || typeof error !== "object") return undefined;
+  const value: unknown = Reflect.get(error, field);
+  return typeof value === "string" ? value : undefined;
+}
+
+let installed = false;
+
+/**
  * The longest string the quiz's chips can produce. Anything longer did not
  * come from a chip, so it is not an enum and must not be sent.
  */

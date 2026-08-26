@@ -67,6 +67,25 @@ export async function requestPermission(): Promise<boolean> {
 }
 
 /**
+ * Whether asking iOS would actually put an alert on the glass.
+ *
+ * iOS is the only honest record of this. The app used to keep its own flag and
+ * skip the request whenever the flag was set, which is how "Turn on reminders"
+ * came to do nothing visible: an earlier build stamped the flag on a screen
+ * that only recorded an intention and deferred the real prompt, so the tap that
+ * promises the alert found the flag already set and asked for nothing. A local
+ * flag can only ever be a guess about a fact the system already holds.
+ *
+ * `canAskAgain` is false once the user has denied, and `requestPermissionsAsync`
+ * would return denied without prompting in that case anyway; this just means the
+ * caller can tell "nothing will appear" from "nothing appeared".
+ */
+export async function canAskPermission(): Promise<boolean> {
+  const { status, canAskAgain } = await Notifications.getPermissionsAsync();
+  return status !== "granted" && canAskAgain;
+}
+
+/**
  * Clears and rebuilds every scheduled notification from the current records.
  * Cheap enough to call after any write; avoids drift between DB and OS state.
  */

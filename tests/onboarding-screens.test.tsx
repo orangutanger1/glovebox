@@ -456,3 +456,64 @@ test("the last question takes no answer at all", () => {
   expect(symptoms.length).toBeGreaterThan(0);
   expect(texts(render(OnboardingHelp)).join(" ").length).toBeGreaterThan(0);
 });
+
+/** The mocked native notification module, as this file installed it. */
+function notifications(): { requestPermissionsAsync: jest.Mock; getPermissionsAsync: jest.Mock } {
+  const mocked = jest.requireMock("expo-notifications");
+  const { requestPermissionsAsync, getPermissionsAsync } = mocked as {
+    requestPermissionsAsync: jest.Mock;
+    getPermissionsAsync: jest.Mock;
+  };
+  return { requestPermissionsAsync, getPermissionsAsync };
+}
+
+/**
+ * Taps a button whose handler is asynchronous and waits for all of it.
+ *
+ * `press` commits the tap and returns; a handler that asks iOS for permission
+ * before it navigates is still mid-flight at that point, and asserting on the
+ * navigation would be asserting on a race.
+ */
+async function pressAndSettle(
+  tree: TestRenderer.ReactTestRenderer,
+  label: string
+): Promise<void> {
+  const target = tree.root.findAll((n) => n.props.label === label && !n.props.disabled);
+  if (target.length === 0) throw new Error(`nothing live is labelled "${label}"`);
+  await act(async () => {
+    await target[0].props.onPress();
+  });
+}
+
+test("the reminders button raises the iOS prompt on the tap that promises it", async () => {
+  const { requestPermissionsAsync, getPermissionsAsync } = notifications();
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+
+  // What iOS says about an install it has never asked. The app used to consult
+  // a flag of its own here, and a flag stamped by an earlier build that only
+  // recorded the intention left this button doing nothing visible at all.
+  getPermissionsAsync.mockResolvedValue({ status: "undetermined", canAskAgain: true });
+  requestPermissionsAsync.mockClear();
+
+  await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
+
+  expect(requestPermissionsAsync).toHaveBeenCalled();
+  expect(navigated).toContain("/onboarding/paywall");
+});
+
+test("a permission iOS will not re-ask is not asked for, and does not block the flow", async () => {
+  const { requestPermissionsAsync, getPermissionsAsync } = notifications();
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+
+  getPermissionsAsync.mockResolvedValue({ status: "denied", canAskAgain: false });
+  requestPermissionsAsync.mockClear();
+
+  await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
+
+  expect(requestPermissionsAsync).not.toHaveBeenCalled();
+  expect(navigated).toContain("/onboarding/paywall");
+
+  getPermissionsAsync.mockResolvedValue({ status: "granted", canAskAgain: false });
+});

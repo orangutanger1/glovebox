@@ -50,6 +50,28 @@ export function initPurchases(): void {
   Purchases.enableAdServicesAttributionTokenCollection().catch(() => {});
 }
 
+/**
+ * Whether the native SDK is holding a configuration, asked of the SDK rather
+ * than inferred from `initPurchases` having run.
+ *
+ * Nothing may present RevenueCat UI without this. `RevenueCatUI.presentPaywall`
+ * reaches `Purchases.shared` on the native side, and reading that singleton
+ * before `configure` is a Swift `fatalError`: the process is killed, no
+ * JavaScript exception is ever raised, and the app "just closes" on the tap.
+ * A build or an OTA update published without `EXPO_PUBLIC_RC_IOS_KEY` inlined
+ * is enough to reach it, which is exactly what shipped: the key lives in the
+ * EAS environment and an update published without `--environment production`
+ * carries `undefined` into the bundle, so `initPurchases` returns early and the
+ * paywall button becomes a crash.
+ */
+async function configured(): Promise<boolean> {
+  try {
+    return await Purchases.isConfigured();
+  } catch {
+    return false;
+  }
+}
+
 export async function isPro(): Promise<boolean> {
   try {
     const info = await Purchases.getCustomerInfo();
@@ -60,6 +82,7 @@ export async function isPro(): Promise<boolean> {
 }
 
 export async function presentPaywall(): Promise<boolean> {
+  if (!(await configured())) return false;
   const result = await RevenueCatUI.presentPaywallIfNeeded({
     requiredEntitlementIdentifier: ENTITLEMENT,
   });
@@ -82,6 +105,12 @@ export type PaywallOutcome = "purchased" | "dismissed" | "unavailable";
  */
 export async function presentOffering(identifier?: string): Promise<PaywallOutcome> {
   const offering = identifier ?? "current";
+  if (!(await configured())) {
+    // The crash case, reported as its own reason so a build shipped without
+    // the key is one event in the funnel rather than a cliff of terminations.
+    track("paywall_unconfigured", { offering });
+    return "unavailable";
+  }
   try {
     const params: { offering?: PurchasesOffering } = {};
     if (identifier) {
@@ -161,5 +190,7 @@ export async function restore(): Promise<boolean> {
 export async function presentCustomerCenter(
   callbacks?: CustomerCenterCallbacks
 ): Promise<void> {
+  // Same fatal native path as the paywall: no configuration, no sheet.
+  if (!(await configured())) return;
   await RevenueCatUI.presentCustomerCenter(callbacks ? { callbacks } : undefined);
 }
