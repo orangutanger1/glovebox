@@ -12,6 +12,7 @@ import { previousRoute } from "../../src/onboarding/flow";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
+import { useDwell } from "../../src/onboarding/useDwell";
 
 /**
  * The three findings, one at a time, on the app's only red screens.
@@ -27,11 +28,24 @@ import { useAdvance } from "../../src/onboarding/nav";
  * a warning lamp coming on, and if the flow used red anywhere else it would
  * not work here.
  */
+
+/**
+ * How long each card holds Continue before it goes live.
+ *
+ * The three cards share one route and one button position, so three fast taps
+ * used to skip two findings without either of them being on the glass long
+ * enough to read a headline. Short enough to be about the spam and not about
+ * reading speed: a user who means to move on barely notices it, and a user who
+ * is drumming on the glass sees the second and third card at all.
+ */
+const DWELL_MS = 1200;
+
 export default function OnboardingSymptoms() {
   const router = useRouter();
   const advance = useAdvance("symptoms");
   const { cards } = useOnboardingFindings();
   const [index, setIndex] = useState(0);
+  const ready = useDwell(DWELL_MS, index);
 
   const card = cards[index];
 
@@ -65,6 +79,7 @@ export default function OnboardingSymptoms() {
             index < cards.length - 1 ? "onboardingC.symptoms.next" : "onboardingC.symptoms.last"
           )}
           onPress={onContinue}
+          disabled={!ready}
         />
       }
       center

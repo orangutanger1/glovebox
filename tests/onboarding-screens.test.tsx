@@ -397,6 +397,33 @@ test("the evidence gate nudges rather than blocks", () => {
   jest.useRealTimers();
 });
 
+test("each symptoms card holds Continue briefly, and holds it again on the next card", () => {
+  jest.useFakeTimers();
+  const tree = render(OnboardingSymptoms);
+  const button = () => tree.root.findAll((n) => n.props.label !== undefined)[0];
+  const headline = () => texts(tree).join(" ");
+
+  // The whole point: three fast taps used to skip two of the three findings,
+  // because all three share one route and one button position. `disabled` is
+  // asserted rather than a bypassed `onPress`, which Pressable would refuse to
+  // deliver but a direct props call happily fires.
+  expect(button().props.disabled).toBe(true);
+  const first = headline();
+
+  act(() => {
+    jest.advanceTimersByTime(1200);
+  });
+  expect(button().props.disabled).toBe(false);
+
+  act(() => {
+    button().props.onPress();
+  });
+  expect(headline()).not.toBe(first);
+  // The dwell restarts per card rather than per mount.
+  expect(button().props.disabled).toBe(true);
+  jest.useRealTimers();
+});
+
 test("the loader draws a bar and holds the screen for the whole readout", () => {
   jest.useFakeTimers();
   const tree = render(OnboardingAnalyzing);

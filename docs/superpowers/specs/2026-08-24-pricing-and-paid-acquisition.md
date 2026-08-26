@@ -86,6 +86,16 @@ PostHog project 574255 (US cloud). The ingestion key is an EAS environment
 variable in all three environments and in `.posthog.env` for local runs;
 account tokens are at `~/.omp/posthog/car.json`, never in the repo.
 
+Note the two credentials are not interchangeable, which cost a session to
+learn. The `phc_` project key only *writes*: it authenticates ingestion and
+cannot read a single event back. Reading the funnel needs a **personal API key**
+(`phx_`), scoped to this project with `query:read`, `event:read`, `insight:read`
+and `person:read`, at `~/.omp/posthog/car.key`. The `pha_`/`phr_` OAuth pair
+that used to sit in `car.json` is gone: it expired, and the refresh endpoint
+recorded alongside it was not the one that would have renewed it, so the read
+path died silently while ingestion kept working. A personal API key does not
+expire. `car.json` now carries `personalApiKey` and the resolved `queryUrl`.
+
 Both require a **native build**. They cannot ship over OTA.
 
 ## Ads account corrections

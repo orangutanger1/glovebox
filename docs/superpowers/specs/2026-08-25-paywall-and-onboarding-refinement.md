@@ -127,6 +127,46 @@ implies, but **do not change prices without explicit sign-off**. Note that
 uses to value an install; it must move in lockstep with any price change or
 every future CPI target is computed against the wrong number.
 
+**Signed off 2026-08-25 and applied.** The four ASC subscriptions were moved to
+the ladder above from the equalization tables already committed under
+`store/pricing/`, via `asc subscriptions pricing prices import`, 175 territories
+each. The two annual products both moved: `pro_annual_standard` is the first
+paywall and `pro_annual` is the trial offering behind the second, and leaving
+one behind would have priced the same year at two numbers. The increases went in
+with `--preserved` so any existing subscriber keeps their price and Apple never
+has to ask for consent; the weekly *decrease* went in without it, because
+preserving someone at the old, higher weekly price is not a kindness. Apple
+schedules price changes on APPROVED subscriptions for the next day, so these
+take effect 2026-08-26 and `asc subscriptions pricing summary` reports the new
+number before RevenueCat's live read does.
+
+`ads.subPrice` needed no change, and the lockstep warning above was answered
+before it was written: 2.33 is $27.99 ÷ 12, and $27.99 is Apple's **70%** of
+$39.99, not of the old $19.99. This app is not on the Small Business Program —
+`asc subscriptions pricing summary` reports year-1 proceeds of $28.00 against
+$33.99 in year two — so the bid model was already valuing an install at the new
+price while the store was still charging the old one. `ads.targetCpi` 1.10 is
+the same figure at the spec's 4% conversion rate and also stands.
+
+What the increase fixed beyond the numbers: weekly was $7.99 against a $2.99
+monthly, so the "cheap" plan cost 2.7× the middle one and the badge on the
+annual row was computing its saving against the *cheapest* per-month option in
+the list. At $3.99/wk against $5.99/mo the ladder is monotonic again and the
+anchor means what it says.
+
+**Alignment defect found in the shipped reorder, fixed in revision 37.** The
+annual row's label stack carried `width: fixed 130` where monthly and weekly
+carry `fill`, and the rows are horizontal stacks distributed `space_between`, so
+the slack was distributed and "Yearly Pro" sat a few points right of the two
+labels under it. Both that stack and the savings-badge text inside it are now
+`fill`; the published diff against revision 36 is those two properties and
+nothing else. Worth knowing for the next time this is inspected from a
+dashboard: RevenueCat's paywall preview renders the *other* app in this project
+(`appafd8673644`, products `monthly` / `yearly` / `lifetime`, which are attached
+to the same packages), so previews and `get_offering_prices` report that app's
+prices, not Wrenchy's. On device the SDK resolves by app and gets the right
+ones. Only `asc subscriptions pricing summary` is authoritative here.
+
 **5. Motivational CTA — currently fails.** `"See Wrenchy Pro"` describes
 navigation, which is exactly the "don't waste this on Continue" failure the
 reference names. It must name an outcome the user wants. On the trial screen,
