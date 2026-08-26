@@ -1,0 +1,52 @@
+{
+	"generatedAt": "2026-08-26T21:49:03.418Z",
+	"locale": "en-US",
+	"org": "23259140",
+	"source": "asc ads reports search-terms (2026-08-01 → 2026-08-26)",
+	"window": {
+		"from": "2026-08-01",
+		"to": "2026-08-26"
+	},
+	"params": {
+		"window": {
+			"from": "2026-08-01",
+			"to": "2026-08-26"
+		},
+		"locale": "en-US",
+		"killRule": {
+			"targetCpi": 1.1,
+			"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+			"wasteThreshold": 2.2,
+			"minTaps": 6,
+			"baselineInstallRate": 0.4,
+			"confidence": 0.95,
+			"breakeven": 27.96,
+			"retentionMonths": 12,
+			"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+			"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+		},
+		"campaign": null
+	},
+	"killRule": {
+		"targetCpi": 1.1,
+		"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+		"wasteThreshold": 2.2,
+		"minTaps": 6,
+		"baselineInstallRate": 0.4,
+		"confidence": 0.95,
+		"breakeven": 27.96,
+		"retentionMonths": 12,
+		"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+		"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+	},
+	"targetCpi": 1.1,
+	"wasteThreshold": 2.2,
+	"minTaps": 6,
+	"rows": 0,
+	"negatives": [],
+	"held": [],
+	"promotions": [],
+	"converting": [],
+	"asoGap": [],
+	"applied": null
+}

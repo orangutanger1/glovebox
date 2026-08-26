@@ -1,31 +1,96 @@
 {
-	"generatedAt": "2026-08-25T04:48:21.748Z",
+	"generatedAt": "2026-08-26T22:13:56.204Z",
 	"retain": 12,
 	"pruned": [],
 	"artifacts": [
 		{
+			"file": "snapshot-2026-08-26.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-08-26T22:11:45.718Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-07-28",
+					"to": "2026-08-26"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "snapshot.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-08-26T22:11:45.718Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-07-28",
+					"to": "2026-08-26"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "mining-2026-08-26.json",
+			"kind": "mining",
+			"generatedAt": "2026-08-26T21:49:03.418Z",
+			"params": {
+				"window": {
+					"from": "2026-08-01",
+					"to": "2026-08-26"
+				},
+				"locale": "en-US",
+				"killRule": {
+					"targetCpi": 1.1,
+					"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+					"wasteThreshold": 2.2,
+					"minTaps": 6,
+					"baselineInstallRate": 0.4,
+					"confidence": 0.95,
+					"breakeven": 27.96,
+					"retentionMonths": 12,
+					"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+					"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+				},
+				"campaign": null
+			},
+			"killRule": {
+				"targetCpi": 1.1,
+				"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+				"wasteThreshold": 2.2,
+				"minTaps": 6,
+				"baselineInstallRate": 0.4,
+				"confidence": 0.95,
+				"breakeven": 27.96,
+				"retentionMonths": 12,
+				"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+				"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+			}
+		},
+		{
 			"file": "campaign-plan.json",
 			"kind": "campaign-plan",
-			"generatedAt": "2026-08-25T04:47:38.193Z",
+			"generatedAt": "2026-08-26T02:38:48.322Z",
 			"params": {
-				"budget": 10,
+				"budget": 30,
 				"split": {
-					"exact": 0.5,
-					"discovery": 0.25,
-					"competitor": 0.15,
-					"brand": 0.1
+					"exact": 40,
+					"discovery": 20,
+					"competitor": 30,
+					"brand": 10
 				},
 				"top": 15,
 				"minVolume": 0,
 				"subPrice": 2.33,
 				"retentionMonths": 12,
 				"bidding": {
-					"seed": 0.35,
+					"seed": 0.65,
 					"min": 0.3,
-					"max": 2,
-					"source": "realised CPT",
-					"observedCpt": 0.35,
-					"derivation": "$0.35 (realised CPT) × (0.75 + demand/200), clamped to [$0.30, $2.00]"
+					"max": 1,
+					"source": "--bid",
+					"observedCpt": null,
+					"derivation": "$0.65 (--bid) × (0.75 + demand/200), clamped to [$0.30, $1.00]"
 				},
 				"killRule": {
 					"targetCpi": 1.1,
@@ -55,20 +120,6 @@
 		},
 		{
 			"file": "snapshot-2026-08-25.json",
-			"kind": "snapshot",
-			"generatedAt": "2026-08-25T04:47:35.615Z",
-			"params": {
-				"org": "23259140",
-				"window": {
-					"from": "2026-07-27",
-					"to": "2026-08-25"
-				},
-				"performance": true
-			},
-			"killRule": null
-		},
-		{
-			"file": "snapshot.json",
 			"kind": "snapshot",
 			"generatedAt": "2026-08-25T04:47:35.615Z",
 			"params": {
