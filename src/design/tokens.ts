@@ -1,3 +1,5 @@
+import { LIGHT } from "./palette";
+
 /**
  * The instrument-panel visual system. See
  * docs/superpowers/specs/2026-08-01-glovebox-instrument-panel-design.md.
@@ -9,37 +11,35 @@
  * Flipping those two colors is the whole system.
  */
 export const tokens = {
+  /**
+   * TEMPORARY. Deleted in the materials migration — see
+   * docs/superpowers/plans/2026-08-27-warm-garage-visual-redesign.md Task 3.
+   * Every key here maps an old instrument-panel name onto the light palette so
+   * the tree renders while components are migrated one file at a time.
+   */
   color: {
-    housing: "#0F1113",
-    metal: "#454A50",
+    housing: LIGHT.base,
+    metal: LIGHT.card,
     white: "#FFFFFF",
-    red: "#C1121F",
-
-    // Derived from white at an alpha. No new hues enter the system.
-    text: "#FFFFFF",
-    textMuted: "rgba(255,255,255,0.55)",
-    textFaint: "rgba(255,255,255,0.35)",
-    hairline: "rgba(255,255,255,0.10)",
-    hairlineLit: "rgba(255,255,255,0.30)",
-    edge: "rgba(0,0,0,0.55)",
-    /** The hard band under a raised control. Opaque, so it reads as a machined
-     *  edge rather than a soft shadow. Darker than the housing it sits on. */
-    edgeSolid: "#07080A",
-    metalHi: "#4E545B",
-    metalLo: "#3A3E43",
-
-    // Red is reserved: overdue and destructive only. Never a primary button.
-    redGlow: "rgba(193,18,31,0.45)",
-    redWash: "rgba(193,18,31,0.14)",
+    red: LIGHT.overdue,
+    text: LIGHT.ink,
+    textMuted: LIGHT.inkMuted,
+    textFaint: LIGHT.inkFaint,
+    hairline: LIGHT.hairline,
+    hairlineLit: LIGHT.hairline,
+    edge: LIGHT.hairline,
+    edgeSolid: LIGHT.cardSunken,
+    metalHi: LIGHT.card,
+    metalLo: LIGHT.cardSunken,
+    redGlow: LIGHT.overdueWash,
+    redWash: LIGHT.overdueWash,
   },
 
   material: {
-    /** LinearGradient colors for a metal face. Vertical, lighter at the top. */
-    metalFace: ["#4E545B", "#3A3E43"] as const,
-    /** Solid, unblurred band under a raised control. Shrinks on press. */
-    edgeHeight: 3,
-    edgePressed: 1,
-    pressTravel: 2,
+    metalFace: [LIGHT.card, LIGHT.card] as const,
+    edgeHeight: 0,
+    edgePressed: 0,
+    pressTravel: 0,
   },
 
   space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },

@@ -21,6 +21,8 @@ import {
   syncQuickActions,
 } from "../src/quickactions";
 import { tokens } from "../src/design/tokens";
+import { LIGHT } from "../src/design/palette";
+import { ThemeProvider } from "../src/design/theme";
 import { getLanguage, initLanguage, t } from "../src/i18n";
 import { bootLanguage } from "../src/i18n/preference";
 import { subscribeLocaleChanged } from "../src/i18n/epoch";
@@ -151,15 +153,15 @@ export default function RootLayout() {
       <View
         style={{
           flex: 1,
-          backgroundColor: tokens.color.housing,
+          backgroundColor: LIGHT.base,
           alignItems: "center",
           justifyContent: "center",
           padding: tokens.space.xl,
           gap: tokens.space.md,
         }}
       >
-        <StatusBar style="light" />
-        <Text style={{ ...tokens.text.heading, color: tokens.color.text, textAlign: "center" }}>
+        <StatusBar style="dark" />
+        <Text style={{ ...tokens.text.heading, color: LIGHT.ink, textAlign: "center" }}>
           {t("layout.fatal.title")}
         </Text>
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textAlign: "center" }}>
@@ -173,67 +175,69 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="light" />
-      <Stack
-        key={localeEpoch}
-        screenOptions={{
-          headerStyle: { backgroundColor: tokens.color.housing },
-          headerTintColor: tokens.color.text,
-          headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: tokens.color.text },
-          headerShadowVisible: false,
-          contentStyle: { backgroundColor: tokens.color.housing },
-          // A chevron with no label. The default label is the previous route's
-          // title, which is how the back button came to read "index".
-          headerBackButtonDisplayMode: "minimal",
-        }}
-      >
-        {/* Screens built on <Screen> already print their own title in the body,
-            so the header title is blanked rather than repeating it two lines
-            up. Every screen still gets a `title` for the accessibility label —
-            without one the route pattern shows through, which is where
-            "vehicle/[id]" was coming from. */}
-        <Stack.Screen
-          name="index"
-          options={{
-            title: t("layout.garage"),
-            headerTitle: "",
-            headerRight: () => (
-              <Pressable onPress={() => router.push("/settings")} hitSlop={12}>
-                <Text style={{ fontSize: 20, color: tokens.color.text }}>⚙︎</Text>
-              </Pressable>
-            ),
+    <ThemeProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="light" />
+        <Stack
+          key={localeEpoch}
+          screenOptions={{
+            headerStyle: { backgroundColor: tokens.color.housing },
+            headerTintColor: tokens.color.text,
+            headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: tokens.color.text },
+            headerShadowVisible: false,
+            contentStyle: { backgroundColor: tokens.color.housing },
+            // A chevron with no label. The default label is the previous route's
+            // title, which is how the back button came to read "index".
+            headerBackButtonDisplayMode: "minimal",
           }}
-        />
-        {/* The onboarding group owns its whole screen. Without this entry the
-            root stack gave it a default header: the route name "onboarding"
-            printed across the top, and a back chevron beside it that popped the
-            entire group and dropped the user into the garage mid-setup —
-            "finished" as far as the app was concerned, with a half-filled car
-            already written. Onboarding now exits only through its last step. */}
-        <Stack.Screen
-          name="onboarding"
-          options={{ headerShown: false, gestureEnabled: false }}
-        />
-        {/* Both are arrived at by replacing whatever was on screen, so there
-            is nothing behind them to swipe back to and no header worth
-            hanging a chevron in. They print their own titles, or in the case
-            of `trial` nothing at all — it is a native paywall on a blank
-            housing, not a page. */}
-        <Stack.Screen name="winback" options={{ headerShown: false }} />
-        <Stack.Screen name="trial" options={{ headerShown: false }} />
-        <Stack.Screen name="settings" options={{ title: t("layout.settings"), headerTitle: "" }} />
-        <Stack.Screen name="intervals" options={{ title: t("layout.intervals"), headerTitle: "" }} />
-        <Stack.Screen name="language" options={{ title: t("language.title"), headerTitle: "" }} />
-        <Stack.Screen name="vehicle/new" options={{ title: t("layout.addVehicle"), headerTitle: "" }} />
-        {/* The one screen with no body title: it names the vehicle in the
-            header instead, set from the row in the screen itself. */}
-        <Stack.Screen name="vehicle/[id]" options={{ title: t("layout.vehicle") }} />
-        <Stack.Screen
-          name="vehicle/[id]/log"
-          options={{ title: t("layout.logService"), headerTitle: "" }}
-        />
-      </Stack>
-    </GestureHandlerRootView>
+        >
+          {/* Screens built on <Screen> already print their own title in the body,
+              so the header title is blanked rather than repeating it two lines
+              up. Every screen still gets a `title` for the accessibility label —
+              without one the route pattern shows through, which is where
+              "vehicle/[id]" was coming from. */}
+          <Stack.Screen
+            name="index"
+            options={{
+              title: t("layout.garage"),
+              headerTitle: "",
+              headerRight: () => (
+                <Pressable onPress={() => router.push("/settings")} hitSlop={12}>
+                  <Text style={{ fontSize: 20, color: tokens.color.text }}>⚙︎</Text>
+                </Pressable>
+              ),
+            }}
+          />
+          {/* The onboarding group owns its whole screen. Without this entry the
+              root stack gave it a default header: the route name "onboarding"
+              printed across the top, and a back chevron beside it that popped the
+              entire group and dropped the user into the garage mid-setup —
+              "finished" as far as the app was concerned, with a half-filled car
+              already written. Onboarding now exits only through its last step. */}
+          <Stack.Screen
+            name="onboarding"
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
+          {/* Both are arrived at by replacing whatever was on screen, so there
+              is nothing behind them to swipe back to and no header worth
+              hanging a chevron in. They print their own titles, or in the case
+              of `trial` nothing at all — it is a native paywall on a blank
+              housing, not a page. */}
+          <Stack.Screen name="winback" options={{ headerShown: false }} />
+          <Stack.Screen name="trial" options={{ headerShown: false }} />
+          <Stack.Screen name="settings" options={{ title: t("layout.settings"), headerTitle: "" }} />
+          <Stack.Screen name="intervals" options={{ title: t("layout.intervals"), headerTitle: "" }} />
+          <Stack.Screen name="language" options={{ title: t("language.title"), headerTitle: "" }} />
+          <Stack.Screen name="vehicle/new" options={{ title: t("layout.addVehicle"), headerTitle: "" }} />
+          {/* The one screen with no body title: it names the vehicle in the
+              header instead, set from the row in the screen itself. */}
+          <Stack.Screen name="vehicle/[id]" options={{ title: t("layout.vehicle") }} />
+          <Stack.Screen
+            name="vehicle/[id]/log"
+            options={{ title: t("layout.logService"), headerTitle: "" }}
+          />
+        </Stack>
+      </GestureHandlerRootView>
+    </ThemeProvider>
   );
 }
