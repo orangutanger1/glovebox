@@ -3,7 +3,7 @@ import Purchases from "react-native-purchases";
 
 /**
  * Product analytics, which exists here for exactly one question: where in
- * eighteen onboarding screens does a paid install stop walking?
+ * fifteen onboarding screens does a paid install stop walking?
  *
  * RevenueCat answers "did they pay" and Apple answers "did they install".
  * Neither can say which screen lost them, so a paywall with no subscribers and
@@ -14,6 +14,14 @@ import Purchases from "react-native-purchases";
  * The client is created lazily and every call is a no-op without a key, so a
  * dev build, a simulator run and a test never post anything and never throw.
  * Nothing in the app should be able to fail because a telemetry call failed.
+ *
+ * Before reading any of what it emits: the flow these events describe has been
+ * rebuilt repeatedly, and the event names did not change when it did, so the
+ * stream looks continuous across changes that make it uncomparable. Every such
+ * break is recorded in
+ * docs/superpowers/specs/2026-08-26-funnel-comparability-register.md, newest
+ * last, and anything that moves, merges or removes a screen belongs in it in
+ * the same commit.
  */
 let client: PostHog | null = null;
 let warned = false;

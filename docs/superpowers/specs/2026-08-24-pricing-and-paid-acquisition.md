@@ -86,6 +86,11 @@ PostHog project 574255 (US cloud). The ingestion key is an EAS environment
 variable in all three environments and in `.posthog.env` for local runs;
 account tokens are at `~/.omp/posthog/car.json`, never in the repo.
 
+The flow has been rebuilt several times since this was written and the event
+names did not change with it. Before quoting any rate from this project, read
+`2026-08-26-funnel-comparability-register.md`: it lists every update that makes
+the two sides of it uncomparable, and the screen count above is already stale.
+
 Note the two credentials are not interchangeable, which cost a session to
 learn. The `phc_` project key only *writes*: it authenticates ingestion and
 cannot read a single event back. Reading the funnel needs a **personal API key**
