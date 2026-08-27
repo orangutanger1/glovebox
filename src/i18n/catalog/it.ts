@@ -119,7 +119,6 @@ export const it: Fragment = {
   "offer.features.title": "Cosa ottieni.",
   "offer.features.subtitle":
     "Tutto sta in un unico file su questo telefono, senza account e senza server.",
-  "offer.features.cta": "Continua",
 
   "offer.plan.title": "Ecco il piano.",
   "offer.plan.subtitle": {

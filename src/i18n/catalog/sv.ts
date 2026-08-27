@@ -129,7 +129,6 @@ export const sv: Fragment = {
   "offer.features.title": "Det här får du.",
   "offer.features.subtitle":
     "Allt ligger i en enda fil i den här telefonen, utan konto och utan server.",
-  "offer.features.cta": "Fortsätt",
 
   "offer.plan.title": "Så här ser planen ut.",
   "offer.plan.subtitle": {

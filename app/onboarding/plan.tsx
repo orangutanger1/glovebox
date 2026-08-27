@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
+import { NotifyBanner } from "../../src/design/NotifyBanner";
 import { tokens } from "../../src/design/tokens";
-import { t } from "../../src/i18n";
+import { formatDate, t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
-import { canAskPermission, requestPermission, rescheduleAll } from "../../src/notify";
+import {
+  canAskPermission,
+  nextReminder,
+  requestPermission,
+  rescheduleAll,
+} from "../../src/notify";
 import { trackNotificationPermission } from "../../src/analytics";
 import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -54,11 +60,24 @@ const SHOWN = 6;
  * Settings only asks when the user taps the reminders row themselves.
  * Reminders are half the product, and nagging for them is the other half of
  * the reviews this app was written against.
+ *
+ * Above the list is the notification itself, drawn as iOS will draw it, from
+ * the reminder the app would schedule first: the same title and body strings
+ * the scheduler passes to `scheduleNotificationAsync`, against this user's own
+ * car, dated the day it will actually arrive. The ask is "may we send you
+ * this", and until now the "this" was a sentence describing a message rather
+ * than the message. It is absent, not faked, on a car whose services all have
+ * mileage-only intervals: nothing would be scheduled, so nothing is shown.
  */
 export default function OnboardingPlan() {
   const advance = useAdvance("plan");
-  const { vehicleName, plan } = useOnboardingFindings();
+  const { vehicle, vehicleName, plan } = useOnboardingFindings();
   const [busy, setBusy] = useState(false);
+  // Scoped to the car this run owns, because a replay happens inside a garage
+  // that already has reminders in it. The DB is not touched again while this
+  // screen is up, and neither is the clock: one read at mount, like the
+  // findings above it.
+  const preview = useMemo(() => (vehicle ? nextReminder(vehicle.id) : undefined), [vehicle]);
 
   async function onRemindMe() {
     if (busy) return;
@@ -118,6 +137,17 @@ export default function OnboardingPlan() {
         </>
       }
     >
+      {preview && (
+        <NotifyBanner
+          title={t("system.notify.title", {
+            vehicle: preview.vehicleName,
+            service: serviceName(preview.serviceType),
+          })}
+          body={t("system.notify.body", { date: formatDate(preview.lastPerformedAt) })}
+          when={formatDate(preview.dueAt)}
+        />
+      )}
+
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
           {plan.items.slice(0, SHOWN).map((item) => (

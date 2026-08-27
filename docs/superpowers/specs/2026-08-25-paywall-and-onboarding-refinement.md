@@ -38,7 +38,7 @@ Its reference layout puts **yearly first and pre-selected**, badged
 | Pre-sheet argument screen | `app/onboarding/paywall.tsx` |
 | Trial screen (2nd ask) | `app/onboarding/offer.tsx` |
 | Free landing (3rd ask) | `app/onboarding/free.tsx` |
-| Free/Pro boundary screen | `app/onboarding/features.tsx` |
+| Free/Pro boundary rows | `app/onboarding/help.tsx` (was its own `features` screen) |
 | Ladder order | `src/onboarding/flow.ts` |
 | English copy | `src/i18n/catalog/en/offer.ts` |
 | RevenueCat project | `projf0d996da`, app `app774f157580`, entitlement `pro` |

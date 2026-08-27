@@ -119,7 +119,6 @@ export const ptBR: Fragment = {
   "offer.features.title": "O que você leva.",
   "offer.features.subtitle":
     "Tudo fica em um arquivo neste celular, sem conta e sem servidor.",
-  "offer.features.cta": "Continuar",
 
   "offer.plan.title": "Este é o plano.",
   "offer.plan.subtitle": {

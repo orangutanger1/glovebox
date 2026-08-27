@@ -57,13 +57,15 @@ jest.mock("expo-notifications", () => ({
 jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 
 import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";
+import { addRecord } from "../src/db/records";
 import {
   getOnboardingVehicleId,
   resetOnboarding,
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { setLanguage } from "../src/i18n";
+import { formatDate, setLanguage } from "../src/i18n";
+import { nextReminder } from "../src/notify";
 import { setDistanceUnit } from "../src/units";
 import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../src/onboarding/estimate";
 import OnboardingVehicle from "../app/onboarding/vehicle";
@@ -77,7 +79,6 @@ import OnboardingWorry from "../app/onboarding/worry";
 import OnboardingResults from "../app/onboarding/results";
 import OnboardingSymptoms from "../app/onboarding/symptoms";
 import OnboardingHelp from "../app/onboarding/help";
-import OnboardingFeatures from "../app/onboarding/features";
 import OnboardingPlan from "../app/onboarding/plan";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
@@ -224,7 +225,6 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingSymptoms,
     OnboardingHelp,
     OnboardingReviews,
-    OnboardingFeatures,
     OnboardingPlan,
     OnboardingPaywall,
     OnboardingOffer,
@@ -535,6 +535,54 @@ test("the last question takes no answer at all", () => {
   const symptoms = texts(render(OnboardingSymptoms)).join(" ");
   expect(symptoms.length).toBeGreaterThan(0);
   expect(texts(render(OnboardingHelp)).join(" ").length).toBeGreaterThan(0);
+});
+
+test("the free and paid halves are named on the same screen as the answer", () => {
+  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  setOnboardingVehicleId(car.id);
+  setAnswers({ drive: "average", tracking: "dealer", worries: ["records", "upsell"] });
+
+  // The boundary was its own screen between the evidence and the plan. Folding
+  // it here is only safe if every row it carried still prints, badge included:
+  // a user who reaches the paywall having never seen "Pro" against a row is
+  // the review this screen exists to prevent.
+  const printed = texts(render(OnboardingHelp));
+  expect(printed).toContain("What you are getting.");
+  expect(printed.filter((s) => s === "Free")).toHaveLength(4);
+  expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
+});
+
+test("the plan screen shows the notification it is asking permission to send", () => {
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+
+  // A car the flow is not about, with a reminder that comes first. Onboarding
+  // is replayable from Settings, so the garage around it is rarely empty, and
+  // the soonest reminder in the whole garage is not this screen's argument.
+  const other = createVehicle({ name: "2009 Volvo V70", year: 2009, odometer: 210000 });
+  addRecord({
+    vehicle_id: other.id,
+    service_type: "Oil Change",
+    performed_at: new Date(Date.now() - 150 * 24 * 3600 * 1000).toISOString(),
+  });
+
+  // Nothing logged against this car, so nothing would ever be scheduled for
+  // it. The preview is absent rather than invented: a specimen notification on
+  // a car the app has no reminder for is a promise of a message it has no
+  // intention of sending, and the Volvo's is not this car's.
+  expect(texts(render(OnboardingPlan)).join(" ")).not.toMatch(/Outback: |Volvo/);
+
+  const performedAt = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
+  addRecord({ vehicle_id: car.id, service_type: "Oil Change", performed_at: performedAt });
+
+  const printed = texts(render(OnboardingPlan));
+  // The same strings the scheduler passes to iOS, against this user's own car:
+  // the ask is "may we send you this", and "this" has to be the message.
+  expect(printed).toContain("2016 Subaru Outback: Oil Change due");
+  expect(printed).toContain(`Last done ${formatDate(performedAt)}.`);
+  // Dated the day it will actually arrive, not "now".
+  const due = nextReminder(car.id);
+  expect(printed).toContain(formatDate(due!.dueAt));
 });
 
 /** The mocked native notification module, as this file installed it. */

@@ -151,7 +151,6 @@ export const pl: Fragment = {
   "offer.features.title": "Co dostajesz.",
   "offer.features.subtitle":
     "Wszystko siedzi w jednym pliku w tym telefonie, bez konta i bez serwera.",
-  "offer.features.cta": "Dalej",
 
   "offer.plan.title": "Oto plan.",
   "offer.plan.subtitle": {

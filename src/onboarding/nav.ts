@@ -7,7 +7,7 @@ import { nextRoute, type OnboardingRoute } from "./flow";
 /**
  * Moving through the flow, in the two directions that are not Back.
  *
- * Seventeen screens is too many to have each one naming its own successor in a
+ * Fifteen screens is too many to have each one naming its own successor in a
  * `router.push` string. The old six did exactly that, and the strings were
  * already wrong twice — a screen pushed the route after the one it recorded as
  * the resume point, so quitting on that screen reopened the previous one.

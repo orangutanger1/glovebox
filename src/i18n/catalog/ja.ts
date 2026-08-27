@@ -123,7 +123,6 @@ export const ja: Fragment = {
   "offer.features.title": "使えるようになるもの。",
   "offer.features.subtitle":
     "すべてこの端末の1つのファイルに入ります。アカウントもサーバーもありません。",
-  "offer.features.cta": "続ける",
 
   "offer.plan.title": "これが予定表です。",
   "offer.plan.subtitle": {

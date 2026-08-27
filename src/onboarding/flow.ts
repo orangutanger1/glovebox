@@ -37,9 +37,10 @@ export const FLOW = [
   "analyzing",
   "results",
   "symptoms",
+  // "help" carries the Free/Pro boundary too: it used to be its own screen
+  // here, and the tap between the promise and its price bought nothing.
   "help",
   "reviews",
-  "features",
   "plan",
   "paywall",
   "offer",
@@ -106,6 +107,10 @@ const RETIRED: Record<string, OnboardingRoute> = {
   // on it resumes on the trial offer: it is the last thing left worth asking,
   // and its own decline now ends the flow.
   free: "offer",
+  // The Free/Pro boundary screen, folded into "help". An install parked on it
+  // resumes on the plan, which is what it used to lead to; the rows it was
+  // showing are two screens behind and were read on the way.
+  features: "plan",
 };
 
 /** Where a relaunch resumes. Anything unrecognised restarts the flow. */

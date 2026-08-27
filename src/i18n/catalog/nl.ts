@@ -531,7 +531,6 @@ export const nl: Fragment = {
   "offer.features.title": "Dit is wat je krijgt.",
   "offer.features.subtitle":
     "Alles staat in één bestand op deze telefoon, zonder account en zonder server.",
-  "offer.features.cta": "Verder",
 
   "offer.plan.title": "Dit is het plan.",
   "offer.plan.subtitle": {

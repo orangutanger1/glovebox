@@ -1,12 +1,9 @@
 import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
-import { listVehicles } from "../db/vehicles";
-import { listRecords } from "../db/records";
-import { nextDue } from "../schedule";
-import { getIntervals } from "../db/intervals";
 import { serviceName } from "../schedule/names";
 import { formatDate, t } from "../i18n";
-import { selectReminders, type Reminder } from "./select";
+import { collectReminders } from "./collect";
+import { selectReminders } from "./select";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -18,48 +15,13 @@ Notifications.setNotificationHandler({
 });
 
 export { MAX_SCHEDULED, selectReminders, type Reminder } from "./select";
+export { collectReminders, nextReminder } from "./collect";
 
 export type ReminderStatus = {
   permission: "granted" | "denied" | "undetermined";
   count: number;
   nextAt?: string;
 };
-
-/** Every service that has a due date, across every vehicle. */
-function collectReminders(): Reminder[] {
-  const intervals = getIntervals();
-  const out: Reminder[] = [];
-
-  for (const vehicle of listVehicles()) {
-    const records = listRecords(vehicle.id);
-    const latestByType = new Map<string, (typeof records)[number]>();
-    for (const r of records) {
-      if (!latestByType.has(r.service_type)) latestByType.set(r.service_type, r);
-    }
-
-    for (const [serviceType, record] of latestByType) {
-      const interval = intervals[serviceType];
-      if (!interval) continue;
-      // A service with only a mileage interval produces no dueAt and so never
-      // notifies. There is no live odometer to trigger from; its due state is
-      // shown in the app instead.
-      const { dueAt } = nextDue({
-        lastPerformedAt: record.performed_at,
-        lastOdometer: record.odometer,
-        interval,
-      });
-      if (!dueAt) continue;
-      out.push({
-        vehicleName: vehicle.name,
-        serviceType,
-        dueAt,
-        lastPerformedAt: record.performed_at,
-      });
-    }
-  }
-
-  return out;
-}
 
 export async function requestPermission(): Promise<boolean> {
   const { status } = await Notifications.requestPermissionsAsync();

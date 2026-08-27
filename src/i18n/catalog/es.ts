@@ -126,7 +126,6 @@ export const es: Fragment = {
   "offer.features.title": "Esto es lo que te llevas.",
   "offer.features.subtitle":
     "Todo vive en un único archivo de este móvil, sin cuenta y sin servidor.",
-  "offer.features.cta": "Continuar",
 
   "offer.plan.title": "Este es el plan.",
   "offer.plan.subtitle": {

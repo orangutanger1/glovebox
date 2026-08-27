@@ -130,7 +130,6 @@ export const de: Fragment = {
   "offer.features.title": "Das bekommst du.",
   "offer.features.subtitle":
     "Alles liegt in einer Datei auf diesem Handy, ohne Konto und ohne Server.",
-  "offer.features.cta": "Weiter",
 
   "offer.plan.title": "Das ist der Plan.",
   "offer.plan.subtitle": {

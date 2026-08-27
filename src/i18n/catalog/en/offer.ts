@@ -21,7 +21,6 @@ export const offer: Fragment = {
   "offer.features.title": "What you are getting.",
   "offer.features.subtitle":
     "Everything lives in one file on this phone, with no account and no server.",
-  "offer.features.cta": "Continue",
 
   "offer.plan.title": "Here is the plan.",
   "offer.plan.subtitle": {

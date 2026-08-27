@@ -134,7 +134,6 @@ export const ko: Fragment = {
   "offer.features.title": "받게 되는 것들이에요.",
   "offer.features.subtitle":
     "전부 이 휴대폰 안 파일 하나에 들어가요. 계정도 서버도 없어요.",
-  "offer.features.cta": "계속",
 
   "offer.plan.title": "계획은 이래요.",
   "offer.plan.subtitle": {
