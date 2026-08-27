@@ -479,7 +479,7 @@ export const it: Fragment = {
   "settings.replay.cancel": "Annulla",
   "settings.replay.confirm": "Rivedi",
 
-  "system.notify.title": "{vehicle}: {service} da fare",
+  "system.notify.title": "Il tuo {vehicle}: {service} da fare",
   "system.notify.body": "Ultima volta {date}.",
 
   "system.notify.when.today": "Oggi",

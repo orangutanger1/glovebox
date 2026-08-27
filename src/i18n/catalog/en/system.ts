@@ -11,7 +11,7 @@ import type { Fragment } from "../types";
  * translated, which is the half a person actually reads.
  */
 export const system: Fragment = {
-  "system.notify.title": "{vehicle}: {service} due",
+  "system.notify.title": "Your {vehicle}\u2019s {service} is due",
   "system.notify.body": "Last done {date}.",
 
   "system.notify.when.today": "Today",

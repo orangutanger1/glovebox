@@ -134,7 +134,7 @@ export const nl: Fragment = {
   "language.system": "Systeem",
 
   // system
-  "system.notify.title": "{vehicle}: {service} aan de beurt",
+  "system.notify.title": "Jouw {vehicle}: {service} is aan de beurt",
   "system.notify.body": "Laatst gedaan op {date}.",
 
   "system.notify.when.today": "Vandaag",

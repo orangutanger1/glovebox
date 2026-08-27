@@ -549,7 +549,7 @@ export const pl: Fragment = {
   "settings.replay.confirm": "Powtórz",
 
   // system
-  "system.notify.title": "{vehicle}: {service} — termin",
+  "system.notify.title": "Tw\u00f3j {vehicle}: {service} \u2014 termin",
   "system.notify.body": "Ostatni raz: {date}.",
 
   "system.notify.when.today": "Dzi\u015b",

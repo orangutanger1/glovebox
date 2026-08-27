@@ -642,7 +642,7 @@ test("the plan screen animates the notification it is asking permission to send"
   // a car the app has no reminder for is a promise of a message it has no
   // intention of sending, and the Volvo's is not this car's.
   expect(texts(render(OnboardingPlan)).join(" ")).not.toMatch(
-    /Outback: |Volvo/,
+    /Outback\u2019s|Volvo/,
   );
 
   const performedAt = new Date(
@@ -658,7 +658,7 @@ test("the plan screen animates the notification it is asking permission to send"
   // The same strings the scheduler passes to iOS, against this user's own car
   // by year, make and model: the ask is "may we send you this", and "this" has
   // to be the message.
-  expect(printed).toContain("2016 Subaru Outback: Oil Change due");
+  expect(printed).toContain("Your 2016 Subaru Outback\u2019s Oil Change is due");
   expect(printed).toContain(`Last done ${formatDate(performedAt)}.`);
   // Labelled with when it will actually arrive, in the words a person uses,
   // and never with a bare "now": the whole claim of the screen is that the
@@ -704,7 +704,7 @@ test("the banner cycles through several of the car's own reminders", () => {
   const printed = texts(render(OnboardingPlan));
   const first = messages[0];
   expect(printed).toContain(
-    `2016 Subaru Outback: ${serviceName(first.serviceType)} due`,
+    `Your 2016 Subaru Outback\u2019s ${serviceName(first.serviceType)} is due`,
   );
   // Soonest first. A demo that opened on the furthest reminder would argue the
   // opposite of the screen it is on.

@@ -480,7 +480,7 @@ export const sv: Fragment = {
   "settings.replay.cancel": "Avbryt",
   "settings.replay.confirm": "Gör igen",
 
-  "system.notify.title": "{vehicle}: dags för {service}",
+  "system.notify.title": "Din {vehicle}: dags f\u00f6r {service}",
   "system.notify.body": "Gjordes senast {date}.",
 
   "system.notify.when.today": "Idag",

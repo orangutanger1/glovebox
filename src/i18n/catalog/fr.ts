@@ -506,7 +506,7 @@ export const fr: Fragment = {
   "settings.replay.confirm": "Revoir",
 
   // system
-  "system.notify.title": "{vehicle}\u00a0: {service} à faire",
+  "system.notify.title": "Votre {vehicle}\u00a0: {service} \u00e0 faire",
   "system.notify.body": "Dernière fois le {date}.",
 
   "system.notify.when.today": "Aujourd\u2019hui",

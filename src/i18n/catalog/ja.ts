@@ -452,7 +452,7 @@ export const ja: Fragment = {
   "settings.replay.confirm": "やり直す",
 
   // system
-  "system.notify.title": "{vehicle}：{service}の時期です",
+  "system.notify.title": "\u304a\u4f7f\u3044\u306e{vehicle}\uff1a{service}\u306e\u6642\u671f\u3067\u3059",
   "system.notify.body": "前回は{date}です。",
 
   "system.notify.when.today": "\u4eca\u65e5",

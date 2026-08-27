@@ -492,7 +492,7 @@ export const de: Fragment = {
   "settings.replay.confirm": "Wiederholen",
 
   // system
-  "system.notify.title": "{vehicle}: {service} fällig",
+  "system.notify.title": "Ihr {vehicle}: {service} ist f\u00e4llig",
   "system.notify.body": "Zuletzt {date}.",
 
   "system.notify.when.today": "Heute",

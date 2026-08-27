@@ -479,7 +479,7 @@ export const ko: Fragment = {
   "settings.replay.confirm": "다시 보기",
 
   // system
-  "system.notify.title": "{vehicle}: {service} 기한",
+  "system.notify.title": "\ub0b4 {vehicle}: {service} \uae30\ud55c\uc774\uc5d0\uc694",
   "system.notify.body": "{date}에 마지막으로 했어요.",
 
   "system.notify.when.today": "\uc624\ub298",

@@ -477,7 +477,7 @@ export const ptBR: Fragment = {
   "settings.replay.cancel": "Cancelar",
   "settings.replay.confirm": "Refazer",
 
-  "system.notify.title": "{vehicle}: {service} vence hoje",
+  "system.notify.title": "Seu {vehicle}: {service} est\u00e1 na hora",
   "system.notify.body": "Última vez: {date}.",
 
   "system.notify.when.today": "Hoje",

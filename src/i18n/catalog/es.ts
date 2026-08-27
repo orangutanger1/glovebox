@@ -493,7 +493,7 @@ export const es: Fragment = {
   "settings.replay.confirm": "Repetir",
 
   // system
-  "system.notify.title": "{vehicle}: toca {service}",
+  "system.notify.title": "A tu {vehicle} le toca {service}",
   "system.notify.body": "Última vez: {date}.",
 
   "system.notify.when.today": "Hoy",
