@@ -162,6 +162,11 @@ export const de: Fragment = {
   "offer.paywall.caption":
     "Alles, was du gerade eingerichtet hast, liegt schon auf diesem Handy. Kein Konto, kein Server, nichts wird verschickt.",
 
+  "offer.paywall.impact.legend": "Was das wert ist",
+  "offer.paywall.impact.warned": "Du erfährst von einem Service, bevor er fällig ist, nicht erst nach der Reparatur.",
+  "offer.paywall.impact.upsell": "Du kommst in die Werkstatt und weißt, was wann gemacht wurde, also wird dir nichts zweimal verkauft.",
+  "offer.paywall.impact.resale": "Du gibst dem nächsten Besitzer ein vollständiges Scheckheft statt Schulterzucken, und das zeigt sich im Preis.",
+
   "offer.trial.title": { one: "Teste es {count} Tag lang.", other: "Teste es {count} Tage lang." },
   "offer.trial.subtitle": {
     one: "Nimm {count} Tag Pro umsonst und entscheide, wenn dein Auto dir wirklich etwas gesagt hat.",
@@ -170,7 +175,6 @@ export const de: Fragment = {
   },
   "offer.trial.cta": { one: "{count} Gratistag starten", other: "{count} Gratistage starten" },
   "offer.trial.decline": "Nein danke, zeig mir die Gratisversion",
-  "offer.trial.caption": "Kündige vor Ablauf in den Einstellungen, dann zahlst du nichts.",
 
   "offer.winback.title": "Du hast aufgehört einzutragen.",
   "offer.winback.decline": "Bring mich einfach in meine Garage",
@@ -499,7 +503,6 @@ export const de: Fragment = {
 
   "system.notify.when.today": "Heute",
   "system.notify.when.tomorrow": "Morgen",
-  "system.notify.when.now": "Jetzt",
   "system.notify.when.days": { one: "In {count} Tag", other: "In {count} Tagen" },
   "system.notify.when.months": { one: "In {count} Monat", other: "In {count} Monaten" },
 

@@ -153,6 +153,11 @@ export const it: Fragment = {
   "offer.paywall.caption":
     "Tutto quello che hai appena impostato è già salvato su questo telefono. Nessun account, nessun server, niente che parta da qui.",
 
+  "offer.paywall.impact.legend": "Quanto vale",
+  "offer.paywall.impact.warned": "Vieni a sapere di un tagliando prima della scadenza, non dopo la riparazione.",
+  "offer.paywall.impact.upsell": "Entri in officina sapendo cosa è stato fatto e quando, così nulla ti viene venduto due volte.",
+  "offer.paywall.impact.resale": "Consegni al prossimo proprietario un libretto completo invece di un’alzata di spalle, e si vede sul prezzo.",
+
   "offer.trial.title": { one: "Provalo per {count} giorno.", other: "Provalo per {count} giorni." },
   "offer.trial.subtitle": {
     one: "Prenditi {count} giorno di Pro senza pagare nulla e decidi dopo che la tua auto ti ha davvero detto qualcosa.",
@@ -161,7 +166,6 @@ export const it: Fragment = {
   },
   "offer.trial.cta": { one: "Attiva {count} giorno gratis", other: "Attiva {count} giorni gratis" },
   "offer.trial.decline": "No grazie, mostrami l'app gratuita",
-  "offer.trial.caption": "Disdici dalle Impostazioni prima della fine e non paghi nulla.",
 
   "offer.winback.title": "Hai smesso di registrare.",
   "offer.winback.decline": "Portami solo al mio garage",
@@ -486,7 +490,6 @@ export const it: Fragment = {
 
   "system.notify.when.today": "Oggi",
   "system.notify.when.tomorrow": "Domani",
-  "system.notify.when.now": "Ora",
   "system.notify.when.days": { one: "Tra {count} giorno", other: "Tra {count} giorni" },
   "system.notify.when.months": { one: "Tra {count} mese", other: "Tra {count} mesi" },
 

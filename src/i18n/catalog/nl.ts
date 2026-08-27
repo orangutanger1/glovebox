@@ -139,7 +139,6 @@ export const nl: Fragment = {
 
   "system.notify.when.today": "Vandaag",
   "system.notify.when.tomorrow": "Morgen",
-  "system.notify.when.now": "Nu",
   "system.notify.when.days": { one: "Over {count} dag", other: "Over {count} dagen" },
   "system.notify.when.months": { one: "Over {count} maand", other: "Over {count} maanden" },
 
@@ -570,6 +569,11 @@ export const nl: Fragment = {
   "offer.paywall.caption":
     "Alles wat je net hebt ingesteld staat al op deze telefoon. Geen account, geen server, niets gaat weg.",
 
+  "offer.paywall.impact.legend": "Wat dat waard is",
+  "offer.paywall.impact.warned": "Je hoort van een onderhoudsbeurt voordat die valt, niet na de reparatie.",
+  "offer.paywall.impact.upsell": "Je komt bij de garage en weet wat wanneer is gedaan, dus niets wordt je twee keer verkocht.",
+  "offer.paywall.impact.resale": "Je geeft de volgende eigenaar een compleet logboek in plaats van een schouderophalen, en dat zie je terug in de prijs.",
+
   "offer.trial.title": { one: "Probeer het {count} dag.", other: "Probeer het {count} dagen." },
   "offer.trial.subtitle": {
     one: "Neem {count} dag Pro voor niets en beslis pas als je auto je echt iets heeft verteld.",
@@ -580,7 +584,6 @@ export const nl: Fragment = {
     other: "Start mijn {count} gratis dagen",
   },
   "offer.trial.decline": "Nee bedankt, laat de gratis app zien",
-  "offer.trial.caption": "Zeg op in Instellingen voordat het afloopt en je betaalt niets.",
 
   "offer.winback.title": "Je bent gestopt met vastleggen.",
   "offer.winback.decline": "Breng me gewoon naar mijn garage",

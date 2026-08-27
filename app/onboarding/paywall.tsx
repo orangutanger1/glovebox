@@ -3,43 +3,42 @@ import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
-import { ListRow } from "../../src/design/ListRow";
-import { Badge } from "../../src/design/Badge";
+import { Lamp } from "../../src/design/Lamp";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, formatNumber, t } from "../../src/i18n";
-import { getDistanceUnit } from "../../src/units";
-import { serviceName } from "../../src/schedule/names";
 import { DISCOUNT_OFFERING, hasOffering, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
-import { nextUp, planItemLine } from "../../src/onboarding/plan";
+import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance, useFinish } from "../../src/onboarding/nav";
 
-const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
-
-/** The status is a state name the schedule computes, not copy — it reaches the
- *  faceplate through a key so no language is stuck with the English word. */
-const STATUS_LABEL = {
-  due: "offer.plan.status.due",
-  soon: "offer.plan.status.soon",
-  ok: "offer.plan.status.ok",
-} as const;
-
-/** The whole schedule is real, but a screen with twelve rows on it is a
- *  document, not a plan. The rest is one line of arithmetic underneath. */
-const SHOWN = 6;
+/** Three consequences, not three features. Each is a thing that happens to the
+ *  user rather than a capability the app has, and none of them names a number,
+ *  a price or a percentage, so none of them goes stale when the offering is
+ *  edited or has to be checked against the dashboard. */
+const IMPACT = [
+  "offer.paywall.impact.warned",
+  "offer.paywall.impact.upsell",
+  "offer.paywall.impact.resale",
+] as const;
 
 /**
- * The plan and the offer, on one screen, at the end of onboarding.
+ * The offer, at the end of onboarding.
  *
- * The plan used to be its own screen before this one, and the notification
- * soft-ask rode on top of it. The ask is now its own screen earlier in the
- * flow, and what was left of the plan — this car's own dated schedule — belongs
- * against the argument that pays for it. "Cars don't warn you. This does." is
- * only a claim until the list under it is the user's own six overdue services,
- * so the two are one screen: the headline, the numbers it stands on, and the
- * schedule it is promising to keep.
+ * The argument is built in three layers, and the layers are the reason this is
+ * a screen rather than a button: the headline, which sells the feeling and not
+ * the product; the gauges, which are this user's own car by name with the
+ * count and the date the quiz computed, so the headline is evidenced rather
+ * than asserted; and three consequences underneath, which say what the
+ * evidence is worth in the order the driver meets it.
+ *
+ * The car's dated schedule is not here. It rode on this screen briefly, on the
+ * theory that "Cars don't warn you. This does." is only a claim until the six
+ * overdue rows sit under it, and what it produced was a page: six rows of
+ * service names between the headline and the only control, on the one screen
+ * in the flow that is asking for money. The list belongs to the reminder ask
+ * on the screen before, which is the thing it is evidence for.
  *
  * The paywall itself is a native RevenueCat sheet configured in the dashboard,
  * so this screen is the argument and the sheet is the price list. It exists as
@@ -65,8 +64,6 @@ export default function OnboardingPaywall() {
   // The soonest service still ahead. `plan.items` is sorted worst-first, so
   // taking its head printed the most overdue row under a "Next up" legend.
   const next = nextUp(plan);
-  const remaining = plan.items.length - SHOWN;
-  const unit = getDistanceUnit();
 
   async function onSeeOffer() {
     if (busy) return;
@@ -123,28 +120,40 @@ export default function OnboardingPaywall() {
         </View>
       </Panel>
 
+      {/* The argument the numbers above are evidence for. The gauges say what
+          is true of this car; these three say what it is worth, in the order
+          the user meets it: the warning that arrives in time, the shop visit
+          they walk into informed, and the log they hand over at the end. The
+          car's own dated schedule sits on the screen before this one, under
+          the reminder ask it belongs to; reprinting it here made this screen a
+          document and buried the offer below six rows of it. */}
       <View style={{ gap: tokens.space.sm }}>
         <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-          {t("offer.plan.title")}
+          {t("offer.paywall.impact.legend")}
         </Text>
         <Panel>
-          <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
-            {plan.items.slice(0, SHOWN).map((item) => (
-              <ListRow
-                key={item.type}
-                title={serviceName(item.type)}
-                subtitle={planItemLine(item, unit)}
-                status={ROW_STATUS[item.status]}
-                right={<Badge label={t(STATUS_LABEL[item.status])} tone={item.status} />}
-              />
+          <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
+            {IMPACT.map((key) => (
+              <View
+                key={key}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  gap: tokens.space.sm,
+                }}
+              >
+                <View style={{ paddingTop: tokens.space.xs }}>
+                  <Lamp lit size={10} />
+                </View>
+                <Text
+                  style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}
+                >
+                  {t(key)}
+                </Text>
+              </View>
             ))}
           </View>
         </Panel>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-          {remaining > 0
-            ? t("offer.plan.noteMore", { count: remaining })
-            : t("offer.plan.note")}
-        </Text>
       </View>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>

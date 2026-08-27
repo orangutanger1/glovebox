@@ -55,6 +55,11 @@ export const offer: Fragment = {
   "offer.paywall.caption":
     "Everything you just set up is already saved on this phone. No account, no server, nothing sent anywhere.",
 
+  "offer.paywall.impact.legend": "What that is worth",
+  "offer.paywall.impact.warned": "You hear about a service before it is due, not after it costs you a repair.",
+  "offer.paywall.impact.upsell": "You walk into the shop knowing what was done and when, so nothing gets sold to you twice.",
+  "offer.paywall.impact.resale": "You hand the next owner a full log instead of a shrug, and it shows in the price.",
+
   "offer.trial.title": { one: "Try it for {count} day.", other: "Try it for {count} days." },
   "offer.trial.subtitle": {
     one: "Take {count} day of Pro for nothing and decide once your car has actually told you something.",
@@ -63,7 +68,6 @@ export const offer: Fragment = {
   },
   "offer.trial.cta": { one: "Start my {count} free day", other: "Start my {count} free days" },
   "offer.trial.decline": "No thanks, show me the free app",
-  "offer.trial.caption": "Cancel in Settings before it ends and you pay nothing.",
 
   "offer.winback.title": "You stopped logging.",
   "offer.winback.decline": "Just take me to my garage",

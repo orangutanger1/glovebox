@@ -161,6 +161,11 @@ export const sv: Fragment = {
   "offer.paywall.caption":
     "Allt du just ställt in ligger redan i den här telefonen. Inget konto, ingen server, inget skickas vidare.",
 
+  "offer.paywall.impact.legend": "Vad det är värt",
+  "offer.paywall.impact.warned": "Du hör om en service innan den ska göras, inte efter reparationen.",
+  "offer.paywall.impact.upsell": "Du kommer till verkstaden och vet vad som gjorts och när, så inget säljs till dig två gånger.",
+  "offer.paywall.impact.resale": "Du lämnar en komplett servicebok till nästa ägare i stället för en axelryckning, och det syns på priset.",
+
   "offer.trial.title": { one: "Testa i {count} dag.", other: "Testa i {count} dagar." },
   "offer.trial.subtitle": {
     one: "Ta {count} dag av Pro utan att betala och bestäm dig när bilen faktiskt har berättat något.",
@@ -172,7 +177,6 @@ export const sv: Fragment = {
     other: "Starta mina {count} gratisdagar",
   },
   "offer.trial.decline": "Nej tack, visa gratisappen",
-  "offer.trial.caption": "Säg upp i Inställningar innan den tar slut, då betalar du ingenting.",
 
   "offer.winback.title": "Du slutade logga.",
   "offer.winback.decline": "Ta mig bara till garaget",
@@ -487,7 +491,6 @@ export const sv: Fragment = {
 
   "system.notify.when.today": "Idag",
   "system.notify.when.tomorrow": "I morgon",
-  "system.notify.when.now": "Nu",
   "system.notify.when.days": { one: "Om {count} dag", other: "Om {count} dagar" },
   "system.notify.when.months": { one: "Om {count} m\u00e5nad", other: "Om {count} m\u00e5nader" },
 

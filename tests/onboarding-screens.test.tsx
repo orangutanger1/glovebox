@@ -230,6 +230,41 @@ test("nothing in the flow sells the free tier", () => {
   expect(texts(render(OnboardingPaywall))).toContain("Keep my car on record");
 });
 
+test("the paywall argues consequence, and leaves the schedule to the ask", () => {
+  const car = createVehicle({
+    name: "2014 Ford F-150",
+    year: 2014,
+    odometer: 96500,
+  });
+  setOnboardingVehicleId(car.id);
+
+  const printed = texts(render(OnboardingPaywall));
+  // The headline sells the feeling, the gauges evidence it against this car,
+  // and three consequences say what the evidence is worth.
+  expect(printed).toContain("Cars don\u2019t warn you. This does.");
+  expect(printed).toContain("2014 Ford F-150");
+  expect(printed).toContain(
+    "You hear about a service before it is due, not after it costs you a repair.",
+  );
+  expect(printed).toContain(
+    "You hand the next owner a full log instead of a shrug, and it shows in the price.",
+  );
+  // The car's dated schedule belongs to the reminder ask on the screen before.
+  // Reprinted here it put six rows of service names between the headline and
+  // the only control on the one screen that asks for money.
+  expect(printed).not.toContain(serviceName("Air Filter"));
+  expect(printed).not.toContain("Nothing on file");
+});
+
+test("the trial screen does not open with the way out", () => {
+  // "Cancel in Settings before it ends and you pay nothing." was the last line
+  // read before the ask, in the app's own voice. RevenueCat renders the
+  // renewal terms and Apple's required disclosure on the sheet one tap away.
+  const printed = texts(render(OnboardingOffer)).join(" ");
+  expect(printed).not.toMatch(/cancel in settings/i);
+  expect(texts(render(OnboardingOffer))).toContain("Try it for 3 days.");
+});
+
 test("no screen in the flow prints an em or en dash", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
@@ -612,7 +647,7 @@ test("the free and paid halves are named on the same screen as the answer", () =
   expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
 });
 
-test("the notify screen shows the reminder it is asking permission to send", () => {
+test("the notify screen asks over this car's own dated schedule", () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     make: "Subaru",
@@ -623,24 +658,28 @@ test("the notify screen shows the reminder it is asking permission to send", () 
   setOnboardingVehicleId(car.id);
 
   const printed = texts(render(OnboardingNotify));
-  // The scheduler's own sentence, against this user's own car by name: the ask
-  // shows the message iOS would really put on the glass. The rotation opens on
-  // the oil change, the service everyone recognises.
-  expect(printed).toContain("Your 2016 Subaru Outback\u2019s Oil Change is due");
-  // The banner carries the moment it arrives, "now", the way iOS stamps a
-  // freshly delivered one, not the due date.
-  expect(printed).toContain("now");
-  // The headline under the handset, and the second answer beside the primary.
+  // The promise, and the evidence for it: the schedule the quiz computed for
+  // this car by name, six rows of it with the scheduler's own status on each.
   expect(printed).toContain("Never miss a service.");
+  expect(printed).toContain(
+    "12 services on a schedule for your 2016 Subaru Outback, counted by date and by distance.",
+  );
+  expect(printed).toContain(serviceName("Air Filter"));
+  expect(printed.filter((s) => s === "Due").length).toBeGreaterThan(0);
+  // Six shown, and the rest as one line of arithmetic rather than six more rows.
+  expect(printed).toContain(
+    "Plus 6 more further out, and one notification per service on the day it comes due.",
+  );
   expect(printed).toContain("Turn on reminders");
   expect(printed).toContain("Do it later");
 });
 
-test("the notify screen shows generic services, not this car's logged history", () => {
-  // The car has one logged service and nothing else, the way it leaves the
-  // quiz. A rotation of one is not a rotation, so the handset cycles the common
-  // services the app ships an opinion about rather than this car's records —
-  // and the mockup does not invent a schedule the plan screen has not shown.
+test("the notify screen mocks up no notification of its own", () => {
+  // A phone drawn in the middle of the glass with an invented reminder on it
+  // sold what a notification looks like, which is the one thing the user
+  // already knows, and it needed a fake service and a fake "last done" date to
+  // do it. The ask stands on the real schedule instead, so no sentence the
+  // scheduler would send is rehearsed here.
   const car = createVehicle({
     name: "2016 Subaru Outback",
     year: 2016,
@@ -654,10 +693,8 @@ test("the notify screen shows generic services, not this car's logged history", 
   });
 
   const printed = texts(render(OnboardingNotify)).join(" ");
-  // The first frame names the first service in the rotation against this car.
-  expect(printed).toContain(
-    `Your 2016 Subaru Outback\u2019s ${serviceName("Oil Change")} is due`,
-  );
+  expect(printed).not.toContain("is due");
+  expect(printed).not.toContain("Last done");
 });
 
 /** The mocked native notification module, as this file installed it. */

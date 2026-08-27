@@ -188,6 +188,11 @@ export const pl: Fragment = {
   "offer.paywall.caption":
     "Wszystko, co właśnie ustawiłeś, jest już zapisane w tym telefonie. Bez konta, bez serwera, nic nie wychodzi na zewnątrz.",
 
+  "offer.paywall.impact.legend": "Ile to warte",
+  "offer.paywall.impact.warned": "Dowiadujesz się o przeglądzie przed terminem, a nie po naprawie.",
+  "offer.paywall.impact.upsell": "Wchodzisz do warsztatu wiedząc, co i kiedy zrobiono, więc nikt nie sprzeda ci tego samego dwa razy.",
+  "offer.paywall.impact.resale": "Następnemu właścicielowi wręczasz pełną historię, a nie wzruszenie ramion, i widać to w cenie.",
+
   "offer.trial.title": {
     one: "Wypróbuj przez {count} dzień.",
     few: "Wypróbuj przez {count} dni.",
@@ -207,7 +212,6 @@ export const pl: Fragment = {
     other: "Zaczynam {count} darmowego dnia",
   },
   "offer.trial.decline": "Nie, dziękuję, pokaż darmową wersję",
-  "offer.trial.caption": "Anuluj w Ustawieniach przed końcem, a nic nie zapłacisz.",
 
   "offer.winback.title": "Dawno nic nie zapisujesz.",
   "offer.winback.decline": "Po prostu przejdź do garażu",
@@ -556,7 +560,6 @@ export const pl: Fragment = {
 
   "system.notify.when.today": "Dzi\u015b",
   "system.notify.when.tomorrow": "Jutro",
-  "system.notify.when.now": "Teraz",
   "system.notify.when.days": {
     one: "Za {count} dzie\u0144",
     few: "Za {count} dni",

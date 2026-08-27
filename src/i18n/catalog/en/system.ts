@@ -16,7 +16,6 @@ export const system: Fragment = {
 
   "system.notify.when.today": "Today",
   "system.notify.when.tomorrow": "Tomorrow",
-  "system.notify.when.now": "now",
   "system.notify.when.days": {
     one: "In {count} day",
     other: "In {count} days",

@@ -166,6 +166,11 @@ export const ko: Fragment = {
   "offer.paywall.caption":
     "지금 설정한 내용은 이미 이 휴대폰에 저장돼 있어요. 계정도, 서버도 없고 어디로도 전송되지 않아요.",
 
+  "offer.paywall.impact.legend": "이게 주는 것",
+  "offer.paywall.impact.warned": "정버는 기한이 오기 전에 알려줍니다. 수리버가 나온 뒤가 아니라요.",
+  "offer.paywall.impact.upsell": "무엇을 언제 했는지 알고 정버소에 들어가니, 같은 정버를 두 번 할 일이 없어요.",
+  "offer.paywall.impact.resale": "다음 주인에게 어림핆한 기여이 아니라 완전한 정버 기록을 넘깁니다. 가객에도 드러나요.",
+
   "offer.trial.title": { other: "{count}일 동안 써 보세요." },
   "offer.trial.subtitle": {
     other:
@@ -173,7 +178,6 @@ export const ko: Fragment = {
   },
   "offer.trial.cta": { other: "무료 {count}일 시작하기" },
   "offer.trial.decline": "괜찮아요, 무료 앱으로 볼게요",
-  "offer.trial.caption": "끝나기 전에 설정에서 해지하면 한 푼도 안 나가요.",
 
   "offer.winback.title": "기록이 멈춰 있어요.",
   "offer.winback.decline": "그냥 차고로 갈게요",
@@ -486,7 +490,6 @@ export const ko: Fragment = {
 
   "system.notify.when.today": "\uc624\ub298",
   "system.notify.when.tomorrow": "\ub0b4\uc77c",
-  "system.notify.when.now": "\uc9c0\uae08",
   "system.notify.when.days": { other: "{count}\uc77c \ud6c4" },
   "system.notify.when.months": { other: "{count}\uac1c\uc6d4 \ud6c4" },
 

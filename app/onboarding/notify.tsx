@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
-import { PhoneNotify, type NotifyRotation } from "../../src/design/PhoneNotify";
+import { Panel } from "../../src/design/Surface";
+import { ListRow } from "../../src/design/ListRow";
+import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, t } from "../../src/i18n";
+import { t } from "../../src/i18n";
+import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
 import {
   canAskPermission,
@@ -11,79 +14,54 @@ import {
   rescheduleAll,
 } from "../../src/notify";
 import { trackNotificationPermission } from "../../src/analytics";
+import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
 
+const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
+
+/** The status is a state name the schedule computes, not copy: it reaches the
+ *  faceplate through a key so no language is stuck with the English word. */
+const STATUS_LABEL = {
+  due: "offer.plan.status.due",
+  soon: "offer.plan.status.soon",
+  ok: "offer.plan.status.ok",
+} as const;
+
+/** The whole schedule is real, but a screen with twelve rows on it is a
+ *  document, not a plan. The rest is one line of arithmetic underneath. */
+const SHOWN = 6;
+
 /**
- * The notification soft-ask, on its own screen.
+ * The notification soft-ask, over this car's own dated schedule.
  *
- * It used to ride on top of the plan, and the two shared a screen on the theory
- * that a permission only makes sense next to the thing it delivers. What that
- * produced was a banner dropping in and lifting away over a list the user was
- * trying to read — an animation competing with the schedule beneath it for the
- * same attention. Split out, the ask is the whole screen: a handset held up in
- * the middle of the glass with a reminder on its lock screen, the headline
- * under it, and the two answers at the foot.
+ * The ask and the list are one screen because the permission only makes sense
+ * next to the thing it delivers: iOS grants an app exactly one system prompt,
+ * opt-in collapses when it fires without context, and "allow notifications?"
+ * on a screen of its own is context-free by construction. Here the user is
+ * looking at six dated services when they are asked whether they want to be
+ * told about them, and "Never miss a service." is the promise those six rows
+ * are the evidence for.
  *
- * The banner does not arrive and leave. A drop-in is the truthful animation for
- * "a notification is an event", but that argument belongs to a screen the user
- * is doing something else on; here the handset is the subject, so it holds still
- * and the service on it cycles instead — oil change, air filter, inspection —
- * so the reader reads the promise against a handful of the services it covers
- * rather than one.
+ * The list is the schedule the quiz computed, worst first, with the status the
+ * scheduler assigned on the right. It is this car's, not a mockup: a phone
+ * drawn in the middle of the glass with an invented reminder on it sold what a
+ * notification looks like, which is the one thing the user already knows.
  *
- * The strings are the scheduler's own, rendered against this user's own car by
- * name, so "Your {vehicle}'s {service} is due" is the sentence iOS would really
- * put on the glass. The services are the common ones the app ships an opinion
- * about rather than this car's logged history: the quiz logs one service, and a
- * rotation of one is not a rotation. This screen sells what reminders are; the
- * plan on the screen after it is where this car's own dated schedule lands.
- *
- * The prompt fires here, on the tap that promises it. iOS grants exactly one
- * system prompt and opt-in collapses when it fires without context, so the
- * request is asked of iOS immediately before it is made: the alert appears on
- * this tap, or the system has already refused to show one. "Do it later" is a
- * real answer and nothing re-asks — Settings offers reminders on a later tap,
- * and iOS still holds the one unused prompt for it.
+ * The prompt fires here, on the tap that promises it, asked of iOS immediately
+ * before the request: the alert appears on this tap, or the system has already
+ * refused to show one. "Do it later" is a real answer and nothing re-asks.
+ * Settings offers reminders on a later tap, and iOS still holds the one unused
+ * prompt for it.
  */
-
-/** The services the handset cycles through — the common ones the app ships an
- *  opinion about, in the reader's language via `serviceName`. */
-const ROTATION = [
-  "Oil Change",
-  "Air Filter",
-  "Inspection",
-  "Tire Rotation",
-  "Brake Inspection",
-];
-
-/** A plausible "last done" for each rotated service, in days back, so the body
- *  line reads like a real reminder rather than every card claiming the same
- *  date. Illustrative, not this car's record. */
-const LAST_DONE_DAYS = [150, 220, 300, 95, 260];
-
-const DAY_MS = 24 * 60 * 60 * 1000;
-
 export default function OnboardingNotify() {
   const advance = useAdvance("notify");
-  const { vehicleName } = useOnboardingFindings();
+  const { vehicleName, plan } = useOnboardingFindings();
   const [busy, setBusy] = useState(false);
 
-  const messages = useMemo<NotifyRotation[]>(
-    () =>
-      ROTATION.map((type, i) => ({
-        title: t("system.notify.title", {
-          vehicle: vehicleName,
-          service: serviceName(type),
-        }),
-        body: t("system.notify.body", {
-          date: formatDate(new Date(Date.now() - LAST_DONE_DAYS[i] * DAY_MS).toISOString()),
-        }),
-        when: t("system.notify.when.now"),
-      })),
-    [vehicleName],
-  );
+  const remaining = plan.items.length - SHOWN;
+  const unit = getDistanceUnit();
 
   async function onRemindMe() {
     if (busy) return;
@@ -121,7 +99,11 @@ export default function OnboardingNotify() {
   return (
     <OnboardingScreen
       route="notify"
-      center
+      title={t("offer.notify.title")}
+      subtitle={t("offer.plan.subtitle", {
+        count: plan.items.length,
+        vehicle: vehicleName,
+      })}
       footer={
         <>
           <Button
@@ -141,18 +123,25 @@ export default function OnboardingNotify() {
         </>
       }
     >
-      <View style={{ alignItems: "center", gap: tokens.space.xl }}>
-        <PhoneNotify messages={messages} date={formatDate(new Date().toISOString())} />
-        <Text
-          style={{
-            ...tokens.text.hero,
-            color: tokens.color.text,
-            textAlign: "center",
-          }}
-        >
-          {t("offer.notify.title")}
-        </Text>
-      </View>
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
+          {plan.items.slice(0, SHOWN).map((item) => (
+            <ListRow
+              key={item.type}
+              title={serviceName(item.type)}
+              subtitle={planItemLine(item, unit)}
+              status={ROW_STATUS[item.status]}
+              right={<Badge label={t(STATUS_LABEL[item.status])} tone={item.status} />}
+            />
+          ))}
+        </View>
+      </Panel>
+
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+        {remaining > 0
+          ? t("offer.plan.noteMore", { count: remaining })
+          : t("offer.plan.note")}
+      </Text>
     </OnboardingScreen>
   );
 }

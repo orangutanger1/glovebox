@@ -153,13 +153,17 @@ export const ja: Fragment = {
   "offer.paywall.caption":
     "いま設定した内容は、すでにこの端末に保存されています。アカウントなし、サーバーなし、外部への送信もありません。",
 
+  "offer.paywall.impact.legend": "これで得られること",
+  "offer.paywall.impact.warned": "整備は期限が来る前に知らせが届きます。修理代がかかってからではありません。",
+  "offer.paywall.impact.upsell": "いつ何をしたか分かった状態で入庫できるので、同じ整備を二度売られません。",
+  "offer.paywall.impact.resale": "次の所有者に、あいまいな記憶ではなく完全な整備記録を渡せます。価格にも表れます。",
+
   "offer.trial.title": { other: "{count}日間試してみる。" },
   "offer.trial.subtitle": {
     other: "Proを{count}日間無料で使って、車が実際に何か言ってきてから決めてください。",
   },
   "offer.trial.cta": { other: "{count}日間の無料期間を始める" },
   "offer.trial.decline": "結構です。無料版を見せてください",
-  "offer.trial.caption": "終了前に設定から解約すれば、料金はかかりません。",
 
   "offer.winback.title": "記録が止まっています。",
   "offer.winback.decline": "ガレージへ進む",
@@ -459,7 +463,6 @@ export const ja: Fragment = {
 
   "system.notify.when.today": "\u4eca\u65e5",
   "system.notify.when.tomorrow": "\u660e\u65e5",
-  "system.notify.when.now": "\u4eca",
   "system.notify.when.days": { other: "{count}\u65e5\u5f8c" },
   "system.notify.when.months": { other: "{count}\u304b\u6708\u5f8c" },
 

@@ -54,7 +54,6 @@ export const esMX: Fragment = {
     other:
       "Llévate {count} días de Pro sin pagar nada y decide cuando tu carro ya te haya dicho algo.",
   },
-  "offer.trial.caption": "Cancela en Configuración antes de que termine y no pagas nada.",
   "offer.winback.title": "Dejaste de registrar.",
 
   "onboardingA.welcome.privacy":

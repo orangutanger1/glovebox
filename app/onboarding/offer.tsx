@@ -19,11 +19,13 @@ import { useFinish } from "../../src/onboarding/nav";
  * in the funnel.
  *
  * It is only ever reached from a dismissed paywall, and only when a `discount`
- * offering actually exists in the RevenueCat dashboard — the check happens
+ * offering actually exists in the RevenueCat dashboard: the check happens
  * before the navigation, so this screen never promises a trial that cannot be
- * started. The renewal terms are the paywall's job; RevenueCat renders the
- * price and the disclosure Apple requires, and repeating a number here would
- * be wrong the moment somebody edits the offering.
+ * started. The renewal terms are the paywall's job. RevenueCat renders the
+ * price and the disclosure Apple requires, both on the sheet one tap away, and
+ * this screen carried a "cancel in Settings before it ends" line under the
+ * buttons that said it first, in the app's own voice: the last thing read
+ * before the ask was an instruction for getting out of it.
  *
  * A purchase ends onboarding, and so does declining: the flow finishes in the
  * garage with the car and the plan the quiz built already in it. It used to
@@ -73,10 +75,6 @@ export default function OnboardingOffer() {
           </Pressable>
         </>
       }
-    >
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("offer.trial.caption")}
-      </Text>
-    </OnboardingScreen>
+    />
   );
 }

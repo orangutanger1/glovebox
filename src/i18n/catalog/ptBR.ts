@@ -151,6 +151,11 @@ export const ptBR: Fragment = {
   "offer.paywall.caption":
     "Tudo o que você acabou de configurar já está salvo neste telefone. Sem conta, sem servidor, nada sai daqui.",
 
+  "offer.paywall.impact.legend": "O que isso vale",
+  "offer.paywall.impact.warned": "Você fica sabendo de uma revisão antes do prazo, não depois do conserto.",
+  "offer.paywall.impact.upsell": "Você chega na oficina sabendo o que foi feito e quando, então nada é vendido duas vezes.",
+  "offer.paywall.impact.resale": "Você entrega ao próximo dono um histórico completo em vez de um ombro encolhido, e isso aparece no preço.",
+
   "offer.trial.title": { one: "Teste por {count} dia.", other: "Teste por {count} dias." },
   "offer.trial.subtitle": {
     one: "Fique {count} dia com o Pro sem pagar nada e decida depois que o seu carro tiver te dito alguma coisa.",
@@ -162,7 +167,6 @@ export const ptBR: Fragment = {
     other: "Começar meus {count} dias grátis",
   },
   "offer.trial.decline": "Não, quero ver o app grátis",
-  "offer.trial.caption": "Cancele nos Ajustes antes de acabar e você não paga nada.",
 
   "offer.winback.title": "Você parou de registrar.",
   "offer.winback.decline": "Só me leve para a minha garagem",
@@ -484,7 +488,6 @@ export const ptBR: Fragment = {
 
   "system.notify.when.today": "Hoje",
   "system.notify.when.tomorrow": "Amanh\u00e3",
-  "system.notify.when.now": "Agora",
   "system.notify.when.days": { one: "Em {count} dia", other: "Em {count} dias" },
   "system.notify.when.months": { one: "Em {count} m\u00eas", other: "Em {count} meses" },
 
