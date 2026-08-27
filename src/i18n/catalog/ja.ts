@@ -455,6 +455,11 @@ export const ja: Fragment = {
   "system.notify.title": "{vehicle}：{service}の時期です",
   "system.notify.body": "前回は{date}です。",
 
+  "system.notify.when.today": "\u4eca\u65e5",
+  "system.notify.when.tomorrow": "\u660e\u65e5",
+  "system.notify.when.days": { other: "{count}\u65e5\u5f8c" },
+  "system.notify.when.months": { other: "{count}\u304b\u6708\u5f8c" },
+
   "system.csv.header.vehicle": "車両",
   "system.csv.header.service": "整備",
   "system.csv.header.date": "日付",

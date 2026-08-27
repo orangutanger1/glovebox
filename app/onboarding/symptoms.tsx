@@ -38,7 +38,7 @@ import { useDwell } from "../../src/onboarding/useDwell";
  * reading speed: a user who means to move on barely notices it, and a user who
  * is drumming on the glass sees the second and third card at all.
  */
-const DWELL_MS = 1200;
+const DWELL_MS = 800;
 
 export default function OnboardingSymptoms() {
   const router = useRouter();

@@ -15,7 +15,7 @@ Notifications.setNotificationHandler({
 });
 
 export { MAX_SCHEDULED, selectReminders, type Reminder } from "./select";
-export { collectReminders, nextReminder } from "./collect";
+export { collectReminders, nextReminder, nextReminders } from "./collect";
 
 export type ReminderStatus = {
   permission: "granted" | "denied" | "undetermined";

@@ -28,7 +28,8 @@ export function collectReminders(vehicleId?: string): Reminder[] {
     const records = listRecords(vehicle.id);
     const latestByType = new Map<string, (typeof records)[number]>();
     for (const r of records) {
-      if (!latestByType.has(r.service_type)) latestByType.set(r.service_type, r);
+      if (!latestByType.has(r.service_type))
+        latestByType.set(r.service_type, r);
     }
 
     for (const [serviceType, record] of latestByType) {
@@ -56,13 +57,25 @@ export function collectReminders(vehicleId?: string): Reminder[] {
 }
 
 /**
- * The one that would fire first, or nothing.
+ * The ones that would fire first, soonest first, or an empty list.
  *
- * `undefined` is a real answer and the only honest one on a car whose services
- * all have mileage-only intervals: there is no next notification, and a screen
+ * Empty is a real answer and the only honest one on a car whose services all
+ * have mileage-only intervals: there is no next notification, and a screen
  * that showed a specimen one anyway would be advertising a message the app has
  * no intention of sending.
  */
-export function nextReminder(vehicleId?: string, now: number = Date.now()): Reminder | undefined {
-  return selectReminders(collectReminders(vehicleId), now, 1)[0];
+export function nextReminders(
+  vehicleId?: string,
+  limit: number = 1,
+  now: number = Date.now(),
+): Reminder[] {
+  return selectReminders(collectReminders(vehicleId), now, limit);
+}
+
+/** The single soonest, which is what a preview of one message needs. */
+export function nextReminder(
+  vehicleId?: string,
+  now: number = Date.now(),
+): Reminder | undefined {
+  return nextReminders(vehicleId, 1, now)[0];
 }

@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
-import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
@@ -24,13 +23,18 @@ import { useAdvance } from "../../src/onboarding/nav";
  * Underneath it, the whole app with the Free/Pro boundary printed on it. That
  * was its own screen, two before the paywall, and the split cost a tap to say
  * something this screen was already halfway through saying: the answer to the
- * user's three complaints is four rows that are free and two that are not, and
- * a reader who has to press Continue between the promise and its price reads
- * them as two claims instead of one. Saying it here rather than letting the
- * paywall be the first mention is still not generosity — the complaint the
- * review corpus returns most often after data loss is the price, and almost
- * all of that is people discovering the boundary after they had committed to
- * the app.
+ * user's three complaints is four capabilities that are free and two that are
+ * not, and a reader who has to press Continue between the promise and its
+ * price reads them as two claims instead of one. Saying it here rather than
+ * letting the paywall be the first mention is still not generosity — the
+ * complaint the review corpus returns most often after data loss is the price,
+ * and almost all of that is people discovering the boundary after they had
+ * committed to the app.
+ *
+ * Those six were a single panel of six identical badge-on-the-right rows,
+ * which is how a capability becomes a line item: the screen ran well past a
+ * phone's height and nothing on it was emphasised over anything else. They are
+ * tiles now, two to a row, each on its own faceplate with the badge leading.
  */
 export default function OnboardingHelp() {
   const advance = useAdvance("help");
@@ -41,19 +45,34 @@ export default function OnboardingHelp() {
       route="help"
       title={t("onboardingC.help.title")}
       subtitle={t("onboardingC.help.subtitle")}
-      footer={<Button label={t("onboardingC.help.continue")} onPress={advance} />}
+      footer={
+        <Button label={t("onboardingC.help.continue")} onPress={advance} />
+      }
     >
       <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           {cards.map((card) => (
             <View key={card.id} style={{ gap: tokens.space.xs }}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: tokens.space.sm,
+                }}
+              >
                 <Lamp lit={false} size={10} />
-                <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+                <Text
+                  style={{
+                    ...tokens.text.legend,
+                    color: tokens.color.textMuted,
+                  }}
+                >
                   {card.legend}
                 </Text>
               </View>
-              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{card.fix}</Text>
+              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                {card.fix}
+              </Text>
             </View>
           ))}
         </View>
@@ -68,23 +87,43 @@ export default function OnboardingHelp() {
         </Text>
       </View>
 
-      <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
-          {features().map((feature) => (
-            <ListRow
-              key={feature.id}
-              title={feature.title}
-              subtitle={feature.subtitle}
-              right={
-                <Badge
-                  label={t(feature.pro ? "offer.badge.pro" : "offer.badge.free")}
-                  tone={feature.pro ? "soon" : "ok"}
-                />
-              }
-            />
-          ))}
-        </View>
-      </Panel>
+      {/* Tiles, two to a row, rather than six full-width rows in one panel.
+          Six identical rows is a spec sheet: the eye reads the shape once and
+          stops, so the sixth capability is worth nothing and the screen is
+          twice as tall as it needs to be. Paired, each capability is a face of
+          its own with its own edge, the Pro pair lands as a block instead of
+          as two more rows, and the whole boundary fits above the fold. */}
+      <View
+        style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}
+      >
+        {features().map((feature) => (
+          <Panel key={feature.id} style={{ flexGrow: 1, flexBasis: "46%" }}>
+            <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+              <Badge
+                label={t(feature.pro ? "offer.badge.pro" : "offer.badge.free")}
+                tone={feature.pro ? "soon" : "ok"}
+              />
+              <Text
+                style={{
+                  ...tokens.text.body,
+                  fontWeight: "600",
+                  color: tokens.color.text,
+                }}
+              >
+                {feature.title}
+              </Text>
+              <Text
+                style={{
+                  ...tokens.text.caption,
+                  color: tokens.color.textMuted,
+                }}
+              >
+                {feature.subtitle}
+              </Text>
+            </View>
+          </Panel>
+        ))}
+      </View>
     </OnboardingScreen>
   );
 }

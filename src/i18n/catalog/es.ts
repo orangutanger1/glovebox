@@ -496,6 +496,11 @@ export const es: Fragment = {
   "system.notify.title": "{vehicle}: toca {service}",
   "system.notify.body": "Última vez: {date}.",
 
+  "system.notify.when.today": "Hoy",
+  "system.notify.when.tomorrow": "Ma\u00f1ana",
+  "system.notify.when.days": { one: "En {count} d\u00eda", other: "En {count} d\u00edas" },
+  "system.notify.when.months": { one: "En {count} mes", other: "En {count} meses" },
+
   "system.csv.header.vehicle": "Vehículo",
   "system.csv.header.service": "Mantenimiento",
   "system.csv.header.date": "Fecha",

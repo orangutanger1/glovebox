@@ -552,6 +552,21 @@ export const pl: Fragment = {
   "system.notify.title": "{vehicle}: {service} — termin",
   "system.notify.body": "Ostatni raz: {date}.",
 
+  "system.notify.when.today": "Dzi\u015b",
+  "system.notify.when.tomorrow": "Jutro",
+  "system.notify.when.days": {
+    one: "Za {count} dzie\u0144",
+    few: "Za {count} dni",
+    many: "Za {count} dni",
+    other: "Za {count} dnia",
+  },
+  "system.notify.when.months": {
+    one: "Za {count} miesi\u0105c",
+    few: "Za {count} miesi\u0105ce",
+    many: "Za {count} miesi\u0119cy",
+    other: "Za {count} miesi\u0105ca",
+  },
+
   "system.csv.header.vehicle": "Pojazd",
   "system.csv.header.service": "Serwis",
   "system.csv.header.date": "Data",

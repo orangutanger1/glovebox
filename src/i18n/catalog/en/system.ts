@@ -14,6 +14,17 @@ export const system: Fragment = {
   "system.notify.title": "{vehicle}: {service} due",
   "system.notify.body": "Last done {date}.",
 
+  "system.notify.when.today": "Today",
+  "system.notify.when.tomorrow": "Tomorrow",
+  "system.notify.when.days": {
+    one: "In {count} day",
+    other: "In {count} days",
+  },
+  "system.notify.when.months": {
+    one: "In {count} month",
+    other: "In {count} months",
+  },
+
   "system.csv.header.vehicle": "Vehicle",
   "system.csv.header.service": "Service",
   "system.csv.header.date": "Date",

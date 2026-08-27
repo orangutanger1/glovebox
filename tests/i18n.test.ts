@@ -4,6 +4,7 @@ import type { Entry } from "../src/i18n/catalog/types";
 import {
   LANGUAGES,
   formatDate,
+  formatDueIn,
   formatNumber,
   formatShortDate,
   resetFormatters,
@@ -15,13 +16,25 @@ import {
 import { serviceName } from "../src/schedule/names";
 
 /** Languages with a full catalog of their own; the rest are regional overlays. */
-const BASE: Language[] = ["de", "fr", "it", "es", "pt-BR", "nl", "sv", "pl", "ja", "ko"];
+const BASE: Language[] = [
+  "de",
+  "fr",
+  "it",
+  "es",
+  "pt-BR",
+  "nl",
+  "sv",
+  "pl",
+  "ja",
+  "ko",
+];
 const OVERLAY: Language[] = ["en-GB", "en-AU", "en-CA", "fr-CA", "es-MX"];
 
 /** Node's CLDR data, parked by tests/hermes-runtime.js before it removed the
  *  constructors iOS does not have. Unchecked cast: nothing to validate. */
-const ICU = (globalThis as unknown as { ICU: { PluralRules: typeof Intl.PluralRules } }).ICU
-  .PluralRules;
+const ICU = (
+  globalThis as unknown as { ICU: { PluralRules: typeof Intl.PluralRules } }
+).ICU.PluralRules;
 
 const placeholders = (entry: Entry): string[] => {
   const values = typeof entry === "string" ? [entry] : Object.values(entry);
@@ -39,7 +52,10 @@ afterEach(() => {
 
 describe("the English catalog", () => {
   test("no two fragments claim the same key", () => {
-    const total = Object.values(FRAGMENTS).reduce((n, f) => n + Object.keys(f).length, 0);
+    const total = Object.values(FRAGMENTS).reduce(
+      (n, f) => n + Object.keys(f).length,
+      0,
+    );
     expect(Object.keys(en)).toHaveLength(total);
   });
 
@@ -76,7 +92,9 @@ describe("every shipped language", () => {
   });
 
   test.each(BASE)("%s translates every key and invents none", (language) => {
-    expect(Object.keys(CATALOGS[language]).sort()).toEqual(Object.keys(en).sort());
+    expect(Object.keys(CATALOGS[language]).sort()).toEqual(
+      Object.keys(en).sort(),
+    );
   });
 
   test.each(OVERLAY)("%s overrides only keys that exist", (language) => {
@@ -87,27 +105,37 @@ describe("every shipped language", () => {
 
   test.each([...BASE, ...OVERLAY])("%s keeps every placeholder", (language) => {
     for (const [key, entry] of Object.entries(CATALOGS[language])) {
-      expect({ key, vars: placeholders(entry) }).toEqual({ key, vars: placeholders(en[key]) });
+      expect({ key, vars: placeholders(entry) }).toEqual({
+        key,
+        vars: placeholders(en[key]),
+      });
     }
   });
 
-  test.each([...BASE, ...OVERLAY])("%s answers with a plural for every counted key", (language) => {
-    for (const [key, entry] of Object.entries(CATALOGS[language])) {
-      if (typeof en[key] === "string") continue;
-      expect(typeof entry).not.toBe("string");
-      if (typeof entry === "string") continue;
-      expect(entry.other).toBeTruthy();
-      const allowed = new ICU(language).resolvedOptions().pluralCategories;
-      expect(Object.keys(entry).filter((c) => !allowed.includes(c as Intl.LDMLPluralRule))).toEqual(
-        []
-      );
-    }
-  });
+  test.each([...BASE, ...OVERLAY])(
+    "%s answers with a plural for every counted key",
+    (language) => {
+      for (const [key, entry] of Object.entries(CATALOGS[language])) {
+        if (typeof en[key] === "string") continue;
+        expect(typeof entry).not.toBe("string");
+        if (typeof entry === "string") continue;
+        expect(entry.other).toBeTruthy();
+        const allowed = new ICU(language).resolvedOptions().pluralCategories;
+        expect(
+          Object.keys(entry).filter(
+            (c) => !allowed.includes(c as Intl.LDMLPluralRule),
+          ),
+        ).toEqual([]);
+      }
+    },
+  );
 
   test("Polish carries the three forms Polish grammar needs", () => {
     // The one language in the set where one/other is not merely coarse but
     // wrong: 2 przeglądy and 5 przeglądów take different endings.
-    const plural = Object.entries(CATALOGS.pl).filter(([, v]) => typeof v !== "string");
+    const plural = Object.entries(CATALOGS.pl).filter(
+      ([, v]) => typeof v !== "string",
+    );
     expect(plural.length).toBeGreaterThan(0);
     for (const [key, entry] of plural) {
       expect({ key, forms: Object.keys(entry as object).sort() }).toEqual({
@@ -219,6 +247,43 @@ describe("dates and numbers follow the language", () => {
     const grouped = formatNumber(51771);
     expect(grouped).not.toContain(",");
     expect(grouped.replace(/\D/g, "")).toBe("51771");
+  });
+
+  describe("formatDueIn", () => {
+    const at = (iso: string) => new Date(iso).getTime();
+
+    test("counts calendar days, not 24-hour blocks", () => {
+      setLanguage("en");
+      // Late evening reading a due date the next morning: eleven hours apart,
+      // and "Today" would be the one wrong answer on the glass.
+      const now = at("2026-09-14T23:00:00.000Z");
+      expect(formatDueIn("2026-09-15T10:00:00.000Z", now)).toBe("Tomorrow");
+      expect(formatDueIn("2026-09-14T23:30:00.000Z", now)).toBe("Today");
+    });
+
+    test("a date already past reads as today rather than as a negative", () => {
+      setLanguage("en");
+      expect(
+        formatDueIn("2026-09-01T10:00:00.000Z", at("2026-09-14T10:00:00.000Z")),
+      ).toBe("Today");
+    });
+
+    test("switches from days to months once the day count is arithmetic", () => {
+      setLanguage("en");
+      const now = at("2026-09-14T10:00:00.000Z");
+      expect(formatDueIn("2026-09-23T10:00:00.000Z", now)).toBe("In 9 days");
+      expect(formatDueIn("2027-03-14T10:00:00.000Z", now)).toBe("In 6 months");
+    });
+
+    test("is a sentence in the reader's language, not an English one", () => {
+      setLanguage("pl");
+      resetFormatters();
+      // Polish needs three plural forms and this key carries them: 2 dni takes
+      // a different ending from 5 dni.
+      const now = at("2026-09-14T10:00:00.000Z");
+      expect(formatDueIn("2026-09-16T10:00:00.000Z", now)).toBe("Za 2 dni");
+      expect(formatDueIn("2026-09-15T10:00:00.000Z", now)).toBe("Jutro");
+    });
   });
 });
 

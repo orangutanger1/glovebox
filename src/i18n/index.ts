@@ -17,7 +17,12 @@ export type { Language };
  * all the way through to English; the Brazilian and German catalogs are wrong in
  * details for those readers and right about every word that matters.
  */
-const NEAREST: Record<string, Language> = { pt: "pt-BR", nb: "sv", nn: "sv", da: "sv" };
+const NEAREST: Record<string, Language> = {
+  pt: "pt-BR",
+  nb: "sv",
+  nn: "sv",
+  da: "sv",
+};
 
 export type Vars = Record<string, string | number>;
 
@@ -59,7 +64,9 @@ export function resolveLanguage(tags: readonly string[]): Language {
  * which nobody can.
  */
 function build(language: Language): Record<string, Entry> {
-  const base = language.includes("-") ? (language.split("-")[0] as Language) : language;
+  const base = language.includes("-")
+    ? (language.split("-")[0] as Language)
+    : language;
   return {
     ...en,
     ...(base === "en" ? {} : (CATALOGS[base] ?? {})),
@@ -135,7 +142,7 @@ function dateFormat(style: "short" | "long"): Intl.DateTimeFormat {
     active,
     style === "short"
       ? { month: "short", day: "numeric" }
-      : { year: "numeric", month: "short", day: "numeric" }
+      : { year: "numeric", month: "short", day: "numeric" },
   );
   return dateFormats[key];
 }
@@ -154,6 +161,35 @@ export function formatShortDate(iso: string): string {
  */
 export function formatDate(iso: string): string {
   return dateFormat("long").format(new Date(iso));
+}
+
+/**
+ * "Tomorrow" / "In 9 days" / "In 7 months" — when a due date arrives, said the
+ * way a person says it.
+ *
+ * Counted in calendar days in the device's own zone, not in 24-hour blocks: a
+ * service due tomorrow morning is "Tomorrow" whether the user reads this at
+ * 9am or 11pm, and rounding a 23-hour gap to "Today" is the one answer that
+ * would be wrong on the glass.
+ *
+ * `Intl.RelativeTimeFormat` would be the obvious tool and does not exist on
+ * iOS Hermes (see tests/hermes-runtime.js), so the four phrasings are catalog
+ * keys like every other sentence in the app.
+ */
+export function formatDueIn(iso: string, now: number = Date.now()): string {
+  const due = new Date(iso);
+  const today = new Date(now);
+  const days = Math.round(
+    (Date.UTC(due.getFullYear(), due.getMonth(), due.getDate()) -
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())) /
+      86_400_000,
+  );
+
+  if (days <= 0) return t("system.notify.when.today");
+  if (days === 1) return t("system.notify.when.tomorrow");
+  // Past two months a day count is arithmetic the reader has to do themselves.
+  if (days < 60) return t("system.notify.when.days", { count: days });
+  return t("system.notify.when.months", { count: Math.round(days / 30) });
 }
 
 /** Test seam: drops the memoised Intl objects so a language switch inside one

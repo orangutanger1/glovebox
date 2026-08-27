@@ -480,6 +480,11 @@ export const ptBR: Fragment = {
   "system.notify.title": "{vehicle}: {service} vence hoje",
   "system.notify.body": "Última vez: {date}.",
 
+  "system.notify.when.today": "Hoje",
+  "system.notify.when.tomorrow": "Amanh\u00e3",
+  "system.notify.when.days": { one: "Em {count} dia", other: "Em {count} dias" },
+  "system.notify.when.months": { one: "Em {count} m\u00eas", other: "Em {count} meses" },
+
   "system.csv.header.vehicle": "Veículo",
   "system.csv.header.service": "Serviço",
   "system.csv.header.date": "Data",

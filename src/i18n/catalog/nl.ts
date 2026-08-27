@@ -137,6 +137,11 @@ export const nl: Fragment = {
   "system.notify.title": "{vehicle}: {service} aan de beurt",
   "system.notify.body": "Laatst gedaan op {date}.",
 
+  "system.notify.when.today": "Vandaag",
+  "system.notify.when.tomorrow": "Morgen",
+  "system.notify.when.days": { one: "Over {count} dag", other: "Over {count} dagen" },
+  "system.notify.when.months": { one: "Over {count} maand", other: "Over {count} maanden" },
+
   "system.csv.header.vehicle": "Voertuig",
   "system.csv.header.service": "Onderhoud",
   "system.csv.header.date": "Datum",

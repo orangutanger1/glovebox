@@ -82,6 +82,33 @@ specifically. Old and new opt-in rates share an event name and nothing else.
 - Completion should rise slightly from removing one tap, independently of
   whether the argument got better.
 
+### 2026-08-26 — OTA `01a0418b-4b87-7ef6-a905-f4ea56d8bd49`
+
+One commit, one boundary, and the smallest of the three so far: no route was
+added or removed, so depth-based funnels do not re-baseline here.
+
+**The reminders question changed again, in the same direction.** The still card
+on `plan` is now the notification arriving — it drops in, holds, lifts, and
+cycles up to three of this car's real reminders, each labelled with when it
+would actually arrive ("Tomorrow", "In 9 days") rather than with a date. The
+previous entry already made `notification_permission` incomparable across the
+`01a0416c` boundary; this makes it incomparable across this one too. Two
+consecutive updates have changed what the user knows at the moment they answer,
+which means the opt-in rate has no baseline at all yet. The first cohort that
+can be quoted is the one that runs this bundle unchanged.
+
+**`help` was rebuilt, not moved.** The six Free/Pro rows are tiles, two to a
+row, badge leading, and the screen is roughly half as tall. `help` still
+inherits the drop that used to belong to `features`, so it remains
+non-comparable to anything before `01a0416c` — but its drop is now also not
+comparable to the single update in between, because the price boundary is being
+read differently: above the fold instead of after a scroll.
+
+**The symptoms dwell went 1200ms to 800ms.** `c5a1bd2` introduced the dwell and
+`01a0416c` shipped it; this shortens it. Time-on-screen for `route=symptoms`
+drops by construction and says nothing about attention. Any per-card drop-off
+comparison has now crossed three different dwell values in four days.
+
 ## The standing caveat that outlives every entry
 
 As of this date the paywall has converted a sample of one. Nothing in this

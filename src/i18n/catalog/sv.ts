@@ -483,6 +483,11 @@ export const sv: Fragment = {
   "system.notify.title": "{vehicle}: dags för {service}",
   "system.notify.body": "Gjordes senast {date}.",
 
+  "system.notify.when.today": "Idag",
+  "system.notify.when.tomorrow": "I morgon",
+  "system.notify.when.days": { one: "Om {count} dag", other: "Om {count} dagar" },
+  "system.notify.when.months": { one: "Om {count} m\u00e5nad", other: "Om {count} m\u00e5nader" },
+
   "system.csv.header.vehicle": "Fordon",
   "system.csv.header.service": "Service",
   "system.csv.header.date": "Datum",

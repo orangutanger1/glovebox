@@ -4,14 +4,14 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
-import { NotifyBanner } from "../../src/design/NotifyBanner";
+import { NotifyDemo, type NotifyMessage } from "../../src/design/NotifyDemo";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, t } from "../../src/i18n";
+import { formatDate, formatDueIn, t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
 import {
   canAskPermission,
-  nextReminder,
+  nextReminders,
   requestPermission,
   rescheduleAll,
 } from "../../src/notify";
@@ -34,6 +34,9 @@ const STATUS_LABEL = {
 /** The whole schedule is real, but a screen with twelve rows on it is a
  *  document, not a plan. The rest is one line of arithmetic underneath. */
 const SHOWN = 6;
+
+/** How many real reminders the banner cycles through. */
+const DEMO_MESSAGES = 3;
 
 /**
  * The plan, and the notification soft-ask.
@@ -61,13 +64,16 @@ const SHOWN = 6;
  * Reminders are half the product, and nagging for them is the other half of
  * the reviews this app was written against.
  *
- * Above the list is the notification itself, drawn as iOS will draw it, from
- * the reminder the app would schedule first: the same title and body strings
- * the scheduler passes to `scheduleNotificationAsync`, against this user's own
- * car, dated the day it will actually arrive. The ask is "may we send you
- * this", and until now the "this" was a sentence describing a message rather
- * than the message. It is absent, not faked, on a car whose services all have
- * mileage-only intervals: nothing would be scheduled, so nothing is shown.
+ * Above the list the notification arrives, drawn as iOS draws it and animated
+ * as iOS delivers it: it drops in from above, holds, lifts away, and the next
+ * one comes. Every message is built from a reminder this app would really
+ * schedule — the same title and body strings the scheduler passes to
+ * `scheduleNotificationAsync`, against this user's own car by year, make and
+ * model, labelled with the day it will actually arrive ("Tomorrow", "In 9
+ * days"). The ask is "may we send you this", and a still card was a picture of
+ * a message rather than the thing itself. It is absent, not faked, on a car
+ * whose services all have mileage-only intervals: nothing would be scheduled,
+ * so nothing is shown.
  */
 export default function OnboardingPlan() {
   const advance = useAdvance("plan");
@@ -77,7 +83,25 @@ export default function OnboardingPlan() {
   // that already has reminders in it. The DB is not touched again while this
   // screen is up, and neither is the clock: one read at mount, like the
   // findings above it.
-  const preview = useMemo(() => (vehicle ? nextReminder(vehicle.id) : undefined), [vehicle]);
+  //
+  // Three at most. The animation is an argument, not a feed, and a fourth
+  // message means the user is watching a loop instead of reading a plan.
+  const messages = useMemo<NotifyMessage[]>(
+    () =>
+      (vehicle ? nextReminders(vehicle.id, DEMO_MESSAGES) : []).map(
+        (reminder) => ({
+          title: t("system.notify.title", {
+            vehicle: reminder.vehicleName,
+            service: serviceName(reminder.serviceType),
+          }),
+          body: t("system.notify.body", {
+            date: formatDate(reminder.lastPerformedAt),
+          }),
+          when: formatDueIn(reminder.dueAt),
+        }),
+      ),
+    [vehicle],
+  );
 
   async function onRemindMe() {
     if (busy) return;
@@ -121,32 +145,32 @@ export default function OnboardingPlan() {
     <OnboardingScreen
       route="plan"
       title={t("offer.plan.title")}
-      subtitle={t("offer.plan.subtitle", { count: plan.items.length, vehicle: vehicleName })}
+      subtitle={t("offer.plan.subtitle", {
+        count: plan.items.length,
+        vehicle: vehicleName,
+      })}
       footer={
         <>
-          <Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />
+          <Button
+            label={t("offer.plan.cta")}
+            onPress={onRemindMe}
+            disabled={busy}
+          />
           <Pressable
             onPress={onDecline}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+            <Text
+              style={{ ...tokens.text.legend, color: tokens.color.textMuted }}
+            >
               {t("offer.plan.decline")}
             </Text>
           </Pressable>
         </>
       }
     >
-      {preview && (
-        <NotifyBanner
-          title={t("system.notify.title", {
-            vehicle: preview.vehicleName,
-            service: serviceName(preview.serviceType),
-          })}
-          body={t("system.notify.body", { date: formatDate(preview.lastPerformedAt) })}
-          when={formatDate(preview.dueAt)}
-        />
-      )}
+      {messages.length > 0 && <NotifyDemo messages={messages} />}
 
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
@@ -156,14 +180,21 @@ export default function OnboardingPlan() {
               title={serviceName(item.type)}
               subtitle={planItemLine(item, unit)}
               status={ROW_STATUS[item.status]}
-              right={<Badge label={t(STATUS_LABEL[item.status])} tone={item.status} />}
+              right={
+                <Badge
+                  label={t(STATUS_LABEL[item.status])}
+                  tone={item.status}
+                />
+              }
             />
           ))}
         </View>
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {remaining > 0 ? t("offer.plan.noteMore", { count: remaining }) : t("offer.plan.note")}
+        {remaining > 0
+          ? t("offer.plan.noteMore", { count: remaining })
+          : t("offer.plan.note")}
       </Text>
     </OnboardingScreen>
   );

@@ -10,7 +10,9 @@ import TestRenderer, { act } from "react-test-renderer";
  * past until you have scrolled it, and that the loader draws a bar and takes
  * as long as it says it does. All three were bugs a pure test cannot see.
  */
-(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+(
+  globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
+).IS_REACT_ACT_ENVIRONMENT = true;
 
 const navigated: string[] = [];
 jest.mock("expo-router", () => ({
@@ -29,9 +31,12 @@ jest.mock("../src/db/client", () => {
   applyMigrations((sql: string) => db.exec(sql), 0);
   return {
     getDb: () => ({
-      runSync: (sql: string, params: unknown[] = []) => db.prepare(sql).run(...params),
-      getFirstSync: (sql: string, params: unknown[] = []) => db.prepare(sql).get(...params) ?? null,
-      getAllSync: (sql: string, params: unknown[] = []) => db.prepare(sql).all(...params),
+      runSync: (sql: string, params: unknown[] = []) =>
+        db.prepare(sql).run(...params),
+      getFirstSync: (sql: string, params: unknown[] = []) =>
+        db.prepare(sql).get(...params) ?? null,
+      getAllSync: (sql: string, params: unknown[] = []) =>
+        db.prepare(sql).all(...params),
     }),
   };
 });
@@ -64,10 +69,14 @@ import {
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { formatDate, setLanguage } from "../src/i18n";
-import { nextReminder } from "../src/notify";
+import { formatDate, formatDueIn, setLanguage } from "../src/i18n";
+import { nextReminder, nextReminders } from "../src/notify";
+import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
-import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../src/onboarding/estimate";
+import {
+  AVERAGE_DISTANCE_PER_YEAR,
+  estimateOdometer,
+} from "../src/onboarding/estimate";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
@@ -113,7 +122,9 @@ function render(Component: () => ReactElement): TestRenderer.ReactTestRenderer {
 function stringsIn(node: TestRenderer.ReactTestInstance): string[] {
   return node
     .findAll((n) => typeof n.type === "string")
-    .flatMap((n) => n.children.filter((c): c is string => typeof c === "string"));
+    .flatMap((n) =>
+      n.children.filter((c): c is string => typeof c === "string"),
+    );
 }
 
 /** Every string the screen actually puts on the glass. */
@@ -123,7 +134,9 @@ function texts(tree: TestRenderer.ReactTestRenderer): string[] {
 
 /** Every `value` prop, which is how the fields report their state. */
 function values(tree: TestRenderer.ReactTestRenderer): unknown[] {
-  return tree.root.findAll((n) => n.props.value !== undefined).map((n) => n.props.value);
+  return tree.root
+    .findAll((n) => n.props.value !== undefined)
+    .map((n) => n.props.value);
 }
 
 /** Every selected set on the screen, which is how the chip rows report theirs. */
@@ -135,14 +148,23 @@ function selections(tree: TestRenderer.ReactTestRenderer): string[] {
 
 /** Taps the chip or the button carrying this label. */
 function press(tree: TestRenderer.ReactTestRenderer, label: string): void {
-  const target = tree.root.findAll((n) => n.props.label === label && !n.props.disabled);
-  if (target.length === 0) throw new Error(`nothing live is labelled "${label}"`);
+  const target = tree.root.findAll(
+    (n) => n.props.label === label && !n.props.disabled,
+  );
+  if (target.length === 0)
+    throw new Error(`nothing live is labelled "${label}"`);
   act(() => target[0].props.onPress());
 }
 
 /** Types into the field carrying this label. */
-function type(tree: TestRenderer.ReactTestRenderer, label: string, text: string): void {
-  const target = tree.root.findAll((n) => n.props.label === label && n.props.onChangeText);
+function type(
+  tree: TestRenderer.ReactTestRenderer,
+  label: string,
+  text: string,
+): void {
+  const target = tree.root.findAll(
+    (n) => n.props.label === label && n.props.onChangeText,
+  );
   if (target.length === 0) throw new Error(`no field is labelled "${label}"`);
   act(() => target[0].props.onChangeText(text));
 }
@@ -160,7 +182,7 @@ function spin(tree: TestRenderer.ReactTestRenderer, detents: number): void {
   act(() =>
     drum.props.onMomentumScrollEnd({
       nativeEvent: { contentOffset: { y: from + detents * 40 } },
-    })
+    }),
   );
 }
 
@@ -186,7 +208,11 @@ beforeEach(() => {
 });
 
 test("nothing in the flow sells the free tier", () => {
-  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  const car = createVehicle({
+    name: "2014 Ford F-150",
+    year: 2014,
+    odometer: 96500,
+  });
   setOnboardingVehicleId(car.id);
 
   // The paywall used to carry a "Start with the free app" link under its
@@ -197,7 +223,9 @@ test("nothing in the flow sells the free tier", () => {
   expect(paywall).not.toMatch(/free forever/i);
   // The trial's decline still names the free app, because that is where it
   // sends the user: the garage, with no screen in between selling free mode.
-  expect(texts(render(OnboardingOffer)).join(" ")).not.toMatch(/free mode|free forever/i);
+  expect(texts(render(OnboardingOffer)).join(" ")).not.toMatch(
+    /free mode|free forever/i,
+  );
   // The button names an outcome. "See Wrenchy Pro" described navigation, which
   // is the one thing a paywall CTA must never spend itself on.
   expect(texts(render(OnboardingPaywall))).toContain("Keep my car on record");
@@ -212,7 +240,11 @@ test("no screen in the flow prints an em or en dash", () => {
     odometer: 96500,
   });
   setOnboardingVehicleId(car.id);
-  setAnswers({ drive: "average", tracking: "dealer", worries: ["records", "upsell"] });
+  setAnswers({
+    drive: "average",
+    tracking: "dealer",
+    worries: ["records", "upsell"],
+  });
 
   const screens = [
     OnboardingVehicle,
@@ -307,7 +339,9 @@ test("the whole quiz is answerable without a keystroke, and still yields a plan"
   // Still an estimate, and now the low band's estimate rather than the
   // national average: `drive` refined the guess on the way past.
   expect(car.odometer_estimated).toBe(1);
-  expect(car.odometer).toBeLessThan(estimateOdometer(car.year, AVERAGE_DISTANCE_PER_YEAR.mi)!);
+  expect(car.odometer).toBeLessThan(
+    estimateOdometer(car.year, AVERAGE_DISTANCE_PER_YEAR.mi)!,
+  );
 
   // The payoff screen is the whole argument for the paywall, so a keyboardless
   // walk has to arrive at a populated one rather than an empty state.
@@ -320,7 +354,9 @@ test("the year comes off a drum, and never off a keyboard", () => {
   const tree = render(OnboardingVehicle);
   // The chip row of twenty-six years, and before it the numeric field with
   // four error messages behind it, are both gone.
-  expect(tree.root.findAll((n) => n.props.keyboardType === "numeric")).toHaveLength(0);
+  expect(
+    tree.root.findAll((n) => n.props.keyboardType === "numeric"),
+  ).toHaveLength(0);
 
   // Three detents down the drum is three model years older than the default.
   spin(tree, 3);
@@ -354,7 +390,11 @@ test("the odometer question starts empty on a car that has no reading yet", () =
 });
 
 test("the odometer can be deferred again, and says so on the screen", () => {
-  const car = createVehicle({ name: "2019 Toyota", year: 2019, make: "Toyota" });
+  const car = createVehicle({
+    name: "2019 Toyota",
+    year: 2019,
+    make: "Toyota",
+  });
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
@@ -367,12 +407,18 @@ test("the odometer can be deferred again, and says so on the screen", () => {
   const saved = getVehicle(car.id)!;
   // Arithmetic, stored as arithmetic: the flag is what every gauge in the app
   // reads to label the number "(est.)", and what `drive` reads to refine it.
-  expect(saved.odometer).toBe(estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR.mi));
+  expect(saved.odometer).toBe(
+    estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR.mi),
+  );
   expect(saved.odometer_estimated).toBe(1);
 });
 
 test("a typed reading is still the answer the screen wants", () => {
-  const car = createVehicle({ name: "2019 Toyota", year: 2019, make: "Toyota" });
+  const car = createVehicle({
+    name: "2019 Toyota",
+    year: 2019,
+    make: "Toyota",
+  });
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
@@ -481,7 +527,8 @@ test("the loader draws a bar and holds the screen for the whole readout", () => 
   jest.useFakeTimers();
   const tree = render(OnboardingAnalyzing);
   expect(
-    tree.root.findAll((n) => n.props.accessibilityRole === "progressbar").length
+    tree.root.findAll((n) => n.props.accessibilityRole === "progressbar")
+      .length,
   ).toBeGreaterThan(0);
 
   // One `act` flushes one timer, because the next one is only scheduled by the
@@ -513,21 +560,27 @@ test("the loader cannot be skipped", () => {
   expect(
     tree.root
       .findAll((n) => typeof n.props.onPress === "function")
-      .filter((n) => stringsIn(n).includes("Working out the schedule."))
+      .filter((n) => stringsIn(n).includes("Working out the schedule.")),
   ).toHaveLength(0);
   expect(navigated).not.toContain("replace:/onboarding/results");
   jest.useRealTimers();
 });
 
 test("the last question takes no answer at all", () => {
-  const car = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 84210 });
+  const car = createVehicle({
+    name: "2019 Toyota",
+    year: 2019,
+    odometer: 84210,
+  });
   setOnboardingVehicleId(car.id);
   setAnswers({ tracking: "memory" });
 
   const tree = render(OnboardingWorry);
   // It used to open on a dead Continue, which is the worst possible last
   // impression of the quiz.
-  expect(texts(tree)).toContain("All optional. Skip it and the next screen is built from your car alone.");
+  expect(texts(tree)).toContain(
+    "All optional. Skip it and the next screen is built from your car alone.",
+  );
   press(tree, "Continue");
   expect(navigated).toContain("/onboarding/analyzing");
 
@@ -538,9 +591,17 @@ test("the last question takes no answer at all", () => {
 });
 
 test("the free and paid halves are named on the same screen as the answer", () => {
-  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  const car = createVehicle({
+    name: "2014 Ford F-150",
+    year: 2014,
+    odometer: 96500,
+  });
   setOnboardingVehicleId(car.id);
-  setAnswers({ drive: "average", tracking: "dealer", worries: ["records", "upsell"] });
+  setAnswers({
+    drive: "average",
+    tracking: "dealer",
+    worries: ["records", "upsell"],
+  });
 
   // The boundary was its own screen between the evidence and the plan. Folding
   // it here is only safe if every row it carried still prints, badge included:
@@ -552,14 +613,24 @@ test("the free and paid halves are named on the same screen as the answer", () =
   expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
 });
 
-test("the plan screen shows the notification it is asking permission to send", () => {
-  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+test("the plan screen animates the notification it is asking permission to send", () => {
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    make: "Subaru",
+    model: "Outback",
+    year: 2016,
+    odometer: 112000,
+  });
   setOnboardingVehicleId(car.id);
 
   // A car the flow is not about, with a reminder that comes first. Onboarding
   // is replayable from Settings, so the garage around it is rarely empty, and
   // the soonest reminder in the whole garage is not this screen's argument.
-  const other = createVehicle({ name: "2009 Volvo V70", year: 2009, odometer: 210000 });
+  const other = createVehicle({
+    name: "2009 Volvo V70",
+    year: 2009,
+    odometer: 210000,
+  });
   addRecord({
     vehicle_id: other.id,
     service_type: "Oil Change",
@@ -570,23 +641,85 @@ test("the plan screen shows the notification it is asking permission to send", (
   // it. The preview is absent rather than invented: a specimen notification on
   // a car the app has no reminder for is a promise of a message it has no
   // intention of sending, and the Volvo's is not this car's.
-  expect(texts(render(OnboardingPlan)).join(" ")).not.toMatch(/Outback: |Volvo/);
+  expect(texts(render(OnboardingPlan)).join(" ")).not.toMatch(
+    /Outback: |Volvo/,
+  );
 
-  const performedAt = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
-  addRecord({ vehicle_id: car.id, service_type: "Oil Change", performed_at: performedAt });
+  const performedAt = new Date(
+    Date.now() - 30 * 24 * 3600 * 1000,
+  ).toISOString();
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: performedAt,
+  });
 
   const printed = texts(render(OnboardingPlan));
-  // The same strings the scheduler passes to iOS, against this user's own car:
-  // the ask is "may we send you this", and "this" has to be the message.
+  // The same strings the scheduler passes to iOS, against this user's own car
+  // by year, make and model: the ask is "may we send you this", and "this" has
+  // to be the message.
   expect(printed).toContain("2016 Subaru Outback: Oil Change due");
   expect(printed).toContain(`Last done ${formatDate(performedAt)}.`);
-  // Dated the day it will actually arrive, not "now".
+  // Labelled with when it will actually arrive, in the words a person uses,
+  // and never with a bare "now": the whole claim of the screen is that the
+  // message comes on a day the user is not thinking about their car.
   const due = nextReminder(car.id);
-  expect(printed).toContain(formatDate(due!.dueAt));
+  expect(printed).toContain(formatDueIn(due!.dueAt));
+  expect(printed).not.toContain(formatDate(due!.dueAt));
+});
+
+test("the banner cycles through several of the car's own reminders", () => {
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    year: 2016,
+    odometer: 112000,
+  });
+  setOnboardingVehicleId(car.id);
+
+  // Recent enough that all three are still ahead: a service already overdue
+  // has no notification to schedule and is dropped before the banner sees it.
+  const recent = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
+  const older = new Date(Date.now() - 90 * 24 * 3600 * 1000).toISOString();
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: older,
+  });
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Tire Rotation",
+    performed_at: recent,
+  });
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Air Filter",
+    performed_at: recent,
+  });
+  // Only one message is on the glass at a time — the point of the animation is
+  // that a notification is an event, not a stack — so the screen is asked for
+  // what it would cycle instead of what a single frame prints.
+  const messages = nextReminders(car.id, 3);
+  expect(messages).toHaveLength(3);
+
+  const printed = texts(render(OnboardingPlan));
+  const first = messages[0];
+  expect(printed).toContain(
+    `2016 Subaru Outback: ${serviceName(first.serviceType)} due`,
+  );
+  // Soonest first. A demo that opened on the furthest reminder would argue the
+  // opposite of the screen it is on.
+  for (const later of messages.slice(1)) {
+    expect(new Date(later.dueAt).getTime()).toBeGreaterThanOrEqual(
+      new Date(first.dueAt).getTime(),
+    );
+  }
 });
 
 /** The mocked native notification module, as this file installed it. */
-function notifications(): { requestPermissionsAsync: jest.Mock; getPermissionsAsync: jest.Mock } {
+function notifications(): {
+  requestPermissionsAsync: jest.Mock;
+  getPermissionsAsync: jest.Mock;
+} {
   const mocked = jest.requireMock("expo-notifications");
   const { requestPermissionsAsync, getPermissionsAsync } = mocked as {
     requestPermissionsAsync: jest.Mock;
@@ -604,10 +737,13 @@ function notifications(): { requestPermissionsAsync: jest.Mock; getPermissionsAs
  */
 async function pressAndSettle(
   tree: TestRenderer.ReactTestRenderer,
-  label: string
+  label: string,
 ): Promise<void> {
-  const target = tree.root.findAll((n) => n.props.label === label && !n.props.disabled);
-  if (target.length === 0) throw new Error(`nothing live is labelled "${label}"`);
+  const target = tree.root.findAll(
+    (n) => n.props.label === label && !n.props.disabled,
+  );
+  if (target.length === 0)
+    throw new Error(`nothing live is labelled "${label}"`);
   await act(async () => {
     await target[0].props.onPress();
   });
@@ -615,13 +751,20 @@ async function pressAndSettle(
 
 test("the reminders button raises the iOS prompt on the tap that promises it", async () => {
   const { requestPermissionsAsync, getPermissionsAsync } = notifications();
-  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    year: 2016,
+    odometer: 112000,
+  });
   setOnboardingVehicleId(car.id);
 
   // What iOS says about an install it has never asked. The app used to consult
   // a flag of its own here, and a flag stamped by an earlier build that only
   // recorded the intention left this button doing nothing visible at all.
-  getPermissionsAsync.mockResolvedValue({ status: "undetermined", canAskAgain: true });
+  getPermissionsAsync.mockResolvedValue({
+    status: "undetermined",
+    canAskAgain: true,
+  });
   requestPermissionsAsync.mockClear();
 
   await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
@@ -632,10 +775,17 @@ test("the reminders button raises the iOS prompt on the tap that promises it", a
 
 test("a permission iOS will not re-ask is not asked for, and does not block the flow", async () => {
   const { requestPermissionsAsync, getPermissionsAsync } = notifications();
-  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    year: 2016,
+    odometer: 112000,
+  });
   setOnboardingVehicleId(car.id);
 
-  getPermissionsAsync.mockResolvedValue({ status: "denied", canAskAgain: false });
+  getPermissionsAsync.mockResolvedValue({
+    status: "denied",
+    canAskAgain: false,
+  });
   requestPermissionsAsync.mockClear();
 
   await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
@@ -643,5 +793,8 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   expect(requestPermissionsAsync).not.toHaveBeenCalled();
   expect(navigated).toContain("/onboarding/paywall");
 
-  getPermissionsAsync.mockResolvedValue({ status: "granted", canAskAgain: false });
+  getPermissionsAsync.mockResolvedValue({
+    status: "granted",
+    canAskAgain: false,
+  });
 });
