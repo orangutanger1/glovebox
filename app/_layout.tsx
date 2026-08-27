@@ -164,10 +164,10 @@ export default function RootLayout() {
         <Text style={{ ...tokens.text.heading, color: LIGHT.ink, textAlign: "center" }}>
           {t("layout.fatal.title")}
         </Text>
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textAlign: "center" }}>
+        <Text style={{ ...tokens.text.body, color: LIGHT.inkMuted, textAlign: "center" }}>
           {t("layout.fatal.body")}
         </Text>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>
+        <Text style={{ ...tokens.text.caption, color: LIGHT.inkFaint, textAlign: "center" }}>
           {fatal}
         </Text>
       </View>
@@ -177,7 +177,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <Stack
           key={localeEpoch}
           screenOptions={{
