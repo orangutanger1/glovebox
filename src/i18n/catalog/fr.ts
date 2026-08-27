@@ -510,6 +510,7 @@ export const fr: Fragment = {
   "system.notify.body": "Dernière fois le {date}.",
 
   "system.notify.when.today": "Aujourd\u2019hui",
+  "system.notify.when.now": "Maintenant",
   "system.notify.when.tomorrow": "Demain",
   "system.notify.when.days": { one: "Dans {count} jour", other: "Dans {count} jours" },
   "system.notify.when.months": { one: "Dans {count} mois", other: "Dans {count} mois" },

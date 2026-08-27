@@ -69,7 +69,7 @@ import {
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { formatDate, formatDueIn, setLanguage } from "../src/i18n";
+import { formatDate, setLanguage } from "../src/i18n";
 import { nextReminder, nextReminders } from "../src/notify";
 import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
@@ -660,11 +660,12 @@ test("the plan screen animates the notification it is asking permission to send"
   // to be the message.
   expect(printed).toContain("Your 2016 Subaru Outback\u2019s Oil Change is due");
   expect(printed).toContain(`Last done ${formatDate(performedAt)}.`);
-  // Labelled with when it will actually arrive, in the words a person uses,
-  // and never with a bare "now": the whole claim of the screen is that the
-  // message comes on a day the user is not thinking about their car.
+  // The timestamp is the one a real banner carries: the moment it arrives, not
+  // the due date. The preview drops in "now", the way iOS delivers a banner,
+  // and the raw due date never reaches the glass — the plan below it carries
+  // the schedule.
   const due = nextReminder(car.id);
-  expect(printed).toContain(formatDueIn(due!.dueAt));
+  expect(printed).toContain("now");
   expect(printed).not.toContain(formatDate(due!.dueAt));
 });
 

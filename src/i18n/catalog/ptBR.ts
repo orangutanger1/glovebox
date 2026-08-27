@@ -482,6 +482,7 @@ export const ptBR: Fragment = {
 
   "system.notify.when.today": "Hoje",
   "system.notify.when.tomorrow": "Amanh\u00e3",
+  "system.notify.when.now": "Agora",
   "system.notify.when.days": { one: "Em {count} dia", other: "Em {count} dias" },
   "system.notify.when.months": { one: "Em {count} m\u00eas", other: "Em {count} meses" },
 

@@ -139,6 +139,7 @@ export const nl: Fragment = {
 
   "system.notify.when.today": "Vandaag",
   "system.notify.when.tomorrow": "Morgen",
+  "system.notify.when.now": "Nu",
   "system.notify.when.days": { one: "Over {count} dag", other: "Over {count} dagen" },
   "system.notify.when.months": { one: "Over {count} maand", other: "Over {count} maanden" },
 

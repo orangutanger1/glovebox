@@ -484,6 +484,7 @@ export const ko: Fragment = {
 
   "system.notify.when.today": "\uc624\ub298",
   "system.notify.when.tomorrow": "\ub0b4\uc77c",
+  "system.notify.when.now": "\uc9c0\uae08",
   "system.notify.when.days": { other: "{count}\uc77c \ud6c4" },
   "system.notify.when.months": { other: "{count}\uac1c\uc6d4 \ud6c4" },
 

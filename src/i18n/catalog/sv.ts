@@ -485,6 +485,7 @@ export const sv: Fragment = {
 
   "system.notify.when.today": "Idag",
   "system.notify.when.tomorrow": "I morgon",
+  "system.notify.when.now": "Nu",
   "system.notify.when.days": { one: "Om {count} dag", other: "Om {count} dagar" },
   "system.notify.when.months": { one: "Om {count} m\u00e5nad", other: "Om {count} m\u00e5nader" },
 

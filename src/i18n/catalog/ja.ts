@@ -457,6 +457,7 @@ export const ja: Fragment = {
 
   "system.notify.when.today": "\u4eca\u65e5",
   "system.notify.when.tomorrow": "\u660e\u65e5",
+  "system.notify.when.now": "\u4eca",
   "system.notify.when.days": { other: "{count}\u65e5\u5f8c" },
   "system.notify.when.months": { other: "{count}\u304b\u6708\u5f8c" },
 

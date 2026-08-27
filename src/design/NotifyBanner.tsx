@@ -1,23 +1,31 @@
 import { View, Text, Image } from "react-native";
-import { tokens } from "./tokens";
 
 const ICON = require("../../assets/icon.png");
 
 /**
- * One iOS notification, drawn by the app.
+ * One iOS notification banner, drawn the way the system draws it.
  *
- * Deliberately not built from `Panel` or `Raised`. Everything else in this
- * product is a machined faceplate; this is the one element on the glass that
- * is not the app at all, and drawing it in the app's own material would make
- * it read as a feature card — which is exactly the misunderstanding a preview
- * of a notification must not create. Rounded, frosted-light, system-shaped.
+ * This is the one element on the glass that is not the app at all — it is the OS
+ * speaking over the top of it — so it is deliberately built from none of the
+ * app's instrument-panel materials. A notification renders in the system
+ * appearance, not the app's: a light, near-opaque rounded card with a soft drop
+ * shadow, floating above whatever is behind it. Drawing it in the app's own dark
+ * metal is exactly what made an earlier version read as a feature card.
  *
- * No blur: the blur budget is one pane per screen and the footer already
- * spends it. A flat white wash at 10% reads the same at this size.
+ * The layout is the real one: a large rounded-square app icon on the left; the
+ * bold title and the lighter body stacked beside it; the arrival time in the top
+ * corner. No separate app-name label — the icon is the app's identity, the way
+ * iOS shows it on the lock screen and in a dropped banner.
  *
  * The strings come from the caller because the only honest source for them is
  * the scheduler's own copy, rendered against the user's own car.
  */
+
+// System label colours (iOS light appearance), not the app's palette: this card
+// is the OS's, and it has to look borrowed.
+const LABEL = "#1c1c1e";
+const SECONDARY = "rgba(60,60,67,0.6)";
+
 export function NotifyBanner({
   title,
   body,
@@ -30,59 +38,64 @@ export function NotifyBanner({
   return (
     <View
       style={{
-        borderRadius: tokens.radius.lg,
-        borderWidth: 1,
-        borderColor: tokens.color.hairline,
-        backgroundColor: "rgba(255,255,255,0.10)",
-        padding: tokens.space.md,
-        gap: tokens.space.xs,
-        ...tokens.shadow.ambient,
+        flexDirection: "row",
+        alignItems: "flex-start",
+        gap: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 12,
+        borderRadius: 22,
+        // iOS continuous corners; ignored on platforms that lack it.
+        borderCurve: "continuous",
+        backgroundColor: "rgba(250,250,252,0.96)",
+        // The banner's own drop shadow, softer and wider than the app's ambient
+        // one — it is lit by the system, not by the panel above it.
+        shadowColor: "#000",
+        shadowOpacity: 0.22,
+        shadowRadius: 18,
+        shadowOffset: { width: 0, height: 10 },
+        elevation: 12,
       }}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: tokens.space.sm,
-        }}
-      >
-        <Image
-          source={ICON}
-          style={{ width: 18, height: 18, borderRadius: 4 }}
-          accessibilityIgnoresInvertColors
-        />
+      <Image
+        source={ICON}
+        style={{ width: 38, height: 38, borderRadius: 9 }}
+        accessibilityIgnoresInvertColors
+      />
+      <View style={{ flex: 1, gap: 2 }}>
+        <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+          {/* Title bold, up to two lines, the way iOS truncates a collapsed
+              banner; the timestamp sits in the top corner beside it. */}
+          <Text
+            numberOfLines={2}
+            style={{
+              flex: 1,
+              fontSize: 15,
+              lineHeight: 20,
+              fontWeight: "600",
+              color: LABEL,
+            }}
+          >
+            {title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 13,
+              lineHeight: 18,
+              color: SECONDARY,
+              marginLeft: 8,
+              marginTop: 1,
+            }}
+          >
+            {when}
+          </Text>
+        </View>
         <Text
-          style={{
-            ...tokens.text.legend,
-            color: tokens.color.textMuted,
-            flex: 1,
-          }}
+          numberOfLines={2}
+          style={{ fontSize: 15, lineHeight: 20, color: "rgba(60,60,67,0.85)" }}
         >
-          Wrenchy
-        </Text>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-          {when}
+          {body}
         </Text>
       </View>
-      {/* Two lines and one, the way iOS truncates a collapsed banner — and the
-          reason the animated container above can hold a fixed height while the
-          messages inside it change every two seconds. */}
-      <Text
-        numberOfLines={2}
-        style={{
-          ...tokens.text.body,
-          fontWeight: "600",
-          color: tokens.color.text,
-        }}
-      >
-        {title}
-      </Text>
-      <Text
-        numberOfLines={1}
-        style={{ ...tokens.text.caption, color: tokens.color.textMuted }}
-      >
-        {body}
-      </Text>
     </View>
   );
 }

@@ -6,7 +6,7 @@ import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { NotifyDemo, type NotifyMessage } from "../../src/design/NotifyDemo";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, formatDueIn, t } from "../../src/i18n";
+import { formatDate, t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
 import {
@@ -97,7 +97,7 @@ export default function OnboardingPlan() {
           body: t("system.notify.body", {
             date: formatDate(reminder.lastPerformedAt),
           }),
-          when: formatDueIn(reminder.dueAt),
+          when: t("system.notify.when.now"),
         }),
       ),
     [vehicle],
@@ -169,8 +169,10 @@ export default function OnboardingPlan() {
           </Pressable>
         </>
       }
+      banner={
+        messages.length > 0 ? <NotifyDemo messages={messages} /> : undefined
+      }
     >
-      {messages.length > 0 && <NotifyDemo messages={messages} />}
 
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>

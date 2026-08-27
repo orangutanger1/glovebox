@@ -484,6 +484,7 @@ export const it: Fragment = {
 
   "system.notify.when.today": "Oggi",
   "system.notify.when.tomorrow": "Domani",
+  "system.notify.when.now": "Ora",
   "system.notify.when.days": { one: "Tra {count} giorno", other: "Tra {count} giorni" },
   "system.notify.when.months": { one: "Tra {count} mese", other: "Tra {count} mesi" },
 

@@ -554,6 +554,7 @@ export const pl: Fragment = {
 
   "system.notify.when.today": "Dzi\u015b",
   "system.notify.when.tomorrow": "Jutro",
+  "system.notify.when.now": "Teraz",
   "system.notify.when.days": {
     one: "Za {count} dzie\u0144",
     few: "Za {count} dni",

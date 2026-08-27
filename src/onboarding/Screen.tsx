@@ -57,6 +57,7 @@ export function OnboardingScreen({
   center = false,
   tone = "housing",
   onBack,
+  banner,
 }: {
   route: OnboardingRoute;
   title: string;
@@ -89,6 +90,10 @@ export function OnboardingScreen({
    *  is three cards on one route, and a Back that abandoned all three because
    *  the user wanted to re-read the first is a Back the user stops pressing. */
   onBack?: () => void;
+  /** A node dropped over the very top of the screen, above the content and
+   *  outside the scroll — where iOS delivers a notification banner. Non-
+   *  interactive: it never intercepts the scroll or a tap beneath it. */
+  banner?: ReactNode;
 }) {
   const router = useRouter();
   const previous = previousRoute(route);
@@ -297,6 +302,22 @@ export function OnboardingScreen({
                   unlocked: atBottom || nudged,
                 })
               : footer}
+          </View>
+        ) : null}
+        {banner ? (
+          <View
+            pointerEvents="none"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              zIndex: 10,
+              paddingHorizontal: tokens.space.md,
+              paddingTop: tokens.space.sm,
+            }}
+          >
+            {banner}
           </View>
         ) : null}
       </KeyboardAvoidingView>
