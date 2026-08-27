@@ -48,7 +48,8 @@
 		"dir": "aso/asa",
 		"subPrice": 2.33,
 		"retentionMonths": 12,
-		"targetCpi": 1.1
+		"targetCpi": 1.1,
+		"seedBid": 0.65
 	},
 	"aso": {
 		"dir": "aso",
