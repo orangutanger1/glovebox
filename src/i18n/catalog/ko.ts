@@ -142,6 +142,8 @@ export const ko: Fragment = {
   },
   "offer.plan.cta": "알림 켜기",
   "offer.plan.decline": "지금은 안 할게요",
+  "offer.notify.title": "정비를 놓치지 마세요.",
+  "offer.notify.decline": "나중에 하기",
   "offer.plan.status.due": "기한",
   "offer.plan.status.soon": "임박",
   "offer.plan.status.ok": "정상",

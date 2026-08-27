@@ -137,6 +137,8 @@ export const sv: Fragment = {
   },
   "offer.plan.cta": "Slå på påminnelser",
   "offer.plan.decline": "Inte nu",
+  "offer.notify.title": "Missa aldrig en service.",
+  "offer.notify.decline": "Gör det senare",
   "offer.plan.status.due": "Dags",
   "offer.plan.status.soon": "Snart",
   "offer.plan.status.ok": "OK",

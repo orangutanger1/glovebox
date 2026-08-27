@@ -60,7 +60,7 @@ export function OnboardingScreen({
   banner,
 }: {
   route: OnboardingRoute;
-  title: string;
+  title?: string;
   subtitle?: string;
   /** Overrides the quiz counter. Used by the paged symptoms screen. */
   legend?: ReactNode;
@@ -204,12 +204,16 @@ export function OnboardingScreen({
     <>
       {center ? <View style={{ flex: 1 }} /> : null}
 
-      <View style={{ gap: tokens.space.sm }}>
-        <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
-        {subtitle ? (
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
-        ) : null}
-      </View>
+      {title || subtitle ? (
+        <View style={{ gap: tokens.space.sm }}>
+          {title ? (
+            <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
+          ) : null}
+          {subtitle ? (
+            <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
+          ) : null}
+        </View>
+      ) : null}
 
       {children}
 

@@ -135,6 +135,8 @@ export const es: Fragment = {
   },
   "offer.plan.cta": "Activar recordatorios",
   "offer.plan.decline": "Ahora no",
+  "offer.notify.title": "No te pierdas ningún servicio.",
+  "offer.notify.decline": "Más tarde",
   "offer.plan.status.due": "Vence",
   "offer.plan.status.soon": "Pronto",
   "offer.plan.status.ok": "OK",

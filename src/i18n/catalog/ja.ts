@@ -130,6 +130,8 @@ export const ja: Fragment = {
   },
   "offer.plan.cta": "通知をオンにする",
   "offer.plan.decline": "今はしない",
+  "offer.notify.title": "整備を見逃さない。",
+  "offer.notify.decline": "後で",
   "offer.plan.status.due": "期限",
   "offer.plan.status.soon": "まもなく",
   "offer.plan.status.ok": "問題なし",

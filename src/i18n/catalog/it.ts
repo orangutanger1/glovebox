@@ -128,6 +128,8 @@ export const it: Fragment = {
   },
   "offer.plan.cta": "Attiva i promemoria",
   "offer.plan.decline": "Non ora",
+  "offer.notify.title": "Non perdere mai una manutenzione.",
+  "offer.notify.decline": "Più tardi",
   "offer.plan.status.due": "Da fare",
   "offer.plan.status.soon": "A breve",
   "offer.plan.status.ok": "OK",

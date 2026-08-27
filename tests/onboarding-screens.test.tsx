@@ -47,7 +47,7 @@ jest.mock("react-native-purchases-ui", () => ({
   PAYWALL_RESULT: {},
 }));
 jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
-// The plan screen fires the iOS permission prompt on its own button now, and
+// The notify screen fires the iOS permission prompt on its own button now, and
 // the year drum clicks. Neither native module exists under the test renderer.
 jest.mock("expo-notifications", () => ({
   requestPermissionsAsync: jest.fn(async () => ({ status: "granted" })),
@@ -69,8 +69,7 @@ import {
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { formatDate, setLanguage } from "../src/i18n";
-import { nextReminder, nextReminders } from "../src/notify";
+import { setLanguage } from "../src/i18n";
 import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
 import {
@@ -88,7 +87,7 @@ import OnboardingWorry from "../app/onboarding/worry";
 import OnboardingResults from "../app/onboarding/results";
 import OnboardingSymptoms from "../app/onboarding/symptoms";
 import OnboardingHelp from "../app/onboarding/help";
-import OnboardingPlan from "../app/onboarding/plan";
+import OnboardingNotify from "../app/onboarding/notify";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
 
@@ -257,7 +256,7 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingSymptoms,
     OnboardingHelp,
     OnboardingReviews,
-    OnboardingPlan,
+    OnboardingNotify,
     OnboardingPaywall,
     OnboardingOffer,
   ];
@@ -613,7 +612,7 @@ test("the free and paid halves are named on the same screen as the answer", () =
   expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
 });
 
-test("the plan screen animates the notification it is asking permission to send", () => {
+test("the notify screen shows the reminder it is asking permission to send", () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     make: "Subaru",
@@ -623,97 +622,42 @@ test("the plan screen animates the notification it is asking permission to send"
   });
   setOnboardingVehicleId(car.id);
 
-  // A car the flow is not about, with a reminder that comes first. Onboarding
-  // is replayable from Settings, so the garage around it is rarely empty, and
-  // the soonest reminder in the whole garage is not this screen's argument.
-  const other = createVehicle({
-    name: "2009 Volvo V70",
-    year: 2009,
-    odometer: 210000,
-  });
-  addRecord({
-    vehicle_id: other.id,
-    service_type: "Oil Change",
-    performed_at: new Date(Date.now() - 150 * 24 * 3600 * 1000).toISOString(),
-  });
-
-  // Nothing logged against this car, so nothing would ever be scheduled for
-  // it. The preview is absent rather than invented: a specimen notification on
-  // a car the app has no reminder for is a promise of a message it has no
-  // intention of sending, and the Volvo's is not this car's.
-  expect(texts(render(OnboardingPlan)).join(" ")).not.toMatch(
-    /Outback\u2019s|Volvo/,
-  );
-
-  const performedAt = new Date(
-    Date.now() - 30 * 24 * 3600 * 1000,
-  ).toISOString();
-  addRecord({
-    vehicle_id: car.id,
-    service_type: "Oil Change",
-    performed_at: performedAt,
-  });
-
-  const printed = texts(render(OnboardingPlan));
-  // The same strings the scheduler passes to iOS, against this user's own car
-  // by year, make and model: the ask is "may we send you this", and "this" has
-  // to be the message.
+  const printed = texts(render(OnboardingNotify));
+  // The scheduler's own sentence, against this user's own car by name: the ask
+  // shows the message iOS would really put on the glass. The rotation opens on
+  // the oil change, the service everyone recognises.
   expect(printed).toContain("Your 2016 Subaru Outback\u2019s Oil Change is due");
-  expect(printed).toContain(`Last done ${formatDate(performedAt)}.`);
-  // The timestamp is the one a real banner carries: the moment it arrives, not
-  // the due date. The preview drops in "now", the way iOS delivers a banner,
-  // and the raw due date never reaches the glass — the plan below it carries
-  // the schedule.
-  const due = nextReminder(car.id);
+  // The banner carries the moment it arrives, "now", the way iOS stamps a
+  // freshly delivered one, not the due date.
   expect(printed).toContain("now");
-  expect(printed).not.toContain(formatDate(due!.dueAt));
+  // The headline under the handset, and the second answer beside the primary.
+  expect(printed).toContain("Never miss a service.");
+  expect(printed).toContain("Turn on reminders");
+  expect(printed).toContain("Do it later");
 });
 
-test("the banner cycles through several of the car's own reminders", () => {
+test("the notify screen shows generic services, not this car's logged history", () => {
+  // The car has one logged service and nothing else, the way it leaves the
+  // quiz. A rotation of one is not a rotation, so the handset cycles the common
+  // services the app ships an opinion about rather than this car's records —
+  // and the mockup does not invent a schedule the plan screen has not shown.
   const car = createVehicle({
     name: "2016 Subaru Outback",
     year: 2016,
     odometer: 112000,
   });
   setOnboardingVehicleId(car.id);
-
-  // Recent enough that all three are still ahead: a service already overdue
-  // has no notification to schedule and is dropped before the banner sees it.
-  const recent = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString();
-  const older = new Date(Date.now() - 90 * 24 * 3600 * 1000).toISOString();
   addRecord({
     vehicle_id: car.id,
     service_type: "Oil Change",
-    performed_at: older,
+    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
   });
-  addRecord({
-    vehicle_id: car.id,
-    service_type: "Tire Rotation",
-    performed_at: recent,
-  });
-  addRecord({
-    vehicle_id: car.id,
-    service_type: "Air Filter",
-    performed_at: recent,
-  });
-  // Only one message is on the glass at a time — the point of the animation is
-  // that a notification is an event, not a stack — so the screen is asked for
-  // what it would cycle instead of what a single frame prints.
-  const messages = nextReminders(car.id, 3);
-  expect(messages).toHaveLength(3);
 
-  const printed = texts(render(OnboardingPlan));
-  const first = messages[0];
+  const printed = texts(render(OnboardingNotify)).join(" ");
+  // The first frame names the first service in the rotation against this car.
   expect(printed).toContain(
-    `Your 2016 Subaru Outback\u2019s ${serviceName(first.serviceType)} is due`,
+    `Your 2016 Subaru Outback\u2019s ${serviceName("Oil Change")} is due`,
   );
-  // Soonest first. A demo that opened on the furthest reminder would argue the
-  // opposite of the screen it is on.
-  for (const later of messages.slice(1)) {
-    expect(new Date(later.dueAt).getTime()).toBeGreaterThanOrEqual(
-      new Date(first.dueAt).getTime(),
-    );
-  }
 });
 
 /** The mocked native notification module, as this file installed it. */
@@ -768,7 +712,7 @@ test("the reminders button raises the iOS prompt on the tap that promises it", a
   });
   requestPermissionsAsync.mockClear();
 
-  await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
+  await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).toHaveBeenCalled();
   expect(navigated).toContain("/onboarding/paywall");
@@ -789,7 +733,7 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   });
   requestPermissionsAsync.mockClear();
 
-  await pressAndSettle(render(OnboardingPlan), "Turn on reminders");
+  await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).not.toHaveBeenCalled();
   expect(navigated).toContain("/onboarding/paywall");

@@ -39,6 +39,9 @@ export const offer: Fragment = {
       "Plus {count} more further out, and one notification per service on the day it comes due.",
   },
 
+  "offer.notify.title": "Never miss a service.",
+  "offer.notify.decline": "Do it later",
+
   "offer.paywall.title": "Cars don’t warn you. This does.",
   "offer.paywall.subtitle":
     "Every service and every odometer reading, on record. The mechanic sees a log, not a guess.",

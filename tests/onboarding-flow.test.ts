@@ -47,7 +47,11 @@ test("the flow ends on the second ask, with no free door after it", () => {
 
 test("a resume point from a version that shipped different screens still lands somewhere", () => {
   expect(resumeRoute("ready")).toBe("analyzing");
-  expect(resumeRoute("reminders")).toBe("plan");
+  expect(resumeRoute("reminders")).toBe("notify");
+  // The plan screen was split: its notification ask is now "notify", its
+  // schedule folded into the paywall. Both old resume points still land.
+  expect(resumeRoute("plan")).toBe("notify");
+  expect(resumeRoute("features")).toBe("paywall");
   // Parked on the free landing by an older build: the trial is the last thing
   // left worth asking, and declining it now ends the flow.
   expect(resumeRoute("free")).toBe("offer");

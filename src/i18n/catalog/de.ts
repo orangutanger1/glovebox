@@ -138,6 +138,8 @@ export const de: Fragment = {
   },
   "offer.plan.cta": "Erinnerungen einschalten",
   "offer.plan.decline": "Jetzt nicht",
+  "offer.notify.title": "Verpasse keinen Service mehr.",
+  "offer.notify.decline": "Später erledigen",
   "offer.plan.status.due": "Fällig",
   "offer.plan.status.soon": "Bald",
   "offer.plan.status.ok": "OK",

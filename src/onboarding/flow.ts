@@ -41,7 +41,7 @@ export const FLOW = [
   // here, and the tap between the promise and its price bought nothing.
   "help",
   "reviews",
-  "plan",
+  "notify",
   "paywall",
   "offer",
 ] as const;
@@ -98,7 +98,11 @@ export function quizStep(route: OnboardingRoute): { step: number; total: number 
  */
 const RETIRED: Record<string, OnboardingRoute> = {
   ready: "analyzing",
-  reminders: "plan",
+  reminders: "notify",
+  // The plan screen, split in two: the notification soft-ask it carried is now
+  // "notify", and the schedule it showed is folded into the paywall. An install
+  // parked on it resumes on the ask, which used to come first on that screen.
+  plan: "notify",
   // The contract screen. It listed what the six questions would ask, which is
   // a screen the user pays a tap for to be told they are about to be asked
   // something. Removed; an install parked on it resumes at the first question.
@@ -108,9 +112,9 @@ const RETIRED: Record<string, OnboardingRoute> = {
   // and its own decline now ends the flow.
   free: "offer",
   // The Free/Pro boundary screen, folded into "help". An install parked on it
-  // resumes on the plan, which is what it used to lead to; the rows it was
-  // showing are two screens behind and were read on the way.
-  features: "plan",
+  // resumes on the paywall, which now carries the plan it used to lead to; the
+  // rows it was showing are two screens behind and were read on the way.
+  features: "paywall",
 };
 
 /** Where a relaunch resumes. Anything unrecognised restarts the flow. */

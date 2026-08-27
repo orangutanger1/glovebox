@@ -145,6 +145,8 @@ export const fr: Fragment = {
   },
   "offer.plan.cta": "Activer les rappels",
   "offer.plan.decline": "Pas maintenant",
+  "offer.notify.title": "Ne manquez plus un entretien.",
+  "offer.notify.decline": "Plus tard",
   "offer.plan.status.due": "À faire",
   "offer.plan.status.soon": "Bientôt",
   "offer.plan.status.ok": "OK",
