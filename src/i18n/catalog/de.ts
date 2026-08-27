@@ -193,14 +193,13 @@ export const de: Fragment = {
 
   "onboardingA.vehicle.title": "Was fährst du?",
   "onboardingA.vehicle.year": "Baujahr",
-  "onboardingA.vehicle.make": "Marke",
+  "onboardingA.vehicle.makeOptional": "Marke (optional)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Pflichtfeld.",
   "onboardingA.vehicle.saved": "Gesichert als \u201e{name}\u201c, umbenennen kannst du es später.",
   "onboardingA.vehicle.modelOptional": "Modell (optional)",
   "onboardingA.vehicle.hint":
-    "Baujahr und Marke, damit Erinnerungen das Auto benennen. Das Modell ist optional.",
+    "Das Baujahr reicht zum Start. Marke und Modell sorgen nur dafür, dass Erinnerungen das Auto benennen.",
 
   "onboardingA.odometer.title.mi": "Wie viele Meilen hat es drauf?",
   "onboardingA.odometer.title.km": "Wie viele Kilometer hat es drauf?",
@@ -209,6 +208,7 @@ export const de: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Ein grober Wert reicht, und er datiert die Services, die nach Strecke fällig werden.",
+  "onboardingA.odometer.later": "Trage ich später nach",
 
   "onboardingA.drive.title": "Wie viel fährst du damit?",
   "onboardingA.drive.subtitle":

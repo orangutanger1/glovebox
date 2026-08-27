@@ -195,13 +195,13 @@ export const ko: Fragment = {
 
   "onboardingA.vehicle.title": "어떤 차를 타세요?",
   "onboardingA.vehicle.year": "연식",
-  "onboardingA.vehicle.make": "제조사",
+  "onboardingA.vehicle.makeOptional": "제조사(선택)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "필수예요.",
   "onboardingA.vehicle.saved": '저장했어요: "{name}". 이름은 나중에 바꿀 수 있어요.',
   "onboardingA.vehicle.modelOptional": "모델(선택)",
-  "onboardingA.vehicle.hint": "연식과 제조사. 알림이 차 이름을 부를 수 있게요. 모델은 선택이에요.",
+  "onboardingA.vehicle.hint":
+    "연식만 있어도 시작할 수 있어요. 제조사와 모델은 알림이 차 이름을 부를 때만 써요.",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
   "onboardingA.odometer.title.km": "주행거리가 몇 킬로미터예요?",
@@ -210,6 +210,7 @@ export const ko: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "대략이어도 괜찮아요. 주행거리로 기한이 오는 정비는 이 숫자로 계산해요.",
+  "onboardingA.odometer.later": "나중에 입력할게요",
 
   "onboardingA.drive.title": "한 해에 얼마나 타세요?",
   "onboardingA.drive.subtitle":

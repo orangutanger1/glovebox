@@ -204,15 +204,14 @@ export const fr: Fragment = {
 
   "onboardingA.vehicle.title": "Qu'est-ce que vous conduisez\u00a0?",
   "onboardingA.vehicle.year": "Année",
-  "onboardingA.vehicle.make": "Marque",
+  "onboardingA.vehicle.makeOptional": "Marque (facultatif)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Obligatoire.",
   "onboardingA.vehicle.saved":
     "Enregistré sous «\u00a0{name}\u00a0», et vous pourrez le renommer plus tard.",
   "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
   "onboardingA.vehicle.hint":
-    "L'année et la marque, pour que les rappels nomment la voiture. Le modèle est facultatif.",
+    "L'année suffit pour commencer. La marque et le modèle servent seulement à ce que les rappels nomment la voiture.",
 
   "onboardingA.odometer.title.mi": "Combien de miles au compteur\u00a0?",
   "onboardingA.odometer.title.km": "Combien de kilomètres au compteur\u00a0?",
@@ -221,6 +220,7 @@ export const fr: Fragment = {
   "onboardingA.odometer.placeholder.km": "135\u202f600",
   "onboardingA.odometer.caption":
     "Un ordre de grandeur suffit, et c'est ce qui date les entretiens dont l'échéance se compte en distance.",
+  "onboardingA.odometer.later": "Je l'ajouterai plus tard",
 
   "onboardingA.drive.title": "Combien roulez-vous avec\u00a0?",
   "onboardingA.drive.subtitle":

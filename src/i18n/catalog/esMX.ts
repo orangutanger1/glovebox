@@ -61,7 +61,7 @@ export const esMX: Fragment = {
     "Todo se queda en este celular, sin cuenta y sin ninguna sesión que cerrar.",
   "onboardingA.vehicle.title": "¿Qué carro manejas?",
   "onboardingA.vehicle.hint":
-    "Año, marca y modelo, para que los recordatorios puedan nombrar el carro.",
+    "Con el año basta para empezar. La marca y el modelo solo sirven para que los recordatorios nombren el carro.",
   // "Traer" is how a Mexican owner asks what a car has on it; Spain asks what it
   // "tiene".
   "onboardingA.odometer.title.mi": "¿Cuántas millas trae?",

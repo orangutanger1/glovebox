@@ -181,13 +181,13 @@ export const ja: Fragment = {
 
   "onboardingA.vehicle.title": "どの車に乗っていますか？",
   "onboardingA.vehicle.year": "年式",
-  "onboardingA.vehicle.make": "メーカー",
+  "onboardingA.vehicle.makeOptional": "メーカー（任意）",
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
-  "onboardingA.vehicle.required": "必須です。",
   "onboardingA.vehicle.saved": "「{name}」として保存しました。名前は後から変更できます。",
   "onboardingA.vehicle.modelOptional": "車種（任意）",
-  "onboardingA.vehicle.hint": "年式とメーカー。通知で車名を出すために使います。車種は任意です。",
+  "onboardingA.vehicle.hint":
+    "年式だけで始められます。メーカーと車種は通知で車名を出すためだけに使います。",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
   "onboardingA.odometer.title.km": "走行距離は何キロですか？",
@@ -196,6 +196,7 @@ export const ja: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "だいたいで構いません。距離で期限が来る整備の日付は、この数字から出します。",
+  "onboardingA.odometer.later": "あとで入力します",
 
   "onboardingA.drive.title": "年間どのくらい走りますか？",
   "onboardingA.drive.subtitle":

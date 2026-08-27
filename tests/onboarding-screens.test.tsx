@@ -65,6 +65,7 @@ import {
 } from "../src/onboarding";
 import { setLanguage } from "../src/i18n";
 import { setDistanceUnit } from "../src/units";
+import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../src/onboarding/estimate";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
@@ -260,7 +261,7 @@ test("the car is one typed word away from answered", () => {
   // The year is already on the drum, the model is optional, so a make is the
   // whole remaining cost of this screen.
   const tree = render(OnboardingVehicle);
-  type(tree, "Make", "Toyota");
+  type(tree, "Make (optional)", "Toyota");
   press(tree, "Continue");
 
   expect(navigated).toContain("/onboarding/odometer");
@@ -270,17 +271,49 @@ test("the car is one typed word away from answered", () => {
   expect(saved.model).toBeUndefined();
 });
 
-test("the make is the one answer the car cannot go without", () => {
+test("the car screen refuses nothing, because it was refusing installs", () => {
+  // Three of the first eight installs died on this screen, every one of them
+  // having tapped a Continue that answered "Required." and stayed put. The
+  // year drum always has an answer, so the screen always has enough to build a
+  // schedule from and never has grounds to refuse.
   const tree = render(OnboardingVehicle);
   press(tree, "Continue");
-  // Continue is always pressable and answers with the reason, rather than
-  // sitting there dead the way the three required fields used to make it.
-  expect(texts(tree)).toContain("Required.");
-  expect(navigated).not.toContain("/onboarding/odometer");
 
-  type(tree, "Make", "Honda");
-  press(tree, "Continue");
   expect(navigated).toContain("/onboarding/odometer");
+  expect(texts(tree)).not.toContain("Required.");
+
+  // Named, not blank, and not the bare model year: "2019" is a number standing
+  // where a car should be in a garage list.
+  const saved = getVehicle(getOnboardingVehicleId()!)!;
+  expect(saved.name).toBe("My car");
+  expect(saved.year).toBe(DEFAULT_YEAR);
+  expect(saved.make).toBeUndefined();
+});
+
+test("the whole quiz is answerable without a keystroke, and still yields a plan", () => {
+  // The spec this flow was built to claims "0 mandatory text fields, 0
+  // keystrokes". Two required text fields had crept back in — the make and the
+  // odometer — and between them they took half the install base before anyone
+  // saw what the app does. This walks the flow the way a thumb does.
+  press(render(OnboardingVehicle), "Continue");
+  press(render(OnboardingOdometer), "I'll add it later");
+  // The chip selects; Continue is what commits the band and refines the
+  // estimate, which is exactly the two-tap shape the other quiz screens have.
+  const drive = render(OnboardingDrive);
+  press(drive, "Under 5,000");
+  press(drive, "Continue");
+
+  const car = getVehicle(getOnboardingVehicleId()!)!;
+  // Still an estimate, and now the low band's estimate rather than the
+  // national average: `drive` refined the guess on the way past.
+  expect(car.odometer_estimated).toBe(1);
+  expect(car.odometer).toBeLessThan(estimateOdometer(car.year, AVERAGE_DISTANCE_PER_YEAR.mi)!);
+
+  // The payoff screen is the whole argument for the paywall, so a keyboardless
+  // walk has to arrive at a populated one rather than an empty state.
+  const printed = texts(render(OnboardingResults)).join(" ");
+  expect(printed).toMatch(/My car/);
+  expect(printed.length).toBeGreaterThan(80);
 });
 
 test("the year comes off a drum, and never off a keyboard", () => {
@@ -291,7 +324,7 @@ test("the year comes off a drum, and never off a keyboard", () => {
 
   // Three detents down the drum is three model years older than the default.
   spin(tree, 3);
-  type(tree, "Make", "Toyota");
+  type(tree, "Make (optional)", "Toyota");
   press(tree, "Continue");
   expect(getVehicle(getOnboardingVehicleId()!)!.year).toBe(DEFAULT_YEAR - 3);
 });
@@ -303,7 +336,7 @@ test("a replay re-describes the car in the garage instead of adding one", () => 
   const car = createVehicle({ name: "2014 Ford", year: 2014, make: "Ford" });
 
   const tree = render(OnboardingVehicle);
-  type(tree, "Make", "Honda");
+  type(tree, "Make (optional)", "Honda");
   press(tree, "Continue");
 
   expect(listVehicles()).toHaveLength(before + 1);
@@ -320,19 +353,39 @@ test("the odometer question starts empty on a car that has no reading yet", () =
   expect(values(render(OnboardingOdometer))).not.toContain("null");
 });
 
-test("the odometer cannot be deferred, and takes a real reading", () => {
+test("the odometer can be deferred again, and says so on the screen", () => {
   const car = createVehicle({ name: "2019 Toyota", year: 2019, make: "Toyota" });
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
-  // The deferral stored the model year times the national average and flagged
-  // it as a guess, which is the number the whole schedule is built on.
-  expect(texts(tree).join(" ")).not.toMatch(/add it later/i);
-  const cont = () => tree.root.findAll((n) => n.props.label === "Continue")[0];
-  expect(cont().props.disabled).toBe(true);
+  // Four of the five people who ever reached this screen while the hatch
+  // existed took it. Removing it turned the fifth question of the flow into a
+  // numeric keyboard with a dead button under it.
+  press(tree, "I'll add it later");
+
+  expect(navigated).toContain("/onboarding/drive");
+  const saved = getVehicle(car.id)!;
+  // Arithmetic, stored as arithmetic: the flag is what every gauge in the app
+  // reads to label the number "(est.)", and what `drive` reads to refine it.
+  expect(saved.odometer).toBe(estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR.mi));
+  expect(saved.odometer_estimated).toBe(1);
+});
+
+test("a typed reading is still the answer the screen wants", () => {
+  const car = createVehicle({ name: "2019 Toyota", year: 2019, make: "Toyota" });
+  setOnboardingVehicleId(car.id);
+
+  const tree = render(OnboardingOdometer);
+  // Continue stays gated on a real number. The hatch is the way past an empty
+  // field, so a disabled Continue is no longer a dead end. Re-queried after
+  // the keystroke rather than held in a variable: the press re-renders, and
+  // the node captured before it is not the node carrying the new prop.
+  const disabled = () =>
+    tree.root.findAll((n) => n.props.label === "Continue")[0].props.disabled;
+  expect(disabled()).toBe(true);
 
   type(tree, "Odometer (mi)", "84210");
-  expect(cont().props.disabled).toBe(false);
+  expect(disabled()).toBe(false);
   press(tree, "Continue");
 
   expect(navigated).toContain("/onboarding/drive");

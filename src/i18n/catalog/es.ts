@@ -194,14 +194,13 @@ export const es: Fragment = {
 
   "onboardingA.vehicle.title": "¿Qué coche conduces?",
   "onboardingA.vehicle.year": "Año",
-  "onboardingA.vehicle.make": "Marca",
+  "onboardingA.vehicle.makeOptional": "Marca (opcional)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Obligatorio.",
   "onboardingA.vehicle.saved": "Guardado como «{name}», y puedes cambiarle el nombre más tarde.",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
   "onboardingA.vehicle.hint":
-    "Año y marca, para que los recordatorios puedan nombrar el coche. El modelo es opcional.",
+    "Con el año basta para empezar. La marca y el modelo solo sirven para que los recordatorios nombren el coche.",
 
   "onboardingA.odometer.title.mi": "¿Cuántas millas tiene?",
   "onboardingA.odometer.title.km": "¿Cuántos kilómetros tiene?",
@@ -210,6 +209,7 @@ export const es: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Un número aproximado sirve, y es lo que fecha los mantenimientos que vencen por distancia.",
+  "onboardingA.odometer.later": "Lo añado más tarde",
 
   "onboardingA.drive.title": "¿Cuánto conduces al año?",
   "onboardingA.drive.subtitle":

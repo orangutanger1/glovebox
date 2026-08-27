@@ -265,14 +265,13 @@ export const nl: Fragment = {
 
   "onboardingA.vehicle.title": "Wat rijd je?",
   "onboardingA.vehicle.year": "Bouwjaar",
-  "onboardingA.vehicle.make": "Merk",
+  "onboardingA.vehicle.makeOptional": "Merk (optioneel)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Verplicht.",
   "onboardingA.vehicle.saved": 'Bewaard als "{name}", en je kunt het later hernoemen.',
   "onboardingA.vehicle.modelOptional": "Model (optioneel)",
   "onboardingA.vehicle.hint":
-    "Bouwjaar en merk, zodat herinneringen de auto bij naam noemen. Het model is optioneel.",
+    "Het bouwjaar is genoeg om te beginnen. Merk en model zorgen er alleen voor dat herinneringen de auto bij naam noemen.",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",
   "onboardingA.odometer.title.km": "Hoeveel kilometer staat erop?",
@@ -281,6 +280,7 @@ export const nl: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Een ruwe schatting is prima, en het is het getal dat bepaalt wanneer onderhoud op afstand aan de beurt is.",
+  "onboardingA.odometer.later": "Ik vul het later in",
 
   "onboardingA.drive.title": "Hoeveel rijd je ermee?",
   "onboardingA.drive.subtitle":

@@ -44,9 +44,13 @@ const DEFAULT_YEAR = NEWEST_YEAR - 12;
  * print have nothing left to say.
  *
  * The make is typed, because there is no short list of makes that is not also
- * wrong for somebody. The model is typed and optional: the schedule never
- * reads it, and `vehicleDisplayName` degrades to "2019 Toyota" without it,
- * which is a car in a garage list rather than a broken row.
+ * wrong for somebody — and typed means skippable, because this screen is the
+ * first thing a new install touches and a keyboard is the worst thing to meet
+ * there. Neither text field gates Continue: the year drum always has an
+ * answer, so the screen always has enough to build a schedule from, and a car
+ * with no make is named by `system.vehicle.fallback` until the owner renames
+ * it. The model is optional for the older reason: the schedule never reads it,
+ * and `vehicleDisplayName` degrades to "2019 Toyota" without it.
  */
 export default function OnboardingVehicle() {
   const advance = useAdvance("vehicle");
@@ -77,35 +81,57 @@ export default function OnboardingVehicle() {
   });
   const [make, setMake] = useState(saved?.make ?? "");
   const [model, setModel] = useState(saved?.model ?? "");
-  const [submitted, setSubmitted] = useState(false);
 
   const parts = { year, make: make.trim() || undefined, model: model.trim() || undefined };
 
-  // The make is the one required answer left: a plan for a car the app cannot
-  // name is not a plan, and the drum has already answered the year.
-  const valid = parts.make !== undefined;
-  const missingMessage = t("onboardingA.vehicle.required");
-
+  /**
+   * Nothing on this screen is required any more, and the funnel is why.
+   *
+   * The make used to be the one mandatory answer: "a plan for a car the app
+   * cannot name is not a plan". That reasoning was about the plan and never
+   * checked against the people. Three of the first eight installs died on this
+   * screen, and all three left the receipt behind — `vehicle_entry` rows with
+   * `event: "invalid"`, which is a Continue tap this screen refused. One of
+   * them tapped Continue four times inside a single second and never opened
+   * the app again; another spent three and a half minutes here across four
+   * mounts and never reached question two. This is the first interactive
+   * screen in the product, and it was spending half the install base to avoid
+   * an unnamed row in a garage list.
+   *
+   * The plan does not actually need the make. Every interval is driven by the
+   * year, the odometer and the drive rate; the make is a label. So it is a
+   * label that can be missing, and `system.vehicle.fallback` is the label
+   * already written in every locale for exactly this case.
+   */
   function onContinue() {
-    if (!valid) {
-      setSubmitted(true);
-      trackVehicleEntry("make", "invalid");
-      return;
-    }
-    // The one part of the car that is allowed to go unanswered, reported as
-    // such: if this is most of the traffic then the question is worth losing,
-    // and that is not a decision to make from a hunch.
+    // Both optional parts are reported the same way, so the funnel can price
+    // each question separately: if the make is mostly skipped it should stop
+    // being asked here at all, and that is a decision for the data.
+    if (parts.make === undefined) trackVehicleEntry("make", "skipped");
     if (parts.model === undefined) trackVehicleEntry("model", "skipped");
     // The make is the user's words about their own car, so it is not reported
     // by value. The funnel needs the shape of the answer, not the answer.
-    trackQuizAnswer("vehicle", { year: parts.year, has_model: parts.model !== undefined });
+    trackQuizAnswer("vehicle", {
+      year: parts.year,
+      has_make: parts.make !== undefined,
+      has_model: parts.model !== undefined,
+    });
 
     // There is no separate name field any more: the name IS the parts. Asking
     // for both meant the user typed "Civic" twice, and year/make/model were
     // then rendered nowhere. `name` is the only field the garage list and the
     // vehicle header ever show. A nickname is offered later, from the vehicle
     // screen, which is the point at which a second car makes one useful.
-    const identity = { name: vehicleDisplayName(parts), ...parts };
+    //
+    // Without a make the parts would name the car "2019", which is a model
+    // year standing where a car should be. `vehicleDisplayName` is left alone
+    // — it is shared with the garage and the vehicle header, and its rule that
+    // parts make a name is still right — and the fallback is chosen here, at
+    // the one place that knows the make was skipped rather than lost.
+    const identity = {
+      name: parts.make === undefined ? t("system.vehicle.fallback") : vehicleDisplayName(parts),
+      ...parts,
+    };
     // Stepping back to this screen and forward again must correct the car, not
     // add a second one to the garage, but only the car this run of onboarding
     // created. Reaching for the first vehicle in the garage instead is how
@@ -157,12 +183,11 @@ export default function OnboardingVehicle() {
           <View style={{ flexDirection: "row", gap: tokens.space.md }}>
             <View style={{ flex: 1 }}>
               <Field
-                label={t("onboardingA.vehicle.make")}
+                label={t("onboardingA.vehicle.makeOptional")}
                 value={make}
                 onChangeText={setMake}
                 placeholder={t("onboardingA.vehicle.makePlaceholder")}
                 onFocus={() => trackVehicleEntry("make", "focused")}
-                error={submitted && parts.make === undefined ? missingMessage : undefined}
               />
             </View>
             <View style={{ flex: 1 }}>
@@ -178,10 +203,15 @@ export default function OnboardingVehicle() {
         </View>
       </Panel>
 
+      {/* The caption confirms rather than instructs. It used to switch between
+          a hint and a confirmation on whether the screen would accept the
+          answer, which is a validation message wearing a caption's clothes;
+          there is nothing left to validate, so it names the car the user is
+          about to get and says the name is not final. */}
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {valid
-          ? t("onboardingA.vehicle.saved", { name: vehicleDisplayName(parts) })
-          : t("onboardingA.vehicle.hint")}
+        {parts.make === undefined
+          ? t("onboardingA.vehicle.hint")
+          : t("onboardingA.vehicle.saved", { name: vehicleDisplayName(parts) })}
       </Text>
     </OnboardingScreen>
   );

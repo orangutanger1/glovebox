@@ -232,14 +232,13 @@ export const pl: Fragment = {
 
   "onboardingA.vehicle.title": "Czym jeździsz?",
   "onboardingA.vehicle.year": "Rocznik",
-  "onboardingA.vehicle.make": "Marka",
+  "onboardingA.vehicle.makeOptional": "Marka (opcjonalnie)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Wymagane.",
   "onboardingA.vehicle.saved": "Zapisane jako „{name}”, nazwę możesz zmienić później.",
   "onboardingA.vehicle.modelOptional": "Model (opcjonalnie)",
   "onboardingA.vehicle.hint":
-    "Rocznik i marka, żeby przypomnienia mogły nazwać samochód. Model jest opcjonalny.",
+    "Rocznik wystarczy na start. Marka i model służą tylko temu, żeby przypomnienia nazwały samochód.",
 
   "onboardingA.odometer.title.mi": "Ile ma mil przebiegu?",
   "onboardingA.odometer.title.km": "Ile ma kilometrów przebiegu?",
@@ -248,6 +247,7 @@ export const pl: Fragment = {
   "onboardingA.odometer.placeholder.km": "135 600",
   "onboardingA.odometer.caption":
     "Wystarczy przybliżona liczba — to ona datuje serwisy, których termin liczy się przebiegiem.",
+  "onboardingA.odometer.later": "Dodam później",
 
   "onboardingA.drive.title": "Ile nim jeździsz?",
   "onboardingA.drive.subtitle":

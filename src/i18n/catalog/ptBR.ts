@@ -184,14 +184,13 @@ export const ptBR: Fragment = {
 
   "onboardingA.vehicle.title": "O que você dirige?",
   "onboardingA.vehicle.year": "Ano",
-  "onboardingA.vehicle.make": "Marca",
+  "onboardingA.vehicle.makeOptional": "Marca (opcional)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Obrigatório.",
   "onboardingA.vehicle.saved": 'Salvo como "{name}", e você pode renomear depois.',
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
   "onboardingA.vehicle.hint":
-    "Ano e marca, para os lembretes dizerem qual é o carro. O modelo é opcional.",
+    "O ano já basta para começar. Marca e modelo servem só para os lembretes dizerem qual é o carro.",
 
   "onboardingA.odometer.title.mi": "Quantas milhas ele tem?",
   "onboardingA.odometer.title.km": "Quantos quilômetros ele tem?",
@@ -200,6 +199,7 @@ export const ptBR: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Um número aproximado já serve, e é ele que dá data aos serviços que vencem por distância.",
+  "onboardingA.odometer.later": "Adiciono depois",
 
   "onboardingA.drive.title": "Quanto você roda com ele?",
   "onboardingA.drive.subtitle":

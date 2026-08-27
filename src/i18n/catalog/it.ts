@@ -183,14 +183,13 @@ export const it: Fragment = {
 
   "onboardingA.vehicle.title": "Cosa guidi?",
   "onboardingA.vehicle.year": "Anno",
-  "onboardingA.vehicle.make": "Marca",
+  "onboardingA.vehicle.makeOptional": "Marca (facoltativo)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Obbligatorio.",
   "onboardingA.vehicle.saved": "Salvata come «{name}», e puoi rinominarla più tardi.",
   "onboardingA.vehicle.modelOptional": "Modello (facoltativo)",
   "onboardingA.vehicle.hint":
-    "Anno e marca, così i promemoria possono chiamare l'auto per nome. Il modello è facoltativo.",
+    "L'anno basta per iniziare. Marca e modello servono solo perché i promemoria chiamino l'auto per nome.",
 
   "onboardingA.odometer.title.mi": "Quante miglia ha?",
   "onboardingA.odometer.title.km": "Quanti chilometri ha?",
@@ -199,6 +198,7 @@ export const it: Fragment = {
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption":
     "Va bene un numero approssimativo, ed è quello che data i tagliandi che scadono per chilometri.",
+  "onboardingA.odometer.later": "Lo aggiungo più tardi",
 
   "onboardingA.drive.title": "Quanto la guidi?",
   "onboardingA.drive.subtitle":

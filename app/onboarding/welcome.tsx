@@ -6,6 +6,7 @@ import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { useAdvance } from "../../src/onboarding/nav";
 import { t } from "../../src/i18n";
+import { track } from "../../src/analytics";
 
 const LIGHT = require("../../assets/onboarding/light.jpeg");
 const LIGHT_RATIO = 1242 / 1663;
@@ -26,6 +27,20 @@ export default function Welcome() {
       useNativeDriver: true,
     }).start();
   }, [content]);
+
+  // Welcome is the one route outside the `OnboardingScreen` frame — it is a
+  // full-bleed photograph with its own layout — so the event the frame emits
+  // for every other screen has to be emitted by hand here. Without it the
+  // first step of the funnel is missing and install → first screen is
+  // unmeasurable: a user who opened the app and left on the headline was
+  // indistinguishable from one who never opened it at all.
+  //
+  // Same shape as the frame's call, so the two orders of magnitude of existing
+  // `onboarding_step_viewed` rows stay comparable: `quiz_step` is null because
+  // welcome asks nothing, and `first_view` is added by the analytics layer.
+  useEffect(() => {
+    track("onboarding_step_viewed", { route: "welcome", quiz_step: null });
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>

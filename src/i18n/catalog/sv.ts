@@ -194,14 +194,13 @@ export const sv: Fragment = {
 
   "onboardingA.vehicle.title": "Vad kör du?",
   "onboardingA.vehicle.year": "Årsmodell",
-  "onboardingA.vehicle.make": "Märke",
+  "onboardingA.vehicle.makeOptional": "Märke (valfritt)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Obligatoriskt.",
   "onboardingA.vehicle.saved": "Sparad som \u201D{name}\u201D, och du kan byta namn senare.",
   "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
   "onboardingA.vehicle.hint":
-    "Årsmodell och märke, så att påminnelserna kan nämna bilen. Modellen är valfri.",
+    "Årsmodellen räcker för att börja. Märke och modell finns bara för att påminnelserna ska kunna nämna bilen.",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
   "onboardingA.odometer.title.km": "Hur många kilometer står den på?",
@@ -210,6 +209,7 @@ export const sv: Fragment = {
   "onboardingA.odometer.placeholder.km": "135\u00A0600",
   "onboardingA.odometer.caption":
     "En ungefärlig siffra räcker, och det är den som sätter datum på allt som ska göras efter sträcka.",
+  "onboardingA.odometer.later": "Jag fyller i det senare",
 
   "onboardingA.drive.title": "Hur långt kör du den?",
   "onboardingA.drive.subtitle":

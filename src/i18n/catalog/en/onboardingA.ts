@@ -27,7 +27,7 @@ export const onboardingA: Fragment = {
 
   "onboardingA.vehicle.title": "What are you driving?",
   "onboardingA.vehicle.year": "Year",
-  "onboardingA.vehicle.make": "Make",
+  "onboardingA.vehicle.makeOptional": "Make (optional)",
   // Corolla and its maker outsell every other car on the planet, so the example
   // is a car the reader has seen wherever they are reading this.
   "onboardingA.vehicle.makePlaceholder": "Toyota",
@@ -35,9 +35,9 @@ export const onboardingA: Fragment = {
   // that it can be left alone. "2019 Toyota" is a car in a garage list.
   "onboardingA.vehicle.modelOptional": "Model (optional)",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.required": "Required.",
   "onboardingA.vehicle.saved": 'Saved as "{name}", and you can rename it later.',
-  "onboardingA.vehicle.hint": "Year and make, so reminders can name the car. The model is optional.",
+  "onboardingA.vehicle.hint":
+    "The year is enough to start. Make and model only let reminders name the car.",
 
   "onboardingA.odometer.title.mi": "How many miles on it?",
   "onboardingA.odometer.title.km": "How many kilometres on it?",
@@ -46,6 +46,7 @@ export const onboardingA: Fragment = {
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption":
     "A rough number is fine, and it is what dates the services that come due by distance.",
+  "onboardingA.odometer.later": "I'll add it later",
 
   "onboardingA.drive.title": "How far do you drive it?",
   "onboardingA.drive.subtitle":
