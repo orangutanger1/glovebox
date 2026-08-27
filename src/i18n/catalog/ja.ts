@@ -121,28 +121,18 @@ export const ja: Fragment = {
   "offer.badge.free": "無料",
 
   "offer.features.title": "使えるようになるもの。",
-  "offer.features.subtitle":
-    "すべてこの端末の1つのファイルに入ります。アカウントもサーバーもありません。",
 
   "offer.plan.title": "これが予定表です。",
-  "offer.plan.subtitle": {
-    other: "{vehicle}の整備{count}件を、日付と距離の両方で数えて管理します。",
-  },
+  "offer.plan.subtitle": { other: "{vehicle}の整備{count}件を予定に入れます。" },
   "offer.plan.cta": "通知をオンにする",
   "offer.plan.decline": "今はしない",
   "offer.notify.title": "整備を見逃さない。",
-  "offer.notify.decline": "後で",
   "offer.plan.status.due": "期限",
   "offer.plan.status.soon": "まもなく",
   "offer.plan.status.ok": "問題なし",
-  "offer.plan.note": "整備ごとに、期限の当日に通知が1回届きます。",
-  "offer.plan.noteMore": {
-    other: "さらに先の{count}件も含め、整備ごとに期限の当日に通知が1回届きます。",
-  },
 
   "offer.paywall.title": "車は警告してくれません。これがします。",
-  "offer.paywall.subtitle":
-    "整備も走行距離の記録も、すべて残ります。整備工場が見るのは記録で、当て推量ではありません。",
+  "offer.paywall.subtitle": "整備も走行距離も、すべて記録に残ります。",
   "offer.paywall.cta": "愛車を記録に残す",
   "offer.paywall.vehicle": "記録済み",
   "offer.paywall.scheduled": "監視中",
@@ -150,8 +140,6 @@ export const ja: Fragment = {
   "offer.paywall.dueNow": "期限切れ",
   "offer.paywall.nextUp": "次の警告",
   "offer.paywall.none": "なし",
-  "offer.paywall.caption":
-    "いま設定した内容は、すでにこの端末に保存されています。アカウントなし、サーバーなし、外部への送信もありません。",
 
   "offer.paywall.impact.legend": "これで得られること",
   "offer.paywall.impact.warned": "整備は期限が来る前に知らせが届きます。修理代がかかってからではありません。",
@@ -159,9 +147,6 @@ export const ja: Fragment = {
   "offer.paywall.impact.resale": "次の所有者に、あいまいな記憶ではなく完全な整備記録を渡せます。価格にも表れます。",
 
   "offer.trial.title": { other: "{count}日間試してみる。" },
-  "offer.trial.subtitle": {
-    other: "Proを{count}日間無料で使って、車が実際に何か言ってきてから決めてください。",
-  },
   "offer.trial.cta": { other: "{count}日間の無料期間を始める" },
   "offer.trial.decline": "結構です。無料版を見せてください",
 
@@ -181,31 +166,23 @@ export const ja: Fragment = {
 
   "onboardingA.welcome.headline": "前回のオイル交換がいつだったか、もう推測せずに済みます。",
   "onboardingA.welcome.start": "はじめる",
-  "onboardingA.welcome.privacy":
-    "すべてこの端末に残ります。アカウントはなく、ログアウトするものもありません。",
+  "onboardingA.welcome.privacy": "アカウント不要。端末の外には出ません。",
 
   "onboardingA.vehicle.title": "どの車に乗っていますか？",
   "onboardingA.vehicle.year": "年式",
   "onboardingA.vehicle.makeOptional": "メーカー（任意）",
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
-  "onboardingA.vehicle.saved": "「{name}」として保存しました。名前は後から変更できます。",
   "onboardingA.vehicle.modelOptional": "車種（任意）",
-  "onboardingA.vehicle.hint":
-    "年式だけで始められます。メーカーと車種は通知で車名を出すためだけに使います。",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
   "onboardingA.odometer.title.km": "走行距離は何キロですか？",
   "onboardingA.odometer.field": "走行距離（{unit}）",
   "onboardingA.odometer.placeholder.mi": "84,210",
   "onboardingA.odometer.placeholder.km": "135,600",
-  "onboardingA.odometer.caption":
-    "だいたいで構いません。距離で期限が来る整備の日付は、この数字から出します。",
-  "onboardingA.odometer.later": "あとで入力します",
+  "onboardingA.odometer.caption": "だいたいの数字で構いません。",
 
   "onboardingA.drive.title": "年間どのくらい走りますか？",
-  "onboardingA.drive.subtitle":
-    "だいたいで構いません。距離の間隔を日付に変えるのが、この数字です。",
   "onboardingA.drive.legend": "年間走行距離（{unit}）",
   "onboardingA.drive.low.mi": "5,000未満",
   "onboardingA.drive.low.km": "8,000未満",
@@ -215,17 +192,15 @@ export const ja: Fragment = {
   "onboardingA.drive.high.km": "16,000〜24,000",
   "onboardingA.drive.very_high.mi": "15,000超",
   "onboardingA.drive.very_high.km": "24,000超",
-  "onboardingA.drive.projection": "このペースなら、来年の今ごろは約{distance}になります。",
-  "onboardingA.drive.caption":
-    "カレンダーではなく距離で期限が来る整備の、日付を出すために使います。",
+  "onboardingA.drive.projection": "来年の今ごろは約{distance}です。",
+  "onboardingA.drive.caption": "おおよそで構いません。",
 
   // onboardingB
   "onboardingB.continue": "続ける",
 
   "onboardingB.service.title": "最後にやった整備は何ですか？",
-  "onboardingB.service.subtitle": "だいたいで構いません。後から直せます。",
+  "onboardingB.service.subtitle": "だいたいで構いません。",
   "onboardingB.service.legend": "整備",
-  "onboardingB.service.caption": "1つ選んでください。残りはいつでも記録できます。",
   "onboardingB.service.when": "{service}はいつですか？",
   "onboardingB.service.whenOther": "その整備はいつですか？",
   "onboardingB.service.whenPending": "いつでしたか？",
@@ -237,10 +212,7 @@ export const ja: Fragment = {
   "onboardingB.service.ago.notSure": "わからない",
 
   "onboardingB.tracking.title": "今はどう管理していますか？",
-  "onboardingB.tracking.subtitle": "どれであっても、多くの人より進んでいます。",
   "onboardingB.tracking.legend": "現状",
-  "onboardingB.tracking.caption":
-    "どれを選んでも、記録したものはWrenchyが無料でCSVに書き出します。",
   "onboardingB.tracking.memory": "記憶",
   "onboardingB.tracking.receipts": "車内の伝票",
   "onboardingB.tracking.spreadsheet": "表計算ソフト",
@@ -248,16 +220,12 @@ export const ja: Fragment = {
   "onboardingB.tracking.nothing": "何もしていない",
 
   "onboardingB.worry.title": "避けたいことは何ですか？",
-  "onboardingB.worry.subtitle":
-    "当てはまるものをすべて選んでください。アプリが何を前に出すかが、これで決まります。",
-  "onboardingB.worry.caption":
-    "最後の質問です。次の画面はアプリではなく、あなたの車の話になります。",
+  "onboardingB.worry.subtitle": "当てはまるものをすべて選んでください。",
   "onboardingB.worry.bills": "突然の修理代",
   "onboardingB.worry.missed": "整備の見落とし",
   "onboardingB.worry.records": "整備記録の紛失",
   "onboardingB.worry.resale": "売却時の価値",
   "onboardingB.worry.upsell": "余計な追加整備",
-  "onboardingB.worry.optional": "すべて任意です。飛ばしても、次の画面はあなたの車だけから作られます。",
 
   "onboardingB.analyzing.title": "予定表を組み立てています。",
   "onboardingB.analyzing.odometer": "{vehicle}、{distance}",
@@ -277,8 +245,7 @@ export const ja: Fragment = {
   "onboardingC.results.noneLogged": "記録済みのものに期限切れはありません。",
   "onboardingC.results.noneYet": "まだ期限切れはありません。",
   "onboardingC.results.clear": "期限切れも、期限が近いものもありません。",
-  "onboardingC.results.subtitle":
-    "{vehicle}について、年間{distance}と記録済みの内容から出しました。",
+  "onboardingC.results.subtitle": "{vehicle}、年間{distance}。",
   "onboardingC.results.continue": "続ける",
   "onboardingC.results.dueNow": "期限到来",
   "onboardingC.results.soon": "まもなく",
@@ -287,23 +254,18 @@ export const ja: Fragment = {
   "onboardingC.results.status.due": "期限",
   "onboardingC.results.status.soon": "まもなく",
   "onboardingC.results.status.ok": "問題なし",
-  "onboardingC.results.next":
-    "次は{date}です。日付と距離のうち、先に来たほうが期限になります。",
-  "onboardingC.results.countdown":
-    "どの整備も日付と距離の両方で数え、先に来たほうを期限とします。",
 
   "onboardingC.symptoms.next": "続ける",
   "onboardingC.symptoms.last": "では、どうすればいいか",
 
   "onboardingC.help.title": "3つとも同じ問題です。",
-  "onboardingC.help.subtitle":
-    "警告を出せる形で何も書き留められていない、ということです。Wrenchyがやるのは、そこだけです。",
+  "onboardingC.help.subtitle": "警告できる形で、どこにも記録されていません。",
   "onboardingC.help.continue": "続ける",
 
   "onboardingC.reviews.title": "このアプリは、これらがあって生まれました。",
   "onboardingC.reviews.subtitle": {
     other:
-      "同じことをする{apps}本のアプリに付いたApp Storeレビュー{total}件のうち、{count}件が星1〜3です。",
+      "同じことをするアプリのApp Storeレビュー{total}件のうち、{count}件が星1〜3です。",
   },
   "onboardingC.reviews.continue": "続ける",
   "onboardingC.reviews.scroll": "スクロールして4件すべて読む",

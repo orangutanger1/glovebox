@@ -59,7 +59,6 @@ export default function OnboardingDrive() {
     <OnboardingScreen
       route="drive"
       title={t("onboardingA.drive.title")}
-      subtitle={t("onboardingA.drive.subtitle")}
       footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!drive} />}
     >
       <ChipRow

@@ -42,9 +42,15 @@ import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
  * than read it, and there is nothing to measure anyway, since the flow can end
  * at the paywall.
  *
- * There is no Skip. Skip existed so a user could arrive in the app with a
- * "My car" stub and no mileage — a garage entry that looks broken and that
- * nothing in the app can act on.
+ * `subtitle` is the only muted line a screen may print, it is one short
+ * sentence, and most screens pass none. Grey-on-black is the housing's own
+ * colour, so a second grey paragraph under the component reads as disabled
+ * text rather than as help, and a question that needs two sentences of it is
+ * a question that needs rewriting.
+ *
+ * There is no Skip, and no screen has a way past its question. Skip existed
+ * so a user could arrive in the app with a "My car" stub and no mileage — a
+ * garage entry that looks broken and that nothing in the app can act on.
  */
 export function OnboardingScreen({
   route,

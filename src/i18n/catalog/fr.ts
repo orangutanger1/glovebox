@@ -135,31 +135,21 @@ export const fr: Fragment = {
   "offer.badge.free": "Gratuit",
 
   "offer.features.title": "Voilà ce que vous obtenez.",
-  "offer.features.subtitle":
-    "Tout tient dans un seul fichier sur ce téléphone, sans compte et sans serveur.",
 
   "offer.plan.title": "Voici le programme.",
   "offer.plan.subtitle": {
-    one: "{count} entretien programmé pour votre {vehicle}, compté par date et par distance.",
-    other: "{count} entretiens programmés pour votre {vehicle}, comptés par date et par distance.",
+    one: "{count} entretien programmé pour votre {vehicle}.",
+    other: "{count} entretiens programmés pour votre {vehicle}.",
   },
   "offer.plan.cta": "Activer les rappels",
   "offer.plan.decline": "Pas maintenant",
   "offer.notify.title": "Ne manquez plus un entretien.",
-  "offer.notify.decline": "Plus tard",
   "offer.plan.status.due": "À faire",
   "offer.plan.status.soon": "Bientôt",
   "offer.plan.status.ok": "OK",
-  "offer.plan.note": "Une notification par entretien, le jour de l'échéance.",
-  "offer.plan.noteMore": {
-    one: "Plus {count} autre plus loin, et une notification par entretien le jour de l'échéance.",
-    other:
-      "Plus {count} autres plus loin, et une notification par entretien le jour de l'échéance.",
-  },
 
   "offer.paywall.title": "Les voitures ne préviennent pas. Ceci, oui.",
-  "offer.paywall.subtitle":
-    "Chaque entretien et chaque relevé du compteur, consignés. Le garagiste voit un carnet, pas une supposition.",
+  "offer.paywall.subtitle": "Chaque entretien et chaque relevé, consignés.",
   "offer.paywall.cta": "Consigner ma voiture",
   "offer.paywall.vehicle": "Consigné",
   "offer.paywall.scheduled": "Suivis",
@@ -167,8 +157,6 @@ export const fr: Fragment = {
   "offer.paywall.dueNow": "En retard",
   "offer.paywall.nextUp": "Prochaine alerte",
   "offer.paywall.none": "Aucun",
-  "offer.paywall.caption":
-    "Tout ce que vous venez de configurer est déjà enregistré sur ce téléphone. Pas de compte, pas de serveur, rien n’est envoyé.",
 
   "offer.paywall.impact.legend": "Ce que cela vaut",
   "offer.paywall.impact.warned": "Vous êtes prévenu avant l’échéance, pas après la réparation.",
@@ -176,11 +164,6 @@ export const fr: Fragment = {
   "offer.paywall.impact.resale": "Vous remettez au prochain propriétaire un carnet complet plutôt qu’un haussement d’épaules, et cela se voit sur le prix.",
 
   "offer.trial.title": { one: "Essayez {count} jour.", other: "Essayez {count} jours." },
-  "offer.trial.subtitle": {
-    one: "Prenez {count} jour de Pro pour rien et décidez quand votre voiture vous aura vraiment dit quelque chose.",
-    other:
-      "Prenez {count} jours de Pro pour rien et décidez quand votre voiture vous aura vraiment dit quelque chose.",
-  },
   "offer.trial.cta": {
     one: "Profiter de {count} jour gratuit",
     other: "Profiter de {count} jours gratuits",
@@ -204,32 +187,23 @@ export const fr: Fragment = {
 
   "onboardingA.welcome.headline": "Ne devinez plus la date de votre dernière vidange.",
   "onboardingA.welcome.start": "Commencer",
-  "onboardingA.welcome.privacy":
-    "Tout reste sur ce téléphone, sans compte et sans rien à déconnecter.",
+  "onboardingA.welcome.privacy": "Aucun compte. Rien ne quitte ce téléphone.",
 
   "onboardingA.vehicle.title": "Qu'est-ce que vous conduisez\u00a0?",
   "onboardingA.vehicle.year": "Année",
   "onboardingA.vehicle.makeOptional": "Marque (facultatif)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.saved":
-    "Enregistré sous «\u00a0{name}\u00a0», et vous pourrez le renommer plus tard.",
   "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
-  "onboardingA.vehicle.hint":
-    "L'année suffit pour commencer. La marque et le modèle servent seulement à ce que les rappels nomment la voiture.",
 
   "onboardingA.odometer.title.mi": "Combien de miles au compteur\u00a0?",
   "onboardingA.odometer.title.km": "Combien de kilomètres au compteur\u00a0?",
   "onboardingA.odometer.field": "Compteur ({unit})",
   "onboardingA.odometer.placeholder.mi": "84\u202f210",
   "onboardingA.odometer.placeholder.km": "135\u202f600",
-  "onboardingA.odometer.caption":
-    "Un ordre de grandeur suffit, et c'est ce qui date les entretiens dont l'échéance se compte en distance.",
-  "onboardingA.odometer.later": "Je l'ajouterai plus tard",
+  "onboardingA.odometer.caption": "Un ordre de grandeur suffit.",
 
   "onboardingA.drive.title": "Combien roulez-vous avec\u00a0?",
-  "onboardingA.drive.subtitle":
-    "À peu près, puisque c'est ce chiffre qui transforme un intervalle de distance en date.",
   "onboardingA.drive.legend": "Distance par an ({unit})",
   "onboardingA.drive.low.mi": "Moins de 5\u202f000",
   "onboardingA.drive.low.km": "Moins de 8\u202f000",
@@ -239,18 +213,15 @@ export const fr: Fragment = {
   "onboardingA.drive.high.km": "16\u202f000 à 24\u202f000",
   "onboardingA.drive.very_high.mi": "Plus de 15\u202f000",
   "onboardingA.drive.very_high.km": "Plus de 24\u202f000",
-  "onboardingA.drive.projection":
-    "À ce rythme, cette voiture affichera environ {distance} à la même époque l'an prochain.",
-  "onboardingA.drive.caption":
-    "Sert à dater les entretiens dont l'échéance se compte en distance plutôt qu'au calendrier.",
+  "onboardingA.drive.projection": "Environ {distance} à la même époque l'an prochain.",
+  "onboardingA.drive.caption": "Une estimation suffit.",
 
   // onboardingB
   "onboardingB.continue": "Continuer",
 
   "onboardingB.service.title": "Qu'avez-vous fait faire en dernier\u00a0?",
-  "onboardingB.service.subtitle": "À peu près suffit, vous pourrez corriger plus tard.",
+  "onboardingB.service.subtitle": "À peu près suffit.",
   "onboardingB.service.legend": "Entretien",
-  "onboardingB.service.caption": "Choisissez-en un, le reste se note quand vous voulez.",
   "onboardingB.service.when": "{service}\u00a0: c'était quand\u00a0?",
   "onboardingB.service.whenOther": "Cette intervention, c'était quand\u00a0?",
   "onboardingB.service.whenPending": "C'était quand\u00a0?",
@@ -262,10 +233,7 @@ export const fr: Fragment = {
   "onboardingB.service.ago.notSure": "Pas sûr",
 
   "onboardingB.tracking.title": "Comment suivez-vous ça aujourd'hui\u00a0?",
-  "onboardingB.tracking.subtitle": "Quoi que ce soit, c'est déjà plus que la plupart des gens.",
   "onboardingB.tracking.legend": "Aujourd'hui",
-  "onboardingB.tracking.caption":
-    "Quel que soit votre choix, Wrenchy exporte gratuitement en CSV tout ce que vous notez.",
   "onboardingB.tracking.memory": "De mémoire",
   "onboardingB.tracking.receipts": "Les factures dans la voiture",
   "onboardingB.tracking.spreadsheet": "Un tableur",
@@ -273,17 +241,12 @@ export const fr: Fragment = {
   "onboardingB.tracking.nothing": "Rien du tout",
 
   "onboardingB.worry.title": "Qu'est-ce que vous voulez éviter\u00a0?",
-  "onboardingB.worry.subtitle":
-    "Cochez tout ce qui s'applique, puisque cela décide de ce que l'app met devant vous.",
-  "onboardingB.worry.caption":
-    "Dernière question, et l'écran suivant parle de votre voiture plutôt que de l'app.",
+  "onboardingB.worry.subtitle": "Cochez tout ce qui s'applique.",
   "onboardingB.worry.bills": "Les factures surprise",
   "onboardingB.worry.missed": "Rater un entretien",
   "onboardingB.worry.records": "Perdre le carnet",
   "onboardingB.worry.resale": "La valeur de revente",
   "onboardingB.worry.upsell": "Payer pour du superflu",
-  "onboardingB.worry.optional":
-    "Tout est facultatif. Passez, et l'écran suivant se construit sur votre voiture seule.",
 
   "onboardingB.analyzing.title": "Calcul des échéances.",
   "onboardingB.analyzing.odometer": "{vehicle} à {distance}",
@@ -312,8 +275,7 @@ export const fr: Fragment = {
   "onboardingC.results.noneLogged": "Rien de ce que vous avez noté n'est en retard.",
   "onboardingC.results.noneYet": "Rien n'est en retard pour l'instant.",
   "onboardingC.results.clear": "Rien n'est en retard, et rien n'approche.",
-  "onboardingC.results.subtitle":
-    "Calculé pour votre {vehicle} d'après {distance} par an et ce que vous avez noté.",
+  "onboardingC.results.subtitle": "Votre {vehicle}, {distance} par an.",
   "onboardingC.results.continue": "Continuer",
   "onboardingC.results.dueNow": "À faire",
   "onboardingC.results.soon": "Bientôt",
@@ -322,24 +284,19 @@ export const fr: Fragment = {
   "onboardingC.results.status.due": "À faire",
   "onboardingC.results.status.soon": "Bientôt",
   "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.next":
-    "La prochaine tombe le {date}, à la première des deux limites atteinte, date ou distance.",
-  "onboardingC.results.countdown":
-    "Chaque entretien est décompté par date et par distance, la première des deux l'emporte.",
 
   "onboardingC.symptoms.next": "Continuer",
   "onboardingC.symptoms.last": "Alors je fais quoi",
 
   "onboardingC.help.title": "Les trois, c'est le même problème.",
-  "onboardingC.help.subtitle":
-    "Rien n'est écrit sous une forme capable de vous prévenir, et c'est tout ce que fait Wrenchy.",
+  "onboardingC.help.subtitle": "Rien n'est écrit sous une forme capable de vous prévenir.",
   "onboardingC.help.continue": "Continuer",
 
   "onboardingC.reviews.title": "Cette app existe à cause de ça.",
   "onboardingC.reviews.subtitle": {
-    one: "{count} des {total} avis App Store sur les {apps} apps qui font déjà ça est noté une à trois étoiles.",
+    one: "{count} des {total} avis App Store sur les apps qui font déjà ça est noté une à trois étoiles.",
     other:
-      "{count} des {total} avis App Store sur les {apps} apps qui font déjà ça sont notés une à trois étoiles.",
+      "{count} des {total} avis App Store sur les apps qui font déjà ça sont notés une à trois étoiles.",
   },
   "onboardingC.reviews.continue": "Continuer",
   "onboardingC.reviews.scroll": "Faites défiler pour lire les quatre",

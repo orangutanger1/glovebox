@@ -1,8 +1,6 @@
 import { useMemo, useState } from "react";
-import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
-import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -53,7 +51,6 @@ export default function OnboardingTracking() {
     <OnboardingScreen
       route="tracking"
       title={t("onboardingB.tracking.title")}
-      subtitle={t("onboardingB.tracking.subtitle")}
       footer={
         <Button label={t("onboardingB.continue")} onPress={onContinue} disabled={!tracking} />
       }
@@ -64,9 +61,6 @@ export default function OnboardingTracking() {
         selected={tracking ? [tracking] : []}
         onPress={setTracking}
       />
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("onboardingB.tracking.caption")}
-      </Text>
     </OnboardingScreen>
   );
 }

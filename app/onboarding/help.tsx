@@ -78,14 +78,9 @@ export default function OnboardingHelp() {
         </View>
       </Panel>
 
-      <View style={{ gap: tokens.space.xs }}>
-        <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>
-          {t("offer.features.title")}
-        </Text>
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-          {t("offer.features.subtitle")}
-        </Text>
-      </View>
+      <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>
+        {t("offer.features.title")}
+      </Text>
 
       {/* Tiles, two to a row, rather than six full-width rows in one panel.
           Six identical rows is a spec sheet: the eye reads the shape once and

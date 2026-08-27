@@ -1,8 +1,6 @@
 import { useMemo, useState } from "react";
-import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
-import { tokens } from "../../src/design/tokens";
 import { getVehicle } from "../../src/db/vehicles";
 import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
 import { t } from "../../src/i18n";
@@ -159,10 +157,6 @@ export default function OnboardingService() {
         onPress={setWhen}
         disabled={type === null}
       />
-
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("onboardingB.service.caption")}
-      </Text>
     </OnboardingScreen>
   );
 }

@@ -127,30 +127,21 @@ export const sv: Fragment = {
   "offer.badge.free": "Gratis",
 
   "offer.features.title": "Det här får du.",
-  "offer.features.subtitle":
-    "Allt ligger i en enda fil i den här telefonen, utan konto och utan server.",
 
   "offer.plan.title": "Så här ser planen ut.",
   "offer.plan.subtitle": {
-    one: "{count} servicepunkt i schemat för din {vehicle}, räknad på datum och på sträcka.",
-    other: "{count} servicepunkter i schemat för din {vehicle}, räknade på datum och på sträcka.",
+    one: "{count} servicepunkt i schemat för din {vehicle}.",
+    other: "{count} servicepunkter i schemat för din {vehicle}.",
   },
   "offer.plan.cta": "Slå på påminnelser",
   "offer.plan.decline": "Inte nu",
   "offer.notify.title": "Missa aldrig en service.",
-  "offer.notify.decline": "Gör det senare",
   "offer.plan.status.due": "Dags",
   "offer.plan.status.soon": "Snart",
   "offer.plan.status.ok": "OK",
-  "offer.plan.note": "En notis per service den dag den ska göras.",
-  "offer.plan.noteMore": {
-    one: "Dessutom {count} till längre fram, och en notis per service den dag den ska göras.",
-    other: "Dessutom {count} till längre fram, och en notis per service den dag den ska göras.",
-  },
 
   "offer.paywall.title": "Bilar varnar inte. Det här gör det.",
-  "offer.paywall.subtitle":
-    "Varje service och varje mätarställning hamnar på pränt. Verkstaden ser en servicebok, inte en gissning.",
+  "offer.paywall.subtitle": "Varje service och varje mätarställning, på pränt.",
   "offer.paywall.cta": "Håll bilen på pränt",
   "offer.paywall.vehicle": "På pränt",
   "offer.paywall.scheduled": "Nu bevakat",
@@ -158,8 +149,6 @@ export const sv: Fragment = {
   "offer.paywall.dueNow": "Försenat i dag",
   "offer.paywall.nextUp": "Nästa varning",
   "offer.paywall.none": "Ingen",
-  "offer.paywall.caption":
-    "Allt du just ställt in ligger redan i den här telefonen. Inget konto, ingen server, inget skickas vidare.",
 
   "offer.paywall.impact.legend": "Vad det är värt",
   "offer.paywall.impact.warned": "Du hör om en service innan den ska göras, inte efter reparationen.",
@@ -167,11 +156,6 @@ export const sv: Fragment = {
   "offer.paywall.impact.resale": "Du lämnar en komplett servicebok till nästa ägare i stället för en axelryckning, och det syns på priset.",
 
   "offer.trial.title": { one: "Testa i {count} dag.", other: "Testa i {count} dagar." },
-  "offer.trial.subtitle": {
-    one: "Ta {count} dag av Pro utan att betala och bestäm dig när bilen faktiskt har berättat något.",
-    other:
-      "Ta {count} dagar av Pro utan att betala och bestäm dig när bilen faktiskt har berättat något.",
-  },
   "offer.trial.cta": {
     one: "Starta min {count} gratisdag",
     other: "Starta mina {count} gratisdagar",
@@ -194,31 +178,23 @@ export const sv: Fragment = {
 
   "onboardingA.welcome.headline": "Sluta gissa när du senast bytte olja.",
   "onboardingA.welcome.start": "Kom igång",
-  "onboardingA.welcome.privacy":
-    "Allt stannar i den här telefonen, utan konto och utan något att logga ut från.",
+  "onboardingA.welcome.privacy": "Inget konto. Inget lämnar telefonen.",
 
   "onboardingA.vehicle.title": "Vad kör du?",
   "onboardingA.vehicle.year": "Årsmodell",
   "onboardingA.vehicle.makeOptional": "Märke (valfritt)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.saved": "Sparad som \u201D{name}\u201D, och du kan byta namn senare.",
   "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
-  "onboardingA.vehicle.hint":
-    "Årsmodellen räcker för att börja. Märke och modell finns bara för att påminnelserna ska kunna nämna bilen.",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
   "onboardingA.odometer.title.km": "Hur många kilometer står den på?",
   "onboardingA.odometer.field": "Mätarställning ({unit})",
   "onboardingA.odometer.placeholder.mi": "84\u00A0210",
   "onboardingA.odometer.placeholder.km": "135\u00A0600",
-  "onboardingA.odometer.caption":
-    "En ungefärlig siffra räcker, och det är den som sätter datum på allt som ska göras efter sträcka.",
-  "onboardingA.odometer.later": "Jag fyller i det senare",
+  "onboardingA.odometer.caption": "En ungefärlig siffra räcker.",
 
   "onboardingA.drive.title": "Hur långt kör du den?",
-  "onboardingA.drive.subtitle":
-    "Ungefär, för det är den siffran som gör ett sträckintervall till ett datum.",
   "onboardingA.drive.legend": "Sträcka per år ({unit})",
   "onboardingA.drive.low.mi": "Under 5\u00A0000",
   "onboardingA.drive.low.km": "Under 8\u00A0000",
@@ -228,17 +204,14 @@ export const sv: Fragment = {
   "onboardingA.drive.high.km": "16\u00A0000\u201324\u00A0000",
   "onboardingA.drive.very_high.mi": "Över 15\u00A0000",
   "onboardingA.drive.very_high.km": "Över 24\u00A0000",
-  "onboardingA.drive.projection":
-    "I den takten står bilen på ungefär {distance} den här tiden nästa år.",
-  "onboardingA.drive.caption":
-    "Används för att datera det som ska göras efter sträcka i stället för efter kalendern.",
+  "onboardingA.drive.projection": "Ungefär {distance} den här tiden nästa år.",
+  "onboardingA.drive.caption": "Ungefär räcker.",
 
   "onboardingB.continue": "Fortsätt",
 
   "onboardingB.service.title": "Vad gjordes senast?",
-  "onboardingB.service.subtitle": "Ungefär rätt räcker, du kan rätta det senare.",
+  "onboardingB.service.subtitle": "Nära nog räcker.",
   "onboardingB.service.legend": "Service",
-  "onboardingB.service.caption": "Välj en, resten kan du logga när som helst.",
   "onboardingB.service.when": "När gjordes {service}?",
   "onboardingB.service.whenOther": "När gjordes servicen?",
   "onboardingB.service.whenPending": "När var det?",
@@ -250,10 +223,7 @@ export const sv: Fragment = {
   "onboardingB.service.ago.notSure": "Osäker",
 
   "onboardingB.tracking.title": "Hur håller du koll i dag?",
-  "onboardingB.tracking.subtitle": "Vad det än är, är det mer än de flesta gör.",
   "onboardingB.tracking.legend": "I dag",
-  "onboardingB.tracking.caption":
-    "Vad du än väljer exporterar Wrenchy allt du loggar som CSV, gratis.",
   "onboardingB.tracking.memory": "Minnet",
   "onboardingB.tracking.receipts": "Kvitton i bilen",
   "onboardingB.tracking.spreadsheet": "Ett kalkylblad",
@@ -261,16 +231,12 @@ export const sv: Fragment = {
   "onboardingB.tracking.nothing": "Ingenting alls",
 
   "onboardingB.worry.title": "Vad vill du undvika?",
-  "onboardingB.worry.subtitle": "Välj så många som stämmer, det avgör vad appen visar dig först.",
-  "onboardingB.worry.caption":
-    "Sista frågan, nästa skärm handlar om din bil i stället för om appen.",
+  "onboardingB.worry.subtitle": "Välj så många som stämmer.",
   "onboardingB.worry.bills": "Oväntade reparationer",
   "onboardingB.worry.missed": "Missa en service",
   "onboardingB.worry.records": "Tappa historiken",
   "onboardingB.worry.resale": "Andrahandsvärdet",
   "onboardingB.worry.upsell": "Onödiga extrajobb",
-  "onboardingB.worry.optional":
-    "Allt är valfritt. Hoppa över, och nästa skärm byggs bara på din bil.",
 
   "onboardingB.analyzing.title": "Räknar ut schemat.",
   "onboardingB.analyzing.odometer": "{vehicle} på {distance}",
@@ -298,8 +264,7 @@ export const sv: Fragment = {
   "onboardingC.results.noneLogged": "Inget du har loggat är försenat.",
   "onboardingC.results.noneYet": "Inget är försenat än.",
   "onboardingC.results.clear": "Inget är försenat, och inget är nära.",
-  "onboardingC.results.subtitle":
-    "Uträknat för din {vehicle} utifrån {distance} per år och det du har loggat.",
+  "onboardingC.results.subtitle": "Din {vehicle}, {distance} per år.",
   "onboardingC.results.continue": "Fortsätt",
   "onboardingC.results.dueNow": "Dags nu",
   "onboardingC.results.soon": "Snart",
@@ -308,23 +273,19 @@ export const sv: Fragment = {
   "onboardingC.results.status.due": "Dags",
   "onboardingC.results.status.soon": "Snart",
   "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.next": "Nästa hamnar {date}, det som kommer först av datum och sträcka.",
-  "onboardingC.results.countdown":
-    "Varje service räknas ner både på datum och på sträcka, det som kommer först gäller.",
 
   "onboardingC.symptoms.next": "Fortsätt",
   "onboardingC.symptoms.last": "Så vad gör jag",
 
   "onboardingC.help.title": "Alla tre är samma problem.",
-  "onboardingC.help.subtitle":
-    "Ingenting är skrivet ner i en form som kan varna dig, och det är precis det Wrenchy gör.",
+  "onboardingC.help.subtitle": "Ingenting är skrivet ner där det kan varna dig.",
   "onboardingC.help.continue": "Fortsätt",
 
   "onboardingC.reviews.title": "Den här appen finns på grund av de här.",
   "onboardingC.reviews.subtitle": {
-    one: "{count} av de {total} recensionerna i App Store av de {apps} appar som redan gör det här är på en till tre stjärnor.",
+    one: "{count} av {total} App Store-recensioner av appar som redan gör det här är på en till tre stjärnor.",
     other:
-      "{count} av de {total} recensionerna i App Store av de {apps} appar som redan gör det här är på en till tre stjärnor.",
+      "{count} av {total} App Store-recensioner av appar som redan gör det här är på en till tre stjärnor.",
   },
   "onboardingC.reviews.continue": "Fortsätt",
   "onboardingC.reviews.scroll": "Skrolla för att läsa alla fyra",

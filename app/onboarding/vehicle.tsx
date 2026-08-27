@@ -37,11 +37,13 @@ const DEFAULT_YEAR = NEWEST_YEAR - 12;
  * The chip version of this screen printed twenty-six year chips over
  * forty-two make chips over a filter box, which is three controls and about
  * seventy tap targets for two answers: the screen the user meets first was the
- * busiest one in the app. It is back to the two text fields and a caption it
- * was, with one change — the year, the one answer with an order and a known
- * range, is a drum. Nothing about a model year needs a keyboard, and a wheel
- * cannot be out of range, so the four validation messages that field used to
- * print have nothing left to say.
+ * busiest one in the app. It is back to the two text fields it was, with one
+ * change — the year, the one answer with an order and a known range, is a
+ * drum. Nothing about a model year needs a keyboard, and a wheel cannot be
+ * out of range, so the four validation messages that field used to print have
+ * nothing left to say. The caption under it is gone too: the question is
+ * "What are you driving?", and a screen that has to explain that is not one
+ * the copy can fix.
  *
  * The make is typed, because there is no short list of makes that is not also
  * wrong for somebody — and typed means skippable, because this screen is the
@@ -202,17 +204,6 @@ export default function OnboardingVehicle() {
           </View>
         </View>
       </Panel>
-
-      {/* The caption confirms rather than instructs. It used to switch between
-          a hint and a confirmation on whether the screen would accept the
-          answer, which is a validation message wearing a caption's clothes;
-          there is nothing left to validate, so it names the car the user is
-          about to get and says the name is not final. */}
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {parts.make === undefined
-          ? t("onboardingA.vehicle.hint")
-          : t("onboardingA.vehicle.saved", { name: vehicleDisplayName(parts) })}
-      </Text>
     </OnboardingScreen>
   );
 }

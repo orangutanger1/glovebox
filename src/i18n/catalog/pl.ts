@@ -149,35 +149,23 @@ export const pl: Fragment = {
   "offer.badge.free": "Darmowy",
 
   "offer.features.title": "Co dostajesz.",
-  "offer.features.subtitle":
-    "Wszystko siedzi w jednym pliku w tym telefonie, bez konta i bez serwera.",
 
   "offer.plan.title": "Oto plan.",
   "offer.plan.subtitle": {
-    one: "{vehicle}: {count} serwis w harmonogramie, liczony według daty i przebiegu.",
-    few: "{vehicle}: {count} serwisy w harmonogramie, liczone według daty i przebiegu.",
-    many: "{vehicle}: {count} serwisów w harmonogramie, liczonych według daty i przebiegu.",
-    other: "{vehicle}: {count} serwisu w harmonogramie, liczonego według daty i przebiegu.",
+    one: "{vehicle}: {count} serwis w harmonogramie.",
+    few: "{vehicle}: {count} serwisy w harmonogramie.",
+    many: "{vehicle}: {count} serwisów w harmonogramie.",
+    other: "{vehicle}: {count} serwisu w harmonogramie.",
   },
   "offer.plan.cta": "Włącz przypomnienia",
   "offer.plan.decline": "Nie teraz",
   "offer.notify.title": "Nie przegap żadnego serwisu.",
-  "offer.notify.decline": "Później",
   "offer.plan.status.due": "Termin",
   "offer.plan.status.soon": "Wkrótce",
   "offer.plan.status.ok": "OK",
-  "offer.plan.note": "Jedno powiadomienie na serwis w dniu, w którym wypada termin.",
-  "offer.plan.noteMore": {
-    one: "Plus {count} kolejny dalej w czasie oraz jedno powiadomienie na serwis w dniu, w którym wypada termin.",
-    few: "Plus {count} kolejne dalej w czasie oraz jedno powiadomienie na serwis w dniu, w którym wypada termin.",
-    many: "Plus {count} kolejnych dalej w czasie oraz jedno powiadomienie na serwis w dniu, w którym wypada termin.",
-    other:
-      "Plus {count} kolejnego dalej w czasie oraz jedno powiadomienie na serwis w dniu, w którym wypada termin.",
-  },
 
   "offer.paywall.title": "Samochody nie ostrzegają. Ta aplikacja owszem.",
-  "offer.paywall.subtitle":
-    "Każdy serwis i każdy stan licznika zostają zapisane. Mechanik widzi książkę, a nie domysły.",
+  "offer.paywall.subtitle": "Każdy serwis i każdy stan licznika, zapisane.",
   "offer.paywall.cta": "Zapisuj mój samochód",
   "offer.paywall.vehicle": "Zapisany",
   "offer.paywall.scheduled": "Pod kontrolą",
@@ -185,8 +173,6 @@ export const pl: Fragment = {
   "offer.paywall.dueNow": "Zaległe dziś",
   "offer.paywall.nextUp": "Następne ostrzeżenie",
   "offer.paywall.none": "Brak",
-  "offer.paywall.caption":
-    "Wszystko, co właśnie ustawiłeś, jest już zapisane w tym telefonie. Bez konta, bez serwera, nic nie wychodzi na zewnątrz.",
 
   "offer.paywall.impact.legend": "Ile to warte",
   "offer.paywall.impact.warned": "Dowiadujesz się o przeglądzie przed terminem, a nie po naprawie.",
@@ -198,12 +184,6 @@ export const pl: Fragment = {
     few: "Wypróbuj przez {count} dni.",
     many: "Wypróbuj przez {count} dni.",
     other: "Wypróbuj przez {count} dnia.",
-  },
-  "offer.trial.subtitle": {
-    one: "Weź {count} dzień Pro za nic i zdecyduj, gdy samochód naprawdę ci coś powie.",
-    few: "Weź {count} dni Pro za nic i zdecyduj, gdy samochód naprawdę ci coś powie.",
-    many: "Weź {count} dni Pro za nic i zdecyduj, gdy samochód naprawdę ci coś powie.",
-    other: "Weź {count} dnia Pro za nic i zdecyduj, gdy samochód naprawdę ci coś powie.",
   },
   "offer.trial.cta": {
     one: "Zaczynam {count} darmowy dzień",
@@ -232,31 +212,23 @@ export const pl: Fragment = {
 
   "onboardingA.welcome.headline": "Koniec ze zgadywaniem, kiedy była ostatnia wymiana oleju.",
   "onboardingA.welcome.start": "Zaczynajmy",
-  "onboardingA.welcome.privacy":
-    "Wszystko zostaje w tym telefonie, bez konta i bez niczego, z czego trzeba się wylogować.",
+  "onboardingA.welcome.privacy": "Bez konta. Nic nie opuszcza telefonu.",
 
   "onboardingA.vehicle.title": "Czym jeździsz?",
   "onboardingA.vehicle.year": "Rocznik",
   "onboardingA.vehicle.makeOptional": "Marka (opcjonalnie)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.saved": "Zapisane jako „{name}”, nazwę możesz zmienić później.",
   "onboardingA.vehicle.modelOptional": "Model (opcjonalnie)",
-  "onboardingA.vehicle.hint":
-    "Rocznik wystarczy na start. Marka i model służą tylko temu, żeby przypomnienia nazwały samochód.",
 
   "onboardingA.odometer.title.mi": "Ile ma mil przebiegu?",
   "onboardingA.odometer.title.km": "Ile ma kilometrów przebiegu?",
   "onboardingA.odometer.field": "Przebieg ({unit})",
   "onboardingA.odometer.placeholder.mi": "84 210",
   "onboardingA.odometer.placeholder.km": "135 600",
-  "onboardingA.odometer.caption":
-    "Wystarczy przybliżona liczba — to ona datuje serwisy, których termin liczy się przebiegiem.",
-  "onboardingA.odometer.later": "Dodam później",
+  "onboardingA.odometer.caption": "Wystarczy przybliżona liczba.",
 
   "onboardingA.drive.title": "Ile nim jeździsz?",
-  "onboardingA.drive.subtitle":
-    "Z grubsza, bo to ta liczba zamienia interwał przebiegu w datę.",
   "onboardingA.drive.legend": "Dystans na rok ({unit})",
   "onboardingA.drive.low.mi": "Poniżej 5000",
   "onboardingA.drive.low.km": "Poniżej 8000",
@@ -266,18 +238,15 @@ export const pl: Fragment = {
   "onboardingA.drive.high.km": "16 000 do 24 000",
   "onboardingA.drive.very_high.mi": "Powyżej 15 000",
   "onboardingA.drive.very_high.km": "Powyżej 24 000",
-  "onboardingA.drive.projection":
-    "W tym tempie za rok o tej porze ten samochód pokaże około {distance}.",
-  "onboardingA.drive.caption":
-    "Służy do datowania serwisów, których termin liczy się przebiegiem, a nie kalendarzem.",
+  "onboardingA.drive.projection": "Za rok o tej porze około {distance}.",
+  "onboardingA.drive.caption": "Wystarczy z grubsza.",
 
   // onboardingB
   "onboardingB.continue": "Dalej",
 
   "onboardingB.service.title": "Jaki był ostatni serwis?",
-  "onboardingB.service.subtitle": "Wystarczy z grubsza, bo możesz to potem poprawić.",
+  "onboardingB.service.subtitle": "Wystarczy mniej więcej.",
   "onboardingB.service.legend": "Serwis",
-  "onboardingB.service.caption": "Wybierz jeden, resztę zapiszesz kiedy indziej.",
   "onboardingB.service.when": "{service} — kiedy to było?",
   "onboardingB.service.whenOther": "Serwis — kiedy to było?",
   "onboardingB.service.whenPending": "Kiedy to było?",
@@ -289,10 +258,7 @@ export const pl: Fragment = {
   "onboardingB.service.ago.notSure": "Nie wiem",
 
   "onboardingB.tracking.title": "Jak to teraz zapisujesz?",
-  "onboardingB.tracking.subtitle": "Cokolwiek to jest, to i tak więcej niż robi większość.",
   "onboardingB.tracking.legend": "Dziś",
-  "onboardingB.tracking.caption":
-    "Cokolwiek wybierzesz, Wrenchy za darmo wyeksportuje do CSV wszystko, co zapiszesz.",
   "onboardingB.tracking.memory": "Pamięć",
   "onboardingB.tracking.receipts": "Paragony w aucie",
   "onboardingB.tracking.spreadsheet": "Arkusz kalkulacyjny",
@@ -300,17 +266,12 @@ export const pl: Fragment = {
   "onboardingB.tracking.nothing": "W ogóle nijak",
 
   "onboardingB.worry.title": "Czego chcesz uniknąć?",
-  "onboardingB.worry.subtitle":
-    "Zaznacz tyle, ile pasuje, bo to decyduje, co aplikacja pokaże ci na wierzchu.",
-  "onboardingB.worry.caption":
-    "Ostatnie pytanie, a następny ekran jest o twoim samochodzie, nie o aplikacji.",
+  "onboardingB.worry.subtitle": "Zaznacz tyle, ile pasuje.",
   "onboardingB.worry.bills": "Niespodziewane rachunki",
   "onboardingB.worry.missed": "Przegapiony serwis",
   "onboardingB.worry.records": "Utrata zapisów",
   "onboardingB.worry.resale": "Wartość przy sprzedaży",
   "onboardingB.worry.upsell": "Naciąganie w warsztacie",
-  "onboardingB.worry.optional":
-    "Wszystko opcjonalne. Pomiń, a następny ekran powstanie z samego auta.",
 
   "onboardingB.analyzing.title": "Ustalam harmonogram.",
   "onboardingB.analyzing.odometer": "{vehicle}, przebieg {distance}",
@@ -345,8 +306,7 @@ export const pl: Fragment = {
   "onboardingC.results.noneLogged": "Nic z tego, co masz zapisane, nie jest po terminie.",
   "onboardingC.results.noneYet": "Nic nie jest jeszcze po terminie.",
   "onboardingC.results.clear": "Nic nie jest po terminie i nic się nie zbliża.",
-  "onboardingC.results.subtitle":
-    "{vehicle}: wyliczone z {distance} rocznie i z tego, co masz zapisane.",
+  "onboardingC.results.subtitle": "{vehicle}, {distance} rocznie.",
   "onboardingC.results.continue": "Dalej",
   "onboardingC.results.dueNow": "Na teraz",
   "onboardingC.results.soon": "Wkrótce",
@@ -355,26 +315,21 @@ export const pl: Fragment = {
   "onboardingC.results.status.due": "Termin",
   "onboardingC.results.status.soon": "Wkrótce",
   "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.next":
-    "Najbliższy wypada {date}, zależnie od tego, co nastąpi pierwsze: data czy przebieg.",
-  "onboardingC.results.countdown":
-    "Każdy serwis jest odliczany według daty i przebiegu, zależnie od tego, co wypadnie pierwsze.",
 
   "onboardingC.symptoms.next": "Dalej",
   "onboardingC.symptoms.last": "To co mam zrobić",
 
   "onboardingC.help.title": "Wszystkie trzy to ten sam problem.",
-  "onboardingC.help.subtitle":
-    "Nic nie jest zapisane w formie, która mogłaby cię ostrzec, a to jest dokładnie to, co robi Wrenchy.",
+  "onboardingC.help.subtitle": "Nic nie jest zapisane tam, gdzie mogłoby cię ostrzec.",
   "onboardingC.help.continue": "Dalej",
 
   "onboardingC.reviews.title": "Ta aplikacja istnieje przez te recenzje.",
   "onboardingC.reviews.subtitle": {
-    one: "{count} z {total} recenzji w App Store dla {apps} aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
-    few: "{count} z {total} recenzji w App Store dla {apps} aplikacji, które już to robią, mają od jednej do trzech gwiazdek.",
-    many: "{count} z {total} recenzji w App Store dla {apps} aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
+    one: "{count} z {total} recenzji w App Store dla aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
+    few: "{count} z {total} recenzji w App Store dla aplikacji, które już to robią, mają od jednej do trzech gwiazdek.",
+    many: "{count} z {total} recenzji w App Store dla aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
     other:
-      "{count} z {total} recenzji w App Store dla {apps} aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
+      "{count} z {total} recenzji w App Store dla aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
   },
   "onboardingC.reviews.continue": "Dalej",
   "onboardingC.reviews.scroll": "Przewiń, żeby przeczytać wszystkie cztery",

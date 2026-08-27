@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
@@ -30,7 +30,7 @@ const STATUS_LABEL = {
 } as const;
 
 /** The whole schedule is real, but a screen with twelve rows on it is a
- *  document, not a plan. The rest is one line of arithmetic underneath. */
+ *  document, not a plan. The subtitle counts the rest. */
 const SHOWN = 6;
 
 /**
@@ -51,16 +51,17 @@ const SHOWN = 6;
  *
  * The prompt fires here, on the tap that promises it, asked of iOS immediately
  * before the request: the alert appears on this tap, or the system has already
- * refused to show one. "Do it later" is a real answer and nothing re-asks.
- * Settings offers reminders on a later tap, and iOS still holds the one unused
- * prompt for it.
+ * refused to show one. There is no "Do it later": every screen in the flow is
+ * mandatory, and the deferral was a second decline on a screen the system
+ * already gives the user one — iOS's own alert has "Don't Allow" on it, and a
+ * user who taps that is through to the paywall with reminders off and nothing
+ * re-asking.
  */
 export default function OnboardingNotify() {
   const advance = useAdvance("notify");
   const { vehicleName, plan } = useOnboardingFindings();
   const [busy, setBusy] = useState(false);
 
-  const remaining = plan.items.length - SHOWN;
   const unit = getDistanceUnit();
 
   async function onRemindMe() {
@@ -89,13 +90,6 @@ export default function OnboardingNotify() {
     advance();
   }
 
-  function onDecline() {
-    // "Do it later" spends nothing: iOS grants one prompt and this user has not
-    // been shown it, so Settings can still offer reminders on a later tap.
-    trackNotificationPermission("deferred");
-    advance();
-  }
-
   return (
     <OnboardingScreen
       route="notify"
@@ -104,24 +98,7 @@ export default function OnboardingNotify() {
         count: plan.items.length,
         vehicle: vehicleName,
       })}
-      footer={
-        <>
-          <Button
-            label={t("offer.plan.cta")}
-            onPress={onRemindMe}
-            disabled={busy}
-          />
-          <Pressable
-            onPress={onDecline}
-            disabled={busy}
-            style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
-          >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              {t("offer.notify.decline")}
-            </Text>
-          </Pressable>
-        </>
-      }
+      footer={<Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />}
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
@@ -136,12 +113,6 @@ export default function OnboardingNotify() {
           ))}
         </View>
       </Panel>
-
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {remaining > 0
-          ? t("offer.plan.noteMore", { count: remaining })
-          : t("offer.plan.note")}
-      </Text>
     </OnboardingScreen>
   );
 }

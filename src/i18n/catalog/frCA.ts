@@ -65,8 +65,6 @@ export const frCA: Fragment = {
   "onboardingA.odometer.title.km": "Combien de kilomètres à l’odomètre?",
   "onboardingA.odometer.field": "Odomètre ({unit})",
   "onboardingA.drive.title": "Combien roulez-vous?",
-  "onboardingA.drive.projection":
-    "À ce rythme, cette auto affichera environ {distance} à pareille date l’an prochain.",
 
   "onboardingB.service.title": "Quel a été votre dernier entretien?",
   // "votre" keeps the sentence out of the service name's gender, which the chip
@@ -112,11 +110,6 @@ export const frCA: Fragment = {
   "evidence.price.answer":
     "La version gratuite est une app complète. Une auto, historique illimité.",
 
-  "offer.trial.subtitle": {
-    one: "Prenez {count} jour de Pro pour rien et décidez quand votre auto vous aura dit quelque chose.",
-    other:
-      "Prenez {count} jours de Pro pour rien et décidez quand votre auto vous aura dit quelque chose.",
-  },
   // "voiture" is the base French word; Québec says "auto", and the paywall
   // headline and its button are the two places the noun is spoken aloud.
   "offer.paywall.title": "Les autos ne préviennent pas. Ceci, oui.",

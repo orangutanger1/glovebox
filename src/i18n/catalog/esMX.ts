@@ -41,26 +41,13 @@ export const esMX: Fragment = {
 
   "layout.settings": "Configuración",
 
-  "offer.features.subtitle":
-    "Todo vive en un solo archivo en este celular, sin cuenta y sin servidor.",
   "offer.paywall.title": "Los carros no avisan. Esto sí.",
-  "offer.paywall.subtitle":
-    "Cada mantenimiento y cada lectura del odómetro, registrados. El taller ve un historial, no una suposición.",
+  "offer.paywall.subtitle": "Cada mantenimiento y cada lectura del odómetro, registrados.",
   "offer.paywall.cta": "Dejar mi carro registrado",
-  "offer.paywall.caption":
-    "Todo lo que acabas de configurar ya está guardado en este celular. Sin cuenta, sin servidor, nada sale de aquí.",
-  "offer.trial.subtitle": {
-    one: "Llévate {count} día de Pro sin pagar nada y decide cuando tu carro ya te haya dicho algo.",
-    other:
-      "Llévate {count} días de Pro sin pagar nada y decide cuando tu carro ya te haya dicho algo.",
-  },
   "offer.winback.title": "Dejaste de registrar.",
 
-  "onboardingA.welcome.privacy":
-    "Todo se queda en este celular, sin cuenta y sin ninguna sesión que cerrar.",
+  "onboardingA.welcome.privacy": "Sin cuenta. Nada sale de tu celular.",
   "onboardingA.vehicle.title": "¿Qué carro manejas?",
-  "onboardingA.vehicle.hint":
-    "Con el año basta para empezar. La marca y el modelo solo sirven para que los recordatorios nombren el carro.",
   // "Traer" is how a Mexican owner asks what a car has on it; Spain asks what it
   // "tiene".
   "onboardingA.odometer.title.mi": "¿Cuántas millas trae?",
@@ -78,17 +65,12 @@ export const esMX: Fragment = {
   "onboardingA.drive.high.km": "16,000 a 24,000",
   "onboardingA.drive.very_high.mi": "Más de 15,000",
   "onboardingA.drive.very_high.km": "Más de 24,000",
-  "onboardingA.drive.projection":
-    "A ese ritmo, este carro va a marcar unos {distance} para esta fecha del año que entra.",
+  "onboardingA.drive.projection": "Unos {distance} para esta fecha del año que entra.",
 
   "onboardingB.service.title": "¿Qué fue lo último que le hicieron?",
   "onboardingB.tracking.receipts": "Recibos en el carro",
-  "onboardingB.worry.caption":
-    "Es la última, y la siguiente pantalla es sobre tu carro, no sobre la app.",
 
   "onboardingC.results.noneLogged": "Nada de lo que registraste está atrasado.",
-  "onboardingC.results.subtitle":
-    "Calculado para tu {vehicle} con {distance} al año y con lo que registraste.",
 
   "pain.overdue.body":
     "En tu {vehicle}, hoy. Nada en el tablero te lo va a avisar, porque el foco se prende después del daño, no antes.",

@@ -132,30 +132,20 @@ export const ko: Fragment = {
   "offer.badge.free": "무료",
 
   "offer.features.title": "받게 되는 것들이에요.",
-  "offer.features.subtitle":
-    "전부 이 휴대폰 안 파일 하나에 들어가요. 계정도 서버도 없어요.",
 
   "offer.plan.title": "계획은 이래요.",
   "offer.plan.subtitle": {
-    other:
-      "{vehicle} 기준으로 정비 {count}건을 일정에 올렸어요. 날짜와 주행거리로 함께 계산해요.",
+    other: "{vehicle} 기준으로 정비 {count}건을 일정에 올렸어요.",
   },
   "offer.plan.cta": "알림 켜기",
   "offer.plan.decline": "지금은 안 할게요",
   "offer.notify.title": "정비를 놓치지 마세요.",
-  "offer.notify.decline": "나중에 하기",
   "offer.plan.status.due": "기한",
   "offer.plan.status.soon": "임박",
   "offer.plan.status.ok": "정상",
-  "offer.plan.note": "정비마다 기한이 되는 날 알림 한 번이에요.",
-  "offer.plan.noteMore": {
-    other:
-      "여기에 더 뒤로 {count}건이 있고, 정비마다 기한이 되는 날 알림 한 번이에요.",
-  },
 
   "offer.paywall.title": "차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
-  "offer.paywall.subtitle":
-    "정비와 주행거리 기록이 모두 남아요. 정비소는 추측이 아니라 기록을 봅니다.",
+  "offer.paywall.subtitle": "정비와 주행거리 기록이 모두 남아요.",
   "offer.paywall.cta": "내 차 기록으로 남기기",
   "offer.paywall.vehicle": "기록 완료",
   "offer.paywall.scheduled": "관리 시작",
@@ -163,8 +153,6 @@ export const ko: Fragment = {
   "offer.paywall.dueNow": "기한 지남",
   "offer.paywall.nextUp": "다음 알림",
   "offer.paywall.none": "없음",
-  "offer.paywall.caption":
-    "지금 설정한 내용은 이미 이 휴대폰에 저장돼 있어요. 계정도, 서버도 없고 어디로도 전송되지 않아요.",
 
   "offer.paywall.impact.legend": "이게 주는 것",
   "offer.paywall.impact.warned": "정버는 기한이 오기 전에 알려줍니다. 수리버가 나온 뒤가 아니라요.",
@@ -172,10 +160,6 @@ export const ko: Fragment = {
   "offer.paywall.impact.resale": "다음 주인에게 어림핆한 기여이 아니라 완전한 정버 기록을 넘깁니다. 가객에도 드러나요.",
 
   "offer.trial.title": { other: "{count}일 동안 써 보세요." },
-  "offer.trial.subtitle": {
-    other:
-      "Pro를 {count}일 동안 무료로 쓰고, 차가 실제로 뭔가 알려준 다음에 결정해요.",
-  },
   "offer.trial.cta": { other: "무료 {count}일 시작하기" },
   "offer.trial.decline": "괜찮아요, 무료 앱으로 볼게요",
 
@@ -195,31 +179,23 @@ export const ko: Fragment = {
 
   "onboardingA.welcome.headline": "마지막 엔진오일 교환이 언제였는지 더는 짐작하지 않아요.",
   "onboardingA.welcome.start": "시작하기",
-  "onboardingA.welcome.privacy":
-    "전부 이 휴대폰에만 남아요. 계정도 없고, 로그아웃할 것도 없어요.",
+  "onboardingA.welcome.privacy": "계정도 없고, 이 휴대폰을 벗어나지 않아요.",
 
   "onboardingA.vehicle.title": "어떤 차를 타세요?",
   "onboardingA.vehicle.year": "연식",
   "onboardingA.vehicle.makeOptional": "제조사(선택)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.saved": '저장했어요: "{name}". 이름은 나중에 바꿀 수 있어요.',
   "onboardingA.vehicle.modelOptional": "모델(선택)",
-  "onboardingA.vehicle.hint":
-    "연식만 있어도 시작할 수 있어요. 제조사와 모델은 알림이 차 이름을 부를 때만 써요.",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
   "onboardingA.odometer.title.km": "주행거리가 몇 킬로미터예요?",
   "onboardingA.odometer.field": "주행거리({unit})",
   "onboardingA.odometer.placeholder.mi": "84,210",
   "onboardingA.odometer.placeholder.km": "135,600",
-  "onboardingA.odometer.caption":
-    "대략이어도 괜찮아요. 주행거리로 기한이 오는 정비는 이 숫자로 계산해요.",
-  "onboardingA.odometer.later": "나중에 입력할게요",
+  "onboardingA.odometer.caption": "대략이어도 괜찮아요.",
 
   "onboardingA.drive.title": "한 해에 얼마나 타세요?",
-  "onboardingA.drive.subtitle":
-    "대략으로요. 거리 주기를 날짜로 바꿔 주는 숫자예요.",
   "onboardingA.drive.legend": "연간 주행거리({unit})",
   "onboardingA.drive.low.mi": "5,000 미만",
   "onboardingA.drive.low.km": "8,000 미만",
@@ -229,18 +205,15 @@ export const ko: Fragment = {
   "onboardingA.drive.high.km": "16,000~24,000",
   "onboardingA.drive.very_high.mi": "15,000 초과",
   "onboardingA.drive.very_high.km": "24,000 초과",
-  "onboardingA.drive.projection":
-    "그 속도라면 내년 이맘때 이 차의 주행거리는 약 {distance} 정도예요.",
-  "onboardingA.drive.caption":
-    "달력이 아니라 주행거리로 기한이 오는 정비의 날짜를 계산할 때 써요.",
+  "onboardingA.drive.projection": "내년 이맘때 약 {distance}.",
+  "onboardingA.drive.caption": "대충이어도 괜찮아요.",
 
   // onboardingB
   "onboardingB.continue": "계속",
 
   "onboardingB.service.title": "마지막으로 받은 정비가 뭐예요?",
-  "onboardingB.service.subtitle": "대충 맞으면 돼요. 나중에 고칠 수 있어요.",
+  "onboardingB.service.subtitle": "대충 맞으면 돼요.",
   "onboardingB.service.legend": "정비",
-  "onboardingB.service.caption": "하나만 고르면 돼요. 나머지는 언제든 기록할 수 있어요.",
   "onboardingB.service.when": "{service}, 언제였어요?",
   "onboardingB.service.whenOther": "그 정비는 언제였어요?",
   "onboardingB.service.whenPending": "언제였어요?",
@@ -252,10 +225,7 @@ export const ko: Fragment = {
   "onboardingB.service.ago.notSure": "잘 모르겠어요",
 
   "onboardingB.tracking.title": "지금은 어떻게 관리하세요?",
-  "onboardingB.tracking.subtitle": "무엇이든, 대부분의 사람보다는 하고 있는 거예요.",
   "onboardingB.tracking.legend": "현재",
-  "onboardingB.tracking.caption":
-    "무엇을 고르든, Wrenchy는 기록한 걸 전부 무료로 CSV로 내보내요.",
   "onboardingB.tracking.memory": "기억",
   "onboardingB.tracking.receipts": "차 안 영수증",
   "onboardingB.tracking.spreadsheet": "스프레드시트",
@@ -263,16 +233,12 @@ export const ko: Fragment = {
   "onboardingB.tracking.nothing": "아무것도 안 해요",
 
   "onboardingB.worry.title": "무엇을 피하고 싶으세요?",
-  "onboardingB.worry.subtitle":
-    "해당되는 건 다 고르세요. 앱이 무엇을 먼저 보여줄지 여기서 정해져요.",
-  "onboardingB.worry.caption":
-    "마지막이에요. 다음 화면은 앱이 아니라 내 차 이야기예요.",
+  "onboardingB.worry.subtitle": "해당되는 건 다 고르세요.",
   "onboardingB.worry.bills": "갑작스러운 수리비",
   "onboardingB.worry.missed": "정비 놓치기",
   "onboardingB.worry.records": "기록 분실",
   "onboardingB.worry.resale": "중고차 가치",
   "onboardingB.worry.upsell": "과잉 정비 권유",
-  "onboardingB.worry.optional": "모두 선택이에요. 건너뛰어도 다음 화면은 당신의 차만으로 만들어져요.",
 
   "onboardingB.analyzing.title": "일정을 계산하고 있어요.",
   "onboardingB.analyzing.odometer": "{vehicle}, {distance}",
@@ -298,8 +264,7 @@ export const ko: Fragment = {
   "onboardingC.results.noneLogged": "기록한 것 중에 기한을 넘긴 건 없어요.",
   "onboardingC.results.noneYet": "아직 기한을 넘긴 건 없어요.",
   "onboardingC.results.clear": "기한을 넘긴 것도, 임박한 것도 없어요.",
-  "onboardingC.results.subtitle":
-    "{vehicle} 기준으로 연간 {distance}, 그리고 기록한 내용으로 계산했어요.",
+  "onboardingC.results.subtitle": "{vehicle}, 연간 {distance}.",
   "onboardingC.results.continue": "계속",
   "onboardingC.results.dueNow": "지금 기한",
   "onboardingC.results.soon": "임박",
@@ -308,23 +273,18 @@ export const ko: Fragment = {
   "onboardingC.results.status.due": "기한",
   "onboardingC.results.status.soon": "임박",
   "onboardingC.results.status.ok": "정상",
-  "onboardingC.results.next":
-    "다음 정비는 {date}에 와요. 날짜와 주행거리 중 먼저 오는 쪽이 기준이에요.",
-  "onboardingC.results.countdown":
-    "모든 정비를 날짜와 주행거리로 함께 카운트해서, 먼저 오는 쪽을 기한으로 알려줘요.",
 
   "onboardingC.symptoms.next": "계속",
   "onboardingC.symptoms.last": "그럼 어떻게 하면 되나요",
 
   "onboardingC.help.title": "셋 다 같은 문제예요.",
-  "onboardingC.help.subtitle":
-    "경고해 줄 수 있는 형태로 아무것도 적혀 있지 않다는 것. Wrenchy가 하는 일이 딱 그거예요.",
+  "onboardingC.help.subtitle": "경고해 줄 수 있는 곳에 적힌 게 없어요.",
   "onboardingC.help.continue": "계속",
 
   "onboardingC.reviews.title": "이 앱은 이것들 때문에 있어요.",
   "onboardingC.reviews.subtitle": {
     other:
-      "이미 이 일을 하는 앱 {apps}개의 App Store 리뷰 {total}개 중 {count}개가 별 1~3개예요.",
+      "이미 이 일을 하는 앱들의 App Store 리뷰 {total}개 중 {count}개가 별 1~3개예요.",
   },
   "onboardingC.reviews.continue": "계속",
   "onboardingC.reviews.scroll": "네 개 모두 스크롤해서 보세요",

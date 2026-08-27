@@ -5,13 +5,12 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { OdometerRoll, randomOdometerReading } from "../../src/design/OdometerRoll";
 import { tokens } from "../../src/design/tokens";
-import { getVehicle, setOdometerEstimate, setOdometerReading } from "../../src/db/vehicles";
+import { getVehicle, setOdometerReading } from "../../src/db/vehicles";
 import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { trackQuizAnswer, trackVehicleEntry } from "../../src/analytics";
 import { parseNumber } from "../../src/format";
-import { AVERAGE_DISTANCE_PER_YEAR, estimateOdometer } from "../../src/onboarding/estimate";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
 import { distanceUnitLabel } from "../../src/units/format";
@@ -23,22 +22,12 @@ import { distanceUnitLabel } from "../../src/units/format";
  * asked for once, here, with the drums of an odometer above the field so the
  * screen shows the thing it is asking the user to go and read.
  *
- * It carries an "I'll add it later" again, and the funnel is why it came back.
- * The escape hatch was removed on the argument that an estimate is "a guess
- * standing in for the one number the schedule is built on, offered at the top
- * of the flow where the cheaper answer is the one everybody takes". The second
- * half of that turned out to be the finding rather than the objection: of the
- * five people who ever reached this screen while the hatch existed, four took
- * it. Removing it did not convert those four into people who walk out to the
- * driveway; it converted them into a hard gate two questions into the app,
- * with a numeric keyboard and a dead Continue button.
- *
- * So the estimate is offered, and everything that made it honest is still
- * here: it is stored flagged (`odometer_estimated`), every gauge in the app
- * labels it "(est.)", `drive` refines it with the mileage band on the very
- * next screen, and any real reading the owner ever enters retires it. An
- * estimate the user can see and correct beats an accurate number from a user
- * who left.
+ * There is no way past it. Every screen in this flow is mandatory now: the
+ * reading is what dates half the schedule, and an "I'll add it later" here
+ * bought a completed flow whose findings were computed from the app's own
+ * arithmetic and presented as the user's car. The friction is one number off
+ * the dash, and the estimate that used to stand in for it is still available
+ * from the garage afterwards.
  */
 export default function OnboardingOdometer() {
   const advance = useAdvance("odometer");
@@ -83,47 +72,11 @@ export default function OnboardingOdometer() {
     advance();
   }
 
-  /**
-   * "I'll add it later": estimate from the model year and move on.
-   *
-   * Written flagged, so it is arithmetic everywhere it is displayed and the
-   * next screen is free to refine it. A year is always present — the drum on
-   * the previous screen cannot produce an empty one — but `estimateOdometer`
-   * returns undefined without one, and in that case nothing is written at all
-   * rather than a zero being invented. An absent reading is a state every
-   * screen downstream already handles.
-   */
-  function onLater() {
-    const ownedId = getOnboardingVehicleId();
-    const vehicle = ownedId ? getVehicle(ownedId) : null;
-    const estimate = vehicle
-      ? estimateOdometer(vehicle.year, AVERAGE_DISTANCE_PER_YEAR[unit])
-      : undefined;
-    if (vehicle && estimate !== undefined) setOdometerEstimate(vehicle.id, estimate);
-    trackVehicleEntry("odometer", "skipped");
-    trackQuizAnswer("odometer", { given: false });
-    advance();
-  }
-
   return (
     <OnboardingScreen
       route="odometer"
       title={t(`onboardingA.odometer.title.${unit}`)}
-      footer={
-        <View style={{ gap: tokens.space.sm }}>
-          <Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!valid} />
-          {/* Secondary, and underneath: the typed reading is still the answer
-              the app wants, so the hatch is visible without competing with it.
-              It is not a text link — the flow has no other text links, and the
-              one screen that hid its escape in caption-sized grey text is the
-              screen this data came from. */}
-          <Button
-            label={t("onboardingA.odometer.later")}
-            variant="secondary"
-            onPress={onLater}
-          />
-        </View>
-      }
+      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!valid} />}
     >
       <Panel>
         {/* Drums above the field the user is about to type into: the screen

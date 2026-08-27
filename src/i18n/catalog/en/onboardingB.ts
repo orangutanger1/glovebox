@@ -13,9 +13,8 @@ export const onboardingB: Fragment = {
   "onboardingB.continue": "Continue",
 
   "onboardingB.service.title": "What did you last get done?",
-  "onboardingB.service.subtitle": "Close enough is fine because you can correct it later.",
+  "onboardingB.service.subtitle": "Close enough is fine.",
   "onboardingB.service.legend": "Service",
-  "onboardingB.service.caption": "Pick one, and you can log the rest anytime.",
   // Two whole questions rather than one with a hole in it: the service name is
   // a noun the sentence has to agree with, and no language builds that from a
   // clause plus a lowercased identifier.
@@ -32,10 +31,7 @@ export const onboardingB: Fragment = {
   "onboardingB.service.ago.notSure": "Not sure",
 
   "onboardingB.tracking.title": "How do you keep track today?",
-  "onboardingB.tracking.subtitle": "Whatever it is, it is more than most people do.",
   "onboardingB.tracking.legend": "Today",
-  "onboardingB.tracking.caption":
-    "Whatever you pick, Wrenchy exports everything you log as a CSV for free.",
   "onboardingB.tracking.memory": "Memory",
   "onboardingB.tracking.receipts": "Receipts in the car",
   "onboardingB.tracking.spreadsheet": "A spreadsheet",
@@ -43,19 +39,12 @@ export const onboardingB: Fragment = {
   "onboardingB.tracking.nothing": "Nothing at all",
 
   "onboardingB.worry.title": "What are you trying to avoid?",
-  "onboardingB.worry.subtitle":
-    "Pick as many as apply, since this decides what the app puts in front of you.",
-  "onboardingB.worry.caption":
-    "Last one, and the next screen is about your car rather than about the app.",
+  "onboardingB.worry.subtitle": "Pick as many as apply.",
   "onboardingB.worry.bills": "Surprise repair bills",
   "onboardingB.worry.missed": "Missing a service",
   "onboardingB.worry.records": "Losing the records",
   "onboardingB.worry.resale": "Resale value",
   "onboardingB.worry.upsell": "Getting upsold",
-  // The last question is not a requirement. An empty answer means no strong
-  // preference, and the findings are built from the car instead.
-  "onboardingB.worry.optional":
-    "All optional. Skip it and the next screen is built from your car alone.",
 
   "onboardingB.analyzing.title": "Working out the schedule.",
   "onboardingB.analyzing.odometer": "{vehicle} at {distance}",

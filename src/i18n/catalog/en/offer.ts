@@ -19,32 +19,22 @@ export const offer: Fragment = {
   "offer.badge.free": "Free",
 
   "offer.features.title": "What you are getting.",
-  "offer.features.subtitle":
-    "Everything lives in one file on this phone, with no account and no server.",
 
   "offer.plan.title": "Here is the plan.",
   "offer.plan.subtitle": {
-    one: "{count} service on a schedule for your {vehicle}, counted by date and by distance.",
-    other: "{count} services on a schedule for your {vehicle}, counted by date and by distance.",
+    one: "{count} service on a schedule for your {vehicle}.",
+    other: "{count} services on a schedule for your {vehicle}.",
   },
   "offer.plan.cta": "Turn on reminders",
   "offer.plan.decline": "Not now",
   "offer.plan.status.due": "Due",
   "offer.plan.status.soon": "Soon",
   "offer.plan.status.ok": "OK",
-  "offer.plan.note": "One notification per service on the day it comes due.",
-  "offer.plan.noteMore": {
-    one: "Plus {count} more further out, and one notification per service on the day it comes due.",
-    other:
-      "Plus {count} more further out, and one notification per service on the day it comes due.",
-  },
 
   "offer.notify.title": "Never miss a service.",
-  "offer.notify.decline": "Do it later",
 
   "offer.paywall.title": "Cars don’t warn you. This does.",
-  "offer.paywall.subtitle":
-    "Every service and every odometer reading, on record. The mechanic sees a log, not a guess.",
+  "offer.paywall.subtitle": "Every service and every reading, on record.",
   "offer.paywall.cta": "Keep my car on record",
   "offer.paywall.vehicle": "On record",
   "offer.paywall.scheduled": "Now tracked",
@@ -52,8 +42,6 @@ export const offer: Fragment = {
   "offer.paywall.dueNow": "Overdue today",
   "offer.paywall.nextUp": "Next warning",
   "offer.paywall.none": "None",
-  "offer.paywall.caption":
-    "Everything you just set up is already saved on this phone. No account, no server, nothing sent anywhere.",
 
   "offer.paywall.impact.legend": "What that is worth",
   "offer.paywall.impact.warned": "You hear about a service before it is due, not after it costs you a repair.",
@@ -61,11 +49,6 @@ export const offer: Fragment = {
   "offer.paywall.impact.resale": "You hand the next owner a full log instead of a shrug, and it shows in the price.",
 
   "offer.trial.title": { one: "Try it for {count} day.", other: "Try it for {count} days." },
-  "offer.trial.subtitle": {
-    one: "Take {count} day of Pro for nothing and decide once your car has actually told you something.",
-    other:
-      "Take {count} days of Pro for nothing and decide once your car has actually told you something.",
-  },
   "offer.trial.cta": { one: "Start my {count} free day", other: "Start my {count} free days" },
   "offer.trial.decline": "No thanks, show me the free app",
 

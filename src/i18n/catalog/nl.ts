@@ -265,31 +265,23 @@ export const nl: Fragment = {
   "onboardingA.welcome.headline":
     "Nooit meer gokken wanneer je de olie voor het laatst hebt ververst.",
   "onboardingA.welcome.start": "Beginnen",
-  "onboardingA.welcome.privacy":
-    "Alles blijft op deze telefoon, zonder account en zonder iets om uit te loggen.",
+  "onboardingA.welcome.privacy": "Geen account. Niets verlaat je telefoon.",
 
   "onboardingA.vehicle.title": "Wat rijd je?",
   "onboardingA.vehicle.year": "Bouwjaar",
   "onboardingA.vehicle.makeOptional": "Merk (optioneel)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
-  "onboardingA.vehicle.saved": 'Bewaard als "{name}", en je kunt het later hernoemen.',
   "onboardingA.vehicle.modelOptional": "Model (optioneel)",
-  "onboardingA.vehicle.hint":
-    "Het bouwjaar is genoeg om te beginnen. Merk en model zorgen er alleen voor dat herinneringen de auto bij naam noemen.",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",
   "onboardingA.odometer.title.km": "Hoeveel kilometer staat erop?",
   "onboardingA.odometer.field": "Kilometerstand ({unit})",
   "onboardingA.odometer.placeholder.mi": "84.210",
   "onboardingA.odometer.placeholder.km": "135.600",
-  "onboardingA.odometer.caption":
-    "Een ruwe schatting is prima, en het is het getal dat bepaalt wanneer onderhoud op afstand aan de beurt is.",
-  "onboardingA.odometer.later": "Ik vul het later in",
+  "onboardingA.odometer.caption": "Een ruwe schatting is prima.",
 
   "onboardingA.drive.title": "Hoeveel rijd je ermee?",
-  "onboardingA.drive.subtitle":
-    "Ongeveer, want dit is het getal dat van een afstandsinterval een datum maakt.",
   "onboardingA.drive.legend": "Afstand per jaar ({unit})",
   "onboardingA.drive.low.mi": "Tot 5.000",
   "onboardingA.drive.low.km": "Tot 8.000",
@@ -299,18 +291,15 @@ export const nl: Fragment = {
   "onboardingA.drive.high.km": "16.000 tot 24.000",
   "onboardingA.drive.very_high.mi": "Boven 15.000",
   "onboardingA.drive.very_high.km": "Boven 24.000",
-  "onboardingA.drive.projection":
-    "In dat tempo staat deze auto over een jaar op ongeveer {distance}.",
-  "onboardingA.drive.caption":
-    "Wordt gebruikt om onderhoud te dateren dat op afstand aan de beurt is in plaats van op de kalender.",
+  "onboardingA.drive.projection": "Volgend jaar rond deze tijd ongeveer {distance}.",
+  "onboardingA.drive.caption": "Ongeveer is prima.",
 
   // onboardingB
   "onboardingB.continue": "Verder",
 
   "onboardingB.service.title": "Wat heb je als laatste laten doen?",
-  "onboardingB.service.subtitle": "Bij benadering is prima, want je kunt het later corrigeren.",
+  "onboardingB.service.subtitle": "Bij benadering is prima.",
   "onboardingB.service.legend": "Onderhoud",
-  "onboardingB.service.caption": "Kies er een, en de rest kun je altijd nog vastleggen.",
   "onboardingB.service.when": "{service}: wanneer was dat?",
   "onboardingB.service.whenOther": "Wanneer was dat onderhoud?",
   "onboardingB.service.whenPending": "Wanneer was dat?",
@@ -322,10 +311,7 @@ export const nl: Fragment = {
   "onboardingB.service.ago.notSure": "Weet ik niet",
 
   "onboardingB.tracking.title": "Hoe hou je het nu bij?",
-  "onboardingB.tracking.subtitle": "Wat het ook is, het is meer dan de meeste mensen doen.",
   "onboardingB.tracking.legend": "Nu",
-  "onboardingB.tracking.caption":
-    "Wat je ook kiest, Wrenchy exporteert alles wat je vastlegt gratis als CSV.",
   "onboardingB.tracking.memory": "Uit mijn hoofd",
   "onboardingB.tracking.receipts": "Bonnetjes in de auto",
   "onboardingB.tracking.spreadsheet": "Een spreadsheet",
@@ -333,17 +319,12 @@ export const nl: Fragment = {
   "onboardingB.tracking.nothing": "Helemaal niets",
 
   "onboardingB.worry.title": "Wat wil je voorkomen?",
-  "onboardingB.worry.subtitle":
-    "Kies er zoveel als er kloppen, want hiermee bepaal je wat de app je voorlegt.",
-  "onboardingB.worry.caption":
-    "Dit is de laatste, en het volgende scherm gaat over je auto in plaats van over de app.",
+  "onboardingB.worry.subtitle": "Kies er zoveel als er kloppen.",
   "onboardingB.worry.bills": "Onverwachte reparatiekosten",
   "onboardingB.worry.missed": "Onderhoud missen",
   "onboardingB.worry.records": "De administratie kwijtraken",
   "onboardingB.worry.resale": "Restwaarde",
   "onboardingB.worry.upsell": "Onnodig werk",
-  "onboardingB.worry.optional":
-    "Allemaal optioneel. Sla het over en het volgende scherm komt alleen uit je auto.",
 
   "onboardingB.analyzing.title": "Het schema wordt berekend.",
   "onboardingB.analyzing.odometer": "{vehicle} op {distance}",
@@ -372,8 +353,7 @@ export const nl: Fragment = {
   "onboardingC.results.noneLogged": "Niets van wat je hebt vastgelegd is te laat.",
   "onboardingC.results.noneYet": "Er is nog niets te laat.",
   "onboardingC.results.clear": "Niets is te laat, en niets komt in de buurt.",
-  "onboardingC.results.subtitle":
-    "Berekend voor je {vehicle} op basis van {distance} per jaar en wat je hebt vastgelegd.",
+  "onboardingC.results.subtitle": "Je {vehicle}, {distance} per jaar.",
   "onboardingC.results.continue": "Verder",
   "onboardingC.results.dueNow": "Nu aan de beurt",
   "onboardingC.results.soon": "Binnenkort",
@@ -382,24 +362,20 @@ export const nl: Fragment = {
   "onboardingC.results.status.due": "Nu",
   "onboardingC.results.status.soon": "Binnenkort",
   "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.next":
-    "De volgende valt op {date}, en wat het eerst komt telt: de datum of de afstand.",
-  "onboardingC.results.countdown":
-    "Elk onderhoud telt af op datum en op afstand, en wat het eerst komt telt.",
 
   "onboardingC.symptoms.next": "Verder",
   "onboardingC.symptoms.last": "En wat doe ik daaraan",
 
   "onboardingC.help.title": "Alle drie zijn hetzelfde probleem.",
-  "onboardingC.help.subtitle":
-    "Er staat niets opgeschreven in een vorm die je kan waarschuwen, en dat is precies wat Wrenchy doet.",
+  "onboardingC.help.subtitle": "Niets staat opgeschreven waar het je kan waarschuwen.",
   "onboardingC.help.continue": "Verder",
 
   "onboardingC.reviews.title": "Deze app bestaat vanwege deze reviews.",
   "onboardingC.reviews.subtitle": {
-    one: "{count} van de {total} App Store-reviews van de {apps} apps die dit al doen is één tot drie sterren.",
+    one:
+      "{count} van de {total} App Store-reviews van apps die dit al doen is één tot drie sterren.",
     other:
-      "{count} van de {total} App Store-reviews van de {apps} apps die dit al doen zijn één tot drie sterren.",
+      "{count} van de {total} App Store-reviews van apps die dit al doen zijn één tot drie sterren.",
   },
   "onboardingC.reviews.continue": "Verder",
   "onboardingC.reviews.scroll": "Scroll om alle vier te lezen",
@@ -534,31 +510,21 @@ export const nl: Fragment = {
   "offer.badge.free": "Gratis",
 
   "offer.features.title": "Dit is wat je krijgt.",
-  "offer.features.subtitle":
-    "Alles staat in één bestand op deze telefoon, zonder account en zonder server.",
 
   "offer.plan.title": "Dit is het plan.",
   "offer.plan.subtitle": {
-    one: "{count} onderhoudsbeurt op schema voor je {vehicle}, geteld op datum en op afstand.",
-    other: "{count} onderhoudsbeurten op schema voor je {vehicle}, geteld op datum en op afstand.",
+    one: "{count} onderhoudsbeurt op schema voor je {vehicle}.",
+    other: "{count} onderhoudsbeurten op schema voor je {vehicle}.",
   },
   "offer.plan.cta": "Herinneringen aanzetten",
   "offer.plan.decline": "Nu niet",
   "offer.notify.title": "Mis nooit meer een onderhoudsbeurt.",
-  "offer.notify.decline": "Later doen",
   "offer.plan.status.due": "Nu",
   "offer.plan.status.soon": "Binnenkort",
   "offer.plan.status.ok": "OK",
-  "offer.plan.note": "Eén melding per onderhoud op de dag dat het aan de beurt is.",
-  "offer.plan.noteMore": {
-    one: "Plus nog {count} verderop, en één melding per onderhoud op de dag dat het aan de beurt is.",
-    other:
-      "Plus nog {count} verderop, en één melding per onderhoud op de dag dat het aan de beurt is.",
-  },
 
   "offer.paywall.title": "Auto’s waarschuwen niet. Dit wel.",
-  "offer.paywall.subtitle":
-    "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd. De garage ziet een boekje, geen gok.",
+  "offer.paywall.subtitle": "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd.",
   "offer.paywall.cta": "Mijn auto vastleggen",
   "offer.paywall.vehicle": "Vastgelegd",
   "offer.paywall.scheduled": "Nu gevolgd",
@@ -566,8 +532,6 @@ export const nl: Fragment = {
   "offer.paywall.dueNow": "Vandaag te laat",
   "offer.paywall.nextUp": "Volgende waarschuwing",
   "offer.paywall.none": "Geen",
-  "offer.paywall.caption":
-    "Alles wat je net hebt ingesteld staat al op deze telefoon. Geen account, geen server, niets gaat weg.",
 
   "offer.paywall.impact.legend": "Wat dat waard is",
   "offer.paywall.impact.warned": "Je hoort van een onderhoudsbeurt voordat die valt, niet na de reparatie.",
@@ -575,10 +539,6 @@ export const nl: Fragment = {
   "offer.paywall.impact.resale": "Je geeft de volgende eigenaar een compleet logboek in plaats van een schouderophalen, en dat zie je terug in de prijs.",
 
   "offer.trial.title": { one: "Probeer het {count} dag.", other: "Probeer het {count} dagen." },
-  "offer.trial.subtitle": {
-    one: "Neem {count} dag Pro voor niets en beslis pas als je auto je echt iets heeft verteld.",
-    other: "Neem {count} dagen Pro voor niets en beslis pas als je auto je echt iets heeft verteld.",
-  },
   "offer.trial.cta": {
     one: "Start mijn {count} gratis dag",
     other: "Start mijn {count} gratis dagen",

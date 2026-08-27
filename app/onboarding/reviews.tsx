@@ -52,7 +52,6 @@ export default function OnboardingReviews() {
       subtitle={t("onboardingC.reviews.subtitle", {
         count: REVIEW_EVIDENCE.negative,
         total: REVIEW_EVIDENCE.total,
-        apps: REVIEW_EVIDENCE.apps,
       })}
       gateTimeoutMs={NUDGE_MS}
       footer={({ atBottom, unlocked }) => (

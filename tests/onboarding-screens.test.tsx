@@ -314,10 +314,10 @@ test("a question stepped back into comes back filled in", () => {
   setAnswers({ drive: "high" });
 
   // The year is a drum and the two words are fields, so the round trip is read
-  // off the caption the screen prints from all three.
+  // off the fields themselves: the caption that used to print all three is
+  // gone, because "What are you driving?" needs no explaining.
   const vehicle = render(OnboardingVehicle);
   expect(values(vehicle)).toEqual(expect.arrayContaining(["Honda", "Civic"]));
-  expect(texts(vehicle).join(" ")).toContain('Saved as "2019 Honda Civic"');
 
   expect(values(render(OnboardingOdometer))).toContain("84210");
   expect(selections(render(OnboardingDrive))).toContain("high");
@@ -356,29 +356,27 @@ test("the car screen refuses nothing, because it was refusing installs", () => {
   expect(saved.make).toBeUndefined();
 });
 
-test("the whole quiz is answerable without a keystroke, and still yields a plan", () => {
-  // The spec this flow was built to claims "0 mandatory text fields, 0
-  // keystrokes". Two required text fields had crept back in — the make and the
-  // odometer — and between them they took half the install base before anyone
-  // saw what the app does. This walks the flow the way a thumb does.
+test("the quiz costs one typed number, and still yields a populated payoff", () => {
+  // Every screen in the flow is mandatory now, so the odometer is the one
+  // keystroke the walk cannot avoid: the make is still optional and the year
+  // is still a drum. This walks it the way a thumb does, plus that one number.
   press(render(OnboardingVehicle), "Continue");
-  press(render(OnboardingOdometer), "I'll add it later");
-  // The chip selects; Continue is what commits the band and refines the
-  // estimate, which is exactly the two-tap shape the other quiz screens have.
+  const odometer = render(OnboardingOdometer);
+  type(odometer, "Odometer (mi)", "84210");
+  press(odometer, "Continue");
+  // The chip selects; Continue is what commits the band, which is exactly the
+  // two-tap shape the other quiz screens have.
   const drive = render(OnboardingDrive);
   press(drive, "Under 5,000");
   press(drive, "Continue");
 
   const car = getVehicle(getOnboardingVehicleId()!)!;
-  // Still an estimate, and now the low band's estimate rather than the
-  // national average: `drive` refined the guess on the way past.
-  expect(car.odometer_estimated).toBe(1);
-  expect(car.odometer).toBeLessThan(
-    estimateOdometer(car.year, AVERAGE_DISTANCE_PER_YEAR.mi)!,
-  );
+  // The reading is the user's, so nothing about it is flagged as arithmetic.
+  expect(car.odometer).toBe(84210);
+  expect(car.odometer_estimated).toBeUndefined();
 
-  // The payoff screen is the whole argument for the paywall, so a keyboardless
-  // walk has to arrive at a populated one rather than an empty state.
+  // The payoff screen is the whole argument for the paywall, so the walk has
+  // to arrive at a populated one rather than an empty state.
   const printed = texts(render(OnboardingResults)).join(" ");
   expect(printed).toMatch(/My car/);
   expect(printed.length).toBeGreaterThan(80);
@@ -423,7 +421,7 @@ test("the odometer question starts empty on a car that has no reading yet", () =
   expect(values(render(OnboardingOdometer))).not.toContain("null");
 });
 
-test("the odometer can be deferred again, and says so on the screen", () => {
+test("the odometer has no way past it", () => {
   const car = createVehicle({
     name: "2019 Toyota",
     year: 2019,
@@ -432,19 +430,21 @@ test("the odometer can be deferred again, and says so on the screen", () => {
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
-  // Four of the five people who ever reached this screen while the hatch
-  // existed took it. Removing it turned the fifth question of the flow into a
-  // numeric keyboard with a dead button under it.
-  press(tree, "I'll add it later");
-
-  expect(navigated).toContain("/onboarding/drive");
-  const saved = getVehicle(car.id)!;
-  // Arithmetic, stored as arithmetic: the flag is what every gauge in the app
-  // reads to label the number "(est.)", and what `drive` reads to refine it.
-  expect(saved.odometer).toBe(
-    estimateOdometer(2019, AVERAGE_DISTANCE_PER_YEAR.mi),
+  // Every screen in the flow is mandatory, so the "I'll add it later" hatch is
+  // gone: it bought a completed flow whose findings were the app's own
+  // arithmetic presented back to the user as their car. One control, one
+  // caption, and nothing on the screen that advances without the reading.
+  const printed = texts(tree).join(" ");
+  expect(printed).not.toMatch(/later|skip/i);
+  const controls = tree.root.findAll(
+    (n) =>
+      typeof n.props.label === "string" && typeof n.props.onPress === "function",
   );
-  expect(saved.odometer_estimated).toBe(1);
+  expect(controls.map((n) => n.props.label)).toEqual(["Continue"]);
+  // And it is shut until the reading is in, so an empty field cannot leave.
+  expect(controls[0].props.disabled).toBe(true);
+  expect(navigated).toHaveLength(0);
+  expect(getVehicle(car.id)!.odometer).toBeUndefined();
 });
 
 test("a typed reading is still the answer the screen wants", () => {
@@ -456,10 +456,10 @@ test("a typed reading is still the answer the screen wants", () => {
   setOnboardingVehicleId(car.id);
 
   const tree = render(OnboardingOdometer);
-  // Continue stays gated on a real number. The hatch is the way past an empty
-  // field, so a disabled Continue is no longer a dead end. Re-queried after
-  // the keystroke rather than held in a variable: the press re-renders, and
-  // the node captured before it is not the node carrying the new prop.
+  // Continue is gated on a real number, and it is the only way off this
+  // screen. Re-queried after the keystroke rather than held in a variable: the
+  // press re-renders, and the node captured before it is not the node
+  // carrying the new prop.
   const disabled = () =>
     tree.root.findAll((n) => n.props.label === "Continue")[0].props.disabled;
   expect(disabled()).toBe(true);
@@ -600,7 +600,7 @@ test("the loader cannot be skipped", () => {
   jest.useRealTimers();
 });
 
-test("the last question takes no answer at all", () => {
+test("the last question requires an answer, like every other one", () => {
   const car = createVehicle({
     name: "2019 Toyota",
     year: 2019,
@@ -610,11 +610,20 @@ test("the last question takes no answer at all", () => {
   setAnswers({ tracking: "memory" });
 
   const tree = render(OnboardingWorry);
-  // It used to open on a dead Continue, which is the worst possible last
-  // impression of the quiz.
-  expect(texts(tree)).toContain(
-    "All optional. Skip it and the next screen is built from your car alone.",
-  );
+  // It decides which three findings the flow shows next, so an empty answer
+  // was the weakest version of the argument available. Multi-select, so the
+  // whole cost of the requirement is one tap.
+  // Re-queried after the tap rather than held in a variable: the press
+  // re-renders, and the node captured before it is not the node carrying the
+  // new prop.
+  expect(
+    tree.root.findAll((n) => n.props.label === "Continue")[0].props.disabled,
+  ).toBe(true);
+
+  press(tree, "Surprise repair bills");
+  expect(
+    tree.root.findAll((n) => n.props.label === "Continue")[0].props.disabled,
+  ).toBe(false);
   press(tree, "Continue");
   expect(navigated).toContain("/onboarding/analyzing");
 
@@ -657,21 +666,30 @@ test("the notify screen asks over this car's own dated schedule", () => {
   });
   setOnboardingVehicleId(car.id);
 
-  const printed = texts(render(OnboardingNotify));
+  const tree = render(OnboardingNotify);
+  const printed = texts(tree);
   // The promise, and the evidence for it: the schedule the quiz computed for
   // this car by name, six rows of it with the scheduler's own status on each.
   expect(printed).toContain("Never miss a service.");
   expect(printed).toContain(
-    "12 services on a schedule for your 2016 Subaru Outback, counted by date and by distance.",
+    "12 services on a schedule for your 2016 Subaru Outback.",
   );
   expect(printed).toContain(serviceName("Air Filter"));
   expect(printed.filter((s) => s === "Due").length).toBeGreaterThan(0);
-  // Six shown, and the rest as one line of arithmetic rather than six more rows.
-  expect(printed).toContain(
-    "Plus 6 more further out, and one notification per service on the day it comes due.",
-  );
+  // One control, and one line of grey under the heading. The "Do it later"
+  // deferral is gone: iOS's own alert carries the decline this screen used to
+  // print above it.
   expect(printed).toContain("Turn on reminders");
-  expect(printed).toContain("Do it later");
+  expect(printed.join(" ")).not.toMatch(/later/i);
+  expect(
+    tree.root
+      .findAll(
+        (n) =>
+          typeof n.props.label === "string" &&
+          typeof n.props.onPress === "function",
+      )
+      .map((n) => n.props.label),
+  ).toEqual(["Turn on reminders"]);
 });
 
 test("the notify screen mocks up no notification of its own", () => {

@@ -1,15 +1,15 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, formatNumber, t } from "../../src/i18n";
+import { formatNumber, t } from "../../src/i18n";
 import { serviceName } from "../../src/schedule/names";
 import { getDistanceUnit } from "../../src/units";
 import { formatDistance } from "../../src/units/format";
-import { nextUp, planItemLine } from "../../src/onboarding/plan";
+import { planItemLine } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -46,10 +46,7 @@ export default function OnboardingResults() {
   const unit = getDistanceUnit();
 
   const pastDue = plan.items.filter((i) => i.status === "due" && i.logged).length;
-  // The soonest thing still ahead, which is not the head of `plan.items`: that
-  // list is sorted worst-first, so on a car with anything overdue it is the
-  // most overdue row and its date is in the past.
-  const upcoming = nextUp(plan);
+
   // `plan.dueNow` folds in every service that has never been logged, and
   // "eleven services are overdue" to somebody who has told us about one of
   // them is our model talking, not their car. The headline counts only what
@@ -106,12 +103,6 @@ export default function OnboardingResults() {
           </View>
         </View>
       </Panel>
-
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {upcoming?.dueAt
-          ? t("onboardingC.results.next", { date: formatDate(upcoming.dueAt) })
-          : t("onboardingC.results.countdown")}
-      </Text>
     </OnboardingScreen>
   );
 }

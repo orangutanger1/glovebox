@@ -155,10 +155,6 @@ export default function OnboardingPaywall() {
           </View>
         </Panel>
       </View>
-
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("offer.paywall.caption")}
-      </Text>
     </OnboardingScreen>
   );
 }

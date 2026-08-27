@@ -56,7 +56,6 @@ export default function OnboardingOffer() {
       route="offer"
       center
       title={t("offer.trial.title", { count: TRIAL_DAYS })}
-      subtitle={t("offer.trial.subtitle", { count: TRIAL_DAYS })}
       footer={
         <>
           <Button
