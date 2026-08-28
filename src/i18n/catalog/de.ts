@@ -415,6 +415,9 @@ export const de: Fragment = {
   "settings.intervals": "Serviceintervalle",
 
   "settings.theme.label": "Erscheinungsbild",
+  "settings.theme.system": "System",
+  "settings.theme.light": "Hell",
+  "settings.theme.dark": "Dunkel",
 
   "settings.language": "Sprache: {language}",
   "settings.units": "Einheit: {unit}",

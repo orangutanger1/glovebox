@@ -400,6 +400,9 @@ export const it: Fragment = {
   "settings.intervals": "Intervalli dei tagliandi",
 
   "settings.theme.label": "Aspetto",
+  "settings.theme.system": "Sistema",
+  "settings.theme.light": "Chiaro",
+  "settings.theme.dark": "Scuro",
 
   "settings.language": "Lingua: {language}",
   "settings.units": "Unità: {unit}",

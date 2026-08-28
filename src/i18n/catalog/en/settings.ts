@@ -20,6 +20,9 @@ export const settings: Fragment = {
   "settings.intervals": "Service intervals",
 
   "settings.theme.label": "Appearance",
+  "settings.theme.system": "System",
+  "settings.theme.light": "Light",
+  "settings.theme.dark": "Dark",
 
   // Two rows a localized app has to have: which language, and which unit. The
   // unit dialog is worded to be boring on purpose — it names both units and

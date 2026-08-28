@@ -180,6 +180,9 @@ export const nl: Fragment = {
   "settings.intervals": "Onderhoudsintervallen",
 
   "settings.theme.label": "Weergave",
+  "settings.theme.system": "Systeem",
+  "settings.theme.light": "Licht",
+  "settings.theme.dark": "Donker",
 
   "settings.language": "Taal: {language}",
   "settings.units": "Eenheden: {unit}",

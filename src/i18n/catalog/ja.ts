@@ -385,6 +385,9 @@ export const ja: Fragment = {
   "settings.intervals": "整備間隔",
 
   "settings.theme.label": "外観",
+  "settings.theme.system": "システム",
+  "settings.theme.light": "ライト",
+  "settings.theme.dark": "ダーク",
 
   "settings.language": "言語：{language}",
   "settings.units": "単位：{unit}",
