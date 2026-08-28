@@ -1,11 +1,10 @@
 import { useCallback, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
 import { Gauge } from "../src/design/Gauge";
-import { ListRow } from "../src/design/ListRow";
 import { Badge } from "../src/design/Badge";
 import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
@@ -158,60 +157,72 @@ export default function Garage() {
         vehicles.map((v) => {
           const s = summarize(v);
           return (
-            <Card key={v.id} status={s.status === "due" ? "overdue" : undefined}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text style={{ ...tokens.text.heading, color: c.ink }}>{v.name}</Text>
-                {s.status === "ok" ? null : (
-                  <Badge
-                    label={s.status === "due" ? t("garage.badge.overdue") : t("garage.badge.dueSoon")}
-                    tone={s.status}
+            <Pressable
+              key={v.id}
+              accessibilityRole="button"
+              onPress={() => router.push(`/vehicle/${v.id}`)}
+              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+            >
+              <Card status={s.status === "due" ? "overdue" : undefined}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    justifyContent: "space-between",
+                    gap: tokens.space.sm,
+                  }}
+                >
+                  <Text style={{ ...tokens.text.heading, color: c.ink, flex: 1 }}>
+                    {v.name}
+                  </Text>
+                  <View
+                    style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
+                  >
+                    {s.status === "ok" ? null : (
+                      <Badge
+                        label={
+                          s.status === "due"
+                            ? t("garage.badge.overdue")
+                            : t("garage.badge.dueSoon")
+                        }
+                        tone={s.status}
+                      />
+                    )}
+                    <Text style={{ ...tokens.text.body, color: c.inkMuted }}>›</Text>
+                  </View>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    paddingTop: tokens.space.xs,
+                  }}
+                >
+                  <Gauge
+                    legend={s.label}
+                    value={s.detail}
+                    lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
                   />
-                )}
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "flex-end",
-                  paddingTop: tokens.space.xs,
-                }}
-              >
-                <Gauge
-                  legend={s.label}
-                  value={s.detail}
-                  lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
-                />
-                {/* An estimate says so in the legend rather than beside the
-                    number: the readout is a distance and the parenthesis would
-                    read as part of it. A reading the app worked out from the
-                    model year is still worth showing, and is not worth showing
-                    as though somebody had read it off the dash. */}
-                <Gauge
-                  legend={
-                    v.odometer && v.odometer_estimated
-                      ? t("garage.odometer.estimated")
-                      : t("garage.odometer")
-                  }
-                  value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
-                  unit={v.odometer ? distanceUnitLabel() : undefined}
-                  align="right"
-                />
-              </View>
-
-              <View style={{ paddingTop: tokens.space.xs }}>
-                <ListRow
-                  title={single ? t("garage.openHistory") : t("garage.openAndLog")}
-                  onPress={() => router.push(`/vehicle/${v.id}`)}
-                />
-              </View>
-            </Card>
+                  {/* An estimate says so in the legend rather than beside the
+                      number: the readout is a distance and the parenthesis would
+                      read as part of it. A reading the app worked out from the
+                      model year is still worth showing, and is not worth showing
+                      as though somebody had read it off the dash. */}
+                  <Gauge
+                    legend={
+                      v.odometer && v.odometer_estimated
+                        ? t("garage.odometer.estimated")
+                        : t("garage.odometer")
+                    }
+                    value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
+                    unit={v.odometer ? distanceUnitLabel() : undefined}
+                    align="right"
+                  />
+                </View>
+              </Card>
+            </Pressable>
           );
         })
       )}
