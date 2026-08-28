@@ -1,29 +1,18 @@
 import { Pressable, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
- * A machined control. The press must MOVE it — the face travels 2px down and
- * the hard edge under it shrinks 3px to 1px, so the button visibly seats into
- * its housing. Opacity-only feedback is the single most template-looking thing
- * a button can do and is deliberately not an option here.
+ * Primary is the accent, not white, and never red — red is reserved for
+ * overdue and destructive.
  *
- * Primary is white, not red. Red is reserved for overdue and destructive.
+ * The previous version travelled 2px on press against a shrinking hard edge,
+ * on the argument that opacity-only feedback is the most template-looking
+ * thing a button can do. That argument was right about opacity alone and wrong
+ * about the fix: scale plus opacity plus a haptic is the native-feeling
+ * version, and it does not require a machined edge under every control.
  */
-
-const FACE = {
-  primary: ["#FFFFFF", "#D8DADE"] as const,
-  secondary: tokens.material.metalFace,
-  danger: ["#D4202C", "#A50E19"] as const,
-};
-
-const FG = {
-  primary: tokens.color.housing,
-  secondary: tokens.color.text,
-  danger: tokens.color.white,
-};
-
 export function Button({
   label,
   onPress,
@@ -35,6 +24,11 @@ export function Button({
   variant?: "primary" | "secondary" | "danger";
   disabled?: boolean;
 }) {
+  const c = useTheme();
+
+  const fill = { primary: c.accent, secondary: c.card, danger: c.overdue };
+  const fg = { primary: c.onAccent, secondary: c.ink, danger: "#FFFFFF" };
+
   function handlePress() {
     // Fire and forget: a failed haptic must never block the action.
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
@@ -43,50 +37,28 @@ export function Button({
 
   return (
     <Pressable onPress={handlePress} disabled={disabled}>
-      {({ pressed }) => {
-        const edge = pressed ? tokens.material.edgePressed : tokens.material.edgeHeight;
-        return (
-          <View
-            style={{
-              borderRadius: tokens.radius.md,
-              backgroundColor: tokens.color.edgeSolid,
-              paddingBottom: disabled ? 0 : edge,
-              marginTop: pressed ? tokens.material.pressTravel : 0,
-              marginBottom: pressed ? tokens.material.pressTravel : 0,
-              opacity: disabled ? 0.4 : 1,
-              ...tokens.shadow.ambient,
-              shadowOpacity: pressed || disabled ? 0.15 : tokens.shadow.ambient.shadowOpacity,
-            }}
-          >
-            <LinearGradient
-              colors={[...FACE[variant]]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={{
-                borderRadius: tokens.radius.md,
-                borderWidth: 1,
-                borderTopColor:
-                  variant === "primary" ? "rgba(255,255,255,0.9)" : tokens.color.hairline,
-                borderLeftColor: tokens.color.hairline,
-                borderRightColor: tokens.color.hairline,
-                borderBottomColor: tokens.color.edge,
-                paddingVertical: 16,
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  ...tokens.text.legend,
-                  fontSize: 14,
-                  color: FG[variant],
-                }}
-              >
-                {label}
-              </Text>
-            </LinearGradient>
-          </View>
-        );
-      }}
+      {({ pressed }) => (
+        <View
+          style={{
+            borderRadius: tokens.radius.md,
+            backgroundColor: fill[variant],
+            borderWidth: 1,
+            borderColor: variant === "secondary" ? c.hairline : "transparent",
+            paddingVertical: 17,
+            alignItems: "center",
+            opacity: disabled ? 0.4 : pressed ? 0.9 : 1,
+            transform: [{ scale: pressed && !disabled ? 0.98 : 1 }],
+            shadowColor: "#000",
+            shadowOpacity: disabled ? 0 : c.shadowOpacity,
+            shadowRadius: 8,
+            shadowOffset: { width: 0, height: 2 },
+          }}
+        >
+          <Text style={{ ...tokens.text.body, fontWeight: "600", color: fg[variant] }}>
+            {label}
+          </Text>
+        </View>
+      )}
     </Pressable>
   );
 }

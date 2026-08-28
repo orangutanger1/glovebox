@@ -1,13 +1,13 @@
 import { Pressable, Text, View } from "react-native";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
- * A machined toggle. The previous version filled unselected chips with
- * `transparent` over a near-black background, which left the user looking at
- * bare text where a control was — the chip had to be a visible object first
- * and a selection second. It is metal when off and white when on.
+ * Selected is the accent; unselected is a sunken fill, never transparent.
+ * `tests/design-tokens.test.tsx` holds that line — an unselected chip filled
+ * with the screen colour is bare text where a control should be, which is the
+ * bug the metal was introduced to fix and which must not return with it.
  */
 export function Chip({
   label,
@@ -18,11 +18,11 @@ export function Chip({
   label: string;
   selected: boolean;
   onPress: () => void;
-  /** Drawn as a control that is not live yet, rather than hidden. A row that
-   *  appears once the row above it is answered changes the shape of the
-   *  question after the user has already read it. */
+  /** Drawn as a control that is not live yet, rather than hidden. */
   disabled?: boolean;
 }) {
+  const c = useTheme();
+
   function handlePress() {
     Haptics.selectionAsync().catch(() => {});
     onPress();
@@ -33,41 +33,26 @@ export function Chip({
       {({ pressed }) => (
         <View
           style={{
+            minHeight: 44,
+            justifyContent: "center",
+            paddingHorizontal: tokens.space.md,
             borderRadius: tokens.radius.pill,
-            backgroundColor: tokens.color.edgeSolid,
-            paddingBottom: pressed && !disabled ? tokens.material.edgePressed : 2,
-            marginTop: pressed && !disabled ? tokens.material.pressTravel : 0,
-            // Dimmed as one object, face and edge together: fading only the
-            // label leaves a live-looking chip with unreadable text in it.
-            opacity: disabled ? 0.4 : 1,
+            backgroundColor: selected ? c.accent : c.cardSunken,
+            borderWidth: 1,
+            borderColor: selected ? c.accent : c.hairline,
+            opacity: disabled ? 0.4 : pressed ? 0.9 : 1,
+            transform: [{ scale: pressed && !disabled ? 0.98 : 1 }],
           }}
         >
-          <LinearGradient
-            colors={selected ? ["#FFFFFF", "#DDDFE3"] : [...tokens.material.metalFace]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
+          <Text
             style={{
-              minHeight: 44,
-              justifyContent: "center",
-              paddingHorizontal: tokens.space.md,
-              borderRadius: tokens.radius.pill,
-              borderWidth: 1,
-              borderTopColor: selected ? "rgba(255,255,255,0.9)" : tokens.color.hairline,
-              borderLeftColor: tokens.color.hairline,
-              borderRightColor: tokens.color.hairline,
-              borderBottomColor: tokens.color.edge,
+              ...tokens.text.body,
+              fontWeight: selected ? "600" : "400",
+              color: selected ? c.onAccent : c.ink,
             }}
           >
-            <Text
-              style={{
-                ...tokens.text.body,
-                fontWeight: selected ? "600" : "400",
-                color: selected ? tokens.color.housing : tokens.color.text,
-              }}
-            >
-              {label}
-            </Text>
-          </LinearGradient>
+            {label}
+          </Text>
         </View>
       )}
     </Pressable>
