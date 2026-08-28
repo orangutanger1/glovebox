@@ -1,4 +1,5 @@
 import { getDb } from "./client";
+import type { BodyStyle } from "../vehicles/bodyStyles";
 import { row, rows } from "./row";
 
 export type Vehicle = {
@@ -12,6 +13,8 @@ export type Vehicle = {
    *  gave us. Absent on every reading that came from a person, which is what
    *  every row written before the column existed is. */
   odometer_estimated?: number;
+  /** Absent means unknown: nothing has ever answered for this vehicle. */
+  body_style?: BodyStyle;
   created_at: string;
   deleted_at?: string;
 };
@@ -44,13 +47,14 @@ export function createVehicle(v: {
   model?: string;
   year?: number;
   odometer?: number;
+  body_style?: BodyStyle;
 }): Vehicle {
   const row: Vehicle = { id: id(), created_at: new Date().toISOString(), ...v };
   getDb().runSync(
-    `INSERT INTO vehicles (id, name, make, model, year, odometer, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO vehicles (id, name, make, model, year, odometer, body_style, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [row.id, row.name, row.make ?? null, row.model ?? null, row.year ?? null,
-     row.odometer ?? null, row.created_at]
+     row.odometer ?? null, row.body_style ?? null, row.created_at]
   );
   return row;
 }
@@ -64,15 +68,18 @@ export function createVehicle(v: {
  */
 export function updateVehicleIdentity(
   vehicleId: string,
-  v: { name: string; make?: string; model?: string; year?: number }
+  v: { name: string; make?: string; model?: string; year?: number; body_style?: BodyStyle }
 ): void {
-  getDb().runSync("UPDATE vehicles SET name = ?, make = ?, model = ?, year = ? WHERE id = ?", [
-    v.name,
-    v.make ?? null,
-    v.model ?? null,
-    v.year ?? null,
-    vehicleId,
-  ]);
+  getDb().runSync(
+    "UPDATE vehicles SET name = ?, make = ?, model = ?, year = ?, body_style = ? WHERE id = ?",
+    [v.name, v.make ?? null, v.model ?? null, v.year ?? null, v.body_style ?? null, vehicleId]
+  );
+}
+
+/** Separate from updateVehicleIdentity because onboarding sets the body style
+ *  without touching the name, make, model or year the previous step wrote. */
+export function setBodyStyle(vehicleId: string, style: BodyStyle): void {
+  getDb().runSync("UPDATE vehicles SET body_style = ? WHERE id = ?", [style, vehicleId]);
 }
 
 /**

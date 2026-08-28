@@ -43,3 +43,16 @@ test("no migration contains a destructive statement", () => {
     expect(m.sql).not.toMatch(/\bDELETE\s+FROM\b/i);
   }
 });
+
+test("migration 6 adds body_style and leaves existing rows unknown", () => {
+  const { db, exec } = open();
+  applyMigrations(exec, 0);
+  db.prepare("INSERT INTO vehicles (id, name, created_at) VALUES (?, ?, ?)").run(
+    "v1", "Civic", "2026-01-01T00:00:00.000Z"
+  );
+  applyMigrations(exec, MIGRATIONS.length);
+  const row = db.prepare("SELECT body_style FROM vehicles WHERE id='v1'").get() as {
+    body_style: string | null;
+  };
+  expect(row.body_style).toBeNull();
+});

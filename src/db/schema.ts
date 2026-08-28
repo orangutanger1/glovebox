@@ -83,6 +83,14 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
       ALTER TABLE vehicles ADD COLUMN odometer_estimated INTEGER;
     `,
   },
+  // Nullable rather than defaulted: a row written before this column has no
+  // answer, and defaulting it to "sedan" would store a guess as a fact.
+  {
+    version: 6,
+    sql: `
+      ALTER TABLE vehicles ADD COLUMN body_style TEXT;
+    `,
+  },
 ];
 
 /**
