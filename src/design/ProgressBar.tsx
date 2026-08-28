@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -24,6 +25,8 @@ export function ProgressBar({
   duration: number;
   height?: number;
 }) {
+  const c = useTheme();
+
   const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -43,11 +46,11 @@ export function ProgressBar({
       style={{
         height,
         borderRadius: tokens.radius.pill,
-        backgroundColor: tokens.color.edgeSolid,
+        backgroundColor: c.cardSunken,
         borderTopWidth: 1,
-        borderTopColor: tokens.color.edge,
+        borderTopColor: c.hairline,
         borderBottomWidth: 1,
-        borderBottomColor: tokens.color.hairline,
+        borderBottomColor: c.hairline,
         overflow: "hidden",
       }}
     >
@@ -55,7 +58,7 @@ export function ProgressBar({
         style={{
           height: "100%",
           borderRadius: tokens.radius.pill,
-          backgroundColor: tokens.color.metalHi,
+          backgroundColor: c.accent,
           width: progress.interpolate({
             inputRange: [0, 1],
             outputRange: ["0%", "100%"],

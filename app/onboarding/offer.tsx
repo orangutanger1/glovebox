@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
@@ -35,6 +36,8 @@ import { useFinish } from "../../src/onboarding/nav";
  * not something to sell.
  */
 export default function OnboardingOffer() {
+  const c = useTheme();
+
   const finish = useFinish();
   const [busy, setBusy] = useState(false);
 
@@ -68,7 +71,7 @@ export default function OnboardingOffer() {
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+            <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
               {t("offer.trial.decline")}
             </Text>
           </Pressable>

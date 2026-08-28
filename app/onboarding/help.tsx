@@ -3,6 +3,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { Badge } from "../../src/design/Badge";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { features } from "../../src/onboarding/features";
@@ -37,6 +38,8 @@ import { useAdvance } from "../../src/onboarding/nav";
  * tiles now, two to a row, each on its own faceplate with the badge leading.
  */
 export default function OnboardingHelp() {
+  const c = useTheme();
+
   const advance = useAdvance("help");
   const { cards } = useOnboardingFindings();
 
@@ -64,13 +67,13 @@ export default function OnboardingHelp() {
                 <Text
                   style={{
                     ...tokens.text.legend,
-                    color: tokens.color.textMuted,
+                    color: c.inkMuted,
                   }}
                 >
                   {card.legend}
                 </Text>
               </View>
-              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+              <Text style={{ ...tokens.text.body, color: c.ink }}>
                 {card.fix}
               </Text>
             </View>
@@ -78,7 +81,7 @@ export default function OnboardingHelp() {
         </View>
       </Panel>
 
-      <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>
+      <Text style={{ ...tokens.text.heading, color: c.ink }}>
         {t("offer.features.title")}
       </Text>
 
@@ -102,7 +105,7 @@ export default function OnboardingHelp() {
                 style={{
                   ...tokens.text.body,
                   fontWeight: "600",
-                  color: tokens.color.text,
+                  color: c.ink,
                 }}
               >
                 {feature.title}
@@ -110,7 +113,7 @@ export default function OnboardingHelp() {
               <Text
                 style={{
                   ...tokens.text.caption,
-                  color: tokens.color.textMuted,
+                  color: c.inkMuted,
                 }}
               >
                 {feature.subtitle}

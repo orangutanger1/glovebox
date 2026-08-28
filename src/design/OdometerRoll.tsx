@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { View, Text, Animated, Easing } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -42,6 +43,8 @@ function Wheel({
   delay: number;
   duration: number;
 }) {
+  const c = useTheme();
+
   const progress = useRef(new Animated.Value(0)).current;
 
   // Three full passes before the landing digit. Fewer and it looks like a
@@ -86,7 +89,7 @@ function Wheel({
               fontSize: 30,
               fontWeight: "600",
               fontVariant: ["tabular-nums"],
-              color: tokens.color.text,
+              color: c.ink,
             }}
           >
             {d}
@@ -105,6 +108,8 @@ export function OdometerRoll({
   value: number;
   places?: number;
 }) {
+  const c = useTheme();
+
   const digits = digitsOf(value, places);
 
   return (
@@ -118,10 +123,10 @@ export function OdometerRoll({
           borderWidth: 1,
           // An inset well: shadowed on its top edge, lit on its bottom. The
           // raised controls in this app are the exact inverse.
-          borderTopColor: tokens.color.edge,
-          borderLeftColor: tokens.color.edge,
-          borderRightColor: tokens.color.edge,
-          borderBottomColor: tokens.color.hairline,
+          borderTopColor: c.hairline,
+          borderLeftColor: c.hairline,
+          borderRightColor: c.hairline,
+          borderBottomColor: c.hairline,
           paddingHorizontal: 6,
           paddingVertical: 4,
           gap: 2,

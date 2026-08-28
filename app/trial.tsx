@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
-import { tokens } from "../src/design/tokens";
+import { useTheme } from "../src/design/theme";
 import { DISCOUNT_OFFERING, presentOffering } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
 
@@ -13,10 +13,12 @@ import { recordReviewEvent } from "../src/review";
  * paywall would be asking them to agree to the same thing twice. This mounts,
  * presents the trial offering, and leaves.
  *
- * The housing-coloured view behind it is what shows for the frame before the
+ * The base-coloured view behind it is what shows for the frame before the
  * native sheet covers it, and again while it dismisses.
  */
 export default function Trial() {
+  const c = useTheme();
+
   const router = useRouter();
   // Effects can run twice; presenting the paywall twice stacks two native
   // sheets and leaves one of them unreachable behind the other.
@@ -33,5 +35,5 @@ export default function Trial() {
     })();
   }, [router]);
 
-  return <View style={{ flex: 1, backgroundColor: tokens.color.housing }} />;
+  return <View style={{ flex: 1, backgroundColor: c.base }} />;
 }

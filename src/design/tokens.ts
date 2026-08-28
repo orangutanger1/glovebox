@@ -1,47 +1,11 @@
-import { LIGHT } from "./palette";
-
 /**
- * The instrument-panel visual system. See
- * docs/superpowers/specs/2026-08-01-glovebox-instrument-panel-design.md.
+ * The measurements, and only the measurements.
  *
- * Three materials and nothing else: housing (the matte body), metal (lit
- * faceplates), glass (blurred panes at the screen edges). Depth is built from
- * per-side border colors because React Native has no inset shadow — a raised
- * control is lit on its top edge, an inset well is shadowed on its top edge.
- * Flipping those two colors is the whole system.
+ * Colour lives in `palette.ts` and is read through `useTheme()`, because a
+ * frozen module-scope object cannot answer which of two themes is on the glass.
+ * What is left here is theme-independent: spacing, radius, and the type scale.
  */
 export const tokens = {
-  /**
-   * TEMPORARY. Deleted in the materials migration — see
-   * docs/superpowers/plans/2026-08-27-warm-garage-visual-redesign.md Task 3.
-   * Every key here maps an old instrument-panel name onto the light palette so
-   * the tree renders while components are migrated one file at a time.
-   */
-  color: {
-    housing: LIGHT.base,
-    metal: LIGHT.card,
-    white: "#FFFFFF",
-    red: LIGHT.overdue,
-    text: LIGHT.ink,
-    textMuted: LIGHT.inkMuted,
-    textFaint: LIGHT.inkFaint,
-    hairline: LIGHT.hairline,
-    hairlineLit: LIGHT.hairline,
-    edge: LIGHT.hairline,
-    edgeSolid: LIGHT.cardSunken,
-    metalHi: LIGHT.card,
-    metalLo: LIGHT.cardSunken,
-    redGlow: LIGHT.overdueWash,
-    redWash: LIGHT.overdueWash,
-  },
-
-  material: {
-    metalFace: [LIGHT.card, LIGHT.card] as const,
-    edgeHeight: 0,
-    edgePressed: 0,
-    pressTravel: 0,
-  },
-
   space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },
   radius: { sm: 8, md: 14, lg: 18, pill: 999 },
 

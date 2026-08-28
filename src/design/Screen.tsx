@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Glass } from "./Glass";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -20,8 +21,10 @@ export function Screen({
   children: React.ReactNode;
   footer?: React.ReactNode;
 }) {
+  const c = useTheme();
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.base }} edges={["bottom"]}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -38,7 +41,7 @@ export function Screen({
           keyboardDismissMode="on-drag"
         >
           {title ? (
-            <Text style={{ ...tokens.text.title, color: tokens.color.text }}>{title}</Text>
+            <Text style={{ ...tokens.text.title, color: c.ink }}>{title}</Text>
           ) : null}
           <View style={{ gap: tokens.space.md }}>{children}</View>
         </ScrollView>

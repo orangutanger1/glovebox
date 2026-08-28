@@ -7,6 +7,7 @@ import { Button } from "../src/design/Button";
 import { Gauge } from "../src/design/Gauge";
 import { ListRow } from "../src/design/ListRow";
 import { Badge } from "../src/design/Badge";
+import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
 import { listVehicles, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
@@ -85,6 +86,8 @@ function summarize(vehicle: Vehicle): Summary {
 }
 
 export default function Garage() {
+  const c = useTheme();
+
   const router = useRouter();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [msg, setMsg] = useState("");
@@ -134,7 +137,7 @@ export default function Garage() {
       footer={
         <>
           {msg ? (
-            <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
+            <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{msg}</Text>
           ) : null}
           {single ? <Button label={t("garage.logService")} onPress={onLog} /> : null}
           <Button
@@ -147,7 +150,7 @@ export default function Garage() {
     >
       {vehicles.length === 0 ? (
         <Card>
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+          <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
             {t("garage.empty")}
           </Text>
         </Card>
@@ -163,7 +166,7 @@ export default function Garage() {
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>{v.name}</Text>
+                <Text style={{ ...tokens.text.heading, color: c.ink }}>{v.name}</Text>
                 {s.status === "ok" ? null : (
                   <Badge
                     label={s.status === "due" ? t("garage.badge.overdue") : t("garage.badge.dueSoon")}

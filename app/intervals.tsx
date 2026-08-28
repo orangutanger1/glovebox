@@ -6,6 +6,7 @@ import { Card } from "../src/design/Card";
 import { Field } from "../src/design/Field";
 import { Button } from "../src/design/Button";
 import { ListRow } from "../src/design/ListRow";
+import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
 import type { Interval } from "../src/schedule";
 import { serviceName, serviceOptions } from "../src/schedule/names";
@@ -32,6 +33,8 @@ function describe(interval: Interval | undefined): string {
 }
 
 export default function Intervals() {
+  const c = useTheme();
+
   const [effective, setEffective] = useState<Record<string, Interval>>({});
   const [overrides, setOverrides] = useState<Record<string, Interval>>({});
   const [editing, setEditing] = useState<string | null>(null);
@@ -85,7 +88,7 @@ export default function Intervals() {
         footer={
           <>
             {msg ? (
-              <Text style={{ ...tokens.text.body, color: tokens.color.red }}>{msg}</Text>
+              <Text style={{ ...tokens.text.body, color: c.overdue }}>{msg}</Text>
             ) : null}
             <Button label={t("intervals.save")} onPress={onSave} />
             <Button label={t("intervals.cancel")} variant="secondary" onPress={() => setEditing(null)} />
@@ -93,7 +96,7 @@ export default function Intervals() {
         }
       >
         <Card>
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+          <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
             {t("intervals.help", { default: describe(fallback) })}
           </Text>
         </Card>
@@ -128,7 +131,7 @@ export default function Intervals() {
   return (
     <Screen title={t("intervals.title")}>
       <Card>
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
           {t("intervals.intro")}
         </Text>
       </Card>
@@ -140,7 +143,7 @@ export default function Intervals() {
             subtitle={describe(effective[type])}
             right={
               overrides[type] ? (
-                <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+                <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
                   {t("intervals.custom")}
                 </Text>
               ) : undefined

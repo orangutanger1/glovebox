@@ -1,4 +1,5 @@
 import { Pressable, View, Text } from "react-native";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -23,6 +24,8 @@ export function ListRow({
   onPress?: () => void;
   status?: "overdue" | "soon" | "ok";
 }) {
+  const c = useTheme();
+
   const dim = status === "ok";
 
   return (
@@ -35,15 +38,15 @@ export function ListRow({
             borderRadius: tokens.radius.sm,
             backgroundColor: pressed ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.18)",
             borderWidth: 1,
-            borderTopColor: tokens.color.edge,
-            borderLeftColor: tokens.color.edge,
-            borderRightColor: tokens.color.edge,
-            borderBottomColor: tokens.color.hairline,
+            borderTopColor: c.hairline,
+            borderLeftColor: c.hairline,
+            borderRightColor: c.hairline,
+            borderBottomColor: c.hairline,
             overflow: "hidden",
           }}
         >
           {status === "overdue" ? (
-            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: tokens.color.red }} />
+            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: c.overdue }} />
           ) : null}
           <View
             style={{
@@ -61,7 +64,7 @@ export function ListRow({
                 style={{
                   ...tokens.text.body,
                   fontWeight: dim ? "400" : "600",
-                  color: dim ? tokens.color.textMuted : tokens.color.text,
+                  color: dim ? c.inkMuted : c.ink,
                 }}
               >
                 {title}
@@ -71,7 +74,7 @@ export function ListRow({
                   style={{
                     ...tokens.text.caption,
                     ...tokens.text.numeric,
-                    color: tokens.color.textMuted,
+                    color: c.inkMuted,
                   }}
                 >
                   {subtitle}

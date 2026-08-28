@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { ListRow } from "../src/design/ListRow";
+import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
 import { LANGUAGES, getLanguage, setLanguage, t, type Language } from "../src/i18n";
 import { LANGUAGE_NAMES } from "../src/i18n/names";
@@ -27,6 +28,8 @@ import { notifyLocaleChanged } from "../src/i18n/epoch";
  * leaving the last explicit choice in place forever.
  */
 export default function LanguagePicker() {
+  const c = useTheme();
+
   const router = useRouter();
   const active = getLanguage();
   const explicit = getLanguagePreference();
@@ -44,7 +47,7 @@ export default function LanguagePicker() {
   return (
     <Screen title={t("language.title")}>
       <Card>
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
           {t("language.intro")}
         </Text>
       </Card>
@@ -70,5 +73,7 @@ export default function LanguagePicker() {
 }
 
 function Check() {
-  return <Text style={{ ...tokens.text.body, color: tokens.color.text }}>✓</Text>;
+  const c = useTheme();
+
+  return <Text style={{ ...tokens.text.body, color: c.ink }}>✓</Text>;
 }

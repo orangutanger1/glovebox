@@ -9,6 +9,7 @@ import { Glass } from "../../src/design/Glass";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle, softDeleteVehicle, type Vehicle } from "../../src/db/vehicles";
 import {
@@ -82,12 +83,16 @@ function recordSubtitle(record: ServiceRecord): string {
 }
 
 function SectionLegend({ children }: { children: string }) {
+  const c = useTheme();
+
   return (
-    <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>{children}</Text>
+    <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>{children}</Text>
   );
 }
 
 export default function VehicleDetail() {
+  const c = useTheme();
+
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
@@ -162,7 +167,7 @@ export default function VehicleDetail() {
   const lastService = records[0];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.base }} edges={["bottom"]}>
       {/* The header is the only place the vehicle is named, so it is set from
           the row rather than left as the route pattern. */}
       <Stack.Screen options={{ title: vehicle?.name ?? t("vehicle.title") }} />
@@ -206,7 +211,7 @@ export default function VehicleDetail() {
                   />
                 </View>
                 {spec ? (
-                  <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+                  <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
                     {spec}
                   </Text>
                 ) : null}
@@ -237,7 +242,7 @@ export default function VehicleDetail() {
           </View>
         }
         ListEmptyComponent={
-          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+          <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
             {t("vehicle.history.empty")}
           </Text>
         }
@@ -257,11 +262,11 @@ export default function VehicleDetail() {
                   justifyContent: "center",
                   marginLeft: tokens.space.sm,
                   paddingHorizontal: tokens.space.md,
-                  backgroundColor: tokens.color.red,
+                  backgroundColor: c.overdue,
                   borderRadius: tokens.radius.sm,
                 }}
               >
-                <Text style={{ ...tokens.text.legend, color: tokens.color.white }}>
+                <Text style={{ ...tokens.text.legend, color: "#FFFFFF" }}>
                   {t("vehicle.swipe.delete")}
                 </Text>
               </Pressable>
@@ -289,15 +294,15 @@ export default function VehicleDetail() {
                   alignItems: "center",
                   padding: tokens.space.md,
                   borderRadius: tokens.radius.sm,
-                  backgroundColor: tokens.color.redWash,
+                  backgroundColor: c.overdueWash,
                   borderWidth: 1,
-                  borderColor: tokens.color.red,
+                  borderColor: c.overdue,
                 }}
               >
-                <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                <Text style={{ ...tokens.text.body, color: c.ink }}>
                   {t("vehicle.serviceDeleted")}
                 </Text>
-                <Text style={{ ...tokens.text.legend, fontSize: 14, color: tokens.color.white }}>
+                <Text style={{ ...tokens.text.legend, fontSize: 14, color: c.accent }}>
                   {t("vehicle.undo")}
                 </Text>
               </View>

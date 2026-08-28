@@ -5,6 +5,7 @@ import { Screen } from "../src/design/Screen";
 import { Button } from "../src/design/Button";
 import { ListRow } from "../src/design/ListRow";
 import { Panel } from "../src/design/Surface";
+import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
 import { t } from "../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../src/purchases";
@@ -31,6 +32,8 @@ import { markWinbackShown } from "../src/winback";
  * confirmed the user is not a subscriber and that the trial offering exists.
  */
 export default function Winback() {
+  const c = useTheme();
+
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
@@ -64,14 +67,14 @@ export default function Winback() {
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+            <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
               {t("offer.winback.decline")}
             </Text>
           </Pressable>
         </>
       }
     >
-      <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+      <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
         {t("offer.winback.body")}
       </Text>
 
@@ -81,12 +84,12 @@ export default function Winback() {
             title={t("offer.winback.feedback")}
             subtitle={t("offer.winback.feedbackNote")}
             onPress={() => void openFeedback()}
-            right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
+            right={<Text style={{ ...tokens.text.body, color: c.inkMuted }}>›</Text>}
           />
         </View>
       </Panel>
 
-      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+      <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
         {t("offer.winback.caption", { count: TRIAL_DAYS })}
       </Text>
     </Screen>

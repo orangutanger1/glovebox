@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -6,14 +7,18 @@ import { tokens } from "./tokens";
  * the app saying something is wrong, so `soon` and `ok` earn their weight from
  * contrast instead.
  */
-const TONE = {
-  due: { bg: tokens.color.red, fg: tokens.color.white, border: "rgba(255,255,255,0.35)" },
-  soon: { bg: "rgba(0,0,0,0.35)", fg: tokens.color.text, border: tokens.color.hairline },
-  ok: { bg: "rgba(0,0,0,0.25)", fg: tokens.color.textMuted, border: tokens.color.hairline },
-};
-
 export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "ok" }) {
+  const c = useTheme();
+
+  // Built here rather than at module scope: the palette is a hook read, and a
+  // frozen table cannot answer which theme is on the glass.
+  const TONE = {
+    due: { bg: c.overdue, fg: "#FFFFFF", border: "rgba(255,255,255,0.35)" },
+    soon: { bg: "rgba(0,0,0,0.35)", fg: c.ink, border: c.hairline },
+    ok: { bg: "rgba(0,0,0,0.25)", fg: c.inkMuted, border: c.hairline },
+  };
   const t = TONE[tone];
+
   return (
     <View
       style={{

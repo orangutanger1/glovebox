@@ -5,6 +5,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { StepLamps } from "../../src/design/StepLamps";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { setOnboardingStep } from "../../src/onboarding";
@@ -41,6 +42,8 @@ import { useDwell } from "../../src/onboarding/useDwell";
 const DWELL_MS = 800;
 
 export default function OnboardingSymptoms() {
+  const c = useTheme();
+
   const router = useRouter();
   const advance = useAdvance("symptoms");
   const { cards } = useOnboardingFindings();
@@ -86,13 +89,13 @@ export default function OnboardingSymptoms() {
     >
       <Panel>
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: 3, backgroundColor: tokens.color.red }} />
+          <View style={{ width: 3, backgroundColor: c.overdue }} />
           <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.md }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
               <Lamp lit size={14} />
-              <Text style={{ ...tokens.text.legend, color: tokens.color.text }}>{card.legend}</Text>
+              <Text style={{ ...tokens.text.legend, color: c.ink }}>{card.legend}</Text>
             </View>
-            <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{card.body}</Text>
+            <Text style={{ ...tokens.text.body, color: c.ink }}>{card.body}</Text>
           </View>
         </View>
       </Panel>

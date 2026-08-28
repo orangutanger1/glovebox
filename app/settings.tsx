@@ -4,6 +4,7 @@ import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
+import { useTheme } from "../src/design/theme";
 import { tokens } from "../src/design/tokens";
 import { t, formatShortDate, getLanguage } from "../src/i18n";
 import { LANGUAGE_NAMES } from "../src/i18n/names";
@@ -24,6 +25,8 @@ import { resetOnboarding } from "../src/onboarding";
 import { recordReviewEvent, maybeRequestReview } from "../src/review";
 
 export default function Settings() {
+  const c = useTheme();
+
   const router = useRouter();
   const [msg, setMsg] = useState("");
   const pro = useIsPro();
@@ -224,7 +227,7 @@ export default function Settings() {
   return (
     <Screen title={t("settings.title")}>
       <Card>
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
           {t("settings.privacy")}
         </Text>
       </Card>
@@ -254,7 +257,7 @@ export default function Settings() {
       />
       <Button label={t("settings.replay")} variant="secondary" onPress={onReplayOnboarding} />
       {msg ? (
-        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
+        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{msg}</Text>
       ) : null}
     </Screen>
   );

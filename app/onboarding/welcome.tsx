@@ -3,6 +3,7 @@ import { View, Text, Image, Animated, Easing } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "../../src/design/Button";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { useAdvance } from "../../src/onboarding/nav";
 import { t } from "../../src/i18n";
@@ -12,6 +13,8 @@ const LIGHT = require("../../assets/onboarding/light.jpeg");
 const LIGHT_RATIO = 1242 / 1663;
 
 export default function Welcome() {
+  const c = useTheme();
+
   const advance = useAdvance("welcome");
   // One driver. The cluster bulb-check flash used to run here and read as a
   // rendering fault rather than an ignition: a red bloom that appears, dies,
@@ -43,7 +46,7 @@ export default function Welcome() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>
+    <View style={{ flex: 1, backgroundColor: c.base }}>
       {/* Full width, own aspect ratio, pinned to the top. Stretched to fill the
           screen instead, `cover` crops about a third off each side of a phone —
           and what it crops is exactly where the trail sweeps out of frame, which
@@ -62,7 +65,7 @@ export default function Welcome() {
         {/* The copy has to land on black, not on a highlight, or the headline
             fights the brightest part of the trail for the same pixels. */}
         <LinearGradient
-          colors={["transparent", "rgba(15,17,19,0.85)", tokens.color.housing]}
+          colors={["transparent", "rgba(15,17,19,0.85)", c.base]}
           locations={[0, 0.6, 1]}
           style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "45%" }}
         />
@@ -90,7 +93,7 @@ export default function Welcome() {
               ...tokens.text.hero,
               fontSize: 38,
               lineHeight: 43,
-              color: tokens.color.text,
+              color: c.ink,
             }}
           >
             {t("onboardingA.welcome.headline")}
@@ -103,7 +106,7 @@ export default function Welcome() {
             <Text
               style={{
                 ...tokens.text.caption,
-                color: tokens.color.textFaint,
+                color: c.inkFaint,
                 textAlign: "center",
               }}
             >

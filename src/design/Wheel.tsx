@@ -9,6 +9,7 @@ import {
 import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { Well } from "./Surface";
+import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -38,6 +39,8 @@ export function Drum({
   onIndex: (i: number) => void;
   width: number;
 }) {
+  const c = useTheme();
+
   const ref = useRef<ScrollView>(null);
   // What the scroll view is actually showing. Without this, the effect below
   // fights the user's finger: every committed index would scroll the drum back
@@ -92,7 +95,7 @@ export function Drum({
             fontSize: 20,
             // Only the selected row is at full white. The rest are the same
             // digits seen around the curve of the drum.
-            color: i === index ? tokens.color.text : tokens.color.textFaint,
+            color: i === index ? c.ink : c.inkFaint,
           }}
         >
           {label}
@@ -107,6 +110,8 @@ export function Drum({
  * top and bottom that makes a column of text read as a cylinder.
  */
 export function WheelCase({ children }: { children: React.ReactNode }) {
+  const c = useTheme();
+
   return (
     <Well style={{ overflow: "hidden" }}>
       <View style={{ height: VISIBLE * ITEM_HEIGHT }}>
@@ -122,7 +127,7 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
             height: ITEM_HEIGHT,
             borderTopWidth: 1,
             borderBottomWidth: 1,
-            borderColor: tokens.color.hairline,
+            borderColor: c.hairline,
             backgroundColor: "rgba(255,255,255,0.04)",
           }}
         />

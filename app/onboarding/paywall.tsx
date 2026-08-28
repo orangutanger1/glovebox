@@ -4,6 +4,7 @@ import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
 import { Lamp } from "../../src/design/Lamp";
+import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, formatNumber, t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, hasOffering, presentOffering } from "../../src/purchases";
@@ -56,6 +57,8 @@ const IMPACT = [
  * finishes the flow.
  */
 export default function OnboardingPaywall() {
+  const c = useTheme();
+
   const advance = useAdvance("paywall");
   const finish = useFinish();
   const { vehicleName, plan } = useOnboardingFindings();
@@ -128,7 +131,7 @@ export default function OnboardingPaywall() {
           the reminder ask it belongs to; reprinting it here made this screen a
           document and buried the offer below six rows of it. */}
       <View style={{ gap: tokens.space.sm }}>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+        <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>
           {t("offer.paywall.impact.legend")}
         </Text>
         <Panel>
@@ -146,7 +149,7 @@ export default function OnboardingPaywall() {
                   <Lamp lit size={10} />
                 </View>
                 <Text
-                  style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}
+                  style={{ ...tokens.text.body, color: c.ink, flex: 1 }}
                 >
                   {t(key)}
                 </Text>

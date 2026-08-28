@@ -14,6 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { StepLamps } from "../design/StepLamps";
+import { useTheme } from "../design/theme";
 import { tokens } from "../design/tokens";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
@@ -101,6 +102,8 @@ export function OnboardingScreen({
    *  interactive: it never intercepts the scroll or a tap beneath it. */
   banner?: ReactNode;
 }) {
+  const c = useTheme();
+
   const router = useRouter();
   const previous = previousRoute(route);
   const quiz = quizStep(route);
@@ -213,10 +216,10 @@ export function OnboardingScreen({
       {title || subtitle ? (
         <View style={{ gap: tokens.space.sm }}>
           {title ? (
-            <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
+            <Text style={{ ...tokens.text.hero, color: c.ink }}>{title}</Text>
           ) : null}
           {subtitle ? (
-            <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
+            <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{subtitle}</Text>
           ) : null}
         </View>
       ) : null}
@@ -228,7 +231,7 @@ export function OnboardingScreen({
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: c.base }}>
       {/* Every material in this app is lit from above; the flat housing was
           the one surface that was not. The generated radial vignette could not
           be used — it arrived as an opaque JPEG with the falloff inverted — so
@@ -237,7 +240,7 @@ export function OnboardingScreen({
         pointerEvents="none"
         colors={
           tone === "alarm"
-            ? [tokens.color.redWash, "transparent"]
+            ? [c.overdueWash, "transparent"]
             : ["rgba(255,255,255,0.05)", "transparent"]
         }
         style={{ position: "absolute", top: 0, left: 0, right: 0, height: 260 }}
@@ -274,7 +277,7 @@ export function OnboardingScreen({
                   <Text
                     style={{
                       ...tokens.text.legend,
-                      color: pressed ? tokens.color.white : tokens.color.textMuted,
+                      color: pressed ? c.ink : c.inkMuted,
                     }}
                   >
                     {`‹ ${t("onboardingC.back")}`}
@@ -285,7 +288,7 @@ export function OnboardingScreen({
             {legend ?? (
               quiz ? (
                 <>
-                  <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+                  <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>
                     {t("onboardingC.question", { step: quiz.step, total: quiz.total })}
                   </Text>
                   <StepLamps step={quiz.step} total={quiz.total} />

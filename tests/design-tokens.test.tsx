@@ -23,6 +23,8 @@ jest.mock("../src/design/themeState", () => ({
   setThemeMode: () => {},
 }));
 
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { Text } from "react-native";
 import { Card } from "../src/design/Card";
 import { Chip } from "../src/design/Chip";
@@ -119,5 +121,37 @@ describe("an overdue card keeps its opaque fill under the wash", () => {
     act(() => {
       tree.unmount();
     });
+  });
+});
+
+/** Every .ts/.tsx file under src/ and app/, so a stray reference anywhere
+ *  fails rather than only the ones a reviewer happened to open. */
+function sources(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) sources(path, out);
+    else if (/\.tsx?$/.test(entry.name)) out.push(path);
+  }
+  return out;
+}
+
+const FILES = [...sources("src"), ...sources("app")];
+
+describe("the instrument-panel material system is gone", () => {
+  test.each([
+    "metalFace",
+    "edgeSolid",
+    "edgeHeight",
+    "edgePressed",
+    "pressTravel",
+    "metalHi",
+    "metalLo",
+    "hairlineLit",
+    "redGlow",
+    "color.housing",
+    "color.metal",
+  ])("no source file mentions %s", (banned) => {
+    const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes(banned));
+    expect(offenders).toEqual([]);
   });
 });
