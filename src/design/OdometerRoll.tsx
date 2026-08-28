@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
 import { View, Text, Animated, Easing } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
@@ -148,14 +147,6 @@ export function OdometerRoll({
               // Right-to-left stagger: the tenths wheel is the last to settle.
               delay={120 + (places - 1 - i) * 90}
               duration={1100 + (places - 1 - i) * 260}
-            />
-            {/* Curvature. A flat digit on a flat rectangle is a number in a
-                box; shaded top and bottom, it is a cylinder seen edge-on. */}
-            <LinearGradient
-              pointerEvents="none"
-              colors={["rgba(0,0,0,0.75)", "transparent", "rgba(0,0,0,0.75)"]}
-              locations={[0, 0.5, 1]}
-              style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
             />
           </View>
         ))}

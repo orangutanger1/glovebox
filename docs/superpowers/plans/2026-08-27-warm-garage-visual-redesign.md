@@ -6,7 +6,7 @@
 
 **Architecture:** `tokens.color` and `tokens.material` are deleted and replaced by two frozen palettes read through a `useTheme()` hook over a React context provided in `app/_layout.tsx`; `tokens.space`, `tokens.radius` and `tokens.text` stay static and keep every existing import site. Depth stops being per-side border trickery and becomes fill + hairline + soft shadow, with `expo-blur` for floating chrome. A new nullable `vehicles.body_style` column, set by a new tap-to-advance onboarding step, keys a single tint-driven PNG family used in the picker, on results, on the paywall, and on every garage card.
 
-**Tech Stack:** React Native 0.86 / Expo 57, expo-router, expo-sqlite (raw SQL migrations), expo-font, expo-blur, expo-linear-gradient (retained for the welcome hero scrim only), expo-haptics, jest + react-test-renderer + better-sqlite3.
+**Tech Stack:** React Native 0.86 / Expo 57, expo-router, expo-sqlite (raw SQL migrations), expo-font, expo-blur, expo-linear-gradient (retained for two uses only: the welcome hero scrim and the onboarding top light), expo-haptics, jest + react-test-renderer + better-sqlite3.
 
 **Spec:** `docs/superpowers/specs/2026-08-27-warm-garage-visual-redesign-design.md`
 

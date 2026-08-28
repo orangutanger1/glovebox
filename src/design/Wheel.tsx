@@ -7,7 +7,6 @@ import {
   type NativeScrollEvent,
 } from "react-native";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
 import { Well } from "./Surface";
 import { useTheme } from "./theme";
 import { tokens } from "./tokens";
@@ -93,9 +92,12 @@ export function Drum({
             textAlign: "center",
             ...tokens.text.readout,
             fontSize: 20,
-            // Only the selected row is at full white. The rest are the same
-            // digits seen around the curve of the drum.
-            color: i === index ? c.ink : c.inkFaint,
+            // Distance from the detent, not a dark vignette over the ends:
+            // the rows either side of the selection recede a step, the rest
+            // sit at the faintest ink, so the column still reads as a drum
+            // seen around its curve on a light surface.
+            color:
+              i === index ? c.ink : Math.abs(i - index) === 1 ? c.inkMuted : c.inkFaint,
           }}
         >
           {label}
@@ -106,8 +108,7 @@ export function Drum({
 }
 
 /**
- * The case: a well, the detent hairlines behind the drums, and the shading at
- * top and bottom that makes a column of text read as a cylinder.
+ * The case: a well, and the detent hairlines behind the drums.
  */
 export function WheelCase({ children }: { children: React.ReactNode }) {
   const c = useTheme();
@@ -132,12 +133,6 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
           }}
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>{children}</View>
-        <LinearGradient
-          pointerEvents="none"
-          colors={["rgba(15,17,19,0.96)", "rgba(15,17,19,0)", "rgba(15,17,19,0.96)"]}
-          locations={[0, 0.5, 1]}
-          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-        />
       </View>
     </Well>
   );
