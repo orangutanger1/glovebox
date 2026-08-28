@@ -48,10 +48,8 @@ export function Button({
             alignItems: "center",
             opacity: disabled ? 0.4 : pressed ? 0.9 : 1,
             transform: [{ scale: pressed && !disabled ? 0.98 : 1 }],
-            shadowColor: "#000",
+            ...tokens.shadow.soft,
             shadowOpacity: disabled ? 0 : c.shadowOpacity,
-            shadowRadius: 8,
-            shadowOffset: { width: 0, height: 2 },
           }}
         >
           <Text style={{ ...tokens.text.body, fontWeight: "600", color: fg[variant] }}>

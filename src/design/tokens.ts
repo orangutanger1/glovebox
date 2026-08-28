@@ -70,11 +70,17 @@ export const tokens = {
   },
 
   shadow: {
-    ambient: {
+    /**
+     * The one drop shadow in the system. `shadowOpacity` is deliberately absent:
+     * it is the only theme-dependent part, it lives on `Palette`, and baking a
+     * value in here would hand every call site a shadow that reads as depth on
+     * warm paper and as a smudge on near-black. Spread it and supply the
+     * opacity: `{ ...tokens.shadow.soft, shadowOpacity: c.shadowOpacity }`.
+     */
+    soft: {
       shadowColor: "#000",
-      shadowOpacity: 0.45,
-      shadowRadius: 10,
-      shadowOffset: { width: 0, height: 4 },
+      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 2 },
     },
   },
 };

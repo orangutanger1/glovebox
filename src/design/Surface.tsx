@@ -9,8 +9,18 @@ import { tokens } from "./tokens";
  * opaque band, because React Native has no inset shadow. It worked, and it
  * looked like 2013 — hard borders around every element is the most reliable
  * dated signal an interface can emit. Depth is now fill, one hairline, and a
- * soft shadow; a recess is a darker fill and no shadow. The direction still
- * lives here and nowhere else.
+ * soft shadow; a recess is a darker fill and no shadow.
+ *
+ * Both raised primitives are the same two nodes: an opaque shadow caster
+ * outside, a clipping face inside. The shadow cannot share a node with
+ * `overflow: hidden` — on iOS the two cancel each other out — and the caster
+ * has to be opaque, or the shadow shows through its own child and a
+ * translucent `style` fill composites over the screen instead of over the
+ * card. That fill is also what lets iOS derive a `shadowPath` instead of
+ * rasterising the alpha channel offscreen every frame.
+ *
+ * `shadowOpacity` is the only theme-dependent part of the shadow, so it is the
+ * only part supplied here; the rest is `tokens.shadow.soft`.
  */
 
 export function Raised({
@@ -25,25 +35,33 @@ export function Raised({
   style?: StyleProp<ViewStyle>;
 }) {
   const c = useTheme();
+  // Press lives on the caster so the face and its shadow move as one object:
+  // scaling the face alone leaves the shadow behind at full size.
   return (
     <View
-      style={[
-        {
-          borderRadius: radius,
-          backgroundColor: c.card,
-          borderWidth: 1,
-          borderColor: c.hairline,
-          shadowColor: "#000",
-          shadowOpacity: pressed ? c.shadowOpacity * 0.4 : c.shadowOpacity,
-          shadowRadius: 8,
-          shadowOffset: { width: 0, height: 2 },
-          opacity: pressed ? 0.9 : 1,
-          transform: [{ scale: pressed ? 0.98 : 1 }],
-        },
-        style,
-      ]}
+      style={{
+        borderRadius: radius,
+        backgroundColor: c.card,
+        ...tokens.shadow.soft,
+        shadowOpacity: pressed ? c.shadowOpacity * 0.4 : c.shadowOpacity,
+        opacity: pressed ? 0.9 : 1,
+        transform: [{ scale: pressed ? 0.98 : 1 }],
+      }}
     >
-      {children}
+      <View
+        style={[
+          {
+            borderRadius: radius,
+            backgroundColor: c.card,
+            borderWidth: 1,
+            borderColor: c.hairline,
+            overflow: "hidden",
+          },
+          style,
+        ]}
+      >
+        {children}
+      </View>
     </View>
   );
 }
@@ -88,16 +106,13 @@ export function Panel({
   style?: StyleProp<ViewStyle>;
 }) {
   const c = useTheme();
-  // The shadow lives on an outer view: on iOS, `overflow: hidden` and a shadow
-  // on the same node cancel the shadow out.
   return (
     <View
       style={{
         borderRadius: radius,
-        shadowColor: "#000",
+        backgroundColor: c.card,
+        ...tokens.shadow.soft,
         shadowOpacity: c.shadowOpacity,
-        shadowRadius: 8,
-        shadowOffset: { width: 0, height: 2 },
       }}
     >
       <View
