@@ -119,7 +119,7 @@ export default function OnboardingAnalyzing() {
                 {last ? (
                   <Lamp lit={plan.dueNow > 0} size={8} />
                 ) : (
-                  <Text style={{ ...tokens.text.legend, color: c.inkFaint, width: 21 }}>
+                  <Text style={{ ...tokens.text.caption, color: c.inkFaint, width: 21 }}>
                     {`0${i + 1}`}
                   </Text>
                 )}
@@ -140,7 +140,7 @@ export default function OnboardingAnalyzing() {
 
           <View style={{ gap: tokens.space.sm }}>
             <ProgressBar duration={lines.length * LINE_MS + HANDOFF_MS} />
-            <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>
+            <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
               {shown >= lines.length
                 ? t("onboardingB.analyzing.done")
                 : t("onboardingB.analyzing.progress", { index: shown + 1, total: lines.length })}

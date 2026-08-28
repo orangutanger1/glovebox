@@ -66,7 +66,7 @@ export default function OnboardingHelp() {
                 <Lamp lit={false} size={10} />
                 <Text
                   style={{
-                    ...tokens.text.legend,
+                    ...tokens.text.caption,
                     color: c.inkMuted,
                   }}
                 >

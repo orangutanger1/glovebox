@@ -54,7 +54,16 @@ jest.mock("react-native-gesture-handler", () => {
 });
 jest.mock("expo-quick-actions", () => ({ initial: null }));
 jest.mock("expo-quick-actions/hooks", () => ({ useQuickActionCallback: () => {} }));
-jest.mock("../src/db/client", () => ({ getDb: () => ({}) }));
+/** Flipped by the boot test at the bottom of the file; loaded everywhere else. */
+let mockFontsLoaded = true;
+jest.mock("expo-font", () => ({ useFonts: () => [mockFontsLoaded, null] }));
+let mockDbBoots = 0;
+jest.mock("../src/db/client", () => ({
+  getDb: () => {
+    mockDbBoots += 1;
+    return {};
+  },
+}));
 jest.mock("../src/purchases", () => ({
   DISCOUNT_OFFERING: "discount",
   hasOffering: async () => false,
@@ -81,7 +90,7 @@ jest.mock("../src/feedback", () => ({ openFeedback: async () => {} }));
 jest.mock("../src/i18n/preference", () => ({ bootLanguage: () => "en" }));
 jest.mock("../src/units", () => ({ initDistanceUnit: () => {} }));
 
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
@@ -96,6 +105,7 @@ import { LIGHT, DARK } from "../src/design/palette";
 import { ProgressBar } from "../src/design/ProgressBar";
 import { ThemeProvider } from "../src/design/theme";
 import { type ThemeMode } from "../src/design/themeState";
+import { tokens } from "../src/design/tokens";
 import { Wheel } from "../src/design/Wheel";
 import RootLayout from "../app/_layout";
 
@@ -420,5 +430,62 @@ describe("the phone's own glyphs invert against the palette", () => {
     act(() => {
       tree.unmount();
     });
+  });
+});
+
+describe("the type scale", () => {
+  test("ships the two font files it names", () => {
+    for (const family of ["InstrumentSans-SemiBold", "InstrumentSans-Bold"]) {
+      expect(existsSync(`assets/fonts/${family}.ttf`)).toBe(true);
+    }
+  });
+
+  test("puts the display face on display sizes and nowhere else", () => {
+    expect(tokens.text.hero.fontFamily).toBe("InstrumentSans-Bold");
+    expect(tokens.text.title.fontFamily).toBe("InstrumentSans-Bold");
+    expect(tokens.text.heading.fontFamily).toBe("InstrumentSans-SemiBold");
+    // Body, caption and readout stay on the system face: it is the better UI
+    // font, and numbers need its tabular figures.
+    expect("fontFamily" in tokens.text.body).toBe(false);
+    expect("fontFamily" in tokens.text.caption).toBe(false);
+    expect("fontFamily" in tokens.text.readout).toBe(false);
+  });
+
+  test("does not ask iOS to synthesise a bold on top of a real one", () => {
+    expect("fontWeight" in tokens.text.hero).toBe(false);
+    expect("fontWeight" in tokens.text.title).toBe(false);
+    expect("fontWeight" in tokens.text.heading).toBe(false);
+  });
+
+  test("keeps tabular figures on every number style", () => {
+    expect(tokens.text.readout.fontVariant).toEqual(["tabular-nums"]);
+    expect(tokens.text.numeric.fontVariant).toEqual(["tabular-nums"]);
+  });
+
+  // The uppercase letterspaced legend is the dashboard's signature and was
+  // also on every form label, decline link and header title in the app.
+  test("reserves the uppercase legend for gauge readouts", () => {
+    const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes("tokens.text.legend"));
+    expect(offenders).toEqual(["src/design/Gauge.tsx"]);
+  });
+});
+
+describe("the display face is a refinement, not a launch requirement", () => {
+  test("holds the first paint until the fonts settle but boots the database anyway", () => {
+    mockFontsLoaded = false;
+    const booted = mockDbBoots;
+    let tree!: TestRenderer.ReactTestRenderer;
+    try {
+      act(() => {
+        tree = TestRenderer.create(<RootLayout />);
+      });
+      expect(tree.toJSON()).toBeNull();
+      expect(mockDbBoots).toBe(booted + 1);
+      act(() => {
+        tree.unmount();
+      });
+    } finally {
+      mockFontsLoaded = true;
+    }
   });
 });

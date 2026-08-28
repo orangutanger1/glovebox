@@ -59,7 +59,7 @@ export function Field({
 
   return (
     <View style={{ gap: tokens.space.xs }}>
-      <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>{label}</Text>
+      <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>{label}</Text>
       <Well
         focused={focused}
         // Red is reserved for overdue and destructive — a rejected value is
@@ -108,7 +108,7 @@ export function Field({
             }}
           >
             <Pressable onPress={() => Keyboard.dismiss()} hitSlop={12}>
-              <Text style={{ ...tokens.text.legend, fontSize: 14, color: c.ink }}>
+              <Text style={{ ...tokens.text.body, fontWeight: "600", color: c.ink }}>
                 Done
               </Text>
             </Pressable>

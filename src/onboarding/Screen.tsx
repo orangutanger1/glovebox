@@ -276,7 +276,7 @@ export function OnboardingScreen({
                 {({ pressed }) => (
                   <Text
                     style={{
-                      ...tokens.text.legend,
+                      ...tokens.text.caption,
                       color: pressed ? c.ink : c.inkMuted,
                     }}
                   >
@@ -288,7 +288,7 @@ export function OnboardingScreen({
             {legend ?? (
               quiz ? (
                 <>
-                  <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>
+                  <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
                     {t("onboardingC.question", { step: quiz.step, total: quiz.total })}
                   </Text>
                   <StepLamps step={quiz.step} total={quiz.total} />

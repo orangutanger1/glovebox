@@ -131,7 +131,7 @@ export default function OnboardingPaywall() {
           the reminder ask it belongs to; reprinting it here made this screen a
           document and buried the offer below six rows of it. */}
       <View style={{ gap: tokens.space.sm }}>
-        <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>
+        <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
           {t("offer.paywall.impact.legend")}
         </Text>
         <Panel>

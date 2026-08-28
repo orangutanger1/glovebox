@@ -143,7 +143,7 @@ export default function Intervals() {
             subtitle={describe(effective[type])}
             right={
               overrides[type] ? (
-                <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
+                <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
                   {t("intervals.custom")}
                 </Text>
               ) : undefined

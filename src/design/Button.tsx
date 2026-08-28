@@ -44,7 +44,9 @@ export function Button({
             backgroundColor: fill[variant],
             borderWidth: 1,
             borderColor: variant === "secondary" ? c.hairline : "transparent",
-            paddingVertical: 17,
+            // 16 + body's 24pt line box + 16 = the same 56pt tall control the
+            // bare 17 bought against the old 22pt line.
+            paddingVertical: tokens.space.md,
             alignItems: "center",
             opacity: disabled ? 0.4 : pressed ? 0.9 : 1,
             transform: [{ scale: pressed && !disabled ? 0.98 : 1 }],

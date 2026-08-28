@@ -86,7 +86,7 @@ function SectionLegend({ children }: { children: string }) {
   const c = useTheme();
 
   return (
-    <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>{children}</Text>
+    <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>{children}</Text>
   );
 }
 
@@ -266,7 +266,7 @@ export default function VehicleDetail() {
                   borderRadius: tokens.radius.sm,
                 }}
               >
-                <Text style={{ ...tokens.text.legend, color: "#FFFFFF" }}>
+                <Text style={{ ...tokens.text.caption, fontWeight: "600", color: "#FFFFFF" }}>
                   {t("vehicle.swipe.delete")}
                 </Text>
               </Pressable>
@@ -302,7 +302,7 @@ export default function VehicleDetail() {
                 <Text style={{ ...tokens.text.body, color: c.ink }}>
                   {t("vehicle.serviceDeleted")}
                 </Text>
-                <Text style={{ ...tokens.text.legend, fontSize: 14, color: c.accent }}>
+                <Text style={{ ...tokens.text.body, fontWeight: "600", color: c.accent }}>
                   {t("vehicle.undo")}
                 </Text>
               </View>

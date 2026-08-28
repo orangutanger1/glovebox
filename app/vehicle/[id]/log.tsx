@@ -125,7 +125,7 @@ export default function LogService() {
       }
     >
       <Card>
-        <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
+        <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
           {t("vehicleForms.log.what")}
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
@@ -140,7 +140,7 @@ export default function LogService() {
         </View>
       </Card>
       <Card>
-        <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
+        <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
           {t("vehicleForms.log.when")}
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>

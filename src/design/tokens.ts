@@ -6,17 +6,19 @@
  * What is left here is theme-independent: spacing, radius, and the type scale.
  */
 export const tokens = {
-  space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },
-  radius: { sm: 8, md: 14, lg: 18, pill: 999 },
+  space: { xs: 4, sm: 8, md: 16, card: 20, lg: 24, xl: 32, xxl: 48 },
+  radius: { sm: 10, md: 16, lg: 22, xl: 28, pill: 999 },
 
   text: {
-    hero: { fontSize: 34, fontWeight: "700" as const, lineHeight: 40 },
-    title: { fontSize: 28, fontWeight: "700" as const, lineHeight: 34 },
-    heading: { fontSize: 20, fontWeight: "600" as const, lineHeight: 25 },
-    body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
+    // No `fontWeight` alongside `fontFamily`: the weight is in the file name,
+    // and passing both makes iOS synthesise a fake bold on top of a real one.
+    hero: { fontSize: 34, fontFamily: "InstrumentSans-Bold", lineHeight: 41 },
+    title: { fontSize: 28, fontFamily: "InstrumentSans-Bold", lineHeight: 34 },
+    heading: { fontSize: 20, fontFamily: "InstrumentSans-SemiBold", lineHeight: 26 },
+    body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 24 },
     caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
 
-    /** Dashboard legend. Every label that names a value uses this. */
+    /** Gauge legends, and nothing else. Every other label is `caption`. */
     legend: {
       fontSize: 12,
       fontWeight: "600" as const,

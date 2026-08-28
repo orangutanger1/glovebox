@@ -93,7 +93,9 @@ export default function OnboardingSymptoms() {
           <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.md }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
               <Lamp lit size={14} />
-              <Text style={{ ...tokens.text.legend, color: c.ink }}>{card.legend}</Text>
+              <Text style={{ ...tokens.text.caption, fontWeight: "600", color: c.ink }}>
+                {card.legend}
+              </Text>
             </View>
             <Text style={{ ...tokens.text.body, color: c.ink }}>{card.body}</Text>
           </View>

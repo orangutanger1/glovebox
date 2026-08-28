@@ -67,7 +67,7 @@ export default function Winback() {
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
-            <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
+            <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
               {t("offer.winback.decline")}
             </Text>
           </Pressable>

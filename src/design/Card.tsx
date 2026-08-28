@@ -21,7 +21,7 @@ export function Card({
     <Panel style={status === "overdue" ? { backgroundColor: c.overdueWash } : undefined}>
       <View style={{ flexDirection: "row" }}>
         {status === "overdue" ? <View style={{ width: 4, backgroundColor: c.overdue }} /> : null}
-        <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.sm }}>
+        <View style={{ flex: 1, padding: tokens.space.card, gap: tokens.space.sm }}>
           {children}
         </View>
       </View>

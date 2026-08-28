@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack, useRouter } from "expo-router";
 import * as QuickActions from "expo-quick-actions";
@@ -46,6 +47,14 @@ export default function RootLayout() {
   // every screen then rebuilds its sentences instead of keeping the ones it
   // formatted in the previous language.
   const [localeEpoch, setLocaleEpoch] = useState(0);
+
+  // The app renders either way: a font that fails to load must not hold the
+  // splash screen, so `error` is read rather than ignored.
+  const [fontsLoaded, fontError] = useFonts({
+    "InstrumentSans-SemiBold": require("../assets/fonts/InstrumentSans-SemiBold.ttf"),
+    "InstrumentSans-Bold": require("../assets/fonts/InstrumentSans-Bold.ttf"),
+  });
+  const fontsSettled = fontsLoaded || fontError !== null;
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
@@ -174,6 +183,8 @@ export default function RootLayout() {
     );
   }
 
+  if (!fontsSettled) return null;
+
   return (
     <ThemeProvider>
       <Chrome localeEpoch={localeEpoch} />
@@ -205,7 +216,7 @@ function Chrome({ localeEpoch }: { localeEpoch: number }) {
         screenOptions={{
           headerStyle: { backgroundColor: c.base },
           headerTintColor: c.ink,
-          headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: c.ink },
+          headerTitleStyle: { ...tokens.text.heading, fontSize: 17, color: c.ink },
           headerShadowVisible: false,
           contentStyle: { backgroundColor: c.base },
           // A chevron with no label. The default label is the previous route's

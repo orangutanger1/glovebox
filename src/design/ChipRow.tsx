@@ -49,7 +49,7 @@ export function ChipRow<T extends string>({
   return (
     <View style={{ gap: tokens.space.sm }}>
       {legend ? (
-        <Text style={{ ...tokens.text.legend, color: c.inkFaint }}>{legend}</Text>
+        <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>{legend}</Text>
       ) : null}
       {scroll ? (
         <ScrollView

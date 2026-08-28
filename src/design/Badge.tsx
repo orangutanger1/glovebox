@@ -31,7 +31,7 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
         alignSelf: "flex-start",
       }}
     >
-      <Text style={{ ...tokens.text.legend, fontSize: 11, color: t.fg }}>{label}</Text>
+      <Text style={{ ...tokens.text.caption, fontWeight: "600", color: t.fg }}>{label}</Text>
     </View>
   );
 }

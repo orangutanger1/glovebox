@@ -175,7 +175,7 @@ export default function OnboardingVehicle() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-          <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>
+          <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
             {t("onboardingA.vehicle.year")}
           </Text>
           <Wheel
