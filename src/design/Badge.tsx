@@ -14,8 +14,8 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
   // frozen table cannot answer which theme is on the glass.
   const TONE = {
     due: { bg: c.overdue, fg: "#FFFFFF", border: "rgba(255,255,255,0.35)" },
-    soon: { bg: "rgba(0,0,0,0.35)", fg: c.ink, border: c.hairline },
-    ok: { bg: "rgba(0,0,0,0.25)", fg: c.inkMuted, border: c.hairline },
+    soon: { bg: c.cardSunken, fg: c.ink, border: c.hairline },
+    ok: { bg: c.cardSunken, fg: c.inkMuted, border: c.hairline },
   };
   const t = TONE[tone];
 

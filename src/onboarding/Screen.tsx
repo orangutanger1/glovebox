@@ -241,7 +241,7 @@ export function OnboardingScreen({
         colors={
           tone === "alarm"
             ? [c.overdueWash, "transparent"]
-            : ["rgba(255,255,255,0.05)", "transparent"]
+            : [c.card, "transparent"]
         }
         style={{ position: "absolute", top: 0, left: 0, right: 0, height: 260 }}
       />

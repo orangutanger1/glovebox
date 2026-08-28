@@ -129,7 +129,7 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
             borderTopWidth: 1,
             borderBottomWidth: 1,
             borderColor: c.hairline,
-            backgroundColor: "rgba(255,255,255,0.04)",
+            backgroundColor: c.card,
           }}
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>{children}</View>

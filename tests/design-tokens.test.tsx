@@ -85,14 +85,18 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
+import { Badge } from "../src/design/Badge";
 import { Card } from "../src/design/Card";
 import { Chip } from "../src/design/Chip";
 import { Glass } from "../src/design/Glass";
 import { Lamp } from "../src/design/Lamp";
+import { ListRow } from "../src/design/ListRow";
+import { OdometerRoll } from "../src/design/OdometerRoll";
 import { LIGHT, DARK } from "../src/design/palette";
 import { ProgressBar } from "../src/design/ProgressBar";
 import { ThemeProvider } from "../src/design/theme";
 import { type ThemeMode } from "../src/design/themeState";
+import { Wheel } from "../src/design/Wheel";
 import RootLayout from "../app/_layout";
 
 describe("an unselected chip is still visibly a control", () => {
@@ -341,6 +345,51 @@ describe("the progress bar is visible in its own track", () => {
     act(() => {
       tree.unmount();
     });
+  });
+});
+
+describe("the odometer is drawn on the theme's own surfaces", () => {
+  // The drums kept `#08090B`, `#1A1D20` and `#2A1215` through the palette
+  // migration because they were never `tokens.color` references: a near-black
+  // well with near-black strips in it, on warm paper.
+  test.each(MODES)("sinks the well and lifts the digit strips in %s", (mode, palette) => {
+    const tree = renderThemed(mode, <OdometerRoll value={123456} />);
+    const fills = styleValues(tree, "backgroundColor");
+    expect(fills).toContain(palette.cardSunken);
+    expect(fills).toContain(palette.card);
+    // The tenths drum, tinted rather than filled — the wash composites over
+    // the well, so it reads against the `card` strips beside it.
+    expect(fills).toContain(palette.overdueWash);
+    act(() => {
+      tree.unmount();
+    });
+  });
+});
+
+describe("the drums, rows and badges paint nothing the palette does not own", () => {
+  // Stated as ownership rather than as a list of banned hexes: the leftovers
+  // swept here were hard-coded literals, and the next one to appear will be a
+  // literal nobody thought to add to a banned list.
+  test.each(MODES)("every fill in the swept components is a palette value in %s", (mode, palette) => {
+    const owned = [
+      ...Object.values(palette).filter((v): v is string => typeof v === "string"),
+      "transparent",
+    ];
+    const nodes = [
+      <Wheel values={[2020, 2021, 2022]} labels={["2020", "2021", "2022"]} value={2021} onChange={() => {}} />,
+      <OdometerRoll value={123456} />,
+      <ListRow title="Oil change" subtitle="1,000 over" status="overdue" onPress={() => {}} />,
+      ...(["due", "soon", "ok"] as const).map((tone) => <Badge key={tone} label="Due" tone={tone} />),
+    ];
+    for (const node of nodes) {
+      const tree = renderThemed(mode, node);
+      const fills = styleValues(tree, "backgroundColor");
+      expect(fills.length).toBeGreaterThan(0);
+      for (const fill of fills) expect(owned).toContain(fill);
+      act(() => {
+        tree.unmount();
+      });
+    }
   });
 });
 

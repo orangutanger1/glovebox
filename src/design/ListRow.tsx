@@ -36,12 +36,11 @@ export function ListRow({
             flexDirection: "row",
             alignItems: "center",
             borderRadius: tokens.radius.sm,
-            backgroundColor: pressed ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.18)",
+            // The groove fills level with the panel under a finger; the
+            // palette has two surface fills and this is the visible one.
+            backgroundColor: pressed ? c.card : c.cardSunken,
             borderWidth: 1,
-            borderTopColor: c.hairline,
-            borderLeftColor: c.hairline,
-            borderRightColor: c.hairline,
-            borderBottomColor: c.hairline,
+            borderColor: c.hairline,
             overflow: "hidden",
           }}
         >
