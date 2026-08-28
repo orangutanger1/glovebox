@@ -53,4 +53,7 @@ export const enAU: Fragment = {
   "service.Tire Rotation": "Tyre Rotation",
   "service.Registration": "Rego",
   "service.Inspection": "Roadworthy",
+
+  "vehicle.body.wagon": "Estate",
+  "vehicle.body.pickup": "Ute",
 };

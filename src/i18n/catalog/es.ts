@@ -183,6 +183,8 @@ export const es: Fragment = {
   "onboardingA.vehicle.makeOptional": "Marca (opcional)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "¿Qué tipo de coche es?",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
 
   "onboardingA.odometer.title.mi": "¿Cuántas millas tiene?",
@@ -413,6 +415,8 @@ export const es: Fragment = {
 
   "settings.intervals": "Intervalos de mantenimiento",
 
+  "settings.theme.label": "Apariencia",
+
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidades: {unit}",
   "settings.units.title": "¿Cambiar a {unit}?",
@@ -493,6 +497,14 @@ export const es: Fragment = {
 
   // vehicle
   "vehicle.title": "Vehículo",
+
+  "vehicle.body.sedan": "Sedán",
+  "vehicle.body.hatchback": "Hatchback",
+  "vehicle.body.coupe": "Cupé",
+  "vehicle.body.wagon": "Familiar",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Pickup",
+  "vehicle.body.van": "Furgoneta",
 
   "vehicle.odometer": "Cuentakilómetros",
   "vehicle.odometer.notSet": "Sin definir",

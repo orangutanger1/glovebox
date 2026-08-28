@@ -19,6 +19,8 @@ export const settings: Fragment = {
 
   "settings.intervals": "Service intervals",
 
+  "settings.theme.label": "Appearance",
+
   // Two rows a localized app has to have: which language, and which unit. The
   // unit dialog is worded to be boring on purpose — it names both units and
   // shows what one real reading becomes, so nobody can be surprised afterwards.

@@ -35,6 +35,8 @@ export const onboardingA: Fragment = {
   "onboardingA.vehicle.modelOptional": "Model (optional)",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
+  "onboardingA.body.title": "What kind of car is it?",
+
   "onboardingA.odometer.title.mi": "How many miles on it?",
   "onboardingA.odometer.title.km": "How many kilometres on it?",
   "onboardingA.odometer.field": "Odometer ({unit})",

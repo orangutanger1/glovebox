@@ -173,6 +173,8 @@ export const ja: Fragment = {
   "onboardingA.vehicle.makeOptional": "メーカー（任意）",
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
+
+  "onboardingA.body.title": "どんな車ですか？",
   "onboardingA.vehicle.modelOptional": "車種（任意）",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
@@ -382,6 +384,8 @@ export const ja: Fragment = {
 
   "settings.intervals": "整備間隔",
 
+  "settings.theme.label": "外観",
+
   "settings.language": "言語：{language}",
   "settings.units": "単位：{unit}",
   "settings.units.title": "{unit}に切り替えますか？",
@@ -454,6 +458,14 @@ export const ja: Fragment = {
 
   // vehicle
   "vehicle.title": "車両",
+
+  "vehicle.body.sedan": "セダン",
+  "vehicle.body.hatchback": "ハッチバック",
+  "vehicle.body.coupe": "クーペ",
+  "vehicle.body.wagon": "ワゴン",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "ピックアップ",
+  "vehicle.body.van": "バン",
 
   "vehicle.odometer": "走行距離",
   "vehicle.odometer.notSet": "未設定",

@@ -194,6 +194,8 @@ export const fr: Fragment = {
   "onboardingA.vehicle.makeOptional": "Marque (facultatif)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "Quel type de voiture ?",
   "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
 
   "onboardingA.odometer.title.mi": "Combien de miles au compteur\u00a0?",
@@ -421,6 +423,8 @@ export const fr: Fragment = {
 
   "settings.intervals": "Intervalles d'entretien",
 
+  "settings.theme.label": "Apparence",
+
   // `{unit}`, `{from}` and `{to}` arrive as the literal abbreviations "mi"/"km",
   // so they are left alone; the 50 000 reading keeps its from-unit figure and
   // only its grouping becomes French.
@@ -505,6 +509,14 @@ export const fr: Fragment = {
 
   // vehicle
   "vehicle.title": "Véhicule",
+
+  "vehicle.body.sedan": "Berline",
+  "vehicle.body.hatchback": "Berline compacte",
+  "vehicle.body.coupe": "Coupé",
+  "vehicle.body.wagon": "Break",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Pick-up",
+  "vehicle.body.van": "Monospace",
 
   "vehicle.odometer": "Compteur",
   "vehicle.odometer.notSet": "Non renseigné",

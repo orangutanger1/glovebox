@@ -186,6 +186,8 @@ export const ko: Fragment = {
   "onboardingA.vehicle.makeOptional": "제조사(선택)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "어떤 차인가요?",
   "onboardingA.vehicle.modelOptional": "모델(선택)",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
@@ -404,6 +406,8 @@ export const ko: Fragment = {
 
   "settings.intervals": "정비 주기",
 
+  "settings.theme.label": "화면 스타일",
+
   "settings.language": "언어: {language}",
   "settings.units": "단위: {unit}",
   "settings.units.title": "{unit} 단위로 바꿀까요?",
@@ -479,6 +483,14 @@ export const ko: Fragment = {
 
   // vehicle
   "vehicle.title": "차량",
+
+  "vehicle.body.sedan": "세단",
+  "vehicle.body.hatchback": "해치백",
+  "vehicle.body.coupe": "쿠페",
+  "vehicle.body.wagon": "왜건",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "픽업트럭",
+  "vehicle.body.van": "밴",
 
   "vehicle.odometer": "주행거리",
   "vehicle.odometer.notSet": "미입력",

@@ -175,6 +175,8 @@ export const ptBR: Fragment = {
   "onboardingA.vehicle.makeOptional": "Marca (opcional)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "Que tipo de carro é?",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
 
   "onboardingA.odometer.title.mi": "Quantas milhas ele tem?",
@@ -398,6 +400,8 @@ export const ptBR: Fragment = {
 
   "settings.intervals": "Intervalos de revisão",
 
+  "settings.theme.label": "Aparência",
+
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidade: {unit}",
   "settings.units.title": "Mudar para {unit}?",
@@ -474,6 +478,14 @@ export const ptBR: Fragment = {
   "unit.km.label": "km",
 
   "vehicle.title": "Veículo",
+
+  "vehicle.body.sedan": "Sedã",
+  "vehicle.body.hatchback": "Hatch",
+  "vehicle.body.coupe": "Cupê",
+  "vehicle.body.wagon": "Perua",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Picape",
+  "vehicle.body.van": "Van",
 
   "vehicle.odometer": "Odômetro",
   "vehicle.odometer.notSet": "Não informado",

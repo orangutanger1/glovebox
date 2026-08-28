@@ -33,6 +33,8 @@ export const enGB: Fragment = {
   "service.Registration": "Road Tax",
   "service.Inspection": "MOT",
 
+  "vehicle.body.wagon": "Estate",
+
   // "Garage" as the user's own cars: renamed, and with it every sentence that
   // referred to that screen.
   "garage.title": "My cars",

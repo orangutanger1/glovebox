@@ -56,6 +56,14 @@ export const nl: Fragment = {
   // vehicle
   "vehicle.title": "Voertuig",
 
+  "vehicle.body.sedan": "Sedan",
+  "vehicle.body.hatchback": "Hatchback",
+  "vehicle.body.coupe": "Coupé",
+  "vehicle.body.wagon": "Stationwagen",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Pick-up",
+  "vehicle.body.van": "Bestelwagen",
+
   "vehicle.odometer": "Kilometerstand",
   "vehicle.odometer.notSet": "Niet ingevuld",
   "vehicle.odometer.estimated": "Kilometerstand (schatting)",
@@ -171,6 +179,8 @@ export const nl: Fragment = {
 
   "settings.intervals": "Onderhoudsintervallen",
 
+  "settings.theme.label": "Weergave",
+
   "settings.language": "Taal: {language}",
   "settings.units": "Eenheden: {unit}",
   "settings.units.title": "Overschakelen naar {unit}?",
@@ -272,6 +282,8 @@ export const nl: Fragment = {
   "onboardingA.vehicle.makeOptional": "Merk (optioneel)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "Wat voor auto is het?",
   "onboardingA.vehicle.modelOptional": "Model (optioneel)",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",

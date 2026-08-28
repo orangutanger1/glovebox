@@ -111,8 +111,13 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //   system.csv.*               the export's cell values are held stable on
     //                              purpose, so a spreadsheet parses the same file
     //                              whatever language wrote it
+    //   vehicle.body.*             body styles a market names in English:
+    //                              SUV everywhere, plus Sedan/Hatchback/
+    //                              Pickup/Van where that is the owner's word.
+    //                              wagon and coupe stay guarded — those are
+    //                              Kombi, Break, Perua, Coupé.
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

@@ -11,6 +11,14 @@ import type { Fragment } from "../types";
 export const vehicle: Fragment = {
   "vehicle.title": "Vehicle",
 
+  "vehicle.body.sedan": "Sedan",
+  "vehicle.body.hatchback": "Hatchback",
+  "vehicle.body.coupe": "Coupe",
+  "vehicle.body.wagon": "Wagon",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Pickup",
+  "vehicle.body.van": "Van",
+
   "vehicle.odometer": "Odometer",
   "vehicle.odometer.notSet": "Not set",
   /** A reading estimated from the model year, never presented as a reading. */

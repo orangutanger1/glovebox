@@ -185,6 +185,8 @@ export const sv: Fragment = {
   "onboardingA.vehicle.makeOptional": "Märke (valfritt)",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
+
+  "onboardingA.body.title": "Vilken typ av bil är det?",
   "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
@@ -404,6 +406,8 @@ export const sv: Fragment = {
 
   "settings.intervals": "Serviceintervall",
 
+  "settings.theme.label": "Utseende",
+
   "settings.language": "Språk: {language}",
   "settings.units": "Enhet: {unit}",
   "settings.units.title": "Byt till {unit}?",
@@ -480,6 +484,14 @@ export const sv: Fragment = {
   "unit.km.label": "km",
 
   "vehicle.title": "Fordon",
+
+  "vehicle.body.sedan": "Sedan",
+  "vehicle.body.hatchback": "Halvkombi",
+  "vehicle.body.coupe": "Coupé",
+  "vehicle.body.wagon": "Kombi",
+  "vehicle.body.suv": "SUV",
+  "vehicle.body.pickup": "Pickup",
+  "vehicle.body.van": "Skåpbil",
 
   "vehicle.odometer": "Mätarställning",
   "vehicle.odometer.notSet": "Inte angiven",
