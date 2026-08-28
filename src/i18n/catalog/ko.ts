@@ -407,6 +407,9 @@ export const ko: Fragment = {
   "settings.intervals": "정비 주기",
 
   "settings.theme.label": "화면 스타일",
+  "settings.theme.system": "시스템",
+  "settings.theme.light": "라이트",
+  "settings.theme.dark": "다크",
 
   "settings.language": "언어: {language}",
   "settings.units": "단위: {unit}",

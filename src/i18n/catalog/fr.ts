@@ -424,6 +424,9 @@ export const fr: Fragment = {
   "settings.intervals": "Intervalles d'entretien",
 
   "settings.theme.label": "Apparence",
+  "settings.theme.system": "Système",
+  "settings.theme.light": "Clair",
+  "settings.theme.dark": "Sombre",
 
   // `{unit}`, `{from}` and `{to}` arrive as the literal abbreviations "mi"/"km",
   // so they are left alone; the 50 000 reading keeps its from-unit figure and

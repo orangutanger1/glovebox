@@ -52,4 +52,10 @@ describe("the stored theme mode", () => {
     setState("theme", "sepia");
     expect(getThemeMode()).toBe("system");
   });
+
+  test("a chosen mode is what the next launch reads", () => {
+    setThemeMode("dark");
+    const { getThemeMode: fresh } = require("../src/design/themeState");
+    expect(fresh()).toBe("dark");
+  });
 });
