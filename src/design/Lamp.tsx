@@ -46,6 +46,8 @@ export function Lamp({
           height: size,
           borderRadius: size / 2,
           backgroundColor: lit ? (alarm ? c.overdue : c.accent) : c.hairline,
+          // Ratified deviation: the lit border was `"rgba(255,255,255,0.35)"` and is
+          // now `c.hairline` in every state — a 35% white rim light does nothing on paper.
           borderWidth: 1,
           borderColor: c.hairline,
         }}

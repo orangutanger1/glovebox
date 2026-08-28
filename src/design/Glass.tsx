@@ -30,6 +30,8 @@ export function Glass({
 
   return (
     <BlurView intensity={40} tint={c.blurTint} style={[{ overflow: "hidden" }, style]}>
+      {/* Ratified deviation: this pane's own `backgroundColor: "rgba(15,17,19,0.55)"` was deleted and its
+          border moved to `c.hairline` — a black footer on warm paper, and `app.json` pins iOS so the blur is real. */}
       <View
         style={{
           borderTopWidth: edge === "top" ? 1 : 0,

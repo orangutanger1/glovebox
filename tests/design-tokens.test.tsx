@@ -23,14 +23,77 @@ jest.mock("../src/design/themeState", () => ({
   setThemeMode: () => {},
 }));
 
+/**
+ * Everything below exists only so `app/_layout.tsx` can be rendered for the
+ * status-bar test at the bottom of this file. `RootLayout` is the app's boot
+ * sequence — database, purchases, analytics, notifications, quick actions —
+ * and it is also the only place the palette decides the colour of the phone's
+ * own glyphs, so there is no smaller unit to render. `Chrome` is not exported
+ * and is deliberately not being exported to make this easier: the seam being
+ * tested is the one the app actually mounts.
+ *
+ * The mocks are inert on purpose. None of the boot work is under test here;
+ * the assertion is one prop on one element.
+ */
+jest.mock("expo-router", () => {
+  const { createElement } = require("react");
+  const Stack = ({ children }: { children?: React.ReactNode }) =>
+    createElement("View", null, children);
+  Stack.Screen = () => null;
+  return {
+    Stack,
+    useRouter: () => ({ push: () => {}, replace: () => {}, navigate: () => {} }),
+  };
+});
+jest.mock("react-native-gesture-handler", () => {
+  const { createElement } = require("react");
+  return {
+    GestureHandlerRootView: ({ children }: { children?: React.ReactNode }) =>
+      createElement("View", null, children),
+  };
+});
+jest.mock("expo-quick-actions", () => ({ initial: null }));
+jest.mock("expo-quick-actions/hooks", () => ({ useQuickActionCallback: () => {} }));
+jest.mock("../src/db/client", () => ({ getDb: () => ({}) }));
+jest.mock("../src/purchases", () => ({
+  DISCOUNT_OFFERING: "discount",
+  hasOffering: async () => false,
+  initPurchases: () => {},
+  isPro: async () => false,
+}));
+jest.mock("../src/analytics", () => ({
+  identifyFromPurchases: async () => {},
+  initAnalytics: () => {},
+  reportFatals: () => {},
+}));
+jest.mock("../src/notify", () => ({ rescheduleAll: async () => {} }));
+jest.mock("../src/onboarding", () => ({ isOnboarded: () => true, getOnboardingStep: () => null }));
+jest.mock("../src/onboarding/flow", () => ({ resumeRoute: () => "welcome" }));
+jest.mock("../src/review", () => ({ recordReviewEvent: () => {} }));
+jest.mock("../src/winback", () => ({ recordOpen: () => null, getWinbackShownAt: () => null }));
+jest.mock("../src/winback/state", () => ({ shouldOfferWinback: () => false }));
+jest.mock("../src/quickactions", () => ({
+  QUICK_ACTION_FEEDBACK: "feedback",
+  QUICK_ACTION_TRIAL: "trial",
+  syncQuickActions: async () => {},
+}));
+jest.mock("../src/feedback", () => ({ openFeedback: async () => {} }));
+jest.mock("../src/i18n/preference", () => ({ bootLanguage: () => "en" }));
+jest.mock("../src/units", () => ({ initDistanceUnit: () => {} }));
+
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
 import { Card } from "../src/design/Card";
 import { Chip } from "../src/design/Chip";
+import { Glass } from "../src/design/Glass";
+import { Lamp } from "../src/design/Lamp";
 import { LIGHT, DARK } from "../src/design/palette";
+import { ProgressBar } from "../src/design/ProgressBar";
 import { ThemeProvider } from "../src/design/theme";
 import { type ThemeMode } from "../src/design/themeState";
+import RootLayout from "../app/_layout";
 
 describe("an unselected chip is still visibly a control", () => {
   // The superseded spec's whole reason for existing: transparent-filled chips
@@ -153,5 +216,160 @@ describe("the instrument-panel material system is gone", () => {
   ])("no source file mentions %s", (banned) => {
     const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes(banned));
     expect(offenders).toEqual([]);
+  });
+});
+
+const MODES = [
+  ["light", LIGHT],
+  ["dark", DARK],
+] as const;
+
+/**
+ * Every style value a rendered tree puts on a host node under one key.
+ *
+ * The two tests above inline this because they only look at
+ * `backgroundColor`; the lamp and the glass are also judged on their border,
+ * so the key is a parameter here. Style props arrive as arrays as often as
+ * objects, and the last entry wins, which is exactly what `Object.assign`
+ * does.
+ */
+function styleValues(tree: TestRenderer.ReactTestRenderer, key: string): unknown[] {
+  return tree.root
+    .findAll((n) => typeof n.type === "string")
+    .flatMap((n) => {
+      const style = n.props.style;
+      const flat = Array.isArray(style) ? Object.assign({}, ...style.filter(Boolean)) : style;
+      return flat?.[key] ? [flat[key]] : [];
+    });
+}
+
+/**
+ * Renders inside `ThemeProvider` with the stored mode set, because every
+ * component below reads the palette out of context. A bare render always gets
+ * the LIGHT default, which makes the dark row of a two-row table pass while
+ * testing the light component twice.
+ */
+function renderThemed(mode: ThemeMode, node: React.ReactNode): TestRenderer.ReactTestRenderer {
+  mockStoredMode = mode;
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(<ThemeProvider>{node}</ThemeProvider>);
+  });
+  return tree;
+}
+
+describe("the lamp's tone", () => {
+  // `tone` is an *additive* prop: it was allowed in only because omitting it
+  // reproduces the previous render exactly. Four call sites rely on that —
+  // `Gauge`'s `lamp` prop, `app/index.tsx`, `app/onboarding/paywall.tsx` and
+  // `app/onboarding/symptoms.tsx` — and none of them names a tone. Flip the
+  // default and every one of them silently turns from an alarm into a
+  // progress pip, which is the failure this table exists to catch.
+  test.each(MODES)(
+    "defaults to alarm, so a call site that names no tone still renders red in %s",
+    (mode, palette) => {
+      const tree = renderThemed(mode, <Lamp lit />);
+      const fills = styleValues(tree, "backgroundColor");
+      expect(fills).toContain(palette.overdueWash);
+      expect(fills).toContain(palette.overdue);
+      expect(fills).not.toContain(palette.accent);
+      act(() => {
+        tree.unmount();
+      });
+    }
+  );
+
+  test.each(MODES)("lights the accent with no red bloom for progress in %s", (mode, palette) => {
+    const tree = renderThemed(mode, <Lamp lit tone="progress" />);
+    const fills = styleValues(tree, "backgroundColor");
+    expect(fills).toContain(palette.accent);
+    expect(fills).not.toContain(palette.overdueWash);
+    expect(fills).not.toContain(palette.overdue);
+    act(() => {
+      tree.unmount();
+    });
+  });
+
+  // The lit bulb used to be rimmed in 35% white, a dark-theme rim light that
+  // draws a grey ring on warm paper. One hairline in every state now.
+  test.each(MODES)("rims the bulb in the hairline, lit or not, in %s", (mode, palette) => {
+    for (const lit of [true, false]) {
+      const tree = renderThemed(mode, <Lamp lit={lit} />);
+      const borders = styleValues(tree, "borderColor");
+      expect(borders.length).toBeGreaterThan(0);
+      for (const border of borders) expect(border).toBe(palette.hairline);
+      act(() => {
+        tree.unmount();
+      });
+    }
+  });
+});
+
+describe("the glass pane is blur, not a slab", () => {
+  // It used to paint `rgba(15,17,19,0.55)` over the blur, which is a black
+  // pane whichever tint is beneath it — a black sticky footer on warm paper.
+  // The blur plus one hairline is the separation now, so the only fill in the
+  // tree is the `transparent` that jest-expo's `BlurView` mock contributes.
+  test.each(MODES)("contributes no opaque fill of its own in %s", (mode, palette) => {
+    const tree = renderThemed(
+      mode,
+      <Glass edge="bottom">
+        <Text>Log service</Text>
+      </Glass>
+    );
+    for (const fill of styleValues(tree, "backgroundColor")) {
+      expect(fill).toBe("transparent");
+    }
+    const borders = styleValues(tree, "borderColor");
+    expect(borders).toContain(palette.hairline);
+    act(() => {
+      tree.unmount();
+    });
+  });
+});
+
+describe("the progress bar is visible in its own track", () => {
+  // The migration table's literal answer for the fill was `card`, which is
+  // `#FFFFFF` in a `#F2EEE8` track: a progress bar you cannot see. The fill
+  // being *different from the track* is the whole assertion.
+  test.each(MODES)("fills the sunken track with the accent in %s", (mode, palette) => {
+    const tree = renderThemed(mode, <ProgressBar duration={1000} />);
+    const fills = styleValues(tree, "backgroundColor");
+    expect(fills).toContain(palette.cardSunken);
+    expect(fills).toContain(palette.accent);
+    expect(palette.accent).not.toBe(palette.cardSunken);
+    act(() => {
+      tree.unmount();
+    });
+  });
+});
+
+describe("the phone's own glyphs invert against the palette", () => {
+  // `RootLayout` renders `ThemeProvider`, so the status bar reads the palette
+  // from `Chrome` one node below it. Get that wrong and the bar is not merely
+  // the wrong colour — it is the theme's colour, i.e. black glyphs on a
+  // near-black bar or white on warm paper, and the clock disappears.
+  //
+  // `RootLayout` is rendered rather than `Chrome`, which is not exported: the
+  // provider/consumer split is the thing under test, so the seam has to be the
+  // one the app mounts.
+  test.each([
+    ["light", LIGHT, "dark"],
+    ["dark", DARK, "light"],
+  ] as const)("uses %s-palette glyphs opposite the blur tint", (mode, palette, glyphs) => {
+    mockStoredMode = mode;
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<RootLayout />);
+    });
+    const bars = tree.root.findAllByType(StatusBar);
+    expect(bars).toHaveLength(1);
+    expect(bars[0].props.style).toBe(glyphs);
+    // Stated as the property and not as a copy of the implementation: with
+    // only two possible values, "not the tint" pins it.
+    expect(bars[0].props.style).not.toBe(palette.blurTint);
+    act(() => {
+      tree.unmount();
+    });
   });
 });
