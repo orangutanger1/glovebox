@@ -196,6 +196,43 @@ For the register's purpose: **1.1.0 is a two-bundle train already**. The
 embedded build-17 bundle is not a population — nobody completed a launch on it.
 Any 1.1.0 data begins with `ota_update_id = 01a04bcc-…`.
 
+### 2026-08-29 — correction: build 17 did reach analytics, and the fatal is after first paint
+
+Two corrections to the entry above, from the full crash log and the event data.
+
+**The crashing launch did reach `initAnalytics`.** `Application Updated` and
+`Application Opened` exist for `$app_version 1.1.0` / `$app_build 17`, captured
+2026-08-29T04:05:44Z (21:05:44 PT), `$sent_at` 04:34:58Z — flushed by one more
+open at roughly 21:34:50 PT, seconds before the entry above was committed. That
+is why it recorded zero events for 1.1.0; it lost a race with ingestion.
+`Application Opened` carries fresh `ota_*`: `ota_update_id
+18ec39bf-4fce-401a-bb0f-b3b4e8677bf1`, `ota_is_embedded true`,
+`ota_runtime_version 1.1.0`. Two consequences: the inlined keys worked, and
+`getDb()` with the v6 migration plus `initPurchases` — both ahead of
+`initAnalytics` in the boot effect — did not throw. Also note for every query
+that segments on bundle identity: on a device, the embedded launch reports its
+own manifest UUID in `ota_update_id`; `updateId` is never null there, so the
+`"embedded"` sentinel does not fire and `ota_is_embedded` is the real signal.
+
+**The stack says after first paint.** The submitted report aborts through
+`ErrorRecovery.notify → runNextTask → crash` with the `launchCached` task
+already removed, which only happens when the launched update's
+`successfulLaunchCount > 0` — some open of the embedded bundle rendered content
+first. So on a first open the boot effect ran to completion, content appeared,
+and the fatal hit inside the 10-second recovery window; a later open died
+pre-paint at 472ms. Every sync step after `initAnalytics` is guarded or pure
+(`recordReviewEvent` catches, `shouldOfferWinback` is null-safe, the rest are
+async), which points at a render or effect throw in the first screen on real
+device data. `body_style` is not it: the garage never reads the column, and
+only `app/onboarding/body.tsx` does — never mounted on an onboarded device.
+
+Next datum is one device open. The diagnostic OTA (`01a04bcc…`) is live for
+runtime 1.1.0, and `expo-updates`' recovery starts a real check and waits five
+seconds for it — with an update on the server it relaunches into the
+instrumented bundle, and a download that outlives the wait persists on disk for
+the launch after. The first open that gets far enough reports `boot_failed`
+with the step, `render_error`, or `js_error` with the stack.
+
 ## The standing caveat that outlives every entry
 
 As of this date the paywall has converted a sample of one. Nothing in this

@@ -1,5 +1,6 @@
 import { createElement, type ReactElement } from "react";
-import TestRenderer, { act } from "react-test-renderer";
+import { act } from "react";
+import TestRenderer from "react-test-renderer";
 import { StyleSheet, type TextStyle } from "react-native";
 
 /**

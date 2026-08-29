@@ -66,14 +66,29 @@ function boot<T>(step: string, run: () => T): T | undefined {
   try {
     return run();
   } catch (e) {
-    track("boot_failed", {
-      step,
-      message: e instanceof Error ? e.message : String(e),
-      stack: (e instanceof Error ? (e.stack ?? "") : "").slice(0, 4000),
-    });
+    const message = e instanceof Error ? e.message : String(e);
+    const stack = (e instanceof Error ? (e.stack ?? "") : "").slice(0, 4000);
+    // Both channels, because they fail differently: the SDK's queue survives
+    // the process and arrives late, the raw POST is on the wire now and is
+    // lost if there is no network. A launch failure is worth two attempts.
+    reportRaw("boot_failed", { step, message, stack });
+    track("boot_failed", { step, message, stack });
     flushNow();
     return undefined;
   }
+}
+
+/**
+ * The bootstrap entry's POST, when the app is running under it.
+ *
+ * `index.js` hangs it on the global rather than exporting it: this module is
+ * loaded by the graph that entry file requires, so an import would be a cycle,
+ * and under jest or web there is no entry file at all.
+ */
+function reportRaw(event: string, properties: Record<string, unknown>): void {
+  const send = (globalThis as { __wrenchyReport?: (e: string, p: unknown) => void })
+    .__wrenchyReport;
+  if (typeof send === "function") send(event, properties);
 }
 
 /**
@@ -86,10 +101,9 @@ function boot<T>(step: string, run: () => T): T | undefined {
  */
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   useEffect(() => {
-    track("render_error", {
-      message: error.message,
-      stack: (error.stack ?? "").slice(0, 4000),
-    });
+    const detail = { message: error.message, stack: (error.stack ?? "").slice(0, 4000) };
+    reportRaw("render_error", detail);
+    track("render_error", detail);
     flushNow();
   }, [error]);
 
@@ -180,6 +194,7 @@ export default function RootLayout() {
       // A migration failure already rolled the file back. Say so instead of
       // rendering an empty screen the user can only read as "my records
       // are gone".
+      reportRaw("boot_failed", { step: "database", message: String(e) });
       track("boot_failed", { step: "database", message: String(e) });
       flushNow();
       setFatal(String(e));
@@ -246,38 +261,63 @@ export default function RootLayout() {
       });
   }, []);
 
-  if (fatal) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: LIGHT.base,
-          alignItems: "center",
-          justifyContent: "center",
-          padding: tokens.space.xl,
-          gap: tokens.space.md,
-        }}
-      >
-        <StatusBar style="dark" />
-        <Text style={{ ...tokens.text.heading, color: LIGHT.ink, textAlign: "center" }}>
-          {t("layout.fatal.title")}
-        </Text>
-        <Text style={{ ...tokens.text.body, color: LIGHT.inkMuted, textAlign: "center" }}>
-          {t("layout.fatal.body")}
-        </Text>
-        <Text style={{ ...tokens.text.caption, color: LIGHT.inkFaint, textAlign: "center" }}>
-          {fatal}
-        </Text>
-      </View>
-    );
-  }
-
-  if (!fontsSettled) return null;
-
+  // Neither the font load nor a dead database may return early from here.
+  //
+  // This function is the root layout, which expo-router renders as the only
+  // screen of its own root navigator (`Content` in ExpoRoot) — so whatever it
+  // returns either contains the app's `<Stack>` or the app has no navigator at
+  // all. Returning `null` while the fonts resolve, which is what 1.1.0 shipped
+  // and 1.0.2 never did, left the router with a route to render and nowhere to
+  // render it on **every cold launch**: the root slot re-dispatched navigation
+  // state against a layout that mounts no navigator until React gave up with
+  // "Maximum update depth exceeded". That throw happens inside the commit
+  // driven from the C++ scheduler, so it reaches `RCTFatal` rather than
+  // `ErrorUtils` — past every JavaScript `try`/`catch` and error boundary —
+  // and under expo-updates the process aborts half a second into launch with a
+  // crash report naming only `ErrorRecovery.crash()`. Builds 17 through 20.
+  //
+  // Both states are drawn as overlays over a mounted `<Stack>` instead. Same
+  // pixels, no unmounted navigator.
   return (
     <ThemeProvider>
-      <Chrome localeEpoch={localeEpoch} />
+      <Chrome localeEpoch={localeEpoch} fatal={fatal} ready={fontsSettled} />
     </ThemeProvider>
+  );
+}
+
+/**
+ * The database is gone and no screen can be trusted. Absolutely positioned
+ * above the stack, opaque, and it swallows taps: the tree below it is mounted
+ * but must not be reachable.
+ */
+function FatalNotice({ detail }: { detail: string }) {
+  const c = useTheme();
+
+  return (
+    <View
+      style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        backgroundColor: c.base,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: tokens.space.xl,
+        gap: tokens.space.md,
+      }}
+    >
+      <Text style={{ ...tokens.text.heading, color: c.ink, textAlign: "center" }}>
+        {t("layout.fatal.title")}
+      </Text>
+      <Text style={{ ...tokens.text.body, color: c.inkMuted, textAlign: "center" }}>
+        {t("layout.fatal.body")}
+      </Text>
+      <Text style={{ ...tokens.text.caption, color: c.inkFaint, textAlign: "center" }}>
+        {detail}
+      </Text>
+    </View>
   );
 }
 
@@ -291,8 +331,19 @@ export default function RootLayout() {
  * theme. `localeEpoch` is passed down because it is the tree's key; the router
  * is re-read rather than threaded, since `useRouter` is a hook and this is a
  * component.
+ *
+ * `ready` and `fatal` are drawn over the stack rather than in place of it. See
+ * the note in `RootLayout` for why nothing may take the navigator's place.
  */
-function Chrome({ localeEpoch }: { localeEpoch: number }) {
+function Chrome({
+  localeEpoch,
+  fatal,
+  ready,
+}: {
+  localeEpoch: number;
+  fatal: string | null;
+  ready: boolean;
+}) {
   const c = useTheme();
   const router = useRouter();
 
@@ -359,6 +410,23 @@ function Chrome({ localeEpoch }: { localeEpoch: number }) {
           options={{ title: t("layout.logService"), headerTitle: "" }}
         />
       </Stack>
+      {/* The font gate, as a curtain rather than an absence: the type scale
+          names two families that are still loading, and a screen that paints
+          in the fallback face and reflows a frame later reads as a glitch. */}
+      {!ready && fatal === null && (
+        <View
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            backgroundColor: c.base,
+          }}
+        />
+      )}
+      {fatal !== null && <FatalNotice detail={fatal} />}
     </GestureHandlerRootView>
   );
 }

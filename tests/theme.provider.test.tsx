@@ -29,7 +29,8 @@ jest.mock("react-native/Libraries/Utilities/useColorScheme", () => ({
 }));
 
 import { Text } from "react-native";
-import TestRenderer, { act } from "react-test-renderer";
+import { act } from "react";
+import TestRenderer from "react-test-renderer";
 import { getDb } from "../src/db/client";
 import { DARK, LIGHT } from "../src/design/palette";
 import { ThemeProvider, useTheme, useThemeMode } from "../src/design/theme";

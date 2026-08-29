@@ -1,7 +1,7 @@
 {
   "name": "car-maintenance-log",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "./index.js",
   "dependencies": {
     "expo": "~57.0.9",
     "expo-application": "~57.0.2",
@@ -41,6 +41,7 @@
     "@types/jest": "^29.5.14",
     "@types/react": "~19.2.2",
     "better-sqlite3": "^13.0.2",
+    "eas-cli": "^23.0.0",
     "fontkit": "^2.0.4",
     "jest": "~29.7.0",
     "jest-expo": "^57.0.3",
@@ -68,7 +69,8 @@
     "eas:status": "node scripts/eas-build.mjs --status --live",
     "eas:accounts": "node scripts/eas-accounts.mjs",
     "eas:switch": "node scripts/eas-switch.mjs",
-    "ota": "node scripts/ota.mjs"
+    "ota": "node scripts/ota.mjs",
+    "postinstall": "node scripts/patch-eas-jwt.mjs"
   },
   "private": true
 }

@@ -41,13 +41,14 @@ export function initPurchases(): void {
   }
   Purchases.setLogLevel(__DEV__ ? LOG_LEVEL.DEBUG : LOG_LEVEL.ERROR);
   Purchases.configure({ apiKey });
-  // Without this, every Apple Search Ads install lands in RevenueCat as
-  // organic: the AdServices attribution token is what carries campaign, ad
-  // group and keyword. It is the only way to tie subscription revenue back to
-  // a keyword, so keyword-level ROAS is unmeasurable until it is called.
-  // iOS-only and best-effort — a rejected/absent token is not an error worth
-  // surfacing to the user.
-  Purchases.enableAdServicesAttributionTokenCollection().catch(() => {});
+  // AdServices attribution collection is disabled: on iOS 26.6 the token fetch
+  // wedges six `AAAttributionRequester` threads at launch — every one blocked
+  // on the framework's own semaphore, per the build 18 and 19 crash reports —
+  // inside the window the app then dies in. Without it, Apple Search Ads
+  // installs land in RevenueCat as organic until the framework or the SDK is
+  // fixed, so keyword-level ROAS goes dark before the app does. Reinstate only
+  // behind a check that the fetch no longer hangs the launch.
+  // Purchases.enableAdServicesAttributionTokenCollection().catch(() => {});
 }
 
 /**

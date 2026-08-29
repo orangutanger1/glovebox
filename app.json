@@ -13,7 +13,7 @@
     "ios": {
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": false,
-      "buildNumber": "17",
+      "buildNumber": "20",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleLocalizations": [
@@ -71,7 +71,9 @@
     },
     "owner": "nakodan-capital",
     "updates": {
-      "url": "https://u.expo.dev/fd84867d-9447-4a57-991a-d7e6a8ef1ac6"
+      "url": "https://u.expo.dev/fd84867d-9447-4a57-991a-d7e6a8ef1ac6",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 10000
     }
   }
 }

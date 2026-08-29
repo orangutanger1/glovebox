@@ -4,6 +4,11 @@
 // and a local read disagree about which day it is.
 process.env.TZ = "America/New_York";
 
+// A `production` NODE_ENV inherited from the shell loads React's production
+// build inside the workers, where `act` does not exist, and every component
+// test dies on it. The suite runs against the development builds or not at all.
+process.env.NODE_ENV = "test";
+
 /**
  * Two projects, because the suite tests two different things.
  *

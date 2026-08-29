@@ -30,6 +30,8 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 
+import { easCommand } from "./eas-bin.mjs";
+
 /**
  * The keys whose absence is a crash rather than a degradation.
  *
@@ -97,14 +99,13 @@ if (!inner) {
     "--message-b64",
     Buffer.from(message, "utf8").toString("base64"),
   ];
-  run("npx", [
-    "--yes",
-    "eas-cli@latest",
+  const envExec = easCommand([
     "env:exec",
     ENVIRONMENT,
     `node scripts/ota.mjs ${argv.join(" ")}`,
     "--non-interactive",
   ]);
+  run(envExec.command, envExec.args);
   process.exit(0);
 }
 
@@ -161,26 +162,23 @@ console.log();
  * update` bundles again rather than shipping these bytes — `--input-dir` is not
  * honoured alongside a fresh export — so the local export's role is to prove
  * that the environment inlines what the app needs, not to be the artefact. */
+const publishSpec = easCommand([
+  "update",
+  "--branch",
+  branch,
+  "--platform",
+  PLATFORM,
+  "--environment",
+  ENVIRONMENT,
+  "--message",
+  message,
+  "--json",
+  "--non-interactive",
+]);
 const published = JSON.parse(
-  capture(
-    "npx",
-    [
-      "--yes",
-      "eas-cli@latest",
-      "update",
-      "--branch",
-      branch,
-      "--platform",
-      PLATFORM,
-      "--environment",
-      ENVIRONMENT,
-      "--message",
-      message,
-      "--json",
-      "--non-interactive",
-    ],
-    { stdio: ["inherit", "pipe", "inherit"] },
-  ),
+  capture(publishSpec.command, publishSpec.args, {
+    stdio: ["inherit", "pipe", "inherit"],
+  }),
 );
 const update =
   published.find((entry) => entry.platform === PLATFORM) ?? published[0];

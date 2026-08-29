@@ -1,4 +1,5 @@
-import TestRenderer, { act } from "react-test-renderer";
+import { act } from "react";
+import TestRenderer from "react-test-renderer";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -38,7 +39,7 @@ jest.mock("../src/design/themeState", () => ({
 jest.mock("expo-router", () => {
   const { createElement } = require("react");
   const Stack = ({ children }: { children?: React.ReactNode }) =>
-    createElement("View", null, children);
+    createElement("View", { testID: "navigator" }, children);
   Stack.Screen = () => null;
   return {
     Stack,
@@ -465,7 +466,24 @@ describe("the type scale", () => {
 });
 
 describe("the display face is a refinement, not a launch requirement", () => {
-  test("holds the first paint until the fonts settle but boots the database anyway", () => {
+  /**
+   * This assertion is the 1.1.0 launch crash, in one line.
+   *
+   * `RootLayout` used to return `null` until the fonts settled, which is on
+   * every cold launch. expo-router renders this component as the only screen of
+   * its own root navigator, so returning nothing left the router holding a
+   * route with no navigator to render it in: the root slot re-dispatched
+   * navigation state until React threw "Maximum update depth exceeded", and
+   * because that throw lands in the commit driven from the C++ scheduler it
+   * reached `RCTFatal` — past every `try`/`catch` and error boundary — and
+   * expo-updates aborted the process half a second into launch. Builds 17
+   * through 20 on TestFlight, four identical crash reports, no JS frames in
+   * any of them.
+   *
+   * The font gate is a curtain over a mounted stack now. The navigator must
+   * exist from the first commit, and the boot sequence must still run.
+   */
+  test("mounts the navigator while the fonts load instead of rendering nothing", () => {
     mockFontsLoaded = false;
     const booted = mockDbBoots;
     let tree!: TestRenderer.ReactTestRenderer;
@@ -473,7 +491,8 @@ describe("the display face is a refinement, not a launch requirement", () => {
       act(() => {
         tree = TestRenderer.create(<RootLayout />);
       });
-      expect(tree.toJSON()).toBeNull();
+      expect(tree.toJSON()).not.toBeNull();
+      expect(tree.root.findAllByProps({ testID: "navigator" }).length).toBeGreaterThan(0);
       expect(mockDbBoots).toBe(booted + 1);
       act(() => {
         tree.unmount();

@@ -1,5 +1,6 @@
 import { createElement } from "react";
-import TestRenderer, { act } from "react-test-renderer";
+import { act } from "react";
+import TestRenderer from "react-test-renderer";
 
 // React only accepts `act` outside a DOM test environment when this is set.
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(asc:*)",
+      "Shell(tee:*)",
+      "Shell(jq -r 'paths(scalars) | join(\".\")' ~/.omp/posthog/car.json 2>/dev/null; echo ----; jq -r 'keys[]' ~/.omp/posthog/car.json 2>/dev/null)",
+      "Shell(python3 -c \" import json d = json.load(open('/home/myen/.omp/posthog/car.json')) def walk(o, p=''): if isinstance(o, dict): for k, v in o.items(): walk(v, f'{p}.{k}' if p else k) elif isinstance(o, list): for i, v in enumerate(o): walk(v, f'{p}[{i}]') else: print(p) walk(d)\")",
+      "Shell(python3 - <<'EOF' import json, urllib.request cfg = json.load(open('/home/myen/.omp/posthog/car.json')) key, project = cfg['personalApiKey'], cfg['projectId'] url = f\"https://us.posthog.com/api/projects/{project}/query/\" def q(sql): body = json.dumps({\"query\": {\"kind\": \"HogQLQuery\", \"query\": sql}}).encode() req = urllib.request.Request(url, data=body, headers={ \"Authorization\": f\"Bearer {key}\", \"Content-Type\": \"application/json\"}) with urllib.request.urlopen(req, timeout=25) as r: return json.load(r) def show(res, cols): out = res.get(\"results\", []) print(\"cols:\", cols) for row in out[:40]: print(\" | \".join(\"\" if v is None else str(v)[:180] for v in row)) print(\"rows:\", len(out)) # 0) is the stream alive at all: last 24h by event r = q(\"SELECT event, count() c, max(timestamp) FROM events WHERE timestamp >= now() - INTERVAL 24 HOUR GROUP BY event ORDER BY c DESC LIMIT 25\") print(\"== last 24h by event ==\"); show(r, [\"event\",\"c\",\"max_ts\"]) # 1) anything since the diagnostic OTA published (2026-08-29 04:35 UTC) r = q(\"SELECT event, count() c, min(timestamp), max(timestamp) FROM events WHERE timestamp >= toDateTime('2026-08-29 04:35:00') GROUP BY event ORDER BY c DESC LIMIT 25\") print(\"== since OTA publish ==\"); show(r, [\"event\",\"c\",\"min\",\"max\"]) # 2) diagnostic events detail r = q(\"\"\"SELECT timestamp, event, JSONExtractString(properties,'step') AS step, substring(JSONExtractString(properties,'message'),1,200) AS msg, JSONExtractString(properties,'ota_update_id') AS ota, JSONExtractString(properties,'$app_version') AS ver FROM events WHERE timestamp >= toDateTime('2026-08-29 04:35:00') AND event IN ('boot_failed','render_error','js_error') ORDER BY timestamp LIMIT 40\"\"\") print(\"== diagnostic events ==\"); show(r, [\"ts\",\"event\",\"step\",\"msg\",\"ota\",\"ver\"]) EOF)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

@@ -18,6 +18,8 @@ import { spawn } from "node:child_process";
 import { accessSync, constants } from "node:fs";
 import { join } from "node:path";
 
+import { assertAppleAuthUsable, loadAscEnv } from "./asc-auth.mjs";
+import { easCommand } from "./eas-bin.mjs";
 import {
   detectExhaustion,
   isEligible,
@@ -40,6 +42,7 @@ const USAGE = `usage: node scripts/eas-build.mjs [flags]
   --platform <ios|...>  platform to build and to meter        (default: ios)
   --no-probe            skip the pre-flight quota read, just try the build
   --raw-eas             bypass \`ship build\` and call eas-cli directly
+  --no-apple-check      queue the build without pre-checking Apple auth
 
 Registry: ${REGISTRY_FILE}`;
 
@@ -52,6 +55,7 @@ function parseArgs(argv) {
     platform: "ios",
     probe: true,
     rawEas: false,
+    appleCheck: true,
     help: false,
   };
   for (let i = 0; i < argv.length; i += 1) {
@@ -63,6 +67,7 @@ function parseArgs(argv) {
       case "--dry-run": opts.dryRun = true; break;
       case "--no-probe": opts.probe = false; break;
       case "--raw-eas": opts.rawEas = true; break;
+      case "--no-apple-check": opts.appleCheck = false; break;
       case "--profile": opts.profile = value(); break;
       case "--platform": opts.platform = value(); break;
       case "--help":
@@ -99,20 +104,15 @@ function which(bin) {
 export function buildCommand({ profile, platform, rawEas }) {
   const ship = rawEas ? null : which("ship");
   if (ship) return { command: ship, args: ["build", "--profile", profile], via: "ship" };
-  return {
-    command: "npx",
-    args: [
-      "--yes",
-      "eas-cli@latest",
-      "build",
-      "--platform",
-      platform,
-      "--profile",
-      profile,
-      "--non-interactive",
-    ],
-    via: "eas-cli",
-  };
+  const spec = easCommand([
+    "build",
+    "--platform",
+    platform,
+    "--profile",
+    profile,
+    "--non-interactive",
+  ]);
+  return { ...spec, via: spec.local ? "eas-cli (local, patched)" : "eas-cli (npx)" };
 }
 
 const quoteArg = (a) => (/[^\w./:@=-]/.test(a) ? `'${a.replaceAll("'", `'\\''`)}'` : a);
@@ -155,12 +155,16 @@ function runBuild({ command, args, env }) {
  * eas-cli prefers EXPO_TOKEN over the stored login (SessionManager reads
  * `process.env.EXPO_TOKEN` first), so leaving it in place is the one way to
  * build under an account nobody asked for.
+ *
+ * `.asc.env` is layered in so eas-cli authenticates to Apple with the App Store
+ * Connect API key instead of prompting for an Apple ID password. See
+ * asc-auth.mjs for why both halves of that are needed.
  */
 function envFor(account) {
   const env = { ...process.env };
   if (account.expoToken) env.EXPO_TOKEN = account.expoToken;
   else delete env.EXPO_TOKEN;
-  return env;
+  return loadAscEnv(env, { warn: (s) => process.stderr.write(s) });
 }
 
 const fmtDate = (iso) => (iso ? new Date(iso).toISOString().slice(0, 10) : "—");
@@ -255,6 +259,19 @@ async function main(argv) {
   // A switch left behind by a killed run would make this build inherit the wrong
   // project. Clear it before choosing anything.
   restore();
+
+  // eas-cli's Apple authentication either works right now or it degrades into a
+  // password prompt part-way through a build. Ask Apple the same question
+  // eas-cli will ask, before queueing anything. EAS holds the same key
+  // server-side, so a build that needs no local Apple auth can skip this with
+  // --no-apple-check.
+  if (opts.appleCheck) {
+    const auth = await assertAppleAuthUsable({ env: loadAscEnv({ ...process.env }) });
+    if (!auth.ok) {
+      process.stderr.write("nothing queued. re-run with --no-apple-check to build anyway.\n");
+      return 2;
+    }
+  }
 
   const attempted = [];
   try {
