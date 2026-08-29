@@ -8,7 +8,6 @@ import { Chip } from "../../../src/design/Chip";
 import { Field } from "../../../src/design/Field";
 import { Button } from "../../../src/design/Button";
 import { DateWheel } from "../../../src/design/DateWheel";
-import { useTheme } from "../../../src/design/theme";
 import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
@@ -43,8 +42,6 @@ const WHEN = [
 const CUSTOM = "custom";
 
 export default function LogService() {
-  const c = useTheme();
-
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const vehicle = getVehicle(id);
@@ -118,14 +115,14 @@ export default function LogService() {
       footer={
         <>
           {error ? (
-            <Text style={{ ...tokens.text.body, color: c.overdue }}>{error}</Text>
+            <Text style={{ ...tokens.text.body, color: tokens.color.red }}>{error}</Text>
           ) : null}
           <Button label={t("vehicleForms.log.save")} onPress={onSave} disabled={saving} />
         </>
       }
     >
       <Card>
-        <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
           {t("vehicleForms.log.what")}
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
@@ -140,7 +137,7 @@ export default function LogService() {
         </View>
       </Card>
       <Card>
-        <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
           {t("vehicleForms.log.when")}
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>

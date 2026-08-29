@@ -1,42 +1,25 @@
 import { View } from "react-native";
-import { useTheme } from "./theme";
+import { tokens } from "./tokens";
 
 /**
  * A dashboard warning lamp. The only element in the app that glows, which is
- * what makes it mean something. Unlit is a hairline bulb — still visibly a
- * lamp, so the lit state has a baseline to contrast against.
- *
- * Two tones, because two different things light this bulb. `alarm` is the
- * default and the original meaning: something is overdue, so it lights in
- * `overdue` with a wash bloom behind it. `progress` is `StepLamps` counting
- * onboarding questions off, where red would be a warning about nothing — it
- * lights in the accent and does not bloom, since the palette has no accent
- * wash and a red halo behind an orange bulb is worse than no halo.
+ * what makes it mean something. Lit = red with a soft bloom behind it; unlit =
+ * a dark recessed bulb, still visibly a lamp so the lit state has a baseline
+ * to contrast against.
  */
-export function Lamp({
-  lit,
-  size = 10,
-  tone = "alarm",
-}: {
-  lit: boolean;
-  size?: number;
-  tone?: "alarm" | "progress";
-}) {
-  const c = useTheme();
-
+export function Lamp({ lit, size = 10 }: { lit: boolean; size?: number }) {
   const glow = size * 2.6;
-  const alarm = tone === "alarm";
 
   return (
     <View style={{ width: glow, height: glow, alignItems: "center", justifyContent: "center" }}>
-      {lit && alarm ? (
+      {lit ? (
         <View
           style={{
             position: "absolute",
             width: glow,
             height: glow,
             borderRadius: glow / 2,
-            backgroundColor: c.overdueWash,
+            backgroundColor: tokens.color.redGlow,
           }}
         />
       ) : null}
@@ -45,11 +28,9 @@ export function Lamp({
           width: size,
           height: size,
           borderRadius: size / 2,
-          backgroundColor: lit ? (alarm ? c.overdue : c.accent) : c.hairline,
-          // Ratified deviation: the lit border was `"rgba(255,255,255,0.35)"` and is
-          // now `c.hairline` in every state — a 35% white rim light does nothing on paper.
+          backgroundColor: lit ? tokens.color.red : tokens.color.edgeSolid,
           borderWidth: 1,
-          borderColor: c.hairline,
+          borderColor: lit ? "rgba(255,255,255,0.35)" : tokens.color.edge,
         }}
       />
     </View>

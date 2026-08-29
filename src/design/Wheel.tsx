@@ -7,8 +7,8 @@ import {
   type NativeScrollEvent,
 } from "react-native";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import { Well } from "./Surface";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -38,8 +38,6 @@ export function Drum({
   onIndex: (i: number) => void;
   width: number;
 }) {
-  const c = useTheme();
-
   const ref = useRef<ScrollView>(null);
   // What the scroll view is actually showing. Without this, the effect below
   // fights the user's finger: every committed index would scroll the drum back
@@ -92,12 +90,9 @@ export function Drum({
             textAlign: "center",
             ...tokens.text.readout,
             fontSize: 20,
-            // Distance from the detent, not a dark vignette over the ends:
-            // the rows either side of the selection recede a step, the rest
-            // sit at the faintest ink, so the column still reads as a drum
-            // seen around its curve on a light surface.
-            color:
-              i === index ? c.ink : Math.abs(i - index) === 1 ? c.inkMuted : c.inkFaint,
+            // Only the selected row is at full white. The rest are the same
+            // digits seen around the curve of the drum.
+            color: i === index ? tokens.color.text : tokens.color.textFaint,
           }}
         >
           {label}
@@ -108,11 +103,10 @@ export function Drum({
 }
 
 /**
- * The case: a well, and the detent hairlines behind the drums.
+ * The case: a well, the detent hairlines behind the drums, and the shading at
+ * top and bottom that makes a column of text read as a cylinder.
  */
 export function WheelCase({ children }: { children: React.ReactNode }) {
-  const c = useTheme();
-
   return (
     <Well style={{ overflow: "hidden" }}>
       <View style={{ height: VISIBLE * ITEM_HEIGHT }}>
@@ -128,11 +122,17 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
             height: ITEM_HEIGHT,
             borderTopWidth: 1,
             borderBottomWidth: 1,
-            borderColor: c.hairline,
-            backgroundColor: c.card,
+            borderColor: tokens.color.hairline,
+            backgroundColor: "rgba(255,255,255,0.04)",
           }}
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>{children}</View>
+        <LinearGradient
+          pointerEvents="none"
+          colors={["rgba(15,17,19,0.96)", "rgba(15,17,19,0)", "rgba(15,17,19,0.96)"]}
+          locations={[0, 0.5, 1]}
+          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+        />
       </View>
     </Well>
   );

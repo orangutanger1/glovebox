@@ -416,10 +416,6 @@ export const es: Fragment = {
 
   "settings.intervals": "Intervalos de mantenimiento",
 
-  "settings.theme.label": "Apariencia",
-  "settings.theme.system": "Sistema",
-  "settings.theme.light": "Claro",
-  "settings.theme.dark": "Oscuro",
 
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidades: {unit}",

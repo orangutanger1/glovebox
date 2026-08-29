@@ -401,10 +401,6 @@ export const ptBR: Fragment = {
 
   "settings.intervals": "Intervalos de revisão",
 
-  "settings.theme.label": "Aparência",
-  "settings.theme.system": "Sistema",
-  "settings.theme.light": "Claro",
-  "settings.theme.dark": "Escuro",
 
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidade: {unit}",

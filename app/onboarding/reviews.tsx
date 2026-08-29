@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
-import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { formatNumber, t } from "../../src/i18n";
 import {
@@ -44,8 +43,6 @@ const NUDGE_MS = 2000;
  * because nothing about the argument has.
  */
 export default function OnboardingReviews() {
-  const c = useTheme();
-
   const advance = useAdvance("reviews");
 
   return (
@@ -73,10 +70,10 @@ export default function OnboardingReviews() {
                 legend={t("onboardingC.reviews.mentioning")}
                 value={formatNumber(theme.count)}
               />
-              <Text style={{ ...tokens.text.body, color: c.ink }}>
+              <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
                 {reviewThemeLabel(theme.id)}
               </Text>
-              <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
                 {evidenceAnswer(theme.id)}
               </Text>
             </View>

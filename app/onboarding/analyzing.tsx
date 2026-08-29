@@ -3,7 +3,6 @@ import { View, Text } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { ProgressBar } from "../../src/design/ProgressBar";
-import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { formatDistance } from "../../src/units/format";
@@ -50,8 +49,6 @@ const HANDOFF_MS = 700;
  * not matter. Three and a bit seconds is a pause, not a wait.
  */
 export default function OnboardingAnalyzing() {
-  const c = useTheme();
-
   const advance = useAdvance("analyzing", "replace");
   const { vehicleName, plan } = useOnboardingFindings();
 
@@ -119,7 +116,7 @@ export default function OnboardingAnalyzing() {
                 {last ? (
                   <Lamp lit={plan.dueNow > 0} size={8} />
                 ) : (
-                  <Text style={{ ...tokens.text.caption, color: c.inkFaint, width: 21 }}>
+                  <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint, width: 21 }}>
                     {`0${i + 1}`}
                   </Text>
                 )}
@@ -128,7 +125,7 @@ export default function OnboardingAnalyzing() {
                     ...tokens.text.body,
                     ...tokens.text.numeric,
                     fontWeight: last ? "600" : "400",
-                    color: last ? c.ink : c.inkMuted,
+                    color: last ? tokens.color.text : tokens.color.textMuted,
                     flex: 1,
                   }}
                 >
@@ -140,7 +137,7 @@ export default function OnboardingAnalyzing() {
 
           <View style={{ gap: tokens.space.sm }}>
             <ProgressBar duration={lines.length * LINE_MS + HANDOFF_MS} />
-            <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
               {shown >= lines.length
                 ? t("onboardingB.analyzing.done")
                 : t("onboardingB.analyzing.progress", { index: shown + 1, total: lines.length })}

@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
-import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle, setOdometerEstimate } from "../../src/db/vehicles";
 import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
@@ -21,8 +20,6 @@ import { distanceUnitLabel, formatDistance } from "../../src/units/format";
 const OPTIONS: readonly DriveAnswer[] = ["low", "average", "high", "very_high"];
 
 export default function OnboardingDrive() {
-  const c = useTheme();
-
   const advance = useAdvance("drive");
   // Persisted, so Back and Continue show the answer already given rather than
   // an unselected row of chips.
@@ -74,7 +71,7 @@ export default function OnboardingDrive() {
       {/* The answer is shown doing its job immediately. A projection the user
           can check against their own sense of the car is also the cheapest
           possible proof that the questions are not decorative. */}
-      <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {drive && odometer !== undefined
           ? t("onboardingA.drive.projection", {
               distance: formatDistance(odometer + DISTANCE_PER_YEAR[unit][drive], unit),

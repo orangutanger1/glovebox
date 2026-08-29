@@ -407,10 +407,6 @@ export const sv: Fragment = {
 
   "settings.intervals": "Serviceintervall",
 
-  "settings.theme.label": "Utseende",
-  "settings.theme.system": "System",
-  "settings.theme.light": "Ljust",
-  "settings.theme.dark": "Mörkt",
 
   "settings.language": "Språk: {language}",
   "settings.units": "Enhet: {unit}",

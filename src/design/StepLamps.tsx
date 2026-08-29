@@ -16,7 +16,7 @@ export function StepLamps({ step, total }: { step: number; total: number }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}>
       {Array.from({ length: total }, (_, i) => (
-        <Lamp key={i} lit={i < step} size={i === step - 1 ? 9 : 7} tone="progress" />
+        <Lamp key={i} lit={i < step} size={i === step - 1 ? 9 : 7} />
       ))}
     </View>
   );

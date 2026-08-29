@@ -116,10 +116,8 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //                              Pickup/Van where that is the owner's word.
     //                              wagon and coupe stay guarded — those are
     //                              Kombi, Break, Perua, Coupé.
-    //   settings.theme.system      de and sv both name it "System"; light and
-    //                              dark differ everywhere and stay guarded.
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^settings\.theme\.system$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

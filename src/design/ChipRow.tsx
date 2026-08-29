@@ -1,6 +1,5 @@
 import { View, Text, ScrollView } from "react-native";
 import { Chip } from "./Chip";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -34,8 +33,6 @@ export function ChipRow<T extends string>({
    *  two-part question has to be visible before the first half is answered. */
   disabled?: boolean;
 }) {
-  const c = useTheme();
-
   const chips = options.map((o) => (
     <Chip
       key={o.value}
@@ -49,7 +46,7 @@ export function ChipRow<T extends string>({
   return (
     <View style={{ gap: tokens.space.sm }}>
       {legend ? (
-        <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>{legend}</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>{legend}</Text>
       ) : null}
       {scroll ? (
         <ScrollView

@@ -1,5 +1,4 @@
 import { Pressable, View, Text } from "react-native";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -24,8 +23,6 @@ export function ListRow({
   onPress?: () => void;
   status?: "overdue" | "soon" | "ok";
 }) {
-  const c = useTheme();
-
   const dim = status === "ok";
 
   return (
@@ -36,16 +33,17 @@ export function ListRow({
             flexDirection: "row",
             alignItems: "center",
             borderRadius: tokens.radius.sm,
-            // The groove fills level with the panel under a finger; the
-            // palette has two surface fills and this is the visible one.
-            backgroundColor: pressed ? c.card : c.cardSunken,
+            backgroundColor: pressed ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.18)",
             borderWidth: 1,
-            borderColor: c.hairline,
+            borderTopColor: tokens.color.edge,
+            borderLeftColor: tokens.color.edge,
+            borderRightColor: tokens.color.edge,
+            borderBottomColor: tokens.color.hairline,
             overflow: "hidden",
           }}
         >
           {status === "overdue" ? (
-            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: c.overdue }} />
+            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: tokens.color.red }} />
           ) : null}
           <View
             style={{
@@ -63,7 +61,7 @@ export function ListRow({
                 style={{
                   ...tokens.text.body,
                   fontWeight: dim ? "400" : "600",
-                  color: dim ? c.inkMuted : c.ink,
+                  color: dim ? tokens.color.textMuted : tokens.color.text,
                 }}
               >
                 {title}
@@ -73,7 +71,7 @@ export function ListRow({
                   style={{
                     ...tokens.text.caption,
                     ...tokens.text.numeric,
-                    color: c.inkMuted,
+                    color: tokens.color.textMuted,
                   }}
                 >
                   {subtitle}

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { View, Text, Animated, Easing } from "react-native";
-import { Well } from "./Surface";
-import { useTheme } from "./theme";
+import { LinearGradient } from "expo-linear-gradient";
+import { tokens } from "./tokens";
 
 /**
  * A mechanical odometer that actually rolls.
@@ -42,8 +42,6 @@ function Wheel({
   delay: number;
   duration: number;
 }) {
-  const c = useTheme();
-
   const progress = useRef(new Animated.Value(0)).current;
 
   // Three full passes before the landing digit. Fewer and it looks like a
@@ -88,7 +86,7 @@ function Wheel({
               fontSize: 30,
               fontWeight: "600",
               fontVariant: ["tabular-nums"],
-              color: c.ink,
+              color: tokens.color.text,
             }}
           >
             {d}
@@ -107,16 +105,23 @@ export function OdometerRoll({
   value: number;
   places?: number;
 }) {
-  const c = useTheme();
-
   const digits = digitsOf(value, places);
 
   return (
     <View style={{ alignItems: "center", justifyContent: "center", paddingVertical: 20 }}>
-      <Well
+      <View
         style={{
           flexDirection: "row",
           alignItems: "center",
+          backgroundColor: "#08090B",
+          borderRadius: tokens.radius.sm,
+          borderWidth: 1,
+          // An inset well: shadowed on its top edge, lit on its bottom. The
+          // raised controls in this app are the exact inverse.
+          borderTopColor: tokens.color.edge,
+          borderLeftColor: tokens.color.edge,
+          borderRightColor: tokens.color.edge,
+          borderBottomColor: tokens.color.hairline,
           paddingHorizontal: 6,
           paddingVertical: 4,
           gap: 2,
@@ -127,29 +132,29 @@ export function OdometerRoll({
           <View
             key={i}
             style={{
-              backgroundColor: c.card,
+              backgroundColor: i === places - 1 ? "#2A1215" : "#1A1D20",
               borderRadius: 3,
               borderWidth: 1,
-              borderColor: c.hairline,
+              borderColor: "rgba(255,255,255,0.06)",
             }}
           >
-            <View
-              style={
-                i === places - 1
-                  ? { backgroundColor: c.overdueWash, borderRadius: 3 }
-                  : undefined
-              }
-            >
-              <Wheel
-                digit={d}
-                // Right-to-left stagger: the tenths wheel is the last to settle.
-                delay={120 + (places - 1 - i) * 90}
-                duration={1100 + (places - 1 - i) * 260}
-              />
-            </View>
+            <Wheel
+              digit={d}
+              // Right-to-left stagger: the tenths wheel is the last to settle.
+              delay={120 + (places - 1 - i) * 90}
+              duration={1100 + (places - 1 - i) * 260}
+            />
+            {/* Curvature. A flat digit on a flat rectangle is a number in a
+                box; shaded top and bottom, it is a cylinder seen edge-on. */}
+            <LinearGradient
+              pointerEvents="none"
+              colors={["rgba(0,0,0,0.75)", "transparent", "rgba(0,0,0,0.75)"]}
+              locations={[0, 0.5, 1]}
+              style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+            />
           </View>
         ))}
-      </Well>
+      </View>
     </View>
   );
 }

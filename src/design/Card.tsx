@@ -1,13 +1,10 @@
 import { View } from "react-native";
 import { Panel } from "./Surface";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
- * A card. `status="overdue"` adds the red stripe down the left edge — the
- * card-level equivalent of a lit lamp, readable at arm's length — plus a wash
- * over the fill, because a 3px stripe alone is invisible on warm paper in
- * daylight.
+ * A metal faceplate. `status="overdue"` adds the red stripe down the left edge
+ * — the card-level equivalent of a lit lamp, readable at arm's length.
  */
 export function Card({
   children,
@@ -16,14 +13,13 @@ export function Card({
   children: React.ReactNode;
   status?: "overdue";
 }) {
-  const c = useTheme();
   return (
-    <Panel style={status === "overdue" ? { backgroundColor: c.overdueWash } : undefined}>
+    <Panel>
       <View style={{ flexDirection: "row" }}>
-        {status === "overdue" ? <View style={{ width: 4, backgroundColor: c.overdue }} /> : null}
-        <View style={{ flex: 1, padding: tokens.space.card, gap: tokens.space.sm }}>
-          {children}
-        </View>
+        {status === "overdue" ? (
+          <View style={{ width: 3, backgroundColor: tokens.color.red }} />
+        ) : null}
+        <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.sm }}>{children}</View>
       </View>
     </Panel>
   );

@@ -14,7 +14,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { StepLamps } from "../design/StepLamps";
-import { useTheme } from "../design/theme";
 import { tokens } from "../design/tokens";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
@@ -44,8 +43,8 @@ import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
  * at the paywall.
  *
  * `subtitle` is the only muted line a screen may print, it is one short
- * sentence, and most screens pass none. Muted ink is the page's own quiet
- * register, so a second grey paragraph under the component reads as disabled
+ * sentence, and most screens pass none. Grey-on-black is the housing's own
+ * colour, so a second grey paragraph under the component reads as disabled
  * text rather than as help, and a question that needs two sentences of it is
  * a question that needs rewriting.
  *
@@ -62,7 +61,7 @@ export function OnboardingScreen({
   gateTimeoutMs,
   children,
   center = false,
-  tone = "base",
+  tone = "housing",
   onBack,
   banner,
 }: {
@@ -90,9 +89,9 @@ export function OnboardingScreen({
   /** Screens with nothing to fill the middle read better optically centred
    *  than pinned under the title. */
   center?: boolean;
-  /** `alarm` washes the screen red. Reserved for the symptoms screens, which
+  /** `alarm` washes the housing red. Reserved for the symptoms screens, which
    *  are the app's only sustained warning state. */
-  tone?: "base" | "alarm";
+  tone?: "housing" | "alarm";
   /** Handles Back inside the screen instead of leaving it. The symptoms pager
    *  is three cards on one route, and a Back that abandoned all three because
    *  the user wanted to re-read the first is a Back the user stops pressing. */
@@ -102,8 +101,6 @@ export function OnboardingScreen({
    *  interactive: it never intercepts the scroll or a tap beneath it. */
   banner?: ReactNode;
 }) {
-  const c = useTheme();
-
   const router = useRouter();
   const previous = previousRoute(route);
   const quiz = quizStep(route);
@@ -216,10 +213,10 @@ export function OnboardingScreen({
       {title || subtitle ? (
         <View style={{ gap: tokens.space.sm }}>
           {title ? (
-            <Text style={{ ...tokens.text.hero, color: c.ink }}>{title}</Text>
+            <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
           ) : null}
           {subtitle ? (
-            <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{subtitle}</Text>
+            <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
           ) : null}
         </View>
       ) : null}
@@ -231,8 +228,8 @@ export function OnboardingScreen({
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: c.base }}>
-      {/* Every material in this app is lit from above; the flat page was
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
+      {/* Every material in this app is lit from above; the flat housing was
           the one surface that was not. The generated radial vignette could not
           be used — it arrived as an opaque JPEG with the falloff inverted — so
           the top light is a gradient in code, which also costs nothing. */}
@@ -240,8 +237,8 @@ export function OnboardingScreen({
         pointerEvents="none"
         colors={
           tone === "alarm"
-            ? [c.overdueWash, "transparent"]
-            : [c.card, "transparent"]
+            ? [tokens.color.redWash, "transparent"]
+            : ["rgba(255,255,255,0.05)", "transparent"]
         }
         style={{ position: "absolute", top: 0, left: 0, right: 0, height: 260 }}
       />
@@ -276,8 +273,8 @@ export function OnboardingScreen({
                 {({ pressed }) => (
                   <Text
                     style={{
-                      ...tokens.text.caption,
-                      color: pressed ? c.ink : c.inkMuted,
+                      ...tokens.text.legend,
+                      color: pressed ? tokens.color.white : tokens.color.textMuted,
                     }}
                   >
                     {`‹ ${t("onboardingC.back")}`}
@@ -288,7 +285,7 @@ export function OnboardingScreen({
             {legend ?? (
               quiz ? (
                 <>
-                  <Text style={{ ...tokens.text.caption, color: c.inkFaint }}>
+                  <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
                     {t("onboardingC.question", { step: quiz.step, total: quiz.total })}
                   </Text>
                   <StepLamps step={quiz.step} total={quiz.total} />

@@ -1,5 +1,4 @@
 import { View, Text } from "react-native";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 import { Lamp } from "./Lamp";
 
@@ -24,18 +23,16 @@ export function Gauge({
   lamp?: boolean;
   align?: "left" | "right";
 }) {
-  const c = useTheme();
-
   return (
     <View style={{ gap: 2, alignItems: align === "right" ? "flex-end" : "flex-start" }}>
       <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}>
-        <Text style={{ ...tokens.text.legend, color: c.inkMuted }}>{legend}</Text>
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{legend}</Text>
         {lamp !== undefined ? <Lamp lit={lamp} /> : null}
       </View>
       <View style={{ flexDirection: "row", alignItems: "baseline", gap: 4 }}>
-        <Text style={{ ...tokens.text.readout, color: c.ink }}>{value}</Text>
+        <Text style={{ ...tokens.text.readout, color: tokens.color.text }}>{value}</Text>
         {unit ? (
-          <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{unit}</Text>
+          <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{unit}</Text>
         ) : null}
       </View>
     </View>

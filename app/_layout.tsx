@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack, useRouter, type ErrorBoundaryProps } from "expo-router";
 import * as QuickActions from "expo-quick-actions";
@@ -28,8 +27,6 @@ import {
   syncQuickActions,
 } from "../src/quickactions";
 import { tokens } from "../src/design/tokens";
-import { LIGHT } from "../src/design/palette";
-import { ThemeProvider, useTheme } from "../src/design/theme";
 import { getLanguage, initLanguage, t } from "../src/i18n";
 import { bootLanguage } from "../src/i18n/preference";
 import { subscribeLocaleChanged } from "../src/i18n/epoch";
@@ -111,22 +108,24 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
     <View
       style={{
         flex: 1,
-        backgroundColor: LIGHT.base,
+        backgroundColor: tokens.color.housing,
         alignItems: "center",
         justifyContent: "center",
         padding: tokens.space.xl,
         gap: tokens.space.md,
       }}
     >
-      <StatusBar style="dark" />
-      <Text style={{ ...tokens.text.heading, color: LIGHT.ink, textAlign: "center" }}>
+      <StatusBar style="light" />
+      <Text style={{ ...tokens.text.heading, color: tokens.color.text, textAlign: "center" }}>
         {t("layout.fatal.title")}
       </Text>
-      <Text style={{ ...tokens.text.caption, color: LIGHT.inkFaint, textAlign: "center" }}>
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>
         {error.message}
       </Text>
       <Pressable onPress={() => void retry()} hitSlop={12}>
-        <Text style={{ ...tokens.text.body, color: LIGHT.ink }}>{t("layout.fatal.retry")}</Text>
+        <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+          {t("layout.fatal.retry")}
+        </Text>
       </Pressable>
     </View>
   );
@@ -139,14 +138,6 @@ export default function RootLayout() {
   // every screen then rebuilds its sentences instead of keeping the ones it
   // formatted in the previous language.
   const [localeEpoch, setLocaleEpoch] = useState(0);
-
-  // The app renders either way: a font that fails to load must not hold the
-  // splash screen, so `error` is read rather than ignored.
-  const [fontsLoaded, fontError] = useFonts({
-    "InstrumentSans-SemiBold": require("../assets/fonts/InstrumentSans-SemiBold.ttf"),
-    "InstrumentSans-Bold": require("../assets/fonts/InstrumentSans-Bold.ttf"),
-  });
-  const fontsSettled = fontsLoaded || fontError !== null;
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
@@ -261,28 +252,25 @@ export default function RootLayout() {
       });
   }, []);
 
-  // Neither the font load nor a dead database may return early from here.
+  // A dead database may not return early from here.
   //
   // This function is the root layout, which expo-router renders as the only
   // screen of its own root navigator (`Content` in ExpoRoot) — so whatever it
   // returns either contains the app's `<Stack>` or the app has no navigator at
-  // all. Returning `null` while the fonts resolve, which is what 1.1.0 shipped
-  // and 1.0.2 never did, left the router with a route to render and nowhere to
-  // render it on **every cold launch**: the root slot re-dispatched navigation
-  // state against a layout that mounts no navigator until React gave up with
-  // "Maximum update depth exceeded". That throw happens inside the commit
-  // driven from the C++ scheduler, so it reaches `RCTFatal` rather than
-  // `ErrorUtils` — past every JavaScript `try`/`catch` and error boundary —
-  // and under expo-updates the process aborts half a second into launch with a
-  // crash report naming only `ErrorRecovery.crash()`. Builds 17 through 20.
+  // all. Returning `null` while something resolves, which is what 1.1.0
+  // shipped for the font load and 1.0.2 never did, left the router with a route
+  // to render and nowhere to render it on **every cold launch**: the root slot
+  // re-dispatched navigation state against a layout that mounts no navigator
+  // until React gave up with "Maximum update depth exceeded". That throw
+  // happens inside the commit driven from the C++ scheduler, so it reaches
+  // `RCTFatal` rather than `ErrorUtils` — past every JavaScript `try`/`catch`
+  // and error boundary — and under expo-updates the process aborts half a
+  // second into launch with a crash report naming only
+  // `ErrorRecovery.crash()`. Builds 17 through 20.
   //
-  // Both states are drawn as overlays over a mounted `<Stack>` instead. Same
-  // pixels, no unmounted navigator.
-  return (
-    <ThemeProvider>
-      <Chrome localeEpoch={localeEpoch} fatal={fatal} ready={fontsSettled} />
-    </ThemeProvider>
-  );
+  // The fatal state is drawn as an overlay over a mounted `<Stack>` instead.
+  // Same pixels, no unmounted navigator.
+  return <Chrome localeEpoch={localeEpoch} fatal={fatal} />;
 }
 
 /**
@@ -291,8 +279,6 @@ export default function RootLayout() {
  * but must not be reachable.
  */
 function FatalNotice({ detail }: { detail: string }) {
-  const c = useTheme();
-
   return (
     <View
       style={{
@@ -301,20 +287,20 @@ function FatalNotice({ detail }: { detail: string }) {
         right: 0,
         bottom: 0,
         left: 0,
-        backgroundColor: c.base,
+        backgroundColor: tokens.color.housing,
         alignItems: "center",
         justifyContent: "center",
         padding: tokens.space.xl,
         gap: tokens.space.md,
       }}
     >
-      <Text style={{ ...tokens.text.heading, color: c.ink, textAlign: "center" }}>
+      <Text style={{ ...tokens.text.heading, color: tokens.color.text, textAlign: "center" }}>
         {t("layout.fatal.title")}
       </Text>
-      <Text style={{ ...tokens.text.body, color: c.inkMuted, textAlign: "center" }}>
+      <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textAlign: "center" }}>
         {t("layout.fatal.body")}
       </Text>
-      <Text style={{ ...tokens.text.caption, color: c.inkFaint, textAlign: "center" }}>
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>
         {detail}
       </Text>
     </View>
@@ -322,43 +308,29 @@ function FatalNotice({ detail }: { detail: string }) {
 }
 
 /**
- * Everything the palette touches, one node below the provider.
+ * The stack and its header chrome.
  *
- * `RootLayout` renders `ThemeProvider`, so a `useTheme()` call up there reads
- * the context default rather than the chosen palette — every header would be
- * light-themed on a dark phone. Splitting the tree here is what makes the
- * status bar and the stack's header and content colours actually follow the
- * theme. `localeEpoch` is passed down because it is the tree's key; the router
- * is re-read rather than threaded, since `useRouter` is a hook and this is a
+ * `localeEpoch` is passed down because it is the tree's key; the router is
+ * re-read rather than threaded, since `useRouter` is a hook and this is a
  * component.
  *
- * `ready` and `fatal` are drawn over the stack rather than in place of it. See
- * the note in `RootLayout` for why nothing may take the navigator's place.
+ * `fatal` is drawn over the stack rather than in place of it. See the note in
+ * `RootLayout` for why nothing may take the navigator's place.
  */
-function Chrome({
-  localeEpoch,
-  fatal,
-  ready,
-}: {
-  localeEpoch: number;
-  fatal: string | null;
-  ready: boolean;
-}) {
-  const c = useTheme();
+function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | null }) {
   const router = useRouter();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* Inverted on purpose: a dark palette needs light glyphs. */}
-      <StatusBar style={c.blurTint === "dark" ? "light" : "dark"} />
+      <StatusBar style="light" />
       <Stack
         key={localeEpoch}
         screenOptions={{
-          headerStyle: { backgroundColor: c.base },
-          headerTintColor: c.ink,
-          headerTitleStyle: { ...tokens.text.heading, fontSize: 17, color: c.ink },
+          headerStyle: { backgroundColor: tokens.color.housing },
+          headerTintColor: tokens.color.text,
+          headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: tokens.color.text },
           headerShadowVisible: false,
-          contentStyle: { backgroundColor: c.base },
+          contentStyle: { backgroundColor: tokens.color.housing },
           // A chevron with no label. The default label is the previous route's
           // title, which is how the back button came to read "index".
           headerBackButtonDisplayMode: "minimal",
@@ -376,7 +348,7 @@ function Chrome({
             headerTitle: "",
             headerRight: () => (
               <Pressable onPress={() => router.push("/settings")} hitSlop={12}>
-                <Text style={{ fontSize: 20, color: c.ink }}>⚙︎</Text>
+                <Text style={{ fontSize: 20, color: tokens.color.text }}>⚙︎</Text>
               </Pressable>
             ),
           }}
@@ -410,22 +382,6 @@ function Chrome({
           options={{ title: t("layout.logService"), headerTitle: "" }}
         />
       </Stack>
-      {/* The font gate, as a curtain rather than an absence: the type scale
-          names two families that are still loading, and a screen that paints
-          in the fallback face and reflows a frame later reads as a glitch. */}
-      {!ready && fatal === null && (
-        <View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            backgroundColor: c.base,
-          }}
-        />
-      )}
       {fatal !== null && <FatalNotice detail={fatal} />}
     </GestureHandlerRootView>
   );

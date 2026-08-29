@@ -4,7 +4,6 @@ import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { OdometerRoll, randomOdometerReading } from "../../src/design/OdometerRoll";
-import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle, setOdometerReading } from "../../src/db/vehicles";
 import { getOnboardingVehicleId } from "../../src/onboarding";
@@ -31,8 +30,6 @@ import { distanceUnitLabel } from "../../src/units/format";
  * from the garage afterwards.
  */
 export default function OnboardingOdometer() {
-  const c = useTheme();
-
   const advance = useAdvance("odometer");
   // Read once, at mount. Stepping back from the next question and forward
   // again lands on a new copy of this screen, and it has to show the reading
@@ -99,7 +96,7 @@ export default function OnboardingOdometer() {
           />
         </View>
       </Panel>
-      <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+      <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
         {t("onboardingA.odometer.caption")}
       </Text>
     </OnboardingScreen>

@@ -9,8 +9,7 @@ import { StyleSheet, type TextStyle } from "react-native";
  * The card used to hold a pill that held a label, so one vehicle offered two
  * places a tap could land for one intent. What a render can prove and a pure
  * test cannot: that there is now exactly one target per vehicle, and that the
- * row's ink comes from whichever palette is on the glass rather than a
- * hard-coded default.
+ * row's ink comes from the tokens rather than a hard-coded default.
  */
 (
   globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -69,9 +68,7 @@ jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 
 import Garage from "../app/index";
 import { createVehicle, listVehicles } from "../src/db/vehicles";
-import { ThemeProvider } from "../src/design/theme";
-import { setThemeMode, type ThemeMode } from "../src/design/themeState";
-import { DARK, LIGHT, type Palette } from "../src/design/palette";
+import { tokens } from "../src/design/tokens";
 import { t, setLanguage } from "../src/i18n";
 import { setDistanceUnit } from "../src/units";
 
@@ -83,17 +80,10 @@ beforeAll(() => {
   createVehicle({ name: NAME, odometer: 101475 });
 });
 
-/**
- * Rendered through the provider, in the mode named. A bare render always gets
- * the LIGHT context default, which would make the dark case assert nothing.
- */
-function renderIn(mode: ThemeMode): TestRenderer.ReactTestRenderer {
-  setThemeMode(mode);
+function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(
-      createElement(ThemeProvider, null, createElement(Garage)) as ReactElement,
-    );
+    tree = TestRenderer.create(createElement(Garage) as ReactElement);
   });
   return tree;
 }
@@ -139,7 +129,7 @@ function pressables(
 }
 
 test("a vehicle row is one tap target, not a card wrapping a button", () => {
-  const tree = renderIn("light");
+  const tree = render();
   const rowPressables = pressables(tree.root).filter((p) =>
     texts(p).some((s) => s.includes("Civic")),
   );
@@ -157,7 +147,7 @@ test("a vehicle row is one tap target, not a card wrapping a button", () => {
 });
 
 test("the inner open-and-log pill is gone", () => {
-  const rendered = texts(renderIn("light").root);
+  const rendered = texts(render().root);
   for (const key of ["garage.openAndLog", "garage.openHistory"] as const) {
     expect(rendered).not.toContain(t(key));
   }
@@ -165,11 +155,8 @@ test("the inner open-and-log pill is gone", () => {
   expect(rendered).toContain("\u203a");
 });
 
-test.each<[ThemeMode, Palette]>([
-  ["light", LIGHT],
-  ["dark", DARK],
-])("the row takes its ink from the %s palette", (mode, palette) => {
-  const tree = renderIn(mode);
-  expect(colorOf(tree, NAME)).toBe(palette.ink);
-  expect(colorOf(tree, "\u203a")).toBe(palette.inkMuted);
+test("the row takes its ink from the tokens, not a hard-coded default", () => {
+  const tree = render();
+  expect(colorOf(tree, NAME)).toBe(tokens.color.text);
+  expect(colorOf(tree, "\u203a")).toBe(tokens.color.textMuted);
 });

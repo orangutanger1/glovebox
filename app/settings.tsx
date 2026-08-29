@@ -3,10 +3,7 @@ import { Alert, Linking, Text } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
-import { ListRow } from "../src/design/ListRow";
 import { Button } from "../src/design/Button";
-import { useTheme, useThemeMode } from "../src/design/theme";
-import { type ThemeMode } from "../src/design/themeState";
 import { tokens } from "../src/design/tokens";
 import { t, formatShortDate, getLanguage } from "../src/i18n";
 import { LANGUAGE_NAMES } from "../src/i18n/names";
@@ -26,24 +23,7 @@ import { requestPermission, rescheduleAll, reminderStatus, type ReminderStatus }
 import { resetOnboarding } from "../src/onboarding";
 import { recordReviewEvent, maybeRequestReview } from "../src/review";
 
-const THEME_NEXT: Record<ThemeMode, ThemeMode> = {
-  system: "light",
-  light: "dark",
-  dark: "system",
-};
-
-// Spelled out rather than built from the mode, so every key this screen reads
-// is greppable in the catalog.
-const THEME_VALUE: Record<ThemeMode, string> = {
-  system: "settings.theme.system",
-  light: "settings.theme.light",
-  dark: "settings.theme.dark",
-};
-
 export default function Settings() {
-  const c = useTheme();
-  const { mode, setMode } = useThemeMode();
-
   const router = useRouter();
   const [msg, setMsg] = useState("");
   const pro = useIsPro();
@@ -244,7 +224,7 @@ export default function Settings() {
   return (
     <Screen title={t("settings.title")}>
       <Card>
-        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
+        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
           {t("settings.privacy")}
         </Text>
       </Card>
@@ -272,21 +252,9 @@ export default function Settings() {
         variant="secondary"
         onPress={() => router.push("/language")}
       />
-      {/* No confirmation: nothing on disk is rewritten and one more tap undoes it. */}
-      <Card>
-        <ListRow
-          title={t("settings.theme.label")}
-          right={
-            <Text style={{ ...tokens.text.body, color: c.inkMuted }}>
-              {t(THEME_VALUE[mode])}
-            </Text>
-          }
-          onPress={() => setMode(THEME_NEXT[mode])}
-        />
-      </Card>
       <Button label={t("settings.replay")} variant="secondary" onPress={onReplayOnboarding} />
       {msg ? (
-        <Text style={{ ...tokens.text.body, color: c.inkMuted }}>{msg}</Text>
+        <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
       ) : null}
     </Screen>
   );

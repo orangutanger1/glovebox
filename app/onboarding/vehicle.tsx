@@ -4,7 +4,6 @@ import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Wheel } from "../../src/design/Wheel";
-import { useTheme } from "../../src/design/theme";
 import { tokens } from "../../src/design/tokens";
 import {
   createVehicle,
@@ -56,8 +55,6 @@ const DEFAULT_YEAR = NEWEST_YEAR - 12;
  * and `vehicleDisplayName` degrades to "2019 Toyota" without it.
  */
 export default function OnboardingVehicle() {
-  const c = useTheme();
-
   const advance = useAdvance("vehicle");
 
   /**
@@ -175,7 +172,7 @@ export default function OnboardingVehicle() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-          <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>
+          <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
             {t("onboardingA.vehicle.year")}
           </Text>
           <Wheel

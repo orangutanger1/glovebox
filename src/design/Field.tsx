@@ -9,7 +9,6 @@ import {
   Platform,
 } from "react-native";
 import { Well } from "./Surface";
-import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
@@ -47,8 +46,6 @@ export function Field({
    *  how much of it had to be typed. */
   onFocus?: () => void;
 }) {
-  const c = useTheme();
-
   const [focused, setFocused] = useState(false);
 
   // The iOS number pad has no return key, so a numeric field with no accessory
@@ -59,13 +56,13 @@ export function Field({
 
   return (
     <View style={{ gap: tokens.space.xs }}>
-      <Text style={{ ...tokens.text.caption, color: c.inkMuted }}>{label}</Text>
+      <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{label}</Text>
       <Well
         focused={focused}
         // Red is reserved for overdue and destructive — a rejected value is
         // the third. The border carries it so the eye lands on the field, not
         // only on the sentence under it.
-        style={error ? { borderColor: c.overdue } : undefined}
+        style={error ? { borderColor: tokens.color.red } : undefined}
       >
         <TextInput
           value={value}
@@ -81,34 +78,34 @@ export function Field({
             setFocused(false);
             onBlur?.();
           }}
-          placeholderTextColor={c.inkFaint}
-          selectionColor={c.accent}
+          placeholderTextColor={tokens.color.textFaint}
+          selectionColor={tokens.color.white}
           inputAccessoryViewID={needsAccessory ? accessoryId : undefined}
           style={{
             ...(numeric ? tokens.text.readout : tokens.text.body),
-            color: c.ink,
+            color: tokens.color.text,
             paddingHorizontal: tokens.space.md,
             paddingVertical: tokens.space.sm + 2,
           }}
         />
       </Well>
       {error ? (
-        <Text style={{ ...tokens.text.caption, color: c.overdue }}>{error}</Text>
+        <Text style={{ ...tokens.text.caption, color: tokens.color.red }}>{error}</Text>
       ) : null}
       {needsAccessory ? (
         <InputAccessoryView nativeID={accessoryId}>
           <View
             style={{
-              backgroundColor: c.cardSunken,
+              backgroundColor: tokens.color.metalLo,
               borderTopWidth: 1,
-              borderTopColor: c.hairline,
+              borderTopColor: tokens.color.hairline,
               alignItems: "flex-end",
               paddingHorizontal: tokens.space.md,
               paddingVertical: tokens.space.sm,
             }}
           >
             <Pressable onPress={() => Keyboard.dismiss()} hitSlop={12}>
-              <Text style={{ ...tokens.text.body, fontWeight: "600", color: c.ink }}>
+              <Text style={{ ...tokens.text.legend, fontSize: 14, color: tokens.color.white }}>
                 Done
               </Text>
             </Pressable>
