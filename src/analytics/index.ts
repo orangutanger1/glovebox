@@ -1,5 +1,6 @@
 import PostHog from "posthog-react-native";
 import Purchases from "react-native-purchases";
+import type * as UpdatesModule from "expo-updates";
 
 /**
  * Product analytics, which exists here for exactly one question: where in
@@ -43,6 +44,57 @@ export function initAnalytics(): void {
     // needs the provider component wrapped around the tree.
     captureAppLifecycleEvents: true,
   });
+  registerBundleIdentity(client);
+}
+
+/**
+ * Which code bundle the events that follow came from.
+ *
+ * A native build carries a version and a build number, and PostHog sends both
+ * as `$app_version` / `$app_build`. An OTA update replaces the JavaScript
+ * inside that same binary and changes neither, so two devices running JS a week
+ * and several flow changes apart report identical values. That is why the
+ * register's own instruction — segment by update, because the OTA id is the
+ * only thing separating two populations on one binary — could not be followed:
+ * nothing was sending an OTA id.
+ *
+ * Registered as super properties rather than passed per call, so it also rides
+ * on the lifecycle events PostHog captures for itself. Those include the
+ * `Application Opened` that opens every session, which is the event any
+ * population split has to be keyed on.
+ */
+function registerBundleIdentity(posthog: PostHog): void {
+  try {
+    // `register` is typed as returning a promise; an unhandled rejection from
+    // telemetry is a red box in a dev build and a logged crash in a release
+    // one, and `capture` has changed its return shape across SDK versions.
+    const pending: unknown = posthog.register(bundleIdentity());
+    if (pending instanceof Promise) pending.catch(() => {});
+  } catch {
+    /* telemetry is never load-bearing */
+  }
+}
+
+/**
+ * `updateId` is null for the bundle shipped inside the binary, and a null in
+ * PostHog cannot be told apart from a property that was never sent — so the
+ * embedded case gets a value of its own. `expo-updates` is a native module, so
+ * it is read through a guarded require: it is absent under ts-jest, on web, and
+ * in a dev client built without it, and none of those may throw here.
+ */
+function bundleIdentity(): Parameters<PostHog["register"]>[0] {
+  try {
+    const Updates = require("expo-updates") as typeof UpdatesModule;
+    return {
+      ota_update_id: Updates.updateId ?? "embedded",
+      ota_is_embedded: Updates.isEmbeddedLaunch,
+      ota_channel: Updates.channel,
+      ota_runtime_version: Updates.runtimeVersion,
+      ota_created_at: Updates.createdAt?.toISOString() ?? null,
+    };
+  } catch {
+    return {};
+  }
 }
 
 /** The property bag PostHog accepts: flat JSON, one level deep. */

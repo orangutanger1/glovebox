@@ -16,7 +16,10 @@ not.
 1. **Segment by app version and, past 1.0.2, by update.** `Application Opened`
    carries the version; the OTA id is the only thing that separates two
    populations running the same binary. Two installs both reporting 1.0.2 can
-   be running bundles a week and three flow changes apart.
+   be running bundles a week and three flow changes apart. From 1.1.0 build 17
+   the id is on every event as `ota_update_id`, with `ota_is_embedded`
+   distinguishing the bundle inside the binary from a downloaded one; before
+   that build the split is not recoverable at all. See the 2026-08-28 entry.
 2. **Never quote a rate that spans a boundary.** Compare post-boundary cohorts
    to each other. If the question is "did the change help", that is an
    experiment, not a date filter.
@@ -123,6 +126,41 @@ one tap. The quiz went from six questions to seven, so:
 - The new step's own drop-off is `route:body` → `route:odometer`. It costs one
   tap and no typing, so a large fall there is a signal that the seven labels
   are not legible, not that the question is unwelcome.
+
+### 2026-08-28 — the update id starts being sent (1.1.0, build 17)
+
+Not a flow break. The opposite: the first build on which rule 1 above can
+actually be followed.
+
+Every event now carries five super properties registered at init —
+`ota_update_id`, `ota_is_embedded`, `ota_channel`, `ota_runtime_version`,
+`ota_created_at`. A native build reports its version and build number, and
+PostHog already sent both; an OTA replaces the JavaScript inside that same
+binary and changes neither, so nothing in the data distinguished two bundles.
+`ota_update_id` reads `"embedded"` rather than null for the bundle shipped
+inside the binary, because a null in PostHog cannot be told apart from a
+property that was never sent.
+
+What this does not do is fix the past, and the gap is total rather than partial:
+
+- Every install from 2026-08-24 to this build reports exactly `1.0.2` /
+  build `15` — 21 people, one row, no variation. Those populations cannot be
+  separated retroactively by any means. Every cross-day rate before build 17
+  is unfalsifiable and stays that way.
+- The specific open contradiction is not resolvable: `route=features` was
+  recorded as removed by OTA `01a0416c` on 08-26, and 8 distinct people viewed
+  it afterwards, most recently 08-28. Either the removal never reached those
+  devices or the entry is wrong, and the field that would settle it did not
+  exist yet. Do not resolve it by guessing; treat pre-17 route presence as the
+  proxy it always was.
+- `runtimeVersion` policy is `appVersion`, so 1.1.0 is a new OTA train. No
+  1.0.2 install can take a 1.1.0 update, which is itself a population boundary.
+
+Also recorded late, in breach of rule 4: `welcome` first appears 08-27 and
+`notify` on 08-28, and no entry named either. They are onboarding routes that
+landed without a boundary being written down. The dates are from event data,
+not from a commit, which is exactly the memory-written entry rule 4 exists to
+prevent — treat both as approximate.
 
 ## The standing caveat that outlives every entry
 

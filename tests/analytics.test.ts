@@ -21,14 +21,28 @@ type Nav = typeof NavModule;
 const mockCapture = jest.fn<unknown, [string, Record<string, unknown>?]>();
 const mockIdentify = jest.fn();
 const mockReplace = jest.fn();
+const mockRegister = jest.fn<unknown, [Record<string, unknown>?]>();
 
 jest.mock("posthog-react-native", () => ({
   __esModule: true,
   default: class {
     capture = mockCapture;
     identify = mockIdentify;
+    register = mockRegister;
   },
 }));
+
+// The native module the bundle identity is read from. Mutable, so one test can
+// be a device running an OTA and the next the bundle inside the binary.
+const mockUpdates = {
+  updateId: null as string | null,
+  isEmbeddedLaunch: true,
+  channel: null as string | null,
+  runtimeVersion: null as string | null,
+  createdAt: null as Date | null,
+};
+
+jest.mock("expo-updates", () => mockUpdates);
 
 // Imported by the analytics module for the RevenueCat id join; nothing here
 // exercises it.
@@ -78,6 +92,12 @@ function onlyEvent(): { event: string; properties: Record<string, unknown> } {
 beforeEach(() => {
   mockCapture.mockReset();
   mockReplace.mockReset();
+  mockRegister.mockReset();
+  mockUpdates.updateId = null;
+  mockUpdates.isEmbeddedLaunch = true;
+  mockUpdates.channel = null;
+  mockUpdates.runtimeVersion = null;
+  mockUpdates.createdAt = null;
 });
 
 test("every helper is a no-op without a key rather than a crash", () => {
@@ -91,6 +111,48 @@ test("every helper is a no-op without a key rather than a crash", () => {
   }).not.toThrow();
 
   expect(mockCapture).not.toHaveBeenCalled();
+  expect(mockRegister).not.toHaveBeenCalled();
+});
+
+test("every event carries the update id that separates two populations on one binary", () => {
+  mockUpdates.updateId = "01a0416c-2b7d-4f1e-9c3a-6d5e8f0a1b2c";
+  mockUpdates.isEmbeddedLaunch = false;
+  mockUpdates.channel = "production";
+  mockUpdates.runtimeVersion = "1.1.0";
+  mockUpdates.createdAt = new Date("2026-08-26T12:00:00.000Z");
+
+  load("phc_test");
+
+  // Super properties, so this rides on the lifecycle events PostHog captures
+  // for itself — including the Application Opened that opens every session.
+  expect(mockRegister).toHaveBeenCalledTimes(1);
+  expect(mockRegister.mock.calls[0][0]).toEqual({
+    ota_update_id: "01a0416c-2b7d-4f1e-9c3a-6d5e8f0a1b2c",
+    ota_is_embedded: false,
+    ota_channel: "production",
+    ota_runtime_version: "1.1.0",
+    ota_created_at: "2026-08-26T12:00:00.000Z",
+  });
+});
+
+test("the bundle shipped inside the binary reports an id of its own, not a null", () => {
+  // A null would be indistinguishable from a property that was never sent,
+  // which is the ambiguity the whole change exists to remove.
+  load("phc_test");
+
+  expect(mockRegister.mock.calls[0][0]).toMatchObject({
+    ota_update_id: "embedded",
+    ota_is_embedded: true,
+  });
+});
+
+test("a register that rejects never reaches the caller", () => {
+  // Rejected on call rather than up front, so the promise is created in the
+  // same tick the catch is attached — an eager reject is unhandled before
+  // anything has had the chance to handle it.
+  mockRegister.mockImplementation(() => Promise.reject(new Error("offline")));
+
+  expect(() => load("phc_test")).not.toThrow();
 });
 
 test("a client that throws on capture takes nothing down with it", () => {
