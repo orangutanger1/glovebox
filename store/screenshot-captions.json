@@ -15,212 +15,198 @@
     "originalTagline": "Your records can't disappear. Car maintenance log and reminders. No account, no server."
   },
   "notes": {
-    "setChanged": "August 2026: the base art was re-authored outside Figma and the set cut from six frames to four. The two frames that went are 'Set up in under a minute' and 'Take your data anywhere.' - a setup screen and an export screen, neither of which is a reason to install. The four that remain are ordered overdue warning, garage, history, log sheet, so frame 1 carries the whole product alone. Frame keys are unchanged because 16 locales of calibrated copy hang off them; the array order, not the key number, is the shipped order. August 2026 (later): both retired frames were re-authored on the new art and returned as frames 5 and 6 of the shipped set, so the six original captions are all live again; their translations were recovered from commit e5bb556 rather than re-translated.",
-    "caption6": "Source read 'Every car in one glovebox.' - a pun on the retired brand name. After the rebrand to Wrenchy that reads as a stale product name in a six-word headline, so captions now say 'one place'. The long store descriptions still use the glove-compartment metaphor on purpose; there it is an image, not a name.",
-    "lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - re-check line wrapping for de-DE, nl-NL and pl, which run longest.",
-    "inspectionTerms": "Captions deliberately avoid inspection names (MOT/TÜV/ITV/車検), which differ per market and are already carried by each locale's subtitle.",
-    "apostrophe": "Captions use the typographic apostrophe U+2019, matching the Figma source (“Your car’s”) and the live English screenshots. An ASCII \"'\" renders as a straight vertical tick in Cambay and reads as a typo at 128px."
+    "setChanged": "August 2026 (third pass): the base art was re-authored again and the set cut from six frames to five. The retired frame is ScreenShotAppStore4, the onboarding setup shot - 'Set up in under a minute' was never a reason to install. Shipped order is the array order, not the key number: overdue alert, garage, service history, log sheet, resale value. Frame keys are kept only because the geometry and the render pipeline hang off them.",
+    "captionsReplaced": "Unlike the earlier re-shoots, this one replaced the caption copy. The new art was authored with its own baked English headlines, and those headlines - not the older calibrated set - are now the source strings; every other locale was retranslated from them. The previous English set ('Know before it's overdue.', 'Every car in one place.', 'Your car's maintenance log.', 'Log a service in 15 seconds.', 'Take your data anywhere.') and its 15 translations are recoverable from git history. Frame 2 now claims 10 seconds, matching the art; the old copy said 15. One string does not match its art: the ScreenShotAppStore6 headline is baked as 'Your Entire Garage in One Place.', which is 31 characters and wraps to three lines in Cambay Bold at 128px in that frame's box. It ships as 'Every Car in One Garage.' instead - same claim, two lines. The baked headline is repainted anyway, so nothing in the image contradicts it.",
+    "subtitles": "The new art also carries a smaller grey subtitle under each headline. It does not ship: caption-band mode flattens everything above the mockup and repaints a single caption block, so the subtitle is erased in every locale including en-US. It survives only in the Downloads originals. Shipping it would need a second text run in shipkit's renderer.",
+    "casing": "English captions follow the art's title case. Other locales use their own sentence case - title case is not a convention in German, French, Spanish, Italian, Dutch, Polish, Portuguese or Swedish, and CJK has no case at all.",
+    "lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - fr-CA/fr-FR run longest at 34 and are the ones to re-check for wrapping.",
+    "inspectionTerms": "Captions deliberately avoid inspection names (MOT/TUV/ITV/vehicle inspection), which differ per market and are already carried by each locale's subtitle.",
+    "apostrophe": "Captions use the typographic apostrophe U+2019, matching the live art and the store copy. An ASCII \"'\" renders as a straight vertical tick in Cambay and reads as a typo at 128px.",
+    "wrapping": "Every locale is 2 lines at the full 128px; no caption is shrunk. Line breaks were tuned by re-rendering, not by character count: the wrap is greedy inside each frame's own box, so ja - which breaks per character, having no spaces - has its comma placed where the break lands (7 characters in frames 1/2/3/6, 8 in frame 5) rather than mid-word."
   },
   "frames": [
     "ScreenShotAppStore3",
     "ScreenShotAppStore6",
     "ScreenShotAppStore1",
     "ScreenShotAppStore2",
-    "ScreenShotAppStore4",
     "ScreenShotAppStore5"
   ],
   "locales": {
     "de-DE": {
       "tagline": "Deine Einträge können nicht verschwinden. Wartungsheft und Erinnerungen. Kein Konto, kein Server.",
       "captions": {
-        "ScreenShotAppStore3": "Wissen, bevor es überfällig ist.",
-        "ScreenShotAppStore6": "Alle Autos an einem Ort.",
-        "ScreenShotAppStore1": "Das Scheckheft deines Autos.",
-        "ScreenShotAppStore2": "Service in 15 Sekunden notiert.",
-        "ScreenShotAppStore4": "In unter einer Minute startklar",
-        "ScreenShotAppStore5": "Deine Daten, überall dabei."
+        "ScreenShotAppStore3": "Ölwechsel nie mehr verpassen.",
+        "ScreenShotAppStore6": "Deine Garage an einem Ort.",
+        "ScreenShotAppStore1": "Vollständige Servicehistorie.",
+        "ScreenShotAppStore2": "In 10 Sekunden notiert.",
+        "ScreenShotAppStore5": "Mehr Wert beim Verkauf."
       },
-      "maxLen": 32
+      "maxLen": 29
     },
     "en-AU": {
       "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
       "captions": {
-        "ScreenShotAppStore3": "Know before it’s overdue.",
-        "ScreenShotAppStore6": "Every car in one place.",
-        "ScreenShotAppStore1": "Your car’s service log.",
-        "ScreenShotAppStore2": "Log a service in 15 seconds.",
-        "ScreenShotAppStore4": "Set up in under a minute",
-        "ScreenShotAppStore5": "Take your data anywhere."
+        "ScreenShotAppStore3": "Never Miss an Oil Change.",
+        "ScreenShotAppStore6": "Every Car in One Garage.",
+        "ScreenShotAppStore1": "Complete Service History.",
+        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
+        "ScreenShotAppStore5": "Maximize Resale Value."
       },
-      "maxLen": 28
+      "maxLen": 26
     },
     "en-CA": {
       "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
       "captions": {
-        "ScreenShotAppStore3": "Know before it’s overdue.",
-        "ScreenShotAppStore6": "Every car in one place.",
-        "ScreenShotAppStore1": "Your car’s service log.",
-        "ScreenShotAppStore2": "Log a service in 15 seconds.",
-        "ScreenShotAppStore4": "Set up in under a minute",
-        "ScreenShotAppStore5": "Take your data anywhere."
+        "ScreenShotAppStore3": "Never Miss an Oil Change.",
+        "ScreenShotAppStore6": "Every Car in One Garage.",
+        "ScreenShotAppStore1": "Complete Service History.",
+        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
+        "ScreenShotAppStore5": "Maximize Resale Value."
       },
-      "maxLen": 28
+      "maxLen": 26
     },
     "en-GB": {
       "tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
       "captions": {
-        "ScreenShotAppStore3": "Know before it’s overdue.",
-        "ScreenShotAppStore6": "Every car in one place.",
-        "ScreenShotAppStore1": "Your car’s service history.",
-        "ScreenShotAppStore2": "Log a service in 15 seconds.",
-        "ScreenShotAppStore4": "Set up in under a minute",
-        "ScreenShotAppStore5": "Take your data anywhere."
+        "ScreenShotAppStore3": "Never Miss an Oil Change.",
+        "ScreenShotAppStore6": "Every Car in One Garage.",
+        "ScreenShotAppStore1": "Complete Service History.",
+        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
+        "ScreenShotAppStore5": "Maximize Resale Value."
       },
-      "maxLen": 28
+      "maxLen": 26
     },
     "en-US": {
       "tagline": "Your records can’t disappear. Car maintenance log and reminders. No account, no server.",
       "captions": {
-        "ScreenShotAppStore3": "Know before it’s overdue.",
-        "ScreenShotAppStore6": "Every car in one place.",
-        "ScreenShotAppStore1": "Your car’s maintenance log.",
-        "ScreenShotAppStore2": "Log a service in 15 seconds.",
-        "ScreenShotAppStore4": "Set up in under a minute",
-        "ScreenShotAppStore5": "Take your data anywhere."
+        "ScreenShotAppStore3": "Never Miss an Oil Change.",
+        "ScreenShotAppStore6": "Every Car in One Garage.",
+        "ScreenShotAppStore1": "Complete Service History.",
+        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
+        "ScreenShotAppStore5": "Maximize Resale Value."
       },
-      "maxLen": 28
+      "maxLen": 26
     },
     "es-ES": {
       "tagline": "Tu historial no puede desaparecer. Mantenimiento y avisos. Sin cuenta, sin servidor.",
       "captions": {
-        "ScreenShotAppStore3": "Entérate antes de que venza.",
-        "ScreenShotAppStore6": "Todos tus coches en un sitio.",
-        "ScreenShotAppStore1": "El historial de tu coche.",
-        "ScreenShotAppStore2": "Anota un servicio en 15 segundos.",
-        "ScreenShotAppStore4": "Listo en menos de un minuto",
-        "ScreenShotAppStore5": "Llévate tus datos a donde sea."
+        "ScreenShotAppStore3": "No olvides el cambio de aceite.",
+        "ScreenShotAppStore6": "Todo tu garaje en un solo sitio.",
+        "ScreenShotAppStore1": "Historial completo de servicio.",
+        "ScreenShotAppStore2": "Anota un servicio en 10 segundos.",
+        "ScreenShotAppStore5": "Más valor de reventa."
       },
       "maxLen": 33
     },
     "es-MX": {
       "tagline": "Tu historial no puede desaparecer. Mantenimiento y recordatorios. Sin cuenta, sin servidor.",
       "captions": {
-        "ScreenShotAppStore3": "Entérate antes de que se venza.",
-        "ScreenShotAppStore6": "Todos tus autos en un lugar.",
-        "ScreenShotAppStore1": "La bitácora de tu auto.",
-        "ScreenShotAppStore2": "Anota un servicio en 15 segundos.",
-        "ScreenShotAppStore4": "Listo en menos de un minuto",
-        "ScreenShotAppStore5": "Llévate tus datos a donde sea."
+        "ScreenShotAppStore3": "No olvides el cambio de aceite.",
+        "ScreenShotAppStore6": "Todo tu garaje en un solo lugar.",
+        "ScreenShotAppStore1": "Historial completo de servicio.",
+        "ScreenShotAppStore2": "Anota un servicio en 10 segundos.",
+        "ScreenShotAppStore5": "Más valor de reventa."
       },
       "maxLen": 33
     },
     "fr-CA": {
       "tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
       "captions": {
-        "ScreenShotAppStore3": "Sachez-le avant l’échéance.",
+        "ScreenShotAppStore3": "Vidange jamais oubliée.",
         "ScreenShotAppStore6": "Toutes vos autos réunies.",
-        "ScreenShotAppStore1": "Le carnet d’entretien de l’auto.",
-        "ScreenShotAppStore2": "Un entretien noté en 15 secondes.",
-        "ScreenShotAppStore4": "Prêt en moins d’une minute",
-        "ScreenShotAppStore5": "Vos données vous suivent partout."
+        "ScreenShotAppStore1": "Historique complet.",
+        "ScreenShotAppStore2": "Noté en 10 secondes.",
+        "ScreenShotAppStore5": "Une meilleure valeur de revente."
       },
-      "maxLen": 33
+      "maxLen": 32
     },
     "fr-FR": {
       "tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
       "captions": {
-        "ScreenShotAppStore3": "Sachez-le avant l’échéance.",
+        "ScreenShotAppStore3": "Vidange jamais oubliée.",
         "ScreenShotAppStore6": "Toutes vos voitures réunies.",
-        "ScreenShotAppStore1": "Le carnet d’entretien auto.",
-        "ScreenShotAppStore2": "Un entretien noté en 15 secondes.",
-        "ScreenShotAppStore4": "Prêt en moins d’une minute",
-        "ScreenShotAppStore5": "Vos données vous suivent partout."
+        "ScreenShotAppStore1": "Historique complet.",
+        "ScreenShotAppStore2": "Noté en 10 secondes.",
+        "ScreenShotAppStore5": "Une meilleure valeur de revente."
       },
-      "maxLen": 33
+      "maxLen": 32
     },
     "it": {
       "tagline": "Il tuo storico non può sparire. Manutenzione e promemoria. Nessun account, nessun server.",
       "captions": {
-        "ScreenShotAppStore3": "Sappilo prima che scada.",
-        "ScreenShotAppStore6": "Tutte le auto in un posto.",
-        "ScreenShotAppStore1": "Il libretto della tua auto.",
-        "ScreenShotAppStore2": "Un tagliando in 15 secondi.",
-        "ScreenShotAppStore4": "Pronto in meno di un minuto",
-        "ScreenShotAppStore5": "Porta i tuoi dati con te."
+        "ScreenShotAppStore3": "Non salti più un cambio olio.",
+        "ScreenShotAppStore6": "Tutto il garage in un posto.",
+        "ScreenShotAppStore1": "Storico completo.",
+        "ScreenShotAppStore2": "Un tagliando in 10 secondi.",
+        "ScreenShotAppStore5": "Più valore alla rivendita."
       },
-      "maxLen": 27
+      "maxLen": 29
     },
     "ja": {
       "tagline": "記録は消えません。整備記録とリマインダー。アカウントなし、サーバーなし。",
       "captions": {
-        "ScreenShotAppStore3": "期限切れの前に、気づく。",
-        "ScreenShotAppStore6": "何台でも、ひとつにまとめて。",
-        "ScreenShotAppStore1": "愛車の整備記録。",
-        "ScreenShotAppStore2": "整備の記録は15秒。",
-        "ScreenShotAppStore4": "設定は1分もかからない",
-        "ScreenShotAppStore5": "データはいつでも持ち出せる。"
+        "ScreenShotAppStore3": "オイル交換を、忘れない。",
+        "ScreenShotAppStore6": "ガレージ全体、ひとつに。",
+        "ScreenShotAppStore1": "整備の履歴を、まるごと。",
+        "ScreenShotAppStore2": "整備の記録は、10秒。",
+        "ScreenShotAppStore5": "リセール価値を、最大化。"
       },
-      "maxLen": 14
+      "maxLen": 12
     },
     "ko": {
       "tagline": "기록은 사라지지 않습니다. 정비 기록과 알림. 계정 없음, 서버 없음.",
       "captions": {
-        "ScreenShotAppStore3": "기한이 지나기 전에 알림.",
-        "ScreenShotAppStore6": "모든 차를 한 곳에.",
-        "ScreenShotAppStore1": "내 차의 정비 기록.",
-        "ScreenShotAppStore2": "정비 기록은 15초면 끝.",
-        "ScreenShotAppStore4": "설정은 1분도 안 걸려요",
-        "ScreenShotAppStore5": "내 데이터를 어디로든."
+        "ScreenShotAppStore3": "오일 교체를 잊지 않기.",
+        "ScreenShotAppStore6": "차고 전체를 한곳에.",
+        "ScreenShotAppStore1": "정비 이력 전체를 한눈에.",
+        "ScreenShotAppStore2": "정비 기록은 10초면 끝.",
+        "ScreenShotAppStore5": "중고 판매가를 높이세요."
       },
       "maxLen": 14
     },
     "nl-NL": {
       "tagline": "Je gegevens kunnen niet verdwijnen. Onderhoud en herinneringen. Geen account, geen server.",
       "captions": {
-        "ScreenShotAppStore3": "Weet het voordat het te laat is.",
-        "ScreenShotAppStore6": "Al je auto’s op één plek.",
-        "ScreenShotAppStore1": "Het onderhoudsboekje van je auto.",
-        "ScreenShotAppStore2": "Een beurt in 15 seconden.",
-        "ScreenShotAppStore4": "Klaar in minder dan een minuut",
-        "ScreenShotAppStore5": "Neem je data overal mee."
+        "ScreenShotAppStore3": "Mis nooit meer een oliewissel.",
+        "ScreenShotAppStore6": "Je hele garage op één plek.",
+        "ScreenShotAppStore1": "Volledige servicehistorie.",
+        "ScreenShotAppStore2": "Een beurt in 10 seconden.",
+        "ScreenShotAppStore5": "Meer restwaarde bij verkoop."
       },
-      "maxLen": 33
+      "maxLen": 30
     },
     "pl": {
       "tagline": "Twoje wpisy nie mogą zniknąć. Serwis i przypomnienia. Bez konta, bez serwera.",
       "captions": {
-        "ScreenShotAppStore3": "Wiedz, zanim minie termin.",
-        "ScreenShotAppStore6": "Wszystkie auta w jednym miejscu.",
-        "ScreenShotAppStore1": "Książka serwisowa Twojego auta.",
-        "ScreenShotAppStore2": "Zapisz serwis w 15 sekund.",
-        "ScreenShotAppStore4": "Gotowe w niecałą minutę",
-        "ScreenShotAppStore5": "Zabierz swoje dane wszędzie."
+        "ScreenShotAppStore3": "Nie przegap wymiany oleju.",
+        "ScreenShotAppStore6": "Cały garaż w jednym miejscu.",
+        "ScreenShotAppStore1": "Pełna historia serwisowa.",
+        "ScreenShotAppStore2": "Zapisz serwis w 10 sekund.",
+        "ScreenShotAppStore5": "Wyższa wartość odsprzedaży."
       },
-      "maxLen": 32
+      "maxLen": 28
     },
     "pt-BR": {
       "tagline": "Seu histórico não pode desaparecer. Manutenção e lembretes. Sem conta, sem servidor.",
       "captions": {
-        "ScreenShotAppStore3": "Saiba antes de atrasar.",
-        "ScreenShotAppStore6": "Todos os carros em um só lugar.",
-        "ScreenShotAppStore1": "O histórico do seu carro.",
-        "ScreenShotAppStore2": "Uma revisão em 15 segundos.",
-        "ScreenShotAppStore4": "Pronto em menos de um minuto",
-        "ScreenShotAppStore5": "Leve seus dados para onde quiser."
+        "ScreenShotAppStore3": "Nunca perca a troca de óleo.",
+        "ScreenShotAppStore6": "Toda a garagem em um só lugar.",
+        "ScreenShotAppStore1": "Todo o serviço registrado.",
+        "ScreenShotAppStore2": "Uma revisão em 10 segundos.",
+        "ScreenShotAppStore5": "Mais valor na revenda."
       },
-      "maxLen": 33
+      "maxLen": 30
     },
     "sv": {
       "tagline": "Dina uppgifter kan inte försvinna. Service och påminnelser. Inget konto, ingen server.",
       "captions": {
-        "ScreenShotAppStore3": "Vet innan det är försenat.",
-        "ScreenShotAppStore6": "Alla bilar på ett ställe.",
-        "ScreenShotAppStore1": "Bilens digitala servicebok.",
-        "ScreenShotAppStore2": "Logga en service på 15 sekunder.",
-        "ScreenShotAppStore4": "Klart på under en minut",
-        "ScreenShotAppStore5": "Ta med dina data överallt."
+        "ScreenShotAppStore3": "Missa aldrig ett oljebyte.",
+        "ScreenShotAppStore6": "Hela garaget på ett ställe.",
+        "ScreenShotAppStore1": "Komplett servicehistorik.",
+        "ScreenShotAppStore2": "Service på 10 sekunder.",
+        "ScreenShotAppStore5": "Högre andrahandsvärde."
       },
-      "maxLen": 32
+      "maxLen": 27
     }
   }
 }

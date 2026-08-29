@@ -62,69 +62,58 @@
 		{
 			"key": "ScreenShotAppStore3",
 			"base": "ScreenShotAppStore3.png",
-			"mockTop": 602,
-			"mockH": 2086,
+			"mockTop": 650,
+			"mockH": 2038,
 			"caption": {
-				"x": 165,
-				"y": 182,
-				"w": 909
+				"x": 149,
+				"y": 166,
+				"w": 944
 			}
 		},
 		{
 			"key": "ScreenShotAppStore6",
 			"base": "ScreenShotAppStore6.png",
-			"mockTop": 612,
-			"mockH": 2076,
+			"mockTop": 672,
+			"mockH": 2016,
 			"caption": {
-				"x": 214,
-				"y": 173,
-				"w": 813
+				"x": 131,
+				"y": 188,
+				"w": 980
 			}
 		},
 		{
 			"key": "ScreenShotAppStore1",
 			"base": "ScreenShotAppStore1.png",
-			"mockTop": 583,
-			"mockH": 2105,
+			"mockTop": 687,
+			"mockH": 2001,
 			"caption": {
-				"x": 98,
-				"y": 180,
-				"w": 1045
+				"x": 126,
+				"y": 168,
+				"w": 990
 			}
 		},
 		{
 			"key": "ScreenShotAppStore2",
 			"base": "ScreenShotAppStore2.png",
-			"mockTop": 501,
-			"mockH": 2187,
+			"mockTop": 805,
+			"mockH": 1883,
 			"caption": {
-				"x": 206,
-				"y": 138,
-				"w": 830
-			}
-		},
-		{
-			"key": "ScreenShotAppStore4",
-			"base": "ScreenShotAppStore4.png",
-			"mockTop": 595,
-			"mockH": 2093,
-			"caption": {
-				"x": 166,
-				"y": 141,
-				"w": 909
+				"x": 153,
+				"y": 382,
+				"w": 936
 			}
 		},
 		{
 			"key": "ScreenShotAppStore5",
 			"base": "ScreenShotAppStore5.png",
-			"mockTop": 595,
-			"mockH": 2093,
+			"mockTop": 865,
+			"mockH": 1823,
 			"caption": {
-				"x": 166,
-				"y": 144,
-				"w": 909
+				"x": 97,
+				"y": 359,
+				"w": 1048
 			}
 		}
 	],
-	"_framesNote": "Six frames, in App Store order. Frames 1-4 are the August 2026 re-authored art; frames 5-6 (ScreenShotAppStore4 = onboarding step 1/5, ScreenShotAppStore5 = onboarding step 4/5 summary) were re-authored on the same art later and appended, which is why their keys again sit out of z-order. The base composites were re-authored outside Figma, so the frame keys no longer track the old Figma z-order: the array order is the shipped order and each key is kept only because 16 locales of calibrated caption copy hang off it. Key to what the art shows: ScreenShotAppStore3 = vehicle detail with an overdue oil change, ScreenShotAppStore6 = the garage list, ScreenShotAppStore1 = full service history, ScreenShotAppStore2 = the log sheet. mockTop/mockH are measured off the art; every caption sits above the mockup, where frame 2 previously carried it below. The near-black band background was snapped to #000000 in the raw art on frames 1-4, because upscaling left per-pixel noise that dropped band flatness under the 0.85 gate on every frame; frames 5-6 arrive already flat at #454A50."
+	"_framesNote": "Five frames, in App Store order, measured off the third-pass art (August 2026): ScreenShotAppStore3 = vehicle detail with an overdue oil change (red glow), ScreenShotAppStore6 = the garage list, ScreenShotAppStore1 = full service history, ScreenShotAppStore2 = the log sheet, ScreenShotAppStore5 = the overview with an export action (green glow). The onboarding frame ScreenShotAppStore4 was retired. Keys no longer track any z-order - the array order is the shipped order and each key is only an identifier the caption file and this geometry share. mockTop is the first row of the phone mockup; mockH is always canvas.h - mockTop because the mockup runs to the bottom edge. The art's glow reaches into the caption band, so the band was snapped to #000000 in the raw PNGs above mockTop - 4, keeping only the baked English headline glyphs as the ink the renderer aligns to; band flatness lands 0.89-0.92 against the 0.85 gate. The baked grey subtitle was erased from the raws: it cannot survive a band repaint, and leaving it in would have skewed the ink box the caption block is centred on. caption.x/w are symmetric about the canvas centre (621) and sized to the headline's own ink, so a localized string wraps where the art wraps."
 }
