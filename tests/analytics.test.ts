@@ -21,14 +21,25 @@ type Nav = typeof NavModule;
 const mockCapture = jest.fn<unknown, [string, Record<string, unknown>?]>();
 const mockIdentify = jest.fn();
 const mockReplace = jest.fn();
-const mockRegister = jest.fn<unknown, [Record<string, unknown>?]>();
+const mockFlush = jest.fn();
+
+/**
+ * The options the client was constructed with. The bundle identity is passed
+ * as `customAppProperties`, which the SDK reads for every event it sends —
+ * so what this holds is what every event will carry.
+ */
+type AppProps = Record<string, unknown>;
+let constructedWith: { customAppProperties?: (native: AppProps) => AppProps } | undefined;
 
 jest.mock("posthog-react-native", () => ({
   __esModule: true,
   default: class {
     capture = mockCapture;
     identify = mockIdentify;
-    register = mockRegister;
+    flush = mockFlush;
+    constructor(_key: string, options: { customAppProperties?: (n: AppProps) => AppProps }) {
+      constructedWith = options;
+    }
   },
 }));
 
@@ -92,13 +103,20 @@ function onlyEvent(): { event: string; properties: Record<string, unknown> } {
 beforeEach(() => {
   mockCapture.mockReset();
   mockReplace.mockReset();
-  mockRegister.mockReset();
+  mockFlush.mockReset();
+  constructedWith = undefined;
   mockUpdates.updateId = null;
   mockUpdates.isEmbeddedLaunch = true;
   mockUpdates.channel = null;
   mockUpdates.runtimeVersion = null;
   mockUpdates.createdAt = null;
 });
+
+/** What the SDK would stamp on every event, given the device's own values. */
+function appProperties(native: AppProps = {}): AppProps {
+  expect(constructedWith?.customAppProperties).toBeInstanceOf(Function);
+  return constructedWith?.customAppProperties?.(native) ?? {};
+}
 
 test("every helper is a no-op without a key rather than a crash", () => {
   const analytics = load();
@@ -111,7 +129,7 @@ test("every helper is a no-op without a key rather than a crash", () => {
   }).not.toThrow();
 
   expect(mockCapture).not.toHaveBeenCalled();
-  expect(mockRegister).not.toHaveBeenCalled();
+  expect(constructedWith).toBeUndefined();
 });
 
 test("every event carries the update id that separates two populations on one binary", () => {
@@ -123,10 +141,14 @@ test("every event carries the update id that separates two populations on one bi
 
   load("phc_test");
 
-  // Super properties, so this rides on the lifecycle events PostHog captures
-  // for itself — including the Application Opened that opens every session.
-  expect(mockRegister).toHaveBeenCalledTimes(1);
-  expect(mockRegister.mock.calls[0][0]).toEqual({
+  // App properties rather than registered super properties: `register` writes
+  // through the persisted `props` key that the SDK's own storage preload fills
+  // from disk a moment later, so the previous session's copy wins and
+  // Application Opened — captured after that preload, and the event any
+  // population split has to be keyed on — reports last launch's bundle.
+  expect(appProperties({ $app_version: "1.1.0", $app_build: "17" })).toEqual({
+    $app_version: "1.1.0",
+    $app_build: "17",
     ota_update_id: "01a0416c-2b7d-4f1e-9c3a-6d5e8f0a1b2c",
     ota_is_embedded: false,
     ota_channel: "production",
@@ -140,19 +162,28 @@ test("the bundle shipped inside the binary reports an id of its own, not a null"
   // which is the ambiguity the whole change exists to remove.
   load("phc_test");
 
-  expect(mockRegister.mock.calls[0][0]).toMatchObject({
+  expect(appProperties()).toMatchObject({
     ota_update_id: "embedded",
     ota_is_embedded: true,
   });
 });
 
-test("a register that rejects never reaches the caller", () => {
-  // Rejected on call rather than up front, so the promise is created in the
-  // same tick the catch is attached — an eager reject is unhandled before
-  // anything has had the chance to handle it.
-  mockRegister.mockImplementation(() => Promise.reject(new Error("offline")));
+test("an expo-updates that cannot answer costs the identity, not the launch", () => {
+  // The dev client, the web build and this runtime all reach the guarded read
+  // and find nothing behind it. The device's own properties must still arrive.
+  Object.defineProperty(mockUpdates, "updateId", {
+    configurable: true,
+    get() {
+      throw new Error("Cannot find native module 'ExpoUpdates'");
+    },
+  });
 
-  expect(() => load("phc_test")).not.toThrow();
+  try {
+    expect(() => load("phc_test")).not.toThrow();
+    expect(appProperties({ $app_version: "1.1.0" })).toEqual({ $app_version: "1.1.0" });
+  } finally {
+    Object.defineProperty(mockUpdates, "updateId", { configurable: true, writable: true, value: null });
+  }
 });
 
 test("a client that throws on capture takes nothing down with it", () => {

@@ -126,6 +126,7 @@ export const nl: Fragment = {
   "layout.addVehicle": "Voertuig toevoegen",
   "layout.vehicle": "Voertuig",
   "layout.logService": "Onderhoud vastleggen",
+  "layout.fatal.retry": "Opnieuw proberen",
   "layout.fatal.title": "Wrenchy kon je administratie niet openen.",
   "layout.fatal.body":
     "Er is niets verwijderd en de database is teruggezet naar de laatste goede versie. Open de app opnieuw. Blijft dit gebeuren, neem dan contact op met support voordat je opnieuw installeert, want opnieuw installeren is wat de gegevens echt kwijtmaakt.",

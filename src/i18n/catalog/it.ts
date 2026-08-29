@@ -109,6 +109,7 @@ export const it: Fragment = {
   "layout.addVehicle": "Aggiungi veicolo",
   "layout.vehicle": "Veicolo",
   "layout.logService": "Registra un tagliando",
+  "layout.fatal.retry": "Riprova",
   "layout.fatal.title": "Wrenchy non è riuscito ad aprire i tuoi dati.",
   "layout.fatal.body":
     "Non è stato eliminato nulla e il database è stato riportato al suo ultimo stato valido. Riapri l'app. Se continua a succedere, contatta l'assistenza prima di reinstallare: è la reinstallazione che farebbe perdere davvero i dati.",

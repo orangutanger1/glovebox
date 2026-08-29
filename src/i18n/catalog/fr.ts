@@ -126,6 +126,7 @@ export const fr: Fragment = {
   "layout.addVehicle": "Ajouter un véhicule",
   "layout.vehicle": "Véhicule",
   "layout.logService": "Noter un entretien",
+  "layout.fatal.retry": "Réessayer",
   "layout.fatal.title": "Wrenchy n'a pas pu ouvrir votre carnet.",
   "layout.fatal.body":
     "Rien n'a été supprimé, et la base a été restaurée à son dernier état correct. Relancez l'app. Si cela se reproduit, contactez le support avant de réinstaller, car c'est la réinstallation qui ferait vraiment perdre le carnet.",

@@ -3,12 +3,18 @@ import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useRouter, type ErrorBoundaryProps } from "expo-router";
 import * as QuickActions from "expo-quick-actions";
 import { useQuickActionCallback } from "expo-quick-actions/hooks";
 import { getDb } from "../src/db/client";
 import { DISCOUNT_OFFERING, hasOffering, initPurchases, isPro } from "../src/purchases";
-import { identifyFromPurchases, initAnalytics, reportFatals } from "../src/analytics";
+import {
+  flushNow,
+  identifyFromPurchases,
+  initAnalytics,
+  reportFatals,
+  track,
+} from "../src/analytics";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { resumeRoute } from "../src/onboarding/flow";
@@ -39,6 +45,78 @@ import { initDistanceUnit } from "../src/units";
  * effect, which remounts the tree if it disagrees with the phone.
  */
 initLanguage(null);
+
+/**
+ * One step of the launch sequence, which reports its own failure instead of
+ * ending the process.
+ *
+ * Everything in the boot effect is a side effect the app wants and no single
+ * one of them is worth a launch. Unguarded, a throw in any of them is an
+ * `RCTFatal`, and under `expo-updates` that is not even a termination the user
+ * can describe: error recovery looks for a remote update, finds none for this
+ * runtime version and aborts the process, so the iOS crash report names
+ * `ErrorRecovery.crash()` and nothing about the JavaScript. A degraded launch —
+ * no reminders rescheduled, no store, wrong language — is a bug report. A
+ * launch that aborts in 470ms is a guessing game.
+ *
+ * The step's name is the payload: `boot_failed` with `step` says which one
+ * without needing a stack to survive.
+ */
+function boot<T>(step: string, run: () => T): T | undefined {
+  try {
+    return run();
+  } catch (e) {
+    track("boot_failed", {
+      step,
+      message: e instanceof Error ? e.message : String(e),
+      stack: (e instanceof Error ? (e.stack ?? "") : "").slice(0, 4000),
+    });
+    flushNow();
+    return undefined;
+  }
+}
+
+/**
+ * A render-time throw, on the screen instead of in a crash report.
+ *
+ * expo-router renders this in place of the tree when a route throws while
+ * rendering, which is the other half of the launch-crash problem: the global
+ * handler above catches what the boot effect throws, and this catches what the
+ * first screen throws. Both paths now end in a sentence the user can read back.
+ */
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  useEffect(() => {
+    track("render_error", {
+      message: error.message,
+      stack: (error.stack ?? "").slice(0, 4000),
+    });
+    flushNow();
+  }, [error]);
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: LIGHT.base,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: tokens.space.xl,
+        gap: tokens.space.md,
+      }}
+    >
+      <StatusBar style="dark" />
+      <Text style={{ ...tokens.text.heading, color: LIGHT.ink, textAlign: "center" }}>
+        {t("layout.fatal.title")}
+      </Text>
+      <Text style={{ ...tokens.text.caption, color: LIGHT.inkFaint, textAlign: "center" }}>
+        {error.message}
+      </Text>
+      <Pressable onPress={() => void retry()} hitSlop={12}>
+        <Text style={{ ...tokens.text.body, color: LIGHT.ink }}>{t("layout.fatal.retry")}</Text>
+      </Pressable>
+    </View>
+  );
+}
 
 export default function RootLayout() {
   const router = useRouter();
@@ -84,12 +162,26 @@ export default function RootLayout() {
   // Runs once on mount, not gated on route state — depending on the route
   // here would produce a redirect loop.
   useEffect(() => {
+    // First, before anything that can throw. Neither call needs the database or
+    // the store: PostHog keys its own anonymous id and `identifyFromPurchases`
+    // joins it to RevenueCat later. Ordering them after `initPurchases`, which
+    // is what shipped, meant a throw anywhere earlier in this effect killed the
+    // launch with no handler installed and no client to report it — a crash
+    // nobody would ever see the stack for, which is precisely what 1.1.0 (17)
+    // did on TestFlight.
+    boot("analytics", () => {
+      initAnalytics();
+      reportFatals();
+    });
+
     try {
       getDb();
     } catch (e) {
       // A migration failure already rolled the file back. Say so instead of
       // rendering an empty screen the user can only read as "my records
       // are gone".
+      track("boot_failed", { step: "database", message: String(e) });
+      flushNow();
       setFatal(String(e));
       return;
     }
@@ -99,25 +191,22 @@ export default function RootLayout() {
     // touch SQLite while it renders; the language only forces a remount when
     // the stored choice disagrees with the phone's, which is the one case where
     // strings are already on the glass in the wrong language.
-    const fromPhone = getLanguage();
-    if (bootLanguage() !== fromPhone) setLocaleEpoch((n) => n + 1);
-    initDistanceUnit();
-    initPurchases();
-    // After `initPurchases`, so the RevenueCat app user id exists to key on.
-    initAnalytics();
-    // Immediately after the client exists: a crash before this line is one
-    // nobody will ever see the stack for.
-    reportFatals();
-    identifyFromPurchases().catch(() => {});
+    boot("language", () => {
+      const fromPhone = getLanguage();
+      if (bootLanguage() !== fromPhone) setLocaleEpoch((n) => n + 1);
+    });
+    boot("units", initDistanceUnit);
+    boot("purchases", initPurchases);
+    boot("identify", () => void identifyFromPurchases().catch(() => {}));
     // Weakest of the happiness signals and forgotten within a day. It is here
     // so that coming back repeatedly counts for something, never so that it
     // can trigger an ask on its own.
-    recordReviewEvent("app_open");
-    rescheduleAll().catch(() => {});
+    boot("review", () => recordReviewEvent("app_open"));
+    boot("notifications", () => void rescheduleAll().catch(() => {}));
 
     // Stamped on every launch, and the value it hands back is the previous
     // one — the only measure of an absence the app has.
-    const previousOpen = recordOpen();
+    const previousOpen = boot("open", recordOpen) ?? null;
 
     if (!isOnboarded()) {
       // Validated, not trusted: the persisted step names a screen that a

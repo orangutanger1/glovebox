@@ -140,6 +140,7 @@ export const pl: Fragment = {
   "layout.addVehicle": "Dodaj pojazd",
   "layout.vehicle": "Pojazd",
   "layout.logService": "Zapisz serwis",
+  "layout.fatal.retry": "Spróbuj ponownie",
   "layout.fatal.title": "Wrenchy nie mógł otworzyć twoich zapisów.",
   "layout.fatal.body":
     "Nic nie zostało usunięte, a baza wróciła do ostatniego dobrego stanu. Otwórz aplikację ponownie. Jeśli to się powtarza, odezwij się do pomocy, zanim przeinstalujesz — to przeinstalowanie naprawdę usunęłoby zapisy.",

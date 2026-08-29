@@ -119,6 +119,7 @@ export const sv: Fragment = {
   "layout.addVehicle": "Lägg till fordon",
   "layout.vehicle": "Fordon",
   "layout.logService": "Logga en service",
+  "layout.fatal.retry": "Försök igen",
   "layout.fatal.title": "Wrenchy kunde inte öppna dina uppgifter.",
   "layout.fatal.body":
     "Ingenting har raderats, och databasen återställdes till sitt senast fungerande läge. Öppna appen igen. Om det fortsätter hända, kontakta supporten innan du installerar om, för det är ominstallationen som faktiskt skulle förlora uppgifterna.",

@@ -109,6 +109,7 @@ export const ptBR: Fragment = {
   "layout.addVehicle": "Adicionar veículo",
   "layout.vehicle": "Veículo",
   "layout.logService": "Registrar um serviço",
+  "layout.fatal.retry": "Tentar de novo",
   "layout.fatal.title": "O Wrenchy não conseguiu abrir os seus registros.",
   "layout.fatal.body":
     "Nada foi apagado, e o banco de dados voltou ao último estado bom. Abra o app de novo. Se continuar acontecendo, fale com o suporte antes de reinstalar, porque é a reinstalação que perderia os registros de verdade.",

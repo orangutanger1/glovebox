@@ -1,4 +1,4 @@
-import PostHog from "posthog-react-native";
+import PostHog, { type PostHogCustomAppProperties } from "posthog-react-native";
 import Purchases from "react-native-purchases";
 import type * as UpdatesModule from "expo-updates";
 
@@ -43,8 +43,8 @@ export function initAnalytics(): void {
     // The funnel is the point; page/tap autocapture would bury it in noise and
     // needs the provider component wrapped around the tree.
     captureAppLifecycleEvents: true,
+    customAppProperties: (native) => ({ ...native, ...bundleIdentity() }),
   });
-  registerBundleIdentity(client);
 }
 
 /**
@@ -58,31 +58,29 @@ export function initAnalytics(): void {
  * only thing separating two populations on one binary — could not be followed:
  * nothing was sending an OTA id.
  *
- * Registered as super properties rather than passed per call, so it also rides
- * on the lifecycle events PostHog captures for itself. Those include the
- * `Application Opened` that opens every session, which is the event any
- * population split has to be keyed on.
- */
-function registerBundleIdentity(posthog: PostHog): void {
-  try {
-    // `register` is typed as returning a promise; an unhandled rejection from
-    // telemetry is a red box in a dev build and a logged crash in a release
-    // one, and `capture` has changed its return shape across SDK versions.
-    const pending: unknown = posthog.register(bundleIdentity());
-    if (pending instanceof Promise) pending.catch(() => {});
-  } catch {
-    /* telemetry is never load-bearing */
-  }
-}
-
-/**
+ * Passed as app properties rather than registered as super properties, which is
+ * what this first shipped as and was wrong. `register` writes through the
+ * persisted `props` key, and the SDK fills that same key from disk a moment
+ * later when its storage preload resolves (`populateMemoryCache`, per key) —
+ * so a value registered in the constructor's tick is overwritten by the
+ * previous session's copy, and `Application Opened`, which the SDK captures
+ * after that preload, reports the bundle the phone was running last launch.
+ * App properties are read off the client on every event, lifecycle ones
+ * included, with no storage anywhere in the path.
+ *
  * `updateId` is null for the bundle shipped inside the binary, and a null in
  * PostHog cannot be told apart from a property that was never sent — so the
  * embedded case gets a value of its own. `expo-updates` is a native module, so
  * it is read through a guarded require: it is absent under ts-jest, on web, and
  * in a dev client built without it, and none of those may throw here.
+ *
+ * The cast is the one dishonest line in the file: `PostHogCustomAppProperties`
+ * is a closed interface of `$`-prefixed device fields, and these five are not
+ * among them. The SDK spreads whatever it is given into every event's
+ * properties, so the runtime contract is exactly right and only the published
+ * type is narrower than the behaviour.
  */
-function bundleIdentity(): Parameters<PostHog["register"]>[0] {
+function bundleIdentity(): PostHogCustomAppProperties {
   try {
     const Updates = require("expo-updates") as typeof UpdatesModule;
     return {
@@ -91,7 +89,7 @@ function bundleIdentity(): Parameters<PostHog["register"]>[0] {
       ota_channel: Updates.channel,
       ota_runtime_version: Updates.runtimeVersion,
       ota_created_at: Updates.createdAt?.toISOString() ?? null,
-    };
+    } as PostHogCustomAppProperties;
   } catch {
     return {};
   }
@@ -150,10 +148,16 @@ export function track(event: string, properties?: Props): void {
  * In a release build an unhandled JS exception is not a red box, it is
  * `RCTFatal`: the process is killed and the user sees the app close on a tap
  * with no message, which is indistinguishable from a native crash and equally
- * undebuggable from the outside. PostHog persists its queue before it flushes,
- * so an event captured here survives the termination and arrives on the next
- * launch — which is the only way a crash on someone else's phone becomes a
- * stack trace here.
+ * undebuggable from the outside.
+ *
+ * The event is flushed rather than left in the queue. A queued event is
+ * persisted and sent on the next launch, which is enough for a crash the user
+ * can walk away from — and worth nothing for a crash at launch, because there
+ * is no next launch that gets far enough to flush. Under `expo-updates` a
+ * launch-time fatal is worse than a termination: error recovery waits for a
+ * remote update, finds none for this runtime version, and calls
+ * `ErrorRecovery.crash()`, so the process aborts in under a second with the
+ * JavaScript message nowhere in the iOS crash report.
  *
  * The previous handler is called afterwards, always. Swallowing the fatal would
  * leave the app running on a broken state it has already lost track of, which
@@ -172,8 +176,23 @@ export function reportFatals(): void {
       stack: (errorField(error, "stack") ?? "").slice(0, 4000),
       fatal: isFatal === true,
     });
+    flushNow();
     previous?.(error, isFatal);
   });
+}
+
+/**
+ * Starts the POST now instead of on the queue's own schedule. There is no
+ * awaiting it: the caller is on the way to a terminated process, and the
+ * network call either wins that race or does not.
+ */
+export function flushNow(): void {
+  try {
+    const pending: unknown = client?.flush();
+    if (pending instanceof Promise) pending.catch(() => {});
+  } catch {
+    /* telemetry is never load-bearing */
+  }
 }
 
 type ErrorUtilsLike = {

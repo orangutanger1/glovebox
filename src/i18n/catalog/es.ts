@@ -115,6 +115,7 @@ export const es: Fragment = {
   "layout.addVehicle": "Añadir vehículo",
   "layout.vehicle": "Vehículo",
   "layout.logService": "Registrar un mantenimiento",
+  "layout.fatal.retry": "Reintentar",
   "layout.fatal.title": "Wrenchy no ha podido abrir tus registros.",
   "layout.fatal.body":
     "No se ha borrado nada y la base de datos se ha restaurado a su último estado correcto. Vuelve a abrir la app. Si sigue pasando, contacta con soporte antes de reinstalar, porque reinstalar es lo que sí perdería los registros.",

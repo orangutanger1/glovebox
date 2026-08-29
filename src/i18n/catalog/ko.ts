@@ -123,6 +123,7 @@ export const ko: Fragment = {
   "layout.addVehicle": "차량 추가",
   "layout.vehicle": "차량",
   "layout.logService": "정비 기록하기",
+  "layout.fatal.retry": "다시 시도",
   "layout.fatal.title": "Wrenchy가 기록을 열지 못했어요.",
   "layout.fatal.body":
     "삭제된 것은 없고, 데이터베이스는 마지막 정상 상태로 되돌렸어요. 앱을 다시 열어 주세요. 계속 이러면 재설치하기 전에 먼저 문의해 주세요. 기록이 실제로 사라지는 건 재설치 쪽이에요.",

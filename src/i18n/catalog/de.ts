@@ -119,6 +119,7 @@ export const de: Fragment = {
   "layout.addVehicle": "Fahrzeug hinzufügen",
   "layout.vehicle": "Fahrzeug",
   "layout.logService": "Service eintragen",
+  "layout.fatal.retry": "Erneut versuchen",
   "layout.fatal.title": "Wrenchy konnte deine Daten nicht öffnen.",
   "layout.fatal.body":
     "Nichts wurde gelöscht, und die Datenbank wurde auf ihren letzten guten Stand zurückgesetzt. Öffne die App neu. Wenn das immer wieder passiert, wende dich an den Support, bevor du neu installierst – neu installieren wäre das, was die Daten wirklich verlieren würde.",

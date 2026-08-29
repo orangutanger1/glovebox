@@ -112,6 +112,7 @@ export const ja: Fragment = {
   "layout.addVehicle": "車を追加",
   "layout.vehicle": "車両",
   "layout.logService": "整備を記録",
+  "layout.fatal.retry": "再試行",
   "layout.fatal.title": "Wrenchyが整備記録を開けませんでした。",
   "layout.fatal.body":
     "削除されたものはありません。データベースは最後に正常だった状態に戻しました。アプリを開き直してください。これが続く場合は、再インストールする前にサポートへご連絡ください。記録を実際に失う原因になるのは、その再インストールです。",
