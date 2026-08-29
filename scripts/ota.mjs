@@ -121,7 +121,14 @@ if (missing.length > 0) {
 }
 
 rmSync("dist", { recursive: true, force: true });
-run("npx", ["--yes", "expo", "export", "--platform", PLATFORM]);
+/* `--clear` is load-bearing, not hygiene. `EXPO_PUBLIC_*` values are inlined by
+ * the transformer, and Metro's transform cache is keyed on the file, not on the
+ * environment that produced it — so any earlier export run without the EAS
+ * environment leaves modules cached with the keys compiled out, and this
+ * script's own gate then refuses a bundle that the environment would have
+ * inlined correctly. Clearing makes the verdict depend on the environment
+ * rather than on what was exported on this machine yesterday. */
+run("npx", ["--yes", "expo", "export", "--platform", PLATFORM, "--clear"]);
 
 const bundleDir = join("dist", "_expo", "static", "js", PLATFORM);
 const bundles = readdirSync(bundleDir).filter(

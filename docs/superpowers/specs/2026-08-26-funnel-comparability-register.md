@@ -162,6 +162,40 @@ landed without a boundary being written down. The dates are from event data,
 not from a commit, which is exactly the memory-written entry rule 4 exists to
 prevent — treat both as approximate.
 
+### 2026-08-28 — correction to the entry above, and OTA `01a04bcc-4588-7cae-aa54-ee610e2da666`
+
+Two things in the entry above were wrong or premature.
+
+**The update id was not actually being sent.** It was registered as PostHog
+super properties in the client's constructor tick. `register` writes through the
+persisted `props` key, and the SDK fills that same key from disk when its
+storage preload resolves, merging per key — so on every launch but the very
+first, the previous session's copy overwrites the fresh one, and
+`Application Opened`, which the SDK captures after that preload, reports the
+bundle the phone was running *last* launch. It now goes through
+`customAppProperties`, which the client reads for every event with no storage
+in the path. Treat any `ota_*` value from before this OTA as lagging by one
+launch; there are none, because of the next paragraph.
+
+**Build 17 never ran.** It crashes on launch: a JavaScript fatal inside the
+launch window makes `expo-updates` wait for a remote update, find none for
+runtime 1.1.0, and call `ErrorRecovery.crash()` — the process aborts ~470ms in
+and the iOS report names only expo-updates. Zero events of any kind exist for
+`1.1.0` / build `17`. Native config is byte-identical to the working build 15
+(same frameworks, same `Expo.plist`, every embedded manifest asset present,
+both `EXPO_PUBLIC_` keys inlined), so the fault is in JavaScript and this OTA
+can carry the fix.
+
+This update is the diagnostic: the analytics client and the fatal handler now
+install before anything else in the boot effect, each boot step reports
+`boot_failed` with its own name instead of killing the launch, a render throw
+lands in an expo-router `ErrorBoundary` as `render_error`, and fatals flush
+immediately rather than waiting for a next launch that never comes.
+
+For the register's purpose: **1.1.0 is a two-bundle train already**. The
+embedded build-17 bundle is not a population — nobody completed a launch on it.
+Any 1.1.0 data begins with `ota_update_id = 01a04bcc-…`.
+
 ## The standing caveat that outlives every entry
 
 As of this date the paywall has converted a sample of one. Nothing in this
