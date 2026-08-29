@@ -70,10 +70,22 @@ export function updateVehicleIdentity(
   vehicleId: string,
   v: { name: string; make?: string; model?: string; year?: number; body_style?: BodyStyle }
 ): void {
-  getDb().runSync(
-    "UPDATE vehicles SET name = ?, make = ?, model = ?, year = ?, body_style = ? WHERE id = ?",
-    [v.name, v.make ?? null, v.model ?? null, v.year ?? null, v.body_style ?? null, vehicleId]
-  );
+  // body_style is the one field here another screen owns, so an absent key
+  // leaves the column alone rather than clearing it. name/make/model/year are
+  // this screen's own and a missing one really does mean "no longer set".
+  const sets = ["name = ?", "make = ?", "model = ?", "year = ?"];
+  const params: (string | number | null)[] = [
+    v.name,
+    v.make ?? null,
+    v.model ?? null,
+    v.year ?? null,
+  ];
+  if ("body_style" in v) {
+    sets.push("body_style = ?");
+    params.push(v.body_style ?? null);
+  }
+  params.push(vehicleId);
+  getDb().runSync(`UPDATE vehicles SET ${sets.join(", ")} WHERE id = ?`, params);
 }
 
 /** Separate from updateVehicleIdentity because onboarding sets the body style

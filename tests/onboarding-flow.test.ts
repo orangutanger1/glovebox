@@ -29,11 +29,22 @@ test("back steps over analyzing, which advances itself", () => {
 });
 
 test("every quiz screen is numbered and no other screen is", () => {
-  expect(QUIZ.map((route) => quizStep(route)?.step)).toEqual([1, 2, 3, 4, 5, 6]);
+  expect(QUIZ.map((route) => quizStep(route)?.step)).toEqual([1, 2, 3, 4, 5, 6, 7]);
   for (const route of FLOW) {
     if (QUIZ.includes(route)) expect(quizStep(route)?.total).toBe(QUIZ.length);
     else expect(quizStep(route)).toBeNull();
   }
+});
+
+test("body sits between the car and the odometer", () => {
+  expect(nextRoute("vehicle")).toBe("body");
+  expect(nextRoute("body")).toBe("odometer");
+  expect(previousRoute("odometer")).toBe("body");
+});
+
+test("the quiz is seven questions and body is the second", () => {
+  expect(QUIZ).toHaveLength(7);
+  expect(quizStep("body")).toEqual({ step: 2, total: 7 });
 });
 
 test("the flow ends on the second ask, with no free door after it", () => {

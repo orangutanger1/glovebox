@@ -27,6 +27,7 @@ jest.mock("../src/db/client", () => {
 import {
   createVehicle,
   getVehicle,
+  setBodyStyle,
   setOdometerEstimate,
   setOdometerReading,
   updateVehicleIdentity,
@@ -154,6 +155,20 @@ test("stepping back and correcting an answer edits the car instead of adding one
   // The corrected answer replaced the record rather than stacking a second one.
   expect(listRecords(first!).filter((r) => r.service_type === "Oil Change")).toHaveLength(1);
   expect(after.plan.items.find((i) => i.type === "Oil Change")?.status).toBe("ok");
+});
+
+test("a body style survives stepping back to the car and forward again", () => {
+  // The body step writes a column the vehicle screen's own save does not own.
+  // A save that cleared it would lose the answer silently, and only on the
+  // path where the user corrected a typo.
+  answerVehicle("2019 Honda Civic", 2019);
+  const id = getOnboardingVehicleId()!;
+  setBodyStyle(id, "pickup");
+
+  answerVehicle("2018 Honda Civic", 2018);
+
+  expect(getVehicle(id)?.body_style).toBe("pickup");
+  expect(getVehicle(id)?.name).toBe("2018 Honda Civic");
 });
 
 test("a changed attitude answer does not blank the ones around it", () => {

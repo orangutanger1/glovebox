@@ -77,6 +77,7 @@ import {
   estimateOdometer,
 } from "../src/onboarding/estimate";
 import OnboardingVehicle from "../app/onboarding/vehicle";
+import OnboardingBody from "../app/onboarding/body";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
 import OnboardingReviews from "../app/onboarding/reviews";
@@ -330,7 +331,7 @@ test("the car is one typed word away from answered", () => {
   type(tree, "Make (optional)", "Toyota");
   press(tree, "Continue");
 
-  expect(navigated).toContain("/onboarding/odometer");
+  expect(navigated).toContain("/onboarding/body");
   const saved = getVehicle(getOnboardingVehicleId()!)!;
   expect(saved.year).toBe(DEFAULT_YEAR);
   expect(saved.name).toBe(`${DEFAULT_YEAR} Toyota`);
@@ -345,7 +346,7 @@ test("the car screen refuses nothing, because it was refusing installs", () => {
   const tree = render(OnboardingVehicle);
   press(tree, "Continue");
 
-  expect(navigated).toContain("/onboarding/odometer");
+  expect(navigated).toContain("/onboarding/body");
   expect(texts(tree)).not.toContain("Required.");
 
   // Named, not blank, and not the bare model year: "2019" is a number standing
@@ -796,5 +797,29 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   getPermissionsAsync.mockResolvedValue({
     status: "granted",
     canAskAgain: false,
+  });
+});
+
+describe("the body-style step", () => {
+  test("offers seven bodies and no Continue button", () => {
+    setOnboardingVehicleId(createVehicle({ name: "2016 Civic" }).id);
+    const strings = texts(render(OnboardingBody));
+    for (const label of ["Sedan", "Hatchback", "Coupe", "Wagon", "SUV", "Pickup", "Van"]) {
+      expect(strings).toContain(label);
+    }
+    expect(strings).not.toContain("Continue");
+  });
+
+  test("a tap records the body and advances", () => {
+    const id = createVehicle({ name: "2023 F-150" }).id;
+    setOnboardingVehicleId(id);
+    press(render(OnboardingBody), "Pickup");
+    expect(getVehicle(id)?.body_style).toBe("pickup");
+    expect(navigated.at(-1)).toBe("/onboarding/odometer");
+  });
+
+  test("a body style given with no car in the run still advances", () => {
+    press(render(OnboardingBody), "Van");
+    expect(navigated.at(-1)).toBe("/onboarding/odometer");
   });
 });

@@ -109,6 +109,21 @@ read differently: above the fold instead of after a scroll.
 drops by construction and says nothing about attention. Any per-card drop-off
 comparison has now crossed three different dwell values in four days.
 
+### 2026-08-27 — a seventh quiz question
+
+`body` was inserted between `vehicle` and `odometer`, asking the body style in
+one tap. The quiz went from six questions to seven, so:
+
+- Every `QUESTION n / 6` label became `n / 7`. Any analysis keyed on the
+  printed step count is comparing two different denominators.
+- Depth-in-flow comparisons across this line are meaningless. Use `route`.
+- `vehicle` → `odometer` is no longer an adjacent pair. A funnel defined on
+  those two steps silently measures a three-step span after this date and will
+  read as a drop-off that did not happen.
+- The new step's own drop-off is `route:body` → `route:odometer`. It costs one
+  tap and no typing, so a large fall there is a signal that the seven labels
+  are not legible, not that the question is unwelcome.
+
 ## The standing caveat that outlives every entry
 
 As of this date the paywall has converted a sample of one. Nothing in this
