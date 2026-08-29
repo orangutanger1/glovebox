@@ -818,6 +818,17 @@ describe("the body-style step", () => {
     expect(navigated.at(-1)).toBe("/onboarding/odometer");
   });
 
+  test("the body already stored comes back selected on a revisit", () => {
+    const id = createVehicle({ name: "2023 F-150" }).id;
+    setOnboardingVehicleId(id);
+    press(render(OnboardingBody), "Pickup");
+
+    const selected = render(OnboardingBody)
+      .root.findAll((n) => typeof n.props.label === "string" && n.props.selected === true)
+      .map((n) => n.props.label as string);
+    expect(new Set(selected)).toEqual(new Set(["Pickup"]));
+  });
+
   test("a body style given with no car in the run still advances", () => {
     press(render(OnboardingBody), "Van");
     expect(navigated.at(-1)).toBe("/onboarding/odometer");

@@ -212,25 +212,19 @@ function sources(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-const FILES = [...sources("src"), ...sources("app")];
+const FILES = [
+  ...sources(join(__dirname, "..", "src")),
+  ...sources(join(__dirname, "..", "app")),
+];
 
 describe("the instrument-panel material system is gone", () => {
-  test.each([
-    "metalFace",
-    "edgeSolid",
-    "edgeHeight",
-    "edgePressed",
-    "pressTravel",
-    "metalHi",
-    "metalLo",
-    "hairlineLit",
-    "redGlow",
-    "color.housing",
-    "color.metal",
-  ])("no source file mentions %s", (banned) => {
-    const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes(banned));
-    expect(offenders).toEqual([]);
-  });
+  test.each(["tokens.color", "tokens.material"])(
+    "no source file mentions %s",
+    (banned) => {
+      const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes(banned));
+      expect(offenders).toEqual([]);
+    }
+  );
 });
 
 const MODES = [
@@ -436,7 +430,7 @@ describe("the phone's own glyphs invert against the palette", () => {
 describe("the type scale", () => {
   test("ships the two font files it names", () => {
     for (const family of ["InstrumentSans-SemiBold", "InstrumentSans-Bold"]) {
-      expect(existsSync(`assets/fonts/${family}.ttf`)).toBe(true);
+      expect(existsSync(join(__dirname, "..", "assets", "fonts", `${family}.ttf`))).toBe(true);
     }
   });
 
@@ -466,7 +460,7 @@ describe("the type scale", () => {
   // also on every form label, decline link and header title in the app.
   test("reserves the uppercase legend for gauge readouts", () => {
     const offenders = FILES.filter((f) => readFileSync(f, "utf8").includes("tokens.text.legend"));
-    expect(offenders).toEqual(["src/design/Gauge.tsx"]);
+    expect(offenders).toEqual([join(__dirname, "..", "src", "design", "Gauge.tsx")]);
   });
 });
 

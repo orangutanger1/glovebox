@@ -50,8 +50,8 @@ export default function Welcome() {
       {/* Full width, own aspect ratio, pinned to the top. Stretched to fill the
           screen instead, `cover` crops about a third off each side of a phone —
           and what it crops is exactly where the trail sweeps out of frame, which
-          is the whole composition. The photograph is black at its edges, so the
-          bottom of it and the housing are the same colour: no seam to hide. */}
+          is the whole composition. The photograph is black at its edges, and the
+          scrim below carries that into the page colour: no seam to hide. */}
       <View
         pointerEvents="none"
         style={{ position: "absolute", top: 0, left: 0, right: 0, aspectRatio: LIGHT_RATIO }}
@@ -62,11 +62,9 @@ export default function Welcome() {
           resizeMode="cover"
           accessibilityIgnoresInvertColors
         />
-        {/* The copy has to land on black, not on a highlight, or the headline
-            fights the brightest part of the trail for the same pixels. */}
         <LinearGradient
-          colors={["transparent", "rgba(15,17,19,0.85)", c.base]}
-          locations={[0, 0.6, 1]}
+          colors={["transparent", c.base]}
+          locations={[0, 1]}
           style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "45%" }}
         />
       </View>

@@ -26,7 +26,7 @@ function id() {
 export function listVehicles(): Vehicle[] {
   return rows(
     getDb().getAllSync<Vehicle>(
-      "SELECT * FROM vehicles WHERE deleted_at IS NULL ORDER BY created_at ASC"
+      "SELECT * FROM vehicles WHERE deleted_at IS NULL ORDER BY created_at ASC, rowid ASC"
     )
   );
 }

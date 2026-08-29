@@ -16,8 +16,8 @@ import { tokens } from "./tokens";
  * `overflow: hidden` — on iOS the two cancel each other out — and the caster
  * has to be opaque, or the shadow shows through its own child and a
  * translucent `style` fill composites over the screen instead of over the
- * card. That fill is also what lets iOS derive a `shadowPath` instead of
- * rasterising the alpha channel offscreen every frame.
+ * card. That fill is also what keeps iOS from rasterising the alpha channel
+ * offscreen every frame.
  *
  * `shadowOpacity` is the only theme-dependent part of the shadow, so it is the
  * only part supplied here; the rest is `tokens.shadow.soft`.

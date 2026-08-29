@@ -34,7 +34,7 @@ export type Palette = {
   blurTint: "light" | "dark";
 };
 
-export const LIGHT: Palette = Object.freeze({
+export const LIGHT = Object.freeze({
   base: "#F7F4EF",
   card: "#FFFFFF",
   cardSunken: "#F2EEE8",
@@ -50,9 +50,9 @@ export const LIGHT: Palette = Object.freeze({
   overdueWash: "rgba(193,18,31,0.08)",
   shadowOpacity: 0.06,
   blurTint: "light",
-});
+} satisfies Palette);
 
-export const DARK: Palette = Object.freeze({
+export const DARK = Object.freeze({
   base: "#101215",
   card: "#191C20",
   cardSunken: "#22262B",
@@ -68,4 +68,4 @@ export const DARK: Palette = Object.freeze({
   overdueWash: "rgba(224,49,61,0.14)",
   shadowOpacity: 0.35,
   blurTint: "dark",
-});
+} satisfies Palette);

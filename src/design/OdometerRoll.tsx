@@ -127,18 +127,26 @@ export function OdometerRoll({
           <View
             key={i}
             style={{
-              backgroundColor: i === places - 1 ? c.overdueWash : c.card,
+              backgroundColor: c.card,
               borderRadius: 3,
               borderWidth: 1,
               borderColor: c.hairline,
             }}
           >
-            <Wheel
-              digit={d}
-              // Right-to-left stagger: the tenths wheel is the last to settle.
-              delay={120 + (places - 1 - i) * 90}
-              duration={1100 + (places - 1 - i) * 260}
-            />
+            <View
+              style={
+                i === places - 1
+                  ? { backgroundColor: c.overdueWash, borderRadius: 3 }
+                  : undefined
+              }
+            >
+              <Wheel
+                digit={d}
+                // Right-to-left stagger: the tenths wheel is the last to settle.
+                delay={120 + (places - 1 - i) * 90}
+                duration={1100 + (places - 1 - i) * 260}
+              />
+            </View>
           </View>
         ))}
       </Well>

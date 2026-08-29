@@ -1,10 +1,11 @@
+import { useMemo } from "react";
 import { View } from "react-native";
 import { Chip } from "../../src/design/Chip";
 import { tokens } from "../../src/design/tokens";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { getOnboardingVehicleId } from "../../src/onboarding";
-import { setBodyStyle } from "../../src/db/vehicles";
+import { getVehicle, setBodyStyle } from "../../src/db/vehicles";
 import { BODY_STYLES, type BodyStyle } from "../../src/vehicles/bodyStyles";
 import { trackQuizAnswer } from "../../src/analytics";
 import { t } from "../../src/i18n";
@@ -13,6 +14,11 @@ import { t } from "../../src/i18n";
  *  does not need confirming. */
 export default function OnboardingBody() {
   const advance = useAdvance("body");
+
+  const current = useMemo(() => {
+    const vehicleId = getOnboardingVehicleId();
+    return vehicleId ? getVehicle(vehicleId)?.body_style : undefined;
+  }, []);
 
   function choose(style: BodyStyle) {
     // No vehicle means the user deep-linked past the screen that creates one.
@@ -38,7 +44,7 @@ export default function OnboardingBody() {
           <Chip
             key={style}
             label={t(`vehicle.body.${style}`)}
-            selected={false}
+            selected={style === current}
             onPress={() => choose(style)}
           />
         ))}

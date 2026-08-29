@@ -3,9 +3,9 @@ import { useTheme } from "./theme";
 import { tokens } from "./tokens";
 
 /**
- * A stamped legend on the faceplate. Only `due` carries color — a red fill is
- * the app saying something is wrong, so `soon` and `ok` earn their weight from
- * contrast instead.
+ * A stamped legend on the faceplate. Only `due` carries a color fill — a red
+ * fill is the app saying something is wrong, so `soon` and `ok` take their tone
+ * in the rim instead.
  */
 export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "ok" }) {
   const c = useTheme();
@@ -13,9 +13,9 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
   // Built here rather than at module scope: the palette is a hook read, and a
   // frozen table cannot answer which theme is on the glass.
   const TONE = {
-    due: { bg: c.overdue, fg: "#FFFFFF", border: "rgba(255,255,255,0.35)" },
-    soon: { bg: c.cardSunken, fg: c.ink, border: c.hairline },
-    ok: { bg: c.cardSunken, fg: c.inkMuted, border: c.hairline },
+    due: { bg: c.overdue, fg: "#FFFFFF", border: c.hairline },
+    soon: { bg: c.cardSunken, fg: c.ink, border: c.soon },
+    ok: { bg: c.cardSunken, fg: c.inkMuted, border: c.ok },
   };
   const t = TONE[tone];
 

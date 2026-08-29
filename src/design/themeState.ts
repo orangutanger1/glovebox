@@ -1,5 +1,7 @@
 import { getState, setState } from "../db/state";
 
+export const THEME_KEY = "theme";
+
 export type ThemeMode = "system" | "light" | "dark";
 
 const MODES: readonly ThemeMode[] = ["system", "light", "dark"];
@@ -10,10 +12,10 @@ const MODES: readonly ThemeMode[] = ["system", "light", "dark"];
  * tree — the same failure shape `resumeRoute` exists to prevent for routes.
  */
 export function getThemeMode(): ThemeMode {
-  const stored = getState("theme");
+  const stored = getState(THEME_KEY);
   return MODES.includes(stored as ThemeMode) ? (stored as ThemeMode) : "system";
 }
 
 export function setThemeMode(mode: ThemeMode): void {
-  setState("theme", mode);
+  setState(THEME_KEY, mode);
 }
