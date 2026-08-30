@@ -9,7 +9,7 @@ import { getVehicle, setOdometerReading } from "../../src/db/vehicles";
 import { getOnboardingVehicleId } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
-import { trackQuizAnswer, trackVehicleEntry } from "../../src/analytics";
+import { trackQuizAnswer, trackStepBlocked, trackVehicleEntry } from "../../src/analytics";
 import { parseNumber } from "../../src/format";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
@@ -57,10 +57,11 @@ export default function OnboardingOdometer() {
   const valid = reading !== undefined && reading >= 0;
 
   function onContinue() {
-    if (!valid) {
-      trackVehicleEntry("odometer", "invalid");
-      return;
-    }
+    // Kept as a guard, not as a reporter. The button is disabled whenever
+    // `valid` is false, so this branch was unreachable and the `invalid` event
+    // it used to emit has never once fired on a device. The odometer's refusals
+    // are counted by `onBlockedPress` below, which is where the tap arrives.
+    if (!valid) return;
     const ownedId = getOnboardingVehicleId();
     const vehicle = ownedId ? getVehicle(ownedId) : null;
     // Set outright rather than as a high-water mark. This field is the dash
@@ -76,7 +77,21 @@ export default function OnboardingOdometer() {
     <OnboardingScreen
       route="odometer"
       title={t(`onboardingA.odometer.title.${unit}`)}
-      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!valid} />}
+      footer={
+        <Button
+          label={t("onboardingA.continue")}
+          onPress={onContinue}
+          disabled={!valid}
+          // Two different failures wearing one greyed-out button: nothing typed
+          // at all, and something typed that `parseNumber` would not take. The
+          // second is a bug report — a grouped reading copied off the dash, a
+          // decimal comma, a unit suffix — and it has to be separable from a
+          // user who simply has not been out to the car yet.
+          onBlockedPress={() =>
+            trackStepBlocked("odometer", odometer.trim() === "" ? "empty" : "unparseable")
+          }
+        />
+      }
     >
       <Panel>
         {/* Drums above the field the user is about to type into: the screen

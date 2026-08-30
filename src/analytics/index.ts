@@ -309,6 +309,27 @@ export function trackVehicleEntry(
 }
 
 /**
+ * A Continue the flow refused, and why.
+ *
+ * Every gated screen in onboarding greys its button out until the question is
+ * answered, and a greyed button that is tapped and abandoned used to leave no
+ * trace at all: the funnel saw a step view and then nothing, which is the same
+ * row a user who never touched the screen produces. That blind spot is the
+ * expensive one. The vehicle screen's validation loop — forty refused taps
+ * from one device in 112 seconds, and no second question ever reached — was
+ * only visible because that screen happened to emit `year:invalid` on every
+ * refusal. Nothing else in the quiz did.
+ *
+ * `reason` is a fixed vocabulary owned by the screen, never user text, so the
+ * question "which gate is people walking into" is one group-by. Repeats are
+ * deliberately not collapsed: the count on one device in one session is the
+ * signal, exactly as it was for the vehicle field.
+ */
+export function trackStepBlocked(route: string, reason: string): void {
+  track("onboarding_step_blocked", { route, reason });
+}
+
+/**
  * Joins this device's PostHog timeline to its RevenueCat identity.
  *
  * Without it the two datasets cannot be joined at all: PostHog would key on

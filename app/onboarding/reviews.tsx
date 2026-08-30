@@ -11,6 +11,7 @@ import {
 } from "../../src/onboarding/evidence";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackStepBlocked } from "../../src/analytics";
 
 /**
  * How long Continue insists on the scroll before it stops standing in the way.
@@ -59,6 +60,7 @@ export default function OnboardingReviews() {
           label={t(atBottom ? "onboardingC.reviews.continue" : "onboardingC.reviews.scroll")}
           onPress={advance}
           disabled={!unlocked}
+          onBlockedPress={() => trackStepBlocked("reviews", "scroll")}
         />
       )}
     >

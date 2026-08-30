@@ -10,7 +10,7 @@ import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboar
 import { distancePerYearFor, odometerDaysAgo } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
-import { trackQuizAnswer } from "../../src/analytics";
+import { trackQuizAnswer, trackStepBlocked } from "../../src/analytics";
 import {
   SERVICE_TYPES,
   SERVICE_WHEN,
@@ -129,7 +129,20 @@ export default function OnboardingService() {
       route="service"
       title={t("onboardingB.service.title")}
       subtitle={t("onboardingB.service.subtitle")}
-      footer={<Button label={t("onboardingB.continue")} onPress={onContinue} disabled={!valid} />}
+      footer={
+        <Button
+          label={t("onboardingB.continue")}
+          onPress={onContinue}
+          disabled={!valid}
+          // One screen, two questions. Which of the two is unanswered is the
+          // point of the report: the second chip row is dimmed until the first
+          // is answered, and people stalling on that row means the staged
+          // reveal is failing, not that the question is unwelcome.
+          onBlockedPress={() =>
+            trackStepBlocked("service", type === null ? "type_unanswered" : "when_unanswered")
+          }
+        />
+      }
     >
       <ChipRow
         legend={t("onboardingB.service.legend")}

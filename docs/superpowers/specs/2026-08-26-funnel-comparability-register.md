@@ -233,6 +233,59 @@ instrumented bundle, and a download that outlives the wait persists on disk for
 the launch after. The first open that gets far enough reports `boot_failed`
 with the step, `render_error`, or `js_error` with the stack.
 
+### 2026-08-29 — build 21, and a gate that was never being counted
+
+**Build 21 is the crash fix in the binary.** Builds 17-20 aborted on launch
+(`app/_layout.tsx` returned `null` until `useFonts` resolved; see
+`2026-08-29-launch-crash-handoff.md`), and build 20 only survived because
+`updates.fallbackToCacheTimeout: 10000` made it pull OTA `01a04e95` before
+starting JS. Build 21 drops that config and embeds the fix instead. Its
+`main.jsbundle` was checked directly rather than assumed: the new vehicle
+screen's keys are present and all nine of the old validation keys
+(`vehicle.yearMissing`, `vehicle.yearDigits`, `vehicle.yearMin`,
+`vehicle.yearMax`, `vehicle.required`, `vehicle.makeNone`,
+`vehicle.makeSearch`, `vehicle.makeOther`, `vehicle.yearOlder`) are absent.
+
+For analysis this means **1.1.0 build 21 is the first bundle on which a
+first-launch cohort exists at all.** Everything on builds 17-20 is a crashed or
+OTA-rescued launch and is not a population.
+
+**`onboarding_step_blocked` is new, and its absence before now is not zero.**
+Five quiz screens — `odometer`, `drive`, `service`, `tracking`, `worry` — plus
+the `symptoms` dwell and the `reviews` scroll gate grey out Continue until
+their question is answered. React Native's `Pressable` does not fire `onPress`
+when `disabled`, so every one of those refusals emitted nothing: a user who
+tapped a dead Continue and quit produced a lone `onboarding_step_viewed`, which
+is the same row a user who read the question and lost interest produces.
+
+That blind spot is the reason the funnel reads as bimodal rather than leaky.
+The early deaths at `vehicle` and `odometer` were the only ones with a receipt,
+and only because the old vehicle screen happened to emit `year:invalid` on
+every refused tap — one device left forty of them in 112 seconds. The other
+gates had no equivalent.
+
+Consequences, all in the "do not compare" direction:
+
+- The event does not exist before this bundle. A query returning no
+  `onboarding_step_blocked` rows for an earlier cohort means the event was not
+  being sent, **not** that nobody was blocked. There is no way to recover the
+  earlier counts.
+- `reason` is a fixed per-screen vocabulary: `unanswered` (drive, tracking,
+  worry), `empty` / `unparseable` (odometer), `type_unanswered` /
+  `when_unanswered` (service), `dwell` (symptoms), `scroll` (reviews).
+- Repeats are deliberately not collapsed. The count on one device in one
+  session is the signal, exactly as it was for the vehicle field, so this event
+  must be read per-person-per-session and never as a raw total.
+- One dead code path was removed with it: `odometer`'s
+  `trackVehicleEntry("odometer", "invalid")` sat behind `if (!valid) return`
+  inside an `onPress` that a disabled button never called. It has never fired
+  on a device. Any analysis that treated its absence as "nobody mis-typed a
+  reading" was reading a bug.
+
+No screen was added, removed or reordered, so depth-based funnels do not
+re-baseline here — but see the point above about `route=odometer`'s
+`vehicle_entry` rows, which change meaning.
+
 ## The standing caveat that outlives every entry
 
 As of this date the paywall has converted a sample of one. Nothing in this

@@ -9,7 +9,7 @@ import { DISTANCE_PER_YEAR } from "../../src/onboarding/plan";
 import { estimateOdometer } from "../../src/onboarding/estimate";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
-import { trackQuizAnswer } from "../../src/analytics";
+import { trackQuizAnswer, trackStepBlocked } from "../../src/analytics";
 import type { DriveAnswer } from "../../src/onboarding/state";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
@@ -59,7 +59,14 @@ export default function OnboardingDrive() {
     <OnboardingScreen
       route="drive"
       title={t("onboardingA.drive.title")}
-      footer={<Button label={t("onboardingA.continue")} onPress={onContinue} disabled={!drive} />}
+      footer={
+        <Button
+          label={t("onboardingA.continue")}
+          onPress={onContinue}
+          disabled={!drive}
+          onBlockedPress={() => trackStepBlocked("drive", "unanswered")}
+        />
+      }
     >
       <ChipRow
         legend={t("onboardingA.drive.legend", { unit: distanceUnitLabel(unit) })}

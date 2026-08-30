@@ -5,7 +5,7 @@ import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
-import { trackQuizAnswer } from "../../src/analytics";
+import { trackQuizAnswer, trackStepBlocked } from "../../src/analytics";
 import { WORRY_ANSWERS, type WorryAnswer } from "../../src/onboarding/state";
 
 const LABEL_KEYS: Record<WorryAnswer, string> = {
@@ -65,6 +65,7 @@ export default function OnboardingWorry() {
           label={t("onboardingB.continue")}
           onPress={onContinue}
           disabled={worries.length === 0}
+          onBlockedPress={() => trackStepBlocked("worry", "unanswered")}
         />
       }
     >

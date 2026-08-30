@@ -7,6 +7,7 @@ import { Lamp } from "../../src/design/Lamp";
 import { StepLamps } from "../../src/design/StepLamps";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
+import { trackStepBlocked } from "../../src/analytics";
 import { setOnboardingStep } from "../../src/onboarding";
 import { previousRoute } from "../../src/onboarding/flow";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -80,6 +81,10 @@ export default function OnboardingSymptoms() {
           )}
           onPress={onContinue}
           disabled={!ready}
+          // The dwell, tapped through. This is the impatience the dwell exists
+          // to absorb, and the count per device is the only way to tell whether
+          // it is absorbing it or simply annoying people.
+          onBlockedPress={() => trackStepBlocked("symptoms", "dwell")}
         />
       }
       center
