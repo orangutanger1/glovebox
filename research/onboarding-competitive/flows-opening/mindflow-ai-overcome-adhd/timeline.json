@@ -1,0 +1,428 @@
+{
+ "name": "Mindflow AI: Overcome ADHD",
+ "slug": "mindflow-ai-overcome-adhd",
+ "developer": "Mindflow AI Inc.",
+ "revenue_monthly_estimate": 0,
+ "downloads_estimate": 0,
+ "released": "2025-04-18",
+ "onboarding_step_count": 31,
+ "has_onboarding_with_quiz": null,
+ "paywall_type": "No Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 0.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 1.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 6.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 9.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 13.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 16.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 17.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 30.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 31.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 35.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 43.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 44.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 46.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 50.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 53.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 54.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 56.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 57.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 62.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 64.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 69.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 73.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 77.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 80.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 91.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 93.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 103.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 105.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 110.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 119.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 121.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 123.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 125.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 127.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 129.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 131.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 134.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 143.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 148.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 158.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 159.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 161.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 166.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 168.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 171.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 176.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 180.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 184.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 185.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 187.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 190.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 193.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 194.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 197.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 199.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 203.166,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 216.6,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 220.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  }
+ ]
+}

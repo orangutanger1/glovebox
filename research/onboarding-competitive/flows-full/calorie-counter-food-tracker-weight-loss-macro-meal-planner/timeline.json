@@ -1,0 +1,1145 @@
+{
+ "name": "Calorie Counter by Numify",
+ "slug": "calorie-counter-food-tracker-weight-loss-macro-meal-planner",
+ "developer": "Municorn",
+ "revenue_monthly_estimate": 850000,
+ "downloads_estimate": 200000,
+ "released": "2024-01-31",
+ "onboarding_step_count": 90,
+ "has_onboarding_with_quiz": null,
+ "paywall_type": "No Free Trial - Soft Paywall",
+ "frames": [
+  {
+   "timestamp": 0.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 5.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 10.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 14.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 20.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 25.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 27.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 34.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 41.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 46.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 50.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 52.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 56.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 59.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 61.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 65.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 67.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 75.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 80.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 83.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 88.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 91.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 94.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 102.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 107.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 110.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 115.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 119.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 123.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 128.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 133.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 137.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 140.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 146.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 150.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 154.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 157.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 160.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 162.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 163.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 168.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 172.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 175.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 180.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 183.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 185.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 188.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 192.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 196.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 200.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 203.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 207.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 210.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 214.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 217.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 220.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 222.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 224.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 227.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 230.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 234.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 236.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 240.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 243.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 247.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 249.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 250.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 254.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 256.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 258.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 260.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 262.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 264.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 265.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 267.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 270.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 273.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 276.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 286.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 288.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 292.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 294.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 295.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 298.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 299.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 301.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 304.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 308.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 314.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 319.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 327.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 328.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 332.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 333.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 335.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 338.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 340.166,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 348.6,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 353.866,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 363.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 368.6,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 376.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 378.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 381.433,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 389.933,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 398.666,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 401.7,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 407.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 409.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 412.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 417.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 423.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 432.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 434.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 446.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 449.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 453.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 462.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 485.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 510.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 512.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 542.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 547.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 559.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 572.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 574.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 575.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 594.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 601.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 603.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 621.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 633.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 647.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 652.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 654.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 664.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 669.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 672.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 680.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 682.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 687.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 693.6,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 696.933,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 699.866,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 701.733,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 710.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 712.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 714.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 717.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 720.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 726.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 732.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 746.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 758.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 765.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 773.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 777.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 780.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 786.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 787.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 800.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 801.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 807.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 808.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 812.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 815.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 818.566,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 821.933,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 823.9,
+   "labels": [
+    "paywall"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 831.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 834.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 839.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 842.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 845.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 848.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 852.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 857.533,
+   "labels": [],
+   "free": true
+  }
+ ]
+}

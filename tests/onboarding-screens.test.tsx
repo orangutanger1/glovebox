@@ -92,6 +92,7 @@ import OnboardingHelp from "../app/onboarding/help";
 import OnboardingNotify from "../app/onboarding/notify";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
+import Subscribed from "../app/subscribed";
 
 /** Where the year drum opens, which is `app/onboarding/vehicle.tsx`'s own
  *  default: the average car on the road is about twelve years old. */
@@ -833,5 +834,44 @@ describe("the body-style step", () => {
   test("a body style given with no car in the run still advances", () => {
     press(render(OnboardingBody), "Van");
     expect(navigated.at(-1)).toBe("/onboarding/odometer");
+  });
+});
+
+/**
+ * The screen that exists because onboarding used to end at Apple's receipt.
+ *
+ * `finish("paid")` completed the flow and replaced the stack with the garage,
+ * so a new subscriber's first screen was a list holding one car, with nothing
+ * naming what they had just bought and nothing to do next. These assertions
+ * are about that gap: the car is named, the numbers the paywall argued from are
+ * restated, and the single action goes to the car rather than to the list.
+ */
+describe("the screen after a purchase", () => {
+  test("names the car and restates what was scheduled", () => {
+    const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
+    setOnboardingVehicleId(id);
+
+    const shown = texts(render(Subscribed)).join(" ");
+    expect(shown).toContain("Pro is on.");
+    expect(shown).toContain("2019 Toyota");
+    // The two rows that sat behind the Pro badge before the money changed
+    // hands, described in the same words afterwards.
+    expect(shown).toContain("More than one vehicle");
+    expect(shown).toContain("Your own service intervals");
+  });
+
+  test("the one action opens the car, not the garage", () => {
+    const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
+    setOnboardingVehicleId(id);
+
+    press(render(Subscribed), "See the schedule");
+    expect(navigated.at(-1)).toBe(`replace:/vehicle/${id}`);
+  });
+
+  test("a car deleted out from under the flow still lands somewhere", () => {
+    // The vehicle row is looked up rather than trusted, so this is the state a
+    // resumed-and-deleted install reaches. It must not be a dead button.
+    press(render(Subscribed), "See the schedule");
+    expect(navigated.at(-1)).toBe("replace:/");
   });
 });

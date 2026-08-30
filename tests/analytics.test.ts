@@ -311,6 +311,10 @@ describe("finishing onboarding", () => {
     });
 
     expect(onlyEvent()).toEqual({ event: "onboarding_completed", properties: { exit } });
-    expect(mockReplace).toHaveBeenCalledWith("/");
+    // Where the flow lets go of the user is part of the exit, not a detail of
+    // it. A paying exit owes the subscriber a screen naming what they bought
+    // and one action to take; a user who declined both asks is owed neither and
+    // goes straight to the garage.
+    expect(mockReplace).toHaveBeenCalledWith(exit === "free" ? "/" : "/subscribed");
   });
 });

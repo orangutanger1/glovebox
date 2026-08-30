@@ -1,0 +1,776 @@
+{
+ "name": "Impulse - Brain Training",
+ "slug": "impulse-brain-training",
+ "developer": "GMRD Apps Limited",
+ "revenue_monthly_estimate": 1000000,
+ "downloads_estimate": 450000,
+ "released": "2019-02-20",
+ "onboarding_step_count": 25,
+ "has_onboarding_with_quiz": true,
+ "paywall_type": "Free Trial - Soft Paywall",
+ "frames": [
+  {
+   "timestamp": 1.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 5.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 13.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 18.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 23.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 27.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 29.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 36.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 38.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 41.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 46.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 48.933,
+   "labels": [
+    "onboarding",
+    "paywall"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 53.966,
+   "labels": [
+    "onboarding",
+    "paywall"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 58.666,
+   "labels": [
+    "onboarding",
+    "paywall"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 63.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 67.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 70.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 74.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 81.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 85.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 89.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 93.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 100.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 104.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 112.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 118.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 120.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 122.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 127.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 128.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 132.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 139.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 142.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 151.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 157.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 161.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 168.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 173.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 178.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 183.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 188.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 193.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 195.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 198.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 200.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 209.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 215.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 219.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 224.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 232.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 236.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 249.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 253.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 256.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 258.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 262.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 265.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 269.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 273.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 276.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 277.666,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 285.233,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 292.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 298.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 303.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 310.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 314.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 317.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 320.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 323.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 326.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 329.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 343.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 348.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 353.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 360.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 363.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 365.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 377.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 380.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 386.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 387.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 392.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 398.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 405.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 408.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 413.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 417.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 423.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 435.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 439.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 443.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 450.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 455.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 457.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 462.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 463.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 466.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 474.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 475.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 476.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 485.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 489.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 493.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 496.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 509.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 514.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 516.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 520.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 525.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 535.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 540.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 545.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 553.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 555.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 557.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 559.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 564.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 569.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 571.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 574.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 576.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 584.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 607.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 612.566,
+   "labels": [],
+   "free": false
+  }
+ ]
+}

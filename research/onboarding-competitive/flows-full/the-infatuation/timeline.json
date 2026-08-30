@@ -1,0 +1,593 @@
+{
+ "name": "The Infatuation",
+ "slug": "the-infatuation",
+ "developer": "The Infatuation Incorporated",
+ "revenue_monthly_estimate": 0,
+ "downloads_estimate": 0,
+ "released": "2011-10-17",
+ "onboarding_step_count": 6,
+ "has_onboarding_with_quiz": false,
+ "paywall_type": "No Paywall",
+ "frames": [
+  {
+   "timestamp": 1.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 6.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 9.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 15.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 17.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 36.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 40.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 51.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 55.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 62.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 66.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 70.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 76.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 79.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 87.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 88.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 96.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 100.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 105.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 124.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 127.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 133.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 136.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 141.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 147.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 153.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 157.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 159.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 162.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 166.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 168.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 175.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 178.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 185.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 190.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 193.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 198.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 201.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 206.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 211.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 216.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 233.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 240.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 249.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 258.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 272.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 275.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 277.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 283.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 286.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 291.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 297.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 301.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 304.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 312.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 352.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 356.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 363.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 373.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 377.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 383.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 390.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 400.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 408.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 423.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 425.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 434.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 438.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 442.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 445.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 453.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 455.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 456.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 458.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 462.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 469.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 473.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 475.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 492.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 502.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 505.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 509.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 514.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 520.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 525.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 531.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 539.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 543.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 546.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 549.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 553.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 557.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 560.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 565.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 570.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 579.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 582.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 590.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 593.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 597.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 601.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 612.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 614.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 616.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 620.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 625.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 626.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 632.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 635.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 637.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 642.066,
+   "labels": [],
+   "free": true
+  }
+ ]
+}

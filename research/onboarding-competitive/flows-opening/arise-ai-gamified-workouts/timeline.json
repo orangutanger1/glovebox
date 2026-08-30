@@ -1,0 +1,422 @@
+{
+ "name": "Arise: Level Up In Real Life",
+ "slug": "arise-ai-gamified-workouts",
+ "developer": "STEALTHCOMPANY, LLC",
+ "revenue_monthly_estimate": 100000,
+ "downloads_estimate": 150000,
+ "released": "2025-04-02",
+ "onboarding_step_count": 36,
+ "has_onboarding_with_quiz": true,
+ "paywall_type": "No Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 0.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 9.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 14.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 19.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 24.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 29.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 39.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 45.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 50.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 55.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 60.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 70.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 77.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 82.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 88.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 91.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 101.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 105.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 112.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 115.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 118.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 120.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 123.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 127.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 129.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 132.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 139.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 154.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 156.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 163.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 171.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 179.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 184.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 192.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 198.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 202.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 205.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 209.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 211.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 213.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 215.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 218.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 229.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 237.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 241.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 244.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 249.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 258.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 261.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 264.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 267.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 268.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 276.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 278.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 284.5,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 288.566,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 295.033,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  }
+ ]
+}

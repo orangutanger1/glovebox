@@ -1,0 +1,601 @@
+{
+ "name": "Melba: Couples & Intimacy",
+ "slug": "melba-couples-intimacy",
+ "developer": "Melba",
+ "revenue_monthly_estimate": 35000,
+ "downloads_estimate": 0,
+ "released": "2022-06-29",
+ "onboarding_step_count": 29,
+ "has_onboarding_with_quiz": null,
+ "paywall_type": "Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 0.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 1.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 7.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 10.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 13.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 23.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 32.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 39.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 42.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 44.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 48.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 53.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 56.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 59.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 61.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 62.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 65.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 66.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 71.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 73.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 75.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 77.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 79.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 81.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 83.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 84.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 87.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 88.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 91.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 93.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 95.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 105.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 110.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 116.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 121.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 126.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 131.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 135.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 137.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 143.0,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 146.433,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 149.0,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 152.666,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 157.366,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 165.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 167.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 169.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 172.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 177.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 179.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 181.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 189.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 194.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 197.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 199.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 200.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 204.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 209.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 230.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 232.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 234.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 238.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 245.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 247.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 253.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 256.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 263.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 268.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 272.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 278.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 293.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 302.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 318.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 322.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 328.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 330.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 334.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 346.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 357.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 363.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 367.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 372.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 385.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 391.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 395.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 398.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 406.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 412.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 416.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 427.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 431.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 440.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 442.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 444.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 446.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 449.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 455.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 461.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 465.366,
+   "labels": [],
+   "free": false
+  }
+ ]
+}

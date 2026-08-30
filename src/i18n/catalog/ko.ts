@@ -546,4 +546,8 @@ export const ko: Fragment = {
   "vehicleForms.log.odometer": "주행거리({unit})",
   "vehicleForms.log.cost": "비용(선택)",
   "vehicleForms.log.notes": "메모(선택)",
+  "subscribed.title": "Pro가 켜졌습니다.",
+  "subscribed.body": "{vehicle}을(를) 정비 일정에 등록했습니다. 기한이 지난 뒤가 아니라 그전에 알려드립니다.",
+  "subscribed.unlocked": "함께 잠금 해제됨",
+  "subscribed.cta": "일정 보기",
 };

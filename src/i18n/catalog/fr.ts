@@ -573,4 +573,8 @@ export const fr: Fragment = {
   "vehicleForms.log.odometer": "Compteur ({unit})",
   "vehicleForms.log.cost": "Coût (facultatif)",
   "vehicleForms.log.notes": "Notes (facultatif)",
+  "subscribed.title": "Pro est activé.",
+  "subscribed.body": "{vehicle} est désormais au programme. Vous serez prévenu avant chaque entretien, pas après.",
+  "subscribed.unlocked": "Également débloqué",
+  "subscribed.cta": "Voir le programme",
 };

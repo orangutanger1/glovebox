@@ -1,0 +1,963 @@
+{
+ "name": "Inflow - Manage Your ADHD",
+ "slug": "inflow-adhd-cbt-based-program",
+ "developer": "Get Inflow Ltd.",
+ "revenue_monthly_estimate": 15000,
+ "downloads_estimate": 0,
+ "released": "2020-11-03",
+ "onboarding_step_count": 47,
+ "has_onboarding_with_quiz": null,
+ "paywall_type": "Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 1.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 3.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 5.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 10.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 12.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 14.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 19.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 22.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 27.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 33.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 41.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 47.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 53.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 57.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 63.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 67.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 71.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 75.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 78.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 82.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 86.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 89.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 93.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 96.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 100.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 107.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 109.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 115.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 120.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 123.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 128.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 137.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 143.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 150.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 155.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 160.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 164.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 169.166,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 177.066,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 182.3,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 191.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 194.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 198.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 203.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 206.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 209.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 215.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 218.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 222.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 225.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 230.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 237.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 243.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 245.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 250.533,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 256.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 261.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 271.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 276.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 280.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 287.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 291.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 293.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 295.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 301.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 303.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 306.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 312.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 315.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 325.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 335.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 342.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 349.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 355.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 381.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 390.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 394.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 398.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 401.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 409.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 412.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 415.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 418.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 422.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 426.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 428.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 430.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 443.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 446.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 448.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 453.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 465.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 466.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 472.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 481.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 482.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 484.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 486.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 488.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 490.433,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 493.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 494.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 499.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 501.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 510.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 512.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 518.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 520.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 523.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 527.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 533.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 536.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 544.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 553.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 561.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 563.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 566.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 572.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 581.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 588.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 591.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 599.433,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 602.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 604.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 607.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 612.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 618.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 622.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 625.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 636.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 647.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 652.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 657.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 663.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 665.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 667.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 685.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 691.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 693.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 695.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 706.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 711.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 714.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 716.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 726.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 739.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 741.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 749.433,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 754.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 756.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 764.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 770.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 771.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 773.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 777.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 793.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 797.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 798.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 802.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 816.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 822.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 824.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 850.366,
+   "labels": [],
+   "free": false
+  }
+ ]
+}

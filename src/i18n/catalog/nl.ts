@@ -568,4 +568,8 @@ export const nl: Fragment = {
     other:
       "Of geef het nog één kans: {count} dagen Pro, gratis. Zeg op voordat ze aflopen en je betaalt niets.",
   },
+  "subscribed.title": "Pro staat aan.",
+  "subscribed.body": "{vehicle} staat nu in het schema. Je hoort het voordat een beurt verloopt, niet erna.",
+  "subscribed.unlocked": "Ook ontgrendeld",
+  "subscribed.cta": "Bekijk het schema",
 };

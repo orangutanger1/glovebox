@@ -542,4 +542,8 @@ export const it: Fragment = {
   "vehicleForms.log.odometer": "Contachilometri ({unit})",
   "vehicleForms.log.cost": "Costo (facoltativo)",
   "vehicleForms.log.notes": "Note (facoltativo)",
+  "subscribed.title": "Pro è attivo.",
+  "subscribed.body": "{vehicle} ora è nel programma. Ti avviseremo prima di ogni intervento, non dopo.",
+  "subscribed.unlocked": "Sbloccato anche",
+  "subscribed.cta": "Vedi il programma",
 };

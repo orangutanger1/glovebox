@@ -1,0 +1,796 @@
+{
+ "name": "RiseGuide: Self Improvement",
+ "slug": "riseguide-top-expert-insights",
+ "developer": "CELEB INNOVATIONS LIMITED",
+ "revenue_monthly_estimate": 300000,
+ "downloads_estimate": 150000,
+ "released": "2024-10-29",
+ "onboarding_step_count": 38,
+ "has_onboarding_with_quiz": null,
+ "paywall_type": "Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 0.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 5.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 8.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 12.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 14.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 16.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 18.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 23.433,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 25.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 27.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 29.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 30.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 32.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 33.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 35.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 37.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 39.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 41.666,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 43.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 44.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 46.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 48.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 50.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 53.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 58.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 60.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 62.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 64.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 67.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 70.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 72.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 78.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 80.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 83.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 88.466,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 94.466,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 99.266,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 104.2,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 124.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 129.833,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 133.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 136.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 140.966,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 145.333,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 153.133,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 158.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 165.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 167.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 171.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 175.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 177.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 183.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 185.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 189.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 192.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 197.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 199.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 201.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 210.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 217.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 224.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 251.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 259.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 272.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 278.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 283.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 286.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 288.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 291.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 297.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 304.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 306.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 313.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 319.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 322.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 330.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 338.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 343.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 345.3,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 351.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 353.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 367.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 374.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 388.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 396.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 400.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 404.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 415.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 420.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 422.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 430.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 437.066,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 439.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 445.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 452.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 462.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 467.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 473.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 485.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 489.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 491.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 522.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 526.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 528.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 533.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 541.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 561.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 565.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 569.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 574.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 578.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 581.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 594.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 604.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 614.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 619.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 626.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 629.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 630.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 632.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 642.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 646.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 654.433,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 657.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 659.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 665.433,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 667.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 674.166,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 679.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 683.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 685.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 688.2,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 693.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 708.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 724.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 726.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 738.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 742.4,
+   "labels": [],
+   "free": false
+  }
+ ]
+}

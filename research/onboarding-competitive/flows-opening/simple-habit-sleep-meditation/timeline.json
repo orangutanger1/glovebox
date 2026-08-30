@@ -1,0 +1,384 @@
+{
+ "name": "Simple Habit Sleep, Meditation",
+ "slug": "simple-habit-sleep-meditation",
+ "developer": "INGENIO, LLC",
+ "revenue_monthly_estimate": 0,
+ "downloads_estimate": 0,
+ "released": "2016-04-01",
+ "onboarding_step_count": 8,
+ "has_onboarding_with_quiz": true,
+ "paywall_type": "Free Trial - Soft Paywall",
+ "frames": [
+  {
+   "timestamp": 2.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 26.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 38.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 47.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 55.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 59.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 62.466,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 68.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 72.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 76.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 79.1,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 85.166,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 88.5,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 92.433,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 117.8,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 121.966,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 125.566,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": false
+  },
+  {
+   "timestamp": 135.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 139.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 144.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 197.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 219.233,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 224.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 232.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 242.033,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 260.4,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 271.733,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 286.266,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 293.666,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 300.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 303.7,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 309.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 316.766,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 326.1,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 329.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 332.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 340.0,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 357.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 363.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 386.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 390.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 395.933,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 407.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 412.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 419.533,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 430.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 434.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 439.566,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 452.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 465.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 481.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 486.466,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 489.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 500.333,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 502.833,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 505.866,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 512.133,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 516.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 523.8,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 527.633,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 533.966,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 542.6,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 547.366,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 558.9,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 570.5,
+   "labels": [],
+   "free": false
+  },
+  {
+   "timestamp": 575.333,
+   "labels": [],
+   "free": false
+  }
+ ]
+}

@@ -559,4 +559,8 @@ export const de: Fragment = {
   "vehicleForms.log.odometer": "Tachostand ({unit})",
   "vehicleForms.log.cost": "Kosten (optional)",
   "vehicleForms.log.notes": "Notizen (optional)",
+  "subscribed.title": "Pro ist an.",
+  "subscribed.body": "{vehicle} steht jetzt im Plan. Du wirst vor jeder fälligen Wartung informiert, nicht danach.",
+  "subscribed.unlocked": "Ebenfalls freigeschaltet",
+  "subscribed.cta": "Plan ansehen",
 };

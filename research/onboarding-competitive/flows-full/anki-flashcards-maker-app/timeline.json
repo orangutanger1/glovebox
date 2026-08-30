@@ -1,0 +1,539 @@
+{
+ "name": "Mopiq: AI Flashcards Learning",
+ "slug": "anki-flashcards-maker-app",
+ "developer": "Xavier Pedrals Camprubi",
+ "revenue_monthly_estimate": 0,
+ "downloads_estimate": 0,
+ "released": "2022-12-06",
+ "onboarding_step_count": 14,
+ "has_onboarding_with_quiz": true,
+ "paywall_type": "Free Trial - Soft Paywall",
+ "frames": [
+  {
+   "timestamp": 0.0,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 4.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 6.5,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 9.9,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 14.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 16.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 18.166,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 20.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 22.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 24.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 26.8,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 30.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 35.766,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 37.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 39.4,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 41.933,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 45.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 52.3,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 55.5,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 60.333,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 67.766,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 72.633,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 80.366,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 84.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 91.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 97.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 104.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 107.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 114.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 119.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 127.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 132.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 136.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 140.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 160.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 164.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 170.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 173.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 178.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 184.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 187.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 193.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 197.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 198.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 208.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 222.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 225.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 227.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 232.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 244.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 248.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 251.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 254.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 261.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 264.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 267.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 269.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 271.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 274.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 277.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 280.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 283.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 295.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 297.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 301.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 308.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 310.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 316.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 318.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 322.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 327.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 329.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 335.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 336.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 340.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 342.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 351.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 360.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 366.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 370.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 373.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 376.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 382.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 385.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 389.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 404.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 408.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 414.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 420.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 422.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 429.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 431.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 434.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 440.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 446.233,
+   "labels": [],
+   "free": true
+  }
+ ]
+}

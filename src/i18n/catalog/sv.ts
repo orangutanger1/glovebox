@@ -546,4 +546,8 @@ export const sv: Fragment = {
   "vehicleForms.log.odometer": "Mätarställning ({unit})",
   "vehicleForms.log.cost": "Kostnad (frivilligt)",
   "vehicleForms.log.notes": "Anteckningar (frivilligt)",
+  "subscribed.title": "Pro är på.",
+  "subscribed.body": "{vehicle} finns nu i schemat. Du får veta innan varje service förfaller, inte efteråt.",
+  "subscribed.unlocked": "Även upplåst",
+  "subscribed.cta": "Visa schemat",
 };

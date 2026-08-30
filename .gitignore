@@ -54,3 +54,19 @@ yarn-error.*
 .asc/native-lock.json
 .asc/*.log
 aso/**/candidates.json
+
+# Competitive research image corpora and the raw harvest.
+#
+# ~290 MB of third-party material: watermarked capture frames from
+# screensdesign.com and App Store marketing screenshots. Deliberately not
+# committed — it would sit in every clone forever, it is somebody else's
+# imagery, and it is reproducible from the scripts beside it
+# (research/harvest_flows.py, research/fetch_screens.py). The conclusions drawn
+# from it are committed: see research/onboarding-competitive/patterns.md,
+# flow-statistics.md, the per-app notes.md, and README.md for provenance.
+research/onboarding-competitive/_data/
+research/onboarding-competitive/flows-full/*/*.webp
+research/onboarding-competitive/flows-opening/*/*.webp
+research/onboarding-competitive/habit-loop/
+research/onboarding-competitive/quiz-archetype/
+research/onboarding-competitive/paywall-and-post-purchase/

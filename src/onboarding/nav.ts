@@ -48,7 +48,16 @@ export function useFinish(): (exit: "paid" | "trial" | "free") => void {
       // reached the garage at all, now split by what they agreed to on the way.
       track("onboarding_completed", { exit });
       completeOnboarding();
-      router.replace("/");
+      // Someone who agreed to something does not land in a list.
+      //
+      // Both paying exits used to replace the stack with the garage, so the
+      // last thing a new subscriber saw was Apple's receipt and the first thing
+      // was one row in a list — nothing naming what they had bought, and no
+      // next action. `/subscribed` is that missing beat, and it owns the move
+      // to the car afterwards. A user who declined twice still goes straight to
+      // the garage: there is nothing to confirm and a screen congratulating
+      // them for saying no twice would be the worst screen in the product.
+      router.replace(exit === "free" ? "/" : "/subscribed");
     },
     [router]
   );

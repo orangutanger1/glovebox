@@ -521,4 +521,8 @@ export const ja: Fragment = {
   "vehicleForms.log.odometer": "走行距離（{unit}）",
   "vehicleForms.log.cost": "費用（任意）",
   "vehicleForms.log.notes": "メモ（任意）",
+  "subscribed.title": "Pro が有効になりました。",
+  "subscribed.body": "{vehicle} を整備計画に登録しました。期限が過ぎてからではなく、その前にお知らせします。",
+  "subscribed.unlocked": "同時に解放されたもの",
+  "subscribed.cta": "整備計画を見る",
 };

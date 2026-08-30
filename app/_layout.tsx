@@ -370,6 +370,9 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
             housing, not a page. */}
         <Stack.Screen name="winback" options={{ headerShown: false }} />
         <Stack.Screen name="trial" options={{ headerShown: false }} />
+        {/* No header and no back: onboarding has already been completed by the
+            time this mounts, so there is nothing behind it to return to. */}
+        <Stack.Screen name="subscribed" options={{ headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="settings" options={{ title: t("layout.settings"), headerTitle: "" }} />
         <Stack.Screen name="intervals" options={{ title: t("layout.intervals"), headerTitle: "" }} />
         <Stack.Screen name="language" options={{ title: t("language.title"), headerTitle: "" }} />

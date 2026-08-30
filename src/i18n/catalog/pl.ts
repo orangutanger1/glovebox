@@ -625,4 +625,8 @@ export const pl: Fragment = {
   "vehicleForms.log.odometer": "Przebieg ({unit})",
   "vehicleForms.log.cost": "Koszt (opcjonalnie)",
   "vehicleForms.log.notes": "Notatki (opcjonalnie)",
+  "subscribed.title": "Pro jest włączone.",
+  "subscribed.body": "{vehicle} jest już w harmonogramie. Dostaniesz znać, zanim przegląd stanie się wymagalny, a nie po fakcie.",
+  "subscribed.unlocked": "Odblokowano także",
+  "subscribed.cta": "Zobacz harmonogram",
 };

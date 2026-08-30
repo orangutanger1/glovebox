@@ -1,0 +1,1017 @@
+{
+ "name": "Deezer: Music Player, Podcast",
+ "slug": "deezer-music-player-podcast",
+ "developer": "DEEZER SA",
+ "revenue_monthly_estimate": 8000000,
+ "downloads_estimate": 150000,
+ "released": "2008-10-31",
+ "onboarding_step_count": 4,
+ "has_onboarding_with_quiz": false,
+ "paywall_type": "Free Trial - Hard Paywall",
+ "frames": [
+  {
+   "timestamp": 1.1,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 7.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 11.233,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 23.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 31.366,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 35.566,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 40.266,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 44.733,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 49.533,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 76.3,
+   "labels": [
+    "paywall",
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 95.7,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 101.066,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 104.033,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 115.6,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 132.633,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 166.866,
+   "labels": [
+    "onboarding"
+   ],
+   "free": true
+  },
+  {
+   "timestamp": 180.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 182.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 187.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 193.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 195.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 201.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 204.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 207.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 214.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 219.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 225.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 228.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 234.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 237.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 239.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 242.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 244.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 255.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 258.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 264.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 291.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 303.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 313.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 325.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 331.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 346.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 349.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 356.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 358.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 365.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 375.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 378.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 381.966,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 388.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 392.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 396.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 413.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 416.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 426.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 431.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 436.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 443.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 461.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 471.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 476.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 480.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 483.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 486.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 490.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 494.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 506.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 514.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 521.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 523.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 538.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 552.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 554.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 558.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 565.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 567.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 572.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 582.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 589.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 594.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 597.5,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 609.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 616.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 628.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 631.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 636.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 645.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 647.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 650.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 658.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 666.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 673.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 678.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 692.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 694.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 697.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 703.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 705.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 707.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 712.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 717.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 728.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 740.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 743.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 747.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 748.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 754.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 759.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 766.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 772.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 784.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 793.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 796.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 798.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 801.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 805.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 816.7,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 868.133,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 880.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 885.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 889.066,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 891.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 893.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 896.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 902.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 914.866,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 922.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 927.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 931.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 935.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 942.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 946.1,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 948.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 951.233,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 955.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 959.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 975.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 984.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 987.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 991.433,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 994.466,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1003.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1013.533,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1025.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1029.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1032.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1037.0,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1042.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1052.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1058.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1061.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1064.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1072.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1086.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1093.366,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1096.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1102.333,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1107.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1110.833,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1112.666,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1121.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1123.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1129.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1133.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1142.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1145.033,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1149.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1157.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1178.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1181.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1183.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1192.633,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1199.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1203.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1207.8,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1211.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1221.3,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1223.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1236.2,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1241.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1244.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1247.9,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1261.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1269.733,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1277.933,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1279.6,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1283.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1290.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1292.766,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1303.4,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1310.266,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1319.566,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1322.166,
+   "labels": [],
+   "free": true
+  },
+  {
+   "timestamp": 1325.6,
+   "labels": [],
+   "free": true
+  }
+ ]
+}

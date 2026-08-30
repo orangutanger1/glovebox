@@ -541,4 +541,8 @@ export const ptBR: Fragment = {
   "vehicleForms.log.odometer": "Odômetro ({unit})",
   "vehicleForms.log.cost": "Custo (opcional)",
   "vehicleForms.log.notes": "Observações (opcional)",
+  "subscribed.title": "O Pro está ligado.",
+  "subscribed.body": "{vehicle} já está no plano. Você será avisado antes de cada serviço vencer, não depois.",
+  "subscribed.unlocked": "Também liberado",
+  "subscribed.cta": "Ver o plano",
 };
