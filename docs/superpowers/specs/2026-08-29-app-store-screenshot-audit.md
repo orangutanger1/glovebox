@@ -73,24 +73,45 @@ listing. Beyond the review risk (metadata must accurately reflect the app), it
 is the same failure the onboarding research flagged in competitors and rejected:
 claiming something the product cannot do.
 
-## What to do
+## What was done
 
-Both actions change a live storefront and are the user's call.
+**The staged set is now four frames.** `05-ScreenShotAppStore5.png` was deleted
+from all sixteen locales, dropped from `frames` in
+`store/screenshot-captions.json`, and its caption removed from every locale's
+`captions` map (retained under `notes.retiredCaptions` for the trail).
+`stage-locales.py --check` passes. The four remaining frames are accurate to the
+shipped app and correctly branded.
 
-1. **Apply the staged set with frame 5 removed** — four frames, all accurate,
-   correctly branded. This fixes the live "Glovebox" problem immediately and
-   ships nothing false. Four screenshots is a complete listing.
-2. **Or re-author frame 5 around something real.** The honest version of
-   "Maximize Resale Value" is the CSV export and the complete history: a
-   full service record is genuinely worth money at resale, and the app
-   genuinely produces one. That claim needs no invented score. It requires
-   device art this session cannot author faithfully — the frames are baked
-   images from a Figma source (`store/figma-geometry.json`), not rendered from
-   the running app.
+The raw is kept at `store/screenshots-raw/en-US/IPHONE_65/ScreenShotAppStore5.png`
+because it is the source art and deleting it would only hide the mistake — but
+**it must not be re-staged as it stands.** The fabrication is in the base art,
+not the localisation, so re-rendering the locales was never going to fix it.
 
-**Do not apply `store/` as it stands.** `store/apply-when-ready.sh` will push
-all sixteen locales, and the version is `READY_FOR_SALE`, so it lands on the
-live listing.
+## What is still blocked, and why
+
+**The live listing is not fixed and cannot be fixed from here.** Version 1.0.2
+is `READY_FOR_SALE`, and a live version's screenshots are frozen — changing them
+requires creating a new App Store version and putting it through review, even
+with no binary change. That is an App Review submission, which is explicitly out
+of scope without instruction.
+
+So the "Glovebox" wordmark and the "STEP 4 / 5" onboarding shot remain on the
+storefront until someone decides to ship a metadata update. The four-frame set
+is staged and ready for whenever that happens.
+
+Two ways forward, both requiring that decision:
+
+1. **Metadata-only version.** Create 1.1.0 in App Store Connect, attach the four
+   frames, submit for review with no binary change. Fixes the branding without
+   waiting on the app.
+2. **Ride along with the next release.** Whenever 1.1.0 ships for real, the
+   screenshots go with it. Cheaper, but the wrong app name stays live longer.
+
+If the resale angle is wanted back as a fifth frame, the honest version is the
+CSV export and the complete service history — a full record genuinely is worth
+money at resale, and the app genuinely produces one. That needs new device art
+from the Figma source (`store/figma-geometry.json`); it cannot be authored from
+the running app, because the frames are baked images rather than captures.
 
 ## Not checked
 

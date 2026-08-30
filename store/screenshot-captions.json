@@ -22,14 +22,32 @@
     "lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - fr-CA/fr-FR run longest at 34 and are the ones to re-check for wrapping.",
     "inspectionTerms": "Captions deliberately avoid inspection names (MOT/TUV/ITV/vehicle inspection), which differ per market and are already carried by each locale's subtitle.",
     "apostrophe": "Captions use the typographic apostrophe U+2019, matching the live art and the store copy. An ASCII \"'\" renders as a straight vertical tick in Cambay and reads as a typo at 128px.",
-    "wrapping": "Every locale is 2 lines at the full 128px; no caption is shrunk. Line breaks were tuned by re-rendering, not by character count: the wrap is greedy inside each frame's own box, so ja - which breaks per character, having no spaces - has its comma placed where the break lands (7 characters in frames 1/2/3/6, 8 in frame 5) rather than mid-word."
+    "wrapping": "Every locale is 2 lines at the full 128px; no caption is shrunk. Line breaks were tuned by re-rendering, not by character count: the wrap is greedy inside each frame's own box, so ja - which breaks per character, having no spaces - has its comma placed where the break lands (7 characters in frames 1/2/3/6, 8 in frame 5) rather than mid-word.",
+    "frameCut2026_08_29": "Cut from five frames to four. ScreenShotAppStore5 (\"Maximize Resale Value.\") showed a product that does not exist: its device art contains a Vehicle Health score, a 100% On-Time Score, Pending Issues, a Verified Digital Logbook and an EXPORT PDF REPORT button. Checked against source - the only export path is src/export/share.ts, which writes text/csv, and none of those strings appear in the i18n catalogue or anywhere in app/ or src/. A health score is also an explicitly rejected product decision: app/onboarding/results.tsx states the results screen is deliberately not a score, because it is a number the app cannot honestly compute. The problem is in the base art, not the localisation - store/screenshots-raw/en-US/IPHONE_65/ScreenShotAppStore5.png is the same screen - so re-rendering the locales would not have fixed it. The raw is kept for the trail and must not be re-staged as it stands. See docs/superpowers/specs/2026-08-29-app-store-screenshot-audit.md. Four screenshots is a complete listing; the remaining four are accurate to the shipped app.",
+    "retiredCaptions": {
+      "de-DE": "Mehr Wert beim Verkauf.",
+      "en-AU": "Maximize Resale Value.",
+      "en-CA": "Maximize Resale Value.",
+      "en-GB": "Maximize Resale Value.",
+      "en-US": "Maximize Resale Value.",
+      "es-ES": "Más valor de reventa.",
+      "es-MX": "Más valor de reventa.",
+      "fr-CA": "Une meilleure valeur de revente.",
+      "fr-FR": "Une meilleure valeur de revente.",
+      "it": "Più valore alla rivendita.",
+      "ja": "リセール価値を、最大化。",
+      "ko": "중고 판매가를 높이세요.",
+      "nl-NL": "Meer restwaarde bij verkoop.",
+      "pl": "Wyższa wartość odsprzedaży.",
+      "pt-BR": "Mais valor na revenda.",
+      "sv": "Högre andrahandsvärde."
+    }
   },
   "frames": [
     "ScreenShotAppStore3",
     "ScreenShotAppStore6",
     "ScreenShotAppStore1",
-    "ScreenShotAppStore2",
-    "ScreenShotAppStore5"
+    "ScreenShotAppStore2"
   ],
   "locales": {
     "de-DE": {
@@ -38,8 +56,7 @@
         "ScreenShotAppStore3": "Ölwechsel nie mehr verpassen.",
         "ScreenShotAppStore6": "Deine Garage an einem Ort.",
         "ScreenShotAppStore1": "Vollständige Servicehistorie.",
-        "ScreenShotAppStore2": "In 10 Sekunden notiert.",
-        "ScreenShotAppStore5": "Mehr Wert beim Verkauf."
+        "ScreenShotAppStore2": "In 10 Sekunden notiert."
       },
       "maxLen": 29
     },
@@ -49,8 +66,7 @@
         "ScreenShotAppStore3": "Never Miss an Oil Change.",
         "ScreenShotAppStore6": "Every Car in One Garage.",
         "ScreenShotAppStore1": "Complete Service History.",
-        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
-        "ScreenShotAppStore5": "Maximize Resale Value."
+        "ScreenShotAppStore2": "Log Service in 10 Seconds."
       },
       "maxLen": 26
     },
@@ -60,8 +76,7 @@
         "ScreenShotAppStore3": "Never Miss an Oil Change.",
         "ScreenShotAppStore6": "Every Car in One Garage.",
         "ScreenShotAppStore1": "Complete Service History.",
-        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
-        "ScreenShotAppStore5": "Maximize Resale Value."
+        "ScreenShotAppStore2": "Log Service in 10 Seconds."
       },
       "maxLen": 26
     },
@@ -71,8 +86,7 @@
         "ScreenShotAppStore3": "Never Miss an Oil Change.",
         "ScreenShotAppStore6": "Every Car in One Garage.",
         "ScreenShotAppStore1": "Complete Service History.",
-        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
-        "ScreenShotAppStore5": "Maximize Resale Value."
+        "ScreenShotAppStore2": "Log Service in 10 Seconds."
       },
       "maxLen": 26
     },
@@ -82,8 +96,7 @@
         "ScreenShotAppStore3": "Never Miss an Oil Change.",
         "ScreenShotAppStore6": "Every Car in One Garage.",
         "ScreenShotAppStore1": "Complete Service History.",
-        "ScreenShotAppStore2": "Log Service in 10 Seconds.",
-        "ScreenShotAppStore5": "Maximize Resale Value."
+        "ScreenShotAppStore2": "Log Service in 10 Seconds."
       },
       "maxLen": 26
     },
@@ -93,8 +106,7 @@
         "ScreenShotAppStore3": "No olvides el cambio de aceite.",
         "ScreenShotAppStore6": "Todo tu garaje en un solo sitio.",
         "ScreenShotAppStore1": "Historial completo de servicio.",
-        "ScreenShotAppStore2": "Anota un servicio en 10 segundos.",
-        "ScreenShotAppStore5": "Más valor de reventa."
+        "ScreenShotAppStore2": "Anota un servicio en 10 segundos."
       },
       "maxLen": 33
     },
@@ -104,8 +116,7 @@
         "ScreenShotAppStore3": "No olvides el cambio de aceite.",
         "ScreenShotAppStore6": "Todo tu garaje en un solo lugar.",
         "ScreenShotAppStore1": "Historial completo de servicio.",
-        "ScreenShotAppStore2": "Anota un servicio en 10 segundos.",
-        "ScreenShotAppStore5": "Más valor de reventa."
+        "ScreenShotAppStore2": "Anota un servicio en 10 segundos."
       },
       "maxLen": 33
     },
@@ -115,8 +126,7 @@
         "ScreenShotAppStore3": "Vidange jamais oubliée.",
         "ScreenShotAppStore6": "Toutes vos autos réunies.",
         "ScreenShotAppStore1": "Historique complet.",
-        "ScreenShotAppStore2": "Noté en 10 secondes.",
-        "ScreenShotAppStore5": "Une meilleure valeur de revente."
+        "ScreenShotAppStore2": "Noté en 10 secondes."
       },
       "maxLen": 32
     },
@@ -126,8 +136,7 @@
         "ScreenShotAppStore3": "Vidange jamais oubliée.",
         "ScreenShotAppStore6": "Toutes vos voitures réunies.",
         "ScreenShotAppStore1": "Historique complet.",
-        "ScreenShotAppStore2": "Noté en 10 secondes.",
-        "ScreenShotAppStore5": "Une meilleure valeur de revente."
+        "ScreenShotAppStore2": "Noté en 10 secondes."
       },
       "maxLen": 32
     },
@@ -137,8 +146,7 @@
         "ScreenShotAppStore3": "Non salti più un cambio olio.",
         "ScreenShotAppStore6": "Tutto il garage in un posto.",
         "ScreenShotAppStore1": "Storico completo.",
-        "ScreenShotAppStore2": "Un tagliando in 10 secondi.",
-        "ScreenShotAppStore5": "Più valore alla rivendita."
+        "ScreenShotAppStore2": "Un tagliando in 10 secondi."
       },
       "maxLen": 29
     },
@@ -148,8 +156,7 @@
         "ScreenShotAppStore3": "オイル交換を、忘れない。",
         "ScreenShotAppStore6": "ガレージ全体、ひとつに。",
         "ScreenShotAppStore1": "整備の履歴を、まるごと。",
-        "ScreenShotAppStore2": "整備の記録は、10秒。",
-        "ScreenShotAppStore5": "リセール価値を、最大化。"
+        "ScreenShotAppStore2": "整備の記録は、10秒。"
       },
       "maxLen": 12
     },
@@ -159,8 +166,7 @@
         "ScreenShotAppStore3": "오일 교체를 잊지 않기.",
         "ScreenShotAppStore6": "차고 전체를 한곳에.",
         "ScreenShotAppStore1": "정비 이력 전체를 한눈에.",
-        "ScreenShotAppStore2": "정비 기록은 10초면 끝.",
-        "ScreenShotAppStore5": "중고 판매가를 높이세요."
+        "ScreenShotAppStore2": "정비 기록은 10초면 끝."
       },
       "maxLen": 14
     },
@@ -170,8 +176,7 @@
         "ScreenShotAppStore3": "Mis nooit meer een oliewissel.",
         "ScreenShotAppStore6": "Je hele garage op één plek.",
         "ScreenShotAppStore1": "Volledige servicehistorie.",
-        "ScreenShotAppStore2": "Een beurt in 10 seconden.",
-        "ScreenShotAppStore5": "Meer restwaarde bij verkoop."
+        "ScreenShotAppStore2": "Een beurt in 10 seconden."
       },
       "maxLen": 30
     },
@@ -181,8 +186,7 @@
         "ScreenShotAppStore3": "Nie przegap wymiany oleju.",
         "ScreenShotAppStore6": "Cały garaż w jednym miejscu.",
         "ScreenShotAppStore1": "Pełna historia serwisowa.",
-        "ScreenShotAppStore2": "Zapisz serwis w 10 sekund.",
-        "ScreenShotAppStore5": "Wyższa wartość odsprzedaży."
+        "ScreenShotAppStore2": "Zapisz serwis w 10 sekund."
       },
       "maxLen": 28
     },
@@ -192,8 +196,7 @@
         "ScreenShotAppStore3": "Nunca perca a troca de óleo.",
         "ScreenShotAppStore6": "Toda a garagem em um só lugar.",
         "ScreenShotAppStore1": "Todo o serviço registrado.",
-        "ScreenShotAppStore2": "Uma revisão em 10 segundos.",
-        "ScreenShotAppStore5": "Mais valor na revenda."
+        "ScreenShotAppStore2": "Uma revisão em 10 segundos."
       },
       "maxLen": 30
     },
@@ -203,8 +206,7 @@
         "ScreenShotAppStore3": "Missa aldrig ett oljebyte.",
         "ScreenShotAppStore6": "Hela garaget på ett ställe.",
         "ScreenShotAppStore1": "Komplett servicehistorik.",
-        "ScreenShotAppStore2": "Service på 10 sekunder.",
-        "ScreenShotAppStore5": "Högre andrahandsvärde."
+        "ScreenShotAppStore2": "Service på 10 sekunder."
       },
       "maxLen": 27
     }
