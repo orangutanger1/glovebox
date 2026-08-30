@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
@@ -13,6 +13,8 @@ import { nextDue, dueStatus } from "../src/schedule";
 import { getIntervals } from "../src/db/intervals";
 import { isPro, presentPaywall } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
+import { track } from "../src/analytics";
+import { isOnboarded } from "../src/onboarding";
 import { t, formatNumber, formatDate } from "../src/i18n";
 import { getDistanceUnit } from "../src/units";
 import { formatDistance, distanceUnitLabel } from "../src/units/format";
@@ -90,6 +92,33 @@ export default function Garage() {
 
   useFocusEffect(useCallback(() => setVehicles(listVehicles()), []));
 
+  /**
+   * The first time the garage is seen in this process.
+   *
+   * The funnel used to stop dead at `onboarding_completed`. Everything after
+   * it — whether someone who finished the flow ever looked at the car it
+   * built, whether they logged anything, whether a subscriber did either — was
+   * unmeasured, so "onboarding works" and "onboarding produces people who
+   * never come back" reported identically.
+   *
+   * A ref rather than a mount effect because `useFocusEffect` re-runs on every
+   * return to this screen, and the question is about the session. The garage is
+   * read again at fire time so the event carries what the user is actually
+   * looking at: an empty garage here is a very different screen from one with a
+   * car in it, and the empty case means something went wrong upstream.
+   */
+  const reportedFirstView = useRef(false);
+  useFocusEffect(
+    useCallback(() => {
+      if (reportedFirstView.current) return;
+      reportedFirstView.current = true;
+      track("home_first_view", {
+        vehicles: listVehicles().length,
+        onboarded: isOnboarded(),
+      });
+    }, [])
+  );
+
   async function onAdd() {
     // Paywall before the form, never after. Making someone fill in a form and
     // then telling them it costs money is the worst version of this moment.
@@ -122,7 +151,12 @@ export default function Garage() {
   // the user has to say which car — sending them to the first vehicle's detail
   // screen silently picked one for them.
   function onLog() {
-    if (vehicles.length === 1) router.push(`/vehicle/${vehicles[0].id}/log`);
+    if (vehicles.length !== 1) return;
+    // The action the whole product is for. Paired with `home_first_view`, this
+    // is the first thing downstream of onboarding that says the flow produced a
+    // user rather than a completion.
+    track("first_core_action", { source: "garage", action: "log_service" });
+    router.push(`/vehicle/${vehicles[0].id}/log`);
   }
 
   const single = vehicles.length === 1;
