@@ -292,3 +292,39 @@ As of this date the paywall has converted a sample of one. Nothing in this
 register is a reason to act on a rate; it is a reason not to believe one. No
 A/B test, no price move, and no further flow surgery justified by "the numbers"
 until a real cohort has reached the paywall on a single unchanged bundle.
+
+### 2026-08-29 (second entry) — the quiz is six questions, and the copy is shorter
+
+**A screen was removed, so depth-based funnels re-baseline here.** `body` is
+gone from `FLOW` and from `QUIZ`. Consequences for anything that reads the
+event stream:
+
+- The quiz counter is now `QUESTION n / 6`, not `n / 7`. Any chart keyed on
+  that string splits at this build.
+- `route=body` stops appearing. A cohort spanning this change has two different
+  step-index-to-screen mappings, so index-based funnels must be segmented, not
+  pooled. Route-name funnels survive it; `vehicle → odometer` is now one hop
+  where it was two.
+- `quiz_answer` with `body_style` stops being emitted. The `body_style` column,
+  its migration and `setBodyStyle` all stay — the data is not dropped, it is
+  simply no longer written by onboarding.
+
+It was cut rather than restyled because nothing downstream read the answer: the
+garage never queried the column and only that screen wrote it. This is trigger
+item 3 from `2026-08-29-onboarding-screen-audit.md`, executed on the owner's
+call ahead of the cohort rather than from blocked-press data. That is a
+decision, not a measurement, and it should be recorded as one.
+
+**Onboarding body copy was shortened across all sixteen locales.** Every
+`pain.*.body` and `pain.*.fix` went from a sentence pair to one line, and the
+three `offer.paywall.impact.*` bullets were cut to a clause each. No key was
+added or removed, so nothing about the event stream changes — but the screens
+named in any before/after read of `symptoms` dwell, `help` time-on-screen or
+paywall conversion are not the same screens they were, and a dwell comparison
+across this build is comparing different amounts of text.
+
+**Chip layout changed on `worry` and `tracking`.** Both wrapped, and with
+labels of unequal width a five-option list wrapped 3 + 2 with the fourth option
+sitting beside the third — a list with no reading order. Both now stack one
+chip per line. Presentation only; the options, their order and their events are
+unchanged.

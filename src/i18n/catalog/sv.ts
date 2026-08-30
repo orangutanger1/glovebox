@@ -152,9 +152,9 @@ export const sv: Fragment = {
   "offer.paywall.none": "Ingen",
 
   "offer.paywall.impact.legend": "Vad det är värt",
-  "offer.paywall.impact.warned": "Du hör om en service innan den ska göras, inte efter reparationen.",
-  "offer.paywall.impact.upsell": "Du kommer till verkstaden och vet vad som gjorts och när, så inget säljs till dig två gånger.",
-  "offer.paywall.impact.resale": "Du lämnar en komplett servicebok till nästa ägare i stället för en axelryckning, och det syns på priset.",
+  "offer.paywall.impact.warned": "Varnad innan det kostar, inte efter.",
+  "offer.paywall.impact.upsell": "Du går in och vet. Inget säljs till dig två gånger.",
+  "offer.paywall.impact.resale": "En komplett logg vid försäljning, och det syns på priset.",
 
   "offer.trial.title": { one: "Testa i {count} dag.", other: "Testa i {count} dagar." },
   "offer.trial.cta": {
@@ -187,7 +187,6 @@ export const sv: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "Vilken typ av bil är det?",
   "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
@@ -299,84 +298,66 @@ export const sv: Fragment = {
     one: "En service är redan försenad",
     other: "{count} servicepunkter är redan försenade",
   },
-  "pain.overdue.body":
-    "På din {vehicle}, i dag. Ingenting på instrumentpanelen kommer att nämna det, för lampan tänds efter skadan i stället för före.",
-  "pain.overdue.fix":
-    "Varje service räknas ner på datum och på sträcka, och flaggas innan siffran blir negativ.",
+  "pain.overdue.body": "På din {vehicle}, i dag. Lampan tänds efter skadan, inte före.",
+  "pain.overdue.fix": "Nedräknat på datum och på sträcka, flaggat innan det går under noll.",
 
   "pain.blind.legend": "Inga uppgifter",
   "pain.blind.headline": {
     one: "{count} av {total} servicepunkter saknar uppgifter",
     other: "{count} av {total} servicepunkter saknar uppgifter",
   },
-  "pain.blind.body":
-    "Wrenchy kan inte bevisa något appen aldrig har sett, och det kan inte du heller. Tills något annat sägs behandlas var och en av dem som att den ska göras.",
-  "pain.blind.fix": "Logga en och hela dess schema startar. Trettio sekunder styck, en gång.",
+  "pain.blind.body": "Tills något säger annat räknas varenda en av dem som förfallen.",
+  "pain.blind.fix": "Logga en så startar hela dess schema. Trettio sekunder, en gång.",
 
   "pain.memory.legend": "Ur minnet",
   "pain.memory.headline": "Enda kopian finns i huvudet",
-  "pain.memory.body":
-    "Du sa att du går på minnet. Minnet håller precis fram till att frågan \u201Dnär exakt?\u201D ställs vid verkstadsdisken, vid en försäljning eller med en lampa tänd i 110.",
-  "pain.memory.fix":
-    "Varje service du loggar skrivs till den här telefonen och stannar där. Inget konto som kan låsa in den.",
+  "pain.memory.body": "Minnet håller ända tills någon i kassan frågar: när exakt?",
+  "pain.memory.fix": "Skrivet till den här telefonen och stannar där. Inget konto att tappa bort det bakom.",
 
   "pain.nothing.legend": "Obevakad",
   "pain.nothing.headline": "Ingenting om den här bilen är skrivet ner",
-  "pain.nothing.body":
-    "Inte det senaste oljebytet, inte mätarställningen det gjordes vid. Bilen har enda historiken, och sättet den berättar den på är att gå sönder.",
-  "pain.nothing.fix":
-    "En tryckning loggar en service. Från och med då finns historiken någon annanstans än i bilen.",
+  "pain.nothing.body": "Bilen för den enda bokföringen, och sättet den berättar det på är att gå sönder.",
+  "pain.nothing.fix": "En tryckning loggar en service. Därefter finns historiken utanför bilen.",
 
   "pain.receipts.legend": "I handskfacket",
   "pain.receipts.headline": "Ett handskfack är inget register",
-  "pain.receipts.body":
-    "Kvitton bevisar att en service gjordes. De säger inget om vad som ska göras härnäst, de ligger i ingen ordning alls, och termopapper bleknar till blankt.",
-  "pain.receipts.fix":
-    "Samma kvitton som daterade rader du kan sortera, söka i och exportera som CSV.",
+  "pain.receipts.body": "Kvitton bevisar vad som gjordes. De säger aldrig vad som står på tur.",
+  "pain.receipts.fix": "Samma kvitton som daterade rader att sortera, söka i och exportera.",
 
   "pain.spreadsheet.legend": "I ett kalkylblad",
   "pain.spreadsheet.headline": "Ett kalkylblad kan inte peta dig på axeln",
-  "pain.spreadsheet.body":
-    "Det håller historiken bra. Det öppnar sig bara aldrig självt, och det enda du behöver från det är en varning du inte kom på att leta efter.",
-  "pain.spreadsheet.fix": "Samma rader, plus en notis den dag en service ska göras.",
+  "pain.spreadsheet.body": "Den håller historiken fint. Den öppnar sig bara aldrig själv för att varna dig.",
+  "pain.spreadsheet.fix": "Samma rader, plus en avisering den dag en service förfaller.",
 
   "pain.dealer.legend": "Hos verkstaden",
   "pain.dealer.headline": "Verkstadens uppgifter är verkstadens",
-  "pain.dealer.body":
-    "Kompletta precis fram till att du byter verkstad, flyttar eller säljer bilen, och synliga för den som skriver din offert i stället för för dig.",
+  "pain.dealer.body": "Komplett tills du byter verkstad, flyttar eller säljer, och synlig för dem, inte för dig.",
   "pain.dealer.fix": "Din egen kopia, i din egen telefon, exporterbar när du vill.",
 
   "pain.bills.legend": "Räkningen",
   "pain.bills.headline": "Uppskjutet underhåll är inte sparade pengar",
-  "pain.bills.body":
-    "Det är samma pengar senare, med en bogsering framför. Jobben som går sönder dyrt är de billiga som ingen höll räkning på.",
-  "pain.bills.fix": "Varje intervall räknas ner, så att det billiga jobbet förblir billigt.",
+  "pain.bills.body": "Det är samma pengar senare, med en bärgare framför.",
+  "pain.bills.fix": "Varje intervall nedräknat, så att det billiga jobbet förblir billigt.",
 
   "pain.missed.legend": "Missen",
   "pain.missed.headline": "Ingenting påminner dig förrän det är för sent",
-  "pain.missed.body":
-    "Ingen missar en service med flit. Den missas en vanlig tisdag, och sedan igen veckan efter, och mätaren fortsätter räkna.",
-  "pain.missed.fix": "En notis per service, den dag den ska göras. Aldrig något annat.",
+  "pain.missed.body": "Ingen missar en service med flit. Man missar den en helt vanlig tisdag.",
+  "pain.missed.fix": "En avisering per service, den dag den förfaller. Inget annat.",
 
   "pain.records.legend": "Beviset",
   "pain.records.headline": "Obevisad service är ogjord service",
-  "pain.records.body":
-    "Ett garantiärende, en försäljning, ett gräl med en verkstad: alla frågar efter uppgifterna, inte efter vad du minns om dem.",
-  "pain.records.fix":
-    "En daterad logg du kan exportera som CSV. Gratis för alltid, för alla, prenumerant eller inte.",
+  "pain.records.body": "Ett garantiärende, en försäljning, ett gräl med verkstaden: alla frågar efter underlaget.",
+  "pain.records.fix": "En daterad logg, exporterbar som CSV. Gratis för alltid, för alla.",
 
   "pain.resale.legend": "Försäljning",
   "pain.resale.headline": "En komplett historik är värd mer än en fläckfri",
-  "pain.resale.body":
-    "Köparen prutar på det du inte kan visa, och det gör bilhandlaren som tar den i inbyte också. Bilen är bara värd det du kan bevisa om den.",
-  "pain.resale.fix":
-    "Exportera hela historiken till CSV och lämna över den. Ingenting av det är låst bakom abonnemanget.",
+  "pain.resale.body": "Köparen drar av för det du inte kan visa. Det gör handlaren också.",
+  "pain.resale.fix": "Exportera hela historiken och lämna över den. Inget ligger bakom Pro.",
 
   "pain.upsell.legend": "Disken",
   "pain.upsell.headline": "De kan din historik. Du gör det inte.",
-  "pain.upsell.body":
-    "\u201DNär gjordes bromsarna senast?\u201D är ingen fråga att gissa på medan någon lämnar pris på just det.",
-  "pain.upsell.fix": "Datumet och mätarställningen, framme vid disken på två tryck.",
+  "pain.upsell.body": "Ingen fråga att gissa på medan någon offererar just den.",
+  "pain.upsell.fix": "Datumet och mätarställningen, uppe i kassan på två tryckningar.",
 
   "pain.vehicleFallback": "bil",
 

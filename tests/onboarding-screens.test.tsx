@@ -78,7 +78,6 @@ import {
   estimateOdometer,
 } from "../src/onboarding/estimate";
 import OnboardingVehicle from "../app/onboarding/vehicle";
-import OnboardingBody from "../app/onboarding/body";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
 import OnboardingReviews from "../app/onboarding/reviews";
@@ -246,12 +245,8 @@ test("the paywall argues consequence, and leaves the schedule to the ask", () =>
   // and three consequences say what the evidence is worth.
   expect(printed).toContain("Cars don\u2019t warn you. This does.");
   expect(printed).toContain("2014 Ford F-150");
-  expect(printed).toContain(
-    "You hear about a service before it is due, not after it costs you a repair.",
-  );
-  expect(printed).toContain(
-    "You hand the next owner a full log instead of a shrug, and it shows in the price.",
-  );
+  expect(printed).toContain("Warned before it costs you, not after.");
+  expect(printed).toContain("A full log at resale, and it shows in the price.");
   // The car's dated schedule belongs to the reminder ask on the screen before.
   // Reprinted here it put six rows of service names between the headline and
   // the only control on the one screen that asks for money.
@@ -333,7 +328,7 @@ test("the car is one typed word away from answered", () => {
   type(tree, "Make (optional)", "Toyota");
   press(tree, "Continue");
 
-  expect(navigated).toContain("/onboarding/body");
+  expect(navigated).toContain("/onboarding/odometer");
   const saved = getVehicle(getOnboardingVehicleId()!)!;
   expect(saved.year).toBe(DEFAULT_YEAR);
   expect(saved.name).toBe(`${DEFAULT_YEAR} Toyota`);
@@ -348,7 +343,7 @@ test("the car screen refuses nothing, because it was refusing installs", () => {
   const tree = render(OnboardingVehicle);
   press(tree, "Continue");
 
-  expect(navigated).toContain("/onboarding/body");
+  expect(navigated).toContain("/onboarding/odometer");
   expect(texts(tree)).not.toContain("Required.");
 
   // Named, not blank, and not the bare model year: "2019" is a number standing
@@ -802,40 +797,9 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   });
 });
 
-describe("the body-style step", () => {
-  test("offers seven bodies and no Continue button", () => {
-    setOnboardingVehicleId(createVehicle({ name: "2016 Civic" }).id);
-    const strings = texts(render(OnboardingBody));
-    for (const label of ["Sedan", "Hatchback", "Coupe", "Wagon", "SUV", "Pickup", "Van"]) {
-      expect(strings).toContain(label);
-    }
-    expect(strings).not.toContain("Continue");
-  });
-
-  test("a tap records the body and advances", () => {
-    const id = createVehicle({ name: "2023 F-150" }).id;
-    setOnboardingVehicleId(id);
-    press(render(OnboardingBody), "Pickup");
-    expect(getVehicle(id)?.body_style).toBe("pickup");
-    expect(navigated.at(-1)).toBe("/onboarding/odometer");
-  });
-
-  test("the body already stored comes back selected on a revisit", () => {
-    const id = createVehicle({ name: "2023 F-150" }).id;
-    setOnboardingVehicleId(id);
-    press(render(OnboardingBody), "Pickup");
-
-    const selected = render(OnboardingBody)
-      .root.findAll((n) => typeof n.props.label === "string" && n.props.selected === true)
-      .map((n) => n.props.label as string);
-    expect(new Set(selected)).toEqual(new Set(["Pickup"]));
-  });
-
-  test("a body style given with no car in the run still advances", () => {
-    press(render(OnboardingBody), "Van");
-    expect(navigated.at(-1)).toBe("/onboarding/odometer");
-  });
-});
+// The body-style step was cut on 2026-08-29. Nothing downstream read
+// `body_style`, so there was no behaviour left to test once the screen went;
+// the column and its helpers stay covered by tests/body-style.test.ts.
 
 /**
  * The screen that exists because onboarding used to end at Apple's receipt.

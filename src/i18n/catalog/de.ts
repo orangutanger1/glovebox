@@ -153,9 +153,9 @@ export const de: Fragment = {
   "offer.paywall.none": "Keine",
 
   "offer.paywall.impact.legend": "Was das wert ist",
-  "offer.paywall.impact.warned": "Du erfährst von einem Service, bevor er fällig ist, nicht erst nach der Reparatur.",
-  "offer.paywall.impact.upsell": "Du kommst in die Werkstatt und weißt, was wann gemacht wurde, also wird dir nichts zweimal verkauft.",
-  "offer.paywall.impact.resale": "Du gibst dem nächsten Besitzer ein vollständiges Scheckheft statt Schulterzucken, und das zeigt sich im Preis.",
+  "offer.paywall.impact.warned": "Gewarnt, bevor es kostet, nicht danach.",
+  "offer.paywall.impact.upsell": "Du kommst informiert rein. Nichts wird dir zweimal verkauft.",
+  "offer.paywall.impact.resale": "Beim Verkauf ein vollständiges Scheckheft, das zeigt sich im Preis.",
 
   "offer.trial.title": { one: "Teste es {count} Tag lang.", other: "Teste es {count} Tage lang." },
   "offer.trial.cta": { one: "{count} Gratistag starten", other: "{count} Gratistage starten" },
@@ -186,7 +186,6 @@ export const de: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "Was für ein Auto ist es?",
   "onboardingA.vehicle.modelOptional": "Modell (optional)",
 
   "onboardingA.odometer.title.mi": "Wie viele Meilen hat es drauf?",
@@ -301,87 +300,66 @@ export const de: Fragment = {
     one: "Ein Service ist schon überfällig",
     other: "{count} Services sind schon überfällig",
   },
-  "pain.overdue.body":
-    "An deinem {vehicle}, heute. Kein Cockpit wird das erwähnen, denn die Lampe geht nach dem Schaden an, nicht davor.",
-  "pain.overdue.fix":
-    "Jeder Service nach Datum und nach Strecke heruntergezählt und gemeldet, bevor die Zahl ins Minus geht.",
+  "pain.overdue.body": "An deinem {vehicle}, heute. Die Lampe geht nach dem Schaden an, nicht davor.",
+  "pain.overdue.fix": "Nach Datum und Laufleistung heruntergezählt, gemeldet bevor es negativ wird.",
 
   "pain.blind.legend": "Kein Eintrag",
   "pain.blind.headline": {
     one: "Zu {count} von {total} Services liegt nichts vor",
     other: "Zu {count} von {total} Services liegt nichts vor",
   },
-  "pain.blind.body":
-    "Wrenchy kann nichts belegen, was es nie gesehen hat, und du auch nicht. Bis etwas anderes gesagt wird, gilt jeder davon als fällig.",
-  "pain.blind.fix": "Trag einen ein, und sein ganzer Plan läuft los. Je dreißig Sekunden, einmalig.",
+  "pain.blind.body": "Bis etwas anderes belegt ist, gilt jeder davon als fällig.",
+  "pain.blind.fix": "Trag einen ein, und der ganze Plan startet. Dreißig Sekunden, einmal.",
 
   "pain.memory.legend": "Aus dem Kopf",
   "pain.memory.headline": "Die einzige Kopie steckt in deinem Kopf",
-  "pain.memory.body":
-    "Du hast gesagt, du gehst nach Gedächtnis. Das hält genau so lange, bis am Tresen, beim Verkauf oder mit einer Lampe bei 120 die Frage \u201ewann genau?\u201c kommt.",
-  "pain.memory.fix":
-    "Jeder Service, den du einträgst, wird auf dieses Handy geschrieben und bleibt da. Kein Konto, hinter dem er verloren geht.",
+  "pain.memory.body": "Das Gedächtnis hält, bis am Tresen jemand „wann genau?“ fragt.",
+  "pain.memory.fix": "Auf diesem Handy gespeichert und dort geblieben. Kein Konto, hinter dem es verschwindet.",
 
   "pain.nothing.legend": "Nicht erfasst",
   "pain.nothing.headline": "Zu diesem Auto ist nichts festgehalten",
-  "pain.nothing.body":
-    "Weder der letzte Ölwechsel noch der Stand, bei dem er war. Das Auto führt das einzige Protokoll, und es teilt es dir mit, indem es liegen bleibt.",
-  "pain.nothing.fix":
-    "Ein Tippen trägt einen Service ein. Ab dann gibt es die Historie auch woanders als im Auto.",
+  "pain.nothing.body": "Das Auto führt das einzige Protokoll, und es meldet sich, indem es liegen bleibt.",
+  "pain.nothing.fix": "Ein Tipp trägt einen Service ein. Danach existiert die Historie außerhalb des Autos.",
 
   "pain.receipts.legend": "Im Handschuhfach",
   "pain.receipts.headline": "Ein Handschuhfach ist kein Verzeichnis",
-  "pain.receipts.body":
-    "Rechnungen belegen, dass ein Service stattgefunden hat. Sie sagen dir nicht, was als Nächstes ansteht, sie liegen in keiner Reihenfolge, und Thermopapier verblasst zu einem leeren Blatt.",
-  "pain.receipts.fix":
-    "Dieselben Rechnungen als datierte Zeilen, die du sortieren, durchsuchen und als CSV exportieren kannst.",
+  "pain.receipts.body": "Rechnungen belegen, dass etwas gemacht wurde. Was als Nächstes fällig ist, sagen sie nie.",
+  "pain.receipts.fix": "Dieselben Rechnungen als datierte Zeilen zum Sortieren, Suchen und Exportieren.",
 
   "pain.spreadsheet.legend": "In einer Tabelle",
   "pain.spreadsheet.headline": "Eine Tabelle kann dir nicht auf die Schulter tippen",
-  "pain.spreadsheet.body":
-    "Sie hält die Historie gut fest. Sie öffnet sich nur nie von selbst, und das Einzige, was du von ihr brauchst, ist eine Warnung, nach der du gar nicht gesucht hättest.",
-  "pain.spreadsheet.fix":
-    "Dieselben Zeilen, plus eine Mitteilung an dem Tag, an dem ein Service fällig wird.",
+  "pain.spreadsheet.body": "Sie hält die Historie gut. Sie öffnet sich nur nie von selbst, um zu warnen.",
+  "pain.spreadsheet.fix": "Dieselben Zeilen, plus eine Nachricht an dem Tag, an dem etwas fällig wird.",
 
   "pain.dealer.legend": "In der Werkstatt",
   "pain.dealer.headline": "Die Daten der Werkstatt gehören der Werkstatt",
-  "pain.dealer.body":
-    "Vollständig, bis du die Werkstatt wechselst, umziehst oder das Auto verkaufst, und einsehbar für den, der deinen Kostenvoranschlag schreibt, nicht für dich.",
-  "pain.dealer.fix":
-    "Deine eigene Kopie, auf deinem eigenen Handy, exportierbar, wann immer du willst.",
+  "pain.dealer.body": "Vollständig, bis du die Werkstatt wechselst, umziehst oder verkaufst, und einsehbar für sie, nicht für dich.",
+  "pain.dealer.fix": "Deine eigene Kopie, auf deinem eigenen Handy, jederzeit exportierbar.",
 
   "pain.bills.legend": "Die Rechnung",
   "pain.bills.headline": "Aufgeschobene Wartung ist kein gespartes Geld",
-  "pain.bills.body":
-    "Es ist dasselbe Geld später, mit einem Abschlepper davor. Die Arbeiten, die teuer schiefgehen, sind die billigen, die keiner mitgezählt hat.",
-  "pain.bills.fix":
-    "Jedes Intervall wird heruntergezählt, damit die billige Arbeit eine billige Arbeit bleibt.",
+  "pain.bills.body": "Es ist dasselbe Geld später, mit einem Abschleppwagen davor.",
+  "pain.bills.fix": "Jedes Intervall wird heruntergezählt, damit die günstige Arbeit günstig bleibt.",
 
   "pain.missed.legend": "Das Versäumnis",
   "pain.missed.headline": "Nichts erinnert dich, bis es zu spät ist",
-  "pain.missed.body":
-    "Ein Service wird nie mit Absicht verpasst. Er wird an einem ganz normalen Dienstag verpasst, und dann wieder in der Woche darauf, und der Tacho läuft weiter.",
-  "pain.missed.fix": "Eine Mitteilung pro Service, am Tag der Fälligkeit. Sonst nie etwas anderes.",
+  "pain.missed.body": "Niemand verpasst einen Service mit Absicht. Man verpasst ihn an einem ganz normalen Dienstag.",
+  "pain.missed.fix": "Eine Nachricht pro Service, an dem Tag, an dem er fällig wird. Sonst nichts.",
 
   "pain.records.legend": "Der Nachweis",
   "pain.records.headline": "Ein Service ohne Nachweis gilt als nicht gemacht",
-  "pain.records.body":
-    "Ein Garantiefall, ein Verkauf, eine Diskussion mit der Werkstatt: Jedes davon fragt nach dem Beleg, nicht nach deiner Erinnerung daran.",
-  "pain.records.fix":
-    "Ein datiertes Protokoll, das du als CSV exportierst. Für immer kostenlos, für alle, ob mit Abo oder ohne.",
+  "pain.records.body": "Garantiefall, Verkauf, Streit mit der Werkstatt: Jeder fragt nach dem Nachweis.",
+  "pain.records.fix": "Ein datiertes Protokoll, als CSV exportierbar. Für immer kostenlos, für alle.",
 
   "pain.resale.legend": "Wiederverkauf",
   "pain.resale.headline": "Eine lückenlose Historie ist mehr wert als eine saubere",
-  "pain.resale.body":
-    "Der Käufer zieht ab, was du ihm nicht zeigen kannst, und der Händler bei der Inzahlungnahme genauso. Das Auto ist nur so viel wert, wie du belegen kannst.",
-  "pain.resale.fix":
-    "Exportier die ganze Historie als CSV und gib sie weiter. Nichts davon hängt hinter dem Abo.",
+  "pain.resale.body": "Der Käufer zieht ab, was du nicht zeigen kannst. Der Händler auch.",
+  "pain.resale.fix": "Exportier die ganze Historie und gib sie weiter. Nichts hängt hinter Pro.",
 
   "pain.upsell.legend": "Der Tresen",
   "pain.upsell.headline": "Die kennen deine Historie. Du nicht.",
-  "pain.upsell.body":
-    "\u201eWann waren die Bremsen zuletzt dran?\u201c ist keine Frage, bei der man raten sollte, während einem jemand genau dafür ein Angebot macht.",
-  "pain.upsell.fix": "Datum und Tachostand, am Tresen mit zwei Tippern aufgerufen.",
+  "pain.upsell.body": "Keine Frage, die man raten sollte, während einem gerade eine Reparatur angeboten wird.",
+  "pain.upsell.fix": "Datum und Tachostand, am Tresen in zwei Tipps auf dem Schirm.",
 
   "pain.vehicleFallback": "Auto",
 

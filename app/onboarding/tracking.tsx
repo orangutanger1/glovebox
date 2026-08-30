@@ -65,6 +65,7 @@ export default function OnboardingTracking() {
         options={options}
         selected={tracking ? [tracking] : []}
         onPress={setTracking}
+        stack
       />
     </OnboardingScreen>
   );

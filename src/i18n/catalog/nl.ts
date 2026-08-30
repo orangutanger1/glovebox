@@ -283,7 +283,6 @@ export const nl: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "Wat voor auto is het?",
   "onboardingA.vehicle.modelOptional": "Model (optioneel)",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",
@@ -399,85 +398,66 @@ export const nl: Fragment = {
     one: "Eén onderhoudsbeurt is al te laat",
     other: "{count} onderhoudsbeurten zijn al te laat",
   },
-  "pain.overdue.body":
-    "Op je {vehicle}, vandaag. Het dashboard gaat er niets over zeggen, want het lampje gaat pas branden ná de schade, niet ervoor.",
-  "pain.overdue.fix":
-    "Elk onderhoud telt af op datum en op afstand, en wordt gemeld voordat het getal negatief wordt.",
+  "pain.overdue.body": "Op je {vehicle}, vandaag. Het lampje gaat pas branden ná de schade, niet ervoor.",
+  "pain.overdue.fix": "Afgeteld op datum en op afstand, gemeld voordat het onder nul gaat.",
 
   "pain.blind.legend": "Geen historie",
   "pain.blind.headline": {
     one: "Van {count} van de {total} onderhoudsbeurten is niets vastgelegd",
     other: "Van {count} van de {total} onderhoudsbeurten is niets vastgelegd",
   },
-  "pain.blind.body":
-    "Wrenchy kan niet bewijzen wat het nooit heeft gezien, en jij ook niet. Tot het tegendeel blijkt, geldt elk daarvan als aan de beurt.",
-  "pain.blind.fix":
-    "Leg er een vast en het hele schema begint te lopen. Dertig seconden per stuk, eenmalig.",
+  "pain.blind.body": "Tot iets anders blijkt, geldt elk daarvan als openstaand.",
+  "pain.blind.fix": "Leg er één vast en het hele schema begint. Dertig seconden, eenmalig.",
 
   "pain.memory.legend": "Uit je hoofd",
   "pain.memory.headline": "De enige kopie zit in je hoofd",
-  "pain.memory.body":
-    "Je zei dat je op je geheugen vaart. Dat houdt stand tot de vraag \u201cwanneer precies?\u201d wordt gesteld: aan de balie, bij de verkoop, of met een lampje aan op de snelweg.",
-  "pain.memory.fix":
-    "Elk onderhoud dat je vastlegt wordt op deze telefoon opgeslagen en blijft daar. Geen account waarachter het kwijt kan raken.",
+  "pain.memory.body": "Je geheugen houdt stand tot iemand aan de balie vraagt: wanneer precies?",
+  "pain.memory.fix": "Op deze telefoon geschreven en daar gebleven. Geen account om het achter kwijt te raken.",
 
   "pain.nothing.legend": "Niet bijgehouden",
   "pain.nothing.headline": "Over deze auto is niets vastgelegd",
-  "pain.nothing.body":
-    "Niet wanneer de olie voor het laatst is ververst, en niet bij welke kilometerstand dat was. De auto houdt als enige de historie bij, en die vertelt het je door kapot te gaan.",
-  "pain.nothing.fix":
-    "Eén tik legt onderhoud vast. Vanaf dat moment bestaat de historie ergens anders dan in de auto.",
+  "pain.nothing.body": "De auto houdt als enige de administratie bij, en hij vertelt het je door stuk te gaan.",
+  "pain.nothing.fix": "Eén tik legt een beurt vast. Daarna bestaat de historie buiten de auto.",
 
   "pain.receipts.legend": "In het dashboardkastje",
   "pain.receipts.headline": "Een dashboardkastje is geen register",
-  "pain.receipts.body":
-    "Bonnetjes bewijzen dát er onderhoud is geweest. Ze zeggen niet wat er hierna aan de beurt is, ze liggen niet op volgorde, en thermisch papier vervaagt tot een leeg vel.",
-  "pain.receipts.fix":
-    "Dezelfde bonnetjes als regels met datum die je kunt sorteren, doorzoeken en exporteren als CSV.",
+  "pain.receipts.body": "Bonnen bewijzen wat er is gedaan. Wat er nu aankomt zeggen ze nooit.",
+  "pain.receipts.fix": "Dezelfde bonnen als regels met datum, te sorteren, te zoeken en te exporteren.",
 
   "pain.spreadsheet.legend": "In een spreadsheet",
   "pain.spreadsheet.headline": "Een spreadsheet tikt je niet op de schouder",
-  "pain.spreadsheet.body":
-    "De historie bewaren gaat prima. Hij opent zichzelf alleen nooit, en het enige wat je eruit nodig hebt is een waarschuwing waar je niet aan dacht te gaan zoeken.",
-  "pain.spreadsheet.fix": "Dezelfde regels, plus één melding op de dag dat onderhoud aan de beurt is.",
+  "pain.spreadsheet.body": "Hij bewaart de historie prima. Hij gaat alleen nooit zelf open om je te waarschuwen.",
+  "pain.spreadsheet.fix": "Dezelfde regels, plus een melding op de dag dat een beurt valt.",
 
   "pain.dealer.legend": "Bij de garage",
   "pain.dealer.headline": "De administratie van de garage is van de garage",
-  "pain.dealer.body":
-    "Compleet, tot je van garage wisselt, verhuist of de auto verkoopt, en zichtbaar voor degene die je offerte opstelt in plaats van voor jou.",
-  "pain.dealer.fix": "Je eigen kopie, op je eigen telefoon, te exporteren wanneer je maar wilt.",
+  "pain.dealer.body": "Compleet tot je van garage wisselt, verhuist of verkoopt, en zichtbaar voor hen, niet voor jou.",
+  "pain.dealer.fix": "Je eigen kopie, op je eigen telefoon, altijd te exporteren.",
 
   "pain.bills.legend": "De rekening",
   "pain.bills.headline": "Achterstallig onderhoud is geen bespaard geld",
-  "pain.bills.body":
-    "Het is hetzelfde geld, later, met een sleepwagen ervoor. De klussen die duur mislopen zijn de goedkope die niemand bijhield.",
-  "pain.bills.fix": "Elk interval telt af, zodat de goedkope klus een goedkope klus blijft.",
+  "pain.bills.body": "Het is hetzelfde geld later, met een sleepwagen ervoor.",
+  "pain.bills.fix": "Elk interval afgeteld, zodat de goedkope klus goedkoop blijft.",
 
   "pain.missed.legend": "De misser",
   "pain.missed.headline": "Niets herinnert je eraan tot het te laat is",
-  "pain.missed.body":
-    "Onderhoud wordt nooit met opzet overgeslagen. Het wordt gemist op een gewone dinsdag, en de week erna weer, en de kilometerstand loopt door.",
-  "pain.missed.fix": "Eén melding per onderhoud, op de dag dat het aan de beurt is. Verder niets, nooit.",
+  "pain.missed.body": "Niemand slaat een beurt met opzet over. Je slaat hem over op een gewone dinsdag.",
+  "pain.missed.fix": "Eén melding per beurt, op de dag dat hij valt. Verder niets.",
 
   "pain.records.legend": "Het bewijs",
   "pain.records.headline": "Onbewezen onderhoud is niet-uitgevoerd onderhoud",
-  "pain.records.body":
-    "Een garantieclaim, een verkoop, een discussie met de garage: ze vragen allemaal om het bewijs, niet om jouw herinnering eraan.",
-  "pain.records.fix":
-    "Een logboek met datums dat je kunt exporteren als CSV. Voor altijd gratis, voor iedereen, met of zonder abonnement.",
+  "pain.records.body": "Een garantieclaim, een verkoop, een discussie met de garage: elk vraagt om het bewijs.",
+  "pain.records.fix": "Een gedateerd logboek, te exporteren als CSV. Voor altijd gratis, voor iedereen.",
 
   "pain.resale.legend": "Verkoop",
   "pain.resale.headline": "Een volledige historie is meer waard dan een schone",
-  "pain.resale.body":
-    "De koper trekt af wat je niet kunt laten zien, en de handelaar die hem inruilt ook. De auto is alleen waard wat je erover kunt bewijzen.",
-  "pain.resale.fix":
-    "Exporteer de hele historie naar CSV en geef die mee. Daar zit niets van achter het abonnement.",
+  "pain.resale.body": "De koper trekt af wat je niet kunt laten zien. De dealer ook.",
+  "pain.resale.fix": "Exporteer de hele historie en geef hem mee. Niets zit achter Pro.",
 
   "pain.upsell.legend": "De balie",
   "pain.upsell.headline": "Zij kennen je historie. Jij niet.",
-  "pain.upsell.body":
-    "\u201cWanneer zijn je remmen voor het laatst nagekeken?\u201d is geen vraag om naar te gokken terwijl iemand je er een offerte voor geeft.",
-  "pain.upsell.fix": "De datum en de kilometerstand, aan de balie in twee tikken op je scherm.",
+  "pain.upsell.body": "Geen vraag om naar te gissen terwijl iemand je er een offerte voor geeft.",
+  "pain.upsell.fix": "De datum en de kilometerstand, aan de balie in twee tikken.",
 
   "pain.vehicleFallback": "auto",
 
@@ -546,9 +526,9 @@ export const nl: Fragment = {
   "offer.paywall.none": "Geen",
 
   "offer.paywall.impact.legend": "Wat dat waard is",
-  "offer.paywall.impact.warned": "Je hoort van een onderhoudsbeurt voordat die valt, niet na de reparatie.",
-  "offer.paywall.impact.upsell": "Je komt bij de garage en weet wat wanneer is gedaan, dus niets wordt je twee keer verkocht.",
-  "offer.paywall.impact.resale": "Je geeft de volgende eigenaar een compleet logboek in plaats van een schouderophalen, en dat zie je terug in de prijs.",
+  "offer.paywall.impact.warned": "Gewaarschuwd voordat het geld kost, niet erna.",
+  "offer.paywall.impact.upsell": "Je komt binnen met de feiten. Niets wordt je twee keer verkocht.",
+  "offer.paywall.impact.resale": "Een volledig logboek bij verkoop, en dat zie je terug in de prijs.",
 
   "offer.trial.title": { one: "Probeer het {count} dag.", other: "Probeer het {count} dagen." },
   "offer.trial.cta": {

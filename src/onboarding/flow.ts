@@ -26,9 +26,8 @@
  */
 export const FLOW = [
   "welcome",
-  // The quiz. Seven questions, all of which change what the app computes.
+  // The quiz. Six questions, all of which change what the app computes.
   "vehicle",
-  "body",
   "odometer",
   "drive",
   "service",
@@ -50,13 +49,12 @@ export const FLOW = [
 export type OnboardingRoute = (typeof FLOW)[number];
 
 /**
- * The screens that ask a question, in order. They get "QUESTION n / 7" and a
+ * The screens that ask a question, in order. They get "QUESTION n / 6" and a
  * lamp row; the narrative screens after them deliberately get neither, because
  * a progress counter on a story tells the user how much of it they can skim.
  */
 export const QUIZ: readonly OnboardingRoute[] = [
   "vehicle",
-  "body",
   "odometer",
   "drive",
   "service",

@@ -143,9 +143,9 @@ export const ja: Fragment = {
   "offer.paywall.none": "なし",
 
   "offer.paywall.impact.legend": "これで得られること",
-  "offer.paywall.impact.warned": "整備は期限が来る前に知らせが届きます。修理代がかかってからではありません。",
-  "offer.paywall.impact.upsell": "いつ何をしたか分かった状態で入庫できるので、同じ整備を二度売られません。",
-  "offer.paywall.impact.resale": "次の所有者に、あいまいな記憶ではなく完全な整備記録を渡せます。価格にも表れます。",
+  "offer.paywall.impact.warned": "費用になる前に警告。後からではなく。",
+  "offer.paywall.impact.upsell": "わかった状態で入れます。同じものを二度売られません。",
+  "offer.paywall.impact.resale": "売るときに完全な記録を。価格に表れます。",
 
   "offer.trial.title": { other: "{count}日間試してみる。" },
   "offer.trial.cta": { other: "{count}日間の無料期間を始める" },
@@ -175,7 +175,6 @@ export const ja: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
 
-  "onboardingA.body.title": "どんな車ですか？",
   "onboardingA.vehicle.modelOptional": "車種（任意）",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
@@ -277,81 +276,63 @@ export const ja: Fragment = {
   // pain
   "pain.overdue.legend": "期限超過",
   "pain.overdue.headline": { other: "{count}件の整備がすでに期限切れです" },
-  "pain.overdue.body":
-    "{vehicle}で、今日の時点です。メーターパネルは何も知らせません。警告灯は傷んだ後に点くもので、その前には点かないからです。",
-  "pain.overdue.fix":
-    "どの整備も日付と距離で数え、数字がマイナスになる前に知らせます。",
+  "pain.overdue.body": "{vehicle}で、今日の時点です。警告灯は傷んだ後に点くもので、その前には点きません。",
+  "pain.overdue.fix": "日付と距離の両方で数え、マイナスになる前に知らせます。",
 
   "pain.blind.legend": "記録なし",
   "pain.blind.headline": { other: "{total}件中{count}件の整備に記録がありません" },
-  "pain.blind.body":
-    "Wrenchyは見ていないものを証明できませんし、あなたにも証明できません。何か記録が入るまで、そのすべてを期限が来たものとして扱います。",
-  "pain.blind.fix": "1件記録すれば、その整備の予定が動き出します。1件30秒、一度だけです。",
+  "pain.blind.body": "記録が出てこないかぎり、そのすべてが「期限切れ」の扱いになります。",
+  "pain.blind.fix": "ひとつ記録すれば、その予定がまるごと動き出します。三十秒、一度だけ。",
 
   "pain.memory.legend": "記憶頼り",
   "pain.memory.headline": "控えは頭の中にしかありません",
-  "pain.memory.body":
-    "記憶で管理していると答えました。記憶は「正確にはいつですか」と聞かれるまでは持ちます。受付で、売却のときに、あるいは高速で警告灯が点いたときに、それを聞かれます。",
-  "pain.memory.fix":
-    "記録した整備はこの端末に書き込まれ、そこに残ります。アカウントの向こうに消えることはありません。",
+  "pain.memory.body": "記憶は、窓口で「正確にいつ？」と聞かれるまでは持ちます。",
+  "pain.memory.fix": "この端末に書き込まれ、そこに残ります。失う先のアカウントはありません。",
 
   "pain.nothing.legend": "未管理",
   "pain.nothing.headline": "この車について何も書き留められていません",
-  "pain.nothing.body":
-    "前回のオイル交換も、そのときの走行距離も残っていません。記録を持っているのは車だけで、車がそれを伝える方法は故障です。",
-  "pain.nothing.fix":
-    "タップ1回で整備を記録できます。そこから先、履歴は車以外の場所にも存在します。",
+  "pain.nothing.body": "唯一の記録を持っているのは車で、その伝え方は故障することです。",
+  "pain.nothing.fix": "一度のタップで整備を記録。以後、履歴は車の外にも存在します。",
 
   "pain.receipts.legend": "グローブボックスの中",
   "pain.receipts.headline": "グローブボックスは索引になりません",
-  "pain.receipts.body":
-    "伝票は整備をやった証拠にはなります。ただ、次に何が来るかは教えてくれず、順番にも並んでおらず、感熱紙は白く消えていきます。",
-  "pain.receipts.fix":
-    "同じ伝票が日付入りの行になり、並べ替え、検索、CSVへの書き出しができます。",
+  "pain.receipts.body": "領収書は済んだことを証明します。次に何が来るかは決して教えません。",
+  "pain.receipts.fix": "同じ領収書を日付つきの行に。並べ替え、検索、書き出しができます。",
 
   "pain.spreadsheet.legend": "表計算ソフトの中",
   "pain.spreadsheet.headline": "表計算ソフトは肩を叩いてくれません",
-  "pain.spreadsheet.body":
-    "履歴を持っておく分には十分です。ただ、自分から開いてはくれません。そこに一番求めているのは、わざわざ見に行こうとは思わなかった警告のほうです。",
-  "pain.spreadsheet.fix": "同じ行に加えて、整備の期限が来た日に通知が1回届きます。",
+  "pain.spreadsheet.body": "履歴の保管は問題ありません。ただ、警告のために自分から開くことはありません。",
+  "pain.spreadsheet.fix": "同じ行に加えて、整備が来る日に通知をひとつ。",
 
   "pain.dealer.legend": "整備工場任せ",
   "pain.dealer.headline": "工場の記録は工場のものです",
-  "pain.dealer.body":
-    "工場を変える、引っ越す、車を売る。そのときまでは完全です。そして見えているのは、見積書を書く人であって、あなたではありません。",
+  "pain.dealer.body": "工場を変える、引っ越す、車を売る、そのときまでは完全です。しかも見えているのは相手であって、あなたではありません。",
   "pain.dealer.fix": "自分の控えを、自分の端末に。いつでも書き出せます。",
 
   "pain.bills.legend": "請求書",
   "pain.bills.headline": "整備の先送りは節約ではありません",
-  "pain.bills.body":
-    "同じ金額を後で払うだけで、しかも前にレッカー代が付きます。高くつく壊れ方をするのは、誰も数えていなかった安い作業です。",
-  "pain.bills.fix": "どの間隔も数え続けるので、安い作業が安いままで済みます。",
+  "pain.bills.body": "同じ金額が後から来ます。しかもレッカーつきで。",
+  "pain.bills.fix": "すべての間隔を数え続けるので、安い作業が安いままで済みます。",
 
   "pain.missed.legend": "見落とし",
   "pain.missed.headline": "遅れるまで何も教えてくれません",
-  "pain.missed.body":
-    "整備をわざと飛ばす人はいません。なんでもない火曜日に飛び、その翌週にもまた飛び、走行距離だけが伸びていきます。",
-  "pain.missed.fix": "整備ごとに、期限の当日に通知が1回。それ以外は一切ありません。",
+  "pain.missed.body": "整備をわざと飛ばす人はいません。飛ぶのはいつも、なんでもない火曜日です。",
+  "pain.missed.fix": "整備ごとに通知はひとつ、期限の当日に。ほかには何もありません。",
 
   "pain.records.legend": "証拠",
   "pain.records.headline": "証明できない整備は、やっていない整備です",
-  "pain.records.body":
-    "保証の申請、売却、工場とのやり取り。どれも求めてくるのは整備記録であって、あなたの記憶ではありません。",
-  "pain.records.fix":
-    "日付の入った記録を、CSVで書き出せます。契約の有無にかかわらず、誰でも永久に無料です。",
+  "pain.records.body": "保証の請求、売却、工場との言い分の食い違い。どれも求めるのは記録です。",
+  "pain.records.fix": "日付の入った記録をCSVで書き出せます。誰でも、ずっと無料で。",
 
   "pain.resale.legend": "売却",
   "pain.resale.headline": "きれいな履歴より、そろった履歴のほうが高く付きます",
-  "pain.resale.body":
-    "買い手は見せられない部分を値引きします。下取りする販売店も同じです。車の価値は、証明できる範囲までです。",
-  "pain.resale.fix":
-    "履歴をまるごとCSVに書き出して渡せます。そこに課金の壁は一切ありません。",
+  "pain.resale.body": "買い手は見せられない分を値引きします。買取店も同じです。",
+  "pain.resale.fix": "履歴をまるごと書き出して渡せます。Proの向こう側にあるものはありません。",
 
   "pain.upsell.legend": "受付カウンター",
   "pain.upsell.headline": "履歴を知っているのは相手で、あなたではありません。",
-  "pain.upsell.body":
-    "「前回のブレーキ整備はいつですか」は、その見積もりを出されている最中に当てずっぽうで答える質問ではありません。",
-  "pain.upsell.fix": "日付と走行距離を、カウンターでタップ2回で出せます。",
+  "pain.upsell.body": "見積もりを出されている最中に、当て推量で答える質問ではありません。",
+  "pain.upsell.fix": "日付と走行距離を、窓口で二タップで表示。",
 
   "pain.vehicleFallback": "車",
 

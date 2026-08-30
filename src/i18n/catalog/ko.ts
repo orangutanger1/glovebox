@@ -156,9 +156,9 @@ export const ko: Fragment = {
   "offer.paywall.none": "없음",
 
   "offer.paywall.impact.legend": "이게 주는 것",
-  "offer.paywall.impact.warned": "정버는 기한이 오기 전에 알려줍니다. 수리버가 나온 뒤가 아니라요.",
-  "offer.paywall.impact.upsell": "무엇을 언제 했는지 알고 정버소에 들어가니, 같은 정버를 두 번 할 일이 없어요.",
-  "offer.paywall.impact.resale": "다음 주인에게 어림핆한 기여이 아니라 완전한 정버 기록을 넘깁니다. 가객에도 드러나요.",
+  "offer.paywall.impact.warned": "비용이 되기 전에 알려드려요. 그 뒤가 아니라.",
+  "offer.paywall.impact.upsell": "알고 들어가요. 같은 걸 두 번 팔리지 않아요.",
+  "offer.paywall.impact.resale": "팔 때 완전한 기록을. 가격에 드러나요.",
 
   "offer.trial.title": { other: "{count}일 동안 써 보세요." },
   "offer.trial.cta": { other: "무료 {count}일 시작하기" },
@@ -188,7 +188,6 @@ export const ko: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "어떤 차인가요?",
   "onboardingA.vehicle.modelOptional": "모델(선택)",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
@@ -298,82 +297,65 @@ export const ko: Fragment = {
   "pain.overdue.headline": {
     other: "정비 {count}건이 이미 기한을 넘겼어요",
   },
-  "pain.overdue.body":
-    "{vehicle} 기준으로, 오늘이요. 계기판은 이걸 알려주지 않아요. 경고등은 손상이 생기기 전이 아니라 생긴 뒤에 켜지니까요.",
-  "pain.overdue.fix":
-    "모든 정비를 날짜와 주행거리로 카운트해서, 숫자가 마이너스로 넘어가기 전에 표시해요.",
+  "pain.overdue.body": "{vehicle} 기준으로, 오늘이요. 경고등은 손상이 생긴 뒤에 켜지지, 그 전에 켜지지 않아요.",
+  "pain.overdue.fix": "날짜와 주행거리로 함께 세어, 마이너스가 되기 전에 알려드려요.",
 
   "pain.blind.legend": "기록 없음",
   "pain.blind.headline": {
     other: "정비 {total}건 중 {count}건은 기록이 없어요",
   },
-  "pain.blind.body":
-    "Wrenchy는 본 적 없는 걸 증명할 수 없고, 그건 나도 마찬가지예요. 아니라는 게 확인되기 전까지는 전부 기한이 된 것으로 봐요.",
-  "pain.blind.fix": "하나만 기록하면 그 정비의 일정이 시작돼요. 한 건에 30초, 한 번만요.",
+  "pain.blind.body": "다른 기록이 나오기 전까지는 그 전부가 정비 시기로 잡혀요.",
+  "pain.blind.fix": "하나만 기록하면 그 일정 전체가 시작돼요. 삼십 초, 한 번이면 돼요.",
 
   "pain.memory.legend": "기억으로",
   "pain.memory.headline": "유일한 사본이 머릿속에 있어요",
-  "pain.memory.body":
-    "기억으로 관리한다고 하셨죠. 기억은 잘 버텨요. 정비소 카운터에서, 중고차 거래에서, 시속 100km로 달리다 경고등이 켜진 채로 \u201c정확히 언제였죠?\u201d라는 질문을 받기 전까지는요.",
-  "pain.memory.fix":
-    "기록한 정비는 모두 이 휴대폰에 저장되고 그대로 남아요. 기록을 가둬 둘 계정도 없어요.",
+  "pain.memory.body": "기억은 카운터에서 «정확히 언제였죠?»라고 묻기 전까지만 버텨요.",
+  "pain.memory.fix": "이 휴대폰에 기록되고 그대로 남아요. 잃어버릴 계정 자체가 없어요.",
 
   "pain.nothing.legend": "관리 안 함",
   "pain.nothing.headline": "이 차에 대해 적혀 있는 게 없어요",
-  "pain.nothing.body":
-    "마지막 엔진오일 교환도, 그때 주행거리도요. 유일한 기록은 차가 가지고 있고, 차가 알려주는 방식은 고장이에요.",
-  "pain.nothing.fix":
-    "한 번 탭하면 정비가 기록돼요. 그때부터 이력은 차 말고 다른 곳에도 있어요.",
+  "pain.nothing.body": "유일한 기록은 차가 갖고 있고, 차가 알려주는 방식은 고장이에요.",
+  "pain.nothing.fix": "한 번 누르면 정비가 기록돼요. 그때부터 이력은 차 밖에도 남아요.",
 
   "pain.receipts.legend": "글로브박스에",
   "pain.receipts.headline": "글로브박스는 색인이 아니에요",
-  "pain.receipts.body":
-    "영수증은 정비를 했다는 걸 증명해요. 다음에 뭐가 기한인지는 알려주지 않고, 순서도 없고, 감열지는 하얗게 지워져요.",
-  "pain.receipts.fix": "같은 영수증을 날짜 붙은 행으로. 정렬하고, 검색하고, CSV로 내보낼 수 있어요.",
+  "pain.receipts.body": "영수증은 한 일을 증명해요. 다음에 뭐가 오는지는 절대 말해주지 않아요.",
+  "pain.receipts.fix": "같은 영수증을 날짜가 붙은 줄로. 정렬하고, 찾고, 내보낼 수 있어요.",
 
   "pain.spreadsheet.legend": "스프레드시트에",
   "pain.spreadsheet.headline": "스프레드시트는 어깨를 두드려 주지 않아요",
-  "pain.spreadsheet.body":
-    "이력을 담는 건 잘해요. 다만 스스로 열리지는 않고, 정작 필요한 건 찾아볼 생각조차 못 한 경고예요.",
-  "pain.spreadsheet.fix": "같은 행에, 정비 기한이 되는 날 알림 하나가 더해져요.",
+  "pain.spreadsheet.body": "이력은 잘 담고 있어요. 다만 경고하려고 스스로 열리는 일은 없어요.",
+  "pain.spreadsheet.fix": "같은 줄에, 정비가 도래하는 날 알림 하나가 더해져요.",
 
   "pain.dealer.legend": "정비소에",
   "pain.dealer.headline": "정비소 기록은 정비소 것이에요",
-  "pain.dealer.body":
-    "정비소를 바꾸거나, 이사하거나, 차를 팔기 전까지만 완전해요. 그리고 그 기록은 나보다 견적서를 쓰는 사람에게 보여요.",
+  "pain.dealer.body": "정비소를 바꾸거나 이사하거나 차를 팔기 전까지는 완전해요. 그리고 그건 그쪽에 보이지, 나에게 보이지 않아요.",
   "pain.dealer.fix": "내 사본을, 내 휴대폰에. 원할 때 언제든 내보낼 수 있어요.",
 
   "pain.bills.legend": "청구서",
   "pain.bills.headline": "정비를 미루는 건 돈을 아끼는 게 아니에요",
-  "pain.bills.body":
-    "같은 돈을 나중에, 앞에 견인차까지 붙여서 내는 거예요. 비싸게 터지는 건 아무도 세지 않던 값싼 항목들이에요.",
-  "pain.bills.fix": "모든 주기를 카운트해서, 값싼 정비가 값싼 정비로 남게 해요.",
+  "pain.bills.body": "같은 돈을 나중에 내는 거예요. 앞에 견인차가 하나 붙고요.",
+  "pain.bills.fix": "모든 주기를 계속 세니까, 싼 작업이 싼 작업으로 끝나요.",
 
   "pain.missed.legend": "놓친 정비",
   "pain.missed.headline": "늦기 전까지는 아무것도 알려주지 않아요",
-  "pain.missed.body":
-    "정비를 일부러 놓치는 사람은 없어요. 평범한 화요일에 놓치고, 그다음 주에 또 놓치고, 주행거리는 계속 올라가요.",
-  "pain.missed.fix": "정비마다 알림 하나, 기한이 되는 날에. 그 외에는 아무것도 없어요.",
+  "pain.missed.body": "일부러 정비를 거르는 사람은 없어요. 그냥 평범한 화요일에 놓쳐요.",
+  "pain.missed.fix": "정비마다 알림 하나, 도래한 그날에. 그 외에는 아무것도 없어요.",
 
   "pain.records.legend": "증빙",
   "pain.records.headline": "증명하지 못한 정비는 하지 않은 정비예요",
-  "pain.records.body":
-    "보증 수리, 중고차 거래, 정비소와의 언쟁. 하나같이 기록을 요구해요. 내 기억이 아니라요.",
-  "pain.records.fix":
-    "날짜 붙은 기록을 CSV로 내보낼 수 있어요. 구독 여부와 상관없이, 누구에게나 영구 무료예요.",
+  "pain.records.body": "보증 청구, 중고 판매, 정비소와의 다툼. 전부 기록을 요구해요.",
+  "pain.records.fix": "날짜가 있는 기록, CSV로 내보내기. 누구에게나 영원히 무료예요.",
 
   "pain.resale.legend": "중고차 거래",
   "pain.resale.headline": "이력이 꽉 찬 차가 깨끗한 차보다 값이 나가요",
-  "pain.resale.body":
-    "보여주지 못하는 건 구매자가 깎아요. 차를 매입하는 딜러도 똑같아요. 차는 증명할 수 있는 만큼만 값이 나가요.",
-  "pain.resale.fix":
-    "전체 이력을 CSV로 내보내서 넘겨주세요. 어느 것도 구독에 묶여 있지 않아요.",
+  "pain.resale.body": "구매자는 보여주지 못한 만큼 깎아요. 딜러도 마찬가지고요.",
+  "pain.resale.fix": "이력 전체를 내보내서 넘겨주세요. Pro 뒤에 잠긴 건 없어요.",
 
   "pain.upsell.legend": "정비소 카운터",
   "pain.upsell.headline": "정비소는 내 이력을 알아요. 나는 몰라요.",
-  "pain.upsell.body":
-    "\u201c브레이크 정비 마지막으로 언제 하셨어요?\u201d는 상대가 그 견적을 내미는 자리에서 짐작으로 답할 질문이 아니에요.",
-  "pain.upsell.fix": "날짜와 주행거리를, 카운터에서 두 번 탭해서 바로 꺼내요.",
+  "pain.upsell.body": "견적을 받는 자리에서 짐작으로 답할 질문이 아니에요.",
+  "pain.upsell.fix": "날짜와 주행거리를, 카운터에서 두 번 눌러 바로.",
 
   "pain.vehicleFallback": "차",
 

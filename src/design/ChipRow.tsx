@@ -18,6 +18,7 @@ export function ChipRow<T extends string>({
   selected,
   onPress,
   scroll = false,
+  stack = false,
   disabled = false,
 }: {
   legend?: string;
@@ -29,6 +30,13 @@ export function ChipRow<T extends string>({
    *  are long but ordered — twenty-six model years wrap into six rows of
    *  identical four-digit numbers, which is a wall rather than a control. */
   scroll?: boolean;
+  /** One chip per line instead of a wrapping block. For answer sets whose
+   *  labels differ enough in width that wrapping reorders them by accident —
+   *  five options can wrap 3 + 2 with the fourth sitting beside the third, and
+   *  a list the user is meant to read down then has no reading order at all.
+   *  Chips keep their natural width, so this is a column of switches rather
+   *  than a column of full-width buttons. */
+  stack?: boolean;
   /** The whole row is drawn but not live. Used where the second half of a
    *  two-part question has to be visible before the first half is answered. */
   disabled?: boolean;
@@ -60,6 +68,8 @@ export function ChipRow<T extends string>({
         >
           {chips}
         </ScrollView>
+      ) : stack ? (
+        <View style={{ alignItems: "flex-start", gap: tokens.space.sm }}>{chips}</View>
       ) : (
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
           {chips}

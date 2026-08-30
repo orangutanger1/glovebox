@@ -44,9 +44,12 @@ export const offer: Fragment = {
   "offer.paywall.none": "None",
 
   "offer.paywall.impact.legend": "What that is worth",
-  "offer.paywall.impact.warned": "You hear about a service before it is due, not after it costs you a repair.",
-  "offer.paywall.impact.upsell": "You walk into the shop knowing what was done and when, so nothing gets sold to you twice.",
-  "offer.paywall.impact.resale": "You hand the next owner a full log instead of a shrug, and it shows in the price.",
+  // Three lines, and they have to land in the width of a phone at the moment
+  // the price is on screen. The long version explained each benefit in a full
+  // clause; a reader deciding whether to pay skims a bullet and takes the verb.
+  "offer.paywall.impact.warned": "Warned before it costs you, not after.",
+  "offer.paywall.impact.upsell": "You walk in knowing. Nothing gets sold to you twice.",
+  "offer.paywall.impact.resale": "A full log at resale, and it shows in the price.",
 
   "offer.trial.title": { one: "Try it for {count} day.", other: "Try it for {count} days." },
   "offer.trial.cta": { one: "Start my {count} free day", other: "Start my {count} free days" },

@@ -149,9 +149,9 @@ export const es: Fragment = {
   "offer.paywall.none": "Ninguno",
 
   "offer.paywall.impact.legend": "Lo que eso vale",
-  "offer.paywall.impact.warned": "Te enteras de un mantenimiento antes de que toque, no después de que te cueste una reparación.",
-  "offer.paywall.impact.upsell": "Llegas al taller sabiendo qué se hizo y cuándo, así que nadie te vende lo mismo dos veces.",
-  "offer.paywall.impact.resale": "Entregas al siguiente dueño un historial completo en vez de un encogimiento de hombros, y eso se nota en el precio.",
+  "offer.paywall.impact.warned": "Avisado antes de que cueste, no después.",
+  "offer.paywall.impact.upsell": "Entras sabiendo. Nada se te vende dos veces.",
+  "offer.paywall.impact.resale": "Un historial completo en la venta, y se nota en el precio.",
 
   "offer.trial.title": { one: "Pruébalo {count} día.", other: "Pruébalo {count} días." },
   "offer.trial.cta": {
@@ -185,7 +185,6 @@ export const es: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "¿Qué tipo de coche es?",
   "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
 
   "onboardingA.odometer.title.mi": "¿Cuántas millas tiene?",
@@ -301,87 +300,66 @@ export const es: Fragment = {
     one: "Un mantenimiento ya está vencido",
     other: "{count} mantenimientos ya están vencidos",
   },
-  "pain.overdue.body":
-    "En tu {vehicle}, hoy. Nada en el cuadro te lo va a decir, porque el testigo se enciende después del daño, no antes.",
-  "pain.overdue.fix":
-    "Cada mantenimiento contado por fecha y por distancia, y avisado antes de que el número se vuelva negativo.",
+  "pain.overdue.body": "En tu {vehicle}, hoy. El testigo se enciende después del daño, no antes.",
+  "pain.overdue.fix": "Contado por fecha y por distancia, avisado antes de que llegue a cero.",
 
   "pain.blind.legend": "Sin registro",
   "pain.blind.headline": {
     one: "{count} de {total} mantenimientos no tiene nada registrado",
     other: "{count} de {total} mantenimientos no tienen nada registrado",
   },
-  "pain.blind.body":
-    "Wrenchy no puede demostrar lo que nunca ha visto, y tú tampoco. Hasta que algo diga lo contrario, todos se tratan como vencidos.",
-  "pain.blind.fix":
-    "Registra uno y arranca todo su calendario. Treinta segundos cada uno, una sola vez.",
+  "pain.blind.body": "Mientras nada diga lo contrario, todos ellos se dan por vencidos.",
+  "pain.blind.fix": "Registra uno y arranca todo su calendario. Treinta segundos, una vez.",
 
   "pain.memory.legend": "De memoria",
   "pain.memory.headline": "La única copia está en tu cabeza",
-  "pain.memory.body":
-    "Has dicho que vas de memoria. La memoria aguanta hasta que alguien pregunta \u00ab¿cuándo exactamente?\u00bb en el mostrador, en la venta o con un testigo encendido a 120.",
-  "pain.memory.fix":
-    "Cada mantenimiento que registras se escribe en este móvil y ahí se queda. Sin ninguna cuenta detrás de la que perderlo.",
+  "pain.memory.body": "La memoria aguanta hasta que alguien pregunta «¿cuándo exactamente?» en el mostrador.",
+  "pain.memory.fix": "Escrito en este teléfono y ahí se queda. Sin cuenta que lo esconda.",
 
   "pain.nothing.legend": "Sin seguimiento",
   "pain.nothing.headline": "De este coche no hay nada anotado",
-  "pain.nothing.body":
-    "Ni el último cambio de aceite, ni los kilómetros que marcaba entonces. El único registro lo tiene el coche, y su forma de contártelo es averiándose.",
-  "pain.nothing.fix":
-    "Un toque registra un mantenimiento. Desde ese momento el historial existe en algún sitio que no es el coche.",
+  "pain.nothing.body": "El coche lleva el único registro, y te avisa averiándose.",
+  "pain.nothing.fix": "Un toque registra un servicio. A partir de ahí el historial existe fuera del coche.",
 
   "pain.receipts.legend": "En la guantera",
   "pain.receipts.headline": "Una guantera no es un índice",
-  "pain.receipts.body":
-    "Las facturas demuestran que algo se hizo. No te dicen qué toca ahora, no siguen ningún orden y el papel térmico se borra hasta quedarse en blanco.",
-  "pain.receipts.fix":
-    "Las mismas facturas como filas con fecha que puedes ordenar, buscar y exportar en CSV.",
+  "pain.receipts.body": "Las facturas prueban lo que se hizo. Nunca dicen qué toca a continuación.",
+  "pain.receipts.fix": "Las mismas facturas como filas con fecha que puedes ordenar, buscar y exportar.",
 
   "pain.spreadsheet.legend": "En una hoja de cálculo",
   "pain.spreadsheet.headline": "Una hoja de cálculo no te toca el hombro",
-  "pain.spreadsheet.body":
-    "Guarda bien el historial. Lo que no hace nunca es abrirse sola, y lo único que necesitas de ella es un aviso que no se te ocurrió ir a buscar.",
-  "pain.spreadsheet.fix":
-    "Las mismas filas, más una notificación el día en que vence un mantenimiento.",
+  "pain.spreadsheet.body": "Guarda bien el historial. Solo que nunca se abre sola para avisarte.",
+  "pain.spreadsheet.fix": "Las mismas filas, más un aviso el día en que algo vence.",
 
   "pain.dealer.legend": "En el taller",
   "pain.dealer.headline": "Los registros del taller son del taller",
-  "pain.dealer.body":
-    "Completos hasta que cambias de taller, te mudas o vendes el coche, y visibles para quien te hace el presupuesto, no para ti.",
-  "pain.dealer.fix": "Tu propia copia, en tu propio móvil, exportable cuando quieras.",
+  "pain.dealer.body": "Completo hasta que cambias de taller, te mudas o vendes, y visible para ellos, no para ti.",
+  "pain.dealer.fix": "Tu propia copia, en tu propio teléfono, exportable cuando quieras.",
 
   "pain.bills.legend": "La factura",
   "pain.bills.headline": "Aplazar el mantenimiento no es ahorrar",
-  "pain.bills.body":
-    "Es el mismo dinero más tarde, con una grúa por delante. Las averías caras salen de los trabajos baratos que nadie estaba contando.",
-  "pain.bills.fix":
-    "Cada intervalo con su cuenta atrás, para que el trabajo barato siga siendo barato.",
+  "pain.bills.body": "Es el mismo dinero más tarde, con una grúa por delante.",
+  "pain.bills.fix": "Cada intervalo contado, para que el trabajo barato siga siendo barato.",
 
   "pain.missed.legend": "El despiste",
   "pain.missed.headline": "Nada te lo recuerda hasta que ya es tarde",
-  "pain.missed.body":
-    "Un mantenimiento nunca se salta a propósito. Se salta un martes cualquiera, y otra vez la semana siguiente, y el cuentakilómetros sigue subiendo.",
-  "pain.missed.fix": "Una notificación por mantenimiento, el día en que vence. Nada más, nunca.",
+  "pain.missed.body": "Nadie se salta un servicio a propósito. Se salta un martes cualquiera.",
+  "pain.missed.fix": "Un aviso por servicio, el día que vence. Nada más.",
 
   "pain.records.legend": "La prueba",
   "pain.records.headline": "Un mantenimiento sin pruebas es un mantenimiento sin hacer",
-  "pain.records.body":
-    "Una reclamación de garantía, una venta, una discusión con el taller: todas piden el registro, no tu recuerdo de él.",
-  "pain.records.fix":
-    "Un historial con fechas que puedes exportar en CSV. Gratis para siempre, para todos, con suscripción o sin ella.",
+  "pain.records.body": "Una garantía, una venta, una discusión con el taller: todas piden el registro.",
+  "pain.records.fix": "Un historial con fechas, exportable a CSV. Gratis para siempre, para todos.",
 
   "pain.resale.legend": "La reventa",
   "pain.resale.headline": "Un historial completo vale más que uno limpio",
-  "pain.resale.body":
-    "El comprador descuenta lo que no puedes enseñarle, y el concesionario que lo tasa también. El coche vale solo lo que puedes demostrar de él.",
-  "pain.resale.fix":
-    "Exporta todo el historial en CSV y entrégalo. Nada de eso está detrás de la suscripción.",
+  "pain.resale.body": "El comprador descuenta lo que no puedes enseñarle. El concesionario también.",
+  "pain.resale.fix": "Exporta todo el historial y entrégalo. Nada queda detrás de Pro.",
 
   "pain.upsell.legend": "El mostrador",
   "pain.upsell.headline": "Ellos conocen tu historial. Tú no.",
-  "pain.upsell.body":
-    "\u00ab¿Cuándo fue tu última revisión de frenos?\u00bb no es una pregunta para andar adivinando mientras alguien te da presupuesto para una.",
-  "pain.upsell.fix": "La fecha y los kilómetros, sacados en el mostrador con dos toques.",
+  "pain.upsell.body": "No es una pregunta para adivinar mientras te pasan el presupuesto.",
+  "pain.upsell.fix": "La fecha y el kilometraje, en el mostrador en dos toques.",
 
   "pain.vehicleFallback": "coche",
 

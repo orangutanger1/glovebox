@@ -142,9 +142,9 @@ export const it: Fragment = {
   "offer.paywall.none": "Nessuno",
 
   "offer.paywall.impact.legend": "Quanto vale",
-  "offer.paywall.impact.warned": "Vieni a sapere di un tagliando prima della scadenza, non dopo la riparazione.",
-  "offer.paywall.impact.upsell": "Entri in officina sapendo cosa è stato fatto e quando, così nulla ti viene venduto due volte.",
-  "offer.paywall.impact.resale": "Consegni al prossimo proprietario un libretto completo invece di un’alzata di spalle, e si vede sul prezzo.",
+  "offer.paywall.impact.warned": "Avvisato prima che costi, non dopo.",
+  "offer.paywall.impact.upsell": "Entri sapendo. Niente ti viene venduto due volte.",
+  "offer.paywall.impact.resale": "Uno storico completo alla rivendita, e si vede sul prezzo.",
 
   "offer.trial.title": { one: "Provalo per {count} giorno.", other: "Provalo per {count} giorni." },
   "offer.trial.cta": { one: "Attiva {count} giorno gratis", other: "Attiva {count} giorni gratis" },
@@ -174,7 +174,6 @@ export const it: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "Che tipo di auto è?",
   "onboardingA.vehicle.modelOptional": "Modello (facoltativo)",
 
   "onboardingA.odometer.title.mi": "Quante miglia ha?",
@@ -287,88 +286,66 @@ export const it: Fragment = {
     one: "Un tagliando è già scaduto",
     other: "{count} tagliandi sono già scaduti",
   },
-  "pain.overdue.body":
-    "Sulla tua {vehicle}, oggi. Sul quadro non comparirà nulla, perché la spia si accende dopo il danno e non prima.",
-  "pain.overdue.fix":
-    "Ogni tagliando con il conto alla rovescia per data e per chilometri, segnalato prima che il numero diventi negativo.",
+  "pain.overdue.body": "Sulla tua {vehicle}, oggi. La spia si accende dopo il danno, non prima.",
+  "pain.overdue.fix": "Contato per data e per distanza, segnalato prima che vada sotto zero.",
 
   "pain.blind.legend": "Nessuno storico",
   "pain.blind.headline": {
     one: "{count} tagliando su {total} non ha nulla in archivio",
     other: "{count} tagliandi su {total} non hanno nulla in archivio",
   },
-  "pain.blind.body":
-    "Wrenchy non può dimostrare quello che non ha mai visto, e nemmeno tu. Finché qualcosa non dice il contrario, ognuno di loro è considerato da fare.",
-  "pain.blind.fix":
-    "Registrane uno e parte tutta la sua tabella di scadenze. Trenta secondi ciascuno, una volta sola.",
+  "pain.blind.body": "Finché qualcosa non dice il contrario, ognuno di questi risulta da fare.",
+  "pain.blind.fix": "Registrane uno e parte tutto il suo calendario. Trenta secondi, una volta.",
 
   "pain.memory.legend": "A memoria",
   "pain.memory.headline": "L'unica copia è nella tua testa",
-  "pain.memory.body":
-    "Hai detto che vai a memoria. La memoria tiene fino al momento in cui ti chiedono «quando esattamente?» al banco dell'officina, alla rivendita o con una spia accesa a 130 all'ora.",
-  "pain.memory.fix":
-    "Ogni tagliando che registri viene scritto su questo telefono e lì resta. Nessun account dietro cui perderlo.",
+  "pain.memory.body": "La memoria regge finché al banco qualcuno chiede «quando esattamente?».",
+  "pain.memory.fix": "Scritto su questo telefono e lì resta. Nessun account dietro cui perderlo.",
 
   "pain.nothing.legend": "Non monitorata",
   "pain.nothing.headline": "Di quest'auto non è scritto niente",
-  "pain.nothing.body":
-    "Non l'ultimo cambio olio, non i chilometri a cui è stato fatto. L'unico archivio ce l'ha l'auto, e il modo in cui te lo dice è rompendosi.",
-  "pain.nothing.fix":
-    "Un tocco registra un tagliando. Da quel momento lo storico esiste anche fuori dall'auto.",
+  "pain.nothing.body": "L'unico registro lo tiene l'auto, e il modo in cui te lo dice è rompendosi.",
+  "pain.nothing.fix": "Un tocco registra un intervento. Da lì lo storico esiste fuori dall'auto.",
 
   "pain.receipts.legend": "Nel cruscotto",
   "pain.receipts.headline": "Il cassetto del cruscotto non è un archivio",
-  "pain.receipts.body":
-    "Le ricevute dimostrano che un tagliando è stato fatto. Non dicono cosa scade dopo, non sono in ordine, e la carta termica sbiadisce fino a restare bianca.",
-  "pain.receipts.fix":
-    "Le stesse ricevute come righe con la data, che puoi ordinare, cercare ed esportare in CSV.",
+  "pain.receipts.body": "Le ricevute provano cosa è stato fatto. Non dicono mai cosa tocca dopo.",
+  "pain.receipts.fix": "Le stesse ricevute come righe datate da ordinare, cercare ed esportare.",
 
   "pain.spreadsheet.legend": "In un foglio di calcolo",
   "pain.spreadsheet.headline": "Un foglio di calcolo non ti dà una pacca sulla spalla",
-  "pain.spreadsheet.body":
-    "Lo storico lo tiene bene. Solo che non si apre da solo, e l'unica cosa che ti serve da lui è un avviso che non avresti pensato di andare a cercare.",
-  "pain.spreadsheet.fix":
-    "Le stesse righe, più una notifica il giorno in cui un tagliando scade.",
+  "pain.spreadsheet.body": "Lo storico lo tiene bene. Solo che non si apre mai da solo per avvisarti.",
+  "pain.spreadsheet.fix": "Le stesse righe, più una notifica il giorno in cui un intervento scade.",
 
   "pain.dealer.legend": "In officina",
   "pain.dealer.headline": "Lo storico dell'officina è dell'officina",
-  "pain.dealer.body":
-    "Completo fino al giorno in cui cambi officina, traslochi o vendi l'auto, e visibile a chi ti scrive il preventivo invece che a te.",
-  "pain.dealer.fix": "La tua copia, sul tuo telefono, esportabile quando vuoi.",
+  "pain.dealer.body": "Completo finché non cambi officina, traslochi o vendi, e visibile a loro, non a te.",
+  "pain.dealer.fix": "Una copia tua, sul tuo telefono, esportabile quando vuoi.",
 
   "pain.bills.legend": "Il conto",
   "pain.bills.headline": "La manutenzione rinviata non è denaro risparmiato",
-  "pain.bills.body":
-    "Sono gli stessi soldi più tardi, con un carro attrezzi davanti. I guasti che costano caro partono dai lavori economici che nessuno teneva d'occhio.",
-  "pain.bills.fix":
-    "Ogni intervallo con il conto alla rovescia, così il lavoro economico resta economico.",
+  "pain.bills.body": "Sono gli stessi soldi più avanti, con un carro attrezzi davanti.",
+  "pain.bills.fix": "Ogni intervallo contato, così il lavoro economico resta economico.",
 
   "pain.missed.legend": "La dimenticanza",
   "pain.missed.headline": "Niente te lo ricorda finché non è tardi",
-  "pain.missed.body":
-    "Un tagliando non si salta di proposito. Si salta un martedì qualunque, e poi di nuovo la settimana dopo, e il contachilometri continua a girare.",
-  "pain.missed.fix": "Una notifica per tagliando, il giorno in cui scade. Nient'altro, mai.",
+  "pain.missed.body": "Nessuno salta un tagliando apposta. Lo si salta un martedì qualunque.",
+  "pain.missed.fix": "Una notifica per intervento, il giorno in cui scade. Nient'altro.",
 
   "pain.records.legend": "La prova",
   "pain.records.headline": "Un tagliando non dimostrato è un tagliando non fatto",
-  "pain.records.body":
-    "Una richiesta in garanzia, una rivendita, una discussione con l'officina: ognuna chiede il documento, non i tuoi ricordi.",
-  "pain.records.fix":
-    "Uno storico con le date che puoi esportare in CSV. Gratis per sempre, per tutti, abbonati o no.",
+  "pain.records.body": "Una garanzia, una vendita, una discussione in officina: ognuna chiede il documento.",
+  "pain.records.fix": "Un registro datato, esportabile in CSV. Gratis per sempre, per tutti.",
 
   "pain.resale.legend": "Rivendita",
   "pain.resale.headline": "Uno storico completo vale più di uno storico pulito",
-  "pain.resale.body":
-    "Chi compra scala dal prezzo quello che non gli puoi mostrare, e lo fa anche il concessionario che la prende in permuta. L'auto vale solo quello che riesci a dimostrare.",
-  "pain.resale.fix":
-    "Esporta tutto lo storico in CSV e consegnalo. Non c'è niente chiuso dietro l'abbonamento.",
+  "pain.resale.body": "Il compratore sconta quello che non puoi mostrargli. Anche il concessionario.",
+  "pain.resale.fix": "Esporta tutto lo storico e consegnalo. Niente resta dietro Pro.",
 
   "pain.upsell.legend": "Il banco",
   "pain.upsell.headline": "Loro conoscono il tuo storico. Tu no.",
-  "pain.upsell.body":
-    "«Quando hai fatto l'ultimo controllo freni?» non è una domanda a cui tirare a indovinare mentre qualcuno te ne fa il preventivo.",
-  "pain.upsell.fix":
-    "La data e i chilometri del contachilometri, tirati su al banco in due tocchi.",
+  "pain.upsell.body": "Non è una domanda su cui tirare a indovinare mentre ti fanno un preventivo.",
+  "pain.upsell.fix": "Data e chilometraggio, tirati fuori al banco in due tocchi.",
 
   "pain.vehicleFallback": "auto",
 

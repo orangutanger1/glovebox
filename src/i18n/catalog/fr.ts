@@ -160,9 +160,9 @@ export const fr: Fragment = {
   "offer.paywall.none": "Aucun",
 
   "offer.paywall.impact.legend": "Ce que cela vaut",
-  "offer.paywall.impact.warned": "Vous êtes prévenu avant l’échéance, pas après la réparation.",
-  "offer.paywall.impact.upsell": "Vous arrivez au garage en sachant ce qui a été fait et quand, donc rien ne vous est vendu deux fois.",
-  "offer.paywall.impact.resale": "Vous remettez au prochain propriétaire un carnet complet plutôt qu’un haussement d’épaules, et cela se voit sur le prix.",
+  "offer.paywall.impact.warned": "Prévenu avant que ça coûte, pas après.",
+  "offer.paywall.impact.upsell": "Vous entrez en sachant. Rien ne vous est vendu deux fois.",
+  "offer.paywall.impact.resale": "Un carnet complet à la revente, et ça se voit sur le prix.",
 
   "offer.trial.title": { one: "Essayez {count} jour.", other: "Essayez {count} jours." },
   "offer.trial.cta": {
@@ -196,7 +196,6 @@ export const fr: Fragment = {
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.body.title": "Quel type de voiture ?",
   "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
 
   "onboardingA.odometer.title.mi": "Combien de miles au compteur\u00a0?",
@@ -311,86 +310,66 @@ export const fr: Fragment = {
     one: "Un entretien est déjà en retard",
     other: "{count} entretiens sont déjà en retard",
   },
-  "pain.overdue.body":
-    "Sur votre {vehicle}, aujourd'hui. Rien au tableau de bord ne va vous le dire, parce que le voyant s'allume après les dégâts et non avant.",
-  "pain.overdue.fix":
-    "Chaque entretien décompté par date et par distance, et signalé avant que le chiffre passe en négatif.",
+  "pain.overdue.body": "Sur votre {vehicle}, aujourd'hui. Le voyant s'allume après les dégâts, pas avant.",
+  "pain.overdue.fix": "Décompté par date et par distance, signalé avant de passer dans le rouge.",
 
   "pain.blind.legend": "Aucune trace",
   "pain.blind.headline": {
     one: "{count} entretien sur {total} n'a rien au carnet",
     other: "{count} entretiens sur {total} n'ont rien au carnet",
   },
-  "pain.blind.body":
-    "Wrenchy ne peut pas prouver ce qu'il n'a jamais vu, et vous non plus. Tant que rien ne dit le contraire, chacun d'eux est traité comme à faire.",
-  "pain.blind.fix": "Notez-en un et tout son suivi démarre. Trente secondes chacun, une seule fois.",
+  "pain.blind.body": "Tant que rien ne dit le contraire, chacune d'elles est comptée comme due.",
+  "pain.blind.fix": "Enregistrez-en une et tout son calendrier démarre. Trente secondes, une fois.",
 
   "pain.memory.legend": "De mémoire",
   "pain.memory.headline": "La seule copie est dans votre tête",
-  "pain.memory.body":
-    "Vous avez dit que vous y allez de mémoire. La mémoire tient jusqu'à la question «\u00a0c'était quand exactement\u00a0?\u00a0», posée au comptoir, à la revente, ou avec un voyant allumé à 130.",
-  "pain.memory.fix":
-    "Chaque entretien que vous notez est écrit sur ce téléphone et y reste. Aucun compte derrière lequel le perdre.",
+  "pain.memory.body": "La mémoire tient jusqu'à ce qu'on vous demande « c'était quand exactement ? » au comptoir.",
+  "pain.memory.fix": "Écrit sur ce téléphone et gardé là. Aucun compte derrière lequel le perdre.",
 
   "pain.nothing.legend": "Non suivi",
   "pain.nothing.headline": "Rien n'est écrit sur cette voiture",
-  "pain.nothing.body":
-    "Ni la dernière vidange, ni le compteur auquel elle a été faite. La voiture garde le seul carnet, et sa façon de vous le dire, c'est la panne.",
-  "pain.nothing.fix":
-    "Un appui note un entretien. À partir de là, l'historique existe ailleurs que dans la voiture.",
+  "pain.nothing.body": "La voiture tient le seul relevé, et sa façon de vous le dire, c'est la panne.",
+  "pain.nothing.fix": "Un geste enregistre un entretien. L'historique existe alors ailleurs que dans la voiture.",
 
   "pain.receipts.legend": "Dans la boîte à gants",
   "pain.receipts.headline": "Une boîte à gants n'est pas un index",
-  "pain.receipts.body":
-    "Les factures prouvent qu'un entretien a eu lieu. Elles ne disent pas ce qui vient ensuite, elles ne sont dans aucun ordre, et le papier thermique s'efface jusqu'au blanc.",
-  "pain.receipts.fix":
-    "Les mêmes factures en lignes datées, que vous pouvez trier, chercher et exporter en CSV.",
+  "pain.receipts.body": "Les factures prouvent ce qui a été fait. Elles ne disent jamais ce qui vient ensuite.",
+  "pain.receipts.fix": "Les mêmes factures en lignes datées, à trier, chercher et exporter.",
 
   "pain.spreadsheet.legend": "Dans un tableur",
   "pain.spreadsheet.headline": "Un tableur ne peut pas vous tapoter l'épaule",
-  "pain.spreadsheet.body":
-    "Il tient très bien l'historique. Il ne s'ouvre juste jamais tout seul, et la seule chose que vous attendez de lui, c'est un avertissement que vous n'auriez pas pensé à aller chercher.",
-  "pain.spreadsheet.fix":
-    "Les mêmes lignes, plus une notification le jour où un entretien arrive à échéance.",
+  "pain.spreadsheet.body": "Il garde très bien l'historique. Il ne s'ouvre simplement jamais tout seul pour vous prévenir.",
+  "pain.spreadsheet.fix": "Les mêmes lignes, plus une notification le jour où un entretien tombe.",
 
   "pain.dealer.legend": "Au garage",
   "pain.dealer.headline": "Le carnet du garage appartient au garage",
-  "pain.dealer.body":
-    "Complet jusqu'au jour où vous changez de garage, déménagez ou vendez la voiture, et visible par celui qui rédige votre devis plutôt que par vous.",
+  "pain.dealer.body": "Complet jusqu'à ce que vous changiez de garage, déménagiez ou vendiez, et visible pour eux, pas pour vous.",
   "pain.dealer.fix": "Votre propre copie, sur votre propre téléphone, exportable quand vous voulez.",
 
   "pain.bills.legend": "La facture",
   "pain.bills.headline": "Un entretien reporté n'est pas de l'argent économisé",
-  "pain.bills.body":
-    "C'est le même argent plus tard, avec une dépanneuse devant. Les pannes qui coûtent cher viennent des entretiens pas chers que personne ne comptait.",
-  "pain.bills.fix":
-    "Chaque intervalle décompté, pour que l'entretien pas cher reste un entretien pas cher.",
+  "pain.bills.body": "C'est le même argent plus tard, avec une dépanneuse devant.",
+  "pain.bills.fix": "Chaque intervalle décompté, pour que le petit travail reste un petit travail.",
 
   "pain.missed.legend": "L'oubli",
   "pain.missed.headline": "Rien ne vous prévient avant qu'il soit tard",
-  "pain.missed.body":
-    "Un entretien n'est jamais raté exprès. Il est raté un mardi ordinaire, puis encore la semaine suivante, et le compteur continue.",
-  "pain.missed.fix": "Une notification par entretien, le jour de l'échéance. Rien d'autre, jamais.",
+  "pain.missed.body": "Personne ne saute un entretien exprès. On le saute un mardi ordinaire.",
+  "pain.missed.fix": "Une notification par entretien, le jour où il tombe. Rien d'autre.",
 
   "pain.records.legend": "La preuve",
   "pain.records.headline": "Un entretien non prouvé est un entretien non fait",
-  "pain.records.body":
-    "Une garantie, une revente, un désaccord avec un garage\u00a0: chacun réclame le carnet, pas votre souvenir.",
-  "pain.records.fix":
-    "Un journal daté, exportable en CSV. Gratuit pour toujours, pour tout le monde, abonné ou pas.",
+  "pain.records.body": "Une garantie, une revente, un litige avec un garage : chacun réclame le relevé.",
+  "pain.records.fix": "Un carnet daté, exportable en CSV. Gratuit à vie, pour tout le monde.",
 
   "pain.resale.legend": "Revente",
   "pain.resale.headline": "Un historique complet vaut mieux qu'un historique propre",
-  "pain.resale.body":
-    "L'acheteur décote ce que vous ne pouvez pas lui montrer, et le concessionnaire qui la reprend aussi. La voiture ne vaut que ce que vous pouvez prouver.",
-  "pain.resale.fix":
-    "Exportez tout l'historique en CSV et remettez-le. Rien n'est bloqué derrière l'abonnement.",
+  "pain.resale.body": "L'acheteur décote ce que vous ne pouvez pas montrer. Le concessionnaire aussi.",
+  "pain.resale.fix": "Exportez tout l'historique et remettez-le. Rien n'est derrière Pro.",
 
   "pain.upsell.legend": "Le comptoir",
   "pain.upsell.headline": "Ils connaissent votre historique. Vous, non.",
-  "pain.upsell.body":
-    "«\u00a0C'était quand, votre dernier entretien des freins\u00a0?\u00a0» n'est pas une question à deviner pendant qu'on vous en chiffre un.",
-  "pain.upsell.fix": "La date et le relevé du compteur, sortis au comptoir en deux appuis.",
+  "pain.upsell.body": "Pas une question à deviner pendant qu'on vous fait un devis.",
+  "pain.upsell.fix": "La date et le kilométrage, sortis au comptoir en deux gestes.",
 
   "pain.vehicleFallback": "voiture",
 

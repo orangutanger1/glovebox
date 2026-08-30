@@ -69,7 +69,7 @@ export default function OnboardingWorry() {
         />
       }
     >
-      <ChipRow options={options} selected={worries} onPress={toggle} />
+      <ChipRow options={options} selected={worries} onPress={toggle} stack />
     </OnboardingScreen>
   );
 }

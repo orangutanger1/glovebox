@@ -33,7 +33,7 @@ was doing so through a bug, not through its length.
 
 ```text
 welcome
-  vehicle  body  odometer  drive  service  tracking  worry     ← the quiz, 7
+  vehicle  odometer  drive  service  tracking  worry            ← the quiz, 6
 analyzing → results → symptoms → help → reviews → notify       ← the payoff, 6
 paywall → offer                                                ← the ask, 2
 ```
@@ -81,20 +81,21 @@ not, and the code already agrees — only the year is required, and it is
 required by being unskippable rather than by being validated. Every interval is
 driven by year, odometer and drive rate. The make is a label.
 
-### body — OPTIONAL, pending data
+### body — REMOVED 2026-08-29
 
-Purpose: body style, one tap, no Continue. Inserted 08-27.
+Purpose was body style, one tap, no Continue. Inserted 08-27, cut ten days
+later without ever being measured on a stable bundle.
 
-Nothing downstream reads `body_style`. The garage never queries the column;
-only this screen writes it. So it is a question asked for personalisation that
-does not yet personalise anything.
+Nothing downstream read `body_style`. The garage never queried the column; only
+this screen wrote it. So it was a question asked for personalisation that did
+not personalise anything, and the audit had it as the one OPTIONAL in sixteen.
 
-That is not automatically a cut. A one-tap question with no keyboard costs
-almost nothing and contributes to the sense that the app is building something
-specific. But it is the cheapest screen to remove if `route:body → route:odometer`
-shows real drop, and it is the only screen in the quiz whose answer the product
-does not consume. **Decide from the first clean cohort.** Do not remove it
-blind: it went in eight days ago and has never been measured on a stable bundle.
+It was cut on the owner's call rather than from the cohort. The structural
+complaint that prompted it — no Continue button, and a fixed answer set with no
+way past it — is real, but repairing it would have been spent on a question the
+product does not consume. The column, its migration and `setBodyStyle` all
+remain, so an existing car's stored body style is not lost and a future screen
+can write it again.
 
 ### odometer — KEEP, now instrumented
 
@@ -259,7 +260,7 @@ in the garage with the car and plan already built.
 | --- | --- | --- |
 | welcome | KEEP | Design. Cheap, and a quiz needs a non-question opener. |
 | vehicle | KEEP | Data. The bug is fixed and verified in build 21's bundle. |
-| body | OPTIONAL | Data pending. Nothing downstream reads `body_style`. |
+| body | REMOVED | Nothing downstream read `body_style`. Cut 2026-08-29. |
 | odometer | KEEP | Design. Gate justified; silence was not, and is now fixed. |
 | drive | KEEP | Design. Load-bearing and shows its own work. |
 | service | KEEP | Design. Watch `when_unanswered`. |
@@ -274,7 +275,8 @@ in the garage with the car and plan already built.
 | paywall | KEEP | Data cannot yet distinguish the failure modes. |
 | offer | KEEP | Design. Trial shown last is the cheap conversion. |
 
-One OPTIONAL, fifteen KEEP, nothing REMOVED, nothing MOVED.
+Fifteen KEEP, one REMOVED, nothing MOVED. The audit shipped with that one
+as OPTIONAL-pending-data; it was cut the same day on the owner's call.
 
 ## Why this audit cuts almost nothing
 
@@ -324,9 +326,15 @@ Then cut in this order, from the blocked-press data:
    not wait for the cohort and it is not a funnel question: it means
    `parseNumber` refused something a person read off their own dash. Fix the
    parser.
-3. **`body`.** Cut if `route:body → route:odometer` drops more than the other
-   one-tap steps. Nothing downstream reads `body_style`, so it is a one-line
-   edit in `src/onboarding/flow.ts` plus a register entry.
+3. **`body`.** ~~Cut if `route:body → route:odometer` drops more than the other
+   one-tap steps.~~ **Done 2026-08-29, ahead of the cohort, on the owner's
+   call.** The screen is removed, the quiz is six questions, and the register
+   carries the re-baseline note. It was not measured first, and that is worth
+   stating plainly: the argument for cutting it was that nothing downstream
+   reads `body_style`, which was already established, and the argument for
+   waiting was only that the drop-off might have been informative. The column,
+   its migration and `setBodyStyle` remain — onboarding simply no longer writes
+   them.
 
 Anything beyond those three needs a new argument. In particular, do not shorten
 the eleven-screen payoff run on the theory that it is long: the two
