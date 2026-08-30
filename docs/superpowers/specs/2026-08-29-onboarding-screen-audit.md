@@ -299,6 +299,37 @@ project does not have — a cohort on a stable bundle — to measure it. The
 sixteen screens are not obviously too many for this archetype; Cal AI, Noom and
 Flo all run longer. What the flow has never had is a clean read.
 
-**The recommendation is: ship build 21, hold the structure, read the first
-cohort, and cut from evidence.** `body` is the first candidate and the cut is a
-one-line edit in `src/onboarding/flow.ts` when the data arrives.
+**The recommendation is: ship the build, hold the structure, read the first
+cohort, and cut from evidence.**
+
+## The trigger — agreed 2026-08-29
+
+Approved rather than left open-ended, so "wait for data" cannot become "wait
+forever". The structure holds until:
+
+> **1.1.0 build 22 has roughly 40 installs that reach `route=vehicle` on one
+> unchanged bundle.**
+
+Build 22 is the first binary carrying `onboarding_step_blocked`, so it is the
+first on which the gates are visible at all. Segment by `ota_update_id` /
+`ota_is_embedded`; do not pool with build 21 or anything earlier.
+
+Then cut in this order, from the blocked-press data:
+
+1. **Any route where more than ~30% of the people who viewed it fire a blocked
+   event.** That is the gate failing, not the screen. Ungate it before removing
+   anything — a screen people cannot get past is not a screen people do not
+   want.
+2. **`odometer` with `reason=unparseable`, at any volume, immediately.** It does
+   not wait for the cohort and it is not a funnel question: it means
+   `parseNumber` refused something a person read off their own dash. Fix the
+   parser.
+3. **`body`.** Cut if `route:body → route:odometer` drops more than the other
+   one-tap steps. Nothing downstream reads `body_style`, so it is a one-line
+   edit in `src/onboarding/flow.ts` plus a register entry.
+
+Anything beyond those three needs a new argument. In particular, do not shorten
+the eleven-screen payoff run on the theory that it is long: the two
+best-documented quiz flows in the research ask for money at ~340s against
+Wrenchy's ~90s, and across 1,800 captured flows onboarding length does not rise
+with revenue.
