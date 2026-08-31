@@ -658,7 +658,7 @@ test("the free and paid halves are named on the same screen as the answer", () =
   expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
 });
 
-test("the notify screen asks over this car's own dated schedule", () => {
+test("the notify screen asks over a picture of the reminder itself", () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     make: "Subaru",
@@ -670,18 +670,24 @@ test("the notify screen asks over this car's own dated schedule", () => {
 
   const tree = render(OnboardingNotify);
   const printed = texts(tree);
-  // The promise, and the evidence for it: the schedule the quiz computed for
-  // this car by name, six rows of it with the scheduler's own status on each.
+  // The promise, and the count behind it, over this car by name.
   expect(printed).toContain("Never miss a service.");
   expect(printed).toContain(
     "12 services on a schedule for your 2016 Subaru Outback.",
   );
-  expect(printed).toContain(serviceName("Air Filter"));
-  // Nothing has been logged for this car, so nothing is overdue: every row is
-  // stamped as unrecorded rather than as a red alarm about a service the app
-  // has never been told about.
-  expect(printed.filter((s) => s === "No record").length).toBeGreaterThan(0);
-  expect(printed).not.toContain("Due");
+
+  // The evidence is the still of the banner, seated between two dimmed
+  // neighbours so it reads as a notification and not as a feature card. The
+  // schedule list it replaced was six service names between the promise and the
+  // only control on the screen.
+  const images = tree.root.findAll(
+    // Host nodes only: the composite `Image` and the host it renders both
+    // carry these props, and counting both says two banners where there is one.
+    (n) => typeof n.type === "string" && n.props.resizeMode === "contain",
+  );
+  expect(images).toHaveLength(1);
+  expect(images[0].props.accessibilityLabel).toBe("Never miss a service.");
+
   // One control, and one line of grey under the heading. The "Do it later"
   // deferral is gone: iOS's own alert carries the decline this screen used to
   // print above it.
@@ -696,33 +702,6 @@ test("the notify screen asks over this car's own dated schedule", () => {
       )
       .map((n) => n.props.label),
   ).toEqual(["Turn on reminders"]);
-});
-
-test("the notify screen shows the reminder this car would actually get", () => {
-  // The banner is the app's own next notification, not a specimen: same catalog
-  // keys the scheduler sends, against this car's records. An invented service
-  // or an invented "last done" date would be advertising a message the app has
-  // no intention of sending.
-  const car = createVehicle({
-    name: "2016 Subaru Outback",
-    year: 2016,
-    odometer: 112000,
-  });
-  setOnboardingVehicleId(car.id);
-  addRecord({
-    vehicle_id: car.id,
-    service_type: "Oil Change",
-    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
-  });
-
-  const printed = texts(render(OnboardingNotify)).join(" ");
-  expect(printed).toContain(
-    `Your 2016 Subaru Outback\u2019s ${serviceName("Oil Change")} is due`,
-  );
-  expect(printed).toContain("Last done");
-  // The schedule list is the fallback for a car with no dated reminder, so it
-  // is not also stacked under the banner.
-  expect(printed).not.toContain(serviceName("Air Filter"));
 });
 
 /** The mocked native notification module, as this file installed it. */

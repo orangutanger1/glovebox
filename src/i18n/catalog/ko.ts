@@ -144,10 +144,6 @@ export const ko: Fragment = {
   "offer.plan.decline": "지금은 안 할게요",
   "offer.notify.title": "정비를 놓치지 마세요.",
   "offer.notify.off": "\uc54c\ub9bc \uaebc\uc9d0",
-  "offer.plan.status.due": "기한",
-  "offer.plan.status.soon": "임박",
-  "offer.plan.status.ok": "정상",
-  "offer.plan.status.noRecord": "기록 없음",
 
   "offer.paywall.title": "차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
   "offer.paywall.subtitle": "정비와 주행거리 기록이 모두 남아요.",

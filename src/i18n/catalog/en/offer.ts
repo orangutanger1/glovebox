@@ -27,10 +27,6 @@ export const offer: Fragment = {
   },
   "offer.plan.cta": "Turn on reminders",
   "offer.plan.decline": "Not now",
-  "offer.plan.status.due": "Due",
-  "offer.plan.status.soon": "Soon",
-  "offer.plan.status.ok": "OK",
-  "offer.plan.status.noRecord": "No record",
 
   "offer.notify.title": "Never miss a service.",
   "offer.notify.off": "Reminders off",

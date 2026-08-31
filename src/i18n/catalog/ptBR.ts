@@ -130,10 +130,6 @@ export const ptBR: Fragment = {
   "offer.plan.decline": "Agora não",
   "offer.notify.title": "Nunca perca uma revisão.",
   "offer.notify.off": "Lembretes desativados",
-  "offer.plan.status.due": "Vencido",
-  "offer.plan.status.soon": "Logo",
-  "offer.plan.status.ok": "OK",
-  "offer.plan.status.noRecord": "Sem registro",
 
   "offer.paywall.title": "Carros não avisam. Isto avisa.",
   "offer.paywall.subtitle": "Cada serviço e cada leitura, registrados.",

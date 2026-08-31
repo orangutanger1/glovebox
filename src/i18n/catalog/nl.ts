@@ -522,10 +522,6 @@ export const nl: Fragment = {
   "offer.plan.decline": "Nu niet",
   "offer.notify.title": "Mis nooit meer een onderhoudsbeurt.",
   "offer.notify.off": "Herinneringen uit",
-  "offer.plan.status.due": "Nu",
-  "offer.plan.status.soon": "Binnenkort",
-  "offer.plan.status.ok": "OK",
-  "offer.plan.status.noRecord": "Geen gegevens",
 
   "offer.paywall.title": "Auto’s waarschuwen niet. Dit wel.",
   "offer.paywall.subtitle": "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd.",
