@@ -1,19 +1,83 @@
 import { t } from "../i18n";
 
+/** Trailing distance units, in the languages the app ships. Stripped only from
+ *  the end of the string, and only as a whole token: removing letters wherever
+ *  they appear would turn "about 80k" into 80. */
+const UNIT_SUFFIX =
+  /[ \u00A0\u202F\u2009]*(?:mi|mi\.|mls|miles?|km|kms|kilometers?|kilometres?|milhas|millas|milles|meilen|mijl|mil|km\/h)\.?$/iu;
+
+/** Everything a locale uses to group thousands that is not "." or ",": the
+ *  ASCII space, NBSP, narrow NBSP and thin space (fr, pl, sv, ru), and the
+ *  apostrophes de-CH and it-CH use. */
+const SPACING = /[\s\u00A0\u202F\u2009'\u2019\u02BC]/g;
+
 /**
  * Parsing for numbers the user typed by hand.
  *
  * `Number("84,210")` is `NaN`, and a `NaN` bound into SQLite lands as NULL —
  * so a mileage entered with the comma the placeholder itself shows would have
- * been silently dropped. Grouping characters and a leading `$` are stripped
- * before parsing, and anything that still isn't finite returns undefined
- * rather than poisoning a column.
+ * been silently dropped.
+ *
+ * The comma was only ever half the problem, and the half that was left is
+ * worse, because it fails quietly instead of loudly. `formatNumber` prints a
+ * German reader's odometer as "84.210" and a French reader's as "84 210", and
+ * the placeholder under the field shows them exactly that — so the two most
+ * likely things those users can type were a silent 84.21 and a rejection. The
+ * odometer screen counts the rejection as `unparseable`; nothing counted the
+ * 84.21, which is the same reading lost with a plausible number left in its
+ * place.
+ *
+ * So the separators are resolved by position rather than assumed:
+ *
+ * - Spacing characters and apostrophes are grouping in every locale that uses
+ *   them, and are simply removed.
+ * - With both "." and "," present, the last one is the decimal separator and
+ *   the other is grouping — true for every locale, in both directions.
+ * - With one kind present more than once it is grouping ("1.234.567").
+ * - With one kind present once, three digits after it means grouping ("84,210",
+ *   "84.210") and anything else means a decimal ("1299,50", "84210.5").
+ *
+ * Anything with a letter still in it after a trailing unit is stripped is
+ * rejected rather than coerced: "about 80k" is not 80, and `Number` would
+ * otherwise take "1e5" and "0x20" as readings nobody typed.
  */
 export function parseNumber(s: string): number | undefined {
-  const cleaned = s.replace(/[,\s$]/g, "");
+  const cleaned = s
+    .trim()
+    .replace(/^[$£€¥]/, "")
+    .replace(UNIT_SUFFIX, "")
+    .replace(SPACING, "");
   if (!cleaned) return undefined;
-  const n = Number(cleaned);
-  return Number.isFinite(n) ? n : undefined;
+  if (!/^[+-]?[\d.,]+$/.test(cleaned)) return undefined;
+
+  const sign = cleaned.startsWith("-") ? -1 : 1;
+  const digits = cleaned.replace(/^[+-]/, "");
+
+  const lastDot = digits.lastIndexOf(".");
+  const lastComma = digits.lastIndexOf(",");
+  const dots = (digits.match(/\./g) ?? []).length;
+  const commas = (digits.match(/,/g) ?? []).length;
+
+  let decimalAt = -1;
+  if (dots > 0 && commas > 0) {
+    decimalAt = Math.max(lastDot, lastComma);
+  } else if (dots + commas === 1) {
+    const at = dots === 1 ? lastDot : lastComma;
+    // Exactly three trailing digits is the grouped form the app itself prints;
+    // any other run is a fraction the user meant.
+    if (digits.length - at - 1 !== 3) decimalAt = at;
+  }
+
+  const whole = (decimalAt === -1 ? digits : digits.slice(0, decimalAt)).replace(/[.,]/g, "");
+  const fraction = decimalAt === -1 ? "" : digits.slice(decimalAt + 1);
+  // A separator with nothing after it is a half-typed number rather than a
+  // reading — "84," is a user mid-keystroke. Nothing *before* it is fine:
+  // ".50" is how a cost under a unit gets typed.
+  if (decimalAt !== -1 && !fraction) return undefined;
+  if (/[.,]/.test(fraction)) return undefined;
+
+  const n = Number(`${whole || "0"}.${fraction || "0"}`);
+  return Number.isFinite(n) ? sign * n : undefined;
 }
 
 /**

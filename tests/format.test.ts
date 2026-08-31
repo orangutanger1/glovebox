@@ -200,3 +200,54 @@ describe("daysInMonth", () => {
     expect(daysInMonth(2026, 4)).toBe(30);
   });
 });
+
+describe("parseNumber, separators the app itself prints", () => {
+  // `formatNumber` renders 84210 as "84.210" in German and "84 210" in French,
+  // and the odometer placeholder shows the reader exactly that. Before this,
+  // the German form parsed as 84.21 — a silent loss with a plausible number
+  // left behind — and the French form was rejected and counted `unparseable`.
+  it("reads a dot-grouped reading as thousands, not as a fraction", () => {
+    expect(parseNumber("84.210")).toBe(84210);
+    expect(parseNumber("1.234.567")).toBe(1234567);
+  });
+
+  it("reads space-grouped readings, including the non-breaking spaces", () => {
+    expect(parseNumber("84 210")).toBe(84210);
+    expect(parseNumber("84 210")).toBe(84210);
+    expect(parseNumber("84 210")).toBe(84210);
+  });
+
+  it("reads the Swiss apostrophe as grouping", () => {
+    expect(parseNumber("84'210")).toBe(84210);
+    expect(parseNumber("84’210")).toBe(84210);
+  });
+
+  it("reads a decimal comma", () => {
+    expect(parseNumber("1299,50")).toBe(1299.5);
+    expect(parseNumber("1.299,50")).toBe(1299.5);
+  });
+
+  it("still reads the English forms both ways round", () => {
+    expect(parseNumber("84,210")).toBe(84210);
+    expect(parseNumber("1,299.50")).toBe(1299.5);
+    expect(parseNumber("84210.5")).toBe(84210.5);
+  });
+
+  it("strips a unit the user copied off the dash", () => {
+    expect(parseNumber("84,210 mi")).toBe(84210);
+    expect(parseNumber("84.210 km")).toBe(84210);
+    expect(parseNumber("50000 miles")).toBe(50000);
+  });
+
+  it("still rejects text, and does not read a suffix as a number", () => {
+    expect(parseNumber("about 80k")).toBeUndefined();
+    expect(parseNumber("abc")).toBeUndefined();
+    expect(parseNumber("1e5")).toBeUndefined();
+    expect(parseNumber("0x20")).toBeUndefined();
+  });
+
+  it("treats a trailing separator as still being typed", () => {
+    expect(parseNumber("84,")).toBeUndefined();
+    expect(parseNumber("84.")).toBeUndefined();
+  });
+});
