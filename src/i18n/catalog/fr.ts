@@ -66,6 +66,8 @@ export const fr: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Noter un entretien",
   "garage.addVehicle": "Ajouter un véhicule",
+  "garage.comingUp": "À venir",
+  "garage.quickLog": "Enregistrer en un geste",
   "garage.empty":
     "Aucun véhicule pour l'instant. Ajoutez-en un et Wrenchy commence à tenir son carnet.",
   "garage.storeUnreachable":
@@ -145,9 +147,11 @@ export const fr: Fragment = {
   "offer.plan.cta": "Activer les rappels",
   "offer.plan.decline": "Pas maintenant",
   "offer.notify.title": "Ne manquez plus un entretien.",
+  "offer.notify.off": "Rappels d\u00e9sactiv\u00e9s",
   "offer.plan.status.due": "À faire",
   "offer.plan.status.soon": "Bientôt",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Aucun suivi",
 
   "offer.paywall.title": "Les voitures ne préviennent pas. Ceci, oui.",
   "offer.paywall.subtitle": "Chaque entretien et chaque relevé, consignés.",
@@ -282,7 +286,10 @@ export const fr: Fragment = {
     one: "Un entretien est déjà en retard.",
     other: "{count} entretiens sont déjà en retard.",
   },
-  "onboardingC.results.noneLogged": "Rien de ce que vous avez noté n'est en retard.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} entretien n’a encore aucun enregistrement.",
+    other: "{count} entretiens n’ont encore aucun enregistrement.",
+  },
   "onboardingC.results.noneYet": "Rien n'est en retard pour l'instant.",
   "onboardingC.results.clear": "Rien n'est en retard, et rien n'approche.",
   "onboardingC.results.subtitle": "Votre {vehicle}, {distance} par an.",
@@ -294,6 +301,7 @@ export const fr: Fragment = {
   "onboardingC.results.status.due": "À faire",
   "onboardingC.results.status.soon": "Bientôt",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Aucun suivi",
 
   "onboardingC.symptoms.next": "Continuer",
   "onboardingC.symptoms.last": "Alors je fais quoi",
@@ -405,6 +413,10 @@ export const fr: Fragment = {
   "settings.title": "Réglages",
   "settings.privacy":
     "Votre carnet vit sur ce téléphone uniquement. Aucun compte, aucun serveur. Export à tout moment, parce que l'export n'est jamais bloqué.",
+  "settings.section.data": "Données",
+  "settings.section.reminders": "Rappels",
+  "settings.section.membership": "Abonnement",
+  "settings.section.preferences": "Préférences",
 
   "settings.export": "Exporter tout le carnet (CSV)",
   "settings.export.error": "Impossible d'ouvrir la feuille de partage. Votre carnet est inchangé.",

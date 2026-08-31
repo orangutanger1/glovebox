@@ -6,6 +6,10 @@ import { Card } from "../src/design/Card";
 import { Button } from "../src/design/Button";
 import { Gauge } from "../src/design/Gauge";
 import { Badge } from "../src/design/Badge";
+import { Chip } from "../src/design/Chip";
+import { ListRow } from "../src/design/ListRow";
+import { Panel } from "../src/design/Surface";
+import { nextReminders } from "../src/notify/collect";
 import { tokens } from "../src/design/tokens";
 import { listVehicles, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
@@ -21,6 +25,15 @@ import { formatDistance, distanceUnitLabel } from "../src/units/format";
 import { serviceName } from "../src/schedule/names";
 
 type Summary = { status: "due" | "soon" | "ok"; label: string; detail: string };
+
+/** What the garage offers to log in one tap. The three services that make up
+ *  most of what anyone ever records; everything else is behind the full form,
+ *  which these chips open with the type already chosen. */
+const QUICK_LOG = ["Oil Change", "Tire Rotation", "Brake Inspection"];
+
+/** How much of the schedule the garage shows. Three rows is a next-up list; the
+ *  whole schedule is the vehicle screen's job. */
+const UPCOMING = 3;
 
 /**
  * The worst status across a vehicle's tracked services, plus the readout that
@@ -161,6 +174,21 @@ export default function Garage() {
 
   const single = vehicles.length === 1;
 
+  /**
+   * The next few services this car has coming, and the one-tap way to record
+   * one.
+   *
+   * The garage used to be a single status card on an otherwise black screen —
+   * the app's home, after a flow that just computed a twelve-service schedule,
+   * showing none of it. These are the same dated reminders the scheduler would
+   * send, read from the same place, so the home screen and the notifications
+   * cannot disagree about what is next.
+   *
+   * Only for a one-car garage. With several, "coming up" has to say which car
+   * on every row, and that list is the vehicle screen.
+   */
+  const upcoming = single ? nextReminders(vehicles[0].id, UPCOMING) : [];
+
   return (
     <Screen
       title={t("garage.title")}
@@ -257,6 +285,53 @@ export default function Garage() {
           );
         })
       )}
+
+      {single ? (
+        <>
+          {upcoming.length > 0 ? (
+            <View style={{ gap: tokens.space.sm }}>
+              <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+                {t("garage.comingUp")}
+              </Text>
+              <Panel>
+                <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
+                  {upcoming.map((r) => (
+                    <ListRow
+                      key={r.serviceType}
+                      title={serviceName(r.serviceType)}
+                      subtitle={formatDate(r.dueAt)}
+                    />
+                  ))}
+                </View>
+              </Panel>
+            </View>
+          ) : null}
+
+          <View style={{ gap: tokens.space.sm }}>
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+              {t("garage.quickLog")}
+            </Text>
+            {/* Chips rather than a second row of buttons: they open the log form
+                with the service already chosen, which is the only step of it
+                that is the same every time. */}
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
+              {QUICK_LOG.map((type) => (
+                <Chip
+                  key={type}
+                  label={serviceName(type)}
+                  selected={false}
+                  onPress={() => {
+                    track("first_core_action", { source: "garage_quick", action: "log_service" });
+                    router.push(
+                      `/vehicle/${vehicles[0].id}/log?type=${encodeURIComponent(type)}`
+                    );
+                  }}
+                />
+              ))}
+            </View>
+          </View>
+        </>
+      ) : null}
     </Screen>
   );
 }

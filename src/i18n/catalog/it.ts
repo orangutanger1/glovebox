@@ -54,6 +54,8 @@ export const it: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Registra un tagliando",
   "garage.addVehicle": "Aggiungi veicolo",
+  "garage.comingUp": "In arrivo",
+  "garage.quickLog": "Registra con un tocco",
   "garage.empty": "Ancora nessun veicolo. Aggiungine uno e Wrenchy inizia a tenerne lo storico.",
   "garage.storeUnreachable": "Store non raggiungibile. Riprova con una connessione migliore.",
 
@@ -127,9 +129,11 @@ export const it: Fragment = {
   "offer.plan.cta": "Attiva i promemoria",
   "offer.plan.decline": "Non ora",
   "offer.notify.title": "Non perdere mai una manutenzione.",
+  "offer.notify.off": "Promemoria disattivati",
   "offer.plan.status.due": "Da fare",
   "offer.plan.status.soon": "A breve",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Nessuno storico",
 
   "offer.paywall.title": "Le auto non avvisano. Questo sì.",
   "offer.paywall.subtitle": "Ogni tagliando e ogni lettura, a libretto.",
@@ -259,7 +263,10 @@ export const it: Fragment = {
     one: "Un tagliando è già scaduto.",
     other: "{count} tagliandi sono già scaduti.",
   },
-  "onboardingC.results.noneLogged": "Niente di quello che hai registrato è scaduto.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} intervento non ha ancora uno storico.",
+    other: "{count} interventi non hanno ancora uno storico.",
+  },
   "onboardingC.results.noneYet": "Ancora niente di scaduto.",
   "onboardingC.results.clear": "Niente è scaduto, e niente è vicino alla scadenza.",
   "onboardingC.results.subtitle": "La tua {vehicle}, {distance} all'anno.",
@@ -271,6 +278,7 @@ export const it: Fragment = {
   "onboardingC.results.status.due": "Da fare",
   "onboardingC.results.status.soon": "A breve",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Nessuno storico",
 
   "onboardingC.symptoms.next": "Continua",
   "onboardingC.symptoms.last": "E allora cosa faccio",
@@ -378,6 +386,10 @@ export const it: Fragment = {
   "settings.title": "Impostazioni",
   "settings.privacy":
     "I tuoi dati stanno solo su questo telefono. Nessun account, nessun server. Esporta quando vuoi, perché l'esportazione non è mai bloccata.",
+  "settings.section.data": "Dati",
+  "settings.section.reminders": "Promemoria",
+  "settings.section.membership": "Abbonamento",
+  "settings.section.preferences": "Preferenze",
 
   "settings.export": "Esporta tutti i dati (CSV)",
   "settings.export.error":

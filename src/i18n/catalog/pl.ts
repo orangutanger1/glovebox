@@ -37,6 +37,8 @@ export const pl: Fragment = {
   "garage.title": "Garaż",
   "garage.logService": "Zapisz serwis",
   "garage.addVehicle": "Dodaj pojazd",
+  "garage.comingUp": "Wkrótce",
+  "garage.quickLog": "Zapisz jednym dotknięciem",
   "garage.empty": "Nie ma jeszcze pojazdów. Dodaj jeden, a Wrenchy zacznie prowadzić jego zapisy.",
   "garage.storeUnreachable":
     "Nie udało się połączyć ze sklepem. Spróbuj ponownie przy lepszym połączeniu.",
@@ -161,9 +163,11 @@ export const pl: Fragment = {
   "offer.plan.cta": "Włącz przypomnienia",
   "offer.plan.decline": "Nie teraz",
   "offer.notify.title": "Nie przegap żadnego serwisu.",
+  "offer.notify.off": "Przypomnienia wy\u0142\u0105czone",
   "offer.plan.status.due": "Termin",
   "offer.plan.status.soon": "Wkrótce",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Brak wpisu",
 
   "offer.paywall.title": "Samochody nie ostrzegają. Ta aplikacja owszem.",
   "offer.paywall.subtitle": "Każdy serwis i każdy stan licznika, zapisane.",
@@ -313,7 +317,12 @@ export const pl: Fragment = {
     many: "{count} serwisów jest już po terminie.",
     other: "{count} serwisu jest już po terminie.",
   },
-  "onboardingC.results.noneLogged": "Nic z tego, co masz zapisane, nie jest po terminie.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} serwis nie ma jeszcze wpisu.",
+    few: "{count} serwisy nie mają jeszcze wpisu.",
+    many: "{count} serwisów nie ma jeszcze wpisu.",
+    other: "{count} serwisu nie ma jeszcze wpisu.",
+  },
   "onboardingC.results.noneYet": "Nic nie jest jeszcze po terminie.",
   "onboardingC.results.clear": "Nic nie jest po terminie i nic się nie zbliża.",
   "onboardingC.results.subtitle": "{vehicle}, {distance} rocznie.",
@@ -325,6 +334,7 @@ export const pl: Fragment = {
   "onboardingC.results.status.due": "Termin",
   "onboardingC.results.status.soon": "Wkrótce",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Brak wpisu",
 
   "onboardingC.symptoms.next": "Dalej",
   "onboardingC.symptoms.last": "To co mam zrobić",
@@ -442,6 +452,10 @@ export const pl: Fragment = {
   "settings.title": "Ustawienia",
   "settings.privacy":
     "Twoje zapisy żyją tylko w tym telefonie. Bez konta, bez serwera. Eksportuj, kiedy chcesz, bo eksport nigdy nie jest zablokowany.",
+  "settings.section.data": "Dane",
+  "settings.section.reminders": "Przypomnienia",
+  "settings.section.membership": "Subskrypcja",
+  "settings.section.preferences": "Ustawienia",
 
   "settings.export": "Eksportuj wszystkie zapisy (CSV)",
   "settings.export.error":

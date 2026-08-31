@@ -114,7 +114,7 @@ export default function OnboardingAnalyzing() {
                     belongs on the count of what needs attention and nowhere
                     else on this screen; the other three lines are readings. */}
                 {last ? (
-                  <Lamp lit={plan.dueNow > 0} size={8} />
+                  <Lamp lit={plan.pastDue > 0} size={8} />
                 ) : (
                   <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint, width: 21 }}>
                     {`0${i + 1}`}

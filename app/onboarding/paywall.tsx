@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Gauge } from "../../src/design/Gauge";
-import { Lamp } from "../../src/design/Lamp";
+import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, formatNumber, t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, hasOffering, presentOffering } from "../../src/purchases";
@@ -108,8 +108,8 @@ export default function OnboardingPaywall() {
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Gauge
               legend={t("offer.paywall.dueNow")}
-              value={formatNumber(plan.dueNow)}
-              lamp={plan.dueNow > 0}
+              value={formatNumber(plan.pastDue)}
+              lamp={plan.pastDue > 0}
             />
             <Gauge
               legend={t("offer.paywall.nextUp")}
@@ -142,8 +142,11 @@ export default function OnboardingPaywall() {
                   gap: tokens.space.sm,
                 }}
               >
-                <View style={{ paddingTop: tokens.space.xs }}>
-                  <Lamp lit size={10} />
+                {/* A tick, not a lamp. The lamp is the car's warning light and
+                    it is red; these three lines are what the user gets, and
+                    stamping the app's alarm signal on them said the opposite. */}
+                <View style={{ paddingTop: 2 }}>
+                  <Check />
                 </View>
                 <Text
                   style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}

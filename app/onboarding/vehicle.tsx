@@ -4,6 +4,7 @@ import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Wheel } from "../../src/design/Wheel";
+import { Chip } from "../../src/design/Chip";
 import { tokens } from "../../src/design/tokens";
 import {
   createVehicle,
@@ -16,6 +17,7 @@ import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { trackQuizAnswer, trackVehicleEntry } from "../../src/analytics";
 import { vehicleDisplayName } from "../../src/format";
+import { suggestMakes } from "../../src/vehicle/makes";
 import { t } from "../../src/i18n";
 
 /**
@@ -85,6 +87,11 @@ export default function OnboardingVehicle() {
   const [model, setModel] = useState(saved?.model ?? "");
 
   const parts = { year, make: make.trim() || undefined, model: model.trim() || undefined };
+
+  // Prefix matches on what has been typed so far. The field stays free text —
+  // these are a shortcut, not a list to pick from — and they disappear the
+  // moment the typed make is already one of them.
+  const makeSuggestions = suggestMakes(make);
 
   /**
    * Nothing on this screen is required any more, and the funnel is why.
@@ -189,6 +196,8 @@ export default function OnboardingVehicle() {
                 value={make}
                 onChangeText={setMake}
                 placeholder={t("onboardingA.vehicle.makePlaceholder")}
+                autoCapitalize="words"
+                autoCorrect={false}
                 onFocus={() => trackVehicleEntry("make", "focused")}
               />
             </View>
@@ -198,10 +207,24 @@ export default function OnboardingVehicle() {
                 value={model}
                 onChangeText={setModel}
                 placeholder={t("onboardingA.vehicle.modelPlaceholder")}
+                autoCapitalize="characters"
+                autoCorrect={false}
                 onFocus={() => trackVehicleEntry("model", "focused")}
               />
             </View>
           </View>
+          {makeSuggestions.length > 0 ? (
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}>
+              {makeSuggestions.map((suggestion: string) => (
+                <Chip
+                  key={suggestion}
+                  label={suggestion}
+                  selected={false}
+                  onPress={() => setMake(suggestion)}
+                />
+              ))}
+            </View>
+          ) : null}
         </View>
       </Panel>
     </OnboardingScreen>

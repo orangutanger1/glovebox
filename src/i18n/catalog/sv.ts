@@ -64,6 +64,8 @@ export const sv: Fragment = {
   "garage.title": "Garaget",
   "garage.logService": "Logga en service",
   "garage.addVehicle": "Lägg till fordon",
+  "garage.comingUp": "Närmast",
+  "garage.quickLog": "Logga med en tryckning",
   "garage.empty": "Inga fordon än. Lägg till ett och Wrenchy börjar föra dess historik.",
   "garage.storeUnreachable": "Kunde inte nå App Store. Försök igen med bättre uppkoppling.",
 
@@ -137,9 +139,11 @@ export const sv: Fragment = {
   "offer.plan.cta": "Slå på påminnelser",
   "offer.plan.decline": "Inte nu",
   "offer.notify.title": "Missa aldrig en service.",
+  "offer.notify.off": "P\u00e5minnelser av",
   "offer.plan.status.due": "Dags",
   "offer.plan.status.soon": "Snart",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Inga uppgifter",
 
   "offer.paywall.title": "Bilar varnar inte. Det här gör det.",
   "offer.paywall.subtitle": "Varje service och varje mätarställning, på pränt.",
@@ -271,7 +275,10 @@ export const sv: Fragment = {
     one: "En service är redan försenad.",
     other: "{count} servicepunkter är redan försenade.",
   },
-  "onboardingC.results.noneLogged": "Inget du har loggat är försenat.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} service saknar ännu uppgifter.",
+    other: "{count} servicetillfällen saknar ännu uppgifter.",
+  },
   "onboardingC.results.noneYet": "Inget är försenat än.",
   "onboardingC.results.clear": "Inget är försenat, och inget är nära.",
   "onboardingC.results.subtitle": "Din {vehicle}, {distance} per år.",
@@ -283,6 +290,7 @@ export const sv: Fragment = {
   "onboardingC.results.status.due": "Dags",
   "onboardingC.results.status.soon": "Snart",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Inga uppgifter",
 
   "onboardingC.symptoms.next": "Fortsätt",
   "onboardingC.symptoms.last": "Så vad gör jag",
@@ -390,6 +398,10 @@ export const sv: Fragment = {
   "settings.title": "Inställningar",
   "settings.privacy":
     "Dina uppgifter finns bara i den här telefonen. Inget konto, ingen server. Exportera när du vill, för exporten är aldrig låst.",
+  "settings.section.data": "Uppgifter",
+  "settings.section.reminders": "Påminnelser",
+  "settings.section.membership": "Medlemskap",
+  "settings.section.preferences": "Inställningar",
 
   "settings.export": "Exportera alla uppgifter (CSV)",
   "settings.export.error": "Kunde inte öppna delningsrutan. Dina uppgifter är oförändrade.",

@@ -48,8 +48,11 @@ export default function OnboardingOdometer() {
   const [odometer, setOdometer] = useState(
     saved?.odometer == null || saved.odometer_estimated ? "" : String(saved.odometer)
   );
-  // Drawn once per mount, not per render: the drums must not re-roll every
-  // time the user types a digit into the field below them.
+  // What the drums show before there is anything to show: a plausible reading,
+  // drawn once per mount so it does not re-roll on every render. The moment the
+  // field holds a number, the drums are that number instead — two different
+  // six-figure readings stacked on one screen is the app disagreeing with
+  // itself about the only fact this screen exists to collect.
   const demo = useMemo(() => randomOdometerReading(), []);
 
   const unit = getDistanceUnit();
@@ -94,12 +97,13 @@ export default function OnboardingOdometer() {
       }
     >
       <Panel>
-        {/* Drums above the field the user is about to type into: the screen
-            shows the thing it is asking them to go and read, and shows it
-            moving. This was a dimmed photograph: static, decoded a frame late,
-            and faded to half strength so it would stop out-shouting the only
-            interactive element on the screen. */}
-        <OdometerRoll value={demo} />
+        {/* Drums above the field, showing whatever the field holds. Until the
+            user types, that is a specimen reading rolling into place — the
+            screen shows the thing it is asking them to go and read, and shows
+            it moving. From the first digit on, the drums are their number:
+            a static demo above a filled-in field had the screen printing two
+            different odometer readings at once. */}
+        <OdometerRoll value={reading ?? demo} live={reading !== undefined} />
         <View style={{ padding: tokens.space.md }}>
           <Field
             label={t("onboardingA.odometer.field", { unit: distanceUnitLabel(unit) })}

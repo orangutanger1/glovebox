@@ -376,7 +376,11 @@ test("the quiz costs one typed number, and still yields a populated payoff", () 
   // The payoff screen is the whole argument for the paywall, so the walk has
   // to arrive at a populated one rather than an empty state.
   const printed = texts(render(OnboardingResults)).join(" ");
-  expect(printed).toMatch(/My car/);
+  // A car with no make is named "My car" on a garage row, and a sentence that
+  // already says "Your" needs the common noun instead — "Your My car" was the
+  // string bug this asserts against.
+  expect(printed).toMatch(/Your car,/);
+  expect(printed).not.toMatch(/Your My car/);
   expect(printed.length).toBeGreaterThan(80);
 });
 
@@ -673,7 +677,11 @@ test("the notify screen asks over this car's own dated schedule", () => {
     "12 services on a schedule for your 2016 Subaru Outback.",
   );
   expect(printed).toContain(serviceName("Air Filter"));
-  expect(printed.filter((s) => s === "Due").length).toBeGreaterThan(0);
+  // Nothing has been logged for this car, so nothing is overdue: every row is
+  // stamped as unrecorded rather than as a red alarm about a service the app
+  // has never been told about.
+  expect(printed.filter((s) => s === "No record").length).toBeGreaterThan(0);
+  expect(printed).not.toContain("Due");
   // One control, and one line of grey under the heading. The "Do it later"
   // deferral is gone: iOS's own alert carries the decline this screen used to
   // print above it.
@@ -690,12 +698,11 @@ test("the notify screen asks over this car's own dated schedule", () => {
   ).toEqual(["Turn on reminders"]);
 });
 
-test("the notify screen mocks up no notification of its own", () => {
-  // A phone drawn in the middle of the glass with an invented reminder on it
-  // sold what a notification looks like, which is the one thing the user
-  // already knows, and it needed a fake service and a fake "last done" date to
-  // do it. The ask stands on the real schedule instead, so no sentence the
-  // scheduler would send is rehearsed here.
+test("the notify screen shows the reminder this car would actually get", () => {
+  // The banner is the app's own next notification, not a specimen: same catalog
+  // keys the scheduler sends, against this car's records. An invented service
+  // or an invented "last done" date would be advertising a message the app has
+  // no intention of sending.
   const car = createVehicle({
     name: "2016 Subaru Outback",
     year: 2016,
@@ -709,8 +716,13 @@ test("the notify screen mocks up no notification of its own", () => {
   });
 
   const printed = texts(render(OnboardingNotify)).join(" ");
-  expect(printed).not.toContain("is due");
-  expect(printed).not.toContain("Last done");
+  expect(printed).toContain(
+    `Your 2016 Subaru Outback\u2019s ${serviceName("Oil Change")} is due`,
+  );
+  expect(printed).toContain("Last done");
+  // The schedule list is the fallback for a car with no dated reminder, so it
+  // is not also stacked under the banner.
+  expect(printed).not.toContain(serviceName("Air Filter"));
 });
 
 /** The mocked native notification module, as this file installed it. */
@@ -838,4 +850,19 @@ describe("the screen after a purchase", () => {
     press(render(Subscribed), "See the schedule");
     expect(navigated.at(-1)).toBe("replace:/");
   });
+});
+
+test("the drums show the reading being typed, not a second invented one", () => {
+  // The screen rolled a random six-figure demo above a field holding the user's
+  // own number: two odometer readings on the one screen whose entire job is to
+  // collect a single reading.
+  const tree = render(OnboardingOdometer);
+  const roll = () =>
+    tree.root.findAll(
+      (n) => typeof n.type === "function" && n.type.name === "OdometerRoll",
+    )[0].props as { value: number; live?: boolean };
+
+  expect(roll().live).toBeFalsy();
+  type(tree, "Odometer (mi)", "84210");
+  expect(roll()).toMatchObject({ value: 84210, live: true });
 });

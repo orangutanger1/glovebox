@@ -23,11 +23,14 @@ import {
   buildPlan,
   nextUp,
   odometerDaysAgo,
+  planBadge,
   planItemLine,
+  planRowStatus,
   distancePerYearFor,
   DISTANCE_PER_YEAR,
   UNSTATED_DISTANCE_PER_YEAR,
 } from "../src/onboarding/plan";
+import { getIntervals } from "../src/db/intervals";
 import { setLanguage } from "../src/i18n";
 
 // `planItemLine` is catalog copy and a formatted distance, so the strings
@@ -283,4 +286,34 @@ test("a line with no interval at all says so rather than coming out blank", () =
   expect(
     planItemLine({ type: "x", status: "ok", logged: true, projected: false }, "mi")
   ).toBe("No interval set");
+});
+
+test("a service with no history is unrecorded, not overdue", () => {
+  // The results screen printed "Nothing you have logged is overdue." above a
+  // red 9. Both halves came from `dueNow`, which folds in every service the app
+  // has never been told about — so the count and the sentence were describing
+  // two different things.
+  const plan = buildPlan({
+    odometer: 60000,
+    records: [
+      {
+        service_type: "Oil Change",
+        performed_at: new Date(Date.now() - 4 * 24 * 3600 * 1000).toISOString(),
+        odometer: 59800,
+      },
+    ],
+    intervals: getIntervals(),
+    answers: {},
+    unit: "mi",
+  });
+
+  expect(plan.pastDue).toBe(0);
+  expect(plan.noRecord).toBe(plan.items.length - 1);
+  expect(plan.dueNow).toBe(plan.pastDue + plan.noRecord);
+
+  const unlogged = plan.items.find((i) => !i.logged)!;
+  // Red is the app saying something is wrong with the car. Nothing is wrong
+  // with a car whose history for a service we simply do not have.
+  expect(planBadge(unlogged)).toEqual({ state: "noRecord", tone: "ok" });
+  expect(planRowStatus(unlogged)).toBe("ok");
 });

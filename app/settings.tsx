@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
-import { Alert, Linking, Text } from "react-native";
+import { Alert, Linking, Text, View } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
-import { Button } from "../src/design/Button";
+import { Panel } from "../src/design/Surface";
+import { ListRow } from "../src/design/ListRow";
 import { tokens } from "../src/design/tokens";
 import { t, formatShortDate, getLanguage } from "../src/i18n";
 import { LANGUAGE_NAMES } from "../src/i18n/names";
@@ -228,34 +229,80 @@ export default function Settings() {
           {t("settings.privacy")}
         </Text>
       </Card>
-      <Button label={t("settings.export")} onPress={onExport} />
-      <Button label={t("settings.intervals")} variant="secondary" onPress={onIntervals} />
-      <Button label={reminderLabel()} variant="secondary" onPress={onReminders} />
+
+      {/* Sections, not a stack of full-width buttons. Every row here was a
+          primary-looking control of the same weight, so "Export all records"
+          and "Language: English (US)" shouted equally loudly and the screen
+          read as a debug menu. Grouped under legends, a row is a place to go
+          and the panel it sits in says what kind of thing it changes. */}
+      <Section legend={t("settings.section.data")}>
+        <ListRow title={t("settings.export")} onPress={onExport} right={<Chevron />} />
+        <ListRow title={t("settings.intervals")} onPress={onIntervals} right={<Chevron />} />
+      </Section>
+
+      <Section legend={t("settings.section.reminders")}>
+        <ListRow
+          title={reminderLabel()}
+          onPress={onReminders}
+          // A blocked permission is a fault the user has to go and clear in
+          // iOS Settings, and it is the one row on this screen that is not
+          // simply a destination.
+          status={reminders?.permission === "denied" ? "overdue" : undefined}
+          right={<Chevron />}
+        />
+      </Section>
+
       {/* Held back until the entitlement resolves. Rendering the free rows in
           the meantime shows a paying subscriber an advert for what they already
           bought. */}
-      {pro === true ? (
-        <Button label={t("settings.manage")} variant="secondary" onPress={onManageSubscription} />
-      ) : pro === false ? (
-        <>
-          <Button label={t("settings.upgrade")} variant="secondary" onPress={onUpgrade} />
-          <Button label={t("settings.restore")} variant="secondary" onPress={onRestore} />
-        </>
-      ) : null}
-      <Button
-        label={t("settings.units", { unit: distanceUnitLabel() })}
-        variant="secondary"
-        onPress={onUnits}
-      />
-      <Button
-        label={t("settings.language", { language: LANGUAGE_NAMES[getLanguage()] })}
-        variant="secondary"
-        onPress={() => router.push("/language")}
-      />
-      <Button label={t("settings.replay")} variant="secondary" onPress={onReplayOnboarding} />
+      {pro === null ? null : (
+        <Section legend={t("settings.section.membership")}>
+          {pro ? (
+            <ListRow title={t("settings.manage")} onPress={onManageSubscription} right={<Chevron />} />
+          ) : (
+            <>
+              <ListRow title={t("settings.upgrade")} onPress={onUpgrade} right={<Chevron />} />
+              <ListRow title={t("settings.restore")} onPress={onRestore} right={<Chevron />} />
+            </>
+          )}
+        </Section>
+      )}
+
+      <Section legend={t("settings.section.preferences")}>
+        <ListRow
+          title={t("settings.units", { unit: distanceUnitLabel() })}
+          onPress={onUnits}
+          right={<Chevron />}
+        />
+        <ListRow
+          title={t("settings.language", { language: LANGUAGE_NAMES[getLanguage()] })}
+          onPress={() => router.push("/language")}
+          right={<Chevron />}
+        />
+        <ListRow title={t("settings.replay")} onPress={onReplayOnboarding} right={<Chevron />} />
+      </Section>
+
       {msg ? (
         <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{msg}</Text>
       ) : null}
     </Screen>
   );
+}
+
+/** A legend and the panel of rows it names. */
+function Section({ legend, children }: { legend: string; children: React.ReactNode }) {
+  return (
+    <View style={{ gap: tokens.space.sm }}>
+      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>{legend}</Text>
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>{children}</View>
+      </Panel>
+    </View>
+  );
+}
+
+/** The trailing mark on a row that opens something. Same glyph the garage card
+ *  uses, so "this goes somewhere" looks the same in both places. */
+function Chevron() {
+  return <Text style={{ ...tokens.text.body, color: tokens.color.textFaint }}>›</Text>;
 }

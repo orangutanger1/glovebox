@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { Button } from "../src/design/Button";
 import { Panel } from "../src/design/Surface";
 import { Gauge } from "../src/design/Gauge";
-import { Lamp } from "../src/design/Lamp";
+import { Check } from "../src/design/Check";
 import { Screen } from "../src/design/Screen";
 import { tokens } from "../src/design/tokens";
 import { features } from "../src/onboarding/features";
@@ -43,7 +43,7 @@ import { formatDate, formatNumber, t } from "../src/i18n";
  */
 export default function Subscribed() {
   const router = useRouter();
-  const { vehicle, vehicleName, plan } = useOnboardingFindings();
+  const { vehicle, vehiclePhrase, plan } = useOnboardingFindings();
   const next = nextUp(plan);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Subscribed() {
             {t("subscribed.title")}
           </Text>
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-            {t("subscribed.body", { vehicle: vehicleName })}
+            {t("subscribed.body", { vehicle: vehiclePhrase })}
           </Text>
         </View>
 
@@ -133,10 +133,13 @@ export default function Subscribed() {
                   key={feature.id}
                   style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}
                 >
-                  {/* Nudged down to sit on the title's optical centre rather
+                  {/* A tick: these rows are what the purchase just unlocked.
+                      The red lamp that used to mark them is the car's warning
+                      light, and it was the app celebrating in alarm colours.
+                      Nudged down to sit on the title's optical centre rather
                       than the row's, now that the row is two lines tall. */}
-                  <View style={{ paddingTop: tokens.space.xs }}>
-                    <Lamp lit size={10} />
+                  <View style={{ paddingTop: 2 }}>
+                    <Check />
                   </View>
                   <View style={{ flex: 1, gap: tokens.space.xs }}>
                     <Text style={{ ...tokens.text.body, color: tokens.color.text }}>

@@ -13,6 +13,10 @@ export const settings: Fragment = {
   "settings.title": "Settings",
   "settings.privacy":
     "Your records live on this phone only. No account, no server. Export any time, because export is never gated.",
+  "settings.section.data": "Records",
+  "settings.section.reminders": "Reminders",
+  "settings.section.membership": "Membership",
+  "settings.section.preferences": "Preferences",
 
   "settings.export": "Export all records (CSV)",
   "settings.export.error": "Could not open the share sheet. Your records are unchanged.",

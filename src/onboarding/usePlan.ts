@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { t } from "../i18n";
+import { vehicleSentenceName } from "../format";
 import { getDistanceUnit } from "../units";
 import { getVehicle, type Vehicle } from "../db/vehicles";
 import { listRecords } from "../db/records";
@@ -14,6 +15,9 @@ export type OnboardingFindings = {
   /** Always a usable noun. A plain word for a car when the row is gone, so
    *  copy never reads "On your null, today." */
   vehicleName: string;
+  /** The same car, named the way a sentence with "your" in front of it needs.
+   *  See `vehicleSentenceName`: "Your My car" is the bug this exists for. */
+  vehiclePhrase: string;
   plan: Plan;
   answers: Answers;
   cards: PainCard[];
@@ -37,6 +41,7 @@ export function readFindings(): OnboardingFindings {
   const ownedId = getOnboardingVehicleId();
   const vehicle = ownedId ? getVehicle(ownedId) : null;
   const vehicleName = vehicle?.name ?? t("pain.vehicleFallback");
+  const vehiclePhrase = vehicleSentenceName(vehicleName);
   const answers = getAnswers();
   const plan = buildPlan({
     odometer: vehicle?.odometer,
@@ -45,7 +50,14 @@ export function readFindings(): OnboardingFindings {
     answers,
     unit: getDistanceUnit(),
   });
-  return { vehicle, vehicleName, plan, answers, cards: painCards({ plan, answers, vehicleName }) };
+  return {
+    vehicle,
+    vehicleName,
+    vehiclePhrase,
+    plan,
+    answers,
+    cards: painCards({ plan, answers, vehicleName: vehiclePhrase }),
+  };
 }
 
 /** Memoised per mount. Six screens read this and none of them re-read on a

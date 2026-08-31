@@ -28,6 +28,8 @@ export const nl: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Onderhoud vastleggen",
   "garage.addVehicle": "Voertuig toevoegen",
+  "garage.comingUp": "Binnenkort",
+  "garage.quickLog": "Vastleggen met één tik",
   "garage.empty":
     "Nog geen voertuigen. Voeg er een toe, dan begint Wrenchy de administratie bij te houden.",
   "garage.storeUnreachable":
@@ -174,6 +176,10 @@ export const nl: Fragment = {
   "settings.title": "Instellingen",
   "settings.privacy":
     "Je administratie staat alleen op deze telefoon. Geen account, geen server. Exporteren kan altijd, want daar zit nooit een slot op.",
+  "settings.section.data": "Gegevens",
+  "settings.section.reminders": "Herinneringen",
+  "settings.section.membership": "Abonnement",
+  "settings.section.preferences": "Voorkeuren",
 
   "settings.export": "Alle gegevens exporteren (CSV)",
   "settings.export.error": "Het deelvenster kon niet worden geopend. Je gegevens zijn onveranderd.",
@@ -361,7 +367,10 @@ export const nl: Fragment = {
     one: "Eén onderhoudsbeurt is al te laat.",
     other: "{count} onderhoudsbeurten zijn al te laat.",
   },
-  "onboardingC.results.noneLogged": "Niets van wat je hebt vastgelegd is te laat.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} onderhoudsbeurt heeft nog geen gegevens.",
+    other: "{count} onderhoudsbeurten hebben nog geen gegevens.",
+  },
   "onboardingC.results.noneYet": "Er is nog niets te laat.",
   "onboardingC.results.clear": "Niets is te laat, en niets komt in de buurt.",
   "onboardingC.results.subtitle": "Je {vehicle}, {distance} per jaar.",
@@ -373,6 +382,7 @@ export const nl: Fragment = {
   "onboardingC.results.status.due": "Nu",
   "onboardingC.results.status.soon": "Binnenkort",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Geen gegevens",
 
   "onboardingC.symptoms.next": "Verder",
   "onboardingC.symptoms.last": "En wat doe ik daaraan",
@@ -511,9 +521,11 @@ export const nl: Fragment = {
   "offer.plan.cta": "Herinneringen aanzetten",
   "offer.plan.decline": "Nu niet",
   "offer.notify.title": "Mis nooit meer een onderhoudsbeurt.",
+  "offer.notify.off": "Herinneringen uit",
   "offer.plan.status.due": "Nu",
   "offer.plan.status.soon": "Binnenkort",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Geen gegevens",
 
   "offer.paywall.title": "Auto’s waarschuwen niet. Dit wel.",
   "offer.paywall.subtitle": "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd.",

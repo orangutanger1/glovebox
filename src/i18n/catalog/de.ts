@@ -61,6 +61,8 @@ export const de: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Service eintragen",
   "garage.addVehicle": "Fahrzeug hinzufügen",
+  "garage.comingUp": "Als Nächstes",
+  "garage.quickLog": "Mit einem Tipp erfassen",
   "garage.empty": "Noch keine Fahrzeuge. Füg eins hinzu, dann führt Wrenchy das Buch.",
   "garage.storeUnreachable": "Store nicht erreichbar. Versuch es mit besserer Verbindung noch mal.",
 
@@ -138,9 +140,11 @@ export const de: Fragment = {
   "offer.plan.cta": "Erinnerungen einschalten",
   "offer.plan.decline": "Jetzt nicht",
   "offer.notify.title": "Verpasse keinen Service mehr.",
+  "offer.notify.off": "Erinnerungen aus",
   "offer.plan.status.due": "Fällig",
   "offer.plan.status.soon": "Bald",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Kein Eintrag",
 
   "offer.paywall.title": "Autos warnen dich nicht. Das hier schon.",
   "offer.paywall.subtitle": "Jeder Service und jeder Tachostand, dokumentiert.",
@@ -272,7 +276,10 @@ export const de: Fragment = {
     one: "Ein Service ist schon überfällig.",
     other: "{count} Services sind schon überfällig.",
   },
-  "onboardingC.results.noneLogged": "Nichts von dem, was du erfasst hast, ist überfällig.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} Service hat noch keinen Eintrag.",
+    other: "{count} Services haben noch keinen Eintrag.",
+  },
   "onboardingC.results.noneYet": "Noch ist nichts überfällig.",
   "onboardingC.results.clear": "Nichts ist überfällig, und nichts steht kurz bevor.",
   "onboardingC.results.subtitle": "{vehicle}, {distance} pro Jahr.",
@@ -284,6 +291,7 @@ export const de: Fragment = {
   "onboardingC.results.status.due": "Fällig",
   "onboardingC.results.status.soon": "Bald",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Kein Eintrag",
 
   "onboardingC.symptoms.next": "Weiter",
   "onboardingC.symptoms.last": "Und was mache ich jetzt",
@@ -395,6 +403,10 @@ export const de: Fragment = {
   "settings.title": "Einstellungen",
   "settings.privacy":
     "Deine Daten liegen nur auf diesem Handy. Kein Konto, kein Server. Exportieren jederzeit, denn der Export ist nie gesperrt.",
+  "settings.section.data": "Daten",
+  "settings.section.reminders": "Erinnerungen",
+  "settings.section.membership": "Mitgliedschaft",
+  "settings.section.preferences": "Einstellungen",
 
   "settings.export": "Alle Daten exportieren (CSV)",
   "settings.export.error": "Das Teilen-Fenster ließ sich nicht öffnen. Deine Daten sind unverändert.",

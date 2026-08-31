@@ -27,6 +27,8 @@ export function Field({
   keyboardType = "default",
   placeholder,
   autoFocus,
+  autoCapitalize,
+  autoCorrect,
   error,
   onBlur,
   onFocus,
@@ -37,6 +39,11 @@ export function Field({
   keyboardType?: "default" | "numeric";
   placeholder?: string;
   autoFocus?: boolean;
+  /** Passed through to the input. A car's make and model are proper nouns and
+   *  short model codes, and iOS lower-casing "GTI" or autocorrecting "Kia" to
+   *  "Kai" writes the wrong car into the garage. */
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
+  autoCorrect?: boolean;
   /** Shown under the field, in red. A field that silently refuses a value
    *  leaves the user retyping it, so every rejection has to be said out loud. */
   error?: string;
@@ -70,6 +77,8 @@ export function Field({
           keyboardType={keyboardType}
           placeholder={placeholder}
           autoFocus={autoFocus}
+          autoCapitalize={autoCapitalize}
+          autoCorrect={autoCorrect}
           onFocus={() => {
             setFocused(true);
             onFocus?.();

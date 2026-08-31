@@ -9,7 +9,7 @@ import { formatNumber, t } from "../../src/i18n";
 import { serviceName } from "../../src/schedule/names";
 import { getDistanceUnit } from "../../src/units";
 import { formatDistance } from "../../src/units/format";
-import { planItemLine } from "../../src/onboarding/plan";
+import { planBadge, planItemLine, planRowStatus } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -18,16 +18,14 @@ import { useAdvance } from "../../src/onboarding/nav";
  *  the plan is shown in full three screens later, once it has been earned. */
 const SHOWN = 4;
 
-/** The list row's red stripe is keyed to "overdue"; the plan calls the same
- *  state "due", which is what the badge prints. One map, stated once. */
-const ROW_STATUS = { due: "overdue", soon: "soon", ok: "ok" } as const;
-
 /** The badge prints a word, the plan branches on an identifier, and the two
- *  cannot be the same string once the word is translated. */
+ *  cannot be the same string once the word is translated. The stripe and the
+ *  tone are `planBadge`/`planRowStatus`'s call, shared with the plan screen. */
 const BADGE_KEY = {
   due: "onboardingC.results.status.due",
   soon: "onboardingC.results.status.soon",
   ok: "onboardingC.results.status.ok",
+  noRecord: "onboardingC.results.status.noRecord",
 } as const;
 
 /**
@@ -42,21 +40,24 @@ const BADGE_KEY = {
  */
 export default function OnboardingResults() {
   const advance = useAdvance("results");
-  const { vehicleName, plan } = useOnboardingFindings();
+  const { vehiclePhrase, plan } = useOnboardingFindings();
   const unit = getDistanceUnit();
-
-  const pastDue = plan.items.filter((i) => i.status === "due" && i.logged).length;
 
   // `plan.dueNow` folds in every service that has never been logged, and
   // "eleven services are overdue" to somebody who has told us about one of
   // them is our model talking, not their car. The headline counts only what
-  // has a history behind it; the gauges below carry the rest, next to the
-  // "on file" count that explains where the difference comes from.
+  // has a history behind it.
+  //
+  // The screen used to answer that case with "Nothing you have logged is
+  // overdue." over a red 9, which is the app contradicting itself in two lines:
+  // the sentence was true and the number beside it said otherwise. The number
+  // was the thing to fix. A service with no history is not overdue, it is
+  // unrecorded, and both the gauge and the headline now say so.
   const title =
-    pastDue > 0
-      ? t("onboardingC.results.overdue", { count: pastDue })
-      : plan.dueNow > 0
-        ? t("onboardingC.results.noneLogged")
+    plan.pastDue > 0
+      ? t("onboardingC.results.overdue", { count: plan.pastDue })
+      : plan.noRecord > 0
+        ? t("onboardingC.results.noBaseline", { count: plan.noRecord })
         : plan.soon > 0
           ? t("onboardingC.results.noneYet")
           : t("onboardingC.results.clear");
@@ -66,7 +67,7 @@ export default function OnboardingResults() {
       route="results"
       title={title}
       subtitle={t("onboardingC.results.subtitle", {
-        vehicle: vehicleName,
+        vehicle: vehiclePhrase,
         distance: formatDistance(plan.distancePerYear, unit),
       })}
       footer={<Button label={t("onboardingC.results.continue")} onPress={advance} />}
@@ -76,8 +77,8 @@ export default function OnboardingResults() {
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <Gauge
               legend={t("onboardingC.results.dueNow")}
-              value={formatNumber(plan.dueNow)}
-              lamp={plan.dueNow > 0}
+              value={formatNumber(plan.pastDue)}
+              lamp={plan.pastDue > 0}
             />
             <Gauge legend={t("onboardingC.results.soon")} value={formatNumber(plan.soon)} />
             <Gauge
@@ -91,15 +92,18 @@ export default function OnboardingResults() {
           </View>
 
           <View style={{ gap: tokens.space.xs }}>
-            {plan.items.slice(0, SHOWN).map((item) => (
-              <ListRow
-                key={item.type}
-                title={serviceName(item.type)}
-                subtitle={planItemLine(item, unit)}
-                status={ROW_STATUS[item.status]}
-                right={<Badge label={t(BADGE_KEY[item.status])} tone={item.status} />}
-              />
-            ))}
+            {plan.items.slice(0, SHOWN).map((item) => {
+              const badge = planBadge(item);
+              return (
+                <ListRow
+                  key={item.type}
+                  title={serviceName(item.type)}
+                  subtitle={planItemLine(item, unit)}
+                  status={planRowStatus(item)}
+                  right={<Badge label={t(BADGE_KEY[badge.state])} tone={badge.tone} />}
+                />
+              );
+            })}
           </View>
         </View>
       </Panel>

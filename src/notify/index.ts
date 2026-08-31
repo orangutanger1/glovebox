@@ -2,6 +2,7 @@ import * as Notifications from "expo-notifications";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { serviceName } from "../schedule/names";
 import { formatDate, t } from "../i18n";
+import { vehicleSentenceName } from "../format";
 import { collectReminders } from "./collect";
 import { selectReminders } from "./select";
 
@@ -61,7 +62,7 @@ export async function rescheduleAll(): Promise<void> {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: t("system.notify.title", {
-          vehicle: reminder.vehicleName,
+          vehicle: vehicleSentenceName(reminder.vehicleName),
           service: serviceName(reminder.serviceType),
         }),
         body: t("system.notify.body", { date: formatDate(reminder.lastPerformedAt) }),

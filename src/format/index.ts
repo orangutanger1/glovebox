@@ -107,6 +107,22 @@ export function vehicleDisplayName(v: {
   return parts.length > 0 ? parts.join(" ") : t("system.vehicle.fallback");
 }
 
+/**
+ * The vehicle's name as it reads inside a sentence that already owns it.
+ *
+ * A car with no make is named by `system.vehicle.fallback` — "My car" — which
+ * is right on a garage row and wrong the moment a sentence puts a possessive in
+ * front of it: "Your My car, 12,500 mi a year." The two cases need different
+ * words, not different grammar, so the sentence form falls back to the common
+ * noun the pain copy already carries in every locale ("car", "Auto", "coche").
+ *
+ * A real name — "2016 Subaru Outback" — is returned untouched, because that is
+ * exactly what a possessive wants in front of it.
+ */
+export function vehicleSentenceName(name: string): string {
+  return name === t("system.vehicle.fallback") ? t("pain.vehicleFallback") : name;
+}
+
 export type DateParts = { year: number; month: number; day: number };
 
 /** Day count for a 1-12 month. Day 0 of the next month is the last of this one. */

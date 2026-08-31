@@ -56,6 +56,8 @@ export const es: Fragment = {
   "garage.title": "Garaje",
   "garage.logService": "Registrar mantenimiento",
   "garage.addVehicle": "Añadir vehículo",
+  "garage.comingUp": "Próximamente",
+  "garage.quickLog": "Registrar con un toque",
   "garage.empty": "Todavía no hay vehículos. Añade uno y Wrenchy empieza a guardar su historial.",
   "garage.storeUnreachable":
     "No se ha podido conectar con la App Store. Inténtalo con mejor conexión.",
@@ -134,9 +136,11 @@ export const es: Fragment = {
   "offer.plan.cta": "Activar recordatorios",
   "offer.plan.decline": "Ahora no",
   "offer.notify.title": "No te pierdas ningún servicio.",
+  "offer.notify.off": "Avisos desactivados",
   "offer.plan.status.due": "Vence",
   "offer.plan.status.soon": "Pronto",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Sin registro",
 
   "offer.paywall.title": "Los coches no avisan. Esto sí.",
   "offer.paywall.subtitle": "Cada mantenimiento y cada lectura, registrados.",
@@ -272,7 +276,10 @@ export const es: Fragment = {
     one: "Un mantenimiento ya está vencido.",
     other: "{count} mantenimientos ya están vencidos.",
   },
-  "onboardingC.results.noneLogged": "Nada de lo que has registrado está vencido.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} servicio aún no tiene registro.",
+    other: "{count} servicios aún no tienen registro.",
+  },
   "onboardingC.results.noneYet": "Todavía no hay nada vencido.",
   "onboardingC.results.clear": "No hay nada vencido ni nada cerca de estarlo.",
   "onboardingC.results.subtitle": "Tu {vehicle}, {distance} al año.",
@@ -284,6 +291,7 @@ export const es: Fragment = {
   "onboardingC.results.status.due": "Vence",
   "onboardingC.results.status.soon": "Pronto",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Sin registro",
 
   "onboardingC.symptoms.next": "Continuar",
   "onboardingC.symptoms.last": "¿Y qué hago?",
@@ -395,6 +403,10 @@ export const es: Fragment = {
   "settings.title": "Ajustes",
   "settings.privacy":
     "Tus registros viven solo en este móvil. Sin cuenta, sin servidor. Exporta cuando quieras, porque la exportación nunca está bloqueada.",
+  "settings.section.data": "Datos",
+  "settings.section.reminders": "Avisos",
+  "settings.section.membership": "Suscripción",
+  "settings.section.preferences": "Preferencias",
 
   "settings.export": "Exportar todos los registros (CSV)",
   "settings.export.error":

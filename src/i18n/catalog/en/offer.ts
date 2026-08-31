@@ -30,8 +30,10 @@ export const offer: Fragment = {
   "offer.plan.status.due": "Due",
   "offer.plan.status.soon": "Soon",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "No record",
 
   "offer.notify.title": "Never miss a service.",
+  "offer.notify.off": "Reminders off",
 
   "offer.paywall.title": "Cars don’t warn you. This does.",
   "offer.paywall.subtitle": "Every service and every reading, on record.",

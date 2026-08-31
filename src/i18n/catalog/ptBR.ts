@@ -54,6 +54,8 @@ export const ptBR: Fragment = {
   "garage.title": "Garagem",
   "garage.logService": "Registrar um serviço",
   "garage.addVehicle": "Adicionar veículo",
+  "garage.comingUp": "A seguir",
+  "garage.quickLog": "Registrar com um toque",
   "garage.empty": "Nenhum veículo ainda. Adicione um e o Wrenchy começa a guardar o histórico.",
   "garage.storeUnreachable": "Não foi possível acessar a App Store. Tente de novo com uma conexão melhor.",
 
@@ -127,9 +129,11 @@ export const ptBR: Fragment = {
   "offer.plan.cta": "Ativar lembretes",
   "offer.plan.decline": "Agora não",
   "offer.notify.title": "Nunca perca uma revisão.",
+  "offer.notify.off": "Lembretes desativados",
   "offer.plan.status.due": "Vencido",
   "offer.plan.status.soon": "Logo",
   "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Sem registro",
 
   "offer.paywall.title": "Carros não avisam. Isto avisa.",
   "offer.paywall.subtitle": "Cada serviço e cada leitura, registrados.",
@@ -261,7 +265,10 @@ export const ptBR: Fragment = {
     one: "Um serviço já está atrasado.",
     other: "{count} serviços já estão atrasados.",
   },
-  "onboardingC.results.noneLogged": "Nada do que você registrou está atrasado.",
+  "onboardingC.results.noBaseline": {
+    one: "{count} serviço ainda não tem registro.",
+    other: "{count} serviços ainda não têm registro.",
+  },
   "onboardingC.results.noneYet": "Nada está atrasado ainda.",
   "onboardingC.results.clear": "Nada está atrasado, e nada está perto de vencer.",
   "onboardingC.results.subtitle": "Seu {vehicle}, {distance} por ano.",
@@ -273,6 +280,7 @@ export const ptBR: Fragment = {
   "onboardingC.results.status.due": "Vencido",
   "onboardingC.results.status.soon": "Logo",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Sem registro",
 
   "onboardingC.symptoms.next": "Continuar",
   "onboardingC.symptoms.last": "E o que eu faço",
@@ -379,6 +387,10 @@ export const ptBR: Fragment = {
   "settings.title": "Ajustes",
   "settings.privacy":
     "Os seus registros ficam só neste celular. Sem conta, sem servidor. Exporte quando quiser, porque a exportação nunca é bloqueada.",
+  "settings.section.data": "Dados",
+  "settings.section.reminders": "Lembretes",
+  "settings.section.membership": "Assinatura",
+  "settings.section.preferences": "Preferências",
 
   "settings.export": "Exportar todos os registros (CSV)",
   "settings.export.error":

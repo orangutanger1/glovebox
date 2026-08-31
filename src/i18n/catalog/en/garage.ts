@@ -13,6 +13,8 @@ export const garage: Fragment = {
   "garage.title": "Garage",
   "garage.logService": "Log a service",
   "garage.addVehicle": "Add vehicle",
+  "garage.comingUp": "Coming up",
+  "garage.quickLog": "Log in one tap",
   "garage.empty": "No vehicles yet. Add one and Wrenchy starts keeping its records.",
   "garage.storeUnreachable": "Could not reach the store. Try again on a better connection.",
 

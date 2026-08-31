@@ -37,21 +37,26 @@ function Wheel({
   digit,
   delay,
   duration,
+  spins,
 }: {
   digit: number;
   delay: number;
   duration: number;
+  /** Full 0-9 passes before the landing digit. Zero while the user is typing:
+   *  a drum that spun three times per keystroke is a slot machine. */
+  spins: number;
 }) {
   const progress = useRef(new Animated.Value(0)).current;
 
-  // Three full passes before the landing digit. Fewer and it looks like a
-  // counter ticking up; more and the user is waiting on an animation.
+  // `spins` full passes before the landing digit. Three reads as a drum being
+  // spun; fewer looks like a counter ticking up, more makes the user wait. Zero
+  // is the typed case, where the wheel is a display and must simply arrive.
   const strip = useMemo(() => {
     const out: number[] = [];
-    for (let i = 0; i < 3; i++) for (let d = 0; d <= 9; d++) out.push(d);
+    for (let i = 0; i < spins; i++) for (let d = 0; d <= 9; d++) out.push(d);
     for (let d = 0; d <= digit; d++) out.push(d);
     return out;
-  }, [digit]);
+  }, [digit, spins]);
 
   useEffect(() => {
     progress.setValue(0);
@@ -100,10 +105,21 @@ function Wheel({
 export function OdometerRoll({
   value,
   places = 6,
+  live = false,
 }: {
   /** The reading the drums settle on. */
   value: number;
   places?: number;
+  /**
+   * The drums are showing a number the user is typing, not a demonstration.
+   *
+   * The screen used to roll a random six-figure reading above a field holding
+   * the user's own — two different numbers, one above the other, on a screen
+   * whose only job is a single reading. Driven from the field, the drums have
+   * to move like a display and not like an intro: no full passes, no stagger,
+   * and short enough that the next keystroke is not queued behind it.
+   */
+  live?: boolean;
 }) {
   const digits = digitsOf(value, places);
 
@@ -140,9 +156,10 @@ export function OdometerRoll({
           >
             <Wheel
               digit={d}
+              spins={live ? 0 : 3}
               // Right-to-left stagger: the tenths wheel is the last to settle.
-              delay={120 + (places - 1 - i) * 90}
-              duration={1100 + (places - 1 - i) * 260}
+              delay={live ? 0 : 120 + (places - 1 - i) * 90}
+              duration={live ? 220 : 1100 + (places - 1 - i) * 260}
             />
             {/* Curvature. A flat digit on a flat rectangle is a number in a
                 box; shaded top and bottom, it is a cylinder seen edge-on. */}

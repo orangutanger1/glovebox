@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
 import { ListRow } from "../src/design/ListRow";
+import { Check } from "../src/design/Check";
 import { tokens } from "../src/design/tokens";
 import { LANGUAGES, getLanguage, setLanguage, t, type Language } from "../src/i18n";
 import { LANGUAGE_NAMES } from "../src/i18n/names";
@@ -69,6 +70,3 @@ export default function LanguagePicker() {
   );
 }
 
-function Check() {
-  return <Text style={{ ...tokens.text.body, color: tokens.color.text }}>✓</Text>;
-}

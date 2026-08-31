@@ -67,6 +67,8 @@ export const ko: Fragment = {
   "garage.title": "차고",
   "garage.logService": "정비 기록하기",
   "garage.addVehicle": "차량 추가",
+  "garage.comingUp": "다음 예정",
+  "garage.quickLog": "한 번에 기록",
   "garage.empty": "아직 차량이 없어요. 한 대 추가하면 Wrenchy가 차계부를 쓰기 시작해요.",
   "garage.storeUnreachable": "스토어에 연결하지 못했어요. 통신이 잘 되는 곳에서 다시 시도해 주세요.",
 
@@ -141,9 +143,11 @@ export const ko: Fragment = {
   "offer.plan.cta": "알림 켜기",
   "offer.plan.decline": "지금은 안 할게요",
   "offer.notify.title": "정비를 놓치지 마세요.",
+  "offer.notify.off": "\uc54c\ub9bc \uaebc\uc9d0",
   "offer.plan.status.due": "기한",
   "offer.plan.status.soon": "임박",
   "offer.plan.status.ok": "정상",
+  "offer.plan.status.noRecord": "기록 없음",
 
   "offer.paywall.title": "차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
   "offer.paywall.subtitle": "정비와 주행거리 기록이 모두 남아요.",
@@ -271,7 +275,7 @@ export const ko: Fragment = {
   "onboardingC.results.overdue": {
     other: "정비 {count}건이 이미 기한을 넘겼어요.",
   },
-  "onboardingC.results.noneLogged": "기록한 것 중에 기한을 넘긴 건 없어요.",
+  "onboardingC.results.noBaseline": { other: "{count}개 정비에 아직 기록이 없습니다." },
   "onboardingC.results.noneYet": "아직 기한을 넘긴 건 없어요.",
   "onboardingC.results.clear": "기한을 넘긴 것도, 임박한 것도 없어요.",
   "onboardingC.results.subtitle": "{vehicle}, 연간 {distance}.",
@@ -283,6 +287,7 @@ export const ko: Fragment = {
   "onboardingC.results.status.due": "기한",
   "onboardingC.results.status.soon": "임박",
   "onboardingC.results.status.ok": "정상",
+  "onboardingC.results.status.noRecord": "기록 없음",
 
   "onboardingC.symptoms.next": "계속",
   "onboardingC.symptoms.last": "그럼 어떻게 하면 되나요",
@@ -391,6 +396,10 @@ export const ko: Fragment = {
   "settings.title": "설정",
   "settings.privacy":
     "기록은 이 휴대폰에만 있어요. 계정도 서버도 없어요. 내보내기는 언제든 되고, 절대 잠기지 않아요.",
+  "settings.section.data": "기록",
+  "settings.section.reminders": "알림",
+  "settings.section.membership": "멤버십",
+  "settings.section.preferences": "환경설정",
 
   "settings.export": "전체 기록 내보내기(CSV)",
   "settings.export.error": "공유 시트를 열지 못했어요. 기록은 그대로예요.",

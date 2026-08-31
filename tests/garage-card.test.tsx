@@ -68,8 +68,11 @@ jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 
 import Garage from "../app/index";
 import { createVehicle, listVehicles } from "../src/db/vehicles";
+import { addRecord } from "../src/db/records";
+import { nextReminders } from "../src/notify/collect";
+import { serviceName } from "../src/schedule/names";
 import { tokens } from "../src/design/tokens";
-import { t, setLanguage } from "../src/i18n";
+import { formatDate, t, setLanguage } from "../src/i18n";
 import { setDistanceUnit } from "../src/units";
 
 const NAME = "2016 Honda Civic";
@@ -159,4 +162,40 @@ test("the row takes its ink from the tokens, not a hard-coded default", () => {
   const tree = render();
   expect(colorOf(tree, NAME)).toBe(tokens.color.text);
   expect(colorOf(tree, "\u203a")).toBe(tokens.color.textMuted);
+});
+
+test("the garage offers the schedule and a one-tap way to log, not a black screen", () => {
+  const tree = render();
+  const printed = texts(tree.root);
+  // The home screen after onboarding used to be one status card on an empty
+  // screen. The quick-log chips are the missing half: the log form, opened
+  // with the service already chosen.
+  expect(printed).toContain(t("garage.quickLog"));
+  for (const service of ["Oil Change", "Tire Rotation", "Brake Inspection"]) {
+    expect(printed).toContain(serviceName(service));
+  }
+
+  navigated.length = 0;
+  const chip = pressables(tree.root).find((p) =>
+    texts(p).includes(serviceName("Oil Change")),
+  )!;
+  act(() => chip.props.onPress());
+  expect(navigated).toEqual([
+    `/vehicle/${listVehicles()[0].id}/log?type=Oil%20Change`,
+  ]);
+});
+
+test("coming up lists the reminders this car would actually get", () => {
+  const car = listVehicles()[0];
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
+  });
+
+  const printed = texts(render().root);
+  expect(printed).toContain(t("garage.comingUp"));
+  // The row is the scheduled reminder, so the home screen and the notification
+  // cannot disagree about what is next.
+  expect(printed).toContain(formatDate(nextReminders(car.id, 1)[0].dueAt));
 });

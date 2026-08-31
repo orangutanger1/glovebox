@@ -42,12 +42,16 @@ const WHEN = [
 const CUSTOM = "custom";
 
 export default function LogService() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  // `type` arrives from the garage's one-tap log actions. Anything unknown is
+  // ignored rather than stored: the param is a shortcut, not an input.
+  const { id, type: preset } = useLocalSearchParams<{ id: string; type?: string }>();
   const router = useRouter();
   const vehicle = getVehicle(id);
 
   // The first chip is the default, so the two cannot drift apart.
-  const [type, setType] = useState(COMMON[0]);
+  const [type, setType] = useState(
+    preset && COMMON.includes(preset) ? preset : COMMON[0]
+  );
   const [daysAgo, setDaysAgo] = useState<number | typeof CUSTOM>(0);
   // Opens on today, so the wheels start somewhere true and the user rolls back
   // from it rather than building a date from nothing.

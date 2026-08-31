@@ -58,6 +58,8 @@ export const ja: Fragment = {
   "garage.title": "ガレージ",
   "garage.logService": "整備を記録",
   "garage.addVehicle": "車を追加",
+  "garage.comingUp": "次の予定",
+  "garage.quickLog": "ワンタップで記録",
   "garage.empty": "まだ車がありません。追加すると、Wrenchyが整備記録を付け始めます。",
   "garage.storeUnreachable": "ストアに接続できませんでした。電波の良い場所でやり直してください。",
 
@@ -128,9 +130,11 @@ export const ja: Fragment = {
   "offer.plan.cta": "通知をオンにする",
   "offer.plan.decline": "今はしない",
   "offer.notify.title": "整備を見逃さない。",
+  "offer.notify.off": "\u901a\u77e5\u30aa\u30d5",
   "offer.plan.status.due": "期限",
   "offer.plan.status.soon": "まもなく",
   "offer.plan.status.ok": "問題なし",
+  "offer.plan.status.noRecord": "記録なし",
 
   "offer.paywall.title": "車は警告してくれません。これがします。",
   "offer.paywall.subtitle": "整備も走行距離も、すべて記録に残ります。",
@@ -252,7 +256,7 @@ export const ja: Fragment = {
   "onboardingC.question": "質問 {step} / {total}",
 
   "onboardingC.results.overdue": { other: "{count}件の整備がすでに期限切れです。" },
-  "onboardingC.results.noneLogged": "記録済みのものに期限切れはありません。",
+  "onboardingC.results.noBaseline": { other: "{count}件の整備にまだ記録がありません。" },
   "onboardingC.results.noneYet": "まだ期限切れはありません。",
   "onboardingC.results.clear": "期限切れも、期限が近いものもありません。",
   "onboardingC.results.subtitle": "{vehicle}、年間{distance}。",
@@ -264,6 +268,7 @@ export const ja: Fragment = {
   "onboardingC.results.status.due": "期限",
   "onboardingC.results.status.soon": "まもなく",
   "onboardingC.results.status.ok": "問題なし",
+  "onboardingC.results.status.noRecord": "記録なし",
 
   "onboardingC.symptoms.next": "続ける",
   "onboardingC.symptoms.last": "では、どうすればいいか",
@@ -368,6 +373,10 @@ export const ja: Fragment = {
   "settings.title": "設定",
   "settings.privacy":
     "整備記録はこの端末の中だけにあります。アカウントもサーバーもありません。書き出しはいつでもできます。書き出しに制限をかけることはありません。",
+  "settings.section.data": "記録",
+  "settings.section.reminders": "通知",
+  "settings.section.membership": "メンバーシップ",
+  "settings.section.preferences": "設定",
 
   "settings.export": "全記録を書き出す（CSV）",
   "settings.export.error": "共有シートを開けませんでした。記録はそのままです。",

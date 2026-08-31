@@ -52,6 +52,13 @@ export type Plan = {
   /** Worst first: due, then soon, then ok; dated before undated inside each. */
   items: PlanItem[];
   dueNow: number;
+  /** Of `dueNow`, the ones with a history behind them — a service this car has
+   *  actually had and is now past. The honest answer to "what is overdue?": a
+   *  service the app has never seen is not late, it is unknown. */
+  pastDue: number;
+  /** Tracked services with nothing on file. Counted apart from `dueNow` so a
+   *  screen can say "nine need a first record" instead of "nine are overdue". */
+  noRecord: number;
   soon: number;
   /** How many of the tracked services have anything on file at all. */
   logged: number;
@@ -172,6 +179,8 @@ export function buildPlan(input: {
   return {
     items,
     dueNow: items.filter((i) => i.status === "due").length,
+    pastDue: items.filter((i) => i.status === "due" && i.logged).length,
+    noRecord: items.filter((i) => !i.logged).length,
     soon: items.filter((i) => i.status === "soon").length,
     logged: items.filter((i) => i.logged).length,
     unit: input.unit,
@@ -223,4 +232,34 @@ export function nextUp(plan: Plan, now: Date = new Date()): PlanItem | undefined
     if (!soonest || item.dueAt < soonest.dueAt!) soonest = item;
   }
   return soonest;
+}
+
+/**
+ * The stamp a plan row wears, as a catalog key and a tone.
+ *
+ * One decision, made once, because three screens print this row and they were
+ * drifting: the results screen, the notification ask and the paywall summary
+ * each mapped status to a badge themselves, and each of them stamped a red
+ * "Due" on a service the app has simply never been told about. Red is the app
+ * saying something is wrong with the car. Nothing is wrong with a car whose
+ * brake-fluid history we do not have; what is missing is the record, and that
+ * is what the row now says.
+ */
+export function planBadge(item: PlanItem): {
+  /** The state the stamp names. Each screen owns the words for it: the results
+   *  screen and the plan screen already carry their own `status.*` keys. */
+  state: "due" | "soon" | "ok" | "noRecord";
+  tone: "due" | "soon" | "ok";
+} {
+  if (!item.logged) return { state: "noRecord", tone: "ok" };
+  if (item.status === "due") return { state: "due", tone: "due" };
+  if (item.status === "soon") return { state: "soon", tone: "soon" };
+  return { state: "ok", tone: "ok" };
+}
+
+/** The list row's stripe. Red is reserved for a service that is genuinely past
+ *  its interval, so an unlogged row is drawn as neutral, not as an alarm. */
+export function planRowStatus(item: PlanItem): "overdue" | "soon" | "ok" {
+  if (!item.logged) return "ok";
+  return item.status === "due" ? "overdue" : item.status === "soon" ? "soon" : "ok";
 }

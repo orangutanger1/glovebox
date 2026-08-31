@@ -19,7 +19,10 @@ export const onboardingC: Fragment = {
     one: "One service is already overdue.",
     other: "{count} services are already overdue.",
   },
-  "onboardingC.results.noneLogged": "Nothing you have logged is overdue.",
+  "onboardingC.results.noBaseline": {
+    one: "One service has no record yet.",
+    other: "{count} services have no record yet.",
+  },
   "onboardingC.results.noneYet": "Nothing is overdue yet.",
   "onboardingC.results.clear": "Nothing is overdue, and nothing is close.",
   "onboardingC.results.subtitle": "Your {vehicle}, {distance} a year.",
@@ -31,6 +34,7 @@ export const onboardingC: Fragment = {
   "onboardingC.results.status.due": "Due",
   "onboardingC.results.status.soon": "Soon",
   "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "No record",
 
   "onboardingC.symptoms.next": "Continue",
   "onboardingC.symptoms.last": "So what do I do",
