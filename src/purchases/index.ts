@@ -99,6 +99,41 @@ export async function presentPaywall(): Promise<boolean> {
 export type PaywallOutcome = "purchased" | "dismissed" | "unavailable";
 
 /**
+ * How long `presentPaywall` may take before the funnel is told it is stuck.
+ *
+ * A user deciding on a price takes seconds; a StoreKit sheet that is going to
+ * appear has appeared well inside this. Anything past it is a sheet that never
+ * came up.
+ */
+const STALL_MS = 8000;
+
+/**
+ * Reports a paywall that neither appeared nor failed.
+ *
+ * On 2026-08-31 two users on build 23 tapped the paywall CTA and emitted
+ * `paywall_shown` and then nothing at all: no `paywall_presented`, no
+ * `paywall_closed`, no `paywall_unavailable`, and no throw for the catch below
+ * to report. Both re-entered the flow minutes later and did it again. A promise
+ * that never settles and a process that died mid-call leave exactly the same
+ * hole in the stream, and the difference decides whether the fix is in this
+ * file or in the native layer — so the timer says which: a `paywall_stalled`
+ * that arrives means the app was alive and waiting, and its absence beside a
+ * `paywall_shown` means it was not.
+ *
+ * Instrumentation only. It never rejects, never races the result away and
+ * never presents anything: the awaited promise is still the sheet's own, so a
+ * sheet that comes up late is reported late rather than abandoned, and a second
+ * presentation — the failure that stacks two unreachable sheets — remains
+ * impossible.
+ */
+function withStallWatch<T>(offering: string, presenting: Promise<T>): Promise<T> {
+  const timer = setTimeout(() => {
+    track("paywall_stalled", { offering, ms: STALL_MS });
+  }, STALL_MS);
+  return presenting.finally(() => clearTimeout(timer));
+}
+
+/**
  * Presents a specific offering's paywall, or the current one when no
  * identifier is given. Unlike `presentPaywall` this does not check the
  * entitlement first: the onboarding paywall is a screen the user navigated to,
@@ -131,7 +166,7 @@ export async function presentOffering(identifier?: string): Promise<PaywallOutco
     // so the existing funnel keeps comparing to itself.
     track("paywall_shown", { offering });
     const asked = Date.now();
-    const result = await RevenueCatUI.presentPaywall(params);
+    const result = await withStallWatch(offering, RevenueCatUI.presentPaywall(params));
     // Evidence. Only reachable once the sheet has actually come back, so
     // `shown` minus `presented` is the number of paywalls that failed to
     // appear at all — previously indistinguishable from a decline. `ms` is

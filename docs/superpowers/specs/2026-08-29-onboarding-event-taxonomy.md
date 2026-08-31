@@ -29,6 +29,7 @@ same thing, **the shipped name stays** and the mapping is recorded here.
 | `paywall_presented` | The RevenueCat sheet actually appeared | — |
 | `paywall_closed` | The sheet was dismissed | — |
 | `paywall_unavailable` / `paywall_unconfigured` | The sheet could not present | — |
+| `paywall_stalled` | 8s after the CTA with the sheet neither up nor failed | `offering`, `ms` |
 | `onboarding_completed` | The flow ends, however it ends | `exit` = `paid` \| `trial` \| `free` |
 | `subscription_success` | The post-purchase screen is reached | `due_now`, `scheduled`, `has_vehicle` |
 | `first_core_action` | The first product action after the flow | `source`, `action` |
