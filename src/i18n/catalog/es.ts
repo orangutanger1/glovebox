@@ -137,6 +137,10 @@ export const es: Fragment = {
   "offer.plan.decline": "Ahora no",
   "offer.notify.title": "No te pierdas ningún servicio.",
   "offer.notify.off": "Avisos desactivados",
+  "offer.plan.status.due": "Vence",
+  "offer.plan.status.soon": "Pronto",
+  "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Sin registro",
 
   "offer.paywall.title": "Los coches no avisan. Esto sí.",
   "offer.paywall.subtitle": "Cada mantenimiento y cada lectura, registrados.",

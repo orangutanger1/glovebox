@@ -164,6 +164,10 @@ export const pl: Fragment = {
   "offer.plan.decline": "Nie teraz",
   "offer.notify.title": "Nie przegap żadnego serwisu.",
   "offer.notify.off": "Przypomnienia wy\u0142\u0105czone",
+  "offer.plan.status.due": "Termin",
+  "offer.plan.status.soon": "Wkrótce",
+  "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Brak wpisu",
 
   "offer.paywall.title": "Samochody nie ostrzegają. Ta aplikacja owszem.",
   "offer.paywall.subtitle": "Każdy serwis i każdy stan licznika, zapisane.",

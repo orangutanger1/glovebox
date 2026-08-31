@@ -148,6 +148,10 @@ export const fr: Fragment = {
   "offer.plan.decline": "Pas maintenant",
   "offer.notify.title": "Ne manquez plus un entretien.",
   "offer.notify.off": "Rappels d\u00e9sactiv\u00e9s",
+  "offer.plan.status.due": "À faire",
+  "offer.plan.status.soon": "Bientôt",
+  "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Aucun suivi",
 
   "offer.paywall.title": "Les voitures ne préviennent pas. Ceci, oui.",
   "offer.paywall.subtitle": "Chaque entretien et chaque relevé, consignés.",

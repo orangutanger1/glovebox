@@ -130,6 +130,10 @@ export const it: Fragment = {
   "offer.plan.decline": "Non ora",
   "offer.notify.title": "Non perdere mai una manutenzione.",
   "offer.notify.off": "Promemoria disattivati",
+  "offer.plan.status.due": "Da fare",
+  "offer.plan.status.soon": "A breve",
+  "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Nessuno storico",
 
   "offer.paywall.title": "Le auto non avvisano. Questo sì.",
   "offer.paywall.subtitle": "Ogni tagliando e ogni lettura, a libretto.",

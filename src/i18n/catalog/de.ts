@@ -141,6 +141,10 @@ export const de: Fragment = {
   "offer.plan.decline": "Jetzt nicht",
   "offer.notify.title": "Verpasse keinen Service mehr.",
   "offer.notify.off": "Erinnerungen aus",
+  "offer.plan.status.due": "Fällig",
+  "offer.plan.status.soon": "Bald",
+  "offer.plan.status.ok": "OK",
+  "offer.plan.status.noRecord": "Kein Eintrag",
 
   "offer.paywall.title": "Autos warnen dich nicht. Das hier schon.",
   "offer.paywall.subtitle": "Jeder Service und jeder Tachostand, dokumentiert.",

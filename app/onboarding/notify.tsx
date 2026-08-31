@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
-import { Image, View, Text } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Image, View, Text, useWindowDimensions } from "react-native";
+import { Panel } from "../../src/design/Surface";
+import { ListRow } from "../../src/design/ListRow";
+import { Badge } from "../../src/design/Badge";
+import { NotifyBanner } from "../../src/design/NotifyBanner";
 import { Button } from "../../src/design/Button";
 import { NotifyShade } from "../../src/design/NotifyShade";
 import { tokens } from "../../src/design/tokens";
-import { t } from "../../src/i18n";
+import { formatDate, formatDueIn, getLanguage, t } from "../../src/i18n";
+import { vehicleSentenceName } from "../../src/format";
+import { getDistanceUnit } from "../../src/units";
+import { serviceName } from "../../src/schedule/names";
+import { planBadge, planItemLine, planRowStatus } from "../../src/onboarding/plan";
 import {
   canAskPermission,
+  nextReminder,
   reminderStatus,
   requestPermission,
   rescheduleAll,
@@ -16,6 +25,28 @@ import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
 
 const NOTIFICATION = require("../../assets/onboarding/notification.png");
+
+/** The art is one fixed English still, so it is only ever shown to a reader of
+ *  English. Everything else gets the banner drawn in code, in its own language,
+ *  from its own car. */
+const ART_LANGUAGES = ["en", "en-GB", "en-AU", "en-CA"];
+
+/** The still's own pixel dimensions, which is the only place its shape is
+ *  stated. The screen sizes it from these rather than trusting the file. */
+const ART = { width: 1100, height: 248 };
+
+/** The status is a state name the schedule computes, not copy: it reaches the
+ *  faceplate through a key so no language is stuck with the English word. */
+const STATUS_LABEL = {
+  due: "offer.plan.status.due",
+  soon: "offer.plan.status.soon",
+  ok: "offer.plan.status.ok",
+  noRecord: "offer.plan.status.noRecord",
+} as const;
+
+/** The whole schedule is real, but a screen with twelve rows on it is a
+ *  document, not a plan. The subtitle counts the rest. */
+const SHOWN = 6;
 
 /**
  * The notification soft-ask, shown as the notification it is asking to send.
@@ -31,13 +62,18 @@ const NOTIFICATION = require("../../assets/onboarding/notification.png");
  * and `system.notify.body` — the exact two lines the scheduler sends — over the
  * app's own icon, so nothing is promised here that the app does not deliver.
  *
- * It is a fixed image rather than a live render of this car's next reminder,
- * which is a deliberate trade. A live banner is personalised and honest to the
- * row, and it is also blank for the car whose services all carry mileage-only
- * intervals, ragged at the long vehicle names, and different on every device.
- * The still is the same on all of them. What it costs is the localisation: the
- * art is English, and a French user reads a French screen with an English
- * banner on it until a per-locale still exists.
+ * The still is English, so English is the only place it is shown. Every other
+ * language draws the same banner in code instead — same layout, same two lines,
+ * rendered from `nextReminder` through the catalog keys the scheduler will
+ * actually send, against this car's own records. An English banner in the
+ * middle of a French screen is worse than a banner that is one pixel-hint less
+ * polished, and a screen that says "12 services on a schedule" in French over
+ * "Last done May 4th" is the app losing the reader's language mid-sentence.
+ *
+ * A car whose services all carry mileage-only intervals has no next
+ * notification, and no honest banner to draw for it. That case falls back to
+ * the dated schedule the quiz computed, worst first — the same evidence, in the
+ * only form that car can support.
  *
  * The prompt fires here, on the tap that promises it, asked of iOS immediately
  * before the request: the alert appears on this tap, or the system has already
@@ -49,9 +85,25 @@ const NOTIFICATION = require("../../assets/onboarding/notification.png");
  */
 export default function OnboardingNotify() {
   const advance = useAdvance("notify");
-  const { vehiclePhrase, plan } = useOnboardingFindings();
+  const { vehicle, vehiclePhrase, plan } = useOnboardingFindings();
   const [busy, setBusy] = useState(false);
   const [granted, setGranted] = useState<boolean | null>(null);
+
+  const unit = getDistanceUnit();
+  const art = ART_LANGUAGES.includes(getLanguage());
+  // Measured, not expressed as a percentage. A percentage width plus an aspect
+  // ratio left the image at its intrinsic 1100pt, hanging a banner off both
+  // edges of the phone at four times the height it should be; an explicit
+  // number cannot be ignored. The gutter is the frame's own, doubled.
+  const { width: screenWidth } = useWindowDimensions();
+  const artWidth = Math.max(0, screenWidth - tokens.space.lg * 2);
+  // Only read for the locales that draw their own banner; the still needs no
+  // data at all. Once per mount either way — the records cannot change while
+  // the flow is on screen.
+  const reminder = useMemo(
+    () => (art ? undefined : nextReminder(vehicle?.id)),
+    [art, vehicle?.id]
+  );
 
   // Whether the stamp under the banner says reminders are off. Null until iOS
   // answers, and nothing is printed on a guess.
@@ -101,20 +153,53 @@ export default function OnboardingNotify() {
       })}
       footer={<Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />}
     >
-      <View style={{ gap: tokens.space.lg }}>
-        <NotifyShade>
-          {/* Sized by its own aspect ratio, so the stack keeps its proportions
-              on every width rather than being letterboxed into a fixed box. */}
-          <Image
-            source={NOTIFICATION}
-            style={{ width: "100%", aspectRatio: 1100 / 248 }}
-            resizeMode="contain"
-            accessibilityIgnoresInvertColors
-            accessibilityLabel={t("offer.notify.title")}
-          />
-        </NotifyShade>
-        {granted === false ? <RemindersOff /> : null}
-      </View>
+      {art || reminder ? (
+        <View style={{ gap: tokens.space.lg }}>
+          <NotifyShade>
+            {art ? (
+              <Image
+                source={NOTIFICATION}
+                style={{
+                  width: artWidth,
+                  height: Math.round((artWidth * ART.height) / ART.width),
+                }}
+                resizeMode="contain"
+                accessibilityIgnoresInvertColors
+                accessibilityLabel={t("offer.notify.title")}
+              />
+            ) : (
+              <NotifyBanner
+                title={t("system.notify.title", {
+                  vehicle: vehicleSentenceName(reminder!.vehicleName),
+                  service: serviceName(reminder!.serviceType),
+                })}
+                body={t("system.notify.body", {
+                  date: formatDate(reminder!.lastPerformedAt),
+                })}
+                when={formatDueIn(reminder!.dueAt)}
+              />
+            )}
+          </NotifyShade>
+          {granted === false ? <RemindersOff /> : null}
+        </View>
+      ) : (
+        <Panel>
+          <View style={{ padding: tokens.space.md, gap: tokens.space.xs }}>
+            {plan.items.slice(0, SHOWN).map((item) => {
+              const badge = planBadge(item);
+              return (
+                <ListRow
+                  key={item.type}
+                  title={serviceName(item.type)}
+                  subtitle={planItemLine(item, unit)}
+                  status={planRowStatus(item)}
+                  right={<Badge label={t(STATUS_LABEL[badge.state])} tone={badge.tone} />}
+                />
+              );
+            })}
+          </View>
+        </Panel>
+      )}
     </OnboardingScreen>
   );
 }

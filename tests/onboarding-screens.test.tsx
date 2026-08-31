@@ -738,6 +738,35 @@ async function pressAndSettle(
   });
 }
 
+test("a language the still cannot speak draws the banner in code instead", () => {
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    year: 2016,
+    odometer: 112000,
+  });
+  setOnboardingVehicleId(car.id);
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
+  });
+
+  setLanguage("fr");
+  try {
+    const tree = render(OnboardingNotify);
+    // No English still on a French screen: the banner is rendered, from this
+    // car's own record, through the keys the scheduler actually sends.
+    expect(
+      tree.root.findAll(
+        (n) => typeof n.type === "string" && n.props.resizeMode === "contain",
+      ),
+    ).toHaveLength(0);
+    expect(texts(tree).join(" ")).toContain("2016 Subaru Outback");
+  } finally {
+    setLanguage("en");
+  }
+});
+
 test("the reminders button raises the iOS prompt on the tap that promises it", async () => {
   const { requestPermissionsAsync, getPermissionsAsync } = notifications();
   const car = createVehicle({

@@ -131,6 +131,10 @@ export const ja: Fragment = {
   "offer.plan.decline": "今はしない",
   "offer.notify.title": "整備を見逃さない。",
   "offer.notify.off": "\u901a\u77e5\u30aa\u30d5",
+  "offer.plan.status.due": "期限",
+  "offer.plan.status.soon": "まもなく",
+  "offer.plan.status.ok": "問題なし",
+  "offer.plan.status.noRecord": "記録なし",
 
   "offer.paywall.title": "車は警告してくれません。これがします。",
   "offer.paywall.subtitle": "整備も走行距離も、すべて記録に残ります。",
