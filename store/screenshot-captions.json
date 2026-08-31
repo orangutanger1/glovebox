@@ -18,8 +18,9 @@
 		"setChanged": "August 2026 (third pass): the base art was re-authored again and the set cut from six frames to five. The retired frame is ScreenShotAppStore4, the onboarding setup shot - 'Set up in under a minute' was never a reason to install. Shipped order is the array order, not the key number: overdue alert, garage, service history, log sheet, resale value. Frame keys are kept only because the geometry and the render pipeline hang off them.",
 		"captionsReplaced": "Unlike the earlier re-shoots, this one replaced the caption copy. The new art was authored with its own baked English headlines, and those headlines - not the older calibrated set - are now the source strings; every other locale was retranslated from them. The previous English set ('Know before it's overdue.', 'Every car in one place.', 'Your car's maintenance log.', 'Log a service in 15 seconds.', 'Take your data anywhere.') and its 15 translations are recoverable from git history. Frame 2 now claims 10 seconds, matching the art; the old copy said 15. One string does not match its art: the ScreenShotAppStore6 headline is baked as 'Your Entire Garage in One Place.', which is 31 characters and wraps to three lines in Cambay Bold at 128px in that frame's box. It ships as 'Every Car in One Garage.' instead - same claim, two lines. The baked headline is repainted anyway, so nothing in the image contradicts it.",
 		"subtitles": "The art's smaller grey subtitle now ships. shipkit's caption pipeline paints a second text run when the spec carries a `type.subtitle` ramp and a frame's copy is `{ headline, subtitle }` rather than a plain string; the headline is fitted first into the band less the subtitle's reserve, and a subtitle that will not fit at its minSize is dropped and reported rather than shipped cramped. The English subtitles are the strings baked into the Figma art; the other fifteen locales are translated from them. The subtitle on ScreenShotAppStore3 is the only place the storefront says 'alerts' rather than showing a list.",
+		"captionLevel2026_08_30": "ScreenShotAppStore2's caption sat 214px lower than the other three: the baked headline in the raw is what the renderer aligns to, and in that frame the art put it at y=382 against 166/188/168 elsewhere. The band is repainted, not the ink box, so levelling it meant moving the baked ink itself - store/screenshots-raw/en-US/IPHONE_65/ScreenShotAppStore2.png had its band (rows 0-800, already snapped to black) rolled up 214px to ink top 168, and figma-geometry caption.y follows. Nothing below mockTop was touched; max delta outside the band is still 0 for all 16 locales. Three Spanish headlines were shortened in the same pass: es-ES/es-MX ScreenShotAppStore2 ran three lines and, once the block moved up, the third line clamped against the band top, and ScreenShotAppStore3/1 were shrinking to 116-120px. 'Anota un servicio en 10 segundos.' -> 'Un servicio en 10 segundos.', 'No olvides el cambio de aceite.' -> 'Cambia el aceite a tiempo.', 'Historial completo de servicio.' -> 'Historial completo.' - all 16 locales are back to two lines at the full 128px.",
 		"casing": "English captions follow the art's title case. Other locales use their own sentence case - title case is not a convention in German, French, Spanish, Italian, Dutch, Polish, Portuguese or Swedish, and CJK has no case at all.",
-		"lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - fr-CA/fr-FR run longest at 34 and are the ones to re-check for wrapping.",
+		"lengths": "Captions overlay a phone mockup, so each is held near the English source length. `maxLen` per locale is reported below - es-ES/es-MX run longest at 32 and are the ones to re-check for wrapping.",
 		"inspectionTerms": "Captions deliberately avoid inspection names (MOT/TUV/ITV/vehicle inspection), which differ per market and are already carried by each locale's subtitle.",
 		"apostrophe": "Captions use the typographic apostrophe U+2019, matching the live art and the store copy. An ASCII \"'\" renders as a straight vertical tick in Cambay and reads as a typo at 128px.",
 		"wrapping": "Every locale is 2 lines at the full 128px; no caption is shrunk. Line breaks were tuned by re-rendering, not by character count: the wrap is greedy inside each frame's own box, so ja - which breaks per character, having no spaces - has its comma placed where the break lands (7 characters in frames 1/2/3/6, 8 in frame 5) rather than mid-word.",
@@ -164,7 +165,7 @@
 			"tagline": "Tu historial no puede desaparecer. Mantenimiento y avisos. Sin cuenta, sin servidor.",
 			"captions": {
 				"ScreenShotAppStore3": {
-					"headline": "No olvides el cambio de aceite.",
+					"headline": "Cambia el aceite a tiempo.",
 					"subtitle": "Avisos antes de que toque el mantenimiento."
 				},
 				"ScreenShotAppStore6": {
@@ -172,21 +173,21 @@
 					"subtitle": "Planes de mantenimiento de todos tus coches."
 				},
 				"ScreenShotAppStore1": {
-					"headline": "Historial completo de servicio.",
+					"headline": "Historial completo.",
 					"subtitle": "Cada cambio de aceite, neumáticos y reparación."
 				},
 				"ScreenShotAppStore2": {
-					"headline": "Anota un servicio en 10 segundos.",
+					"headline": "Un servicio en 10 segundos.",
 					"subtitle": "Un toque. Sin escribir nada."
 				}
 			},
-			"maxLen": 33
+			"maxLen": 32
 		},
 		"es-MX": {
 			"tagline": "Tu historial no puede desaparecer. Mantenimiento y recordatorios. Sin cuenta, sin servidor.",
 			"captions": {
 				"ScreenShotAppStore3": {
-					"headline": "No olvides el cambio de aceite.",
+					"headline": "Cambia el aceite a tiempo.",
 					"subtitle": "Avisos antes de que toque el mantenimiento."
 				},
 				"ScreenShotAppStore6": {
@@ -194,15 +195,15 @@
 					"subtitle": "Planes de mantenimiento de todos tus autos."
 				},
 				"ScreenShotAppStore1": {
-					"headline": "Historial completo de servicio.",
+					"headline": "Historial completo.",
 					"subtitle": "Cada cambio de aceite, llantas y reparación."
 				},
 				"ScreenShotAppStore2": {
-					"headline": "Anota un servicio en 10 segundos.",
+					"headline": "Un servicio en 10 segundos.",
 					"subtitle": "Un toque. Sin escribir nada."
 				}
 			},
-			"maxLen": 33
+			"maxLen": 32
 		},
 		"fr-CA": {
 			"tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
@@ -224,7 +225,7 @@
 					"subtitle": "Une seule touche. Aucune saisie."
 				}
 			},
-			"maxLen": 32
+			"maxLen": 25
 		},
 		"fr-FR": {
 			"tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
@@ -246,7 +247,7 @@
 					"subtitle": "Une seule touche. Aucune saisie."
 				}
 			},
-			"maxLen": 32
+			"maxLen": 28
 		},
 		"it": {
 			"tagline": "Il tuo storico non può sparire. Manutenzione e promemoria. Nessun account, nessun server.",
