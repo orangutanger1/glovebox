@@ -7,10 +7,15 @@ const ICON = require("../../assets/icon.png");
  *
  * This is the one element on the glass that is not the app at all — it is the OS
  * speaking over the top of it — so it is deliberately built from none of the
- * app's instrument-panel materials. A notification renders in the system
- * appearance, not the app's: a light, near-opaque rounded card with a soft drop
- * shadow, floating above whatever is behind it. Drawing it in the app's own dark
- * metal is exactly what made an earlier version read as a feature card.
+ * app's instrument-panel materials. It is iOS's dark appearance: a translucent
+ * charcoal capsule with a hairline lip, white title, dimmed body, and the
+ * arrival time in the corner — the banner a driver actually sees, because a
+ * phone showing this app is a phone in dark mode. It was drawn in the light
+ * appearance first, which put a white card in the middle of a black screen and
+ * read as an illustration of a notification rather than as one.
+ *
+ * It is still not built from the app's own metal: drawing it in the panel
+ * materials is what made an even earlier version read as a feature card.
  *
  * The layout is the real one: a large rounded-square app icon on the left; the
  * bold title and the lighter body stacked beside it; the arrival time in the top
@@ -21,10 +26,11 @@ const ICON = require("../../assets/icon.png");
  * the scheduler's own copy, rendered against the user's own car.
  */
 
-// System label colours (iOS light appearance), not the app's palette: this card
+// System label colours (iOS dark appearance), not the app's palette: this card
 // is the OS's, and it has to look borrowed.
-const LABEL = "#1c1c1e";
-const SECONDARY = "rgba(60,60,67,0.6)";
+const LABEL = "#FFFFFF";
+const SECONDARY = "rgba(235,235,245,0.6)";
+const BODY = "rgba(235,235,245,0.78)";
 
 export function NotifyBanner({
   title,
@@ -46,11 +52,15 @@ export function NotifyBanner({
         borderRadius: 22,
         // iOS continuous corners; ignored on platforms that lack it.
         borderCurve: "continuous",
-        backgroundColor: "rgba(250,250,252,0.96)",
+        backgroundColor: "rgba(58,58,60,0.72)",
+        // The lip the system's material catches light on. Without it the
+        // capsule dissolves into a dark screen instead of floating over it.
+        borderWidth: 1,
+        borderColor: "rgba(255,255,255,0.10)",
         // The banner's own drop shadow, softer and wider than the app's ambient
         // one — it is lit by the system, not by the panel above it.
         shadowColor: "#000",
-        shadowOpacity: 0.22,
+        shadowOpacity: 0.45,
         shadowRadius: 18,
         shadowOffset: { width: 0, height: 10 },
         elevation: 12,
@@ -91,7 +101,7 @@ export function NotifyBanner({
         </View>
         <Text
           numberOfLines={2}
-          style={{ fontSize: 15, lineHeight: 20, color: "rgba(60,60,67,0.85)" }}
+          style={{ fontSize: 15, lineHeight: 20, color: BODY }}
         >
           {body}
         </Text>
