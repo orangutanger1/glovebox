@@ -1,5 +1,5 @@
 {
-	"generatedAt": "2026-08-30T06:26:57.686Z",
+	"generatedAt": "2026-08-31T03:42:11.910Z",
 	"app": "Wrenchy",
 	"root": "store/screenshots",
 	"locales": [
@@ -9,32 +9,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/de-DE/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2824778,
+							"bytes": 2842532,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3463698,
+							"bytes": 2665715,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2088143,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2017253,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2215900,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2108962,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2421655,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -49,32 +56,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-AU/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820424,
+							"bytes": 2348247,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462498,
+							"bytes": 2460833,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084549,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 1984117,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2222611,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2085273,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2196761,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -89,32 +103,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-CA/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820424,
+							"bytes": 2348247,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462498,
+							"bytes": 2460833,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084549,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 1984117,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2222611,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2085273,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2196761,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -129,32 +150,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-GB/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820424,
+							"bytes": 2348247,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462498,
+							"bytes": 2460833,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084549,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 1984117,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2222611,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2085273,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2196761,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -169,32 +197,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-US/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820424,
+							"bytes": 2348247,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462498,
+							"bytes": 2460833,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084549,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 1984117,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2222611,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2085273,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2196761,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -209,32 +244,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/es-ES/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2823949,
+							"bytes": 2838542,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3464560,
+							"bytes": 2668078,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2086971,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2015932,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2228534,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2098574,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2428134,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -249,32 +291,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/es-MX/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2823949,
+							"bytes": 2838542,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3465836,
+							"bytes": 2668960,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2086971,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2015932,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2228534,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2096195,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2428134,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -289,32 +338,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/fr-CA/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820012,
+							"bytes": 2839084,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462480,
+							"bytes": 2664126,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2077271,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2014071,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2217465,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2098765,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2427454,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -329,32 +385,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/fr-FR/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820012,
+							"bytes": 2839084,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3464295,
+							"bytes": 2666199,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2077271,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2014071,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2217465,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2098765,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2427454,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -369,32 +432,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/it/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2819044,
+							"bytes": 2833638,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3462088,
+							"bytes": 2658742,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2078050,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2015733,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2220104,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2093879,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2426588,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -409,32 +479,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/ja/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2826148,
+							"bytes": 2846721,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3464510,
+							"bytes": 2672353,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2089361,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2015729,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2224181,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2109056,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2433330,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -449,32 +526,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/ko/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2812692,
+							"bytes": 2824104,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3451540,
+							"bytes": 2648918,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2075571,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2005721,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2211864,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2087766,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2410401,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -489,32 +573,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/nl-NL/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2823037,
+							"bytes": 2841612,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3465219,
+							"bytes": 2667428,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2085427,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2009725,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2217403,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2105841,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2427645,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -529,32 +620,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/pl/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820781,
+							"bytes": 2838942,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3466906,
+							"bytes": 2668861,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084504,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2018728,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2221535,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2101706,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2430342,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -569,32 +667,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/pt-BR/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2822157,
+							"bytes": 2837589,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3466805,
+							"bytes": 2670075,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2084485,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2016671,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2224805,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2100715,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2427096,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -609,32 +714,39 @@
 				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/sv/IPHONE_65",
-					"count": 4,
+					"count": 5,
 					"files": [
 						{
 							"file": "01-ScreenShotAppStore3.png",
-							"bytes": 2820587,
+							"bytes": 2837723,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
 							"file": "02-ScreenShotAppStore6.png",
-							"bytes": 3464205,
+							"bytes": 2662761,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "03-ScreenShotAppStore1.png",
-							"bytes": 2083500,
+							"file": "03-ScreenShotAppStore2.png",
+							"bytes": 2014704,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
 						},
 						{
-							"file": "04-ScreenShotAppStore2.png",
-							"bytes": 2219674,
+							"file": "04-ScreenShotAppStore1.png",
+							"bytes": 2102252,
+							"width": 1242,
+							"height": 2688,
+							"format": "png"
+						},
+						{
+							"file": "05-ScreenShotAppStore7.png",
+							"bytes": 2421234,
 							"width": 1242,
 							"height": 2688,
 							"format": "png"
@@ -647,6 +759,6 @@
 	"totals": {
 		"locales": 16,
 		"groups": 16,
-		"files": 64
+		"files": 80
 	}
 }

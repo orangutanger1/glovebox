@@ -42,13 +42,18 @@
 			"pl": "Wyższa wartość odsprzedaży.",
 			"pt-BR": "Mais valor na revenda.",
 			"sv": "Högre andrahandsvärde."
-		}
+		},
+		"setChanged2026_08_30": "Fourth pass, five frames. The garage and log-sheet art were re-authored flat (straight-on) replacing the perspective renders, and a fifth frame was added: ScreenShotAppStore7, the settings screen on a purple glow, headlined '100% Private. Always Yours.' - the privacy claim was previously carried only by the tagline. The oil-change (ScreenShotAppStore3) and service-history (ScreenShotAppStore1) raws are byte-comparable to the third-pass art and were not restaged. Shipped order changed: the log sheet now precedes the service history. New raws were prepped the same way as the third pass - scaled to 1242x2688 (cover, centred), band above mockTop-4 snapped to #000000 keeping only the baked English headline glyphs, baked grey subtitle erased. Band flatness: 0.90 (frame 6), 0.92 (frame 2), 0.85 (frame 7) against the 0.85 gate - frame 7 sits on the gate because its baked headline is the largest ink block in the set.",
+		"captionFit2026_08_30b": "Three headlines were rewritten to fit the fourth-pass geometry, not for meaning: the log-sheet frame's ink box narrowed from 936px to 843px, which shrank de-DE ('In 10 Sekunden notiert.' at 124px) and pt-BR ('Uma revisão em 10 segundos.' at 116px) below the 128px design size; both were re-cut into shorter lines. The ja privacy headline ran three lines, breaking mid-word ('完全プライベー/ト。'), and was rewritten to '完全に非公開、ずっと自分に。' so the greedy per-character wrap lands on the comma at 7 characters.",
+		"jaWrap2026_08_30": "The fourth-pass ink boxes changed ja's per-character wrap (frame 6 went 980->1125px, frame 2 936->843px), so three ja headlines were re-cut to break on their comma rather than mid-word: garage 'ガレージ全体、ひとつに。' -> 'ガレージ全体を、ひとつに。', log sheet '整備の記録は、10秒。' -> '整備記録は、10秒。', privacy '完全プライベート。ずっと手元に。' -> '完全に非公開で、ずっと自分に。'.",
+		"englishShipsTheArt2026_08_30": "en-US, en-GB, en-AU and en-CA ship the unrepainted art: the fourth-pass frames were authored with their English headline and subtitle baked in, so repainting the band only redrew the same words in a different face and position. Those four locale directories are static files, kept byte-identical in store/screenshots-art/IPHONE_65 (scaled to 1242x2688 where the source was not, cover-fit and centred). `ship shots render` with no locale argument WILL overwrite them - render the twelve translated locales explicitly, or restore the four from store/screenshots-art afterwards. The English strings in this file are kept as the source the other twelve locales are translated from, and as the fallback if the English frames ever need to be repainted again."
 	},
 	"frames": [
 		"ScreenShotAppStore3",
 		"ScreenShotAppStore6",
+		"ScreenShotAppStore2",
 		"ScreenShotAppStore1",
-		"ScreenShotAppStore2"
+		"ScreenShotAppStore7"
 	],
 	"locales": {
 		"de-DE": {
@@ -62,13 +67,17 @@
 					"headline": "Deine Garage an einem Ort.",
 					"subtitle": "Wartungspläne für alle deine Fahrzeuge."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "10 Sekunden pro Service.",
+					"subtitle": "Ein Tipp genügt. Kein Tippen nötig."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Vollständige Servicehistorie.",
 					"subtitle": "Jeder Ölwechsel und jede Reparatur erfasst."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "In 10 Sekunden notiert.",
-					"subtitle": "Ein Tipp genügt. Kein Tippen nötig."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privat. Immer deins.",
+					"subtitle": "Kein Konto, kein Tracking. Deine Daten bleiben auf dem Gerät."
 				}
 			},
 			"maxLen": 29
@@ -81,19 +90,23 @@
 					"subtitle": "Get smart alerts before service is overdue."
 				},
 				"ScreenShotAppStore6": {
-					"headline": "Every Car in One Garage.",
+					"headline": "Your Entire Garage in One Place.",
 					"subtitle": "Track maintenance schedules across all your vehicles."
+				},
+				"ScreenShotAppStore2": {
+					"headline": "Log Service in 10 Seconds.",
+					"subtitle": "One-tap logging. Zero typing required."
 				},
 				"ScreenShotAppStore1": {
 					"headline": "Complete Service History.",
 					"subtitle": "Every oil change, tyre rotation and repair recorded."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Log Service in 10 Seconds.",
-					"subtitle": "One-tap logging. Zero typing required."
+				"ScreenShotAppStore7": {
+					"headline": "100% Private. Always Yours.",
+					"subtitle": "No accounts, no tracking. Your records stay on your device."
 				}
 			},
-			"maxLen": 26
+			"maxLen": 32
 		},
 		"en-CA": {
 			"tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
@@ -103,19 +116,23 @@
 					"subtitle": "Get smart alerts before service is overdue."
 				},
 				"ScreenShotAppStore6": {
-					"headline": "Every Car in One Garage.",
+					"headline": "Your Entire Garage in One Place.",
 					"subtitle": "Track maintenance schedules across all your vehicles."
+				},
+				"ScreenShotAppStore2": {
+					"headline": "Log Service in 10 Seconds.",
+					"subtitle": "One-tap logging. Zero typing required."
 				},
 				"ScreenShotAppStore1": {
 					"headline": "Complete Service History.",
 					"subtitle": "Every oil change, tire rotation, and repair recorded."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Log Service in 10 Seconds.",
-					"subtitle": "One-tap logging. Zero typing required."
+				"ScreenShotAppStore7": {
+					"headline": "100% Private. Always Yours.",
+					"subtitle": "No accounts, no tracking. Your records stay on your device."
 				}
 			},
-			"maxLen": 26
+			"maxLen": 32
 		},
 		"en-GB": {
 			"tagline": "Your records can’t disappear. Car service log and reminders. No account, no server.",
@@ -125,19 +142,23 @@
 					"subtitle": "Get smart alerts before service is overdue."
 				},
 				"ScreenShotAppStore6": {
-					"headline": "Every Car in One Garage.",
+					"headline": "Your Entire Garage in One Place.",
 					"subtitle": "Track maintenance schedules across all your vehicles."
+				},
+				"ScreenShotAppStore2": {
+					"headline": "Log Service in 10 Seconds.",
+					"subtitle": "One-tap logging. Zero typing required."
 				},
 				"ScreenShotAppStore1": {
 					"headline": "Complete Service History.",
 					"subtitle": "Every oil change, tyre rotation and repair recorded."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Log Service in 10 Seconds.",
-					"subtitle": "One-tap logging. Zero typing required."
+				"ScreenShotAppStore7": {
+					"headline": "100% Private. Always Yours.",
+					"subtitle": "No accounts, no tracking. Your records stay on your device."
 				}
 			},
-			"maxLen": 26
+			"maxLen": 32
 		},
 		"en-US": {
 			"tagline": "Your records can’t disappear. Car maintenance log and reminders. No account, no server.",
@@ -147,19 +168,23 @@
 					"subtitle": "Get smart alerts before service is overdue."
 				},
 				"ScreenShotAppStore6": {
-					"headline": "Every Car in One Garage.",
+					"headline": "Your Entire Garage in One Place.",
 					"subtitle": "Track maintenance schedules across all your vehicles."
+				},
+				"ScreenShotAppStore2": {
+					"headline": "Log Service in 10 Seconds.",
+					"subtitle": "One-tap logging. Zero typing required."
 				},
 				"ScreenShotAppStore1": {
 					"headline": "Complete Service History.",
 					"subtitle": "Every oil change, tire rotation, and repair recorded."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Log Service in 10 Seconds.",
-					"subtitle": "One-tap logging. Zero typing required."
+				"ScreenShotAppStore7": {
+					"headline": "100% Private. Always Yours.",
+					"subtitle": "No accounts, no tracking. Your records stay on your device."
 				}
 			},
-			"maxLen": 26
+			"maxLen": 32
 		},
 		"es-ES": {
 			"tagline": "Tu historial no puede desaparecer. Mantenimiento y avisos. Sin cuenta, sin servidor.",
@@ -172,13 +197,17 @@
 					"headline": "Todo tu garaje en un solo sitio.",
 					"subtitle": "Planes de mantenimiento de todos tus coches."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Un servicio en 10 segundos.",
+					"subtitle": "Un toque. Sin escribir nada."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Historial completo.",
 					"subtitle": "Cada cambio de aceite, neumáticos y reparación."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Un servicio en 10 segundos.",
-					"subtitle": "Un toque. Sin escribir nada."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privado. Siempre tuyo.",
+					"subtitle": "Sin cuentas ni rastreo. Tus registros se quedan en tu teléfono."
 				}
 			},
 			"maxLen": 32
@@ -194,13 +223,17 @@
 					"headline": "Todo tu garaje en un solo lugar.",
 					"subtitle": "Planes de mantenimiento de todos tus autos."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Un servicio en 10 segundos.",
+					"subtitle": "Un toque. Sin escribir nada."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Historial completo.",
 					"subtitle": "Cada cambio de aceite, llantas y reparación."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Un servicio en 10 segundos.",
-					"subtitle": "Un toque. Sin escribir nada."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privado. Siempre tuyo.",
+					"subtitle": "Sin cuentas ni rastreo. Tus registros se quedan en tu teléfono."
 				}
 			},
 			"maxLen": 32
@@ -216,16 +249,20 @@
 					"headline": "Toutes vos autos réunies.",
 					"subtitle": "Le suivi d’entretien de toutes vos voitures."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Noté en 10 secondes.",
+					"subtitle": "Une seule touche. Aucune saisie."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Historique complet.",
 					"subtitle": "Chaque vidange, permutation de pneus et réparation."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Noté en 10 secondes.",
-					"subtitle": "Une seule touche. Aucune saisie."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privé. Toujours à vous.",
+					"subtitle": "Aucun compte, aucun suivi. Vos données restent sur l’appareil."
 				}
 			},
-			"maxLen": 25
+			"maxLen": 29
 		},
 		"fr-FR": {
 			"tagline": "Vos données ne peuvent pas disparaître. Carnet d’entretien et rappels. Aucun compte, aucun serveur.",
@@ -238,16 +275,20 @@
 					"headline": "Toutes vos voitures réunies.",
 					"subtitle": "Le suivi d’entretien de toutes vos voitures."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Noté en 10 secondes.",
+					"subtitle": "Une seule touche. Aucune saisie."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Historique complet.",
 					"subtitle": "Chaque vidange, permutation de pneus et réparation."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Noté en 10 secondes.",
-					"subtitle": "Une seule touche. Aucune saisie."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privé. Toujours à vous.",
+					"subtitle": "Aucun compte, aucun suivi. Vos données restent sur l’appareil."
 				}
 			},
-			"maxLen": 28
+			"maxLen": 29
 		},
 		"it": {
 			"tagline": "Il tuo storico non può sparire. Manutenzione e promemoria. Nessun account, nessun server.",
@@ -260,13 +301,17 @@
 					"headline": "Tutto il garage in un posto.",
 					"subtitle": "Le scadenze di tutti i tuoi veicoli."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Un tagliando in 10 secondi.",
+					"subtitle": "Un tocco. Senza digitare nulla."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Storico completo.",
 					"subtitle": "Ogni cambio olio, gomme e riparazione."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Un tagliando in 10 secondi.",
-					"subtitle": "Un tocco. Senza digitare nulla."
+				"ScreenShotAppStore7": {
+					"headline": "100% privato. Sempre tuo.",
+					"subtitle": "Nessun account, nessun tracciamento. I dati restano sul telefono."
 				}
 			},
 			"maxLen": 29
@@ -279,19 +324,23 @@
 					"subtitle": "整備が遅れる前に、\n賢くお知らせ。"
 				},
 				"ScreenShotAppStore6": {
-					"headline": "ガレージ全体、ひとつに。",
+					"headline": "ガレージ全体を、ひとつに。",
 					"subtitle": "すべての車の整備予定を、\nまとめて管理。"
+				},
+				"ScreenShotAppStore2": {
+					"headline": "整備記録は、10秒。",
+					"subtitle": "ワンタップ。入力は不要。"
 				},
 				"ScreenShotAppStore1": {
 					"headline": "整備の履歴を、まるごと。",
 					"subtitle": "オイル交換もタイヤ交換も、\nすべて記録。"
 				},
-				"ScreenShotAppStore2": {
-					"headline": "整備の記録は、10秒。",
-					"subtitle": "ワンタップ。入力は不要。"
+				"ScreenShotAppStore7": {
+					"headline": "完全に非公開で、ずっと自分に。",
+					"subtitle": "アカウントも追跡もなし。記録はこの端末だけに。"
 				}
 			},
-			"maxLen": 12
+			"maxLen": 15
 		},
 		"ko": {
 			"tagline": "기록은 사라지지 않습니다. 정비 기록과 알림. 계정 없음, 서버 없음.",
@@ -304,16 +353,20 @@
 					"headline": "차고 전체를 한곳에.",
 					"subtitle": "모든 차량의 정비 일정을 관리하세요."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "정비 기록은 10초면 끝.",
+					"subtitle": "한 번 탭하면 끝. 입력은 필요 없어요."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "정비 이력 전체를 한눈에.",
 					"subtitle": "엔진오일, 타이어 교체, 수리까지 기록."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "정비 기록은 10초면 끝.",
-					"subtitle": "한 번 탭하면 끝. 입력은 필요 없어요."
+				"ScreenShotAppStore7": {
+					"headline": "100% 비공개. 언제나 내 것.",
+					"subtitle": "계정도 추적도 없이, 기록은 내 기기에만."
 				}
 			},
-			"maxLen": 14
+			"maxLen": 18
 		},
 		"nl-NL": {
 			"tagline": "Je gegevens kunnen niet verdwijnen. Onderhoud en herinneringen. Geen account, geen server.",
@@ -326,13 +379,17 @@
 					"headline": "Je hele garage op één plek.",
 					"subtitle": "Onderhoudsschema’s voor al je auto’s."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Een beurt in 10 seconden.",
+					"subtitle": "Één tik. Geen getyp."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Volledige servicehistorie.",
 					"subtitle": "Elke olieverversing, bandenwissel en reparatie."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Een beurt in 10 seconden.",
-					"subtitle": "Één tik. Geen getyp."
+				"ScreenShotAppStore7": {
+					"headline": "100% privé. Altijd van jou.",
+					"subtitle": "Geen account, geen tracking. Je gegevens blijven op je telefoon."
 				}
 			},
 			"maxLen": 30
@@ -348,16 +405,20 @@
 					"headline": "Cały garaż w jednym miejscu.",
 					"subtitle": "Harmonogramy serwisu wszystkich aut."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Zapisz serwis w 10 sekund.",
+					"subtitle": "Jedno dotknięcie. Zero pisania."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Pełna historia serwisowa.",
 					"subtitle": "Każda wymiana oleju, opon i naprawa."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Zapisz serwis w 10 sekund.",
-					"subtitle": "Jedno dotknięcie. Zero pisania."
+				"ScreenShotAppStore7": {
+					"headline": "100% prywatnie. Zawsze twoje.",
+					"subtitle": "Bez kont i śledzenia. Twoje wpisy zostają na telefonie."
 				}
 			},
-			"maxLen": 28
+			"maxLen": 29
 		},
 		"pt-BR": {
 			"tagline": "Seu histórico não pode desaparecer. Manutenção e lembretes. Sem conta, sem servidor.",
@@ -370,13 +431,17 @@
 					"headline": "Toda a garagem em um só lugar.",
 					"subtitle": "Planos de manutenção de todos os carros."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Revisão em 10 segundos.",
+					"subtitle": "Um toque. Sem digitar nada."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Todo o serviço registrado.",
 					"subtitle": "Cada troca de óleo, pneus e reparo."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Uma revisão em 10 segundos.",
-					"subtitle": "Um toque. Sem digitar nada."
+				"ScreenShotAppStore7": {
+					"headline": "100% privado. Sempre seu.",
+					"subtitle": "Sem contas, sem rastreio. Seus registros ficam no aparelho."
 				}
 			},
 			"maxLen": 30
@@ -392,13 +457,17 @@
 					"headline": "Hela garaget på ett ställe.",
 					"subtitle": "Serviceplaner för alla dina bilar."
 				},
+				"ScreenShotAppStore2": {
+					"headline": "Service på 10 sekunder.",
+					"subtitle": "En tryckning. Ingen skrivning."
+				},
 				"ScreenShotAppStore1": {
 					"headline": "Komplett servicehistorik.",
 					"subtitle": "Varje oljebyte, däckbyte och reparation."
 				},
-				"ScreenShotAppStore2": {
-					"headline": "Service på 10 sekunder.",
-					"subtitle": "En tryckning. Ingen skrivning."
+				"ScreenShotAppStore7": {
+					"headline": "100 % privat. Alltid ditt.",
+					"subtitle": "Inga konton, ingen spårning. Dina uppgifter stannar i telefonen."
 				}
 			},
 			"maxLen": 27

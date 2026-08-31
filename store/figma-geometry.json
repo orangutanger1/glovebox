@@ -75,19 +75,30 @@
 			"mockH": 2038,
 			"caption": {
 				"x": 149,
-				"y": 166,
+				"y": 202,
 				"w": 944
 			}
 		},
 		{
 			"key": "ScreenShotAppStore6",
 			"base": "ScreenShotAppStore6.png",
-			"mockTop": 672,
-			"mockH": 2016,
+			"mockTop": 655,
+			"mockH": 2033,
 			"caption": {
-				"x": 131,
-				"y": 188,
-				"w": 980
+				"x": 58,
+				"y": 265,
+				"w": 1125
+			}
+		},
+		{
+			"key": "ScreenShotAppStore2",
+			"base": "ScreenShotAppStore2.png",
+			"mockTop": 600,
+			"mockH": 2088,
+			"caption": {
+				"x": 200,
+				"y": 203,
+				"w": 843
 			}
 		},
 		{
@@ -97,21 +108,22 @@
 			"mockH": 2001,
 			"caption": {
 				"x": 126,
-				"y": 168,
+				"y": 253,
 				"w": 990
 			}
 		},
 		{
-			"key": "ScreenShotAppStore2",
-			"base": "ScreenShotAppStore2.png",
-			"mockTop": 805,
-			"mockH": 1883,
+			"key": "ScreenShotAppStore7",
+			"base": "ScreenShotAppStore7.png",
+			"mockTop": 765,
+			"mockH": 1923,
 			"caption": {
-				"x": 153,
-				"y": 168,
-				"w": 936
+				"x": 63,
+				"y": 222,
+				"w": 1116
 			}
 		}
 	],
-	"_framesNote": "Five frames, in App Store order, measured off the third-pass art (August 2026): ScreenShotAppStore3 = vehicle detail with an overdue oil change (red glow), ScreenShotAppStore6 = the garage list, ScreenShotAppStore1 = full service history, ScreenShotAppStore2 = the log sheet, ScreenShotAppStore5 = the overview with an export action (green glow). The onboarding frame ScreenShotAppStore4 was retired. Keys no longer track any z-order - the array order is the shipped order and each key is only an identifier the caption file and this geometry share. mockTop is the first row of the phone mockup; mockH is always canvas.h - mockTop because the mockup runs to the bottom edge. The art's glow reaches into the caption band, so the band was snapped to #000000 in the raw PNGs above mockTop - 4, keeping only the baked English headline glyphs as the ink the renderer aligns to; band flatness lands 0.89-0.92 against the 0.85 gate. The baked grey subtitle was erased from the raws: it cannot survive a band repaint, and leaving it in would have skewed the ink box the caption block is centred on. caption.x/w are symmetric about the canvas centre (621) and sized to the headline's own ink, so a localized string wraps where the art wraps."
+	"_framesNote": "Five frames, in App Store order, measured off the fourth-pass art (August 2026): ScreenShotAppStore3 = vehicle detail with an overdue oil change (red glow), ScreenShotAppStore6 = the garage list, ScreenShotAppStore2 = the log sheet, ScreenShotAppStore1 = full service history, ScreenShotAppStore7 = settings on a purple glow (the privacy frame). ScreenShotAppStore4 (onboarding) and ScreenShotAppStore5 (resale value, a screen the app does not have) are retired and their raws are kept only for the trail. Keys track nothing but identity - the array order is the shipped order, and it is shared with the caption file. mockTop is the first row of the phone mockup; mockH is always canvas.h - mockTop because the mockup runs to the bottom edge. The band above mockTop - 4 is snapped to #000000 in the raw PNGs, keeping only the baked English headline glyphs as the ink the renderer aligns to; the baked grey subtitle is erased, since it cannot survive a band repaint and would skew the ink box the caption block centres on. caption.x/w are symmetric about the canvas centre (621) and sized to the headline's own ink, so a localized string wraps where the art wraps.",
+	"_bandShiftNote": "The baked headline ink in every raw was moved down (frame 3 +36, 6 +86, 2 +66, 1 +85, 7 +96) so the renderer's block lands where the art actually put it. The renderer centres the headline+subtitle block on the baked ink box, and the box is headline-only because the baked subtitle is erased - so once subtitles started shipping, the block grew upward and every caption rendered 87-148px above the art's own headline. Each delta is the offset between the baked headline's centre and the combined headline+subtitle centre measured off the original art. caption.y follows the moved ink. Nothing below mockTop - 4 was touched."
 }
