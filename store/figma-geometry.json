@@ -49,6 +49,15 @@
 		"minSize": 72,
 		"step": 4,
 		"extraLines": 1,
+		"subtitle": {
+			"size": 72,
+			"lineHeight": 90,
+			"colour": "#A0A0A0",
+			"minSize": 56,
+			"step": 4,
+			"gap": 170,
+			"_note": "The second run the art was authored with. The ramp is measured off the retired ScreenShotAppStore4/5 originals - the only Figma exports still on disk - where the subtitle runs about 0.75x the headline's glyph height with 160px between the two runs' cap tops; the shipping frames' own originals were never kept, so size and gap are tuned against the rendered result rather than read off them. The colour is the art's muted grey; correct it from the originals if they resurface."
+		},
 		"_note": "Greedy, not balanced, and inside each frame's own Figma box width — because that is what Figma does. A balanced wrap reads better in isolation but breaks lines where the designer did not: it split frame 2 as 'Log a service / in 15 seconds.' where Figma had 'Log a service in 15 / seconds.'"
 	},
 	"band": {
@@ -101,17 +110,6 @@
 				"x": 153,
 				"y": 382,
 				"w": 936
-			}
-		},
-		{
-			"key": "ScreenShotAppStore5",
-			"base": "ScreenShotAppStore5.png",
-			"mockTop": 865,
-			"mockH": 1823,
-			"caption": {
-				"x": 97,
-				"y": 359,
-				"w": 1048
 			}
 		}
 	],
