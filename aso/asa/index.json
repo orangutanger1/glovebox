@@ -1,17 +1,17 @@
 {
-	"generatedAt": "2026-08-26T22:13:56.204Z",
+	"generatedAt": "2026-08-31T21:29:34.098Z",
 	"retain": 12,
 	"pruned": [],
 	"artifacts": [
 		{
-			"file": "snapshot-2026-08-26.json",
+			"file": "snapshot-2026-08-31.json",
 			"kind": "snapshot",
-			"generatedAt": "2026-08-26T22:11:45.718Z",
+			"generatedAt": "2026-08-31T21:29:34.068Z",
 			"params": {
 				"org": "23259140",
 				"window": {
-					"from": "2026-07-28",
-					"to": "2026-08-26"
+					"from": "2026-08-02",
+					"to": "2026-08-31"
 				},
 				"performance": true
 			},
@@ -19,6 +19,70 @@
 		},
 		{
 			"file": "snapshot.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-08-31T21:29:34.068Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-08-02",
+					"to": "2026-08-31"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "campaign-plan.json",
+			"kind": "campaign-plan",
+			"generatedAt": "2026-08-26T22:14:51.000Z",
+			"params": {
+				"budget": 32,
+				"split": {
+					"exact": 37.5,
+					"discovery": 46.9,
+					"competitor": 12.5,
+					"brand": 3.1
+				},
+				"top": 15,
+				"minVolume": 0,
+				"subPrice": 2.33,
+				"retentionMonths": 12,
+				"bidding": {
+					"seed": 0.65,
+					"min": 0.3,
+					"max": 1,
+					"source": "--bid",
+					"observedCpt": null,
+					"derivation": "$0.65 (--bid) × (0.75 + demand/200), clamped to [$0.30, $1.00]"
+				},
+				"killRule": {
+					"targetCpi": 1.1,
+					"source": "ads.targetCpi",
+					"wasteThreshold": 2.2,
+					"minTaps": 6,
+					"baselineInstallRate": 0.4,
+					"confidence": 0.95,
+					"breakeven": 27.96,
+					"retentionMonths": 12,
+					"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+					"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+				}
+			},
+			"killRule": {
+				"targetCpi": 1.1,
+				"source": "ads.targetCpi",
+				"wasteThreshold": 2.2,
+				"minTaps": 6,
+				"baselineInstallRate": 0.4,
+				"confidence": 0.95,
+				"breakeven": 27.96,
+				"retentionMonths": 12,
+				"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+				"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+			}
+		},
+		{
+			"file": "snapshot-2026-08-26.json",
 			"kind": "snapshot",
 			"generatedAt": "2026-08-26T22:11:45.718Z",
 			"params": {
@@ -58,56 +122,6 @@
 			"killRule": {
 				"targetCpi": 1.1,
 				"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
-				"wasteThreshold": 2.2,
-				"minTaps": 6,
-				"baselineInstallRate": 0.4,
-				"confidence": 0.95,
-				"breakeven": 27.96,
-				"retentionMonths": 12,
-				"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
-				"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
-			}
-		},
-		{
-			"file": "campaign-plan.json",
-			"kind": "campaign-plan",
-			"generatedAt": "2026-08-26T02:38:48.322Z",
-			"params": {
-				"budget": 30,
-				"split": {
-					"exact": 40,
-					"discovery": 20,
-					"competitor": 30,
-					"brand": 10
-				},
-				"top": 15,
-				"minVolume": 0,
-				"subPrice": 2.33,
-				"retentionMonths": 12,
-				"bidding": {
-					"seed": 0.65,
-					"min": 0.3,
-					"max": 1,
-					"source": "--bid",
-					"observedCpt": null,
-					"derivation": "$0.65 (--bid) × (0.75 + demand/200), clamped to [$0.30, $1.00]"
-				},
-				"killRule": {
-					"targetCpi": 1.1,
-					"source": "ads.targetCpi",
-					"wasteThreshold": 2.2,
-					"minTaps": 6,
-					"baselineInstallRate": 0.4,
-					"confidence": 0.95,
-					"breakeven": 27.96,
-					"retentionMonths": 12,
-					"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
-					"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
-				}
-			},
-			"killRule": {
-				"targetCpi": 1.1,
-				"source": "ads.targetCpi",
 				"wasteThreshold": 2.2,
 				"minTaps": 6,
 				"baselineInstallRate": 0.4,

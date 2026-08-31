@@ -106,7 +106,7 @@
 		{
 			"role": "exact",
 			"name": "Wrenchy · Exact · US",
-			"dailyBudget": 12,
+			"dailyBudget": 2,
 			"totalBudget": 360,
 			"countriesOrRegions": [
 				"US"
@@ -128,7 +128,7 @@
 							"bid": 0.77,
 							"apple": {
 								"id": "2303538551",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "oil change reminder",
 								"matchType": "EXACT",
 								"bidAmount": 0.77,
@@ -161,7 +161,7 @@
 					],
 					"apple": {
 						"id": "2150517194",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · oil change reminder",
 						"defaultBidAmount": 0.77,
 						"automatedKeywordsOptIn": false,
@@ -179,7 +179,7 @@
 							"bid": 0.77,
 							"apple": {
 								"id": "2303538792",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "auto maintenance log",
 								"matchType": "EXACT",
 								"bidAmount": 0.77,
@@ -212,7 +212,7 @@
 					],
 					"apple": {
 						"id": "2150518326",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · auto maintenance log",
 						"defaultBidAmount": 0.77,
 						"automatedKeywordsOptIn": false,
@@ -230,7 +230,7 @@
 							"bid": 0.74,
 							"apple": {
 								"id": "2303530331",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "free car maintenance tracker",
 								"matchType": "EXACT",
 								"bidAmount": 0.74,
@@ -263,7 +263,7 @@
 					],
 					"apple": {
 						"id": "2150518428",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · free car maintenance tracker",
 						"defaultBidAmount": 0.74,
 						"automatedKeywordsOptIn": false,
@@ -281,7 +281,7 @@
 							"bid": 0.77,
 							"apple": {
 								"id": "2303537604",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "auto maintenance tracker",
 								"matchType": "EXACT",
 								"bidAmount": 0.77,
@@ -314,7 +314,7 @@
 					],
 					"apple": {
 						"id": "2150517741",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · auto maintenance tracker",
 						"defaultBidAmount": 0.77,
 						"automatedKeywordsOptIn": false,
@@ -332,7 +332,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303534965",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "vehicle maintenance log",
 								"matchType": "EXACT",
 								"bidAmount": 0.75,
@@ -365,7 +365,7 @@
 					],
 					"apple": {
 						"id": "2150514620",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · vehicle maintenance log",
 						"defaultBidAmount": 0.75,
 						"automatedKeywordsOptIn": false,
@@ -383,7 +383,7 @@
 							"bid": 0.77,
 							"apple": {
 								"id": "2303538743",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "fuel monitor service reminder",
 								"matchType": "EXACT",
 								"bidAmount": 0.77,
@@ -416,7 +416,7 @@
 					],
 					"apple": {
 						"id": "2150517786",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · fuel monitor service reminder",
 						"defaultBidAmount": 0.77,
 						"automatedKeywordsOptIn": false,
@@ -434,7 +434,7 @@
 							"bid": 0.77,
 							"apple": {
 								"id": "2303538048",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "vehicle maintenance tracker",
 								"matchType": "EXACT",
 								"bidAmount": 0.77,
@@ -467,7 +467,7 @@
 					],
 					"apple": {
 						"id": "2150516805",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · vehicle maintenance tracker",
 						"defaultBidAmount": 0.77,
 						"automatedKeywordsOptIn": false,
@@ -485,7 +485,7 @@
 							"bid": 0.72,
 							"apple": {
 								"id": "2303534118",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "car maintenance reminder",
 								"matchType": "EXACT",
 								"bidAmount": 0.72,
@@ -518,7 +518,7 @@
 					],
 					"apple": {
 						"id": "2150518178",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · car maintenance reminder",
 						"defaultBidAmount": 0.72,
 						"automatedKeywordsOptIn": false,
@@ -536,7 +536,7 @@
 							"bid": 0.78,
 							"apple": {
 								"id": "2303538319",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "car maintenance tracker",
 								"matchType": "EXACT",
 								"bidAmount": 0.78,
@@ -569,7 +569,7 @@
 					],
 					"apple": {
 						"id": "2150516214",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · car maintenance tracker",
 						"defaultBidAmount": 0.78,
 						"automatedKeywordsOptIn": false,
@@ -587,7 +587,7 @@
 							"bid": 0.78,
 							"apple": {
 								"id": "2303530030",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "car maintenance log",
 								"matchType": "EXACT",
 								"bidAmount": 0.78,
@@ -620,7 +620,7 @@
 					],
 					"apple": {
 						"id": "2150518379",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · car maintenance log",
 						"defaultBidAmount": 0.78,
 						"automatedKeywordsOptIn": false,
@@ -638,7 +638,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303537143",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "car service tracker",
 								"matchType": "EXACT",
 								"bidAmount": 0.75,
@@ -671,7 +671,7 @@
 					],
 					"apple": {
 						"id": "2150517399",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · car service tracker",
 						"defaultBidAmount": 0.75,
 						"automatedKeywordsOptIn": false,
@@ -689,7 +689,7 @@
 							"bid": 0.71,
 							"apple": {
 								"id": "2303526383",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "vehicle maintenance journal",
 								"matchType": "EXACT",
 								"bidAmount": 0.71,
@@ -722,7 +722,7 @@
 					],
 					"apple": {
 						"id": "2150518575",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · vehicle maintenance journal",
 						"defaultBidAmount": 0.71,
 						"automatedKeywordsOptIn": false,
@@ -740,7 +740,7 @@
 							"bid": 0.73,
 							"apple": {
 								"id": "2303536480",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "vehicle maintenance",
 								"matchType": "EXACT",
 								"bidAmount": 0.73,
@@ -773,7 +773,7 @@
 					],
 					"apple": {
 						"id": "2150518233",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · vehicle maintenance",
 						"defaultBidAmount": 0.73,
 						"automatedKeywordsOptIn": false,
@@ -791,7 +791,7 @@
 							"bid": 0.73,
 							"apple": {
 								"id": "2303537118",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "auto maintenance",
 								"matchType": "EXACT",
 								"bidAmount": 0.73,
@@ -824,7 +824,7 @@
 					],
 					"apple": {
 						"id": "2150517242",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · auto maintenance",
 						"defaultBidAmount": 0.73,
 						"automatedKeywordsOptIn": false,
@@ -842,7 +842,7 @@
 							"bid": 0.68,
 							"apple": {
 								"id": "2303537894",
-								"syncedAt": "2026-08-26T22:13:54.637Z",
+								"syncedAt": "2026-08-31T21:28:53.933Z",
 								"text": "auto maintenance fuel diary",
 								"matchType": "EXACT",
 								"bidAmount": 0.68,
@@ -875,7 +875,7 @@
 					],
 					"apple": {
 						"id": "2150516700",
-						"syncedAt": "2026-08-26T22:13:54.637Z",
+						"syncedAt": "2026-08-31T21:28:53.933Z",
 						"name": "EX · auto maintenance fuel diary",
 						"defaultBidAmount": 0.68,
 						"automatedKeywordsOptIn": false,
@@ -887,16 +887,16 @@
 			"rationale": "One ad group per keyword, for creative control: an ad group is the smallest object that can carry its own Custom Product Page and its own bid. Budget is set on the campaign — Apple has no ad-group budget.",
 			"apple": {
 				"id": "2144507320",
-				"syncedAt": "2026-08-26T22:13:54.637Z",
+				"syncedAt": "2026-08-31T21:28:53.933Z",
 				"name": "Wrenchy · Exact · US",
-				"dailyBudget": 12,
+				"dailyBudget": 2,
 				"status": "ENABLED"
 			}
 		},
 		{
 			"role": "discovery",
 			"name": "Wrenchy · Discovery · US",
-			"dailyBudget": 15,
+			"dailyBudget": 3,
 			"totalBudget": 450,
 			"countriesOrRegions": [
 				"US"
@@ -918,7 +918,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2304631298",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "car maintenance",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -931,7 +931,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2304631299",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "service reminder",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -944,7 +944,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2304631300",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "oil change",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -957,7 +957,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536512",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "oil change reminder",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -970,7 +970,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536513",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "auto maintenance log",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -983,7 +983,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536514",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "free car maintenance tracker",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -996,7 +996,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536515",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "auto maintenance tracker",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1009,7 +1009,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536516",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "vehicle maintenance log",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1022,7 +1022,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536517",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "fuel monitor service reminder",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1035,7 +1035,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536518",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "vehicle maintenance tracker",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1048,7 +1048,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536519",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "car maintenance reminder",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1061,7 +1061,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536520",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "car maintenance tracker",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1074,7 +1074,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536521",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "car maintenance log",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1087,7 +1087,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536522",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "car service tracker",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1100,7 +1100,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536523",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "vehicle maintenance journal",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1113,7 +1113,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536524",
-								"syncedAt": "2026-08-26T22:13:55.413Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "vehicle maintenance",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1126,7 +1126,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536525",
-								"syncedAt": "2026-08-26T22:13:55.414Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "auto maintenance",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1139,7 +1139,7 @@
 							"bid": 0.75,
 							"apple": {
 								"id": "2303536526",
-								"syncedAt": "2026-08-26T22:13:55.414Z",
+								"syncedAt": "2026-08-31T21:28:55.142Z",
 								"text": "auto maintenance fuel diary",
 								"matchType": "BROAD",
 								"bidAmount": 0.75,
@@ -1150,7 +1150,7 @@
 					"demand": 81,
 					"apple": {
 						"id": "2150516353",
-						"syncedAt": "2026-08-26T22:13:55.413Z",
+						"syncedAt": "2026-08-31T21:28:55.142Z",
 						"name": "DISC · US",
 						"defaultBidAmount": 0.75,
 						"automatedKeywordsOptIn": false,
@@ -1279,16 +1279,16 @@
 			"rationale": "Broad match plus Search Match, with every Exact term negated so the two cannot cannibalise each other.",
 			"apple": {
 				"id": "2144513765",
-				"syncedAt": "2026-08-26T22:13:54.637Z",
+				"syncedAt": "2026-08-31T21:28:54.617Z",
 				"name": "Wrenchy · Discovery · US",
-				"dailyBudget": 15,
+				"dailyBudget": 3,
 				"status": "ENABLED"
 			}
 		},
 		{
 			"role": "competitor",
 			"name": "Wrenchy · Competitor · US",
-			"dailyBudget": 4,
+			"dailyBudget": 2,
 			"totalBudget": 120,
 			"countriesOrRegions": [
 				"US"
@@ -1310,7 +1310,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2304137884",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "fuelly",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1328,9 +1328,9 @@
 					],
 					"apple": {
 						"id": "2150572683",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · fuelly",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1346,7 +1346,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2304141286",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "drivvo",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1364,9 +1364,9 @@
 					],
 					"apple": {
 						"id": "2150571497",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · drivvo",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1382,7 +1382,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2304141223",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "simply auto",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1400,9 +1400,9 @@
 					],
 					"apple": {
 						"id": "2150571893",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · simply auto",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1418,7 +1418,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2303527085",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "carfax car care",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1436,9 +1436,9 @@
 					],
 					"apple": {
 						"id": "2150518027",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · carfax car care",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1454,7 +1454,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2304132789",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "autosist",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1472,9 +1472,9 @@
 					],
 					"apple": {
 						"id": "2150571101",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · autosist",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1490,7 +1490,7 @@
 							"bid": 1.5,
 							"apple": {
 								"id": "2304136725",
-								"syncedAt": "2026-08-26T22:13:56.193Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "fuelio",
 								"matchType": "EXACT",
 								"bidAmount": 1.5,
@@ -1508,9 +1508,9 @@
 					],
 					"apple": {
 						"id": "2150572881",
-						"syncedAt": "2026-08-26T22:13:56.193Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "COMP · fuelio",
-						"defaultBidAmount": 0.75,
+						"defaultBidAmount": 1.5,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1525,9 +1525,9 @@
 			"rationale": "Exact match on the apps you are compared to; your own name is negated here so Brand keeps that traffic at its own price.",
 			"apple": {
 				"id": "2144514455",
-				"syncedAt": "2026-08-26T22:13:55.414Z",
+				"syncedAt": "2026-08-31T21:28:55.814Z",
 				"name": "Wrenchy · Competitor · US",
-				"dailyBudget": 4,
+				"dailyBudget": 2,
 				"status": "ENABLED"
 			}
 		},
@@ -1556,7 +1556,7 @@
 							"bid": 0.3,
 							"apple": {
 								"id": "2303536701",
-								"syncedAt": "2026-08-26T22:13:56.194Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "wrenchy",
 								"matchType": "EXACT",
 								"bidAmount": 0.3,
@@ -1569,7 +1569,7 @@
 							"bid": 0.3,
 							"apple": {
 								"id": "2303536702",
-								"syncedAt": "2026-08-26T22:13:56.194Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "wrenchy",
 								"matchType": "BROAD",
 								"bidAmount": 0.3,
@@ -1582,7 +1582,7 @@
 							"bid": 0.3,
 							"apple": {
 								"id": "2304141387",
-								"syncedAt": "2026-08-26T22:13:56.194Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "wrenchy app",
 								"matchType": "EXACT",
 								"bidAmount": 0.3,
@@ -1595,7 +1595,7 @@
 							"bid": 0.3,
 							"apple": {
 								"id": "2304141388",
-								"syncedAt": "2026-08-26T22:13:56.194Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "wrenchy car",
 								"matchType": "EXACT",
 								"bidAmount": 0.3,
@@ -1608,7 +1608,7 @@
 							"bid": 0.3,
 							"apple": {
 								"id": "2304141389",
-								"syncedAt": "2026-08-26T22:13:56.194Z",
+								"syncedAt": "2026-08-31T21:28:56.347Z",
 								"text": "wrenchy car service log",
 								"matchType": "EXACT",
 								"bidAmount": 0.3,
@@ -1619,9 +1619,9 @@
 					"demand": 100,
 					"apple": {
 						"id": "2150517787",
-						"syncedAt": "2026-08-26T22:13:56.194Z",
+						"syncedAt": "2026-08-31T21:28:56.347Z",
 						"name": "BRAND · wrenchy",
-						"defaultBidAmount": 0.81,
+						"defaultBidAmount": 0.3,
 						"automatedKeywordsOptIn": false,
 						"status": "ENABLED"
 					}
@@ -1631,7 +1631,7 @@
 			"rationale": "Your own name is the cheapest tap you will ever buy, and the one a competitor buys if you do not.",
 			"apple": {
 				"id": "2144514548",
-				"syncedAt": "2026-08-26T22:13:56.194Z",
+				"syncedAt": "2026-08-31T21:28:56.347Z",
 				"name": "Wrenchy · Brand · US",
 				"dailyBudget": 1,
 				"status": "ENABLED"
@@ -1650,6 +1650,6 @@
 		"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
 		"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
 	},
-	"syncedAt": "2026-08-26T22:13:56.194Z",
+	"syncedAt": "2026-08-31T21:28:56.347Z",
 	"syncedOrg": "23259140"
 }
