@@ -1,12 +1,20 @@
 import { useState } from "react";
-import { Text, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Button } from "../../src/design/Button";
+import { ListRow } from "../../src/design/ListRow";
+import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useFinish } from "../../src/onboarding/nav";
+
+/** The three moments a trial has, in the order the user meets them: what opens
+ *  now, the way out, and what happens if they do nothing. Named rather than
+ *  numbered — the day count lives in the title, and a row that said "Day 3"
+ *  would go stale the moment the offering's introductory period is edited. */
+const STEPS = ["now", "runs", "ends"] as const;
 
 /**
  * The one retry, and the last screen in the flow.
@@ -33,6 +41,12 @@ import { useFinish } from "../../src/onboarding/nav";
  * the funnel listing what costs nothing to a user who had just been within one
  * tap of a trial. The free tier is what the app does when nobody pays; it is
  * not something to sell.
+ *
+ * The screen carried the headline and nothing else, which asked the user to
+ * take the word "free" on trust at the one moment they are deciding whether
+ * they are about to be charged. The three rows under it answer that: what
+ * opens now, how to get out, and what happens if they do nothing. The price
+ * itself is still the sheet's job — it is the only thing that knows it.
  */
 export default function OnboardingOffer() {
   const finish = useFinish();
@@ -54,8 +68,8 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
-      center
       title={t("offer.trial.title", { count: TRIAL_DAYS })}
+      subtitle={t("offer.trial.subtitle")}
       footer={
         <>
           <Button
@@ -74,6 +88,21 @@ export default function OnboardingOffer() {
           </Pressable>
         </>
       }
-    />
+    >
+      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+        {t("offer.trial.legend")}
+      </Text>
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+          {STEPS.map((step) => (
+            <ListRow
+              key={step}
+              title={t(`offer.trial.${step}.title`)}
+              subtitle={t(`offer.trial.${step}.body`)}
+            />
+          ))}
+        </View>
+      </Panel>
+    </OnboardingScreen>
   );
 }
