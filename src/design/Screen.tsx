@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, type Edge } from "react-native-safe-area-context";
 import { Glass } from "./Glass";
 import { tokens } from "./tokens";
 
@@ -10,18 +10,29 @@ import { tokens } from "./tokens";
  * action stays reachable while the list scrolls behind it. Content gets bottom
  * padding to clear it — a button that covers the last row is the same class of
  * bug as a keyboard that covers the button.
+ *
+ * `edges` defaults to the bottom only, because most screens mounted in this
+ * housing sit under a native stack header and that header already supplies the
+ * top inset — claiming it here too would pad twice. The exceptions are the
+ * screens registered with `headerShown: false` (`subscribed`, `winback`),
+ * which own the full height: without the top edge their title is drawn under
+ * the status bar, and on a notched device "Pro is on." rendered straight
+ * through the clock.
  */
 export function Screen({
   title,
   children,
   footer,
+  edges = ["bottom"],
 }: {
   title?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
+  /** Safe-area edges to claim. Add "top" on any screen with no native header. */
+  edges?: readonly Edge[];
 }) {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={edges}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

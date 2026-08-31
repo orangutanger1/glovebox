@@ -51,6 +51,10 @@ export default function Winback() {
 
   return (
     <Screen
+      // Registered with `headerShown: false`, so this screen owns the full
+      // height and has to claim the top inset itself — the same bug the
+      // subscribed screen had, where the title drew under the status bar.
+      edges={["top", "bottom"]}
       title={t("offer.winback.title")}
       footer={
         <>

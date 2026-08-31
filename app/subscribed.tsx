@@ -7,6 +7,7 @@ import { Gauge } from "../src/design/Gauge";
 import { Lamp } from "../src/design/Lamp";
 import { Screen } from "../src/design/Screen";
 import { tokens } from "../src/design/tokens";
+import { features } from "../src/onboarding/features";
 import { useOnboardingFindings } from "../src/onboarding/usePlan";
 import { nextUp } from "../src/onboarding/plan";
 import { track } from "../src/analytics";
@@ -65,8 +66,22 @@ export default function Subscribed() {
     else router.replace("/");
   }
 
+  // The two rows that are actually behind the entitlement, read from the same
+  // list the help screen prints so a capability cannot be described one way
+  // before the money and another way after it. Two, not four: `features()`
+  // marks exactly `garage` and `intervals` as `pro`, and padding this panel
+  // with free capabilities would make the screen claim the subscription
+  // bought something it did not.
+  const unlocked = features().filter((f) => f.pro);
+
   return (
-    <Screen footer={<Button label={t("subscribed.cta")} onPress={onFirstAction} />}>
+    <Screen
+      // No native header on this route (`headerShown: false` in _layout), so
+      // the housing has to claim the top inset itself. Without it the title
+      // was drawn under the status bar and "Pro is on." ran through the clock.
+      edges={["top", "bottom"]}
+      footer={<Button label={t("subscribed.cta")} onPress={onFirstAction} />}
+    >
       <View style={{ gap: tokens.space.lg }}>
         <View style={{ gap: tokens.space.sm }}>
           <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>
@@ -97,25 +112,40 @@ export default function Subscribed() {
           </View>
         </Panel>
 
-        {/* The two rows that were behind the badge on the help screen, now
-            without it. Reusing that copy rather than writing new lines is the
-            point: a capability described one way before the paywall and another
-            way after it is a promise quietly restated. */}
+        {/* The rows that were behind the badge on the help screen, now without
+            it. Reusing that copy rather than writing new lines is the point: a
+            capability described one way before the paywall and another way
+            after it is a promise quietly restated.
+            
+            Each row now carries its subtitle as well as its title. Two bare
+            lines left most of a phone's height empty under them, which read as
+            a screen that had failed to load rather than as a short list; the
+            subtitles are the same sentences the help screen already showed, so
+            nothing new is claimed and the panel has a body. */}
         <View style={{ gap: tokens.space.sm }}>
           <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
             {t("subscribed.unlocked")}
           </Text>
           <Panel>
             <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-              {["features.garage.title", "features.intervals.title"].map((key) => (
+              {unlocked.map((feature) => (
                 <View
-                  key={key}
-                  style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
+                  key={feature.id}
+                  style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}
                 >
-                  <Lamp lit size={10} />
-                  <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
-                    {t(key)}
-                  </Text>
+                  {/* Nudged down to sit on the title's optical centre rather
+                      than the row's, now that the row is two lines tall. */}
+                  <View style={{ paddingTop: tokens.space.xs }}>
+                    <Lamp lit size={10} />
+                  </View>
+                  <View style={{ flex: 1, gap: tokens.space.xs }}>
+                    <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                      {feature.title}
+                    </Text>
+                    <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                      {feature.subtitle}
+                    </Text>
+                  </View>
                 </View>
               ))}
             </View>
