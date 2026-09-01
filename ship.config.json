@@ -1,7 +1,7 @@
 {
 	"name": "Wrenchy",
 	"bundleId": "com.idea6.carmaintenancelog",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"appDir": ".",
 	"asc": {
 		"appId": "6797103341",

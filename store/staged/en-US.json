@@ -19,5 +19,5 @@
     "inspectionTerm": "Safety/emissions inspection (varies by state)",
     "reasoning": "Primary locale. Recovered into the staged workflow from the canonical tree, which was the only place en-US existed - `ship meta stage` regenerates canonical from staged, so an unstaged primary locale was one `stage` away from being lost and was silently excluded from `ship meta lint`/`apply`."
   },
-  "whatsNew": "Glovebox is now Wrenchy.\n\nSame app, same private log with no account and no server. Only the name has changed — every service record you have entered is still on your phone, exactly where it was."
+  "whatsNew": "Fixed a bug that could show the same service as due and overdue at the same time.\n\nThe first-run screens are clearer too, and the reminder preview now matches your device's light or dark appearance."
 }
