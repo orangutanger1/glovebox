@@ -23,6 +23,7 @@ const ROWS = [
   { id: "due" },
   { id: "reminders" },
   { id: "export" },
+  { id: "costs" },
   { id: "garage", pro: true },
   { id: "intervals", pro: true },
 ] as const;

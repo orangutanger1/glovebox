@@ -21,9 +21,14 @@ export const features: Fragment = {
   "features.export.subtitle":
     "Free forever for everyone, so your records are never hostage to a subscription.",
 
-  "features.garage.title": "More than one vehicle",
-  "features.garage.subtitle": "The whole garage, each with its own schedule.",
+  "features.costs.title": "See what it's costing you",
+  "features.costs.subtitle":
+    "Totals by vehicle, by service and by month, added up from the costs you log.",
 
-  "features.intervals.title": "Your own service intervals",
-  "features.intervals.subtitle": "Override any of them when the manual disagrees with the defaults.",
+  "features.garage.title": "Unlimited vehicles",
+  "features.garage.subtitle": "Every car, van and truck you own, tracked in one place.",
+
+  "features.intervals.title": "Servicing on your terms",
+  "features.intervals.subtitle":
+    "Set the intervals to match how you actually drive, and keep the history a buyer will pay for.",
 };

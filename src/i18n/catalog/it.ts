@@ -44,8 +44,12 @@ export const it: Fragment = {
   "features.export.subtitle":
     "Gratis per sempre e per tutti, così i tuoi dati non restano in ostaggio di un abbonamento.",
 
-  "features.garage.title": "Più di un veicolo",
-  "features.garage.subtitle": "Tutto il garage, ognuno con le sue scadenze.",
+  "features.costs.title": "Guarda quanto ti costa",
+  "features.costs.subtitle":
+    "Totali per veicolo, per tagliando e per mese, sommati dai costi che registri.",
+
+  "features.garage.title": "Veicoli illimitati",
+  "features.garage.subtitle": "Ogni auto, furgone e camion che possiedi, in un posto solo.",
 
   "features.intervals.title": "I tuoi intervalli dei tagliandi",
   "features.intervals.subtitle":
@@ -78,6 +82,26 @@ export const it: Fragment = {
 
   "garage.openHistory": "Apri lo storico",
   "garage.openAndLog": "Apri e registra un tagliando",
+
+  // insights
+  "insights.title": "Costi",
+  "insights.subtitle": "Quanto è costato il garage, direttamente dal tuo registro.",
+  "insights.total.label": "Registrato finora",
+  "insights.total.priced": {
+    one: "Da {count} tagliando con prezzo.",
+    other: "Da {count} tagliandi con prezzo.",
+  },
+  "insights.total.unpriced": {
+    one: "Per {count} altro tagliando manca il costo.",
+    other: "Per altri {count} tagliandi manca il costo.",
+  },
+  "insights.byVehicle.title": "Per veicolo",
+  "insights.byService.title": "Dove finiscono",
+  "insights.byMonth.title": "Ultimi 12 mesi",
+  "insights.empty.title": "Ancora nessun costo",
+  "insights.empty.body": "Aggiungi un costo quando registri un tagliando e comparirà qui. Anche i tagliandi passati si possono modificare.",
+  "insights.empty.cta": "Vai al mio garage",
+  "insights.open": "Vedi i costi",
 
   "intervals.title": "Intervalli dei tagliandi",
   "intervals.intro":

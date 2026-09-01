@@ -1,5 +1,6 @@
 import { getDb } from "./client";
 import { rows } from "./row";
+import type { CostedRecord } from "../insights";
 
 export type ServiceRecord = {
   id: string;
@@ -85,6 +86,29 @@ export function allRecordsForExport(): (ServiceRecord & { vehicle_name: string }
        FROM service_records r
        JOIN vehicles v ON v.id = r.vehicle_id
        ORDER BY v.name ASC, r.performed_at DESC`
+    )
+  );
+}
+
+/**
+ * Every live record in the garage, trimmed to the columns spend arithmetic
+ * reads.
+ *
+ * One query rather than `listRecords` per vehicle: the insights screen sums
+ * across the whole garage, and a round trip per vehicle turns a garage of eight
+ * into eight synchronous queries on a screen that renders on focus.
+ *
+ * Tombstoned rows are excluded, unlike `allRecordsForExport`. The two have
+ * opposite obligations: an export must never lose a row the user once had, and
+ * a total must never count a service the user deleted.
+ */
+export function costedRecords(): CostedRecord[] {
+  return rows(
+    getDb().getAllSync<CostedRecord>(
+      `SELECT vehicle_id, service_type, performed_at, cost
+       FROM service_records
+       WHERE deleted_at IS NULL
+       ORDER BY performed_at DESC`
     )
   );
 }

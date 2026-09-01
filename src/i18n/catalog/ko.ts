@@ -57,8 +57,12 @@ export const ko: Fragment = {
   "features.export.subtitle":
     "누구에게나 영구 무료라서, 내 기록이 구독에 묶이는 일이 없어요.",
 
-  "features.garage.title": "차량 여러 대",
-  "features.garage.subtitle": "차고 전체를, 각자 자기 일정으로.",
+  "features.costs.title": "얼마나 드는지 한눈에",
+  "features.costs.subtitle":
+    "입력한 비용을 차량별, 정비별, 월별로 합산해서 보여줘요.",
+
+  "features.garage.title": "차량 무제한",
+  "features.garage.subtitle": "가지고 있는 승용차, 밴, 트럭을 한곳에서.",
 
   "features.intervals.title": "나만의 정비 주기",
   "features.intervals.subtitle": "정비 지침서가 기본값과 다르면 어느 것이든 바꿀 수 있어요.",
@@ -91,6 +95,24 @@ export const ko: Fragment = {
 
   "garage.openHistory": "차계부 열기",
   "garage.openAndLog": "열어서 정비 기록하기",
+
+  // insights
+  "insights.title": "비용",
+  "insights.subtitle": "정비 기록에서 바로 계산한, 차고에 든 비용이에요.",
+  "insights.total.label": "지금까지 기록한 금액",
+  "insights.total.priced": {
+    other: "금액을 입력한 정비 {count}건 기준.",
+  },
+  "insights.total.unpriced": {
+    other: "금액이 없는 정비가 {count}건 더 있어요.",
+  },
+  "insights.byVehicle.title": "차량별",
+  "insights.byService.title": "어디에 쓰였나",
+  "insights.byMonth.title": "최근 12개월",
+  "insights.empty.title": "아직 금액이 없어요",
+  "insights.empty.body": "정비를 기록할 때 비용을 넣으면 여기에 나와요. 지난 정비도 수정할 수 있어요.",
+  "insights.empty.cta": "내 차고로",
+  "insights.open": "비용 보기",
 
   // intervals
   "intervals.title": "정비 주기",

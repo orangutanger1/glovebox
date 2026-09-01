@@ -54,8 +54,12 @@ export const sv: Fragment = {
   "features.export.subtitle":
     "Gratis för alla, för alltid, så att dina uppgifter aldrig sitter fast bakom ett abonnemang.",
 
-  "features.garage.title": "Fler än ett fordon",
-  "features.garage.subtitle": "Hela garaget, var och en med sitt eget schema.",
+  "features.costs.title": "Se vad det kostar dig",
+  "features.costs.subtitle":
+    "Summor per fordon, per service och per månad, räknat på kostnaderna du loggar.",
+
+  "features.garage.title": "Obegränsat antal fordon",
+  "features.garage.subtitle": "Varje bil, skåpbil och lastbil du äger, samlat på ett ställe.",
 
   "features.intervals.title": "Dina egna serviceintervall",
   "features.intervals.subtitle":
@@ -88,6 +92,26 @@ export const sv: Fragment = {
 
   "garage.openHistory": "Öppna historiken",
   "garage.openAndLog": "Öppna och logga en service",
+
+  // insights
+  "insights.title": "Kostnader",
+  "insights.subtitle": "Vad garaget har kostat, direkt ur din logg.",
+  "insights.total.label": "Registrerat hittills",
+  "insights.total.priced": {
+    one: "Från {count} service med pris.",
+    other: "Från {count} servicetillfällen med pris.",
+  },
+  "insights.total.unpriced": {
+    one: "{count} till service saknar kostnad.",
+    other: "{count} till servicetillfällen saknar kostnad.",
+  },
+  "insights.byVehicle.title": "Per fordon",
+  "insights.byService.title": "Vart det går",
+  "insights.byMonth.title": "Senaste 12 månaderna",
+  "insights.empty.title": "Inga priser än",
+  "insights.empty.body": "Lägg till en kostnad när du loggar en service, så dyker den upp här. Tidigare servicetillfällen går också att ändra.",
+  "insights.empty.cta": "Till mitt garage",
+  "insights.open": "Visa kostnader",
 
   "intervals.title": "Serviceintervall",
   "intervals.intro":

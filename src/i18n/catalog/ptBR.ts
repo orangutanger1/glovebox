@@ -45,8 +45,12 @@ export const ptBR: Fragment = {
   "features.export.subtitle":
     "Grátis para sempre, para todos, para os seus registros nunca ficarem presos a uma assinatura.",
 
-  "features.garage.title": "Mais de um veículo",
-  "features.garage.subtitle": "A garagem inteira, cada carro com a sua própria programação.",
+  "features.costs.title": "Veja quanto está custando",
+  "features.costs.subtitle":
+    "Totais por veículo, por serviço e por mês, somados dos custos que você registra.",
+
+  "features.garage.title": "Veículos ilimitados",
+  "features.garage.subtitle": "Cada carro, van e caminhão que você tem, tudo num lugar só.",
 
   "features.intervals.title": "Os seus próprios intervalos",
   "features.intervals.subtitle": "Mude qualquer um deles quando o manual não bater com o padrão.",
@@ -78,6 +82,26 @@ export const ptBR: Fragment = {
 
   "garage.openHistory": "Abrir histórico",
   "garage.openAndLog": "Abrir e registrar um serviço",
+
+  // insights
+  "insights.title": "Custos",
+  "insights.subtitle": "O que a garagem custou, direto do seu registro.",
+  "insights.total.label": "Registrado até agora",
+  "insights.total.priced": {
+    one: "De {count} serviço com preço.",
+    other: "De {count} serviços com preço.",
+  },
+  "insights.total.unpriced": {
+    one: "Falta o custo de mais {count} serviço.",
+    other: "Falta o custo de mais {count} serviços.",
+  },
+  "insights.byVehicle.title": "Por veículo",
+  "insights.byService.title": "Para onde vai",
+  "insights.byMonth.title": "Últimos 12 meses",
+  "insights.empty.title": "Nenhum custo ainda",
+  "insights.empty.body": "Adicione um custo ao registrar um serviço e ele aparece aqui. Serviços antigos também podem ser editados.",
+  "insights.empty.cta": "Ir para a minha garagem",
+  "insights.open": "Ver custos",
 
   "intervals.title": "Intervalos de revisão",
   "intervals.intro":

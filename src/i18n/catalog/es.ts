@@ -45,8 +45,12 @@ export const es: Fragment = {
   "features.export.subtitle":
     "Gratis para siempre y para todos, así tus registros nunca quedan rehenes de una suscripción.",
 
-  "features.garage.title": "Más de un vehículo",
-  "features.garage.subtitle": "Todo el garaje, cada coche con su propio calendario.",
+  "features.costs.title": "Mira lo que te está costando",
+  "features.costs.subtitle":
+    "Totales por vehículo, por mantenimiento y por mes, sumados de los costes que registras.",
+
+  "features.garage.title": "Vehículos ilimitados",
+  "features.garage.subtitle": "Cada coche, furgoneta y camión que tengas, en un solo sitio.",
 
   "features.intervals.title": "Tus propios intervalos de mantenimiento",
   "features.intervals.subtitle":
@@ -81,6 +85,26 @@ export const es: Fragment = {
 
   "garage.openHistory": "Abrir historial",
   "garage.openAndLog": "Abrir y registrar un mantenimiento",
+
+  // insights
+  "insights.title": "Costes",
+  "insights.subtitle": "Lo que ha costado el garaje, directo de tu registro.",
+  "insights.total.label": "Registrado hasta ahora",
+  "insights.total.priced": {
+    one: "De {count} mantenimiento con precio.",
+    other: "De {count} mantenimientos con precio.",
+  },
+  "insights.total.unpriced": {
+    one: "A {count} mantenimiento más le falta el coste.",
+    other: "A {count} mantenimientos más les falta el coste.",
+  },
+  "insights.byVehicle.title": "Por vehículo",
+  "insights.byService.title": "A dónde va",
+  "insights.byMonth.title": "Últimos 12 meses",
+  "insights.empty.title": "Aún no hay costes",
+  "insights.empty.body": "Añade un coste al registrar un mantenimiento y aparecerá aquí. Los mantenimientos anteriores también se pueden editar.",
+  "insights.empty.cta": "Ir a mi garaje",
+  "insights.open": "Ver costes",
 
   // intervals
   "intervals.title": "Intervalos de mantenimiento",

@@ -50,8 +50,12 @@ export const de: Fragment = {
   "features.export.subtitle":
     "Für immer kostenlos für alle, damit deine Daten nie an einem Abo hängen.",
 
-  "features.garage.title": "Mehr als ein Fahrzeug",
-  "features.garage.subtitle": "Die ganze Garage, jedes mit eigenem Plan.",
+  "features.costs.title": "Sieh, was es dich kostet",
+  "features.costs.subtitle":
+    "Summen nach Fahrzeug, nach Service und nach Monat, aus den Kosten, die du einträgst.",
+
+  "features.garage.title": "Unbegrenzt viele Fahrzeuge",
+  "features.garage.subtitle": "Jedes Auto, jeder Transporter, jeder Lkw – alles an einem Ort.",
 
   "features.intervals.title": "Deine eigenen Serviceintervalle",
   "features.intervals.subtitle":
@@ -85,6 +89,26 @@ export const de: Fragment = {
 
   "garage.openHistory": "Historie öffnen",
   "garage.openAndLog": "Öffnen und Service eintragen",
+
+  // insights
+  "insights.title": "Kosten",
+  "insights.subtitle": "Was die Garage gekostet hat, direkt aus deinem Logbuch.",
+  "insights.total.label": "Bisher erfasst",
+  "insights.total.priced": {
+    one: "Aus {count} Service mit Preis.",
+    other: "Aus {count} Services mit Preis.",
+  },
+  "insights.total.unpriced": {
+    one: "Bei {count} weiteren Service fehlt der Preis.",
+    other: "Bei {count} weiteren Services fehlt der Preis.",
+  },
+  "insights.byVehicle.title": "Nach Fahrzeug",
+  "insights.byService.title": "Wohin es geht",
+  "insights.byMonth.title": "Letzte 12 Monate",
+  "insights.empty.title": "Noch keine Preise",
+  "insights.empty.body": "Trag beim Loggen eines Service die Kosten ein, dann steht es hier. Alte Einträge kannst du auch nachbearbeiten.",
+  "insights.empty.cta": "Zu meiner Garage",
+  "insights.open": "Kosten ansehen",
 
   // intervals
   "intervals.title": "Serviceintervalle",

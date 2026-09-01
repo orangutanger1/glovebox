@@ -22,6 +22,7 @@ import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
 import { t, formatNumber, formatDate } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
+import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
 
@@ -74,7 +75,7 @@ const UNDO_WINDOW_MS = 8000;
 function recordSubtitle(record: ServiceRecord): string {
   const date = formatDate(record.performed_at);
   const distance = record.odometer ? formatDistance(record.odometer) : undefined;
-  const cost = record.cost ? `$${record.cost.toLocaleString()}` : undefined;
+  const cost = record.cost ? formatMoney(record.cost) : undefined;
   if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
   if (distance) return t("vehicle.row.dateDistance", { date, distance });
   if (cost) return t("vehicle.row.dateCost", { date, cost });

@@ -31,6 +31,7 @@ import { getLanguage, initLanguage, t } from "../src/i18n";
 import { bootLanguage } from "../src/i18n/preference";
 import { subscribeLocaleChanged } from "../src/i18n/epoch";
 import { initDistanceUnit } from "../src/units";
+import { initCurrency } from "../src/money";
 
 /**
  * The phone's language, resolved before the first component renders.
@@ -202,6 +203,9 @@ export default function RootLayout() {
       if (bootLanguage() !== fromPhone) setLocaleEpoch((n) => n + 1);
     });
     boot("units", initDistanceUnit);
+    // Same shape as the unit, and read into memory for the same reason: every
+    // cost on the insights screen formats through it.
+    boot("currency", initCurrency);
     boot("purchases", initPurchases);
     boot("identify", () => void identifyFromPurchases().catch(() => {}));
     // Weakest of the happiness signals and forgotten within a day. It is here
@@ -375,6 +379,10 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
         <Stack.Screen name="subscribed" options={{ headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="settings" options={{ title: t("layout.settings"), headerTitle: "" }} />
         <Stack.Screen name="intervals" options={{ title: t("layout.intervals"), headerTitle: "" }} />
+        {/* Titled from the screen's own fragment rather than a `layout.*` key:
+            the header and the h1 are the same word, and a second key for it is
+            a second thing to translate and to let drift. */}
+        <Stack.Screen name="insights" options={{ title: t("insights.title"), headerTitle: "" }} />
         <Stack.Screen name="language" options={{ title: t("language.title"), headerTitle: "" }} />
         <Stack.Screen name="vehicle/new" options={{ title: t("layout.addVehicle"), headerTitle: "" }} />
         {/* The one screen with no body title: it names the vehicle in the

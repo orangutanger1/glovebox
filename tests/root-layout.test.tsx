@@ -64,6 +64,7 @@ jest.mock("../src/quickactions", () => ({
 jest.mock("../src/feedback", () => ({ openFeedback: async () => {} }));
 jest.mock("../src/i18n/preference", () => ({ bootLanguage: () => "en" }));
 jest.mock("../src/units", () => ({ initDistanceUnit: () => {} }));
+jest.mock("../src/money", () => ({ initCurrency: () => {} }));
 
 import RootLayout from "../app/_layout";
 

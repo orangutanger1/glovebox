@@ -231,6 +231,26 @@ export const nl: Fragment = {
   "settings.replay.cancel": "Annuleer",
   "settings.replay.confirm": "Opnieuw",
 
+  // insights
+  "insights.title": "Kosten",
+  "insights.subtitle": "Wat de garage heeft gekost, rechtstreeks uit je logboek.",
+  "insights.total.label": "Tot nu toe vastgelegd",
+  "insights.total.priced": {
+    one: "Uit {count} beurt met prijs.",
+    other: "Uit {count} beurten met prijs.",
+  },
+  "insights.total.unpriced": {
+    one: "Bij {count} andere beurt ontbreken de kosten.",
+    other: "Bij {count} andere beurten ontbreken de kosten.",
+  },
+  "insights.byVehicle.title": "Per voertuig",
+  "insights.byService.title": "Waar het heen gaat",
+  "insights.byMonth.title": "Laatste 12 maanden",
+  "insights.empty.title": "Nog niets met een prijs",
+  "insights.empty.body": "Vul kosten in als je een beurt vastlegt, dan staat het hier. Eerdere beurten kun je ook aanpassen.",
+  "insights.empty.cta": "Naar mijn garage",
+  "insights.open": "Kosten bekijken",
+
   // intervals
   "intervals.title": "Onderhoudsintervallen",
   "intervals.intro":
@@ -500,8 +520,12 @@ export const nl: Fragment = {
   "features.export.subtitle":
     "Voor altijd gratis voor iedereen, zodat je administratie nooit gegijzeld wordt door een abonnement.",
 
-  "features.garage.title": "Meer dan één voertuig",
-  "features.garage.subtitle": "De hele garage, elk met een eigen schema.",
+  "features.costs.title": "Zie wat het je kost",
+  "features.costs.subtitle":
+    "Totalen per voertuig, per beurt en per maand, opgeteld uit de kosten die je invult.",
+
+  "features.garage.title": "Onbeperkt voertuigen",
+  "features.garage.subtitle": "Elke auto, bestelwagen en vrachtwagen die je hebt, op één plek.",
 
   "features.intervals.title": "Je eigen onderhoudsintervallen",
   "features.intervals.subtitle":

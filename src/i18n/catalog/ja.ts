@@ -48,8 +48,12 @@ export const ja: Fragment = {
   "features.export.subtitle":
     "誰でも永久に無料です。整備記録がサブスクの人質になることはありません。",
 
-  "features.garage.title": "複数台の車を登録",
-  "features.garage.subtitle": "ガレージ全体を、車ごとの予定表で管理します。",
+  "features.costs.title": "いくらかかっているかが見える",
+  "features.costs.subtitle":
+    "入力した金額から、車両ごと・整備ごと・月ごとの合計を出します。",
+
+  "features.garage.title": "車両は何台でも",
+  "features.garage.subtitle": "所有している乗用車・バン・トラックを、まとめて一か所で。",
 
   "features.intervals.title": "自分の整備間隔",
   "features.intervals.subtitle": "取扱説明書と初期値が食い違うときは、どれでも上書きできます。",
@@ -82,6 +86,24 @@ export const ja: Fragment = {
 
   "garage.openHistory": "履歴を開く",
   "garage.openAndLog": "開いて整備を記録",
+
+  // insights
+  "insights.title": "費用",
+  "insights.subtitle": "整備記録から見た、ガレージにかかった費用です。",
+  "insights.total.label": "これまでの記録額",
+  "insights.total.priced": {
+    other: "金額を入力した{count}件の整備から。",
+  },
+  "insights.total.unpriced": {
+    other: "ほかに{count}件、金額が未入力です。",
+  },
+  "insights.byVehicle.title": "車両ごと",
+  "insights.byService.title": "何に使ったか",
+  "insights.byMonth.title": "過去12か月",
+  "insights.empty.title": "まだ金額がありません",
+  "insights.empty.body": "整備を記録するときに金額を入れると、ここに表示されます。過去の記録も編集できます。",
+  "insights.empty.cta": "ガレージへ",
+  "insights.open": "費用を見る",
 
   // intervals
   "intervals.title": "整備間隔",
