@@ -286,6 +286,19 @@ export default function Garage() {
         })
       )}
 
+      {/* Below the garage, not in the header: costs are a thing you go and
+          look at, not a thing you act on, and the header already holds the one
+          control (settings) this screen needs at a glance. Shown whenever there
+          is a vehicle at all — an empty garage has nothing to price, and the
+          screen behind this row would only be able to say so. */}
+      {vehicles.length > 0 ? (
+        <ListRow
+          title={t("insights.open")}
+          onPress={() => router.push("/insights")}
+          right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
+        />
+      ) : null}
+
       {single ? (
         <>
           {upcoming.length > 0 ? (

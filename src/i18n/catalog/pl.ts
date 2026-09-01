@@ -93,12 +93,40 @@ export const pl: Fragment = {
   "features.export.subtitle":
     "Za darmo i na zawsze, dla każdego, więc twoje zapisy nigdy nie są zakładnikiem subskrypcji.",
 
-  "features.garage.title": "Więcej niż jeden pojazd",
-  "features.garage.subtitle": "Cały garaż, każdy z własnym harmonogramem.",
+  "features.costs.title": "Zobacz, ile cię to kosztuje",
+  "features.costs.subtitle":
+    "Sumy według pojazdu, przeglądu i miesiąca, policzone z kosztów, które wpisujesz.",
+
+  "features.garage.title": "Nieograniczona liczba pojazdów",
+  "features.garage.subtitle": "Każde auto, dostawczak i ciężarówka, jaką masz, w jednym miejscu.",
 
   "features.intervals.title": "Własne interwały serwisowe",
   "features.intervals.subtitle":
     "Zmień dowolny, gdy instrukcja mówi co innego niż ustawienia domyślne.",
+
+  // insights
+  "insights.title": "Koszty",
+  "insights.subtitle": "Ile kosztował garaż, prosto z twojego dziennika.",
+  "insights.total.label": "Zapisano do tej pory",
+  "insights.total.priced": {
+    one: "Z {count} przeglądu z ceną.",
+    few: "Z {count} przeglądów z ceną.",
+    many: "Z {count} przeglądów z ceną.",
+    other: "Z {count} przeglądu z ceną.",
+  },
+  "insights.total.unpriced": {
+    one: "Przy {count} kolejnym przeglądzie brakuje kosztu.",
+    few: "Przy {count} kolejnych przeglądach brakuje kosztu.",
+    many: "Przy {count} kolejnych przeglądach brakuje kosztu.",
+    other: "Przy {count} kolejnych przeglądach brakuje kosztu.",
+  },
+  "insights.byVehicle.title": "Według pojazdu",
+  "insights.byService.title": "Na co idzie",
+  "insights.byMonth.title": "Ostatnie 12 miesięcy",
+  "insights.empty.title": "Jeszcze nic z ceną",
+  "insights.empty.body": "Dodaj koszt przy zapisywaniu przeglądu, a pojawi się tutaj. Wcześniejsze przeglądy też można edytować.",
+  "insights.empty.cta": "Do mojego garażu",
+  "insights.open": "Zobacz koszty",
 
   // intervals
   "intervals.title": "Interwały serwisowe",

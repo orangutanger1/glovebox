@@ -55,8 +55,12 @@ export const fr: Fragment = {
   "features.export.subtitle":
     "Gratuit pour toujours et pour tout le monde, pour que votre carnet ne soit jamais l'otage d'un abonnement.",
 
-  "features.garage.title": "Plus d'un véhicule",
-  "features.garage.subtitle": "Tout le garage, chacun avec son propre suivi.",
+  "features.costs.title": "Voyez ce que ça vous coûte",
+  "features.costs.subtitle":
+    "Des totaux par véhicule, par entretien et par mois, calculés sur les coûts que vous saisissez.",
+
+  "features.garage.title": "Véhicules illimités",
+  "features.garage.subtitle": "Chaque voiture, camionnette et camion que vous avez, au même endroit.",
 
   "features.intervals.title": "Vos propres intervalles",
   "features.intervals.subtitle":
@@ -92,6 +96,26 @@ export const fr: Fragment = {
 
   "garage.openHistory": "Ouvrir l'historique",
   "garage.openAndLog": "Ouvrir et noter un entretien",
+
+  // insights
+  "insights.title": "Coûts",
+  "insights.subtitle": "Ce que le garage a coûté, directement depuis votre carnet.",
+  "insights.total.label": "Enregistré à ce jour",
+  "insights.total.priced": {
+    one: "À partir de {count} entretien chiffré.",
+    other: "À partir de {count} entretiens chiffrés.",
+  },
+  "insights.total.unpriced": {
+    one: "{count} autre entretien n’a pas de coût enregistré.",
+    other: "{count} autres entretiens n’ont pas de coût enregistré.",
+  },
+  "insights.byVehicle.title": "Par véhicule",
+  "insights.byService.title": "Où ça part",
+  "insights.byMonth.title": "12 derniers mois",
+  "insights.empty.title": "Aucun coût saisi",
+  "insights.empty.body": "Ajoutez un coût en enregistrant un entretien et il apparaîtra ici. Les entretiens passés se modifient aussi.",
+  "insights.empty.cta": "Aller à mon garage",
+  "insights.open": "Voir les coûts",
 
   // intervals
   "intervals.title": "Intervalles d'entretien",

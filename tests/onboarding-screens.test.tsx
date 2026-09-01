@@ -70,7 +70,7 @@ import {
   setAnswers,
   setOnboardingVehicleId,
 } from "../src/onboarding";
-import { setLanguage } from "../src/i18n";
+import { setLanguage, t } from "../src/i18n";
 import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
 import {
@@ -843,8 +843,13 @@ describe("the screen after a purchase", () => {
     expect(shown).toContain("2019 Toyota");
     // The two rows that sat behind the Pro badge before the money changed
     // hands, described in the same words afterwards.
-    expect(shown).toContain("More than one vehicle");
-    expect(shown).toContain("Your own service intervals");
+    //
+    // Read through `t` rather than pasted in: the claim is that this screen
+    // shows the same two feature rows the paywall did, not that they are
+    // phrased any particular way, and the pasted version went stale the first
+    // time the copy was edited.
+    expect(shown).toContain(t("features.garage.title"));
+    expect(shown).toContain(t("features.intervals.title"));
   });
 
   test("the one action opens the car, not the garage", () => {

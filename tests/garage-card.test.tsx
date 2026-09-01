@@ -108,10 +108,10 @@ function texts(node: TestRenderer.ReactTestInstance): string[] {
 }
 
 function colorOf(
-  tree: TestRenderer.ReactTestRenderer,
+  scope: TestRenderer.ReactTestInstance,
   text: string,
 ): TextStyle["color"] {
-  const node = tree.root.find(
+  const node = scope.find(
     (n) => typeof n.type === "string" && ownText(n) === text,
   );
   const style: TextStyle = StyleSheet.flatten(node.props.style);
@@ -160,8 +160,15 @@ test("the inner open-and-log pill is gone", () => {
 
 test("the row takes its ink from the tokens, not a hard-coded default", () => {
   const tree = render();
-  expect(colorOf(tree, NAME)).toBe(tokens.color.text);
-  expect(colorOf(tree, "\u203a")).toBe(tokens.color.textMuted);
+  // Scoped to the vehicle row. The garage now also carries a costs row with a
+  // chevron of its own, and this assertion is about the ink on *this* row —
+  // matching against the whole tree would make it fail the next time any other
+  // destination is added, which is not the thing being protected.
+  const row = pressables(tree.root).filter((p) =>
+    texts(p).some((s) => s.includes("Civic")),
+  )[0];
+  expect(colorOf(row, NAME)).toBe(tokens.color.text);
+  expect(colorOf(row, "\u203a")).toBe(tokens.color.textMuted);
 });
 
 test("the garage offers the schedule and a one-tap way to log, not a black screen", () => {
