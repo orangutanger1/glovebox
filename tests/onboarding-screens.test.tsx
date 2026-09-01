@@ -635,7 +635,7 @@ test("the last question requires an answer, like every other one", () => {
   expect(texts(render(OnboardingHelp)).join(" ").length).toBeGreaterThan(0);
 });
 
-test("the free and paid halves are named on the same screen as the answer", () => {
+test("the price boundary is never drawn before the paywall", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
@@ -648,14 +648,17 @@ test("the free and paid halves are named on the same screen as the answer", () =
     worries: ["records", "upsell"],
   });
 
-  // The boundary was its own screen between the evidence and the plan. Folding
-  // it here is only safe if every row it carried still prints, badge included:
-  // a user who reaches the paywall having never seen "Pro" against a row is
-  // the review this screen exists to prevent.
+  // The Free/Pro grid used to live here, and this test used to require it. It
+  // was removed on purpose: a user who has not yet seen a price learns from
+  // that grid that there is one to avoid, and reads the free column as a place
+  // to settle. The split belongs to the paywall, so the assertion is inverted
+  // rather than deleted — the screen is the reply to the three complaints and
+  // nothing else, and a badge reappearing here is the regression.
   const printed = texts(render(OnboardingHelp));
-  expect(printed).toContain("What you are getting.");
-  expect(printed.filter((s) => s === "Free")).toHaveLength(4);
-  expect(printed.filter((s) => s === "Pro")).toHaveLength(2);
+  expect(printed.length).toBeGreaterThan(0);
+  expect(printed).not.toContain("Free");
+  expect(printed).not.toContain("Pro");
+  expect(printed.join(" ")).not.toContain("What you are getting.");
 });
 
 test("the notify screen asks over a picture of the reminder itself", () => {
