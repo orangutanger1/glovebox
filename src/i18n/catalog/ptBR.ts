@@ -357,7 +357,7 @@ export const ptBR: Fragment = {
   "pain.resale.legend": "Revenda",
   "pain.resale.headline": "Histórico completo vale mais que histórico limpo",
   "pain.resale.body": "O comprador desconta o que você não consegue mostrar. A loja também.",
-  "pain.resale.fix": "Exporte todo o histórico e entregue. Nada fica atrás do Pro.",
+  "pain.resale.fix": "Exporte todo o histórico e entregue.",
 
   "pain.upsell.legend": "O balcão",
   "pain.upsell.headline": "Eles sabem o seu histórico. Você não.",

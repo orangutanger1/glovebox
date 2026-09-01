@@ -368,7 +368,7 @@ export const sv: Fragment = {
   "pain.resale.legend": "Försäljning",
   "pain.resale.headline": "En komplett historik är värd mer än en fläckfri",
   "pain.resale.body": "Köparen drar av för det du inte kan visa. Det gör handlaren också.",
-  "pain.resale.fix": "Exportera hela historiken och lämna över den. Inget ligger bakom Pro.",
+  "pain.resale.fix": "Exportera hela historiken och lämna över den.",
 
   "pain.upsell.legend": "Disken",
   "pain.upsell.headline": "De kan din historik. Du gör det inte.",

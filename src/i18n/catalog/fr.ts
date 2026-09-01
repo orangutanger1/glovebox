@@ -380,7 +380,7 @@ export const fr: Fragment = {
   "pain.resale.legend": "Revente",
   "pain.resale.headline": "Un historique complet vaut mieux qu'un historique propre",
   "pain.resale.body": "L'acheteur décote ce que vous ne pouvez pas montrer. Le concessionnaire aussi.",
-  "pain.resale.fix": "Exportez tout l'historique et remettez-le. Rien n'est derrière Pro.",
+  "pain.resale.fix": "Exportez tout l'historique et remettez-le.",
 
   "pain.upsell.legend": "Le comptoir",
   "pain.upsell.headline": "Ils connaissent votre historique. Vous, non.",

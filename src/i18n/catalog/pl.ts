@@ -419,7 +419,7 @@ export const pl: Fragment = {
   "pain.resale.legend": "Sprzedaż",
   "pain.resale.headline": "Pełna historia jest warta więcej niż czysta",
   "pain.resale.body": "Kupujący odlicza to, czego nie możesz pokazać. Dealer tak samo.",
-  "pain.resale.fix": "Wyeksportuj całą historię i przekaż ją. Nic nie stoi za Pro.",
+  "pain.resale.fix": "Wyeksportuj całą historię i przekaż ją.",
 
   "pain.upsell.legend": "Przy ladzie",
   "pain.upsell.headline": "Oni znają twoją historię. Ty nie.",

@@ -363,7 +363,7 @@ export const ko: Fragment = {
   "pain.resale.legend": "중고차 거래",
   "pain.resale.headline": "이력이 꽉 찬 차가 깨끗한 차보다 값이 나가요",
   "pain.resale.body": "구매자는 보여주지 못한 만큼 깎아요. 딜러도 마찬가지고요.",
-  "pain.resale.fix": "이력 전체를 내보내서 넘겨주세요. Pro 뒤에 잠긴 건 없어요.",
+  "pain.resale.fix": "이력 전체를 내보내서 넘겨주세요.",
 
   "pain.upsell.legend": "정비소 카운터",
   "pain.upsell.headline": "정비소는 내 이력을 알아요. 나는 몰라요.",

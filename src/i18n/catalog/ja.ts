@@ -340,7 +340,7 @@ export const ja: Fragment = {
   "pain.resale.legend": "売却",
   "pain.resale.headline": "きれいな履歴より、そろった履歴のほうが高く付きます",
   "pain.resale.body": "買い手は見せられない分を値引きします。買取店も同じです。",
-  "pain.resale.fix": "履歴をまるごと書き出して渡せます。Proの向こう側にあるものはありません。",
+  "pain.resale.fix": "履歴をまるごと書き出して渡せます。",
 
   "pain.upsell.legend": "受付カウンター",
   "pain.upsell.headline": "履歴を知っているのは相手で、あなたではありません。",

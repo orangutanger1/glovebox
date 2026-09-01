@@ -73,7 +73,7 @@ export const pain: Fragment = {
   "pain.resale.legend": "Resale",
   "pain.resale.headline": "A full history is worth more than a clean one",
   "pain.resale.body": "The buyer discounts what you cannot show them. So does the dealer.",
-  "pain.resale.fix": "Export the whole history and hand it over. Nothing locked behind Pro.",
+  "pain.resale.fix": "Export the whole history and hand it over.",
 
   "pain.upsell.legend": "The counter",
   "pain.upsell.headline": "They know your history. You do not.",

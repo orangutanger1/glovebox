@@ -2,10 +2,8 @@ import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
-import { Badge } from "../../src/design/Badge";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
-import { features } from "../../src/onboarding/features";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -20,21 +18,12 @@ import { useAdvance } from "../../src/onboarding/nav";
  * Every lamp is out. It is the same panel as the symptoms screen with the
  * alarms cleared, which is the entire argument made without a sentence.
  *
- * Underneath it, the whole app with the Free/Pro boundary printed on it. That
- * was its own screen, two before the paywall, and the split cost a tap to say
- * something this screen was already halfway through saying: the answer to the
- * user's three complaints is four capabilities that are free and two that are
- * not, and a reader who has to press Continue between the promise and its
- * price reads them as two claims instead of one. Saying it here rather than
- * letting the paywall be the first mention is still not generosity — the
- * complaint the review corpus returns most often after data loss is the price,
- * and almost all of that is people discovering the boundary after they had
- * committed to the app.
- *
- * Those six were a single panel of six identical badge-on-the-right rows,
- * which is how a capability becomes a line item: the screen ran well past a
- * phone's height and nothing on it was emphasised over anything else. They are
- * tiles now, two to a row, each on its own faceplate with the badge leading.
+ * The Free/Pro capability grid used to sit underneath. It is gone: printing
+ * the boundary here taught a user who has not yet seen a price that there is
+ * one to avoid, and named the free tier as a place they could settle. The
+ * paywall is where the split belongs. What is left is the reply to the three
+ * complaints and nothing else, which is also what makes the screen fit a
+ * phone.
  */
 export default function OnboardingHelp() {
   const advance = useAdvance("help");
@@ -77,48 +66,6 @@ export default function OnboardingHelp() {
           ))}
         </View>
       </Panel>
-
-      <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>
-        {t("offer.features.title")}
-      </Text>
-
-      {/* Tiles, two to a row, rather than six full-width rows in one panel.
-          Six identical rows is a spec sheet: the eye reads the shape once and
-          stops, so the sixth capability is worth nothing and the screen is
-          twice as tall as it needs to be. Paired, each capability is a face of
-          its own with its own edge, the Pro pair lands as a block instead of
-          as two more rows, and the whole boundary fits above the fold. */}
-      <View
-        style={{ flexDirection: "row", flexWrap: "wrap", gap: tokens.space.sm }}
-      >
-        {features().map((feature) => (
-          <Panel key={feature.id} style={{ flexGrow: 1, flexBasis: "46%" }}>
-            <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
-              <Badge
-                label={t(feature.pro ? "offer.badge.pro" : "offer.badge.free")}
-                tone={feature.pro ? "soon" : "ok"}
-              />
-              <Text
-                style={{
-                  ...tokens.text.body,
-                  fontWeight: "600",
-                  color: tokens.color.text,
-                }}
-              >
-                {feature.title}
-              </Text>
-              <Text
-                style={{
-                  ...tokens.text.caption,
-                  color: tokens.color.textMuted,
-                }}
-              >
-                {feature.subtitle}
-              </Text>
-            </View>
-          </Panel>
-        ))}
-      </View>
     </OnboardingScreen>
   );
 }

@@ -356,7 +356,7 @@ export const it: Fragment = {
   "pain.resale.legend": "Rivendita",
   "pain.resale.headline": "Uno storico completo vale più di uno storico pulito",
   "pain.resale.body": "Il compratore sconta quello che non puoi mostrargli. Anche il concessionario.",
-  "pain.resale.fix": "Esporta tutto lo storico e consegnalo. Niente resta dietro Pro.",
+  "pain.resale.fix": "Esporta tutto lo storico e consegnalo.",
 
   "pain.upsell.legend": "Il banco",
   "pain.upsell.headline": "Loro conoscono il tuo storico. Tu no.",

@@ -370,7 +370,7 @@ export const de: Fragment = {
   "pain.resale.legend": "Wiederverkauf",
   "pain.resale.headline": "Eine lückenlose Historie ist mehr wert als eine saubere",
   "pain.resale.body": "Der Käufer zieht ab, was du nicht zeigen kannst. Der Händler auch.",
-  "pain.resale.fix": "Exportier die ganze Historie und gib sie weiter. Nichts hängt hinter Pro.",
+  "pain.resale.fix": "Exportier die ganze Historie und gib sie weiter.",
 
   "pain.upsell.legend": "Der Tresen",
   "pain.upsell.headline": "Die kennen deine Historie. Du nicht.",

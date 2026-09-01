@@ -462,7 +462,7 @@ export const nl: Fragment = {
   "pain.resale.legend": "Verkoop",
   "pain.resale.headline": "Een volledige historie is meer waard dan een schone",
   "pain.resale.body": "De koper trekt af wat je niet kunt laten zien. De dealer ook.",
-  "pain.resale.fix": "Exporteer de hele historie en geef hem mee. Niets zit achter Pro.",
+  "pain.resale.fix": "Exporteer de hele historie en geef hem mee.",
 
   "pain.upsell.legend": "De balie",
   "pain.upsell.headline": "Zij kennen je historie. Jij niet.",
