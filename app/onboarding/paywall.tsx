@@ -145,7 +145,7 @@ export default function OnboardingPaywall() {
                 {/* A tick, not a lamp. The lamp is the car's warning light and
                     it is red; these three lines are what the user gets, and
                     stamping the app's alarm signal on them said the opposite. */}
-                <View style={{ paddingTop: 2 }}>
+                <View style={{ paddingTop: 0 }}>
                   <Check />
                 </View>
                 <Text

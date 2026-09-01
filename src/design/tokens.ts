@@ -14,6 +14,10 @@ export const tokens = {
     metal: "#454A50",
     white: "#FFFFFF",
     red: "#C1121F",
+    /** The confirmed telltale. A cluster's green lamp — the one that says a
+     *  system is on and working, as opposed to the red one that says it needs
+     *  something. Only ever marks a good, settled fact. */
+    green: "#2FBF71",
 
     // Derived from white at an alpha. No new hues enter the system.
     text: "#FFFFFF",
@@ -31,6 +35,11 @@ export const tokens = {
     // Red is reserved: overdue and destructive only. Never a primary button.
     redGlow: "rgba(193,18,31,0.45)",
     redWash: "rgba(193,18,31,0.14)",
+
+    // Green's counterparts, at the same alphas. Used behind a tick, never as a
+    // fill big enough to compete with the red lamp for attention.
+    greenGlow: "rgba(47,191,113,0.45)",
+    greenWash: "rgba(47,191,113,0.14)",
   },
 
   material: {
