@@ -45,7 +45,7 @@ export const fuel: Fragment = {
 
   "fuel.card.title": "Fuel",
   "fuel.card.spend": "Fuel spend",
-  "fuel.card.perDistance": "Cost per {unit}",
+  "fuel.card.perDistance": "Cost per 100 {unit}",
   "fuel.card.efficiency": "Efficiency",
   "fuel.card.months": "Last 12 months",
   "fuel.card.fills": {

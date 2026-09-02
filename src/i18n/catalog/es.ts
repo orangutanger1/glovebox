@@ -616,7 +616,7 @@ export const es: Fragment = {
   "fuel.form.needOdometer": "Indica el cuentakilómetros y cuánto combustible entró.",
   "fuel.card.title": "Combustible",
   "fuel.card.spend": "Gasto en combustible",
-  "fuel.card.perDistance": "Coste por {unit}",
+  "fuel.card.perDistance": "Coste por 100 {unit}",
   "fuel.card.efficiency": "Consumo",
   "fuel.card.months": "Últimos 12 meses",
   "fuel.card.fills": { one: "De {count} repostaje con precio.", other: "De {count} repostajes con precio." },

@@ -685,7 +685,7 @@ export const pl: Fragment = {
   "fuel.form.needOdometer": "Podaj stan licznika i ile paliwa wlano.",
   "fuel.card.title": "Paliwo",
   "fuel.card.spend": "Wydatki na paliwo",
-  "fuel.card.perDistance": "Koszt na {unit}",
+  "fuel.card.perDistance": "Koszt na 100 {unit}",
   "fuel.card.efficiency": "Spalanie",
   "fuel.card.months": "Ostatnie 12 miesięcy",
   "fuel.card.fills": { one: "Z {count} tankowania z ceną.", few: "Z {count} tankowań z ceną.", many: "Z {count} tankowań z ceną.", other: "Z {count} tankowania z ceną." },

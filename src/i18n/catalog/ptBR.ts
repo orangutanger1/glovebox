@@ -594,7 +594,7 @@ export const ptBR: Fragment = {
   "fuel.form.needOdometer": "Informe o odômetro e quanto combustível entrou.",
   "fuel.card.title": "Combustível",
   "fuel.card.spend": "Gasto com combustível",
-  "fuel.card.perDistance": "Custo por {unit}",
+  "fuel.card.perDistance": "Custo por 100 {unit}",
   "fuel.card.efficiency": "Consumo",
   "fuel.card.months": "Últimos 12 meses",
   "fuel.card.fills": { one: "De {count} abastecimento com preço.", other: "De {count} abastecimentos com preço." },

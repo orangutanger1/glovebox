@@ -599,7 +599,7 @@ export const ko: Fragment = {
   "fuel.form.needOdometer": "주행거리계 값과 주유량을 입력하세요.",
   "fuel.card.title": "연료",
   "fuel.card.spend": "연료비",
-  "fuel.card.perDistance": "{unit}당 비용",
+  "fuel.card.perDistance": "100{unit}당 비용",
   "fuel.card.efficiency": "연비",
   "fuel.card.months": "최근 12개월",
   "fuel.card.fills": { other: "금액을 입력한 주유 {count}건 기준." },

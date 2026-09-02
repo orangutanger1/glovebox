@@ -613,7 +613,7 @@ export const de: Fragment = {
   "fuel.form.needOdometer": "Trag den Tachostand ein und wie viel getankt wurde.",
   "fuel.card.title": "Kraftstoff",
   "fuel.card.spend": "Kraftstoffkosten",
-  "fuel.card.perDistance": "Kosten pro {unit}",
+  "fuel.card.perDistance": "Kosten pro 100 {unit}",
   "fuel.card.efficiency": "Verbrauch",
   "fuel.card.months": "Letzte 12 Monate",
   "fuel.card.fills": { one: "Aus {count} Füllung mit Preis.", other: "Aus {count} Füllungen mit Preis." },

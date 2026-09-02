@@ -573,7 +573,7 @@ export const ja: Fragment = {
   "fuel.form.needOdometer": "走行距離計の値と給油量を入力してください。",
   "fuel.card.title": "燃料",
   "fuel.card.spend": "燃料費",
-  "fuel.card.perDistance": "{unit}あたりの費用",
+  "fuel.card.perDistance": "100{unit}あたりの費用",
   "fuel.card.efficiency": "燃費",
   "fuel.card.months": "直近12か月",
   "fuel.card.fills": { other: "金額を入力した給油{count}件から。" },

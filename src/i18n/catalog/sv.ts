@@ -603,7 +603,7 @@ export const sv: Fragment = {
   "fuel.form.needOdometer": "Fyll i mätarställningen och hur mycket bränsle som gick in.",
   "fuel.card.title": "Bränsle",
   "fuel.card.spend": "Bränslekostnad",
-  "fuel.card.perDistance": "Kostnad per {unit}",
+  "fuel.card.perDistance": "Kostnad per 100 {unit}",
   "fuel.card.efficiency": "Förbrukning",
   "fuel.card.months": "Senaste 12 månaderna",
   "fuel.card.fills": { one: "Från {count} tankning med pris.", other: "Från {count} tankningar med pris." },

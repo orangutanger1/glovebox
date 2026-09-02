@@ -624,7 +624,7 @@ export const nl: Fragment = {
   "fuel.form.needOdometer": "Vul de kilometerstand in en hoeveel brandstof erin ging.",
   "fuel.card.title": "Brandstof",
   "fuel.card.spend": "Brandstofkosten",
-  "fuel.card.perDistance": "Kosten per {unit}",
+  "fuel.card.perDistance": "Kosten per 100 {unit}",
   "fuel.card.efficiency": "Verbruik",
   "fuel.card.months": "Laatste 12 maanden",
   "fuel.card.fills": { one: "Uit {count} tankbeurt met prijs.", other: "Uit {count} tankbeurten met prijs." },
