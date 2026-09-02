@@ -1,6 +1,7 @@
 import type { Entry, Fragment } from "../types";
 import { evidence } from "./evidence";
 import { features } from "./features";
+import { fuel } from "./fuel";
 import { garage } from "./garage";
 import { insights } from "./insights";
 import { intervals } from "./intervals";
@@ -37,6 +38,7 @@ import { vehicleForms } from "./vehicleForms";
 export const FRAGMENTS: Record<string, Fragment> = {
   evidence,
   features,
+  fuel,
   garage,
   insights,
   intervals,
