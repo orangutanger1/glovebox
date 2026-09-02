@@ -5,6 +5,14 @@ import {
   LITRES_PER_IMPERIAL_GALLON,
   LITRES_PER_US_GALLON,
 } from "../src/fuel/units";
+import { setLanguage } from "../src/i18n";
+import {
+  efficiencyUnitLabel,
+  formatEfficiency,
+  formatVolume,
+  volumeUnitLabel,
+} from "../src/fuel/format";
+
 
 describe("fuelUnitsFor", () => {
   test("the US pumps gallons and quotes MPG", () => {
@@ -58,4 +66,22 @@ test("which direction is good depends on the convention", () => {
   expect(betterEfficiency("mpg_us")).toBe("higher");
   expect(betterEfficiency("mpg_imp")).toBe("higher");
   expect(betterEfficiency("l_per_100km")).toBe("lower");
+});
+
+describe("formatting a fill", () => {
+  beforeAll(() => setLanguage("en"));
+
+  test("volume is labelled with the unit that was pumped", () => {
+    expect(formatVolume(12.4, "gal")).toBe("12.4 gal");
+    expect(formatVolume(48.2, "L")).toBe("48.2 L");
+    expect(volumeUnitLabel("gal")).toBe("gal");
+  });
+
+  test("efficiency is rounded to one decimal, which is all a tank supports", () => {
+    // A figure to three decimals implies a precision that a hand-entered
+    // odometer and a pump that stops on a round number do not have.
+    expect(formatEfficiency(32.456, "mpg_us")).toBe("32.5 mpg");
+    expect(formatEfficiency(7.8123, "l_per_100km")).toBe("7.8 L/100km");
+    expect(efficiencyUnitLabel("l_per_100km")).toBe("L/100km");
+  });
 });
