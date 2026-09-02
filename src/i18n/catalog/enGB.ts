@@ -41,7 +41,7 @@ export const enGB: Fragment = {
   "layout.garage": "My cars",
   "vehicle.delete.body":
     "It leaves your list of cars along with its service history. Records already exported stay in that file.",
-  "features.garage.subtitle": "Every car you own, each with its own schedule.",
+  "features.garage.subtitle": "Every car, van and lorry you own, tracked in one place.",
   "offer.winback.decline": "Just take me to my cars",
 
   // "Garage" as the workshop, which is where American English said "shop". A UK

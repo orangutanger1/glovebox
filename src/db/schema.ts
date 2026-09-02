@@ -91,6 +91,43 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
       ALTER TABLE vehicles ADD COLUMN body_style TEXT;
     `,
   },
+  // Fuel is logged weekly where a service is logged yearly, so these rows will
+  // outnumber service_records roughly 50:1. Its own table rather than a
+  // `service_type = 'fuel'` row: every existing query over service_records —
+  // costedRecords(), the interval engine, the due logic — would otherwise
+  // silently start counting fill-ups.
+  //
+  // odometer and volume are NOT NULL, the opposite of service_records and
+  // deliberately so. A service with no odometer is still a record of work done;
+  // a fill with no odometer can never produce a distance and corrupts the
+  // efficiency of the fill after it too. Requiring them here means the math
+  // never has to ask whether a row is trustworthy.
+  //
+  // cost stays nullable, matching the provenance rule src/insights is built on:
+  // a fill nobody priced must not be summed as a zero.
+  //
+  // The index is on odometer rather than filled_at because efficiency is
+  // computed over distance, so odometer order is the true order — someone
+  // logging yesterday's fill this morning is still placed correctly.
+  {
+    version: 7,
+    sql: `
+      CREATE TABLE IF NOT EXISTS fuel_entries (
+        id TEXT PRIMARY KEY NOT NULL,
+        vehicle_id TEXT NOT NULL,
+        filled_at TEXT NOT NULL,
+        odometer INTEGER NOT NULL,
+        volume REAL NOT NULL,
+        cost REAL,
+        full INTEGER NOT NULL DEFAULT 1,
+        deleted_at TEXT,
+        created_at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_fuel_vehicle
+        ON fuel_entries (vehicle_id, odometer);
+    `,
+  },
 ];
 
 /**

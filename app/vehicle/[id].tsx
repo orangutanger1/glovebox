@@ -17,11 +17,15 @@ import {
   undoDelete,
   type ServiceRecord,
 } from "../../src/db/records";
+import { listFuelEntries, type FuelRow } from "../../src/db/fuel";
+import { averageEfficiency, latestEfficiency } from "../../src/fuel";
+import { currentFuelUnits, formatEfficiency, formatVolume } from "../../src/fuel/format";
 import { nextDue, dueStatus } from "../../src/schedule";
 import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
 import { t, formatNumber, formatDate } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
+import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
 
@@ -66,6 +70,11 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
 
 const UNDO_WINDOW_MS = 8000;
 
+/** The recent fills the summary shows before it defers to the full list. Three
+ *  rather than ten: this block sits above the service history, which is what
+ *  the screen is for. */
+const RECENT_FILLS = 3;
+
 /**
  * The facts a history row can carry, as one message per combination: the middot
  * is punctuation a translator has to be able to change, and only a whole
@@ -74,11 +83,57 @@ const UNDO_WINDOW_MS = 8000;
 function recordSubtitle(record: ServiceRecord): string {
   const date = formatDate(record.performed_at);
   const distance = record.odometer ? formatDistance(record.odometer) : undefined;
-  const cost = record.cost ? `$${record.cost.toLocaleString()}` : undefined;
+  const cost = record.cost ? formatMoney(record.cost) : undefined;
   if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
   if (distance) return t("vehicle.row.dateDistance", { date, distance });
   if (cost) return t("vehicle.row.dateCost", { date, cost });
   return date;
+}
+
+/**
+ * Last tank, with the average beneath it.
+ *
+ * The two "not yet" states are the point. A dash where a figure belongs reads
+ * as a broken calculation, and a user whose first fill produced nothing has to
+ * be told that the second full tank is where the number arrives — otherwise
+ * the feature looks broken on exactly the day they first try it.
+ */
+function FuelSummary({ entries }: { entries: FuelRow[] }) {
+  const { style } = currentFuelUnits();
+  const latest = latestEfficiency(entries, style);
+  const average = averageEfficiency(entries, style);
+
+  if (latest === null) {
+    return (
+      <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+        {entries.length === 0 ? t("fuel.summary.needFirst") : t("fuel.summary.needSecond")}
+      </Text>
+    );
+  }
+
+  return (
+    <View style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}>
+      <Gauge legend={t("fuel.summary.last")} value={formatEfficiency(latest, style)} />
+      {average !== null ? (
+        <Gauge
+          legend={t("fuel.summary.average")}
+          value={formatEfficiency(average, style)}
+          align="right"
+        />
+      ) : null}
+    </View>
+  );
+}
+
+/** A fill row, carrying the same facts as a service row and through the same
+ *  messages: "date · distance · cost" is exactly a fill. */
+function fillSubtitle(entry: FuelRow): string {
+  const date = formatDate(entry.filled_at);
+  const distance = formatDistance(entry.odometer);
+  const cost = entry.cost ? formatMoney(entry.cost) : undefined;
+  return cost
+    ? t("vehicle.row.dateDistanceCost", { date, distance, cost })
+    : t("vehicle.row.dateDistance", { date, distance });
 }
 
 function SectionLegend({ children }: { children: string }) {
@@ -92,12 +147,14 @@ export default function VehicleDetail() {
   const router = useRouter();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [records, setRecords] = useState<ServiceRecord[]>([]);
+  const [fuel, setFuel] = useState<FuelRow[]>([]);
   const [undoId, setUndoId] = useState<string | null>(null);
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const refresh = useCallback(() => {
     setVehicle(getVehicle(id));
     setRecords(listRecords(id));
+    setFuel(listFuelEntries(id));
   }, [id]);
 
   useFocusEffect(refresh);
@@ -233,6 +290,33 @@ export default function VehicleDetail() {
               </View>
             ) : null}
 
+            {/* A section of its own, never interleaved with the history below.
+                After a few months this is forty fill-ups, and an oil change
+                buried among them is the log the app exists for, lost. */}
+            <View style={{ gap: tokens.space.xs }}>
+              <SectionLegend>{t("fuel.title")}</SectionLegend>
+              <Panel>
+                <View style={{ padding: tokens.space.md }}>
+                  <FuelSummary entries={fuel} />
+                </View>
+              </Panel>
+              {fuel.slice(0, RECENT_FILLS).map((f) => (
+                <ListRow
+                  key={f.id}
+                  title={formatVolume(f.volume)}
+                  subtitle={fillSubtitle(f)}
+                  status="ok"
+                />
+              ))}
+              {fuel.length > RECENT_FILLS ? (
+                <Pressable onPress={() => router.push(`/vehicle/${id}/fuel`)}>
+                  <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+                    {t("fuel.seeAll")}
+                  </Text>
+                </Pressable>
+              ) : null}
+            </View>
+
             <SectionLegend>{t("vehicle.history")}</SectionLegend>
           </View>
         }
@@ -303,7 +387,24 @@ export default function VehicleDetail() {
               </View>
             </Pressable>
           ) : null}
-          <Button label={t("vehicle.logService")} onPress={() => router.push(`/vehicle/${id}/log`)} />
+          {/* Two actions, equal width. Logging fuel happens weekly and logging
+              a service yearly, so the fuel button cannot be buried — but the
+              service log is what the app is, so it keeps the primary weight. */}
+          <View style={{ flexDirection: "row", gap: tokens.space.sm }}>
+            <View style={{ flex: 1 }}>
+              <Button
+                label={t("vehicle.logService")}
+                onPress={() => router.push(`/vehicle/${id}/log`)}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Button
+                label={t("fuel.log")}
+                variant="secondary"
+                onPress={() => router.push(`/vehicle/${id}/fuel/new`)}
+              />
+            </View>
+          </View>
         </View>
       </Glass>
     </SafeAreaView>

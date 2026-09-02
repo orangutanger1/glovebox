@@ -328,3 +328,22 @@ labels of unequal width a five-option list wrapped 3 + 2 with the fourth option
 sitting beside the third — a list with no reading order. Both now stack one
 chip per line. Presentation only; the options, their order and their events are
 unchanged.
+
+**Fuel logging shipped (2026-09-01), adding two events.** `fuel_logged`
+carries `full` (whether the tank was filled) and `priced` (whether a cost was
+entered); `fuel_card_paywall` fires when a free user taps the locked fuel card
+on the costs screen. Neither renames nor replaces an existing event, so every
+onboarding funnel is unaffected and nothing here needs segmenting.
+
+What does change is the population behind the retention numbers from this build
+on. Fuel is logged weekly where a service is logged yearly, so sessions per
+user and log-writes per user are both expected to rise for reasons that have
+nothing to do with the flow that precedes them. A retention or engagement read
+spanning this build is comparing an app with one weekly reason to open it
+against an app with none.
+
+`fuel_card_paywall` is also the app's third paywall entry point, alongside the
+add-vehicle and intervals gates. Any paywall-conversion figure pooled across
+entry points is now pooled across three, and the fuel one reaches users who
+have already entered data of their own — a different intent from the other two,
+and worth segmenting rather than averaging.
