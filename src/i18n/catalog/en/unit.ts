@@ -14,4 +14,16 @@ export const unit: Fragment = {
   "unit.km": "{value} km",
   "unit.mi.label": "mi",
   "unit.km.label": "km",
+
+  // Volume and efficiency, under the same rule and for the same reason. The
+  // abbreviations themselves are not translated: "mpg" and "L/100km" are what a
+  // driver reads on a pump and in a spec sheet in every one of these markets.
+  "unit.gal": "{value} gal",
+  "unit.litre": "{value} L",
+  "unit.gal.label": "gal",
+  "unit.litre.label": "L",
+  "unit.mpg": "{value} mpg",
+  "unit.l100km": "{value} L/100km",
+  "unit.mpg.label": "mpg",
+  "unit.l100km.label": "L/100km",
 };

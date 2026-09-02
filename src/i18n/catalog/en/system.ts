@@ -33,6 +33,10 @@ export const system: Fragment = {
   "system.csv.header.notes": "Notes",
   "system.csv.header.deleted": "Deleted",
   "system.csv.cell.deleted": "deleted",
+  "system.csv.fuel.volume": "Fuel ({unit})",
+  "system.csv.fuel.full": "Full tank",
+  "system.csv.cell.yes": "Yes",
+  "system.csv.cell.no": "No",
 
   "system.quickaction.trial.title": "Try Pro free",
   "system.quickaction.trial.subtitle": {
