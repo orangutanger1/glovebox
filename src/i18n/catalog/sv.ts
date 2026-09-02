@@ -620,4 +620,8 @@ export const sv: Fragment = {
   "unit.l100km": "{value} L/100km",
   "unit.mpg.label": "mpg",
   "unit.l100km.label": "L/100km",
+  "system.csv.fuel.volume": "Bränsle ({unit})",
+  "system.csv.fuel.full": "Full tank",
+  "system.csv.cell.yes": "Ja",
+  "system.csv.cell.no": "Nej",
 };

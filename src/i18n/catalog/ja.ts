@@ -590,4 +590,8 @@ export const ja: Fragment = {
   "unit.l100km": "{value}L/100km",
   "unit.mpg.label": "mpg",
   "unit.l100km.label": "L/100km",
+  "system.csv.fuel.volume": "給油量（{unit}）",
+  "system.csv.fuel.full": "満タン",
+  "system.csv.cell.yes": "はい",
+  "system.csv.cell.no": "いいえ",
 };

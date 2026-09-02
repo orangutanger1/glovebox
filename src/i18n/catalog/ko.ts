@@ -616,4 +616,8 @@ export const ko: Fragment = {
   "unit.l100km": "{value}L/100km",
   "unit.mpg.label": "mpg",
   "unit.l100km.label": "L/100km",
+  "system.csv.fuel.volume": "주유량({unit})",
+  "system.csv.fuel.full": "가득 주유",
+  "system.csv.cell.yes": "예",
+  "system.csv.cell.no": "아니오",
 };

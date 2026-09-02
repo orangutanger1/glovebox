@@ -19,7 +19,14 @@ jest.mock("../src/db/client", () => {
   };
 });
 
-import { toCsv } from "../src/export/csv";
+// The US region makes the fuel column gallons, which is what the rows below
+// are written in.
+jest.mock("../src/i18n/device", () => ({
+  deviceRegion: () => "US",
+  deviceLanguageTags: () => ["en-US"],
+}));
+
+import { toCsv, toFuelCsv } from "../src/export/csv";
 import { setLanguage } from "../src/i18n";
 import { getDistanceUnit, setDistanceUnit } from "../src/units";
 
@@ -102,4 +109,66 @@ test("marks soft-deleted rows instead of omitting them", () => {
     },
   ]);
   expect(out.trim().endsWith(",deleted")).toBe(true);
+});
+
+const FUEL_HEADER = "Vehicle,Date,Odometer (mi),Fuel (gal),Cost,Full tank,Deleted\n";
+
+test("the fuel export writes a header row even with no fills", () => {
+  expect(toFuelCsv([])).toBe(FUEL_HEADER);
+});
+
+test("the fuel columns say which units their numbers are in", () => {
+  // Bare numbers are unreadable once the app can store either unit: 40 is a
+  // large tank in gallons and a small one in litres.
+  expect(toFuelCsv([])).toContain("Odometer (mi)");
+  expect(toFuelCsv([])).toContain("Fuel (gal)");
+});
+
+test("an unpriced fill exports an empty cost cell, never a zero", () => {
+  const csv = toFuelCsv([
+    {
+      vehicle_name: "Civic",
+      filled_at: "2026-03-01T12:00:00.000Z",
+      odometer: 1200,
+      volume: 12,
+      full: 1,
+    },
+  ]);
+  expect(csv).toContain("Civic,2026-03-01,1200,12,,Yes,\n");
+});
+
+test("a partial is marked, so a spreadsheet can reproduce the tank rule", () => {
+  const csv = toFuelCsv([
+    {
+      vehicle_name: "Civic",
+      filled_at: "2026-03-01T12:00:00.000Z",
+      odometer: 1200,
+      volume: 5,
+      cost: 20,
+      full: 0,
+    },
+  ]);
+  expect(csv).toContain(",No,");
+});
+
+test("a deleted fill is still exported, and marked", () => {
+  // The export's obligation is the opposite of a total's: it must never lose a
+  // row the user once had.
+  const csv = toFuelCsv([
+    {
+      vehicle_name: "Civic",
+      filled_at: "2026-03-01T12:00:00.000Z",
+      odometer: 1200,
+      volume: 12,
+      full: 1,
+      deleted_at: "2026-03-02T12:00:00.000Z",
+    },
+  ]);
+  expect(csv).toContain(",deleted\n");
+});
+
+test("the existing service export is untouched", () => {
+  // Its column set is a contract someone's spreadsheet keys off, which is the
+  // whole reason fuel went into a second file.
+  expect(toCsv([])).toBe(HEADER);
 });

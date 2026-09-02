@@ -611,4 +611,8 @@ export const ptBR: Fragment = {
   "unit.l100km": "{value} L/100km",
   "unit.mpg.label": "mpg",
   "unit.l100km.label": "L/100km",
+  "system.csv.fuel.volume": "Combustível ({unit})",
+  "system.csv.fuel.full": "Tanque cheio",
+  "system.csv.cell.yes": "Sim",
+  "system.csv.cell.no": "Não",
 };
