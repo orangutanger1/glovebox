@@ -1,3 +1,4 @@
+import { AppState } from "react-native";
 import Purchases, { LOG_LEVEL, type PurchasesOffering } from "react-native-purchases";
 import RevenueCatUI, { PAYWALL_RESULT, type CustomerCenterCallbacks } from "react-native-purchases-ui";
 import { track } from "../analytics";
@@ -125,12 +126,33 @@ const STALL_MS = 8000;
  * sheet that comes up late is reported late rather than abandoned, and a second
  * presentation — the failure that stacks two unreachable sheets — remains
  * impossible.
+ *
+ * The timer only reports a stall the app was actually awake for. StoreKit will
+ * not put a sheet over a backgrounded app, so a user who switches away mid-wait
+ * comes back to a paywall that presents on the next foreground — which is a
+ * slow sheet, not a missing one. On 2026-09-03 one user produced exactly that:
+ * `paywall_shown` at 02:51:47, this timer at 02:51:55, background at 02:52:47,
+ * foreground at 02:54:50, and `paywall_presented` three seconds later. Counting
+ * that as a stall is what made a fixed paywall read as still broken. So a
+ * backgrounded app suppresses the report rather than delaying it: the question
+ * this event answers is "was the app alive and waiting", and an app in the
+ * background was not.
  */
 function withStallWatch<T>(offering: string, presenting: Promise<T>): Promise<T> {
+  // Sampled at the tap, not inside the timer: a sheet asked for while the app
+  // was already on its way out has never had a foreground to appear in.
+  let awake = AppState.currentState === "active";
+  const backgrounded = AppState.addEventListener("change", (next) => {
+    if (next !== "active") awake = false;
+  });
   const timer = setTimeout(() => {
+    if (!awake) return;
     track("paywall_stalled", { offering, ms: STALL_MS });
   }, STALL_MS);
-  return presenting.finally(() => clearTimeout(timer));
+  return presenting.finally(() => {
+    clearTimeout(timer);
+    backgrounded.remove();
+  });
 }
 
 /**
