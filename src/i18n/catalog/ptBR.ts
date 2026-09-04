@@ -221,6 +221,7 @@ export const ptBR: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84.210",
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption": "Um número aproximado já serve.",
+  "onboardingA.odometer.required": "Informe a leitura para continuar.",
 
   "onboardingA.drive.title": "Quanto você roda com ele?",
   "onboardingA.drive.legend": "Distância por ano ({unit})",

@@ -230,6 +230,7 @@ export const ko: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84,210",
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption": "대략이어도 괜찮아요.",
+  "onboardingA.odometer.required": "계속하려면 주행거리를 입력하세요.",
 
   "onboardingA.drive.title": "한 해에 얼마나 타세요?",
   "onboardingA.drive.legend": "연간 주행거리({unit})",

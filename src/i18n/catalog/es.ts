@@ -229,6 +229,7 @@ export const es: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84.210",
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption": "Un número aproximado sirve.",
+  "onboardingA.odometer.required": "Introduce la lectura para continuar.",
 
   "onboardingA.drive.title": "¿Cuánto conduces al año?",
   "onboardingA.drive.legend": "Distancia al año ({unit})",

@@ -240,6 +240,7 @@ export const fr: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84\u202f210",
   "onboardingA.odometer.placeholder.km": "135\u202f600",
   "onboardingA.odometer.caption": "Un ordre de grandeur suffit.",
+  "onboardingA.odometer.required": "Saisis le relevé pour continuer.",
 
   "onboardingA.drive.title": "Combien roulez-vous avec\u00a0?",
   "onboardingA.drive.legend": "Distance par an ({unit})",

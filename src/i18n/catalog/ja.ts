@@ -217,6 +217,7 @@ export const ja: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84,210",
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption": "だいたいの数字で構いません。",
+  "onboardingA.odometer.required": "続けるには走行距離を入力してください。",
 
   "onboardingA.drive.title": "年間どのくらい走りますか？",
   "onboardingA.drive.legend": "年間走行距離（{unit}）",
