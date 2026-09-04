@@ -347,3 +347,88 @@ add-vehicle and intervals gates. Any paywall-conversion figure pooled across
 entry points is now pooled across three, and the fuel one reaches users who
 have already entered data of their own — a different intent from the other two,
 and worth segmenting rather than averaging.
+
+### 2026-09-04 — the watchdog guard, the odometer error, and the cohort clock restarting
+
+**Two onboarding-adjacent changes shipped together (`4d37965`, `752180e`,
+merged as `4828261`), so the cohort clock restarts here.** Anything reading
+`paywall_stalled` or `onboarding_step_blocked` on `odometer` must segment at
+this bundle, not pool across it.
+
+**`paywall_stalled` changed meaning.** Before this build the event fired on a
+bare 8-second timer with no knowledge of whether the app was still in the
+foreground. StoreKit will not present a sheet over a backgrounded app, so a
+user who switched away mid-wait produced a `paywall_stalled` and then a
+perfectly normal `paywall_presented` on their return. The watchdog now samples
+`AppState` at the tap and suppresses the report if the app leaves the
+foreground before the timer fires.
+
+Consequences:
+
+- **Every `paywall_stalled` before this build is an upper bound, not a count.**
+  Pre-boundary and post-boundary stall rates are not the same measurement and
+  must never be divided into one another.
+- The correct pre-boundary reconstruction is to pair each `paywall_shown` with
+  the `paywall_presented` that follows it for the same distinct id, and ignore
+  the stall event entirely. Done that way, OTA `01a05fab` (02 Sep) presents for
+  4 of 4 tappers through 04 Sep 18:12Z, and `01a05f4b` for 1 of 1. The last
+  build on which the bug is real is `c8bc1771`, at 2 of 4.
+
+**This is the second time an instrument, not the product, produced the
+finding.** The 08-29 entry records seven controls that could refuse a user
+while emitting nothing; this one records an event that fired when nothing was
+wrong. Both were read as product failures first. The budget freeze of 31 Aug
+(`faae312`) was held three days past the fix on the strength of a single false
+positive, which is the cost of the error and is worth stating as one.
+
+**`odometer` gained an inline error message.** A refused Continue now renders
+"Enter the reading to continue." (and its equivalent in all eleven catalog
+languages) where it previously gave a haptic and nothing else. The screen is
+still mandatory and the gate is unchanged — what changed is what the user reads
+at the moment of refusal, so `onboarding_step_blocked` counts on `odometer`
+are not comparable across this build. Expect the refused-tap count per user to
+fall without the drop-off changing, and do not read that fall as a funnel
+improvement.
+
+**A recorded finding, not a break: there is no odometer parser bug.** Across
+31 Aug – 4 Sep the screen produced 22 refusals from 8 users and **every one
+carried `reason=empty`; `unparseable` did not fire once.** Trigger item 2 in
+`2026-08-29-onboarding-screen-audit.md` — "fix `parseNumber` immediately, at
+any volume" — has therefore been checked and has nothing to act on. It is
+resolved by measurement rather than by a fix, and is marked so in that file.
+
+**The symptoms screen's 82 blocked presses are not 82 impatient users.** They
+come from 3 distinct ids against an 800ms dwell timer, which counts its own
+ticks. Trigger item 1 (ungate any route refusing more than ~30% of its viewers)
+must be evaluated on distinct users per route, never on raw event counts, or
+`symptoms` will fail it every time on three devices.
+
+### 2026-09-04 — the onboarding freeze, and what it is waiting for
+
+Not a break. Recorded here so the absence of changes is as legible as the
+changes, and so the next session does not re-derive it.
+
+**Onboarding structure is frozen from this build until the trigger in
+`2026-08-29-onboarding-screen-audit.md` is met.** The trigger is ~40 installs
+reaching `route=vehicle` on one unchanged bundle, segmented by
+`ota_update_id`. The state as of today:
+
+| | |
+| --- | --- |
+| Unique users at `route=vehicle`, 31 Aug – 4 Sep | 19, pooled across 3 OTA builds |
+| Largest single-bundle paywall cohort | 4, on `01a05fab` |
+| Arrival rate at `vehicle` | ~3.8/day |
+| Paid installs | ~1.4/day |
+| Subscriptions, per Apple and per RevenueCat | **0** — 0 active trials, 0 active subs, $0.00 over 28 days against 71 new customers |
+
+At the observed rate the trigger is roughly ten days out from this bundle, and
+only if nothing ships into onboarding in the meantime. The two deferred devices
+from `research/onboarding-competitive/patterns.md` — the pre-paywall completion
+checklist (Pattern 10) and trial-first vs trial-on-dismissal (Pattern 8) — are
+precisely the changes that would destroy the baseline they are meant to be
+measured against, so neither ships before the trigger.
+
+**The two `subscription_success` events in PostHog are not sales.** They belong
+to one device in Anaheim on builds 22 and 23, the same geography as the
+`entry-bootstrap` crash reports, and both stores report zero. Treat
+install→paid as 0 and do not let the event count contradict the ledger.

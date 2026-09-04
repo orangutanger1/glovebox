@@ -322,10 +322,20 @@ Then cut in this order, from the blocked-press data:
    event.** That is the gate failing, not the screen. Ungate it before removing
    anything — a screen people cannot get past is not a screen people do not
    want.
-2. **`odometer` with `reason=unparseable`, at any volume, immediately.** It does
-   not wait for the cohort and it is not a funnel question: it means
-   `parseNumber` refused something a person read off their own dash. Fix the
-   parser.
+2. ~~**`odometer` with `reason=unparseable`, at any volume, immediately.**~~
+   **Checked 2026-09-04: nothing to fix.** Over 31 Aug - 4 Sep the screen
+   produced 22 refusals from 8 users and **every one carried `reason=empty`**;
+   `unparseable` did not fire once. Nobody is fighting `parseNumber`. The
+   refusals are people who have not been out to the car, which is the gate
+   working, against a greyed button that gave a haptic and no words. That was
+   fixed on the same day (`752180e`) with an inline "Enter the reading to
+   continue." in all eleven catalog languages; the screen stays mandatory.
+
+   This item is resolved by measurement rather than by a fix, which is the
+   outcome the instrumentation was built for. It stays on the list, struck
+   through, because the reasoning that put it here was sound and the standing
+   rule survives: an `unparseable` at any volume is still a parser bug and
+   still jumps the queue.
 3. **`body`.** ~~Cut if `route:body → route:odometer` drops more than the other
    one-tap steps.~~ **Done 2026-08-29, ahead of the cohort, on the owner's
    call.** The screen is removed, the quiz is six questions, and the register
