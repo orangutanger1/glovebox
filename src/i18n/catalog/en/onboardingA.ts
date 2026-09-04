@@ -41,6 +41,7 @@ export const onboardingA: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84,210",
   "onboardingA.odometer.placeholder.km": "135,600",
   "onboardingA.odometer.caption": "A rough number is fine.",
+  "onboardingA.odometer.required": "Enter the reading to continue.",
 
   "onboardingA.drive.title": "How far do you drive it?",
   "onboardingA.drive.legend": "Distance a year ({unit})",

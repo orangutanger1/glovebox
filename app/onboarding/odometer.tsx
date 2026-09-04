@@ -54,6 +54,13 @@ export default function OnboardingOdometer() {
   // six-figure readings stacked on one screen is the app disagreeing with
   // itself about the only fact this screen exists to collect.
   const demo = useMemo(() => randomOdometerReading(), []);
+  // Set by a refused Continue, cleared by the next keystroke. The greyed button
+  // already fires a warning haptic, which says "that tap registered and was
+  // refused" but not what it wants: 8 of the 17 users who reached this screen
+  // in the five days from 2026-08-31 tapped it with an empty field, 22 times
+  // between them, and none of them ever typed anything unparseable. They were
+  // not fighting the parser, they were being refused without being told why.
+  const [refused, setRefused] = useState(false);
 
   const unit = getDistanceUnit();
   const reading = parseNumber(odometer);
@@ -90,9 +97,10 @@ export default function OnboardingOdometer() {
           // second is a bug report — a grouped reading copied off the dash, a
           // decimal comma, a unit suffix — and it has to be separable from a
           // user who simply has not been out to the car yet.
-          onBlockedPress={() =>
-            trackStepBlocked("odometer", odometer.trim() === "" ? "empty" : "unparseable")
-          }
+          onBlockedPress={() => {
+            setRefused(true);
+            trackStepBlocked("odometer", odometer.trim() === "" ? "empty" : "unparseable");
+          }}
         />
       }
     >
@@ -108,9 +116,13 @@ export default function OnboardingOdometer() {
           <Field
             label={t("onboardingA.odometer.field", { unit: distanceUnitLabel(unit) })}
             value={odometer}
-            onChangeText={setOdometer}
+            onChangeText={(next) => {
+              setRefused(false);
+              setOdometer(next);
+            }}
             keyboardType="numeric"
             placeholder={t(`onboardingA.odometer.placeholder.${unit}`)}
+            error={refused ? t("onboardingA.odometer.required") : undefined}
             onFocus={() => trackVehicleEntry("odometer", "focused")}
           />
         </View>

@@ -231,6 +231,7 @@ export const sv: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84\u00A0210",
   "onboardingA.odometer.placeholder.km": "135\u00A0600",
   "onboardingA.odometer.caption": "En ungefärlig siffra räcker.",
+  "onboardingA.odometer.required": "Ange mätarställningen för att fortsätta.",
 
   "onboardingA.drive.title": "Hur långt kör du den?",
   "onboardingA.drive.legend": "Sträcka per år ({unit})",

@@ -317,6 +317,7 @@ export const nl: Fragment = {
   "onboardingA.odometer.placeholder.mi": "84.210",
   "onboardingA.odometer.placeholder.km": "135.600",
   "onboardingA.odometer.caption": "Een ruwe schatting is prima.",
+  "onboardingA.odometer.required": "Voer de stand in om door te gaan.",
 
   "onboardingA.drive.title": "Hoeveel rijd je ermee?",
   "onboardingA.drive.legend": "Afstand per jaar ({unit})",

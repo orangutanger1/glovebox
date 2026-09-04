@@ -106,7 +106,7 @@
 		{
 			"role": "exact",
 			"name": "Wrenchy · Exact · US",
-			"dailyBudget": 2,
+			"dailyBudget": 3,
 			"totalBudget": 360,
 			"countriesOrRegions": [
 				"US"
