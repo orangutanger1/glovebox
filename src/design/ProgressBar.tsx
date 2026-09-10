@@ -2,14 +2,27 @@ import { useEffect, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
 import { tokens } from "./tokens";
 
+/** Ease in, ease out, and hard through the middle — the standard cubic pair
+ *  rather than React Native's own `Easing.inOut(Easing.cubic)`, which spends
+ *  so long on the ramps that the bar looks stalled at both ends. */
+const CURVE = Easing.bezier(0.65, 0, 0.35, 1);
+
 /**
  * A machined slot with a bar filling it, for the one screen that makes the
  * user wait.
  *
  * Inset, not raised: the track is shadowed on its top edge, which is how every
  * well in this design system is drawn, and the fill is the only lit thing in
- * it. Linear easing on purpose. A progress bar that accelerates at the end is
- * telling the user something about the work that is not true.
+ * it.
+ *
+ * It eases in and out rather than running flat. The first version was linear,
+ * on the argument that a bar which accelerates is lying about the work — but
+ * the wait it describes is not flat either. It starts as a machine picking the
+ * job up and ends as one setting the answer down, and a constant-rate fill
+ * across both reads as a countdown timer: something the app is waiting out
+ * rather than something it is doing. The curve is symmetric, so the bar is
+ * still at its own halfway point at the halfway moment and the readout beside
+ * it never disagrees with the clock by more than the shape of the ramp.
  *
  * Width, not `scaleX`: a scaled bar grows from its centre unless it is nudged
  * back with a translate, and the two transforms disagree on a fractional
@@ -41,7 +54,7 @@ export function ProgressBar({
     const run = Animated.timing(progress, {
       toValue: 1,
       duration,
-      easing: Easing.linear,
+      easing: CURVE,
       useNativeDriver: false,
     });
     run.start();

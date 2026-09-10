@@ -263,7 +263,7 @@ export default function RootLayout() {
         // this route, and a subscription cancelled inside Customer Center
         // keeps its entitlement until the period it was paid for runs out.
         if (isLocked({ isPro: pro, grandfathered, isOnboarded: true })) {
-          router.replace("/locked");
+          router.replace("/onboarding/offer?walled=1");
           return;
         }
 
@@ -406,7 +406,6 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
         {/* No header, no back and no swipe. Being unable to leave without
             subscribing or restoring is what this screen is; a gesture out of
             it would drop the user into the garage it exists to close. */}
-        <Stack.Screen name="locked" options={{ headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="trial" options={{ headerShown: false }} />
         {/* No header and no back: onboarding has already been completed by the
             time this mounts, so there is nothing behind it to return to. */}

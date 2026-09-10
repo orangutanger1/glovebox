@@ -197,7 +197,6 @@ export const ko: Fragment = {
     other: "{count}일 시작하기",
   },
   "offer.trial.decline": "괜찮아요",
-  "offer.trial.subtitle": "오늘부터 Pro 전체 기능을 특별 가격으로.",
   "offer.trial.legend": "이 제안이 진행되는 방식",
   "offer.trial.now.title": "오늘",
   "offer.trial.now.body": "플랜, 알림, 전체 기록까지 모두 열립니다.",
@@ -677,7 +676,4 @@ export const ko: Fragment = {
   "system.csv.cell.yes": "예",
   "system.csv.cell.no": "아니오",
 
-  "locked.title": "Wrenchy는 구독제입니다.",
-  "locked.body": "차도, 계획도, 알림도 모두 그대로 있어요. 무료 버전은 없습니다. 구독 하나로 앱 전체가 열리고, 첫 주부터 시작해요.",
-  "locked.cta": "내 차고 열기",
 };

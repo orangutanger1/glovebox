@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useRouter } from "expo-router";
 import { completeOnboarding, setOnboardingStep } from ".";
-import { isGrandfathered } from "../paywall";
 import { track } from "../analytics";
 import { cancelOnboardingNudges } from "../notify";
 import { nextRoute, type OnboardingRoute } from "./flow";
@@ -66,13 +65,13 @@ export function useFinish(): (exit: "paid" | "trial" | "free") => void {
         router.replace("/subscribed");
         return;
       }
-      // Declined twice. There is no free tier to land in any more, so this
-      // exit is the wall — except for an install that finished onboarding
-      // under a build that promised one, which keeps the app it was promised.
-      // The garage is still what a grandfathered decliner gets: there is
-      // nothing to confirm and a screen congratulating them for saying no
-      // twice would be the worst screen in the product.
-      router.replace(isGrandfathered() ? "/" : "/locked");
+      // The garage. This exit is only reachable by an install that finished
+      // onboarding under a build that promised a free tier, and that promise
+      // outlives the build that made it. Nobody else leaves the flow without
+      // paying: the trial screen keeps a decliner on itself rather than
+      // handing them on to a wall, so there is no second screen to route to
+      // and no free landing to congratulate anyone for saying no twice.
+      router.replace("/");
     },
     [router]
   );

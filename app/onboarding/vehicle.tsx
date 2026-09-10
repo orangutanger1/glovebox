@@ -207,7 +207,10 @@ export default function OnboardingVehicle() {
                 value={model}
                 onChangeText={setModel}
                 placeholder={t("onboardingA.vehicle.modelPlaceholder")}
-                autoCapitalize="characters"
+                // Words, not characters. Shouting the model back at the owner
+                // — CIVIC, RAV4, F-150 — is the keyboard treating a name as a
+                // part number, and the name is what the garage list prints.
+                autoCapitalize="words"
                 autoCorrect={false}
                 onFocus={() => trackVehicleEntry("model", "focused")}
               />

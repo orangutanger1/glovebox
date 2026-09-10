@@ -188,7 +188,6 @@ export const ptBR: Fragment = {
     other: "Começar meus {count} dias",
   },
   "offer.trial.decline": "Não, obrigado",
-  "offer.trial.subtitle": "Pro completo desde hoje, com preço de estreia.",
   "offer.trial.legend": "Como funciona a oferta",
   "offer.trial.now.title": "Hoje",
   "offer.trial.now.body": "Tudo é liberado: seu plano, seus lembretes, seu histórico completo.",
@@ -672,7 +671,4 @@ export const ptBR: Fragment = {
   "system.csv.cell.yes": "Sim",
   "system.csv.cell.no": "Não",
 
-  "locked.title": "O Wrenchy é uma assinatura.",
-  "locked.body": "Seu carro, seu plano e seus lembretes continuam aqui. Não existe versão gratuita: uma assinatura abre o app inteiro, e ela começa com a sua primeira semana.",
-  "locked.cta": "Abrir minha garagem",
 };

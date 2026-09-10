@@ -336,18 +336,12 @@ describe("finishing onboarding", () => {
     expect(mockReplace).toHaveBeenCalledWith("/subscribed");
   });
 
-  test("declining both asks ends at the wall", () => {
-    // There is no free tier left to land in, and the flow has already made
-    // both of its asks. The wall is the app for this user until they subscribe
-    // or restore.
-    finish("free");
-    expect(mockReplace).toHaveBeenCalledWith("/locked");
-  });
-
-  test("a grandfathered decliner still lands in their garage", () => {
-    // They finished onboarding under a build that promised a free tier, and
-    // that promise outlives the build that made it.
-    mockGrandfathered = true;
+  test("the free exit lands in the garage", () => {
+    // The only caller left is a grandfathered decliner: they finished
+    // onboarding under a build that promised a free tier, and that promise
+    // outlives the build that made it. Everybody else who declines stays on
+    // the trial screen, which is the wall now, so the flow never routes them
+    // anywhere at all.
     finish("free");
     expect(mockReplace).toHaveBeenCalledWith("/");
   });

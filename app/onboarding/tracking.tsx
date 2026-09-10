@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Button } from "../../src/design/Button";
-import { ChipRow } from "../../src/design/ChipRow";
+import { OptionCards } from "../../src/design/OptionCards";
 import { t } from "../../src/i18n";
 import { getAnswers, setAnswers } from "../../src/onboarding";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -60,12 +60,11 @@ export default function OnboardingTracking() {
         />
       }
     >
-      <ChipRow
+      <OptionCards
         legend={t("onboardingB.tracking.legend")}
         options={options}
         selected={tracking ? [tracking] : []}
         onPress={setTracking}
-        stack
       />
     </OnboardingScreen>
   );

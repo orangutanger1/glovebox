@@ -195,7 +195,6 @@ export const es: Fragment = {
     other: "Empezar mis {count} días",
   },
   "offer.trial.decline": "No, gracias",
-  "offer.trial.subtitle": "Pro completo desde hoy, a precio de lanzamiento.",
   "offer.trial.legend": "Cómo funciona la oferta",
   "offer.trial.now.title": "Hoy",
   "offer.trial.now.body": "Se desbloquea todo: tu plan, tus recordatorios, tu historial completo.",
@@ -694,7 +693,4 @@ export const es: Fragment = {
   "system.csv.cell.yes": "Sí",
   "system.csv.cell.no": "No",
 
-  "locked.title": "Wrenchy es una suscripción.",
-  "locked.body": "Tu coche, tu plan y tus recordatorios siguen aquí. No hay versión gratuita: una suscripción abre toda la app, y empieza con tu primera semana.",
-  "locked.cta": "Abrir mi garaje",
 };

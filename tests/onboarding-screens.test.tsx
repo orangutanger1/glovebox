@@ -23,6 +23,7 @@ jest.mock("expo-router", () => ({
     back: () => navigated.push("back"),
     canGoBack: () => true,
   }),
+  useLocalSearchParams: () => ({}),
 }));
 
 jest.mock("../src/db/client", () => {
@@ -270,7 +271,7 @@ test("the second offer does not open with the way out", () => {
   // renewal terms and Apple's required disclosure on the sheet one tap away.
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/cancel in settings/i);
-  expect(texts(render(OnboardingOffer))).toContain("Your first 7 days, for less.");
+  expect(texts(render(OnboardingOffer))).toContain("Your first 7 days cost less.");
 });
 
 test("the second offer promises nothing free and no free app to fall back on", () => {
@@ -280,6 +281,34 @@ test("the second offer promises nothing free and no free app to fall back on", (
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/\bfree\b/i);
   expect(printed).toContain("No thanks");
+});
+
+test("declining the second offer leaves the user on it, with no way out", () => {
+  // There used to be a wall behind this screen: a separate route, headed
+  // "Wrenchy is a subscription.", that a decliner was pushed to and could not
+  // leave. It made the same argument one tap later with the offer taken off
+  // it. Declining now stays here — the screen is the wall — so what has to
+  // change is the way out: "No thanks" is spent, Back goes, and Restore takes
+  // the link's place because a screen with no exit has to carry one for the
+  // subscriber whose receipt has not synced (Guideline 3.1.1).
+  const tree = render(OnboardingOffer);
+  expect(texts(tree)).toContain("No thanks");
+  expect(texts(tree)).toContain("‹ Back");
+
+  const link = tree.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes("No thanks"),
+  );
+  act(() => link[link.length - 1].props.onPress());
+
+  const after = texts(tree);
+  expect(after).not.toContain("No thanks");
+  expect(after).not.toContain("‹ Back");
+  expect(after).toContain(t("settings.restore"));
+  // The ask itself is untouched: same headline, same three rows, same button.
+  expect(after).toContain("Your first 7 days cost less.");
+  expect(after).toContain("Start my first 7 days");
+  // And nothing was navigated to. The old wall was a `replace` away.
+  expect(navigated).toEqual([]);
 });
 
 test("no screen in the flow prints an em or en dash", () => {

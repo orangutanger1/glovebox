@@ -59,12 +59,12 @@ export const offer: Fragment = {
   "offer.paywall.impact.resale": "A full log at resale, and it shows in the price.",
 
   "offer.trial.title": {
-    one: "Your first {count} day, for less.",
-    other: "Your first {count} days, for less.",
+    one: "Your first {count} day costs less.",
+    other: "Your first {count} days cost less.",
   },
   "offer.trial.title.named": {
-    one: "{name}, your first {count} day, for less.",
-    other: "{name}, your first {count} days, for less.",
+    one: "{name}, your first {count} day costs less.",
+    other: "{name}, your first {count} days cost less.",
   },
   "offer.trial.cta": {
     one: "Start my first {count} day",
@@ -74,7 +74,6 @@ export const offer: Fragment = {
   // to send them to any more, and a link promising one would be the last thing
   // read before the wall it actually leads to.
   "offer.trial.decline": "No thanks",
-  "offer.trial.subtitle": "Full Pro from today, at an introductory price.",
   "offer.trial.legend": "How the offer runs",
   "offer.trial.now.title": "Today",
   "offer.trial.now.body": "Everything unlocks: your plan, your reminders, your full log.",

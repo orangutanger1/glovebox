@@ -199,7 +199,6 @@ export const de: Fragment = {
     other: "{count} Tage starten",
   },
   "offer.trial.decline": "Nein danke",
-  "offer.trial.subtitle": "Voller Pro-Zugang ab heute, zum Einstiegspreis.",
   "offer.trial.legend": "So läuft das Angebot",
   "offer.trial.now.title": "Heute",
   "offer.trial.now.body": "Alles wird freigeschaltet: dein Plan, deine Erinnerungen, dein komplettes Logbuch.",
@@ -694,7 +693,4 @@ export const de: Fragment = {
   "system.csv.cell.yes": "Ja",
   "system.csv.cell.no": "Nein",
 
-  "locked.title": "Wrenchy ist ein Abo.",
-  "locked.body": "Dein Auto, dein Plan und deine Erinnerungen sind alle noch da. Es gibt keine Gratisversion: Ein Abo öffnet die ganze App, und es beginnt mit deiner ersten Woche.",
-  "locked.cta": "Meine Garage öffnen",
 };

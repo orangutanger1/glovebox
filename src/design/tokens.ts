@@ -45,6 +45,11 @@ export const tokens = {
   material: {
     /** LinearGradient colors for a metal face. Vertical, lighter at the top. */
     metalFace: ["#4E545B", "#3A3E43"] as const,
+    /** The same face under the panel light: what a chosen control is made of.
+     *  Two stops brighter, not a new hue and not white — a full-width answer
+     *  card in white is the brightest thing on the screen, which puts the
+     *  user's own answer above the red lamp in the one hierarchy the app has. */
+    metalFaceLit: ["#6E757D", "#4C525A"] as const,
     /** Solid, unblurred band under a raised control. Shrinks on press. */
     edgeHeight: 3,
     edgePressed: 1,

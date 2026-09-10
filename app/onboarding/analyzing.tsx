@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { View, Text } from "react-native";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { View, Text, Animated, Easing } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { Lamp } from "../../src/design/Lamp";
 import { Check } from "../../src/design/Check";
@@ -38,11 +38,16 @@ const HANDOFF_MS = 700;
  * that comes out. Each one is ticked as it lands, so the panel reads as a
  * checklist being worked rather than a paragraph being typed.
  *
- * The bar above them is honest about what it measures. It runs for exactly as
- * long as the readout takes to finish, which is the wait it is describing, and
- * it moves at a constant rate because nothing about the wait accelerates. The
- * percentage beside it is that same bar's own value rather than a second
- * counter, so there is no arrangement in which the two disagree.
+ * The bar above them is honest about what it measures: it runs for exactly as
+ * long as the readout takes to finish, which is the wait it is describing.
+ *
+ * The percentage is that same bar's own value rather than a second counter, so
+ * there is no arrangement in which the two disagree — and it is printed above
+ * the headline rather than beside the bar. It used to be a legend-sized number
+ * at the end of a row inside the panel, which is the smallest type on the
+ * screen given to the one thing the user is actually watching. On a screen
+ * whose whole job is a wait, the number counting it out is the headline and
+ * "Working out the schedule." is the caption under it.
  *
  * It replaces itself rather than pushing, so Back from the results lands on
  * the last question instead of bouncing off a screen that immediately moves
@@ -101,77 +106,122 @@ export default function OnboardingAnalyzing() {
   }, [shown, lines.length, advance]);
 
   return (
-    <OnboardingScreen route="analyzing" center title={t("onboardingB.analyzing.title")}>
+    <OnboardingScreen
+      route="analyzing"
+      center
+      title={t("onboardingB.analyzing.title")}
+      // The count, at the size of the thing being counted. Tabular figures, so
+      // three digits arriving under two do not shift the headline beneath it.
+      overline={
+        <Text
+          style={{
+            ...tokens.text.numeric,
+            fontSize: 56,
+            lineHeight: 60,
+            fontWeight: "700",
+            color: tokens.color.text,
+          }}
+        >
+          {t("onboardingB.analyzing.percent", { percent: formatNumber(percent) })}
+        </Text>
+      }
+    >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
           {/* The bar leads the panel rather than closing it. It is the one
-              thing on this screen that answers "how much longer", and a
-              readout the user has to scan past four lines to find is a
-              readout they read after they needed it. The percentage is the
-              bar's own value, so the two cannot disagree. */}
-          <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
-            <View style={{ flex: 1 }}>
-              <ProgressBar
-                duration={lines.length * LINE_MS + HANDOFF_MS}
-                onProgress={onProgress}
-              />
-            </View>
-            <Text
-              style={{
-                ...tokens.text.legend,
-                ...tokens.text.numeric,
-                color: tokens.color.text,
-                // Reserved, so the row does not shuffle as the number goes from
-                // one digit to three.
-                minWidth: 44,
-                textAlign: "right",
-              }}
-            >
-              {t("onboardingB.analyzing.percent", { percent: formatNumber(percent) })}
-            </Text>
-          </View>
+              thing in here that answers "how much longer", and a readout the
+              user has to scan past four lines to find is a readout they read
+              after they needed it. Its own fill is what the headline above
+              prints, so the two cannot disagree. */}
+          <ProgressBar duration={lines.length * LINE_MS + HANDOFF_MS} onProgress={onProgress} />
 
           {lines.map((line, i) => {
             const last = i === lines.length - 1;
-            const done = i < shown;
             return (
-              <View
+              <Line
                 key={line}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: tokens.space.sm,
-                  // Rendered from the first frame at zero opacity rather than
-                  // mounted late: a row appearing changes the height of the
-                  // panel, and a panel that grows four times reads as a layout
-                  // fault rather than as a machine working.
-                  opacity: done ? 1 : 0,
-                }}
-              >
-                {/* A checkpoint that has been reached is ticked. The one
-                    exception is the last line when something is actually past
-                    due: the lamp is the app's alarm, it belongs on the count of
-                    what needs attention, and a green tick beside "3 services
-                    overdue" would be the app congratulating itself. */}
-                <View style={{ width: 22, alignItems: "center" }}>
-                  {last && plan.pastDue > 0 ? <Lamp lit size={8} /> : <Check size={14} />}
-                </View>
-                <Text
-                  style={{
-                    ...tokens.text.body,
-                    ...tokens.text.numeric,
-                    fontWeight: last ? "600" : "400",
-                    color: last ? tokens.color.text : tokens.color.textMuted,
-                    flex: 1,
-                  }}
-                >
-                  {line}
-                </Text>
-              </View>
+                text={line}
+                done={i < shown}
+                last={last}
+                /* A checkpoint that has been reached is ticked. The one
+                   exception is the last line when something is actually past
+                   due: the lamp is the app's alarm, it belongs on the count of
+                   what needs attention, and a green tick beside "3 services
+                   overdue" would be the app congratulating itself. */
+                mark={last && plan.pastDue > 0 ? <Lamp lit size={8} /> : <Check size={14} />}
+              />
             );
           })}
         </View>
       </Panel>
     </OnboardingScreen>
+  );
+}
+
+/** How long a checkpoint takes to land. Short, and decelerating: the value was
+ *  computed before the screen mounted and this is the machine reporting it,
+ *  not the machine thinking about it. */
+const LAND_MS = 200;
+
+/**
+ * One checkpoint in the readout.
+ *
+ * Every row is rendered from the first frame and only its opacity changes: a
+ * row mounting late changes the height of the panel, and a panel that grows
+ * four times reads as a layout fault rather than as a machine working. What is
+ * animated on top of that is 4px of travel, so a line does not simply exist
+ * where a moment ago there was nothing — it arrives, which is the difference
+ * between a checklist being worked and text being switched on.
+ */
+function Line({
+  text,
+  done,
+  last,
+  mark,
+}: {
+  text: string;
+  done: boolean;
+  last: boolean;
+  mark: ReactNode;
+}) {
+  const land = useRef(new Animated.Value(done ? 1 : 0)).current;
+
+  useEffect(() => {
+    if (!done) return;
+    const run = Animated.timing(land, {
+      toValue: 1,
+      duration: LAND_MS,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    });
+    run.start();
+    return () => run.stop();
+  }, [land, done]);
+
+  return (
+    <Animated.View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        gap: tokens.space.sm,
+        opacity: land,
+        transform: [
+          { translateY: land.interpolate({ inputRange: [0, 1], outputRange: [4, 0] }) },
+        ],
+      }}
+    >
+      <View style={{ width: 22, alignItems: "center" }}>{mark}</View>
+      <Text
+        style={{
+          ...tokens.text.body,
+          ...tokens.text.numeric,
+          fontWeight: last ? "600" : "400",
+          color: last ? tokens.color.text : tokens.color.textMuted,
+          flex: 1,
+        }}
+      >
+        {text}
+      </Text>
+    </Animated.View>
   );
 }

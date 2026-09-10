@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useCallback, useState } from "react";
 import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
-import { Bars, type Bar } from "../../src/design/Bars";
+import { Segments } from "../../src/design/Segments";
 import { tokens } from "../../src/design/tokens";
 import { formatNumber, t } from "../../src/i18n";
 import { formatMoney } from "../../src/money";
@@ -12,6 +12,11 @@ import { MAINTENANCE_RATE, ROADSIDE, maintenanceCost } from "../../src/onboardin
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
+
+/** The horizon AAA publishes its own five-year figure over, and therefore the
+ *  number of blocks in the meter. It is not a knob: change it and the total the
+ *  screen fills to stops being the total the source line credits. */
+const YEARS = 5;
 
 /**
  * What the problem costs, immediately after the screens that named it.
@@ -30,12 +35,18 @@ import { useAdvance } from "../../src/onboarding/nav";
  * argument: a source line has to be present and has to lose every fight for
  * attention with the figure it is vouching for.
  *
- * What replaced the paragraphs is the arithmetic drawn. The two figures are on
- * one scale — a year against AAA's own five-year horizon — so they are two
- * bars rather than two gauges with no relationship printed between them, and
- * they grow on mount because the whole point of the screen is the size of the
- * second one. The roadside statistic is a readout and one line, not the three
- * sentences it was.
+ * What replaced the paragraphs is the arithmetic drawn — and what replaced that
+ * is the arithmetic happening.
+ *
+ * The first version drew the two figures as two bars on one scale, a year
+ * against AAA's own five-year horizon. Every reading of that picture is the
+ * same reading: the short bar is a fifth of the long one, which is a fact about
+ * the number five and not about this car. The five years are now five blocks in
+ * one meter and they fill a year at a time, with the running total counting up
+ * beside them. Nothing is asserted that the bars did not assert; the difference
+ * is that the reader watches the same money get spent five times instead of
+ * being shown its sum. The roadside statistic is a readout and one line, not the
+ * three sentences it was.
  *
  * Neither figure is asserted as a fact about this car. AAA's rate is what the
  * average American driver spends per mile on maintenance, repairs and tyres;
@@ -54,31 +65,14 @@ export default function OnboardingCost() {
   const unit = getDistanceUnit();
   const cost = maintenanceCost(plan.distancePerYear, unit);
 
-  // Both bars scale against the five-year figure, which is the longer of the
-  // two by construction. Sharing a scale is the only reason the pair is a
-  // chart at all: drawn to their own widths they would be two full bars saying
-  // nothing.
-  const bars = useMemo<Bar[]>(
-    () => [
-      {
-        key: "year",
-        label: t("onboardingC.cost.perYear"),
-        value: formatMoney(cost.perYear, MAINTENANCE_RATE.currency),
-        fraction: cost.overFiveYears === 0 ? 0 : cost.perYear / cost.overFiveYears,
-      },
-      {
-        key: "five",
-        label: t("onboardingC.cost.fiveYears"),
-        value: formatMoney(cost.overFiveYears, MAINTENANCE_RATE.currency),
-        fraction: 1,
-        // Not an alarm. This is money the car costs whoever owns it and
-        // whatever they do about it, and a red bar here would be the app
-        // calling ordinary maintenance a fault.
-        tone: "metal",
-      },
-    ],
-    [cost.perYear, cost.overFiveYears]
-  );
+  // How many years the meter has filled so far, and therefore what the readout
+  // above it says. It ends on the published five-year figure rather than on
+  // five times the yearly one, so the number the screen finishes on is the one
+  // the source line vouches for and not an accumulation that rounds past it.
+  const [years, setYears] = useState(0);
+  const onStep = useCallback((filled: number) => setYears(filled), []);
+  const running =
+    years >= YEARS ? cost.overFiveYears : Math.round((cost.overFiveYears / YEARS) * years);
 
   return (
     <OnboardingScreen
@@ -107,7 +101,54 @@ export default function OnboardingCost() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
-          <Bars bars={bars} />
+          {/* The total, then the years it is made of. The legend names the
+              horizon, the readout is the money, and the meter under them is
+              where that money comes from — one block a year, filling. */}
+          <View style={{ gap: tokens.space.sm }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                gap: tokens.space.sm,
+              }}
+            >
+              <View style={{ gap: tokens.space.xs }}>
+                <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+                  {t("onboardingC.cost.fiveYears")}
+                </Text>
+                <Text
+                  style={{
+                    ...tokens.text.readout,
+                    ...tokens.text.numeric,
+                    fontSize: 34,
+                    lineHeight: 38,
+                    color: tokens.color.text,
+                  }}
+                >
+                  {formatMoney(running, MAINTENANCE_RATE.currency)}
+                </Text>
+              </View>
+              <View style={{ alignItems: "flex-end", gap: tokens.space.xs }}>
+                <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+                  {t("onboardingC.cost.perYear")}
+                </Text>
+                <Text
+                  style={{
+                    ...tokens.text.readout,
+                    ...tokens.text.numeric,
+                    color: tokens.color.textMuted,
+                  }}
+                >
+                  {formatMoney(cost.perYear, MAINTENANCE_RATE.currency)}
+                </Text>
+              </View>
+            </View>
+            {/* Not an alarm. This is money the car costs whoever owns it and
+                whatever they do about it, and a red meter here would be the app
+                calling ordinary maintenance a fault. */}
+            <Segments count={YEARS} onStep={onStep} />
+          </View>
 
           {/* The second figure, and the one that is about not maintaining the
               car rather than about maintaining it. A readout and a legend, so

@@ -16,9 +16,10 @@
  * "offer" catches the user who closed that sheet and gives them the trial,
  * which is worth more here than it is up front: a trial shown first is handed
  * to everyone who would have paid outright. A user who closes that one too has
- * declined twice and is taken to the garage, because the flow has nothing left
- * to sell and a screen advertising the free tier is not an ask, it is a
- * consolation the app pays for in conversions.
+ * declined twice, and the flow keeps them on it: there is nothing left to sell,
+ * and both of the screens that used to follow — a free-tier landing and then a
+ * wall repeating the same argument with the offer taken off it — were the app
+ * spending its last screen on something other than the ask.
  *
  * One ordered array is the whole navigation model: Back is the entry before
  * you, Continue is the entry after you, and no screen hard-codes the name of

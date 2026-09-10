@@ -198,7 +198,6 @@ export const sv: Fragment = {
     other: "Starta mina {count} dagar",
   },
   "offer.trial.decline": "Nej tack",
-  "offer.trial.subtitle": "Hela Pro från i dag, till introduktionspris.",
   "offer.trial.legend": "Så fungerar erbjudandet",
   "offer.trial.now.title": "I dag",
   "offer.trial.now.body": "Allt låses upp: din plan, dina påminnelser, hela loggboken.",
@@ -681,7 +680,4 @@ export const sv: Fragment = {
   "system.csv.cell.yes": "Ja",
   "system.csv.cell.no": "Nej",
 
-  "locked.title": "Wrenchy är en prenumeration.",
-  "locked.body": "Din bil, din plan och dina påminnelser finns kvar. Det finns ingen gratisversion: en prenumeration öppnar hela appen, och den börjar med din första vecka.",
-  "locked.cta": "Öppna mitt garage",
 };

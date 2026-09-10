@@ -1,8 +1,7 @@
-import { useMemo } from "react";
 import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
-import { Bars, type Bar } from "../../src/design/Bars";
+import { DotGrid } from "../../src/design/DotGrid";
 import { tokens } from "../../src/design/tokens";
 import { formatNumber, t } from "../../src/i18n";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -14,7 +13,7 @@ import { useAdvance } from "../../src/onboarding/nav";
  *
  * The screen before this one prices the problem out of AAA's published figures.
  * This is its counterpart and it is the opposite kind of screen: not one
- * outside number on it. Every bar is counted from this user's own car — the
+ * outside number on it. Every mark is counted from this user's own car — the
  * twelve services the app tracks, and how many of them they were able to put a
  * date on when asked four screens ago.
  *
@@ -26,11 +25,24 @@ import { useAdvance } from "../../src/onboarding/nav";
  * actually closes — how much of the car is written down somewhere that can warn
  * you, before and after.
  *
- * Two pairs, because the two halves of the claim are different claims. The
- * first is coverage: services with a date on them. The second is the load that
- * coverage takes off the driver: services nobody has to hold in their head.
- * The second pair inverts — the good bar is the short one — which is the whole
- * reason it is drawn rather than written.
+ * It was four bars in two pairs, and the bars were the wrong instrument. A bar
+ * is for a magnitude nobody can count; twelve services is a magnitude anybody
+ * can count, and a bar filled a quarter of the way has to be converted back
+ * into "three of twelve" by the reader — which is why the number had to be
+ * printed beside it. The services are drawn as the services now: twelve
+ * sockets, and a stud seated in every one the user could date. The dark ones
+ * are the picture. They are what the app is for, and a bar cannot show an
+ * absence, only a shortfall.
+ *
+ * The two claims are still two claims and are still drawn differently. Coverage
+ * is the grid, because it is a count of things. The load that coverage takes
+ * off the driver is two figures — twelve against zero — because that pair is
+ * strongest as numerals and drawing an empty grid twice would be the same
+ * picture making a second, weaker point.
+ *
+ * The right column waits for the left to finish seating. The claim is a before
+ * and an after, and two grids filling at once is one picture rather than a
+ * change from one state to another.
  */
 export default function OnboardingCompare() {
   const advance = useAdvance("compare");
@@ -38,56 +50,9 @@ export default function OnboardingCompare() {
 
   const total = plan.items.length;
   const logged = plan.logged;
-
-  // Both pairs share one scale — the count of tracked services — so the four
-  // bars can be read against each other rather than each against itself.
-  const dated = useMemo<Bar[]>(
-    () => [
-      {
-        key: "dated-alone",
-        label: t("onboardingC.compare.alone"),
-        value: t("onboardingC.compare.ofTotal", {
-          count: formatNumber(logged),
-          total: formatNumber(total),
-        }),
-        fraction: total === 0 ? 0 : logged / total,
-        tone: "red",
-      },
-      {
-        key: "dated-app",
-        label: t("onboardingC.compare.withApp"),
-        value: t("onboardingC.compare.ofTotal", {
-          count: formatNumber(total),
-          total: formatNumber(total),
-        }),
-        fraction: 1,
-        tone: "green",
-      },
-    ],
-    [logged, total]
-  );
-
-  const remembered = useMemo<Bar[]>(
-    () => [
-      {
-        key: "remember-alone",
-        label: t("onboardingC.compare.alone"),
-        value: formatNumber(total),
-        fraction: 1,
-        tone: "red",
-      },
-      {
-        // Zero, and drawn as an empty track rather than rounded up to a sliver.
-        // It is the only bar in the app that means something by being absent.
-        key: "remember-app",
-        label: t("onboardingC.compare.withApp"),
-        value: formatNumber(0),
-        fraction: 0,
-        tone: "green",
-      },
-    ],
-    [total]
-  );
+  /** Where the second grid starts: after the first has seated its last stud.
+   *  `DotGrid` steps 40ms a dot, so this tracks whatever it is showing. */
+  const afterFirst = logged * 40 + 240;
 
   return (
     <OnboardingScreen
@@ -108,23 +73,100 @@ export default function OnboardingCompare() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
-          <Group heading={t("onboardingC.compare.dated")} bars={dated} />
+          <Group heading={t("onboardingC.compare.dated")}>
+            <Column
+              legend={t("onboardingC.compare.alone")}
+              value={t("onboardingC.compare.ofTotal", {
+                count: formatNumber(logged),
+                total: formatNumber(total),
+              })}
+            >
+              {/* Green for the ones that are dated, whichever side they are on:
+                  the tone is what the mark means, not which column it is in.
+                  The nine empty sockets beside them are the argument. */}
+              <DotGrid total={total} filled={logged} tone="green" />
+            </Column>
+            <Column
+              legend={t("onboardingC.compare.withApp")}
+              value={t("onboardingC.compare.ofTotal", {
+                count: formatNumber(total),
+                total: formatNumber(total),
+              })}
+            >
+              <DotGrid total={total} filled={total} tone="green" delay={afterFirst} />
+            </Column>
+          </Group>
+
           <View style={{ borderTopWidth: 1, borderTopColor: tokens.color.hairline }} />
-          <Group heading={t("onboardingC.compare.remembered")} bars={remembered} />
+
+          <Group heading={t("onboardingC.compare.remembered")}>
+            <Column legend={t("onboardingC.compare.alone")}>
+              {/* The one red figure on the screen, and the only thing on it the
+                  app calls a fault: a service nobody has written down is a
+                  service somebody is holding in their head. */}
+              <Figure value={formatNumber(total)} tone="red" />
+            </Column>
+            <Column legend={t("onboardingC.compare.withApp")}>
+              <Figure value={formatNumber(0)} tone="green" />
+            </Column>
+          </Group>
         </View>
       </Panel>
     </OnboardingScreen>
   );
 }
 
-/** A pair under the question it answers. The heading is body text, not a
- *  legend: the legends belong to the bars, and a third size of uppercase in
- *  one panel is a panel with no hierarchy left. */
-function Group({ heading, bars }: { heading: string; bars: Bar[] }) {
+/** A claim, and the two sides of it. The heading is body text, not a legend:
+ *  the legends belong to the columns, and a third size of uppercase in one
+ *  panel is a panel with no hierarchy left. */
+function Group({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
     <View style={{ gap: tokens.space.md }}>
       <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{heading}</Text>
-      <Bars bars={bars} />
+      <View style={{ flexDirection: "row", gap: tokens.space.md }}>{children}</View>
     </View>
+  );
+}
+
+/** One side of a claim: what it is, the picture, and the figure under it. */
+function Column({
+  legend,
+  value,
+  children,
+}: {
+  legend: string;
+  value?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <View style={{ flex: 1, gap: tokens.space.sm }}>
+      <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{legend}</Text>
+      {children}
+      {value ? (
+        <Text
+          style={{ ...tokens.text.legend, ...tokens.text.numeric, color: tokens.color.text }}
+        >
+          {value}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
+/** A count with nothing to draw. Twelve against zero is a comparison that gets
+ *  weaker the more it is illustrated. */
+function Figure({ value, tone }: { value: string; tone: "red" | "green" }) {
+  return (
+    <Text
+      style={{
+        ...tokens.text.readout,
+        ...tokens.text.numeric,
+        fontSize: 34,
+        lineHeight: 38,
+        color: tone === "red" ? tokens.color.red : tokens.color.green,
+      }}
+    >
+      {value}
+    </Text>
   );
 }

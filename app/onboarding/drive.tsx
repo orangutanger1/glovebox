@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Text } from "react-native";
 import { Button } from "../../src/design/Button";
-import { ChipRow } from "../../src/design/ChipRow";
+import { OptionCards } from "../../src/design/OptionCards";
 import { tokens } from "../../src/design/tokens";
 import { getVehicle, setOdometerEstimate } from "../../src/db/vehicles";
 import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
@@ -16,7 +16,9 @@ import { getDistanceUnit } from "../../src/units";
 import { distanceUnitLabel, formatDistance } from "../../src/units/format";
 
 /** Ranges, not a slider. Nobody knows their annual mileage to the mile, and a
- *  slider would ask them to pretend they do. */
+ *  slider would ask them to pretend they do. Four of them, stacked as cards:
+ *  the ranges are ordered, and an ordered set of answers has to be readable
+ *  top to bottom or the order is not information. */
 const OPTIONS: readonly DriveAnswer[] = ["low", "average", "high", "very_high"];
 
 export default function OnboardingDrive() {
@@ -68,7 +70,7 @@ export default function OnboardingDrive() {
         />
       }
     >
-      <ChipRow
+      <OptionCards
         legend={t("onboardingA.drive.legend", { unit: distanceUnitLabel(unit) })}
         options={options}
         selected={drive ? [drive] : []}

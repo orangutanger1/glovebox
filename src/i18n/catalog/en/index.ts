@@ -7,7 +7,6 @@ import { insights } from "./insights";
 import { intervals } from "./intervals";
 import { language } from "./language";
 import { layout } from "./layout";
-import { locked } from "./locked";
 import { offer } from "./offer";
 import { onboardingA } from "./onboardingA";
 import { onboardingB } from "./onboardingB";
@@ -45,7 +44,6 @@ export const FRAGMENTS: Record<string, Fragment> = {
   intervals,
   language,
   layout,
-  locked,
   offer,
   onboardingA,
   onboardingB,

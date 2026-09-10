@@ -629,7 +629,6 @@ export const nl: Fragment = {
     other: "Start mijn {count} dagen",
   },
   "offer.trial.decline": "Nee bedankt",
-  "offer.trial.subtitle": "Volledige Pro vanaf vandaag, voor introductieprijs.",
   "offer.trial.legend": "Zo verloopt het aanbod",
   "offer.trial.now.title": "Vandaag",
   "offer.trial.now.body": "Alles gaat open: je plan, je herinneringen, je volledige logboek.",
@@ -702,7 +701,4 @@ export const nl: Fragment = {
   "system.csv.cell.yes": "Ja",
   "system.csv.cell.no": "Nee",
 
-  "locked.title": "Wrenchy is een abonnement.",
-  "locked.body": "Je auto, je plan en je herinneringen staan er allemaal nog. Er is geen gratis versie: één abonnement opent de hele app, en die begint met je eerste week.",
-  "locked.cta": "Mijn garage openen",
 };

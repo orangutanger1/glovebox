@@ -6,7 +6,7 @@ import { Gauge } from "../../src/design/Gauge";
 import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, formatNumber, t } from "../../src/i18n";
-import { DISCOUNT_OFFERING, hasOffering, presentOffering } from "../../src/purchases";
+import { presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -52,9 +52,8 @@ const IMPACT = [
  * at the end of the flow, both spent the app's last screen selling the version
  * that earns nothing: a user shown a page of what is free forever has been
  * talked out of the trial they were one tap from. Declining both asks now ends
- * onboarding in the garage, with the plan they built already in it. Nothing
- * here traps the user; the sheet closes on a swipe and every dismissal path
- * finishes the flow.
+ * onboarding in the garage, with the plan they built already in it. Every
+ * dismissal path leads to the trial screen, which is where the flow ends.
  */
 export default function OnboardingPaywall() {
   const advance = useAdvance("paywall");
@@ -79,13 +78,13 @@ export default function OnboardingPaywall() {
       finish("paid");
       return;
     }
-    // A dismissal is the whole reason the trial exists, so it goes there. A
-    // paywall that could not present — no API key in the build, no network,
-    // products not yet fetchable — has shown the user nothing to reconsider,
-    // and the trial sheet would fail on the same missing offering, so that
-    // user goes to the garage rather than tapping a second dead button.
-    if (outcome === "dismissed" && (await hasOffering(DISCOUNT_OFFERING))) advance();
-    else finish("free");
+    // A dismissal is the whole reason the trial exists, so it goes there —
+    // and so does a paywall that could not present at all, because the screen
+    // it advances to is now the end of the flow rather than a stop on the way
+    // to one. It falls back to the current offering when there is no discount
+    // offering to show, so it is never the dead button this branch used to
+    // route around.
+    advance();
   }
 
   return (

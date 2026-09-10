@@ -184,7 +184,6 @@ export const ja: Fragment = {
     other: "{count}日間を始める",
   },
   "offer.trial.decline": "今はけっこうです",
-  "offer.trial.subtitle": "今日からProのすべてを、導入価格で。",
   "offer.trial.legend": "オファーの流れ",
   "offer.trial.now.title": "今日",
   "offer.trial.now.body": "すべてが使えます。整備プラン、リマインダー、全記録。",
@@ -651,7 +650,4 @@ export const ja: Fragment = {
   "system.csv.cell.yes": "はい",
   "system.csv.cell.no": "いいえ",
 
-  "locked.title": "Wrenchyはサブスクリプションです。",
-  "locked.body": "あなたの車も、プランも、リマインダーもそのまま残っています。無料版はありません。ひとつのサブスクリプションでアプリ全体が使えるようになり、最初の1週間から始まります。",
-  "locked.cta": "ガレージを開く",
 };

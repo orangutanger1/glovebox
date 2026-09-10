@@ -55,6 +55,7 @@ import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
 export function OnboardingScreen({
   route,
   title,
+  overline,
   subtitle,
   legend,
   footer,
@@ -63,10 +64,16 @@ export function OnboardingScreen({
   center = false,
   tone = "housing",
   onBack,
+  hideBack = false,
   banner,
 }: {
   route: OnboardingRoute;
   title?: string;
+  /** A node printed directly above the title, in the same block. For the one
+   *  screen with a figure that outranks its own headline: a readout the user
+   *  is watching belongs above the sentence describing it, not beside a bar
+   *  further down the page. */
+  overline?: ReactNode;
   subtitle?: string;
   /** Overrides the quiz counter. Used by the paged symptoms screen. */
   legend?: ReactNode;
@@ -96,6 +103,10 @@ export function OnboardingScreen({
    *  is three cards on one route, and a Back that abandoned all three because
    *  the user wanted to re-read the first is a Back the user stops pressing. */
   onBack?: () => void;
+  /** Takes the Back control off the header. For the one screen that becomes a
+   *  wall: the ask behind it has already been refused, and a Back that walks
+   *  the user into a refused ask is an exit that is not one. */
+  hideBack?: boolean;
   /** A node dropped over the very top of the screen, above the content and
    *  outside the scroll — where iOS delivers a notification banner. Non-
    *  interactive: it never intercepts the scroll or a tap beneath it. */
@@ -210,8 +221,9 @@ export function OnboardingScreen({
     <>
       {center ? <View style={{ flex: 1 }} /> : null}
 
-      {title || subtitle ? (
+      {title || subtitle || overline ? (
         <View style={{ gap: tokens.space.sm }}>
+          {overline}
           {title ? (
             <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>{title}</Text>
           ) : null}
@@ -268,7 +280,7 @@ export function OnboardingScreen({
               minHeight: 28,
             }}
           >
-            {previous || onBack ? (
+            {!hideBack && (previous || onBack) ? (
               <Pressable onPress={goBack} hitSlop={12} accessibilityRole="button">
                 {({ pressed }) => (
                   <Text
