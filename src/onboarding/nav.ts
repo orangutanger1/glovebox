@@ -1,7 +1,9 @@
 import { useCallback } from "react";
 import { useRouter } from "expo-router";
 import { completeOnboarding, setOnboardingStep } from ".";
+import { isGrandfathered } from "../paywall";
 import { track } from "../analytics";
+import { cancelOnboardingNudges } from "../notify";
 import { nextRoute, type OnboardingRoute } from "./flow";
 
 /**
@@ -48,16 +50,29 @@ export function useFinish(): (exit: "paid" | "trial" | "free") => void {
       // reached the garage at all, now split by what they agreed to on the way.
       track("onboarding_completed", { exit });
       completeOnboarding();
+      // Before anything routes. The two "finish setting up your car" nudges are
+      // scheduled from inside the flow, and the flow has just been finished —
+      // a user who subscribes and is told two hours later to go and set up the
+      // car they set up reads the app as not knowing what it did.
+      void cancelOnboardingNudges().catch(() => {});
       // Someone who agreed to something does not land in a list.
       //
       // Both paying exits used to replace the stack with the garage, so the
       // last thing a new subscriber saw was Apple's receipt and the first thing
       // was one row in a list — nothing naming what they had bought, and no
       // next action. `/subscribed` is that missing beat, and it owns the move
-      // to the car afterwards. A user who declined twice still goes straight to
-      // the garage: there is nothing to confirm and a screen congratulating
-      // them for saying no twice would be the worst screen in the product.
-      router.replace(exit === "free" ? "/" : "/subscribed");
+      // to the car afterwards.
+      if (exit !== "free") {
+        router.replace("/subscribed");
+        return;
+      }
+      // Declined twice. There is no free tier to land in any more, so this
+      // exit is the wall — except for an install that finished onboarding
+      // under a build that promised one, which keeps the app it was promised.
+      // The garage is still what a grandfathered decliner gets: there is
+      // nothing to confirm and a screen congratulating them for saying no
+      // twice would be the worst screen in the product.
+      router.replace(isGrandfathered() ? "/" : "/locked");
     },
     [router]
   );

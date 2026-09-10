@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { Alert, Linking, Text, View } from "react-native";
+import { useCallback, useRef, useState } from "react";
+import { Alert, AppState, Linking, Text, View } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
@@ -30,24 +30,66 @@ export default function Settings() {
   const pro = useIsPro();
   const [reminders, setReminders] = useState<ReminderStatus | null>(null);
 
-  // Re-read on every focus: permission can be revoked in iOS Settings while
-  // the app is backgrounded, and coming back to a stale "Reminders on" is the
-  // exact lie this row exists to prevent.
+  // What iOS last said. Only used to notice the transition into "granted",
+  // which is the moment there is repair work to do.
+  const lastPermission = useRef<ReminderStatus["permission"] | null>(null);
+
+  /**
+   * Re-reads iOS, and rebuilds the schedule if permission has just appeared.
+   *
+   * The rebuild is the half that was missing. Permission granted outside the
+   * app arms nothing on its own: `rescheduleAll` is what turns records into
+   * pending notifications, and it is a no-op while permission is absent — so
+   * the launch that ran it last ran it before the user said yes. Without this,
+   * the row went from "Turn on reminders" straight to "No reminders scheduled",
+   * which reads as the button having failed.
+   *
+   * Gated on the transition rather than on `count === 0`, because zero is a
+   * truthful answer for a car whose services all carry mileage-only intervals,
+   * and rebuilding the whole queue on every foreground to re-derive it is work
+   * for nothing.
+   */
+  const readReminders = useCallback(async (): Promise<ReminderStatus> => {
+    let status = await reminderStatus();
+    if (status.permission === "granted" && lastPermission.current !== "granted") {
+      await rescheduleAll();
+      status = await reminderStatus();
+    }
+    lastPermission.current = status.permission;
+    return status;
+  }, []);
+
+  // Re-read on every focus *and* on every return to the foreground.
+  //
+  // Focus alone was not enough, and the gap was the whole bug: tapping the row
+  // while iOS holds a hard denial sends the user to Settings.app, and while
+  // they are there this screen is backgrounded but never blurred — expo-router
+  // does not change focus for an app switch. So the user flipped the toggle in
+  // iOS Settings, came back, and read "Reminders are blocked" about a system
+  // that had just agreed. `AppState` is the only event that fires on that
+  // return.
   useFocusEffect(
     useCallback(() => {
       let live = true;
-      reminderStatus()
-        .then((s) => live && setReminders(s))
-        .catch(() => live && setReminders(null));
+      const read = () => {
+        readReminders()
+          .then((s) => live && setReminders(s))
+          .catch(() => live && setReminders(null));
+      };
+      read();
+      const sub = AppState.addEventListener("change", (next) => {
+        if (next === "active") read();
+      });
       return () => {
         live = false;
+        sub.remove();
       };
-    }, [])
+    }, [readReminders])
   );
 
   async function refreshReminders() {
     try {
-      setReminders(await reminderStatus());
+      setReminders(await readReminders());
     } catch {
       setReminders(null);
     }

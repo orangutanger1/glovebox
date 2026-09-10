@@ -12,7 +12,16 @@ import type { Fragment } from "../types";
  */
 export const system: Fragment = {
   "system.notify.title": "Your {vehicle}\u2019s {service} is due",
+  "system.notify.title.named": "{name}, your {vehicle}’s {service} is due",
   "system.notify.body": "Last done {date}.",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "Your {vehicle}: setup is half done",
+  "system.resume.first.title.named": "{name}, your {vehicle}: setup is half done",
+  "system.resume.first.body": "One more minute and the service schedule is ready.",
+  "system.resume.second.title": "Your {vehicle} is still waiting",
+  "system.resume.second.title.named": "{name}, your {vehicle} is still waiting",
+  "system.resume.second.body": "Nothing you entered was lost. Pick up where you stopped.",
 
   "system.notify.when.today": "Today",
   "system.notify.when.tomorrow": "Tomorrow",
@@ -38,10 +47,10 @@ export const system: Fragment = {
   "system.csv.cell.yes": "Yes",
   "system.csv.cell.no": "No",
 
-  "system.quickaction.trial.title": "Try Pro free",
+  "system.quickaction.trial.title": "Try Pro",
   "system.quickaction.trial.subtitle": {
-    one: "{count} day, then it renews unless you cancel",
-    other: "{count} days, then it renews unless you cancel",
+    one: "{count} day at the introductory price, then it renews",
+    other: "{count} days at the introductory price, then it renews",
   },
   "system.quickaction.feedback.title": "Send feedback",
   "system.quickaction.feedback.subtitle": "Tell us what went wrong",

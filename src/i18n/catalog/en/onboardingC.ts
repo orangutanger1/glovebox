@@ -36,6 +36,28 @@ export const onboardingC: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "No record",
 
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "The next twelve months",
+  "onboardingC.outlook.subtitle": "Your {vehicle}, {distance} a year.",
+  "onboardingC.outlook.dueWithinYear": "Due in a year",
+  "onboardingC.outlook.nextUp": "Next up",
+  "onboardingC.outlook.none": "No date",
+  "onboardingC.outlook.odometer": "Today",
+  "onboardingC.outlook.projected": "In a year",
+  "onboardingC.outlook.continue": "Continue",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "Keeping it running costs about {cost} a year.",
+  "onboardingC.cost.subtitle": "At the {distance} a year you drive.",
+  "onboardingC.cost.perYear": "A year",
+  "onboardingC.cost.fiveYears": "Over five years",
+  "onboardingC.cost.roadside": "AAA answered {calls} roadside calls in {year}. About {percent}% were tows and flat batteries: breakdowns it says maintenance would have prevented.",
+  "onboardingC.cost.source": "{rate}, and {roadside}. US averages, in {currency}.",
+  "onboardingC.cost.continue": "Continue",
+
   "onboardingC.symptoms.next": "Continue",
   "onboardingC.symptoms.last": "So what do I do",
 

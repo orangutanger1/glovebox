@@ -55,6 +55,7 @@ jest.mock("expo-notifications", () => ({
   getPermissionsAsync: jest.fn(async () => ({ status: "granted" })),
   getAllScheduledNotificationsAsync: jest.fn(async () => []),
   cancelAllScheduledNotificationsAsync: jest.fn(async () => {}),
+  cancelScheduledNotificationAsync: jest.fn(async () => {}),
   scheduleNotificationAsync: jest.fn(async () => "id"),
   setNotificationHandler: jest.fn(),
   AndroidImportance: { DEFAULT: 3 },
@@ -65,18 +66,24 @@ jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";
 import { addRecord } from "../src/db/records";
 import {
+  getOnboardingName,
   getOnboardingVehicleId,
   resetOnboarding,
   setAnswers,
+  setOnboardingName,
   setOnboardingVehicleId,
 } from "../src/onboarding";
 import { setLanguage, t } from "../src/i18n";
 import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
+import { MAINTENANCE_RATE } from "../src/onboarding/cost";
+import { getDb } from "../src/db/client";
+import { ONBOARDING_NAME_KEY } from "../src/onboarding/state";
 import {
   AVERAGE_DISTANCE_PER_YEAR,
   estimateOdometer,
 } from "../src/onboarding/estimate";
+import OnboardingName from "../app/onboarding/name";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
 import OnboardingDrive from "../app/onboarding/drive";
@@ -86,6 +93,8 @@ import OnboardingService from "../app/onboarding/service";
 import OnboardingTracking from "../app/onboarding/tracking";
 import OnboardingWorry from "../app/onboarding/worry";
 import OnboardingResults from "../app/onboarding/results";
+import OnboardingOutlook from "../app/onboarding/outlook";
+import OnboardingCost from "../app/onboarding/cost";
 import OnboardingSymptoms from "../app/onboarding/symptoms";
 import OnboardingHelp from "../app/onboarding/help";
 import OnboardingNotify from "../app/onboarding/notify";
@@ -254,13 +263,22 @@ test("the paywall argues consequence, and leaves the schedule to the ask", () =>
   expect(printed).not.toContain("Nothing on file");
 });
 
-test("the trial screen does not open with the way out", () => {
+test("the second offer does not open with the way out", () => {
   // "Cancel in Settings before it ends and you pay nothing." was the last line
   // read before the ask, in the app's own voice. RevenueCat renders the
   // renewal terms and Apple's required disclosure on the sheet one tap away.
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/cancel in settings/i);
-  expect(texts(render(OnboardingOffer))).toContain("Try it for 3 days.");
+  expect(texts(render(OnboardingOffer))).toContain("Your first 7 days, for less.");
+});
+
+test("the second offer promises nothing free and no free app to fall back on", () => {
+  // The app has no free tier and this screen sells a paid introductory week.
+  // A screen that still says "free" is a promise the sheet behind it breaks,
+  // and a decline link offering "the free app" points at a wall.
+  const printed = texts(render(OnboardingOffer)).join(" ");
+  expect(printed).not.toMatch(/\bfree\b/i);
+  expect(printed).toContain("No thanks");
 });
 
 test("no screen in the flow prints an em or en dash", () => {
@@ -279,6 +297,7 @@ test("no screen in the flow prints an em or en dash", () => {
   });
 
   const screens = [
+    OnboardingName,
     OnboardingVehicle,
     OnboardingOdometer,
     OnboardingDrive,
@@ -286,7 +305,9 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingTracking,
     OnboardingWorry,
     OnboardingResults,
+    OnboardingOutlook,
     OnboardingSymptoms,
+    OnboardingCost,
     OnboardingHelp,
     OnboardingReviews,
     OnboardingNotify,
@@ -791,7 +812,7 @@ test("the reminders button raises the iOS prompt on the tap that promises it", a
   await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).toHaveBeenCalled();
-  expect(navigated).toContain("/onboarding/paywall");
+  expect(navigated).toContain("/onboarding/symptoms");
 });
 
 test("a permission iOS will not re-ask is not asked for, and does not block the flow", async () => {
@@ -812,7 +833,7 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).not.toHaveBeenCalled();
-  expect(navigated).toContain("/onboarding/paywall");
+  expect(navigated).toContain("/onboarding/symptoms");
 
   getPermissionsAsync.mockResolvedValue({
     status: "granted",
@@ -881,4 +902,99 @@ test("the drums show the reading being typed, not a second invented one", () => 
   expect(roll().live).toBeFalsy();
   type(tree, "Odometer (mi)", "84210");
   expect(roll()).toMatchObject({ value: 84210, live: true });
+});
+
+/**
+ * The three screens added on 2026-09-10: the introduction, the twelve-month
+ * projection, and the one screen in the flow carrying figures that are not the
+ * user's own.
+ */
+
+test("the name screen will not let an empty answer through", () => {
+  const tree = render(OnboardingName);
+
+  // Gated on the field, not on the tap. `press` refuses a disabled control, so
+  // this is the assertion that Continue is actually dead rather than merely
+  // ignored.
+  expect(() => press(tree, t("onboardingA.name.continue"))).toThrow();
+
+  // Three spaces is not an answer either, and this is the one that a naive
+  // `value.length > 0` would have let past.
+  type(tree, t("onboardingA.name.label"), "   ");
+  expect(() => press(tree, t("onboardingA.name.continue"))).toThrow();
+
+  type(tree, t("onboardingA.name.label"), "  Alex ");
+  press(tree, t("onboardingA.name.continue"));
+  expect(getOnboardingName()).toBe("Alex");
+  expect(navigated).toContain("/onboarding/vehicle");
+});
+
+test("the name screen comes back filled in", () => {
+  setOnboardingName("Alex");
+  // A replay keeps the name — it re-asks about the car, not about the driver —
+  // so the one user who has already answered taps Continue rather than typing
+  // their own name a second time.
+  expect(values(render(OnboardingName))).toContain("Alex");
+});
+
+test("both asks address the driver by name, and neither breaks without one", () => {
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+  setAnswers({ drive: "average" });
+
+  // The name outlives `resetOnboarding` by design, so the unnamed half of this
+  // test has to clear it explicitly. This is the state every install that
+  // predates the name screen is in.
+  getDb().runSync("DELETE FROM app_state WHERE key = ?", [ONBOARDING_NAME_KEY]);
+
+  const unnamed = texts(render(OnboardingPaywall)).join(" ");
+  expect(unnamed).toBe(unnamed.replace(/\{name\}/g, ""));
+  expect(unnamed).toContain(t("offer.paywall.title"));
+
+  setOnboardingName("Alex");
+  for (const Screen of [OnboardingPaywall, OnboardingOffer]) {
+    const printed = texts(render(Screen)).join(" ");
+    expect(printed).toContain("Alex");
+    expect(printed).not.toMatch(/\{\w+\}/);
+  }
+});
+
+test("the outlook screen counts the year ahead and names what is next", () => {
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date().toISOString(),
+    odometer: 112000,
+  });
+  setAnswers({ drive: "high" });
+
+  const printed = texts(render(OnboardingOutlook)).join(" ");
+  expect(printed).toContain(t("onboardingC.outlook.title"));
+  expect(printed).toContain(t("onboardingC.outlook.dueWithinYear"));
+  // The projection is a distance, not a score. `results.tsx` refuses to print
+  // one and this screen inherits the refusal; a stray percentage here would be
+  // the only invented figure in the flow.
+  expect(printed).not.toMatch(/\d+\s*%/);
+  expect(printed).not.toMatch(/\{\w+\}/);
+});
+
+test("the cost screen prices the user's own mileage and says whose figures they are", () => {
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+  setAnswers({ drive: "high" });
+
+  const printed = texts(render(OnboardingCost)).join(" ");
+
+  // 12,500 miles a year at AAA's 11.04 cents a mile, rounded to the nearest
+  // ten: $1,380. The number on the glass has to be this user's, not AAA's
+  // 15,000-mile assumption.
+  expect(printed).toContain("1,380");
+  // Attribution, on the screen, in the reader's language. A statistic nobody
+  // can chase is indistinguishable from one we invented.
+  expect(printed).toContain("AAA");
+  expect(printed).toContain(MAINTENANCE_RATE.edition);
+  expect(printed).toContain(MAINTENANCE_RATE.currency);
+  expect(printed).not.toMatch(/\{\w+\}/);
 });

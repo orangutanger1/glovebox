@@ -11,6 +11,7 @@ import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
+import { tNamed } from "../../src/onboarding";
 import { useAdvance, useFinish } from "../../src/onboarding/nav";
 
 /** Three consequences, not three features. Each is a thing that happens to the
@@ -90,7 +91,10 @@ export default function OnboardingPaywall() {
   return (
     <OnboardingScreen
       route="paywall"
-      title={t("offer.paywall.title")}
+      // The one screen in the flow that asks for money, addressed to the person
+      // who was asked their name on screen two. `tNamed` falls back to the
+      // unnamed sentence for an install that predates that screen.
+      title={tNamed("offer.paywall.title")}
       subtitle={t("offer.paywall.subtitle")}
       footer={<Button label={t("offer.paywall.cta")} onPress={onSeeOffer} disabled={busy} />}
     >

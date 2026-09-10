@@ -71,6 +71,14 @@ jest.mock("../src/onboarding", () => ({
   setOnboardingStep: jest.fn(),
 }));
 
+// Same reason: the grandfathering flag is a row in `app_state`, and where a
+// declining user lands is what is under test, not how the flag is stored.
+let mockGrandfathered = false;
+jest.mock("../src/paywall", () => ({ isGrandfathered: () => mockGrandfathered }));
+// `useFinish` clears the unfinished-onboarding nudges. The real module reaches
+// expo-notifications, which is ESM and has no place in the logic project.
+jest.mock("../src/notify", () => ({ cancelOnboardingNudges: async () => {} }));
+
 // `useFinish` is a hook only so it can reach the router; the callback it
 // returns is what carries the event. Memoisation is not what is under test,
 // and calling a hook outside a render needs the dispatcher stubbed.
@@ -301,7 +309,7 @@ test("a vehicle entry event carries the field and what happened, never a value",
 
 /** The exit reason is the addition the revenue question depends on. */
 describe("finishing onboarding", () => {
-  test.each(["paid", "trial", "free"] as const)("%s is reported as the exit", (exit) => {
+  const finish = (exit: "paid" | "trial" | "free") => {
     process.env.EXPO_PUBLIC_POSTHOG_KEY = "phc_test";
     jest.isolateModules(() => {
       const analytics = require("../src/analytics") as Analytics;
@@ -309,12 +317,38 @@ describe("finishing onboarding", () => {
       const nav = require("../src/onboarding/nav") as Nav;
       nav.useFinish()(exit);
     });
+  };
 
+  beforeEach(() => {
+    mockGrandfathered = false;
+  });
+
+  test.each(["paid", "trial", "free"] as const)("%s is reported as the exit", (exit) => {
+    finish(exit);
     expect(onlyEvent()).toEqual({ event: "onboarding_completed", properties: { exit } });
-    // Where the flow lets go of the user is part of the exit, not a detail of
-    // it. A paying exit owes the subscriber a screen naming what they bought
-    // and one action to take; a user who declined both asks is owed neither and
-    // goes straight to the garage.
-    expect(mockReplace).toHaveBeenCalledWith(exit === "free" ? "/" : "/subscribed");
+  });
+
+  // Where the flow lets go of the user is part of the exit, not a detail of it.
+  test.each(["paid", "trial"] as const)("%s is owed a screen naming it", (exit) => {
+    // A paying exit owes the subscriber a screen naming what they bought and
+    // one action to take. The garage is one row in a list.
+    finish(exit);
+    expect(mockReplace).toHaveBeenCalledWith("/subscribed");
+  });
+
+  test("declining both asks ends at the wall", () => {
+    // There is no free tier left to land in, and the flow has already made
+    // both of its asks. The wall is the app for this user until they subscribe
+    // or restore.
+    finish("free");
+    expect(mockReplace).toHaveBeenCalledWith("/locked");
+  });
+
+  test("a grandfathered decliner still lands in their garage", () => {
+    // They finished onboarding under a build that promised a free tier, and
+    // that promise outlives the build that made it.
+    mockGrandfathered = true;
+    finish("free");
+    expect(mockReplace).toHaveBeenCalledWith("/");
   });
 });

@@ -3,8 +3,10 @@ import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { serviceName } from "../schedule/names";
 import { formatDate, t } from "../i18n";
 import { vehicleSentenceName } from "../format";
+import { tNamed } from "../onboarding";
 import { collectReminders } from "./collect";
 import { selectReminders } from "./select";
+import { scheduleOnboardingNudges } from "./resume";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,6 +19,7 @@ Notifications.setNotificationHandler({
 
 export { MAX_SCHEDULED, selectReminders, type Reminder } from "./select";
 export { collectReminders, nextReminder, nextReminders } from "./collect";
+export { scheduleOnboardingNudges, cancelOnboardingNudges, RESUME_NUDGE_IDS } from "./resume";
 
 export type ReminderStatus = {
   permission: "granted" | "denied" | "undetermined";
@@ -58,10 +61,21 @@ export async function rescheduleAll(): Promise<void> {
 
   await Notifications.cancelAllScheduledNotificationsAsync();
 
+  // Rebuilt here rather than only where onboarding grants permission, because
+  // this function clears the queue: any other caller — a logged service, a cold
+  // start — would otherwise silently delete the nudges an unfinished flow is
+  // relying on. A no-op once onboarding is done.
+  await scheduleOnboardingNudges();
+
   for (const reminder of selectReminders(collectReminders(), Date.now())) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: t("system.notify.title", {
+        // Addressed to the driver by name where the app has one. The name is
+        // baked in at schedule time rather than at delivery time, which is the
+        // only option iOS gives — a pending notification is a fixed string —
+        // and is harmless here: `rescheduleAll` runs on every launch and after
+        // every write, so a name typed today is in every reminder by tomorrow.
+        title: tNamed("system.notify.title", {
           vehicle: vehicleSentenceName(reminder.vehicleName),
           service: serviceName(reminder.serviceType),
         }),

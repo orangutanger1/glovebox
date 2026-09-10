@@ -4,33 +4,50 @@ import RevenueCatUI, { PAYWALL_RESULT, type CustomerCenterCallbacks } from "reac
 import { track } from "../analytics";
 
 /**
- * The offering that carries the free trial, and the only one that does.
+ * The offering that carries the introductory offer, and the only one that does.
  *
- * The trial deliberately does not appear on the first paywall. On the App
- * Store a free trial is an *introductory offer* attached to a product, applied
- * automatically by StoreKit to any eligible buyer — so "hide the trial on
- * paywall one, show it on paywall two" cannot be done by hiding words. The two
- * paywalls have to sell different products, and they do: the default offering
- * sells products with no introductory offer, and this one sells `pro_annual`,
- * which carries a 3-day free trial. Buying a no-trial product does not consume
- * the subscription group's introductory-offer eligibility, so a user who says
- * no to the first paywall is still eligible at the second.
+ * The intro deliberately does not appear on the first paywall. On the App
+ * Store an introductory offer is attached to a *product* and applied
+ * automatically by StoreKit to any eligible buyer — so "hide the cheap first
+ * week on paywall one, show it on paywall two" cannot be done by hiding words.
+ * The two paywalls have to sell different products, and they do: the default
+ * offering sells products with no introductory offer, and this one sells
+ * `pro_weekly`, whose first week is a pay-up-front introductory price.
+ * Buying a no-intro product does not consume the subscription group's
+ * introductory-offer eligibility, so a user who says no to the first paywall
+ * is still eligible at the second.
  *
  * It exists entirely in the RevenueCat dashboard — an offering with this
  * identifier and a paywall attached. No offering, no screen: the flow goes
- * straight into the app rather than promising a trial that cannot be started.
+ * straight to the wall rather than promising a price that cannot be bought.
  */
 export const DISCOUNT_OFFERING = "discount";
 
 /**
- * The length of that trial, in days, for copy that names it.
+ * The length of that introductory period, in days, for copy that names it.
  *
  * Must match the introductory offer on every product in the offering above.
  * `asc subscriptions offers introductory list --subscription-id <id>` is the
- * source of truth; today `pro_annual` is THREE_DAYS / FREE_TRIAL and
- * `pro_monthly` has none, which is exactly the split this file assumes.
+ * source of truth; today `pro_weekly` is ONE_WEEK / PAY_AS_YOU_GO over one
+ * period, which is exactly what this file assumes.
+ *
+ * Pay-as-you-go rather than pay-up-front because Apple rejects a ONE_WEEK
+ * pay-up-front offer outright ("Provided duration is not supported by
+ * PAY_UP_FRONT"). Over a single period of a weekly subscription the two are
+ * the same charge on the same day, so nothing here or in the copy depends on
+ * the distinction.
+ *
+ * The offer exists in the United States only. Every other storefront buys
+ * `pro_weekly` at its standard price with no introductory period — which the
+ * copy survives, because it never names a price or a discount, and the sheet
+ * shows whatever this storefront actually offers.
+ *
+ * The *price* is deliberately not here and is never in copy. StoreKit
+ * localises and converts it per storefront, and a hardcoded "$0.99" is wrong
+ * in every country that does not use dollars and stale the day the tier
+ * changes. The RevenueCat sheet one tap away is the only thing that knows it.
  */
-export const TRIAL_DAYS = 3;
+export const INTRO_DAYS = 7;
 
 export const ENTITLEMENT = "pro";
 

@@ -24,6 +24,14 @@ export const onboardingA: Fragment = {
   "onboardingA.welcome.start": "Get started",
   "onboardingA.welcome.privacy": "No account. Nothing leaves your phone.",
 
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "What should we call you?",
+  "onboardingA.name.subtitle": "It goes on your reminders. It never leaves this phone.",
+  "onboardingA.name.label": "Your name",
+  "onboardingA.name.placeholder": "Alex",
+  "onboardingA.name.continue": "Continue",
+
   "onboardingA.vehicle.title": "What are you driving?",
   "onboardingA.vehicle.year": "Year",
   "onboardingA.vehicle.makeOptional": "Make (optional)",

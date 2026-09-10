@@ -5,9 +5,10 @@ import { ListRow } from "../../src/design/ListRow";
 import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
-import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../../src/purchases";
+import { DISCOUNT_OFFERING, INTRO_DAYS, presentOffering } from "../../src/purchases";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 
 /** The three moments a trial has, in the order the user meets them: what opens
@@ -68,12 +69,14 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
-      title={t("offer.trial.title", { count: TRIAL_DAYS })}
+      // The second ask, and the last screen that can use the name — same
+      // fallback as the first.
+      title={tNamed("offer.trial.title", { count: INTRO_DAYS })}
       subtitle={t("offer.trial.subtitle")}
       footer={
         <>
           <Button
-            label={t("offer.trial.cta", { count: TRIAL_DAYS })}
+            label={t("offer.trial.cta", { count: INTRO_DAYS })}
             onPress={onSeeOffer}
             disabled={busy}
           />

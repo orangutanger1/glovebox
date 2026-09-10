@@ -172,6 +172,7 @@ export const ko: Fragment = {
   "offer.plan.status.noRecord": "기록 없음",
 
   "offer.paywall.title": "차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
+  "offer.paywall.title.named": "{name}님, 차는 미리 알려주지 않아요. 이 앱이 알려줘요.",
   "offer.paywall.subtitle": "정비와 주행거리 기록이 모두 남아요.",
   "offer.paywall.cta": "내 차 기록으로 남기기",
   "offer.paywall.vehicle": "기록 완료",
@@ -186,17 +187,24 @@ export const ko: Fragment = {
   "offer.paywall.impact.upsell": "알고 들어가요. 같은 걸 두 번 팔리지 않아요.",
   "offer.paywall.impact.resale": "팔 때 완전한 기록을. 가격에 드러나요.",
 
-  "offer.trial.title": { other: "{count}일 동안 써 보세요." },
-  "offer.trial.cta": { other: "무료 {count}일 시작하기" },
-  "offer.trial.decline": "괜찮아요, 무료 앱으로 볼게요",
-  "offer.trial.subtitle": "Pro 전체 기능을 무료로. 오늘은 결제되지 않습니다.",
-  "offer.trial.legend": "체험 진행 방식",
+  "offer.trial.title": {
+    other: "첫 {count}일은 특별 가격으로.",
+  },
+  "offer.trial.title.named": {
+    other: "{name}님, 첫 {count}일은 특별 가격으로.",
+  },
+  "offer.trial.cta": {
+    other: "{count}일 시작하기",
+  },
+  "offer.trial.decline": "괜찮아요",
+  "offer.trial.subtitle": "오늘부터 Pro 전체 기능을 특별 가격으로.",
+  "offer.trial.legend": "이 제안이 진행되는 방식",
   "offer.trial.now.title": "오늘",
   "offer.trial.now.body": "플랜, 알림, 전체 기록까지 모두 열립니다.",
   "offer.trial.runs.title": "체험 기간에는",
   "offer.trial.runs.body": "차에 필요한 정비를 앱이 지켜봅니다. 외울 필요가 없습니다.",
   "offer.trial.ends.title": "체험이 끝나면",
-  "offer.trial.ends.body": "다음 화면의 가격으로 갱신됩니다. 그전에 결정하시면 됩니다.",
+  "offer.trial.ends.body": "이후에는 정가로 갱신됩니다. 그전에 결정하시면 됩니다.",
 
   "offer.winback.title": "기록이 멈춰 있어요.",
   "offer.winback.decline": "그냥 차고로 갈게요",
@@ -205,8 +213,7 @@ export const ko: Fragment = {
   "offer.winback.feedback": "무엇이 문제였는지 알려주세요",
   "offer.winback.feedbackNote": "짧은 양식이고, Safari에서 열려요",
   "offer.winback.caption": {
-    other:
-      "아니면 한 번 더 해 볼까요. Pro {count}일, 무료예요. 끝나기 전에 해지하면 한 푼도 안 나가요.",
+    other: "아니면 한 번 더 해 볼까요. Pro {count}일을 특별 가격으로. 끝나기 전에 해지하면 거기서 끝이에요.",
   },
 
   // onboardingA
@@ -215,6 +222,14 @@ export const ko: Fragment = {
   "onboardingA.welcome.headline": "마지막 엔진오일 교환이 언제였는지 더는 짐작하지 않아요.",
   "onboardingA.welcome.start": "시작하기",
   "onboardingA.welcome.privacy": "계정도 없고, 이 휴대폰을 벗어나지 않아요.",
+
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "어떻게 불러 드릴까요?",
+  "onboardingA.name.subtitle": "알림에 표시돼요. 이 기기를 벗어나지 않아요.",
+  "onboardingA.name.label": "이름",
+  "onboardingA.name.placeholder": "지민",
+  "onboardingA.name.continue": "계속",
 
   "onboardingA.vehicle.title": "어떤 차를 타세요?",
   "onboardingA.vehicle.year": "연식",
@@ -311,6 +326,28 @@ export const ko: Fragment = {
   "onboardingC.results.status.soon": "임박",
   "onboardingC.results.status.ok": "정상",
   "onboardingC.results.status.noRecord": "기록 없음",
+
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "앞으로 12개월",
+  "onboardingC.outlook.subtitle": "{vehicle}, 연간 {distance}.",
+  "onboardingC.outlook.dueWithinYear": "1년 안에",
+  "onboardingC.outlook.nextUp": "다음 정비",
+  "onboardingC.outlook.none": "날짜 없음",
+  "onboardingC.outlook.odometer": "오늘",
+  "onboardingC.outlook.projected": "1년 후",
+  "onboardingC.outlook.continue": "계속",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "유지비는 연간 약 {cost}입니다.",
+  "onboardingC.cost.subtitle": "연간 {distance}를 주행할 때 기준이에요.",
+  "onboardingC.cost.perYear": "연간",
+  "onboardingC.cost.fiveYears": "5년 동안",
+  "onboardingC.cost.roadside": "AAA는 {year}년에 긴급출동 {calls}건을 처리했어요. 약 {percent}%가 견인과 방전이었고, AAA는 정비로 막을 수 있었다고 밝혔어요.",
+  "onboardingC.cost.source": "{rate} 및 {roadside}. 미국 평균, {currency} 기준.",
+  "onboardingC.cost.continue": "계속",
 
   "onboardingC.symptoms.next": "계속",
   "onboardingC.symptoms.last": "그럼 어떻게 하면 되나요",
@@ -472,7 +509,16 @@ export const ko: Fragment = {
 
   // system
   "system.notify.title": "\ub0b4 {vehicle}: {service} \uae30\ud55c\uc774\uc5d0\uc694",
+  "system.notify.title.named": "{name}님, {vehicle}: {service} 기한이에요",
   "system.notify.body": "{date}에 마지막으로 했어요.",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "내 {vehicle}: 설정이 아직 안 끝났어요",
+  "system.resume.first.title.named": "{name}님, {vehicle}: 설정이 아직 안 끝났어요",
+  "system.resume.first.body": "1분이면 정비 일정이 완성돼요.",
+  "system.resume.second.title": "내 {vehicle}: 아직 기다리는 중이에요",
+  "system.resume.second.title.named": "{name}님, {vehicle}: 아직 기다리는 중이에요",
+  "system.resume.second.body": "입력한 내용은 그대로 있어요. 이어서 하세요.",
 
   "system.notify.when.today": "\uc624\ub298",
   "system.notify.when.tomorrow": "\ub0b4\uc77c",
@@ -488,9 +534,9 @@ export const ko: Fragment = {
   "system.csv.header.deleted": "삭제",
   "system.csv.cell.deleted": "deleted",
 
-  "system.quickaction.trial.title": "Pro 무료로 써 보기",
+  "system.quickaction.trial.title": "Pro 써 보기",
   "system.quickaction.trial.subtitle": {
-    other: "{count}일, 이후 해지하지 않으면 갱신돼요",
+    other: "{count}일은 특별 가격, 이후 갱신돼요",
   },
   "system.quickaction.feedback.title": "의견 보내기",
   "system.quickaction.feedback.subtitle": "무엇이 문제였는지 알려주세요",
@@ -621,4 +667,8 @@ export const ko: Fragment = {
   "system.csv.fuel.full": "가득 주유",
   "system.csv.cell.yes": "예",
   "system.csv.cell.no": "아니오",
+
+  "locked.title": "Wrenchy는 구독제입니다.",
+  "locked.body": "차도, 계획도, 알림도 모두 그대로 있어요. 무료 버전은 없습니다. 구독 하나로 앱 전체가 열리고, 첫 주부터 시작해요.",
+  "locked.cta": "내 차고 열기",
 };

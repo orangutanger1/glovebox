@@ -170,6 +170,7 @@ export const sv: Fragment = {
   "offer.plan.status.noRecord": "Inga uppgifter",
 
   "offer.paywall.title": "Bilar varnar inte. Det här gör det.",
+  "offer.paywall.title.named": "{name}, bilar varnar inte. Det här gör det.",
   "offer.paywall.subtitle": "Varje service och varje mätarställning, på pränt.",
   "offer.paywall.cta": "Håll bilen på pränt",
   "offer.paywall.vehicle": "På pränt",
@@ -184,20 +185,27 @@ export const sv: Fragment = {
   "offer.paywall.impact.upsell": "Du går in och vet. Inget säljs till dig två gånger.",
   "offer.paywall.impact.resale": "En komplett logg vid försäljning, och det syns på priset.",
 
-  "offer.trial.title": { one: "Testa i {count} dag.", other: "Testa i {count} dagar." },
-  "offer.trial.cta": {
-    one: "Starta min {count} gratisdag",
-    other: "Starta mina {count} gratisdagar",
+  "offer.trial.title": {
+    one: "{count} dag till introduktionspris.",
+    other: "{count} dagar till introduktionspris.",
   },
-  "offer.trial.decline": "Nej tack, visa gratisappen",
-  "offer.trial.subtitle": "Hela Pro, gratis. Inget dras i dag.",
-  "offer.trial.legend": "Så fungerar provperioden",
+  "offer.trial.title.named": {
+    one: "{name}, {count} dag till introduktionspris.",
+    other: "{name}, {count} dagar till introduktionspris.",
+  },
+  "offer.trial.cta": {
+    one: "Starta min {count} dag",
+    other: "Starta mina {count} dagar",
+  },
+  "offer.trial.decline": "Nej tack",
+  "offer.trial.subtitle": "Hela Pro från i dag, till introduktionspris.",
+  "offer.trial.legend": "Så fungerar erbjudandet",
   "offer.trial.now.title": "I dag",
   "offer.trial.now.body": "Allt låses upp: din plan, dina påminnelser, hela loggboken.",
   "offer.trial.runs.title": "Under provperioden",
   "offer.trial.runs.body": "Varje service bilen ska ha bevakas, den behöver inte kommas ihåg.",
   "offer.trial.ends.title": "När den tar slut",
-  "offer.trial.ends.body": "Den förnyas till priset på nästa skärm. Du bestämmer innan dess.",
+  "offer.trial.ends.body": "Sedan förnyas det till ordinarie pris. Du bestämmer innan dess.",
 
   "offer.winback.title": "Du slutade logga.",
   "offer.winback.decline": "Ta mig bara till garaget",
@@ -206,9 +214,8 @@ export const sv: Fragment = {
   "offer.winback.feedback": "Berätta vad som gick fel",
   "offer.winback.feedbackNote": "Ett kort formulär, öppnas i Safari",
   "offer.winback.caption": {
-    one: "Eller ge det ett försök till: {count} dag av Pro, gratis. Säg upp innan den tar slut, då betalar du ingenting.",
-    other:
-      "Eller ge det ett försök till: {count} dagar av Pro, gratis. Säg upp innan de tar slut, då betalar du ingenting.",
+    one: "Eller ge det ett försök till: {count} dag av Pro till introduktionspris. Säg upp innan den tar slut, så stannar det där.",
+    other: "Eller ge det ett försök till: {count} dagar av Pro till introduktionspris. Säg upp innan de tar slut, så stannar det där.",
   },
 
   "onboardingA.continue": "Fortsätt",
@@ -216,6 +223,14 @@ export const sv: Fragment = {
   "onboardingA.welcome.headline": "Sluta gissa när du senast bytte olja.",
   "onboardingA.welcome.start": "Kom igång",
   "onboardingA.welcome.privacy": "Inget konto. Inget lämnar telefonen.",
+
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "Vad ska vi kalla dig?",
+  "onboardingA.name.subtitle": "Namnet står i dina påminnelser. Det lämnar aldrig den här telefonen.",
+  "onboardingA.name.label": "Ditt namn",
+  "onboardingA.name.placeholder": "Elin",
+  "onboardingA.name.continue": "Fortsätt",
 
   "onboardingA.vehicle.title": "Vad kör du?",
   "onboardingA.vehicle.year": "Årsmodell",
@@ -316,6 +331,28 @@ export const sv: Fragment = {
   "onboardingC.results.status.soon": "Snart",
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Inga uppgifter",
+
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "De kommande tolv månaderna",
+  "onboardingC.outlook.subtitle": "Din {vehicle}, {distance} per år.",
+  "onboardingC.outlook.dueWithinYear": "Inom ett år",
+  "onboardingC.outlook.nextUp": "Närmast",
+  "onboardingC.outlook.none": "Inget datum",
+  "onboardingC.outlook.odometer": "Idag",
+  "onboardingC.outlook.projected": "Om ett år",
+  "onboardingC.outlook.continue": "Fortsätt",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "Att hålla den igång kostar runt {cost} per år.",
+  "onboardingC.cost.subtitle": "Vid de {distance} per år du kör.",
+  "onboardingC.cost.perYear": "Per år",
+  "onboardingC.cost.fiveYears": "Över fem år",
+  "onboardingC.cost.roadside": "AAA ryckte ut på {calls} vägassistanser {year}. Ungefär {percent}% var bärgningar och urladdade batterier: haverier som underhåll hade förhindrat, enligt AAA.",
+  "onboardingC.cost.source": "{rate} och {roadside}. Amerikanska genomsnitt, i {currency}.",
+  "onboardingC.cost.continue": "Fortsätt",
 
   "onboardingC.symptoms.next": "Fortsätt",
   "onboardingC.symptoms.last": "Så vad gör jag",
@@ -478,7 +515,16 @@ export const sv: Fragment = {
   "settings.replay.confirm": "Gör igen",
 
   "system.notify.title": "Din {vehicle}: dags f\u00f6r {service}",
+  "system.notify.title.named": "{name}, din {vehicle}: dags för {service}",
   "system.notify.body": "Gjordes senast {date}.",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "Din {vehicle}: inställningen är halvklar",
+  "system.resume.first.title.named": "{name}, din {vehicle}: inställningen är halvklar",
+  "system.resume.first.body": "En minut till så är serviceplanen klar.",
+  "system.resume.second.title": "Din {vehicle} väntar fortfarande",
+  "system.resume.second.title.named": "{name}, din {vehicle} väntar fortfarande",
+  "system.resume.second.body": "Inget av det du fyllde i är borta. Fortsätt där du slutade.",
 
   "system.notify.when.today": "Idag",
   "system.notify.when.tomorrow": "I morgon",
@@ -494,10 +540,10 @@ export const sv: Fragment = {
   "system.csv.header.deleted": "Raderad",
   "system.csv.cell.deleted": "deleted",
 
-  "system.quickaction.trial.title": "Testa Pro gratis",
+  "system.quickaction.trial.title": "Testa Pro",
   "system.quickaction.trial.subtitle": {
-    one: "{count} dag, sedan förnyas det om du inte säger upp",
-    other: "{count} dagar, sedan förnyas det om du inte säger upp",
+    one: "{count} dag till introduktionspris, sedan förnyas det",
+    other: "{count} dagar till introduktionspris, sedan förnyas det",
   },
   "system.quickaction.feedback.title": "Skicka feedback",
   "system.quickaction.feedback.subtitle": "Berätta vad som gick fel",
@@ -625,4 +671,8 @@ export const sv: Fragment = {
   "system.csv.fuel.full": "Full tank",
   "system.csv.cell.yes": "Ja",
   "system.csv.cell.no": "Nej",
+
+  "locked.title": "Wrenchy är en prenumeration.",
+  "locked.body": "Din bil, din plan och dina påminnelser finns kvar. Det finns ingen gratisversion: en prenumeration öppnar hela appen, och den börjar med din första vecka.",
+  "locked.cta": "Öppna mitt garage",
 };

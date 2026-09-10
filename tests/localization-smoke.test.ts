@@ -42,6 +42,14 @@ const SAMPLES: Record<string, string | number> = {
   to: "km",
   example: "80,467 km",
   cost: "79",
+  // The cited-statistics screen. Numbers where the sentence prints a number,
+  // already-formatted strings where the screen formats before it interpolates.
+  calls: "27,000,000",
+  year: 2024,
+  percent: 74,
+  rate: "AAA Your Driving Costs 2025",
+  roadside: "AAA 2025",
+  currency: "USD",
   default: "6 months · 5,000 mi",
   language: "English (US)",
 };

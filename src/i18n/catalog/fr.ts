@@ -178,6 +178,7 @@ export const fr: Fragment = {
   "offer.plan.status.noRecord": "Aucun suivi",
 
   "offer.paywall.title": "Les voitures ne préviennent pas. Ceci, oui.",
+  "offer.paywall.title.named": "{name}, les voitures ne préviennent pas. Ceci, oui.",
   "offer.paywall.subtitle": "Chaque entretien et chaque relevé, consignés.",
   "offer.paywall.cta": "Consigner ma voiture",
   "offer.paywall.vehicle": "Consigné",
@@ -192,20 +193,27 @@ export const fr: Fragment = {
   "offer.paywall.impact.upsell": "Vous entrez en sachant. Rien ne vous est vendu deux fois.",
   "offer.paywall.impact.resale": "Un carnet complet à la revente, et ça se voit sur le prix.",
 
-  "offer.trial.title": { one: "Essayez {count} jour.", other: "Essayez {count} jours." },
-  "offer.trial.cta": {
-    one: "Profiter de {count} jour gratuit",
-    other: "Profiter de {count} jours gratuits",
+  "offer.trial.title": {
+    one: "{count} jour au prix de lancement.",
+    other: "{count} jours au prix de lancement.",
   },
-  "offer.trial.decline": "Non merci, montrez-moi l'app gratuite",
-  "offer.trial.subtitle": "Pro complet, gratuit. Rien n’est débité aujourd’hui.",
-  "offer.trial.legend": "Comment se passe l’essai",
+  "offer.trial.title.named": {
+    one: "{name}, {count} jour au prix de lancement.",
+    other: "{name}, {count} jours au prix de lancement.",
+  },
+  "offer.trial.cta": {
+    one: "Commencer mon {count} jour",
+    other: "Commencer mes {count} jours",
+  },
+  "offer.trial.decline": "Non merci",
+  "offer.trial.subtitle": "Pro complet dès aujourd’hui, au prix de lancement.",
+  "offer.trial.legend": "Comment se passe l’offre",
   "offer.trial.now.title": "Aujourd’hui",
   "offer.trial.now.body": "Tout se débloque : votre plan, vos rappels, votre carnet complet.",
   "offer.trial.runs.title": "Pendant l’essai",
   "offer.trial.runs.body": "Chaque entretien dû sur votre voiture est surveillé, pas mémorisé.",
   "offer.trial.ends.title": "À la fin",
-  "offer.trial.ends.body": "L’abonnement se renouvelle au prix indiqué à l’écran suivant. Vous décidez avant.",
+  "offer.trial.ends.body": "L’abonnement se renouvelle ensuite au prix normal. Vous décidez avant.",
 
   "offer.winback.title": "Vous avez arrêté de noter.",
   "offer.winback.decline": "Emmenez-moi juste à mon garage",
@@ -214,9 +222,8 @@ export const fr: Fragment = {
   "offer.winback.feedback": "Dites-nous ce qui n'a pas marché",
   "offer.winback.feedbackNote": "Un formulaire court, s'ouvre dans Safari",
   "offer.winback.caption": {
-    one: "Ou retentez le coup\u00a0: {count} jour de Pro, gratuit. Résiliez avant la fin et vous ne payez rien.",
-    other:
-      "Ou retentez le coup\u00a0: {count} jours de Pro, gratuits. Résiliez avant la fin et vous ne payez rien.",
+    one: "Ou retentez le coup : {count} jour de Pro au prix de lancement. Résiliez avant la fin et cela s’arrête là.",
+    other: "Ou retentez le coup : {count} jours de Pro au prix de lancement. Résiliez avant la fin et cela s’arrête là.",
   },
 
   // onboardingA
@@ -225,6 +232,14 @@ export const fr: Fragment = {
   "onboardingA.welcome.headline": "Ne devinez plus la date de votre dernière vidange.",
   "onboardingA.welcome.start": "Commencer",
   "onboardingA.welcome.privacy": "Aucun compte. Rien ne quitte ce téléphone.",
+
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "Comment doit-on vous appeler ?",
+  "onboardingA.name.subtitle": "Votre prénom apparaît dans vos rappels. Il ne quitte jamais ce téléphone.",
+  "onboardingA.name.label": "Votre prénom",
+  "onboardingA.name.placeholder": "Camille",
+  "onboardingA.name.continue": "Continuer",
 
   "onboardingA.vehicle.title": "Qu'est-ce que vous conduisez\u00a0?",
   "onboardingA.vehicle.year": "Année",
@@ -327,6 +342,28 @@ export const fr: Fragment = {
   "onboardingC.results.status.soon": "Bientôt",
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Aucun suivi",
+
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "Les douze prochains mois",
+  "onboardingC.outlook.subtitle": "Votre {vehicle}, {distance} par an.",
+  "onboardingC.outlook.dueWithinYear": "Dans un an",
+  "onboardingC.outlook.nextUp": "Prochainement",
+  "onboardingC.outlook.none": "Sans date",
+  "onboardingC.outlook.odometer": "Aujourd’hui",
+  "onboardingC.outlook.projected": "Dans un an",
+  "onboardingC.outlook.continue": "Continuer",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "L’entretien coûte environ {cost} par an.",
+  "onboardingC.cost.subtitle": "Pour les {distance} par an que vous parcourez.",
+  "onboardingC.cost.perYear": "Par an",
+  "onboardingC.cost.fiveYears": "Sur cinq ans",
+  "onboardingC.cost.roadside": "AAA a traité {calls} dépannages en {year}. Environ {percent} % étaient des remorquages et des batteries à plat\u00a0: des pannes que l’entretien aurait évitées, selon AAA.",
+  "onboardingC.cost.source": "{rate} et {roadside}. Moyennes américaines, en {currency}.",
+  "onboardingC.cost.continue": "Continuer",
 
   "onboardingC.symptoms.next": "Continuer",
   "onboardingC.symptoms.last": "Alors je fais quoi",
@@ -498,7 +535,16 @@ export const fr: Fragment = {
 
   // system
   "system.notify.title": "Votre {vehicle}\u00a0: {service} \u00e0 faire",
+  "system.notify.title.named": "{name}, votre {vehicle} : {service} à faire",
   "system.notify.body": "Dernière fois le {date}.",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "Votre {vehicle} : configuration inachevée",
+  "system.resume.first.title.named": "{name}, votre {vehicle} : configuration inachevée",
+  "system.resume.first.body": "Encore une minute et le programme d’entretien est prêt.",
+  "system.resume.second.title": "Votre {vehicle} attend toujours",
+  "system.resume.second.title.named": "{name}, votre {vehicle} attend toujours",
+  "system.resume.second.body": "Rien de ce que vous avez saisi n’est perdu. Reprenez où vous en étiez.",
 
   "system.notify.when.today": "Aujourd\u2019hui",
   "system.notify.when.tomorrow": "Demain",
@@ -515,10 +561,10 @@ export const fr: Fragment = {
   // A CSV cell value, not copy: it stays the token a spreadsheet filters on.
   "system.csv.cell.deleted": "deleted",
 
-  "system.quickaction.trial.title": "Essayer Pro gratuitement",
+  "system.quickaction.trial.title": "Essayer Pro",
   "system.quickaction.trial.subtitle": {
-    one: "{count} jour, puis renouvellement sauf résiliation",
-    other: "{count} jours, puis renouvellement sauf résiliation",
+    one: "{count} jour au prix de lancement, puis renouvellement",
+    other: "{count} jours au prix de lancement, puis renouvellement",
   },
   "system.quickaction.feedback.title": "Envoyer un retour",
   "system.quickaction.feedback.subtitle": "Dites-nous ce qui n'a pas marché",
@@ -650,4 +696,8 @@ export const fr: Fragment = {
   "system.csv.fuel.full": "Plein complet",
   "system.csv.cell.yes": "Oui",
   "system.csv.cell.no": "Non",
+
+  "locked.title": "Wrenchy est un abonnement.",
+  "locked.body": "Votre voiture, votre plan et vos rappels sont toujours là. Il n’y a pas de version gratuite : un abonnement ouvre toute l’app, et il commence par votre première semaine.",
+  "locked.cta": "Ouvrir mon garage",
 };

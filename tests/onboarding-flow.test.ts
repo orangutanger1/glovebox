@@ -59,6 +59,23 @@ test("the flow ends on the second ask, with no free door after it", () => {
   expect(FLOW.indexOf("offer")).toBeGreaterThan(FLOW.indexOf("paywall"));
 });
 
+test("the notification ask comes before the screens a user drops out of", () => {
+  // It used to sit immediately before the paywall, which covered exactly one
+  // exit. Everything a user quits during — symptoms, help, reviews — now
+  // happens with permission already asked, so an abandoned flow can be told it
+  // is abandoned. It still comes after the computed result, because the screen
+  // is a picture of a real reminder built from this car's own records.
+  // "outlook" was inserted between the results and the ask: the projection is
+  // what the reminder is for, so it stands immediately in front of it.
+  expect(nextRoute("results")).toBe("outlook");
+  expect(nextRoute("outlook")).toBe("notify");
+  expect(nextRoute("notify")).toBe("symptoms");
+  for (const later of ["symptoms", "help", "reviews", "paywall", "offer"] as const) {
+    expect(FLOW.indexOf("notify")).toBeLessThan(FLOW.indexOf(later));
+  }
+  expect(FLOW.indexOf("notify")).toBeGreaterThan(FLOW.indexOf("results"));
+});
+
 test("a resume point from a version that shipped different screens still lands somewhere", () => {
   expect(resumeRoute("ready")).toBe("analyzing");
   expect(resumeRoute("reminders")).toBe("notify");
@@ -73,6 +90,24 @@ test("a resume point from a version that shipped different screens still lands s
   expect(resumeRoute("a-screen-that-never-existed")).toBe("welcome");
   expect(resumeRoute(null)).toBe("welcome");
   expect(resumeRoute("symptoms")).toBe("symptoms");
+});
+
+test("the flow introduces itself before it interrogates", () => {
+  // The name is asked once, before the quiz, and it is not one of the six
+  // questions — a counter over "what should we call you?" makes an
+  // introduction feel like question zero.
+  expect(nextRoute("welcome")).toBe("name");
+  expect(nextRoute("name")).toBe("vehicle");
+  expect(QUIZ).not.toContain("name");
+  expect(quizStep("name")).toBeNull();
+});
+
+test("the cost of the problem is stated between the symptoms and the answer", () => {
+  // "symptoms" names the problem, "cost" prices it, "help" answers it. Priced
+  // after the answer it is an invoice; priced before the problem it is a
+  // statistic with nothing to attach to.
+  expect(nextRoute("symptoms")).toBe("cost");
+  expect(nextRoute("cost")).toBe("help");
 });
 
 test("route names are checked, not assumed", () => {

@@ -15,6 +15,50 @@ export const ONBOARDING_STEP_KEY = "onboarding_step";
 export const ONBOARDING_VEHICLE_KEY = "onboarding_vehicle_id";
 
 /**
+ * What the driver is called.
+ *
+ * Asked once, on the screen after the hook, and read back on the two screens
+ * that ask for money and in every reminder the app sends. It is the only thing
+ * the app knows about the person rather than the car, which is exactly why it
+ * is worth one screen: "Your 2016 Outback's oil change is due" is a
+ * notification from a database, and the same sentence with a name in front of
+ * it is a message.
+ *
+ * Its own key rather than a field in the answers blob. The answers describe the
+ * quiz and are cleared by a replay so the questions can be asked again; a name
+ * is not a quiz answer and asking for it twice is the app forgetting who it is
+ * talking to.
+ *
+ * Every reader has to survive its absence. It is required for anyone starting
+ * the flow from here on, but every install that finished onboarding under an
+ * earlier build has none, and those installs still get reminders.
+ */
+export const ONBOARDING_NAME_KEY = "onboarding_name";
+
+/**
+ * The longest name the app will store.
+ *
+ * Not a validation rule about people — names are longer than this and that is
+ * fine — but a layout one: this string lands in a notification title beside a
+ * vehicle name and a service name, and iOS gives that line about forty
+ * characters before it truncates. A name that eats the whole title makes the
+ * notification useless to the person it is greeting.
+ */
+export const NAME_MAX_LENGTH = 24;
+
+/**
+ * The stored form of a typed name, or null if there is nothing worth storing.
+ *
+ * Trimmed, collapsed and capped. A field that accepted "   " would put a
+ * required screen behind a space bar, and one that accepted a pasted paragraph
+ * would put it in a push notification.
+ */
+export function normalizeName(raw: string): string | null {
+  const cleaned = raw.replace(/\s+/g, " ").trim().slice(0, NAME_MAX_LENGTH);
+  return cleaned.length > 0 ? cleaned : null;
+}
+
+/**
  * The quiz answers that are not rows in another table.
  *
  * Year, make, model, mileage and the last service all land in `vehicles` and

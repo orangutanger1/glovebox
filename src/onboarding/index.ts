@@ -1,4 +1,5 @@
 import { getDb } from "../db/client";
+import { t, type Vars } from "../i18n";
 import { getState, setState } from "../db/state";
 import {
   readOnboardingState,
@@ -7,6 +8,8 @@ import {
   ONBOARDING_STEP_KEY,
   ONBOARDING_VEHICLE_KEY,
   ONBOARDING_ANSWERS_KEY,
+  ONBOARDING_NAME_KEY,
+  normalizeName,
   type Answers,
 } from "./state";
 
@@ -40,6 +43,45 @@ export function getOnboardingVehicleId(): string | null {
 
 export function setOnboardingVehicleId(vehicleId: string): void {
   setState(ONBOARDING_VEHICLE_KEY, vehicleId);
+}
+
+/**
+ * What to call the driver, or null.
+ *
+ * Null is a real answer with a real cause: every install that finished
+ * onboarding before the name screen existed has none, and they are the majority
+ * of installs on the day this ships. Every caller renders the unnamed sentence
+ * for them rather than a greeting with a hole in it.
+ */
+export function getOnboardingName(): string | null {
+  return normalizeName(getState(ONBOARDING_NAME_KEY) ?? "");
+}
+
+/** Normalised on the way in, so nothing downstream has to trim a push
+ *  notification. A name that normalises to nothing is not written. */
+export function setOnboardingName(raw: string): void {
+  const name = normalizeName(raw);
+  if (name) setState(ONBOARDING_NAME_KEY, name);
+}
+
+/**
+ * A sentence in two versions: with the driver's name in it, and without.
+ *
+ * Every string the name appears in needs both, because the name cannot be
+ * relied on. It is required of anyone starting the flow from here on, but every
+ * install that finished onboarding under an earlier build has none, and those
+ * installs are the ones already receiving reminders. Interpolating an empty
+ * string into "{name}, your oil change is due" produces a notification that
+ * opens with a comma.
+ *
+ * Two keys rather than one with a conditional inside it: where a name goes in a
+ * sentence is the translator's decision, and in several of the shipped
+ * languages it is not the front. A key pair lets each catalog put it where its
+ * own grammar wants it, or leave it out of one of the two entirely.
+ */
+export function tNamed(key: string, vars?: Vars): string {
+  const name = getOnboardingName();
+  return name ? t(`${key}.named`, { ...vars, name }) : t(key, vars);
 }
 
 /**

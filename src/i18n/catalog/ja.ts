@@ -159,6 +159,7 @@ export const ja: Fragment = {
   "offer.plan.status.noRecord": "記録なし",
 
   "offer.paywall.title": "車は警告してくれません。これがします。",
+  "offer.paywall.title.named": "{name}さん、車は警告してくれません。これがします。",
   "offer.paywall.subtitle": "整備も走行距離も、すべて記録に残ります。",
   "offer.paywall.cta": "愛車を記録に残す",
   "offer.paywall.vehicle": "記録済み",
@@ -173,17 +174,24 @@ export const ja: Fragment = {
   "offer.paywall.impact.upsell": "わかった状態で入れます。同じものを二度売られません。",
   "offer.paywall.impact.resale": "売るときに完全な記録を。価格に表れます。",
 
-  "offer.trial.title": { other: "{count}日間試してみる。" },
-  "offer.trial.cta": { other: "{count}日間の無料期間を始める" },
-  "offer.trial.decline": "結構です。無料版を見せてください",
-  "offer.trial.subtitle": "Proのすべてを無料で。今日は請求されません。",
-  "offer.trial.legend": "無料期間の流れ",
+  "offer.trial.title": {
+    other: "最初の{count}日間はお得な価格で。",
+  },
+  "offer.trial.title.named": {
+    other: "{name}さん、最初の{count}日間はお得な価格で。",
+  },
+  "offer.trial.cta": {
+    other: "{count}日間を始める",
+  },
+  "offer.trial.decline": "今はけっこうです",
+  "offer.trial.subtitle": "今日からProのすべてを、導入価格で。",
+  "offer.trial.legend": "オファーの流れ",
   "offer.trial.now.title": "今日",
   "offer.trial.now.body": "すべてが使えます。整備プラン、リマインダー、全記録。",
   "offer.trial.runs.title": "期間中は",
   "offer.trial.runs.body": "必要な整備はアプリが見張ります。覚えておく必要はありません。",
   "offer.trial.ends.title": "期間が終わったら",
-  "offer.trial.ends.body": "次の画面の価格で更新されます。それまでにお決めください。",
+  "offer.trial.ends.body": "その後は通常価格で更新されます。それまでにお決めください。",
 
   "offer.winback.title": "記録が止まっています。",
   "offer.winback.decline": "ガレージへ進む",
@@ -192,8 +200,7 @@ export const ja: Fragment = {
   "offer.winback.feedback": "うまくいかなかった点を教えてください",
   "offer.winback.feedbackNote": "短いフォームです。Safariで開きます",
   "offer.winback.caption": {
-    other:
-      "もう一度試すこともできます。Proを{count}日間無料で。終了前に解約すれば料金はかかりません。",
+    other: "もう一度試すこともできます。Proを{count}日間、導入価格で。終了前に解約すればそこで終わりです。",
   },
 
   // onboardingA
@@ -202,6 +209,14 @@ export const ja: Fragment = {
   "onboardingA.welcome.headline": "前回のオイル交換がいつだったか、もう推測せずに済みます。",
   "onboardingA.welcome.start": "はじめる",
   "onboardingA.welcome.privacy": "アカウント不要。端末の外には出ません。",
+
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "お名前を教えてください",
+  "onboardingA.name.subtitle": "リマインダーに表示されます。この端末から出ることはありません。",
+  "onboardingA.name.label": "お名前",
+  "onboardingA.name.placeholder": "アレックス",
+  "onboardingA.name.continue": "続ける",
 
   "onboardingA.vehicle.title": "どの車に乗っていますか？",
   "onboardingA.vehicle.year": "年式",
@@ -292,6 +307,28 @@ export const ja: Fragment = {
   "onboardingC.results.status.soon": "まもなく",
   "onboardingC.results.status.ok": "問題なし",
   "onboardingC.results.status.noRecord": "記録なし",
+
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "これからの12か月",
+  "onboardingC.outlook.subtitle": "{vehicle}、年間{distance}。",
+  "onboardingC.outlook.dueWithinYear": "1年以内",
+  "onboardingC.outlook.nextUp": "次回",
+  "onboardingC.outlook.none": "日付なし",
+  "onboardingC.outlook.odometer": "現在",
+  "onboardingC.outlook.projected": "1年後",
+  "onboardingC.outlook.continue": "続ける",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "維持費は年間およそ{cost}です。",
+  "onboardingC.cost.subtitle": "年間{distance}走る場合。",
+  "onboardingC.cost.perYear": "年間",
+  "onboardingC.cost.fiveYears": "5年間",
+  "onboardingC.cost.roadside": "AAAは{year}年に{calls}件のロードサービスに対応しました。約{percent}%はレッカーとバッテリー上がりで、AAAは整備で防げたとしています。",
+  "onboardingC.cost.source": "{rate}、および{roadside}。米国平均、通貨は{currency}。",
+  "onboardingC.cost.continue": "続ける",
 
   "onboardingC.symptoms.next": "続ける",
   "onboardingC.symptoms.last": "では、どうすればいいか",
@@ -446,7 +483,16 @@ export const ja: Fragment = {
 
   // system
   "system.notify.title": "\u304a\u4f7f\u3044\u306e{vehicle}\uff1a{service}\u306e\u6642\u671f\u3067\u3059",
+  "system.notify.title.named": "{name}さん、{vehicle}：{service}の時期です",
   "system.notify.body": "前回は{date}です。",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "お使いの{vehicle}：設定が途中です",
+  "system.resume.first.title.named": "{name}さん、{vehicle}：設定が途中です",
+  "system.resume.first.body": "あと1分でメンテナンス計画が完成します。",
+  "system.resume.second.title": "お使いの{vehicle}：まだお待ちしています",
+  "system.resume.second.title.named": "{name}さん、{vehicle}：まだお待ちしています",
+  "system.resume.second.body": "入力した内容は残っています。続きからどうぞ。",
 
   "system.notify.when.today": "\u4eca\u65e5",
   "system.notify.when.tomorrow": "\u660e\u65e5",
@@ -462,9 +508,9 @@ export const ja: Fragment = {
   "system.csv.header.deleted": "削除",
   "system.csv.cell.deleted": "deleted",
 
-  "system.quickaction.trial.title": "Proを無料で試す",
+  "system.quickaction.trial.title": "Proを試す",
   "system.quickaction.trial.subtitle": {
-    other: "{count}日間、その後は解約しない限り更新されます",
+    other: "{count}日間は導入価格、その後は更新されます",
   },
   "system.quickaction.feedback.title": "フィードバックを送る",
   "system.quickaction.feedback.subtitle": "うまくいかなかった点を教えてください",
@@ -595,4 +641,8 @@ export const ja: Fragment = {
   "system.csv.fuel.full": "満タン",
   "system.csv.cell.yes": "はい",
   "system.csv.cell.no": "いいえ",
+
+  "locked.title": "Wrenchyはサブスクリプションです。",
+  "locked.body": "あなたの車も、プランも、リマインダーもそのまま残っています。無料版はありません。ひとつのサブスクリプションでアプリ全体が使えるようになり、最初の1週間から始まります。",
+  "locked.cta": "ガレージを開く",
 };

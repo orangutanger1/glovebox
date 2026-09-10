@@ -1,5 +1,5 @@
 import * as QuickActions from "expo-quick-actions";
-import { TRIAL_DAYS } from "../purchases";
+import { INTRO_DAYS } from "../purchases";
 import { t } from "../i18n";
 
 /**
@@ -10,12 +10,12 @@ import { t } from "../i18n";
  * render two of our rows next to the button that deletes it. Somebody with
  * their finger on the icon is the closest thing to a caught churn this
  * platform allows, and they get the same two things every other exit gets —
- * somewhere to complain, and a free trial.
+ * somewhere to complain, and the introductory offer.
  *
  * Set dynamically rather than declared in Info.plist. Static actions would
  * appear before the first launch, which buys nothing (there is nothing to
  * churn from yet) and costs the one thing that matters here: a subscriber must
- * not be shown "Try Pro free" in a menu they open every day.
+ * not be shown "Try Pro" in a menu they open every day.
  */
 export const QUICK_ACTION_TRIAL = "trial";
 export const QUICK_ACTION_FEEDBACK = "feedback";
@@ -31,7 +31,7 @@ export function quickActionItems(canTrial: boolean): QuickActions.Action[] {
     items.push({
       id: QUICK_ACTION_TRIAL,
       title: t("system.quickaction.trial.title"),
-      subtitle: t("system.quickaction.trial.subtitle", { count: TRIAL_DAYS }),
+      subtitle: t("system.quickaction.trial.subtitle", { count: INTRO_DAYS }),
       // SF Symbols rather than a branded glyph: these sit directly above
       // Apple's own rows, and anything off-weight looks like a mistake.
       icon: "symbol:gift",

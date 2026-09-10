@@ -7,7 +7,7 @@ import { ListRow } from "../src/design/ListRow";
 import { Panel } from "../src/design/Surface";
 import { tokens } from "../src/design/tokens";
 import { t } from "../src/i18n";
-import { DISCOUNT_OFFERING, TRIAL_DAYS, presentOffering } from "../src/purchases";
+import { DISCOUNT_OFFERING, INTRO_DAYS, presentOffering } from "../src/purchases";
 import { openFeedback } from "../src/feedback";
 import { recordReviewEvent } from "../src/review";
 import { markWinbackShown } from "../src/winback";
@@ -21,14 +21,14 @@ import { markWinbackShown } from "../src/winback";
  * say anything before or after. The one moment it does get with a churned user
  * is the launch after the absence, and this is that launch.
  *
- * Two things are on offer: the feedback form and the trial. The form is a
- * tappable row rather than a step, because a survey standing between a user
- * and a free trial is a survey that costs money — and because opening it
- * leaves for Safari, which is a fine place to end a session but a terrible
- * place to be sent mid-flow.
+ * Two things are on offer: the feedback form and the introductory offer. The
+ * form is a tappable row rather than a step, because a survey standing between
+ * a user and a cheap first week is a survey that costs money — and because
+ * opening it leaves for Safari, which is a fine place to end a session but a
+ * terrible place to be sent mid-flow.
  *
  * The route is only ever reached from the launch guard, which has already
- * confirmed the user is not a subscriber and that the trial offering exists.
+ * confirmed the user is not a subscriber and that the offering exists.
  */
 export default function Winback() {
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function Winback() {
       footer={
         <>
           <Button
-            label={t("offer.trial.cta", { count: TRIAL_DAYS })}
+            label={t("offer.trial.cta", { count: INTRO_DAYS })}
             onPress={onStartTrial}
             disabled={busy}
           />
@@ -91,7 +91,7 @@ export default function Winback() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("offer.winback.caption", { count: TRIAL_DAYS })}
+        {t("offer.winback.caption", { count: INTRO_DAYS })}
       </Text>
     </Screen>
   );

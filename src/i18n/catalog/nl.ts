@@ -146,7 +146,16 @@ export const nl: Fragment = {
 
   // system
   "system.notify.title": "Jouw {vehicle}: {service} is aan de beurt",
+  "system.notify.title.named": "{name}, jouw {vehicle}: {service} is aan de beurt",
   "system.notify.body": "Laatst gedaan op {date}.",
+  // The two nudges an unfinished onboarding gets, two hours and a day
+  // after the user walked away from it.
+  "system.resume.first.title": "Jouw {vehicle}: instellen is half klaar",
+  "system.resume.first.title.named": "{name}, jouw {vehicle}: instellen is half klaar",
+  "system.resume.first.body": "Nog één minuut en het onderhoudsschema staat.",
+  "system.resume.second.title": "Jouw {vehicle} wacht nog",
+  "system.resume.second.title.named": "{name}, jouw {vehicle} wacht nog",
+  "system.resume.second.body": "Niets van wat je invulde is weg. Ga verder waar je stopte.",
 
   "system.notify.when.today": "Vandaag",
   "system.notify.when.tomorrow": "Morgen",
@@ -162,10 +171,10 @@ export const nl: Fragment = {
   "system.csv.header.deleted": "Verwijderd",
   "system.csv.cell.deleted": "deleted",
 
-  "system.quickaction.trial.title": "Pro gratis proberen",
+  "system.quickaction.trial.title": "Pro proberen",
   "system.quickaction.trial.subtitle": {
-    one: "{count} dag, daarna loopt het door tenzij je opzegt",
-    other: "{count} dagen, daarna loopt het door tenzij je opzegt",
+    one: "{count} dag voor introductieprijs, daarna loopt het door",
+    other: "{count} dagen voor introductieprijs, daarna loopt het door",
   },
   "system.quickaction.feedback.title": "Feedback sturen",
   "system.quickaction.feedback.subtitle": "Vertel ons wat er misging",
@@ -303,6 +312,14 @@ export const nl: Fragment = {
   "onboardingA.welcome.start": "Beginnen",
   "onboardingA.welcome.privacy": "Geen account. Niets verlaat je telefoon.",
 
+  // The introduction, on the screen before the quiz. The name is read
+  // back on both ask screens and in every reminder, and nowhere else.
+  "onboardingA.name.title": "Hoe mogen we je noemen?",
+  "onboardingA.name.subtitle": "Je naam staat in je herinneringen. Hij verlaat deze telefoon nooit.",
+  "onboardingA.name.label": "Je naam",
+  "onboardingA.name.placeholder": "Sanne",
+  "onboardingA.name.continue": "Verder",
+
   "onboardingA.vehicle.title": "Wat rijd je?",
   "onboardingA.vehicle.year": "Bouwjaar",
   "onboardingA.vehicle.makeOptional": "Merk (optioneel)",
@@ -404,6 +421,28 @@ export const nl: Fragment = {
   "onboardingC.results.status.soon": "Binnenkort",
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Geen gegevens",
+
+  // The twelve-month projection, between the results and the notification
+  // ask. Counts and dates the scheduler already computes; no score.
+  "onboardingC.outlook.title": "De komende twaalf maanden",
+  "onboardingC.outlook.subtitle": "Je {vehicle}, {distance} per jaar.",
+  "onboardingC.outlook.dueWithinYear": "Binnen een jaar",
+  "onboardingC.outlook.nextUp": "Straks",
+  "onboardingC.outlook.none": "Geen datum",
+  "onboardingC.outlook.odometer": "Vandaag",
+  "onboardingC.outlook.projected": "Over een jaar",
+  "onboardingC.outlook.continue": "Verder",
+
+  // The only figures in the flow that are not the user's own. Both are
+  // AAA's, both are attributed on the glass, and the money stays in the
+  // currency they were published in. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "Rijdend houden kost ongeveer {cost} per jaar.",
+  "onboardingC.cost.subtitle": "Bij de {distance} per jaar die je rijdt.",
+  "onboardingC.cost.perYear": "Per jaar",
+  "onboardingC.cost.fiveYears": "Over vijf jaar",
+  "onboardingC.cost.roadside": "AAA behandelde {calls} pechmeldingen in {year}. Ongeveer {percent}% waren sleepbeurten en lege accu's: pech die onderhoud volgens AAA had voorkomen.",
+  "onboardingC.cost.source": "{rate} en {roadside}. Amerikaanse gemiddelden, in {currency}.",
+  "onboardingC.cost.continue": "Verder",
 
   "onboardingC.symptoms.next": "Verder",
   "onboardingC.symptoms.last": "En wat doe ik daaraan",
@@ -553,6 +592,7 @@ export const nl: Fragment = {
   "offer.plan.status.noRecord": "Geen gegevens",
 
   "offer.paywall.title": "Auto’s waarschuwen niet. Dit wel.",
+  "offer.paywall.title.named": "{name}, auto’s waarschuwen niet. Dit wel.",
   "offer.paywall.subtitle": "Elke onderhoudsbeurt en elke kilometerstand, vastgelegd.",
   "offer.paywall.cta": "Mijn auto vastleggen",
   "offer.paywall.vehicle": "Vastgelegd",
@@ -567,20 +607,27 @@ export const nl: Fragment = {
   "offer.paywall.impact.upsell": "Je komt binnen met de feiten. Niets wordt je twee keer verkocht.",
   "offer.paywall.impact.resale": "Een volledig logboek bij verkoop, en dat zie je terug in de prijs.",
 
-  "offer.trial.title": { one: "Probeer het {count} dag.", other: "Probeer het {count} dagen." },
-  "offer.trial.cta": {
-    one: "Start mijn {count} gratis dag",
-    other: "Start mijn {count} gratis dagen",
+  "offer.trial.title": {
+    one: "{count} dag voor introductieprijs.",
+    other: "{count} dagen voor introductieprijs.",
   },
-  "offer.trial.decline": "Nee bedankt, laat de gratis app zien",
-  "offer.trial.subtitle": "Volledige Pro, gratis. Vandaag wordt er niets afgeschreven.",
-  "offer.trial.legend": "Zo verloopt de proefperiode",
+  "offer.trial.title.named": {
+    one: "{name}, {count} dag voor introductieprijs.",
+    other: "{name}, {count} dagen voor introductieprijs.",
+  },
+  "offer.trial.cta": {
+    one: "Start mijn {count} dag",
+    other: "Start mijn {count} dagen",
+  },
+  "offer.trial.decline": "Nee bedankt",
+  "offer.trial.subtitle": "Volledige Pro vanaf vandaag, voor introductieprijs.",
+  "offer.trial.legend": "Zo verloopt het aanbod",
   "offer.trial.now.title": "Vandaag",
   "offer.trial.now.body": "Alles gaat open: je plan, je herinneringen, je volledige logboek.",
   "offer.trial.runs.title": "Zolang hij loopt",
   "offer.trial.runs.body": "Elke beurt die je auto nodig heeft wordt bewaakt, niet onthouden.",
   "offer.trial.ends.title": "Als hij afloopt",
-  "offer.trial.ends.body": "Hij verlengt tegen de prijs op het volgende scherm. Je beslist daarvoor.",
+  "offer.trial.ends.body": "Daarna verlengt het tegen de normale prijs. Je beslist daarvoor.",
 
   "offer.winback.title": "Je bent gestopt met vastleggen.",
   "offer.winback.decline": "Breng me gewoon naar mijn garage",
@@ -589,9 +636,8 @@ export const nl: Fragment = {
   "offer.winback.feedback": "Vertel ons wat er misging",
   "offer.winback.feedbackNote": "Een kort formulier, opent in Safari",
   "offer.winback.caption": {
-    one: "Of geef het nog één kans: {count} dag Pro, gratis. Zeg op voordat het afloopt en je betaalt niets.",
-    other:
-      "Of geef het nog één kans: {count} dagen Pro, gratis. Zeg op voordat ze aflopen en je betaalt niets.",
+    one: "Of geef het nog één kans: {count} dag Pro voor introductieprijs. Zeg op voordat het afloopt en daar blijft het bij.",
+    other: "Of geef het nog één kans: {count} dagen Pro voor introductieprijs. Zeg op voordat ze aflopen en daar blijft het bij.",
   },
   "subscribed.title": "Pro staat aan.",
   "subscribed.body": "{vehicle} staat nu in het schema. Je hoort het voordat een beurt verloopt, niet erna.",
@@ -646,4 +692,8 @@ export const nl: Fragment = {
   "system.csv.fuel.full": "Vol getankt",
   "system.csv.cell.yes": "Ja",
   "system.csv.cell.no": "Nee",
+
+  "locked.title": "Wrenchy is een abonnement.",
+  "locked.body": "Je auto, je plan en je herinneringen staan er allemaal nog. Er is geen gratis versie: één abonnement opent de hele app, en die begint met je eerste week.",
+  "locked.cta": "Mijn garage openen",
 };

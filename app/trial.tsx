@@ -6,7 +6,7 @@ import { DISCOUNT_OFFERING, presentOffering } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
 
 /**
- * Where "Try Pro free" in the home-screen menu lands.
+ * Where "Try Pro" in the home-screen menu lands.
  *
  * Deliberately not a screen. The user has already read the offer — it was the
  * row they tapped, subtitle and all — so putting a page in front of the

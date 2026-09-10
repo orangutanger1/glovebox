@@ -16,6 +16,7 @@ import {
 } from "../src/analytics";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
+import { isLocked, resolveGrandfathered } from "../src/paywall";
 import { resumeRoute } from "../src/onboarding/flow";
 import { recordReviewEvent } from "../src/review";
 import { recordOpen, getWinbackShownAt } from "../src/winback";
@@ -218,7 +219,22 @@ export default function RootLayout() {
     // one — the only measure of an absence the app has.
     const previousOpen = boot("open", recordOpen) ?? null;
 
-    if (!isOnboarded()) {
+    const onboarded = isOnboarded();
+
+    // Stamped before anything can route on it, and only ever written once. An
+    // install that had already finished onboarding when this build first ran
+    // did so under a build that promised a free tier, and keeps it; everyone
+    // else meets the wall. Doing this later — on the first wall, say — would
+    // hand the decision to whichever screen happened to ask first on a launch
+    // with no network.
+    //
+    // A failure here falls open. `boot` swallows the throw and hands back
+    // undefined, and the only reasonable reading of "the database would not
+    // answer" is that this user keeps their app: walling someone because a
+    // write failed is the one outcome worth more than the subscription.
+    const grandfathered = boot("grandfather", () => resolveGrandfathered(onboarded)) ?? true;
+
+    if (!onboarded) {
       // Validated, not trusted: the persisted step names a screen that a
       // previous version of the app may have shipped and this one does not,
       // and redirecting to a route that no longer exists is a blank screen on
@@ -236,6 +252,20 @@ export default function RootLayout() {
     Promise.all([isPro(), hasOffering(DISCOUNT_OFFERING)])
       .then(([pro, hasOffer]) => {
         void syncQuickActions(!pro && hasOffer);
+
+        // The wall, for a user who has no entitlement and was never promised a
+        // free app. It comes before the win-back on purpose: both are launch
+        // interruptions, and offering a lapsed subscriber "one more go" on top
+        // of a screen they cannot get past is two asks stacked on one launch.
+        //
+        // Asked here rather than on every screen because the answer is only
+        // ever "yes" at launch: a purchase made anywhere in the app replaces
+        // this route, and a subscription cancelled inside Customer Center
+        // keeps its entitlement until the period it was paid for runs out.
+        if (isLocked({ isPro: pro, grandfathered, isOnboarded: true })) {
+          router.replace("/locked");
+          return;
+        }
 
         // A launch that came from the menu is a launch with a destination. The
         // win-back would replace it with a screen the user did not ask for,
@@ -373,6 +403,10 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
             of `trial` nothing at all — it is a native paywall on a blank
             housing, not a page. */}
         <Stack.Screen name="winback" options={{ headerShown: false }} />
+        {/* No header, no back and no swipe. Being unable to leave without
+            subscribing or restoring is what this screen is; a gesture out of
+            it would drop the user into the garage it exists to close. */}
+        <Stack.Screen name="locked" options={{ headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="trial" options={{ headerShown: false }} />
         {/* No header and no back: onboarding has already been completed by the
             time this mounts, so there is nothing behind it to return to. */}
@@ -391,6 +425,23 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
         <Stack.Screen
           name="vehicle/[id]/log"
           options={{ title: t("layout.logService"), headerTitle: "" }}
+        />
+        {/* Both fuel routes were missing from this list, and a route with no
+            entry here gets no title at all — so the header printed the route
+            pattern instead, which is how "vehicle/[id]/fuel/new" came to be the
+            heading over Log fuel. Titled from the fuel fragment rather than new
+            `layout.*` keys: the header and the screen's own h1 are the same
+            words, and a second key for each is a second thing to translate.
+
+            The form blanks its header title because it prints one in the body;
+            the history does not print one, so its header keeps the text. */}
+        <Stack.Screen
+          name="vehicle/[id]/fuel/index"
+          options={{ title: t("fuel.history.title") }}
+        />
+        <Stack.Screen
+          name="vehicle/[id]/fuel/new"
+          options={{ title: t("fuel.form.title"), headerTitle: "" }}
         />
       </Stack>
       {fatal !== null && <FatalNotice detail={fatal} />}

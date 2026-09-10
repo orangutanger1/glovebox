@@ -52,6 +52,10 @@ jest.mock("../src/analytics", () => ({
 }));
 jest.mock("../src/notify", () => ({ rescheduleAll: async () => {} }));
 jest.mock("../src/onboarding", () => ({ isOnboarded: () => true, getOnboardingStep: () => null }));
+jest.mock("../src/paywall", () => ({
+  resolveGrandfathered: () => true,
+  isLocked: () => false,
+}));
 jest.mock("../src/onboarding/flow", () => ({ resumeRoute: () => "welcome" }));
 jest.mock("../src/review", () => ({ recordReviewEvent: () => {} }));
 jest.mock("../src/winback", () => ({ recordOpen: () => null, getWinbackShownAt: () => null }));

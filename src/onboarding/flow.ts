@@ -26,6 +26,13 @@
  */
 export const FLOW = [
   "welcome",
+  // Who the driver is, before anything is asked about the car. One field, and
+  // the only thing the app ever learns about the person: it is read back on
+  // both screens that ask for money and in every reminder the app sends.
+  // Before the quiz because that is where an introduction goes — asked after
+  // six questions it reads as a form field the app forgot, and asked after the
+  // results it reads as a condition on seeing them.
+  "name",
   // The quiz. Six questions, all of which change what the app computes.
   "vehicle",
   "odometer",
@@ -36,12 +43,36 @@ export const FLOW = [
   // The payoff, in the order that earns the ask.
   "analyzing",
   "results",
+  // The same plan, twelve months forward. "results" is the car today; this is
+  // where it lands by this time next year at the rate the user drives, which is
+  // the argument for a reminder rather than a look at the dash — and it is the
+  // screen the notification ask is standing on.
+  "outlook",
+  // The notification ask sits here, immediately after the computed result and
+  // five screens earlier than it used to.
+  //
+  // It used to be the last screen before the paywall, which covered exactly one
+  // drop-off — the one at the ask for money. Everybody who quit during the
+  // evidence screens quit with notifications never requested, and an install
+  // the app cannot notify is an install it cannot invite back: an abandoned
+  // flow has a half-written car in it and no way to say so. Permission first,
+  // then the rest of the argument.
+  //
+  // Not earlier than this. The screen is a picture of a real reminder built
+  // from this car's own records, so it needs the quiz answered and the plan
+  // computed; asked before "results" it would be "allow notifications?" with
+  // nothing behind it, which is the context-free version opt-in collapses on.
+  "notify",
   "symptoms",
+  // What the symptoms cost, in the only two figures on this screen that are
+  // not the user's own: AAA's published maintenance rate per mile, multiplied
+  // by the mileage this user just told us they drive. The pain beat states the
+  // problem; this prices it, immediately before "help" answers it.
+  "cost",
   // "help" carries the Free/Pro boundary too: it used to be its own screen
   // here, and the tap between the promise and its price bought nothing.
   "help",
   "reviews",
-  "notify",
   "paywall",
   "offer",
 ] as const;
