@@ -2,9 +2,9 @@ import { Pressable, View, Text } from "react-native";
 import { tokens } from "./tokens";
 
 /**
- * A slot milled into the faceplate. Rows are inset wells rather than raised
- * cards so a list reads as one panel with grooves in it, not a stack of
- * floating tiles.
+ * A row in a list. Flat, and one value up from the panel it sits in, so a list
+ * reads as one object with rows in it rather than as a stack of floating
+ * tiles. A press darkens the row; nothing moves.
  *
  * `status="overdue"` lights the row: red stripe on the left, title at full
  * weight. Healthy rows recede into muted text — health is expressed by weight
@@ -33,17 +33,16 @@ export function ListRow({
             flexDirection: "row",
             alignItems: "center",
             borderRadius: tokens.radius.sm,
-            backgroundColor: pressed ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.18)",
-            borderWidth: 1,
-            borderTopColor: tokens.color.edge,
-            borderLeftColor: tokens.color.edge,
-            borderRightColor: tokens.color.edge,
-            borderBottomColor: tokens.color.hairline,
+            // One value above whatever it sits on, and no border: a bordered
+            // row inside a bordered panel is a box in a box, and the row has
+            // to read the same standing alone on the background as it does
+            // inside a list.
+            backgroundColor: pressed ? "#23272C" : tokens.color.surfaceHi,
             overflow: "hidden",
           }}
         >
           {status === "overdue" ? (
-            <View style={{ width: 3, alignSelf: "stretch", backgroundColor: tokens.color.red }} />
+            <View style={{ width: 2, alignSelf: "stretch", backgroundColor: tokens.color.red }} />
           ) : null}
           <View
             style={{
@@ -53,7 +52,7 @@ export function ListRow({
               justifyContent: "space-between",
               gap: tokens.space.sm,
               paddingHorizontal: tokens.space.md,
-              paddingVertical: tokens.space.sm + 2,
+              paddingVertical: tokens.space.sm + 4,
             }}
           >
             <View style={{ flex: 1, gap: 2 }}>

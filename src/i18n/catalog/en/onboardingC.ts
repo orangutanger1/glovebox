@@ -88,6 +88,5 @@ export const onboardingC: Fragment = {
     other: "{count} of {total} App Store reviews of apps that already do this are one to three stars.",
   },
   "onboardingC.reviews.continue": "Continue",
-  "onboardingC.reviews.scroll": "Scroll to read all four",
   "onboardingC.reviews.mentioning": "Reviews mentioning",
 };

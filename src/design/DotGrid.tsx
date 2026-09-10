@@ -116,13 +116,11 @@ function Dot({
         borderRadius: size / 2,
         alignItems: "center",
         justifyContent: "center",
-        // The socket, always drawn. An empty one is the point of the picture.
-        backgroundColor: tokens.color.edgeSolid,
+        // The empty ring, always drawn. An unfilled one is the point of the
+        // picture.
+        backgroundColor: tokens.color.sunken,
         borderWidth: 1,
-        borderTopColor: tokens.color.edge,
-        borderLeftColor: tokens.color.edge,
-        borderRightColor: tokens.color.edge,
-        borderBottomColor: tokens.color.hairline,
+        borderColor: tokens.color.hairline,
       }}
     >
       {lit ? (

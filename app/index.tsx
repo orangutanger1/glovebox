@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
@@ -8,6 +8,7 @@ import { Gauge } from "../src/design/Gauge";
 import { Badge } from "../src/design/Badge";
 import { Chip } from "../src/design/Chip";
 import { ListRow } from "../src/design/ListRow";
+import { PressableScale } from "../src/design/PressableScale";
 import { Panel } from "../src/design/Surface";
 import { nextReminders } from "../src/notify/collect";
 import { tokens } from "../src/design/tokens";
@@ -216,11 +217,10 @@ export default function Garage() {
         vehicles.map((v) => {
           const s = summarize(v);
           return (
-            <Pressable
+            <PressableScale
               key={v.id}
               accessibilityRole="button"
               onPress={() => router.push(`/vehicle/${v.id}`)}
-              style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
             >
               <Card status={s.status === "due" ? "overdue" : undefined}>
                 <View
@@ -281,7 +281,7 @@ export default function Garage() {
                   />
                 </View>
               </Card>
-            </Pressable>
+            </PressableScale>
           );
         })
       )}

@@ -34,14 +34,13 @@ const NUDGE_MS = 2000;
  * The tallies are the claim, and the label on each one says exactly what it
  * counts: a mention, not a verdict.
  *
- * Continue asks for the scroll and then stops insisting. This is the only
- * screen in the flow whose whole content is the argument rather than a summary
- * of it, so the label still says which of the two states it is in and the
- * scroll is still the thing being asked for. What it no longer does is refuse:
- * a disabled button on the one screen whose job is to earn trust taught the
- * most impatient users that the app argues back, and they are the users this
- * screen exists for. The label does not change when the timeout elapses,
- * because nothing about the argument has.
+ * Continue waits, and says nothing about it. The label never changes: a
+ * button that renames itself "Scroll to read all four" turns the control into
+ * a second set of instructions on the one screen whose whole content is the
+ * argument, and the user reads the button instead of the evidence. The state
+ * is carried by the control's own material — an unlit face, the way a lamp
+ * that is not on is not a lamp with a caption. It stops refusing after
+ * NUDGE_MS whether or not anything was scrolled.
  */
 export default function OnboardingReviews() {
   const advance = useAdvance("reviews");
@@ -55,9 +54,9 @@ export default function OnboardingReviews() {
         total: REVIEW_EVIDENCE.total,
       })}
       gateTimeoutMs={NUDGE_MS}
-      footer={({ atBottom, unlocked }) => (
+      footer={({ unlocked }) => (
         <Button
-          label={t(atBottom ? "onboardingC.reviews.continue" : "onboardingC.reviews.scroll")}
+          label={t("onboardingC.reviews.continue")}
           onPress={advance}
           disabled={!unlocked}
           onBlockedPress={() => trackStepBlocked("reviews", "scroll")}

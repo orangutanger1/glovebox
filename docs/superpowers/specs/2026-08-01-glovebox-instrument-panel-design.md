@@ -1,6 +1,10 @@
 # Glovebox Visual System — Instrument Panel
 
-**Status:** approved 2026-08-01. Supersedes the color, surface, and component sections of
+**Status:** SUPERSEDED 2026-09-10 by `2026-09-10-glovebox-flat-dark-design.md`. Kept for the
+reasoning behind the contrast and control-visibility rules, which the flat system inherits.
+Nothing in the material model below is still shipped.
+
+**Status (historical):** approved 2026-08-01. Supersedes the color, surface, and component sections of
 `2026-08-01-glovebox-ui-ux-and-onboarding.md`. That document remains the source of truth for
 screen flow, copy, and onboarding order; everything visual is defined here.
 

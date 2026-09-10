@@ -230,7 +230,9 @@ export default function Insights() {
                   height: m.total === 0 ? 1 : Math.max(2, (m.total / peak) * BAR_MAX),
                   backgroundColor:
                     m.total === 0 ? tokens.color.hairline : tokens.color.metalHi,
-                  borderRadius: tokens.radius.sm,
+                  // A column this narrow with a 10pt radius is a lozenge, not
+                  // a bar: the corner has to stay smaller than the stem.
+                  borderRadius: 4,
                 }}
               />
             </View>
@@ -342,7 +344,7 @@ export default function Insights() {
                         height: m.total === 0 ? 1 : Math.max(2, (m.total / fuelPeak) * BAR_MAX),
                         backgroundColor:
                           m.total === 0 ? tokens.color.hairline : tokens.color.metalHi,
-                        borderRadius: tokens.radius.sm,
+                        borderRadius: 4,
                       }}
                     />
                   </View>

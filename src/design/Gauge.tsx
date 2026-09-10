@@ -4,8 +4,9 @@ import { Lamp } from "./Lamp";
 
 /**
  * A legend/readout pair — the app's signature element. Where a generic layout
- * writes "Odometer: 84,210" in a sentence, this puts a tracked uppercase
- * legend above a tabular-numeral readout, the way a cluster does.
+ * writes "Odometer: 84,210" in a sentence, this stacks a quiet label above a
+ * large tabular-numeral figure, so the number is what the eye lands on and the
+ * label is there for the second look.
  *
  * The legend and the readout never appear apart.
  */

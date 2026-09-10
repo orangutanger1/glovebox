@@ -3,8 +3,9 @@ import { Panel } from "./Surface";
 import { tokens } from "./tokens";
 
 /**
- * A metal faceplate. `status="overdue"` adds the red stripe down the left edge
- * — the card-level equivalent of a lit lamp, readable at arm's length.
+ * A content surface. `status="overdue"` adds the red rule down the left edge —
+ * the card-level equivalent of a lit lamp, readable at arm's length, and the
+ * only place a card is allowed any colour at all.
  */
 export function Card({
   children,
@@ -17,9 +18,9 @@ export function Card({
     <Panel>
       <View style={{ flexDirection: "row" }}>
         {status === "overdue" ? (
-          <View style={{ width: 3, backgroundColor: tokens.color.red }} />
+          <View style={{ width: 2, backgroundColor: tokens.color.red }} />
         ) : null}
-        <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.sm }}>{children}</View>
+        <View style={{ flex: 1, padding: tokens.space.md, gap: tokens.space.sm + 2 }}>{children}</View>
       </View>
     </Panel>
   );

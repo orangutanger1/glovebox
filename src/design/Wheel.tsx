@@ -103,8 +103,9 @@ export function Drum({
 }
 
 /**
- * The case: a well, the detent hairlines behind the drums, and the shading at
- * top and bottom that makes a column of text read as a cylinder.
+ * The case: a sunken surface, the detent hairlines marking the selected row,
+ * and the fade at top and bottom that makes a column of text read as a
+ * cylinder rather than as a list that has been cut off.
  */
 export function WheelCase({ children }: { children: React.ReactNode }) {
   return (
@@ -129,7 +130,7 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
         <View style={{ flexDirection: "row", justifyContent: "center" }}>{children}</View>
         <LinearGradient
           pointerEvents="none"
-          colors={["rgba(15,17,19,0.96)", "rgba(15,17,19,0)", "rgba(15,17,19,0.96)"]}
+          colors={["rgba(8,9,11,0.96)", "rgba(8,9,11,0)", "rgba(8,9,11,0.96)"]}
           locations={[0, 0.5, 1]}
           style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
         />

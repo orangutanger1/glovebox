@@ -3,7 +3,7 @@ import { BlurView } from "expo-blur";
 import { tokens } from "./tokens";
 
 /**
- * A blurred pane floating over the metal. Used for sticky footers and headers
+ * A blurred pane floating over the content beneath it. Used for sticky footers and headers
  * so content passes underneath instead of ending at a hard line.
  *
  * Blur is the most expensive thing in this system. One pane per screen, at a
@@ -26,8 +26,8 @@ export function Glass({
         style={{
           borderTopWidth: edge === "top" ? 1 : 0,
           borderBottomWidth: edge === "bottom" ? 1 : 0,
-          borderColor: "rgba(255,255,255,0.06)",
-          backgroundColor: "rgba(15,17,19,0.55)",
+          borderColor: tokens.color.hairline,
+          backgroundColor: "rgba(10,11,13,0.60)",
         }}
       >
         {children}

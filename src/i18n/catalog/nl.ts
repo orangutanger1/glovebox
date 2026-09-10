@@ -468,7 +468,6 @@ export const nl: Fragment = {
       "{count} van de {total} App Store-reviews van apps die dit al doen zijn één tot drie sterren.",
   },
   "onboardingC.reviews.continue": "Verder",
-  "onboardingC.reviews.scroll": "Scroll om alle vier te lezen",
   "onboardingC.reviews.mentioning": "Reviews over",
 
   // pain

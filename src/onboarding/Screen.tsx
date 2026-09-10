@@ -87,9 +87,9 @@ export function OnboardingScreen({
    *
    * Opt-in per screen rather than global, and the whole reason it exists is
    * that the gate was a blocker. A user who has decided is not persuaded by a
-   * dead button; they are taught that the app argues with taps. The label
-   * still asks for the scroll after this elapses, so the affordance survives
-   * and only the refusal goes away.
+   * dead button; they are taught that the app argues with taps. `atBottom` is
+   * still reported separately after this elapses, so a screen can go on
+   * knowing whether its content was read while no longer standing in the way.
    */
   gateTimeoutMs?: number;
   children?: ReactNode;
@@ -148,9 +148,7 @@ export function OnboardingScreen({
    * The gate was written to stop a user tapping past an argument they had not
    * read. What it actually did was hand the most impatient users a dead
    * control at the exact moment the flow was asking them for trust, which
-   * costs more than the paragraph it protected. The timer only ever unlocks:
-   * `atBottom` is still reported separately, so the button can go on asking
-   * for the scroll while no longer standing in the way of it.
+   * costs more than the paragraph it protected. The timer only ever unlocks.
    */
   const [nudged, setNudged] = useState(false);
   useEffect(() => {
@@ -241,18 +239,18 @@ export function OnboardingScreen({
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
-      {/* Every material in this app is lit from above; the flat housing was
-          the one surface that was not. The generated radial vignette could not
-          be used — it arrived as an opaque JPEG with the falloff inverted — so
-          the top light is a gradient in code, which also costs nothing. */}
+      {/* A single soft wash at the top of the flow's background, so a screen
+          of flat surfaces on flat black has somewhere the light is coming
+          from. It is under 4% and 320px tall: at the strength where it is felt
+          as depth rather than seen as a gradient. */}
       <LinearGradient
         pointerEvents="none"
         colors={
           tone === "alarm"
             ? [tokens.color.redWash, "transparent"]
-            : ["rgba(255,255,255,0.05)", "transparent"]
+            : ["rgba(255,255,255,0.035)", "transparent"]
         }
-        style={{ position: "absolute", top: 0, left: 0, right: 0, height: 260 }}
+        style={{ position: "absolute", top: 0, left: 0, right: 0, height: 320 }}
       />
       <KeyboardAvoidingView
         style={{ flex: 1 }}

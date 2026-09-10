@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { View, Text, Pressable, Animated, Easing } from "react-native";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
 import { tokens } from "./tokens";
+import { usePressScale } from "./press";
 
 /**
  * The answers to a question, as a column of full-width cards.
@@ -16,12 +16,11 @@ import { tokens } from "./tokens";
  * answers by scanning for the shortest label. The pills were also the smallest
  * targets in the flow at the one moment the app is asking for something.
  *
- * So: one card per line, each the full width of the gutter, each a raised
- * metal face with a socket on the right. The socket is the whole selection
- * language — empty and recessed when the answer is not chosen, filled with a
- * lit stud when it is. Nothing about the card moves position when it is
- * picked, which is what makes a multi-select column readable while it is being
- * filled in.
+ * So: one card per line, each the full width of the gutter, each a flat
+ * surface with a socket on the right. The socket is the whole selection
+ * language — an empty ring when the answer is not chosen, a filled dot when it
+ * is. Nothing about the card moves position when it is picked, which is what
+ * makes a multi-select column readable while it is being filled in.
  *
  * The cards enter staggered on mount, 45ms apart. It is the only decorative
  * motion in the quiz and it earns its place by giving the column a reading
@@ -90,6 +89,7 @@ function OptionCard({
   disabled: boolean;
   delay: number;
 }) {
+  const press = usePressScale(disabled);
   const enter = useRef(new Animated.Value(0)).current;
   // Starts wherever the card starts, so a screen returned to by Back shows its
   // answer already picked instead of playing the pick again.
@@ -139,68 +139,57 @@ function OptionCard({
     >
       <Pressable
         onPress={handlePress}
+        onPressIn={press.onPressIn}
+        onPressOut={press.onPressOut}
         disabled={disabled}
         accessibilityRole="checkbox"
         accessibilityState={{ checked: selected, disabled }}
       >
-        {({ pressed }) => (
-          <View
-            style={{
-              borderRadius: tokens.radius.md,
-              backgroundColor: tokens.color.edgeSolid,
-              // The same machined edge every raised control in the app sits on,
-              // shrinking under the press so the card travels into the housing.
-              paddingBottom:
-                pressed && !disabled ? tokens.material.edgePressed : tokens.material.edgeHeight,
-              marginTop: pressed && !disabled ? tokens.material.pressTravel : 0,
-              opacity: disabled ? 0.4 : 1,
-            }}
-          >
-            <LinearGradient
-              colors={
-                selected
-                  ? [...tokens.material.metalFaceLit]
-                  : [...tokens.material.metalFace]
-              }
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
+        <Animated.View
+          style={{
+            transform: [{ scale: press.scale }],
+            flexDirection: "row",
+            alignItems: "center",
+            gap: tokens.space.md,
+            minHeight: 62,
+            paddingHorizontal: tokens.space.md,
+            paddingVertical: tokens.space.sm + 4,
+            borderRadius: tokens.radius.md,
+            borderWidth: 1,
+            // The chosen card is one value up with a lit hairline round it.
+            // That is the whole difference: a picked answer does not need to
+            // be a different material from the ones beside it, only a brighter
+            // one, and the socket on the right is already saying which it is.
+            backgroundColor: disabled
+              ? tokens.color.surface
+              : selected
+                ? tokens.color.surfaceHi
+                : tokens.color.surface,
+            borderColor: selected ? tokens.color.hairlineLit : tokens.color.hairline,
+          }}
+        >
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: tokens.space.md,
-                minHeight: 60,
-                paddingHorizontal: tokens.space.md,
-                paddingVertical: tokens.space.sm + 2,
-                borderRadius: tokens.radius.md,
-                borderWidth: 1,
-                // Lit along the top when chosen: the panel light falling on the
-                // one card the user has picked out of the column.
-                borderTopColor: selected ? tokens.color.hairlineLit : tokens.color.hairline,
-                borderLeftColor: tokens.color.hairline,
-                borderRightColor: tokens.color.hairline,
-                borderBottomColor: tokens.color.edge,
+                ...tokens.text.body,
+                fontWeight: selected ? "600" : "400",
+                color: disabled
+                  ? tokens.color.textFaint
+                  : selected
+                    ? tokens.color.text
+                    : tokens.color.textMuted,
               }}
             >
-              <View style={{ flex: 1, gap: 2 }}>
-                <Text
-                  style={{
-                    ...tokens.text.body,
-                    fontWeight: selected ? "600" : "400",
-                    color: selected ? tokens.color.text : tokens.color.textMuted,
-                  }}
-                >
-                  {label}
-                </Text>
-                {detail ? (
-                  <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
-                    {detail}
-                  </Text>
-                ) : null}
-              </View>
-              <Socket pick={pick} />
-            </LinearGradient>
+              {label}
+            </Text>
+            {detail ? (
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+                {detail}
+              </Text>
+            ) : null}
           </View>
-        )}
+          <Socket pick={pick} />
+        </Animated.View>
       </Pressable>
     </Animated.View>
   );
@@ -210,14 +199,12 @@ const SOCKET = 22;
 const STUD = 12;
 
 /**
- * The selection itself: a hole milled in the faceplate, and a stud that drops
- * into it.
+ * The selection itself: a ring, and a dot that lands in it.
  *
- * The stud grows from 0.7 rather than from nothing. Nothing in a machine
- * appears out of an empty hole, and a mark that scales from zero reads as a
- * graphic being drawn instead of a part being seated. The socket stays visible
- * either way, so an unanswered question still looks like a row of controls
- * waiting rather than a row of labels.
+ * The dot grows from 0.7 rather than from nothing. A mark that scales from
+ * zero reads as a graphic being drawn rather than as a state arriving. The
+ * ring stays visible either way, so an unanswered question still looks like a
+ * row of controls waiting rather than a row of labels.
  */
 function Socket({ pick }: { pick: Animated.Value }) {
   return (
@@ -228,12 +215,9 @@ function Socket({ pick }: { pick: Animated.Value }) {
         borderRadius: SOCKET / 2,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: tokens.color.edgeSolid,
+        backgroundColor: tokens.color.sunken,
         borderWidth: 1,
-        borderTopColor: tokens.color.edge,
-        borderLeftColor: tokens.color.edge,
-        borderRightColor: tokens.color.edge,
-        borderBottomColor: tokens.color.hairline,
+        borderColor: tokens.color.hairlineLit,
       }}
     >
       <Animated.View

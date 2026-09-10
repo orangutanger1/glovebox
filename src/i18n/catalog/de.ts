@@ -379,7 +379,6 @@ export const de: Fragment = {
       "{count} von {total} App-Store-Bewertungen von Apps, die das schon machen, haben einen bis drei Sterne.",
   },
   "onboardingC.reviews.continue": "Weiter",
-  "onboardingC.reviews.scroll": "Scroll, um alle vier zu lesen",
   "onboardingC.reviews.mentioning": "Bewertungen über",
 
   // pain

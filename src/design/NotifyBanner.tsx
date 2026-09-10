@@ -7,15 +7,15 @@ const ICON = require("../../assets/icon.png");
  *
  * This is the one element on the glass that is not the app at all — it is the OS
  * speaking over the top of it — so it is deliberately built from none of the
- * app's instrument-panel materials. It is iOS's dark appearance: a translucent
+ * app's own surfaces. It is iOS's dark appearance: a translucent
  * charcoal capsule with a hairline lip, white title, dimmed body, and the
  * arrival time in the corner — the banner a driver actually sees, because a
  * phone showing this app is a phone in dark mode. It was drawn in the light
  * appearance first, which put a white card in the middle of a black screen and
  * read as an illustration of a notification rather than as one.
  *
- * It is still not built from the app's own metal: drawing it in the panel
- * materials is what made an even earlier version read as a feature card.
+ * It is still not built from the app's own surfaces: drawing it in them is
+ * what made an even earlier version read as a feature card.
  *
  * The layout is the real one: a large rounded-square app icon on the left; the
  * bold title and the lighter body stacked beside it; the arrival time in the top

@@ -375,7 +375,6 @@ export const sv: Fragment = {
       "{count} av {total} App Store-recensioner av appar som redan gör det här är på en till tre stjärnor.",
   },
   "onboardingC.reviews.continue": "Fortsätt",
-  "onboardingC.reviews.scroll": "Skrolla för att läsa alla fyra",
   "onboardingC.reviews.mentioning": "Recensioner som nämner",
 
   "pain.overdue.legend": "Försenat",

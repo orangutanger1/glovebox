@@ -350,7 +350,6 @@ export const ja: Fragment = {
       "同じことをするアプリのApp Storeレビュー{total}件のうち、{count}件が星1〜3です。",
   },
   "onboardingC.reviews.continue": "続ける",
-  "onboardingC.reviews.scroll": "スクロールして4件すべて読む",
   "onboardingC.reviews.mentioning": "言及しているレビュー",
 
   // pain

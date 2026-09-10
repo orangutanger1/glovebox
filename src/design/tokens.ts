@@ -1,86 +1,126 @@
 /**
- * The instrument-panel visual system. See
- * docs/superpowers/specs/2026-08-01-glovebox-instrument-panel-design.md.
+ * The flat dark visual system. See
+ * docs/superpowers/specs/2026-09-10-glovebox-flat-dark-design.md.
  *
- * Three materials and nothing else: housing (the matte body), metal (lit
- * faceplates), glass (blurred panes at the screen edges). Depth is built from
- * per-side border colors because React Native has no inset shadow — a raised
- * control is lit on its top edge, an inset well is shadowed on its top edge.
- * Flipping those two colors is the whole system.
+ * This replaces the machined instrument-panel material — brushed-metal
+ * faceplates, per-side bevels, hard opaque edge bands under every control.
+ * That system was legible but it dated the app: three-dimensional plastic on a
+ * phone screen reads as software from a decade ago, and the eye spends its
+ * attention on the housing rather than on the one number the screen exists to
+ * show.
+ *
+ * What replaces it is depth by value, not by light. Surfaces sit at four
+ * levels of the same near-black neutral, separated by a single hairline; there
+ * are no gradients, no textures and no inner shadows. Hierarchy is carried by
+ * type and by space. Colour is spent only where it means something: red for
+ * overdue and destructive, green for a settled fact, and white for the one
+ * primary action on a screen.
+ *
+ * The key names are unchanged from the panel system so that no screen had to
+ * be rewritten to move; the values behind them are new.
  */
 export const tokens = {
   color: {
-    housing: "#0F1113",
-    metal: "#454A50",
+    /** The app background. Not pure black — a flat #000 makes every surface
+     *  above it look like a floating rectangle, and OLED smearing on scroll is
+     *  worse against it. */
+    housing: "#0A0B0D",
+    /** A card, a panel, a list container. One step up from the background. */
+    surface: "#131518",
+    /** A card on a card, and the selected state of a neutral control. */
+    surfaceHi: "#1B1E23",
+    /** Below the background: input wells, progress tracks, empty sockets. */
+    sunken: "#08090B",
+
     white: "#FFFFFF",
-    red: "#C1121F",
-    /** The confirmed telltale. A cluster's green lamp — the one that says a
-     *  system is on and working, as opposed to the red one that says it needs
-     *  something. Only ever marks a good, settled fact. */
-    green: "#2FBF71",
+    /** Overdue and destructive, and nothing else. Brighter and less brown than
+     *  the old signal red, which went muddy against a flat dark surface. */
+    red: "#E5484D",
+    /** The confirmed telltale — a system that is on and working. Only ever
+     *  marks a good, settled fact. */
+    green: "#3DD68C",
 
-    // Derived from white at an alpha. No new hues enter the system.
-    text: "#FFFFFF",
-    textMuted: "rgba(255,255,255,0.55)",
-    textFaint: "rgba(255,255,255,0.35)",
-    hairline: "rgba(255,255,255,0.10)",
-    hairlineLit: "rgba(255,255,255,0.30)",
-    edge: "rgba(0,0,0,0.55)",
-    /** The hard band under a raised control. Opaque, so it reads as a machined
-     *  edge rather than a soft shadow. Darker than the housing it sits on. */
-    edgeSolid: "#07080A",
-    metalHi: "#4E545B",
-    metalLo: "#3A3E43",
+    // Text is one neutral at three weights of presence. Never a fourth.
+    text: "#EDEEF0",
+    textMuted: "rgba(237,238,240,0.62)",
+    textFaint: "rgba(237,238,240,0.38)",
 
-    // Red is reserved: overdue and destructive only. Never a primary button.
-    redGlow: "rgba(193,18,31,0.45)",
-    redWash: "rgba(193,18,31,0.14)",
+    /** The only border in the system. One hairline, one value, every surface. */
+    hairline: "rgba(255,255,255,0.07)",
+    /** The same hairline with the light on it: focus, and a selected edge. */
+    hairlineLit: "rgba(255,255,255,0.20)",
+    /** Kept for the screens that drew the old dark bevel edge. It is now the
+     *  same hairline, so a stray border cannot reintroduce a bevel. */
+    edge: "rgba(255,255,255,0.05)",
+    /** Kept for the screens that drew the old hard band. It is now simply the
+     *  sunken surface, which is what those call sites actually wanted: a track
+     *  or a socket beneath the thing on top of it. */
+    edgeSolid: "#08090B",
 
-    // Green's counterparts, at the same alphas. Used behind a tick, never as a
-    // fill big enough to compete with the red lamp for attention.
-    greenGlow: "rgba(47,191,113,0.45)",
-    greenWash: "rgba(47,191,113,0.14)",
+    /** A neutral fill for bars, meters and inactive segments. Alpha, so it
+     *  sits correctly on whichever surface it lands on. */
+    metalHi: "rgba(237,238,240,0.45)",
+    metalLo: "rgba(237,238,240,0.10)",
+
+    redGlow: "rgba(229,72,77,0.40)",
+    redWash: "rgba(229,72,77,0.12)",
+    greenGlow: "rgba(61,214,140,0.40)",
+    greenWash: "rgba(61,214,140,0.12)",
   },
 
   material: {
-    /** LinearGradient colors for a metal face. Vertical, lighter at the top. */
-    metalFace: ["#4E545B", "#3A3E43"] as const,
-    /** The same face under the panel light: what a chosen control is made of.
-     *  Two stops brighter, not a new hue and not white — a full-width answer
-     *  card in white is the brightest thing on the screen, which puts the
-     *  user's own answer above the red lamp in the one hierarchy the app has. */
-    metalFaceLit: ["#6E757D", "#4C525A"] as const,
-    /** Solid, unblurred band under a raised control. Shrinks on press. */
-    edgeHeight: 3,
-    edgePressed: 1,
-    pressTravel: 2,
+    /** Flat. Kept as a two-stop pair so any remaining gradient call site
+     *  renders a solid surface rather than a ramp. */
+    metalFace: ["#131518", "#131518"] as const,
+    /** The chosen state of a neutral control: one value up, not a new hue. */
+    metalFaceLit: ["#1B1E23", "#1B1E23"] as const,
+    /** The press language is now scale, not travel. These are kept at zero so
+     *  a control that still reads them cannot reintroduce the bevel. */
+    edgeHeight: 0,
+    edgePressed: 0,
+    pressTravel: 0,
+    /** What a pressed control scales to. Subtle enough to be felt rather than
+     *  watched, which is the entire job of press feedback. */
+    pressScale: 0.97,
+  },
+
+  /** Under 300ms for anything the user is waiting on. Entering and exiting are
+   *  ease-out: the movement has to start immediately, because the first frame
+   *  is the one being watched. */
+  motion: {
+    press: 120,
+    fast: 160,
+    base: 220,
+    /** A strong ease-out. The built-in curves are too weak to read as
+     *  intentional at these durations. */
+    easeOut: [0.23, 1, 0.32, 1] as const,
+    easeInOut: [0.77, 0, 0.175, 1] as const,
   },
 
   space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },
-  radius: { sm: 8, md: 14, lg: 18, pill: 999 },
+  radius: { sm: 10, md: 14, lg: 20, pill: 999 },
 
   text: {
-    hero: { fontSize: 34, fontWeight: "700" as const, lineHeight: 40 },
-    title: { fontSize: 28, fontWeight: "700" as const, lineHeight: 34 },
-    heading: { fontSize: 20, fontWeight: "600" as const, lineHeight: 25 },
-    body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
-    caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
-    /** Attribution, and nothing else. Smaller than caption because a source
-     *  line has to be on the glass and must not compete with the figure it is
-     *  vouching for; it is read once, by the one reader who goes looking. */
+    hero: { fontSize: 32, fontWeight: "700" as const, lineHeight: 38, letterSpacing: -0.6 },
+    title: { fontSize: 26, fontWeight: "700" as const, lineHeight: 32, letterSpacing: -0.4 },
+    heading: { fontSize: 19, fontWeight: "600" as const, lineHeight: 25, letterSpacing: -0.2 },
+    body: { fontSize: 16, fontWeight: "400" as const, lineHeight: 23 },
+    caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 19 },
+    /** Attribution, and nothing else. Read once, by the one reader who goes
+     *  looking, and never competing with the figure it vouches for. */
     footnote: { fontSize: 11, fontWeight: "400" as const, lineHeight: 15 },
 
-    /** Dashboard legend. Every label that names a value uses this. */
-    legend: {
-      fontSize: 12,
-      fontWeight: "600" as const,
-      letterSpacing: 1.2,
-      textTransform: "uppercase" as const,
-    },
+    /** The label that names a value. It used to be tracked and uppercased on
+     *  every screen, which is a dashboard convention and, applied to thirty
+     *  labels at once, the single most dated thing in the app: shouting is not
+     *  hierarchy. It is now a small, quiet, sentence-case label that gets out
+     *  of the way of the number under it. */
+    legend: { fontSize: 13, fontWeight: "500" as const, letterSpacing: 0.1 },
     /** Every number the user reads. Always paired with a legend above it. */
     readout: {
-      fontSize: 22,
+      fontSize: 24,
       fontWeight: "600" as const,
+      letterSpacing: -0.4,
       fontVariant: ["tabular-nums"] as ("tabular-nums")[],
     },
     /** Inline numerics inside a sentence. */
@@ -88,11 +128,13 @@ export const tokens = {
   },
 
   shadow: {
+    /** Depth is value, not shade. What is left is a wide, almost invisible
+     *  ambient that keeps a surface from being a flat sticker at the edges. */
     ambient: {
       shadowColor: "#000",
-      shadowOpacity: 0.45,
-      shadowRadius: 10,
-      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.5,
+      shadowRadius: 24,
+      shadowOffset: { width: 0, height: 8 },
     },
   },
 };

@@ -376,7 +376,6 @@ export const es: Fragment = {
       "{count} de las {total} valoraciones en la App Store de las apps que ya hacen esto son de una a tres estrellas.",
   },
   "onboardingC.reviews.continue": "Continuar",
-  "onboardingC.reviews.scroll": "Desliza para leer las cuatro",
   "onboardingC.reviews.mentioning": "Valoraciones que mencionan",
 
   // pain

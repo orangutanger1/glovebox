@@ -1,13 +1,13 @@
-import { Pressable, Text, View } from "react-native";
+import { Animated, Pressable, Text } from "react-native";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
 import { tokens } from "./tokens";
+import { usePressScale } from "./press";
 
 /**
- * A machined toggle. The previous version filled unselected chips with
- * `transparent` over a near-black background, which left the user looking at
- * bare text where a control was — the chip had to be a visible object first
- * and a selection second. It is metal when off and white when on.
+ * A pill toggle. Flat: a surface when off, white when on, with the label
+ * carrying the state change in weight as well as in colour. The chip has to be
+ * a visible object first and a selection second — an unselected chip filled
+ * with `transparent` leaves the user looking at bare text where a control is.
  */
 export function Chip({
   label,
@@ -23,53 +23,52 @@ export function Chip({
    *  question after the user has already read it. */
   disabled?: boolean;
 }) {
+  const press = usePressScale(disabled);
+
   function handlePress() {
     Haptics.selectionAsync().catch(() => {});
     onPress();
   }
 
   return (
-    <Pressable onPress={handlePress} disabled={disabled} accessibilityState={{ disabled }}>
-      {({ pressed }) => (
-        <View
+    <Pressable
+      onPress={handlePress}
+      onPressIn={press.onPressIn}
+      onPressOut={press.onPressOut}
+      disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ disabled, selected }}
+    >
+      <Animated.View
+        style={{
+          transform: [{ scale: press.scale }],
+          minHeight: 44,
+          justifyContent: "center",
+          paddingHorizontal: tokens.space.md,
+          borderRadius: tokens.radius.pill,
+          borderWidth: 1,
+          backgroundColor: disabled
+            ? tokens.color.surface
+            : selected
+              ? tokens.color.white
+              : tokens.color.surfaceHi,
+          borderColor: selected ? "transparent" : tokens.color.hairline,
+        }}
+      >
+        <Text
           style={{
-            borderRadius: tokens.radius.pill,
-            backgroundColor: tokens.color.edgeSolid,
-            paddingBottom: pressed && !disabled ? tokens.material.edgePressed : 2,
-            marginTop: pressed && !disabled ? tokens.material.pressTravel : 0,
-            // Dimmed as one object, face and edge together: fading only the
-            // label leaves a live-looking chip with unreadable text in it.
-            opacity: disabled ? 0.4 : 1,
+            ...tokens.text.body,
+            fontWeight: selected ? "600" : "400",
+            color: disabled
+              ? tokens.color.textFaint
+              : selected
+                ? tokens.color.housing
+                : tokens.color.text,
           }}
         >
-          <LinearGradient
-            colors={selected ? ["#FFFFFF", "#DDDFE3"] : [...tokens.material.metalFace]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={{
-              minHeight: 44,
-              justifyContent: "center",
-              paddingHorizontal: tokens.space.md,
-              borderRadius: tokens.radius.pill,
-              borderWidth: 1,
-              borderTopColor: selected ? "rgba(255,255,255,0.9)" : tokens.color.hairline,
-              borderLeftColor: tokens.color.hairline,
-              borderRightColor: tokens.color.hairline,
-              borderBottomColor: tokens.color.edge,
-            }}
-          >
-            <Text
-              style={{
-                ...tokens.text.body,
-                fontWeight: selected ? "600" : "400",
-                color: selected ? tokens.color.housing : tokens.color.text,
-              }}
-            >
-              {label}
-            </Text>
-          </LinearGradient>
-        </View>
-      )}
+          {label}
+        </Text>
+      </Animated.View>
     </Pressable>
   );
 }

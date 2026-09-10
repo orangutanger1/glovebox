@@ -364,7 +364,6 @@ export const ptBR: Fragment = {
     other: "{count} das {total} avaliações na App Store de apps que já fazem isso são de uma a três estrelas.",
   },
   "onboardingC.reviews.continue": "Continuar",
-  "onboardingC.reviews.scroll": "Role para ler todas as quatro",
   "onboardingC.reviews.mentioning": "Avaliações citando",
 
   "pain.overdue.legend": "Atrasado",

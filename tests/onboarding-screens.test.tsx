@@ -538,8 +538,8 @@ test("the evidence screen will not let you continue until you have scrolled it",
     scroll.props.onLayout({ nativeEvent: { layout: { height: 500 } } });
     scroll.props.onContentSizeChange(390, 1400);
   });
-  expect(texts(tree)).toContain("Scroll to read all four");
-  expect(texts(tree)).not.toContain("Continue");
+  const gate = () => tree.root.findAll((n) => n.props.label !== undefined)[0];
+  expect(gate().props.disabled).toBe(true);
 
   act(() => {
     scroll.props.onScroll({
@@ -550,7 +550,7 @@ test("the evidence screen will not let you continue until you have scrolled it",
       },
     });
   });
-  expect(texts(tree)).toContain("Continue");
+  expect(gate().props.disabled).toBe(false);
 });
 
 test("a screen with nothing to scroll is not gated by the scroll it cannot do", () => {
@@ -578,10 +578,10 @@ test("the evidence gate nudges rather than blocks", () => {
   act(() => {
     jest.advanceTimersByTime(2000);
   });
-  // Live, and still asking for the scroll: the affordance survives, the
-  // refusal does not.
+  // Live, and labelled the way it always was: the refusal goes away without
+  // the control ever having renamed itself.
   expect(button().props.disabled).toBe(false);
-  expect(texts(tree)).toContain("Scroll to read all four");
+  expect(texts(tree)).toContain("Continue");
   jest.useRealTimers();
 });
 

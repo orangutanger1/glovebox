@@ -8,7 +8,7 @@ import { tokens } from "./tokens";
  * to contrast against.
  */
 export function Lamp({ lit, size = 10 }: { lit: boolean; size?: number }) {
-  const glow = size * 2.6;
+  const glow = size * 2.4;
 
   return (
     <View style={{ width: glow, height: glow, alignItems: "center", justifyContent: "center" }}>
@@ -28,9 +28,9 @@ export function Lamp({ lit, size = 10 }: { lit: boolean; size?: number }) {
           width: size,
           height: size,
           borderRadius: size / 2,
-          backgroundColor: lit ? tokens.color.red : tokens.color.edgeSolid,
+          backgroundColor: lit ? tokens.color.red : tokens.color.sunken,
           borderWidth: 1,
-          borderColor: lit ? "rgba(255,255,255,0.35)" : tokens.color.edge,
+          borderColor: lit ? "rgba(255,255,255,0.25)" : tokens.color.hairline,
         }}
       />
     </View>

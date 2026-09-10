@@ -12,13 +12,14 @@ import { Well } from "./Surface";
 import { tokens } from "./tokens";
 
 /**
- * An input recessed into the faceplate. The label above it is a legend, and a
- * numeric field's text is a readout — a mileage entry should look like the
- * odometer it mirrors.
+ * An input. It sits one value below the background, so the field is a place
+ * text goes rather than a box drawn around some. The label above it is a
+ * legend, and a numeric field's text is a readout — a mileage entry should
+ * look like the odometer it mirrors.
  *
- * Focus lights the top border rather than adding a colored ring: the well is
- * catching more light, which is consistent with how every other surface here
- * signals state.
+ * Focus brightens the hairline rather than adding a coloured ring. Colour in
+ * this app means something, and "the cursor is here" is not one of the things
+ * it means.
  */
 export function Field({
   label,
@@ -94,7 +95,7 @@ export function Field({
             ...(numeric ? tokens.text.readout : tokens.text.body),
             color: tokens.color.text,
             paddingHorizontal: tokens.space.md,
-            paddingVertical: tokens.space.sm + 2,
+            paddingVertical: tokens.space.sm + 4,
           }}
         />
       </Well>
@@ -105,7 +106,7 @@ export function Field({
         <InputAccessoryView nativeID={accessoryId}>
           <View
             style={{
-              backgroundColor: tokens.color.metalLo,
+              backgroundColor: tokens.color.surfaceHi,
               borderTopWidth: 1,
               borderTopColor: tokens.color.hairline,
               alignItems: "flex-end",
@@ -114,7 +115,7 @@ export function Field({
             }}
           >
             <Pressable onPress={() => Keyboard.dismiss()} hitSlop={12}>
-              <Text style={{ ...tokens.text.legend, fontSize: 14, color: tokens.color.white }}>
+              <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.white }}>
                 Done
               </Text>
             </Pressable>

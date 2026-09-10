@@ -2,14 +2,18 @@ import { View, Text } from "react-native";
 import { tokens } from "./tokens";
 
 /**
- * A stamped legend on the faceplate. Only `due` carries color — a red fill is
- * the app saying something is wrong, so `soon` and `ok` earn their weight from
- * contrast instead.
+ * A status label. Only `due` carries colour — a red fill is the app saying
+ * something is wrong, so `soon` and `ok` earn their weight from contrast
+ * instead.
+ *
+ * `due` is a wash and a red label rather than a solid red block: at this size
+ * a filled chip is a sticker, and the row it sits in already carries the
+ * alarm. The badge names the state, it does not shout it.
  */
 const TONE = {
-  due: { bg: tokens.color.red, fg: tokens.color.white, border: "rgba(255,255,255,0.35)" },
-  soon: { bg: "rgba(0,0,0,0.35)", fg: tokens.color.text, border: tokens.color.hairline },
-  ok: { bg: "rgba(0,0,0,0.25)", fg: tokens.color.textMuted, border: tokens.color.hairline },
+  due: { bg: tokens.color.redWash, fg: tokens.color.red, border: "rgba(229,72,77,0.30)" },
+  soon: { bg: tokens.color.surfaceHi, fg: tokens.color.text, border: tokens.color.hairline },
+  ok: { bg: "transparent", fg: tokens.color.textMuted, border: tokens.color.hairline },
 };
 
 export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "ok" }) {
@@ -20,13 +24,13 @@ export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "
         backgroundColor: t.bg,
         borderColor: t.border,
         borderWidth: 1,
-        borderRadius: tokens.radius.sm,
-        paddingHorizontal: tokens.space.sm,
-        paddingVertical: 3,
+        borderRadius: tokens.radius.pill,
+        paddingHorizontal: tokens.space.sm + 2,
+        paddingVertical: 4,
         alignSelf: "flex-start",
       }}
     >
-      <Text style={{ ...tokens.text.legend, fontSize: 11, color: t.fg }}>{label}</Text>
+      <Text style={{ ...tokens.text.caption, fontWeight: "500", color: t.fg }}>{label}</Text>
     </View>
   );
 }

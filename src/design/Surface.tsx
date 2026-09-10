@@ -1,43 +1,24 @@
-import { View, Image, type ViewStyle, type StyleProp } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, type ViewStyle, type StyleProp } from "react-native";
 import { tokens } from "./tokens";
 
-const METAL = require("../../assets/onboarding/metal.jpg");
-
 /**
- * The brushed-aluminium grain every metal face carries.
+ * The three surface primitives every control is built from.
  *
- * A two-stop vertical gradient is what a faceplate looks like in a spec, not
- * in life — the eye reads a perfectly smooth ramp as plastic. Six percent of a
- * real brush texture is below the threshold of "there is a photo here" and
- * above the threshold of "this is a machined surface", which is the whole
- * point. It tiles, so one 512px file covers every surface at every size.
- */
-function Grain() {
-  return (
-    <View
-      pointerEvents="none"
-      style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-    >
-      <Image
-        source={METAL}
-        resizeMode="repeat"
-        style={{ width: "100%", height: "100%", opacity: 0.06 }}
-      />
-    </View>
-  );
-}
-
-/**
- * The two surface primitives every control is built from.
+ * They used to be machined: a lit top edge, a dark bottom edge, a hard opaque
+ * band underneath that shrank on press, and six percent of a brushed-metal
+ * photograph over the whole thing. That was a convincing faceplate and a dated
+ * interface — the housing was the loudest thing on every screen.
  *
- * `Raised` sits above the faceplate: lit on its top edge, with a hard opaque
- * band beneath it that shrinks when pressed, so the control visibly travels
- * into its housing. `Well` is the same bevel flipped — shadowed on top,
- * because a recess is below the surface, not above it.
+ * All three are now flat, and separated only by value:
  *
- * Getting the bevel backwards makes buttons look like holes, so the direction
- * lives here and nowhere else.
+ *   `Panel`  a surface holding content, one step above the background.
+ *   `Raised` the same surface for something pressable, which answers a press
+ *            by lifting one value rather than by travelling into the screen.
+ *   `Well`   below the background: an input, a track, an empty socket.
+ *
+ * There is exactly one border colour in the system and every one of these
+ * draws it on all four sides. A per-side border is what made the old surfaces
+ * three-dimensional, so the direction no longer needs to live anywhere.
  */
 
 export function Raised({
@@ -51,42 +32,20 @@ export function Raised({
   radius?: number;
   style?: StyleProp<ViewStyle>;
 }) {
-  const edge = pressed ? tokens.material.edgePressed : tokens.material.edgeHeight;
-  const travel = pressed ? tokens.material.pressTravel : 0;
-
   return (
     <View
-      style={{
-        borderRadius: radius,
-        backgroundColor: tokens.color.edgeSolid,
-        paddingBottom: edge,
-        marginTop: travel,
-        // The ambient shadow collapses under a pressed control — a button
-        // resting in its housing casts almost nothing.
-        ...tokens.shadow.ambient,
-        shadowOpacity: pressed ? 0.2 : tokens.shadow.ambient.shadowOpacity,
-      }}
+      style={[
+        {
+          borderRadius: radius,
+          backgroundColor: pressed ? tokens.color.surfaceHi : tokens.color.surface,
+          borderWidth: 1,
+          borderColor: pressed ? tokens.color.hairlineLit : tokens.color.hairline,
+          overflow: "hidden",
+        },
+        style,
+      ]}
     >
-      <LinearGradient
-        colors={[...tokens.material.metalFace]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={[
-          {
-            borderRadius: radius,
-            borderWidth: 1,
-            borderTopColor: tokens.color.hairline,
-            borderLeftColor: tokens.color.hairline,
-            borderRightColor: tokens.color.hairline,
-            borderBottomColor: tokens.color.edge,
-            overflow: "hidden",
-          },
-          style,
-        ]}
-      >
-        <Grain />
-        {children}
-      </LinearGradient>
+      {children}
     </View>
   );
 }
@@ -107,14 +66,9 @@ export function Well({
       style={[
         {
           borderRadius: radius,
-          backgroundColor: tokens.color.housing,
+          backgroundColor: tokens.color.sunken,
           borderWidth: 1,
-          // Flipped: dark on top, light on the bottom lip. This is what makes
-          // it read as milled into the panel rather than stuck onto it.
-          borderTopColor: focused ? tokens.color.hairlineLit : tokens.color.edge,
-          borderLeftColor: tokens.color.edge,
-          borderRightColor: tokens.color.edge,
-          borderBottomColor: tokens.color.hairline,
+          borderColor: focused ? tokens.color.hairlineLit : tokens.color.hairline,
         },
         style,
       ]}
@@ -124,7 +78,7 @@ export function Well({
   );
 }
 
-/** A flat metal panel — no edge band, no travel. Cards and list containers. */
+/** A surface holding content. Cards and list containers. */
 export function Panel({
   children,
   radius = tokens.radius.md,
@@ -134,30 +88,20 @@ export function Panel({
   radius?: number;
   style?: StyleProp<ViewStyle>;
 }) {
-  // The shadow lives on an outer view: on iOS, `overflow: hidden` and a shadow
-  // on the same node cancel the shadow out.
   return (
-    <View style={{ borderRadius: radius, ...tokens.shadow.ambient }}>
-      <LinearGradient
-        colors={[...tokens.material.metalFace]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={[
-          {
-            borderRadius: radius,
-            borderWidth: 1,
-            borderTopColor: tokens.color.hairline,
-            borderLeftColor: tokens.color.hairline,
-            borderRightColor: tokens.color.hairline,
-            borderBottomColor: tokens.color.edge,
-            overflow: "hidden",
-          },
-          style,
-        ]}
-      >
-        <Grain />
-        {children}
-      </LinearGradient>
+    <View
+      style={[
+        {
+          borderRadius: radius,
+          backgroundColor: tokens.color.surface,
+          borderWidth: 1,
+          borderColor: tokens.color.hairline,
+          overflow: "hidden",
+        },
+        style,
+      ]}
+    >
+      {children}
     </View>
   );
 }

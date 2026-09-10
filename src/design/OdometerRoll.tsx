@@ -129,15 +129,10 @@ export function OdometerRoll({
         style={{
           flexDirection: "row",
           alignItems: "center",
-          backgroundColor: "#08090B",
-          borderRadius: tokens.radius.sm,
+          backgroundColor: tokens.color.sunken,
+          borderRadius: tokens.radius.md,
           borderWidth: 1,
-          // An inset well: shadowed on its top edge, lit on its bottom. The
-          // raised controls in this app are the exact inverse.
-          borderTopColor: tokens.color.edge,
-          borderLeftColor: tokens.color.edge,
-          borderRightColor: tokens.color.edge,
-          borderBottomColor: tokens.color.hairline,
+          borderColor: tokens.color.hairline,
           paddingHorizontal: 6,
           paddingVertical: 4,
           gap: 2,
@@ -148,10 +143,12 @@ export function OdometerRoll({
           <View
             key={i}
             style={{
-              backgroundColor: i === places - 1 ? "#2A1215" : "#1A1D20",
-              borderRadius: 3,
+              // The last drum is the tenths wheel, tinted so the reading is
+              // read as a measurement and not as a six-figure integer.
+              backgroundColor: i === places - 1 ? tokens.color.redWash : tokens.color.surfaceHi,
+              borderRadius: 4,
               borderWidth: 1,
-              borderColor: "rgba(255,255,255,0.06)",
+              borderColor: tokens.color.hairline,
             }}
           >
             <Wheel

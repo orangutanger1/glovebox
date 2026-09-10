@@ -424,7 +424,6 @@ export const pl: Fragment = {
       "{count} z {total} recenzji w App Store dla aplikacji, które już to robią, ma od jednej do trzech gwiazdek.",
   },
   "onboardingC.reviews.continue": "Dalej",
-  "onboardingC.reviews.scroll": "Przewiń, żeby przeczytać wszystkie cztery",
   "onboardingC.reviews.mentioning": "Recenzje wspominające o",
 
   // pain

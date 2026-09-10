@@ -4,7 +4,7 @@ import { Glass } from "./Glass";
 import { tokens } from "./tokens";
 
 /**
- * The housing every screen is mounted in.
+ * The frame every screen is mounted in.
  *
  * `footer` renders under a glass pane pinned to the bottom, so a primary
  * action stays reachable while the list scrolls behind it. Content gets bottom
@@ -39,7 +39,12 @@ export function Screen({
       >
         <ScrollView
           contentContainerStyle={{
-            padding: tokens.space.md,
+            // The gutter is the lg step, not md. Content that starts 16px from
+            // the edge of a phone reads as filling the screen; 24px is what
+            // makes a list of cards read as a page with margins, and it is the
+            // single cheapest change in the app's density.
+            paddingHorizontal: tokens.space.lg,
+            paddingTop: tokens.space.md,
             paddingBottom: footer ? tokens.space.xxl + tokens.space.lg : tokens.space.xl,
             gap: tokens.space.md,
           }}
@@ -49,13 +54,30 @@ export function Screen({
           keyboardDismissMode="on-drag"
         >
           {title ? (
-            <Text style={{ ...tokens.text.title, color: tokens.color.text }}>{title}</Text>
+            <Text
+              style={{
+                ...tokens.text.title,
+                color: tokens.color.text,
+                marginBottom: tokens.space.xs,
+              }}
+            >
+              {title}
+            </Text>
           ) : null}
           <View style={{ gap: tokens.space.md }}>{children}</View>
         </ScrollView>
         {footer ? (
           <Glass edge="top">
-            <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>{footer}</View>
+            <View
+              style={{
+                paddingHorizontal: tokens.space.lg,
+                paddingTop: tokens.space.md,
+                paddingBottom: tokens.space.sm,
+                gap: tokens.space.sm,
+              }}
+            >
+              {footer}
+            </View>
           </Glass>
         ) : null}
       </KeyboardAvoidingView>

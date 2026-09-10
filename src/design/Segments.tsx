@@ -80,14 +80,11 @@ export function Segments({
         gap: 3,
         height,
         borderRadius: tokens.radius.sm,
-        // The same inset well every other readout in the app is drawn in:
-        // shadowed on the top edge, so what fills it sits in the panel.
-        backgroundColor: tokens.color.edgeSolid,
+        // The same sunken track every other meter in the app is drawn in, so
+        // what fills it reads as sitting inside the surface.
+        backgroundColor: tokens.color.sunken,
         borderWidth: 1,
-        borderTopColor: tokens.color.edge,
-        borderLeftColor: tokens.color.edge,
-        borderRightColor: tokens.color.edge,
-        borderBottomColor: tokens.color.hairline,
+        borderColor: tokens.color.hairline,
         overflow: "hidden",
         padding: 3,
       }}
@@ -98,9 +95,7 @@ export function Segments({
           style={{
             flex: 1,
             borderRadius: 3,
-            backgroundColor: tone === "red" ? tokens.color.red : tokens.color.metalHi,
-            borderTopWidth: 1,
-            borderTopColor: tokens.color.hairline,
+            backgroundColor: tone === "red" ? tokens.color.red : tokens.color.text,
             // Each block owns one step of the run and ramps across it, so the
             // meter is a thing being filled rather than five lights switching
             // on. Clamped, so a block that has had its turn stays lit.

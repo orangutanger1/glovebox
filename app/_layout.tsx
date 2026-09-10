@@ -362,7 +362,7 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
         screenOptions={{
           headerStyle: { backgroundColor: tokens.color.housing },
           headerTintColor: tokens.color.text,
-          headerTitleStyle: { ...tokens.text.legend, fontSize: 15, color: tokens.color.text },
+          headerTitleStyle: { ...tokens.text.body, fontWeight: "600", color: tokens.color.text },
           headerShadowVisible: false,
           contentStyle: { backgroundColor: tokens.color.housing },
           // A chevron with no label. The default label is the previous route's

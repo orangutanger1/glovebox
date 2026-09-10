@@ -386,7 +386,6 @@ export const fr: Fragment = {
       "{count} des {total} avis App Store sur les apps qui font déjà ça sont notés une à trois étoiles.",
   },
   "onboardingC.reviews.continue": "Continuer",
-  "onboardingC.reviews.scroll": "Faites défiler pour lire les quatre",
   "onboardingC.reviews.mentioning": "Avis qui mentionnent",
 
   // pain

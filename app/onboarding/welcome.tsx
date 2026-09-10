@@ -62,7 +62,7 @@ export default function Welcome() {
         {/* The copy has to land on black, not on a highlight, or the headline
             fights the brightest part of the trail for the same pixels. */}
         <LinearGradient
-          colors={["transparent", "rgba(15,17,19,0.85)", tokens.color.housing]}
+          colors={["transparent", "rgba(10,11,13,0.85)", tokens.color.housing]}
           locations={[0, 0.6, 1]}
           style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "45%" }}
         />

@@ -8,12 +8,10 @@ import { tokens } from "./tokens";
 const CURVE = Easing.bezier(0.65, 0, 0.35, 1);
 
 /**
- * A machined slot with a bar filling it, for the one screen that makes the
- * user wait.
+ * A track with a bar filling it, for the one screen that makes the user wait.
  *
- * Inset, not raised: the track is shadowed on its top edge, which is how every
- * well in this design system is drawn, and the fill is the only lit thing in
- * it.
+ * Sunken, not raised: the track sits below the surface it is drawn on, and the
+ * fill is the only bright thing in it.
  *
  * It eases in and out rather than running flat. The first version was linear,
  * on the argument that a bar which accelerates is lying about the work — but
@@ -79,11 +77,9 @@ export function ProgressBar({
       style={{
         height,
         borderRadius: tokens.radius.pill,
-        backgroundColor: tokens.color.edgeSolid,
-        borderTopWidth: 1,
-        borderTopColor: tokens.color.edge,
-        borderBottomWidth: 1,
-        borderBottomColor: tokens.color.hairline,
+        backgroundColor: tokens.color.sunken,
+        borderWidth: 1,
+        borderColor: tokens.color.hairline,
         overflow: "hidden",
       }}
     >
@@ -91,7 +87,7 @@ export function ProgressBar({
         style={{
           height: "100%",
           borderRadius: tokens.radius.pill,
-          backgroundColor: tokens.color.metalHi,
+          backgroundColor: tokens.color.text,
           width: progress.interpolate({
             inputRange: [0, 1],
             outputRange: ["0%", "100%"],

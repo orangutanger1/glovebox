@@ -369,7 +369,6 @@ export const ko: Fragment = {
       "이미 이 일을 하는 앱들의 App Store 리뷰 {total}개 중 {count}개가 별 1~3개예요.",
   },
   "onboardingC.reviews.continue": "계속",
-  "onboardingC.reviews.scroll": "네 개 모두 스크롤해서 보세요",
   "onboardingC.reviews.mentioning": "이런 내용을 언급한 리뷰",
 
   // pain
