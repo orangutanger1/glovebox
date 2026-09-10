@@ -88,6 +88,21 @@ export function updateVehicleIdentity(
   getDb().runSync(`UPDATE vehicles SET ${sets.join(", ")} WHERE id = ?`, params);
 }
 
+/**
+ * The one field an owner is allowed to change on its own, from the vehicle
+ * screen.
+ *
+ * Separate from `updateVehicleIdentity` because that function's contract is
+ * "this is what the car IS" — an absent make or model there means the owner
+ * cleared it, so renaming through it would wipe the year, make and model of
+ * any car whose rename form did not also carry them. Until this existed the
+ * only way to correct a name was to delete the vehicle and add it again, which
+ * costs the entire service history.
+ */
+export function renameVehicle(vehicleId: string, name: string): void {
+  getDb().runSync("UPDATE vehicles SET name = ? WHERE id = ?", [name, vehicleId]);
+}
+
 /** Separate from updateVehicleIdentity because onboarding sets the body style
  *  without touching the name, make, model or year the previous step wrote. */
 export function setBodyStyle(vehicleId: string, style: BodyStyle): void {

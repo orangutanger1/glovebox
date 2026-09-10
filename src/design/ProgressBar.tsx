@@ -19,10 +19,21 @@ import { tokens } from "./tokens";
 export function ProgressBar({
   duration,
   height = 6,
+  onProgress,
 }: {
   /** Milliseconds for the fill to cross the track. */
   duration: number;
   height?: number;
+  /**
+   * The same fill, as a whole percent, for a screen that wants to print it.
+   *
+   * Read off the driving `Animated.Value` rather than counted on a timer of
+   * its own: two clocks for one bar drift, and a number that disagrees with
+   * the bar beside it is worse than no number. Fires only when the rounded
+   * value changes, so it is a hundred updates over the whole run and not one
+   * per frame. Must be stable — wrap it in `useCallback`.
+   */
+  onProgress?: (percent: number) => void;
 }) {
   const progress = useRef(new Animated.Value(0)).current;
 
@@ -36,6 +47,18 @@ export function ProgressBar({
     run.start();
     return () => run.stop();
   }, [progress, duration]);
+
+  useEffect(() => {
+    if (!onProgress) return;
+    let last = -1;
+    const id = progress.addListener(({ value }) => {
+      const percent = Math.round(value * 100);
+      if (percent === last) return;
+      last = percent;
+      onProgress(percent);
+    });
+    return () => progress.removeListener(id);
+  }, [progress, onProgress]);
 
   return (
     <View

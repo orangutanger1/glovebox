@@ -48,6 +48,7 @@ export const vehicle: Fragment = {
   "vehicle.undo": "Undo",
   "vehicle.logService": "Log a service",
 
+  "vehicle.rename.title": "Rename vehicle",
   "vehicle.deleteVehicle": "Delete vehicle",
   "vehicle.delete.title": "Delete {name}?",
   "vehicle.delete.body":

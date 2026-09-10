@@ -95,6 +95,7 @@ import OnboardingWorry from "../app/onboarding/worry";
 import OnboardingResults from "../app/onboarding/results";
 import OnboardingOutlook from "../app/onboarding/outlook";
 import OnboardingCost from "../app/onboarding/cost";
+import OnboardingCompare from "../app/onboarding/compare";
 import OnboardingSymptoms from "../app/onboarding/symptoms";
 import OnboardingHelp from "../app/onboarding/help";
 import OnboardingNotify from "../app/onboarding/notify";
@@ -308,6 +309,7 @@ test("no screen in the flow prints an em or en dash", () => {
     OnboardingOutlook,
     OnboardingSymptoms,
     OnboardingCost,
+    OnboardingCompare,
     OnboardingHelp,
     OnboardingReviews,
     OnboardingNotify,
@@ -346,7 +348,7 @@ test("the car is one typed word away from answered", () => {
   // The year is already on the drum, the model is optional, so a make is the
   // whole remaining cost of this screen.
   const tree = render(OnboardingVehicle);
-  type(tree, "Make (optional)", "Toyota");
+  type(tree, "Make", "Toyota");
   press(tree, "Continue");
 
   expect(navigated).toContain("/onboarding/odometer");
@@ -415,7 +417,7 @@ test("the year comes off a drum, and never off a keyboard", () => {
 
   // Three detents down the drum is three model years older than the default.
   spin(tree, 3);
-  type(tree, "Make (optional)", "Toyota");
+  type(tree, "Make", "Toyota");
   press(tree, "Continue");
   expect(getVehicle(getOnboardingVehicleId()!)!.year).toBe(DEFAULT_YEAR - 3);
 });
@@ -427,7 +429,7 @@ test("a replay re-describes the car in the garage instead of adding one", () => 
   const car = createVehicle({ name: "2014 Ford", year: 2014, make: "Ford" });
 
   const tree = render(OnboardingVehicle);
-  type(tree, "Make (optional)", "Honda");
+  type(tree, "Make", "Honda");
   press(tree, "Continue");
 
   expect(listVehicles()).toHaveLength(before + 1);
@@ -491,7 +493,8 @@ test("a typed reading is still the answer the screen wants", () => {
   expect(disabled()).toBe(false);
   press(tree, "Continue");
 
-  expect(navigated).toContain("/onboarding/drive");
+  // The notification ask sits between the odometer and the mileage rate.
+  expect(navigated).toContain("/onboarding/notify");
   const saved = getVehicle(car.id)!;
   expect(saved.odometer).toBe(84210);
   expect(saved.odometer_estimated).toBeUndefined();
@@ -604,6 +607,31 @@ test("the loader draws a bar and holds the screen for the whole readout", () => 
 
   step(700);
   expect(navigated).toContain("replace:/onboarding/results");
+  jest.useRealTimers();
+});
+
+test("the loader prints its own bar as a percentage, and ticks what it has read", () => {
+  jest.useFakeTimers();
+  const tree = render(OnboardingAnalyzing);
+
+  // The percentage is the bar's value, not a second counter, so at mount it is
+  // the bar's starting value and nothing else. The gray box used to close on a
+  // "Reading 1 of 4" line under the bar, which is the answer to "how much
+  // longer" printed below everything it applies to.
+  expect(texts(tree).join(" ")).toContain("0%");
+
+  const step = (ms: number) =>
+    act(() => {
+      jest.advanceTimersByTime(ms);
+    });
+  step(650);
+  step(650);
+  step(650);
+  step(650);
+
+  // One tick per checkpoint. The lamp is allowed to take the last one when
+  // something is genuinely past due; nothing here is, so all four are ticks.
+  expect(texts(tree).filter((line) => line === "\u2713")).toHaveLength(4);
   jest.useRealTimers();
 });
 
@@ -812,7 +840,7 @@ test("the reminders button raises the iOS prompt on the tap that promises it", a
   await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).toHaveBeenCalled();
-  expect(navigated).toContain("/onboarding/symptoms");
+  expect(navigated).toContain("/onboarding/drive");
 });
 
 test("a permission iOS will not re-ask is not asked for, and does not block the flow", async () => {
@@ -833,7 +861,7 @@ test("a permission iOS will not re-ask is not asked for, and does not block the 
   await pressAndSettle(render(OnboardingNotify), "Turn on reminders");
 
   expect(requestPermissionsAsync).not.toHaveBeenCalled();
-  expect(navigated).toContain("/onboarding/symptoms");
+  expect(navigated).toContain("/onboarding/drive");
 
   getPermissionsAsync.mockResolvedValue({
     status: "granted",
@@ -997,4 +1025,31 @@ test("the cost screen prices the user's own mileage and says whose figures they 
   expect(printed).toContain(MAINTENANCE_RATE.edition);
   expect(printed).toContain(MAINTENANCE_RATE.currency);
   expect(printed).not.toMatch(/\{\w+\}/);
+});
+
+test("the comparison screen counts the car, and never prices it", () => {
+  const car = createVehicle({
+    name: "2016 Subaru Outback",
+    year: 2016,
+    make: "Subaru",
+    model: "Outback",
+    odometer: 112000,
+  });
+  setOnboardingVehicleId(car.id);
+  setAnswers({ drive: "average" });
+
+  const tree = render(OnboardingCompare);
+  const printed = texts(tree).join(" ");
+
+  // Four bars, two pairs. The component draws a track per row, so the count of
+  // tracks is the count of rows.
+  expect(printed).toContain("On your own");
+  expect(printed).toContain("With Wrenchy");
+
+  // The screen the conversion structure asks for here says "you will save
+  // $400 a year". There is no published figure behind that sentence, so this
+  // screen may not print money at all: every number on it is a count of this
+  // car's own tracked services.
+  expect(printed).not.toMatch(/[$\u20ac\u00a3\u00a5]/);
+  expect(printed).toContain("Counted from your own answers.");
 });

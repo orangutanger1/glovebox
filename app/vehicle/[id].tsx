@@ -327,7 +327,17 @@ export default function VehicleDetail() {
         }
         ListFooterComponent={
           vehicle ? (
-            <View style={{ paddingTop: tokens.space.xl }}>
+            // Rename above delete, and separated from it. They are the two
+            // actions that change what the vehicle is rather than what it has
+            // done, but only one of them is irreversible, and the rename is
+            // here precisely so that correcting a name stops meaning deleting
+            // the car.
+            <View style={{ paddingTop: tokens.space.xl, gap: tokens.space.md }}>
+              <Button
+                label={t("vehicle.rename.title")}
+                variant="secondary"
+                onPress={() => router.push(`/vehicle/${id}/edit`)}
+              />
               <Button label={t("vehicle.deleteVehicle")} variant="danger" onPress={onDeleteVehicle} />
             </View>
           ) : null

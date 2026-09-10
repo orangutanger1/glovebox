@@ -426,6 +426,14 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
           name="vehicle/[id]/log"
           options={{ title: t("layout.logService"), headerTitle: "" }}
         />
+        {/* Titled from the vehicle fragment for the same reason the fuel
+            routes are: the header and the screen's own h1 say the same three
+            words, and a `layout.*` twin of each is a second thing to keep in
+            eleven languages. Blank header title because the body prints one. */}
+        <Stack.Screen
+          name="vehicle/[id]/edit"
+          options={{ title: t("vehicle.rename.title"), headerTitle: "" }}
+        />
         {/* Both fuel routes were missing from this list, and a route with no
             entry here gets no title at all — so the header printed the route
             pattern instead, which is how "vehicle/[id]/fuel/new" came to be the

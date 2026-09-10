@@ -229,18 +229,16 @@ export const de: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "Wie sollen wir dich nennen?",
-  "onboardingA.name.subtitle": "Der Name steht in deinen Erinnerungen. Er verlässt dieses Telefon nie.",
   "onboardingA.name.label": "Dein Name",
-  "onboardingA.name.placeholder": "Lena",
   "onboardingA.name.continue": "Weiter",
 
   "onboardingA.vehicle.title": "Was fährst du?",
   "onboardingA.vehicle.year": "Baujahr",
-  "onboardingA.vehicle.makeOptional": "Marke (optional)",
+  "onboardingA.vehicle.make": "Marke",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "Modell (optional)",
+  "onboardingA.vehicle.model": "Modell",
 
   "onboardingA.odometer.title.mi": "Wie viele Meilen hat es drauf?",
   "onboardingA.odometer.title.km": "Wie viele Kilometer hat es drauf?",
@@ -308,8 +306,7 @@ export const de: Fragment = {
     one: "{count} braucht Aufmerksamkeit, {soon} in Kürze",
     other: "{count} brauchen Aufmerksamkeit, {soon} in Kürze",
   },
-  "onboardingB.analyzing.done": "Fertig",
-  "onboardingB.analyzing.progress": "Wert {index} von {total}",
+  "onboardingB.analyzing.percent": "{percent}\u00a0%",
 
   // onboardingC
   "onboardingC.back": "Zurück",
@@ -354,9 +351,20 @@ export const de: Fragment = {
   "onboardingC.cost.subtitle": "Bei {distance} pro Jahr, die du fährst.",
   "onboardingC.cost.perYear": "Pro Jahr",
   "onboardingC.cost.fiveYears": "Über fünf Jahre",
-  "onboardingC.cost.roadside": "AAA rückte {year} zu {calls} Pannen aus. Rund {percent}% waren Abschleppungen und leere Batterien: Pannen, die laut AAA mit Wartung vermeidbar gewesen wären.",
+  "onboardingC.cost.roadsidePercent": "{percent}\u00a0%",
+  "onboardingC.cost.roadside": "der {calls} Pannen, zu denen AAA {year} ausrückte, waren Abschleppungen und leere Batterien.",
   "onboardingC.cost.source": "{rate} und {roadside}. US-Durchschnittswerte, in {currency}.",
   "onboardingC.cost.continue": "Weiter",
+
+  "onboardingC.compare.title": "Auf eigene Faust oder nach Plan.",
+  "onboardingC.compare.subtitle": "Dein {vehicle}, auf beide Arten gepflegt.",
+  "onboardingC.compare.dated": "Services mit einem Datum",
+  "onboardingC.compare.remembered": "Services, die du im Kopf behalten musst",
+  "onboardingC.compare.alone": "Auf eigene Faust",
+  "onboardingC.compare.withApp": "Mit Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} von {total}",
+  "onboardingC.compare.source": "Aus deinen eigenen Angaben gezählt. Keine Durchschnittswerte, keine Schätzungen.",
+  "onboardingC.compare.continue": "Weiter",
 
   "onboardingC.symptoms.next": "Weiter",
   "onboardingC.symptoms.last": "Und was mache ich jetzt",
@@ -604,6 +612,7 @@ export const de: Fragment = {
   "vehicle.undo": "Rückgängig",
   "vehicle.logService": "Service eintragen",
 
+  "vehicle.rename.title": "Fahrzeug umbenennen",
   "vehicle.deleteVehicle": "Fahrzeug löschen",
   "vehicle.delete.title": "{name} löschen?",
   "vehicle.delete.body":

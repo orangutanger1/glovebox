@@ -60,6 +60,10 @@ export const tokens = {
     heading: { fontSize: 20, fontWeight: "600" as const, lineHeight: 25 },
     body: { fontSize: 17, fontWeight: "400" as const, lineHeight: 22 },
     caption: { fontSize: 13, fontWeight: "400" as const, lineHeight: 18 },
+    /** Attribution, and nothing else. Smaller than caption because a source
+     *  line has to be on the glass and must not compete with the figure it is
+     *  vouching for; it is read once, by the one reader who goes looking. */
+    footnote: { fontSize: 11, fontWeight: "400" as const, lineHeight: 15 },
 
     /** Dashboard legend. Every label that names a value uses this. */
     legend: {

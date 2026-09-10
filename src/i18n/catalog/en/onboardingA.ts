@@ -26,21 +26,27 @@ export const onboardingA: Fragment = {
 
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
+  //
+  // No subtitle and no placeholder. The subtitle explained where the name
+  // goes, which is a promise the reminders keep on their own, and the
+  // placeholder put a stranger's name in the field the user is being asked
+  // for their own — the one field in the app where an example is a person.
   "onboardingA.name.title": "What should we call you?",
-  "onboardingA.name.subtitle": "It goes on your reminders. It never leaves this phone.",
   "onboardingA.name.label": "Your name",
-  "onboardingA.name.placeholder": "Alex",
   "onboardingA.name.continue": "Continue",
 
   "onboardingA.vehicle.title": "What are you driving?",
   "onboardingA.vehicle.year": "Year",
-  "onboardingA.vehicle.makeOptional": "Make (optional)",
+  "onboardingA.vehicle.make": "Make",
   // Corolla and its maker outsell every other car on the planet, so the example
   // is a car the reader has seen wherever they are reading this.
   "onboardingA.vehicle.makePlaceholder": "Toyota",
-  // The one part of the car nothing but the name reads, so it says out loud
-  // that it can be left alone. "2019 Toyota" is a car in a garage list.
-  "onboardingA.vehicle.modelOptional": "Model (optional)",
+  // Nothing but the name ever reads the model, so it is the safest part to
+  // leave blank: "2019 Toyota" is a car in a garage list. Neither this label
+  // nor the make one says "(optional)" any more — nothing on this screen is
+  // required, the button never refuses, and a parenthesis on two of three
+  // fields reads as a rule about the third.
+  "onboardingA.vehicle.model": "Model",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
   "onboardingA.odometer.title.mi": "How many miles on it?",

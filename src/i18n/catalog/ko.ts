@@ -226,18 +226,16 @@ export const ko: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "어떻게 불러 드릴까요?",
-  "onboardingA.name.subtitle": "알림에 표시돼요. 이 기기를 벗어나지 않아요.",
   "onboardingA.name.label": "이름",
-  "onboardingA.name.placeholder": "지민",
   "onboardingA.name.continue": "계속",
 
   "onboardingA.vehicle.title": "어떤 차를 타세요?",
   "onboardingA.vehicle.year": "연식",
-  "onboardingA.vehicle.makeOptional": "제조사(선택)",
+  "onboardingA.vehicle.make": "제조사",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "모델(선택)",
+  "onboardingA.vehicle.model": "모델",
 
   "onboardingA.odometer.title.mi": "주행거리가 몇 마일이에요?",
   "onboardingA.odometer.title.km": "주행거리가 몇 킬로미터예요?",
@@ -303,8 +301,7 @@ export const ko: Fragment = {
   "onboardingB.analyzing.due": {
     other: "{count}건은 손봐야 하고, {soon}건이 곧 와요",
   },
-  "onboardingB.analyzing.done": "완료",
-  "onboardingB.analyzing.progress": "{total}개 중 {index}개 확인",
+  "onboardingB.analyzing.percent": "{percent}%",
 
   // onboardingC
   "onboardingC.back": "뒤로",
@@ -345,9 +342,20 @@ export const ko: Fragment = {
   "onboardingC.cost.subtitle": "연간 {distance}를 주행할 때 기준이에요.",
   "onboardingC.cost.perYear": "연간",
   "onboardingC.cost.fiveYears": "5년 동안",
-  "onboardingC.cost.roadside": "AAA는 {year}년에 긴급출동 {calls}건을 처리했어요. 약 {percent}%가 견인과 방전이었고, AAA는 정비로 막을 수 있었다고 밝혔어요.",
+  "onboardingC.cost.roadsidePercent": "{percent}%",
+  "onboardingC.cost.roadside": "AAA가 {year}년에 처리한 긴급출동 {calls}건 중 견인과 방전이 차지한 비율이에요.",
   "onboardingC.cost.source": "{rate} 및 {roadside}. 미국 평균, {currency} 기준.",
   "onboardingC.cost.continue": "계속",
+
+  "onboardingC.compare.title": "혼자 관리할까요, 일정에 맡길까요.",
+  "onboardingC.compare.subtitle": "같은 {vehicle}, 두 가지 방식으로.",
+  "onboardingC.compare.dated": "날짜가 있는 정비",
+  "onboardingC.compare.remembered": "직접 기억해야 하는 정비",
+  "onboardingC.compare.alone": "혼자서",
+  "onboardingC.compare.withApp": "Wrenchy와 함께",
+  "onboardingC.compare.ofTotal": "{total}개 중 {count}개",
+  "onboardingC.compare.source": "직접 답한 내용으로 센 숫자예요. 평균도 추정도 없어요.",
+  "onboardingC.compare.continue": "계속",
 
   "onboardingC.symptoms.next": "계속",
   "onboardingC.symptoms.last": "그럼 어떻게 하면 되나요",
@@ -587,6 +595,7 @@ export const ko: Fragment = {
   "vehicle.undo": "되돌리기",
   "vehicle.logService": "정비 기록하기",
 
+  "vehicle.rename.title": "차량 이름 변경",
   "vehicle.deleteVehicle": "차량 삭제",
   "vehicle.delete.title": "{name}, 삭제할까요?",
   "vehicle.delete.body":

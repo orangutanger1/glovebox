@@ -227,18 +227,16 @@ export const sv: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "Vad ska vi kalla dig?",
-  "onboardingA.name.subtitle": "Namnet står i dina påminnelser. Det lämnar aldrig den här telefonen.",
   "onboardingA.name.label": "Ditt namn",
-  "onboardingA.name.placeholder": "Elin",
   "onboardingA.name.continue": "Fortsätt",
 
   "onboardingA.vehicle.title": "Vad kör du?",
   "onboardingA.vehicle.year": "Årsmodell",
-  "onboardingA.vehicle.makeOptional": "Märke (valfritt)",
+  "onboardingA.vehicle.make": "Märke",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "Modell (valfritt)",
+  "onboardingA.vehicle.model": "Modell",
 
   "onboardingA.odometer.title.mi": "Hur många miles står den på?",
   "onboardingA.odometer.title.km": "Hur många kilometer står den på?",
@@ -305,8 +303,7 @@ export const sv: Fragment = {
     one: "{count} behöver åtgärdas, {soon} på väg",
     other: "{count} behöver åtgärdas, {soon} på väg",
   },
-  "onboardingB.analyzing.done": "Klart",
-  "onboardingB.analyzing.progress": "Läser {index} av {total}",
+  "onboardingB.analyzing.percent": "{percent}\u00a0%",
 
   "onboardingC.back": "Tillbaka",
   "onboardingC.question": "Fråga {step} / {total}",
@@ -350,9 +347,20 @@ export const sv: Fragment = {
   "onboardingC.cost.subtitle": "Vid de {distance} per år du kör.",
   "onboardingC.cost.perYear": "Per år",
   "onboardingC.cost.fiveYears": "Över fem år",
-  "onboardingC.cost.roadside": "AAA ryckte ut på {calls} vägassistanser {year}. Ungefär {percent}% var bärgningar och urladdade batterier: haverier som underhåll hade förhindrat, enligt AAA.",
+  "onboardingC.cost.roadsidePercent": "{percent}\u00a0%",
+  "onboardingC.cost.roadside": "av de {calls} vägassistanser AAA ryckte ut på {year} var bärgningar och urladdade batterier.",
   "onboardingC.cost.source": "{rate} och {roadside}. Amerikanska genomsnitt, i {currency}.",
   "onboardingC.cost.continue": "Fortsätt",
+
+  "onboardingC.compare.title": "På egen hand, eller efter ett schema.",
+  "onboardingC.compare.subtitle": "Din {vehicle}, skött på båda sätten.",
+  "onboardingC.compare.dated": "Servicepunkter med ett datum",
+  "onboardingC.compare.remembered": "Servicepunkter du måste hålla i huvudet",
+  "onboardingC.compare.alone": "På egen hand",
+  "onboardingC.compare.withApp": "Med Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} av {total}",
+  "onboardingC.compare.source": "Räknat från dina egna svar. Inga genomsnitt, inga uppskattningar.",
+  "onboardingC.compare.continue": "Fortsätt",
 
   "onboardingC.symptoms.next": "Fortsätt",
   "onboardingC.symptoms.last": "Så vad gör jag",
@@ -592,6 +600,7 @@ export const sv: Fragment = {
   "vehicle.undo": "Ångra",
   "vehicle.logService": "Logga en service",
 
+  "vehicle.rename.title": "Byt namn på fordonet",
   "vehicle.deleteVehicle": "Ta bort fordon",
   "vehicle.delete.title": "Ta bort {name}?",
   "vehicle.delete.body":

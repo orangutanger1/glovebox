@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
-import { Gauge } from "../../src/design/Gauge";
+import { Bars, type Bar } from "../../src/design/Bars";
 import { tokens } from "../../src/design/tokens";
 import { formatNumber, t } from "../../src/i18n";
 import { formatMoney } from "../../src/money";
@@ -19,9 +20,22 @@ import { useAdvance } from "../../src/onboarding/nav";
  * own, and it carries two. The rule the rest of the flow follows is written at
  * the top of `pain.ts` — nothing invented, nothing sourced to a study that does
  * not exist — and the way this screen keeps it is by printing where both
- * numbers came from, in the reader's own language, on the glass. A statistic
- * the user cannot go and check is indistinguishable from one we made up, and
- * the app has spent nine screens earning the opposite impression.
+ * numbers came from. A statistic the user cannot go and check is
+ * indistinguishable from one we made up, and the app has spent nine screens
+ * earning the opposite impression.
+ *
+ * The attribution is at the very bottom of the page, in the smallest type the
+ * system has, directly above the button. It used to be the fourth paragraph
+ * inside the panel, which put a URL-length sentence in the middle of the
+ * argument: a source line has to be present and has to lose every fight for
+ * attention with the figure it is vouching for.
+ *
+ * What replaced the paragraphs is the arithmetic drawn. The two figures are on
+ * one scale — a year against AAA's own five-year horizon — so they are two
+ * bars rather than two gauges with no relationship printed between them, and
+ * they grow on mount because the whole point of the screen is the size of the
+ * second one. The roadside statistic is a readout and one line, not the three
+ * sentences it was.
  *
  * Neither figure is asserted as a fact about this car. AAA's rate is what the
  * average American driver spends per mile on maintenance, repairs and tyres;
@@ -40,6 +54,32 @@ export default function OnboardingCost() {
   const unit = getDistanceUnit();
   const cost = maintenanceCost(plan.distancePerYear, unit);
 
+  // Both bars scale against the five-year figure, which is the longer of the
+  // two by construction. Sharing a scale is the only reason the pair is a
+  // chart at all: drawn to their own widths they would be two full bars saying
+  // nothing.
+  const bars = useMemo<Bar[]>(
+    () => [
+      {
+        key: "year",
+        label: t("onboardingC.cost.perYear"),
+        value: formatMoney(cost.perYear, MAINTENANCE_RATE.currency),
+        fraction: cost.overFiveYears === 0 ? 0 : cost.perYear / cost.overFiveYears,
+      },
+      {
+        key: "five",
+        label: t("onboardingC.cost.fiveYears"),
+        value: formatMoney(cost.overFiveYears, MAINTENANCE_RATE.currency),
+        fraction: 1,
+        // Not an alarm. This is money the car costs whoever owns it and
+        // whatever they do about it, and a red bar here would be the app
+        // calling ordinary maintenance a fault.
+        tone: "metal",
+      },
+    ],
+    [cost.perYear, cost.overFiveYears]
+  );
+
   return (
     <OnboardingScreen
       route="cost"
@@ -49,48 +89,51 @@ export default function OnboardingCost() {
       subtitle={t("onboardingC.cost.subtitle", {
         distance: formatDistance(plan.distancePerYear, unit),
       })}
-      footer={<Button label={t("onboardingC.cost.continue")} onPress={advance} />}
-    >
-      <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge
-              legend={t("onboardingC.cost.perYear")}
-              value={formatMoney(cost.perYear, MAINTENANCE_RATE.currency)}
-            />
-            <Gauge
-              // "Over five years" is written out rather than counted. The
-              // horizon is AAA's own and is a constant, and a plural key for a
-              // number that is always five is four categories of nothing.
-              legend={t("onboardingC.cost.fiveYears")}
-              value={formatMoney(cost.overFiveYears, MAINTENANCE_RATE.currency)}
-              align="right"
-            />
-          </View>
-
-          {/* The second figure, and the one that is about not maintaining the
-              car rather than about maintaining it. It is left as AAA's claim,
-              quoted, rather than restated as ours: AAA is the body that
-              answered the calls and the only one in a position to say what
-              caused them. */}
-          <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
-            {t("onboardingC.cost.roadside", {
-              calls: formatNumber(ROADSIDE.calls),
-              year: ROADSIDE.year,
-              percent: ROADSIDE.towingAndBatteryPct,
-            })}
-          </Text>
-
-          {/* Not decoration. Both figures are attributed here, with the edition
-              and the year, so the number on this screen can be chased to the
-              page it was read from. */}
-          <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+      footer={
+        <>
+          {/* Attribution, at the very bottom of the page. Both figures are
+              named here with their edition and year, so the numbers above can
+              be chased to the page they were read from. */}
+          <Text style={{ ...tokens.text.footnote, color: tokens.color.textFaint }}>
             {t("onboardingC.cost.source", {
               rate: `${MAINTENANCE_RATE.source} ${MAINTENANCE_RATE.edition}`,
               roadside: `${ROADSIDE.source} ${ROADSIDE.publishedAt.slice(0, 4)}`,
               currency: MAINTENANCE_RATE.currency,
             })}
           </Text>
+          <Button label={t("onboardingC.cost.continue")} onPress={advance} />
+        </>
+      }
+    >
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.lg }}>
+          <Bars bars={bars} />
+
+          {/* The second figure, and the one that is about not maintaining the
+              car rather than about maintaining it. A readout and a legend, so
+              the number is the thing on the glass; the claim that maintenance
+              would have prevented these calls is AAA's own, and the source
+              line at the foot of the page is where it is credited. */}
+          <View style={{ borderTopWidth: 1, borderTopColor: tokens.color.hairline }} />
+          <View style={{ gap: tokens.space.xs }}>
+            <Text
+              style={{
+                ...tokens.text.readout,
+                ...tokens.text.numeric,
+                color: tokens.color.red,
+              }}
+            >
+              {t("onboardingC.cost.roadsidePercent", {
+                percent: formatNumber(ROADSIDE.towingAndBatteryPct),
+              })}
+            </Text>
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+              {t("onboardingC.cost.roadside", {
+                calls: formatNumber(ROADSIDE.calls),
+                year: ROADSIDE.year,
+              })}
+            </Text>
+          </View>
         </View>
       </Panel>
     </OnboardingScreen>

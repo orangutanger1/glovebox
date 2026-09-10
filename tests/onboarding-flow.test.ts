@@ -61,19 +61,35 @@ test("the flow ends on the second ask, with no free door after it", () => {
 
 test("the notification ask comes before the screens a user drops out of", () => {
   // It used to sit immediately before the paywall, which covered exactly one
-  // exit. Everything a user quits during — symptoms, help, reviews — now
-  // happens with permission already asked, so an abandoned flow can be told it
-  // is abandoned. It still comes after the computed result, because the screen
-  // is a picture of a real reminder built from this car's own records.
-  // "outlook" was inserted between the results and the ask: the projection is
-  // what the reminder is for, so it stands immediately in front of it.
-  expect(nextRoute("results")).toBe("outlook");
-  expect(nextRoute("outlook")).toBe("notify");
-  expect(nextRoute("notify")).toBe("symptoms");
-  for (const later of ["symptoms", "help", "reviews", "paywall", "offer"] as const) {
+  // exit. Then it moved to just after the computed result, which still left
+  // the whole quiz in front of it — and the quiz is where an abandoned flow is
+  // abandoned. It now sits two questions in, which is the earliest point at
+  // which the app knows the car it would be sending reminders about.
+  expect(nextRoute("odometer")).toBe("notify");
+  expect(nextRoute("notify")).toBe("drive");
+  for (const later of [
+    "drive",
+    "service",
+    "tracking",
+    "worry",
+    "results",
+    "outlook",
+    "symptoms",
+    "help",
+    "reviews",
+    "paywall",
+    "offer",
+  ] as const) {
     expect(FLOW.indexOf("notify")).toBeLessThan(FLOW.indexOf(later));
   }
-  expect(FLOW.indexOf("notify")).toBeGreaterThan(FLOW.indexOf("results"));
+  // Not before the car exists. "allow notifications?" with no vehicle behind it
+  // is the context-free ask opt-in collapses on.
+  expect(FLOW.indexOf("notify")).toBeGreaterThan(FLOW.indexOf("vehicle"));
+  // It is not one of the six questions, however deep into them it sits.
+  expect(QUIZ).not.toContain("notify");
+  expect(quizStep("notify")).toBeNull();
+  // The projection still leads straight into the results it projects from.
+  expect(nextRoute("results")).toBe("outlook");
 });
 
 test("a resume point from a version that shipped different screens still lands somewhere", () => {
@@ -103,11 +119,13 @@ test("the flow introduces itself before it interrogates", () => {
 });
 
 test("the cost of the problem is stated between the symptoms and the answer", () => {
-  // "symptoms" names the problem, "cost" prices it, "help" answers it. Priced
-  // after the answer it is an invoice; priced before the problem it is a
-  // statistic with nothing to attach to.
+  // "symptoms" names the problem, "cost" prices it, "compare" draws the gap
+  // the app closes, "help" answers it. Priced after the answer it is an
+  // invoice; priced before the problem it is a statistic with nothing to
+  // attach to.
   expect(nextRoute("symptoms")).toBe("cost");
-  expect(nextRoute("cost")).toBe("help");
+  expect(nextRoute("cost")).toBe("compare");
+  expect(nextRoute("compare")).toBe("help");
 });
 
 test("route names are checked, not assumed", () => {

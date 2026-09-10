@@ -93,6 +93,7 @@ export const nl: Fragment = {
   "vehicle.undo": "Herstel",
   "vehicle.logService": "Onderhoud vastleggen",
 
+  "vehicle.rename.title": "Voertuig hernoemen",
   "vehicle.deleteVehicle": "Voertuig verwijderen",
   "vehicle.delete.title": "{name} verwijderen?",
   "vehicle.delete.body":
@@ -315,18 +316,16 @@ export const nl: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "Hoe mogen we je noemen?",
-  "onboardingA.name.subtitle": "Je naam staat in je herinneringen. Hij verlaat deze telefoon nooit.",
   "onboardingA.name.label": "Je naam",
-  "onboardingA.name.placeholder": "Sanne",
   "onboardingA.name.continue": "Verder",
 
   "onboardingA.vehicle.title": "Wat rijd je?",
   "onboardingA.vehicle.year": "Bouwjaar",
-  "onboardingA.vehicle.makeOptional": "Merk (optioneel)",
+  "onboardingA.vehicle.make": "Merk",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "Model (optioneel)",
+  "onboardingA.vehicle.model": "Model",
 
   "onboardingA.odometer.title.mi": "Hoeveel mijl staat erop?",
   "onboardingA.odometer.title.km": "Hoeveel kilometer staat erop?",
@@ -394,8 +393,7 @@ export const nl: Fragment = {
     one: "{count} vraagt aandacht, {soon} binnenkort",
     other: "{count} vragen aandacht, {soon} binnenkort",
   },
-  "onboardingB.analyzing.done": "Klaar",
-  "onboardingB.analyzing.progress": "Meting {index} van {total}",
+  "onboardingB.analyzing.percent": "{percent}%",
 
   // onboardingC
   "onboardingC.back": "Terug",
@@ -440,9 +438,20 @@ export const nl: Fragment = {
   "onboardingC.cost.subtitle": "Bij de {distance} per jaar die je rijdt.",
   "onboardingC.cost.perYear": "Per jaar",
   "onboardingC.cost.fiveYears": "Over vijf jaar",
-  "onboardingC.cost.roadside": "AAA behandelde {calls} pechmeldingen in {year}. Ongeveer {percent}% waren sleepbeurten en lege accu's: pech die onderhoud volgens AAA had voorkomen.",
+  "onboardingC.cost.roadsidePercent": "{percent}%",
+  "onboardingC.cost.roadside": "van de {calls} pechmeldingen die AAA in {year} behandelde waren sleepbeurten en lege accu's.",
   "onboardingC.cost.source": "{rate} en {roadside}. Amerikaanse gemiddelden, in {currency}.",
   "onboardingC.cost.continue": "Verder",
+
+  "onboardingC.compare.title": "Op eigen houtje, of volgens een schema.",
+  "onboardingC.compare.subtitle": "Je {vehicle}, op allebei de manieren.",
+  "onboardingC.compare.dated": "Beurten met een datum",
+  "onboardingC.compare.remembered": "Beurten die je zelf moet onthouden",
+  "onboardingC.compare.alone": "Op eigen houtje",
+  "onboardingC.compare.withApp": "Met Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} van {total}",
+  "onboardingC.compare.source": "Geteld uit je eigen antwoorden. Geen gemiddelden, geen schattingen.",
+  "onboardingC.compare.continue": "Verder",
 
   "onboardingC.symptoms.next": "Verder",
   "onboardingC.symptoms.last": "En wat doe ik daaraan",

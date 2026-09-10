@@ -236,18 +236,16 @@ export const fr: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "Comment doit-on vous appeler ?",
-  "onboardingA.name.subtitle": "Votre prénom apparaît dans vos rappels. Il ne quitte jamais ce téléphone.",
   "onboardingA.name.label": "Votre prénom",
-  "onboardingA.name.placeholder": "Camille",
   "onboardingA.name.continue": "Continuer",
 
   "onboardingA.vehicle.title": "Qu'est-ce que vous conduisez\u00a0?",
   "onboardingA.vehicle.year": "Année",
-  "onboardingA.vehicle.makeOptional": "Marque (facultatif)",
+  "onboardingA.vehicle.make": "Marque",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "Modèle (facultatif)",
+  "onboardingA.vehicle.model": "Modèle",
 
   "onboardingA.odometer.title.mi": "Combien de miles au compteur\u00a0?",
   "onboardingA.odometer.title.km": "Combien de kilomètres au compteur\u00a0?",
@@ -315,8 +313,7 @@ export const fr: Fragment = {
     one: "{count} demande votre attention, {soon} à venir",
     other: "{count} demandent votre attention, {soon} à venir",
   },
-  "onboardingB.analyzing.done": "Terminé",
-  "onboardingB.analyzing.progress": "Relevé {index} sur {total}",
+  "onboardingB.analyzing.percent": "{percent}\u202f%",
 
   // onboardingC
   "onboardingC.back": "Retour",
@@ -361,9 +358,20 @@ export const fr: Fragment = {
   "onboardingC.cost.subtitle": "Pour les {distance} par an que vous parcourez.",
   "onboardingC.cost.perYear": "Par an",
   "onboardingC.cost.fiveYears": "Sur cinq ans",
-  "onboardingC.cost.roadside": "AAA a traité {calls} dépannages en {year}. Environ {percent} % étaient des remorquages et des batteries à plat\u00a0: des pannes que l’entretien aurait évitées, selon AAA.",
+  "onboardingC.cost.roadsidePercent": "{percent}\u202f%",
+  "onboardingC.cost.roadside": "des {calls} dépannages traités par AAA en {year} étaient des remorquages et des batteries à plat.",
   "onboardingC.cost.source": "{rate} et {roadside}. Moyennes américaines, en {currency}.",
   "onboardingC.cost.continue": "Continuer",
+
+  "onboardingC.compare.title": "Seul, ou selon un calendrier.",
+  "onboardingC.compare.subtitle": "Votre {vehicle}, entretenu des deux façons.",
+  "onboardingC.compare.dated": "Entretiens avec une date",
+  "onboardingC.compare.remembered": "Entretiens que vous devez retenir",
+  "onboardingC.compare.alone": "Seul",
+  "onboardingC.compare.withApp": "Avec Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} sur {total}",
+  "onboardingC.compare.source": "Compté à partir de vos réponses. Aucune moyenne, aucune estimation.",
+  "onboardingC.compare.continue": "Continuer",
 
   "onboardingC.symptoms.next": "Continuer",
   "onboardingC.symptoms.last": "Alors je fais quoi",
@@ -616,6 +624,7 @@ export const fr: Fragment = {
   "vehicle.undo": "Annuler",
   "vehicle.logService": "Noter un entretien",
 
+  "vehicle.rename.title": "Renommer le véhicule",
   "vehicle.deleteVehicle": "Supprimer le véhicule",
   "vehicle.delete.title": "Supprimer {name}\u00a0?",
   "vehicle.delete.body":

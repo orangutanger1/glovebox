@@ -61,6 +61,5 @@ export const onboardingB: Fragment = {
     one: "{count} needs attention, {soon} coming up",
     other: "{count} need attention, {soon} coming up",
   },
-  "onboardingB.analyzing.done": "Done",
-  "onboardingB.analyzing.progress": "Reading {index} of {total}",
+  "onboardingB.analyzing.percent": "{percent}%",
 };

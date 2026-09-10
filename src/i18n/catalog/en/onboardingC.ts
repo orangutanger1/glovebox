@@ -54,9 +54,26 @@ export const onboardingC: Fragment = {
   "onboardingC.cost.subtitle": "At the {distance} a year you drive.",
   "onboardingC.cost.perYear": "A year",
   "onboardingC.cost.fiveYears": "Over five years",
-  "onboardingC.cost.roadside": "AAA answered {calls} roadside calls in {year}. About {percent}% were tows and flat batteries: breakdowns it says maintenance would have prevented.",
+  "onboardingC.cost.roadsidePercent": "{percent}%",
+  "onboardingC.cost.roadside": "of the {calls} roadside calls AAA answered in {year} were tows and flat batteries.",
   "onboardingC.cost.source": "{rate}, and {roadside}. US averages, in {currency}.",
   "onboardingC.cost.continue": "Continue",
+
+  // The counterpart of the cost screen, and the opposite kind of figure: not
+  // one number on it comes from outside this phone. Both pairs are counted
+  // from the tracked services and from how many of them the user could put a
+  // date on, which is why the screen can make a comparison at all — "you will
+  // save $400 a year" has no published figure behind it and would be the one
+  // invented number in the flow.
+  "onboardingC.compare.title": "On your own, or on a schedule.",
+  "onboardingC.compare.subtitle": "Your {vehicle}, kept both ways.",
+  "onboardingC.compare.dated": "Services with a date on them",
+  "onboardingC.compare.remembered": "Services you have to keep in your head",
+  "onboardingC.compare.alone": "On your own",
+  "onboardingC.compare.withApp": "With Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} of {total}",
+  "onboardingC.compare.source": "Counted from your own answers. No averages, no estimates.",
+  "onboardingC.compare.continue": "Continue",
 
   "onboardingC.symptoms.next": "Continue",
   "onboardingC.symptoms.last": "So what do I do",

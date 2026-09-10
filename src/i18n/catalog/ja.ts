@@ -213,18 +213,16 @@ export const ja: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "お名前を教えてください",
-  "onboardingA.name.subtitle": "リマインダーに表示されます。この端末から出ることはありません。",
   "onboardingA.name.label": "お名前",
-  "onboardingA.name.placeholder": "アレックス",
   "onboardingA.name.continue": "続ける",
 
   "onboardingA.vehicle.title": "どの車に乗っていますか？",
   "onboardingA.vehicle.year": "年式",
-  "onboardingA.vehicle.makeOptional": "メーカー（任意）",
+  "onboardingA.vehicle.make": "メーカー",
   "onboardingA.vehicle.makePlaceholder": "トヨタ",
   "onboardingA.vehicle.modelPlaceholder": "カローラ",
 
-  "onboardingA.vehicle.modelOptional": "車種（任意）",
+  "onboardingA.vehicle.model": "車種",
 
   "onboardingA.odometer.title.mi": "走行距離は何マイルですか？",
   "onboardingA.odometer.title.km": "走行距離は何キロですか？",
@@ -286,8 +284,7 @@ export const ja: Fragment = {
   "onboardingB.analyzing.rateProjected": "年間{distance}、来年には{projected}",
   "onboardingB.analyzing.clear": "今日対応が必要なものはありません",
   "onboardingB.analyzing.due": { other: "{count}件が要対応、{soon}件が間近" },
-  "onboardingB.analyzing.done": "完了",
-  "onboardingB.analyzing.progress": "{total}件中{index}件目を読み込み中",
+  "onboardingB.analyzing.percent": "{percent}%",
 
   // onboardingC
   "onboardingC.back": "戻る",
@@ -326,9 +323,20 @@ export const ja: Fragment = {
   "onboardingC.cost.subtitle": "年間{distance}走る場合。",
   "onboardingC.cost.perYear": "年間",
   "onboardingC.cost.fiveYears": "5年間",
-  "onboardingC.cost.roadside": "AAAは{year}年に{calls}件のロードサービスに対応しました。約{percent}%はレッカーとバッテリー上がりで、AAAは整備で防げたとしています。",
+  "onboardingC.cost.roadsidePercent": "{percent}%",
+  "onboardingC.cost.roadside": "AAAが{year}年に対応した{calls}件のロードサービスのうち、レッカーとバッテリー上がりの割合。",
   "onboardingC.cost.source": "{rate}、および{roadside}。米国平均、通貨は{currency}。",
   "onboardingC.cost.continue": "続ける",
+
+  "onboardingC.compare.title": "自分で管理するか、計画に任せるか。",
+  "onboardingC.compare.subtitle": "同じ{vehicle}を、2つのやり方で。",
+  "onboardingC.compare.dated": "日付が入っている整備",
+  "onboardingC.compare.remembered": "自分で覚えておく整備",
+  "onboardingC.compare.alone": "自分だけで",
+  "onboardingC.compare.withApp": "Wrenchyあり",
+  "onboardingC.compare.ofTotal": "{total}件中{count}件",
+  "onboardingC.compare.source": "あなたの回答から数えた数字です。平均値も推計もありません。",
+  "onboardingC.compare.continue": "続ける",
 
   "onboardingC.symptoms.next": "続ける",
   "onboardingC.symptoms.last": "では、どうすればいいか",
@@ -561,6 +569,7 @@ export const ja: Fragment = {
   "vehicle.undo": "元に戻す",
   "vehicle.logService": "整備を記録",
 
+  "vehicle.rename.title": "車両名を変更",
   "vehicle.deleteVehicle": "車を削除",
   "vehicle.delete.title": "{name}を削除しますか？",
   "vehicle.delete.body":

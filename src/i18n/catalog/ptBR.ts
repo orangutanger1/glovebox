@@ -217,18 +217,16 @@ export const ptBR: Fragment = {
   // The introduction, on the screen before the quiz. The name is read
   // back on both ask screens and in every reminder, and nowhere else.
   "onboardingA.name.title": "Como podemos te chamar?",
-  "onboardingA.name.subtitle": "Aparece nos seus lembretes. Nunca sai deste telefone.",
   "onboardingA.name.label": "Seu nome",
-  "onboardingA.name.placeholder": "Ana",
   "onboardingA.name.continue": "Continuar",
 
   "onboardingA.vehicle.title": "O que você dirige?",
   "onboardingA.vehicle.year": "Ano",
-  "onboardingA.vehicle.makeOptional": "Marca (opcional)",
+  "onboardingA.vehicle.make": "Marca",
   "onboardingA.vehicle.makePlaceholder": "Toyota",
   "onboardingA.vehicle.modelPlaceholder": "Corolla",
 
-  "onboardingA.vehicle.modelOptional": "Modelo (opcional)",
+  "onboardingA.vehicle.model": "Modelo",
 
   "onboardingA.odometer.title.mi": "Quantas milhas ele tem?",
   "onboardingA.odometer.title.km": "Quantos quilômetros ele tem?",
@@ -295,8 +293,7 @@ export const ptBR: Fragment = {
     one: "{count} precisa de atenção, {soon} chegando",
     other: "{count} precisam de atenção, {soon} chegando",
   },
-  "onboardingB.analyzing.done": "Pronto",
-  "onboardingB.analyzing.progress": "Leitura {index} de {total}",
+  "onboardingB.analyzing.percent": "{percent}%",
 
   "onboardingC.back": "Voltar",
   "onboardingC.question": "Pergunta {step} / {total}",
@@ -340,9 +337,20 @@ export const ptBR: Fragment = {
   "onboardingC.cost.subtitle": "Com os {distance} por ano que você dirige.",
   "onboardingC.cost.perYear": "Por ano",
   "onboardingC.cost.fiveYears": "Em cinco anos",
-  "onboardingC.cost.roadside": "A AAA atendeu {calls} chamados de assistência em {year}. Cerca de {percent}% foram reboques e baterias descarregadas: panes que, segundo a AAA, a manutenção teria evitado.",
+  "onboardingC.cost.roadsidePercent": "{percent}%",
+  "onboardingC.cost.roadside": "dos {calls} chamados de assistência atendidos pela AAA em {year} foram reboques e baterias descarregadas.",
   "onboardingC.cost.source": "{rate} e {roadside}. Médias dos EUA, em {currency}.",
   "onboardingC.cost.continue": "Continuar",
+
+  "onboardingC.compare.title": "Por conta própria, ou com um calendário.",
+  "onboardingC.compare.subtitle": "Seu {vehicle}, cuidado das duas formas.",
+  "onboardingC.compare.dated": "Serviços com uma data",
+  "onboardingC.compare.remembered": "Serviços que você precisa lembrar",
+  "onboardingC.compare.alone": "Por conta própria",
+  "onboardingC.compare.withApp": "Com o Wrenchy",
+  "onboardingC.compare.ofTotal": "{count} de {total}",
+  "onboardingC.compare.source": "Contado a partir das suas respostas. Sem médias, sem estimativas.",
+  "onboardingC.compare.continue": "Continuar",
 
   "onboardingC.symptoms.next": "Continuar",
   "onboardingC.symptoms.last": "E o que eu faço",
@@ -583,6 +591,7 @@ export const ptBR: Fragment = {
   "vehicle.undo": "Desfazer",
   "vehicle.logService": "Registrar um serviço",
 
+  "vehicle.rename.title": "Renomear veículo",
   "vehicle.deleteVehicle": "Apagar veículo",
   "vehicle.delete.title": "Apagar {name}?",
   "vehicle.delete.body":

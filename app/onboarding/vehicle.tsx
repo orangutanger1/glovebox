@@ -192,7 +192,7 @@ export default function OnboardingVehicle() {
           <View style={{ flexDirection: "row", gap: tokens.space.md }}>
             <View style={{ flex: 1 }}>
               <Field
-                label={t("onboardingA.vehicle.makeOptional")}
+                label={t("onboardingA.vehicle.make")}
                 value={make}
                 onChangeText={setMake}
                 placeholder={t("onboardingA.vehicle.makePlaceholder")}
@@ -203,7 +203,7 @@ export default function OnboardingVehicle() {
             </View>
             <View style={{ flex: 1 }}>
               <Field
-                label={t("onboardingA.vehicle.modelOptional")}
+                label={t("onboardingA.vehicle.model")}
                 value={model}
                 onChangeText={setModel}
                 placeholder={t("onboardingA.vehicle.modelPlaceholder")}

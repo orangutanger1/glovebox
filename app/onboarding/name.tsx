@@ -51,7 +51,6 @@ export default function OnboardingName() {
     <OnboardingScreen
       route="name"
       title={t("onboardingA.name.title")}
-      subtitle={t("onboardingA.name.subtitle")}
       footer={
         <Button
           label={t("onboardingA.name.continue")}
@@ -69,7 +68,6 @@ export default function OnboardingName() {
             label={t("onboardingA.name.label")}
             value={value}
             onChangeText={(next) => setValue(next.slice(0, NAME_MAX_LENGTH))}
-            placeholder={t("onboardingA.name.placeholder")}
             autoFocus
             // A given name is a proper noun, and iOS lower-casing it or
             // autocorrecting it to a dictionary word writes the wrong person
