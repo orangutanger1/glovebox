@@ -139,6 +139,13 @@ export default function OnboardingNotify() {
     } catch {
       // Unavailable, which is not a denial and is not the user's answer
       // either. The app works without notifications.
+    } finally {
+      // Released before we leave, because this screen stays mounted after we
+      // do: the next question is pushed on top of it, so a Back from there
+      // returns to this instance. A `busy` left standing there is a dead
+      // button on the screen the user has just walked back to, with the only
+      // way out being another Back and then a Continue.
+      setBusy(false);
     }
     advance();
   }
