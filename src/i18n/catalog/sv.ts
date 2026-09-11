@@ -42,10 +42,11 @@ export const sv: Fragment = {
 
   "features.history.title": "Varje service, sparad för alltid",
   "features.history.subtitle":
-    "Datum, mätarställning, kostnad och anteckningar. Borttagna rader markeras som raderade i stället för att kastas.",
+    "Datum, mätarställning, kostnad och anteckningar från varje besök, sparade så länge du har bilen.",
 
   "features.due.title": "Dags efter datum och sträcka",
-  "features.due.subtitle": "Det som kommer först, räknat från intervallen för varje service.",
+  "features.due.subtitle":
+    "Det som kommer först: sträckan du kör eller månaderna som går.",
 
   "features.reminders.title": "En påminnelse per service",
   "features.reminders.subtitle": "Den dag det ska göras, och aldrig något annat.",
@@ -194,6 +195,13 @@ export const sv: Fragment = {
     other: "Starta mina {count} dagar",
   },
   "offer.trial.decline": "Nej tack",
+  "offer.trial.gets.reminders": "Påminnelse före varje service",
+  "offer.trial.gets.due": "Dags efter datum och sträcka",
+  "offer.trial.gets.history": "Varje service sparas för alltid",
+  "offer.trial.gets.costs": "Se vad bilen kostar",
+  "offer.trial.gets.garage": "Obegränsat med fordon",
+  "offer.trial.gets.intervals": "Egna serviceintervall",
+  "offer.trial.gets.export": "Exportera allt som CSV",
   "offer.trial.legend": "Så fungerar erbjudandet",
   "offer.trial.now.title": "I dag",
   "offer.trial.now.body": "Allt låses upp: din plan, dina påminnelser, hela loggboken.",

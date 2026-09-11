@@ -32,11 +32,11 @@ export const es: Fragment = {
   // features
   "features.history.title": "Cada mantenimiento, guardado para siempre",
   "features.history.subtitle":
-    "Fecha, cuentakilómetros, coste y notas, y las filas borradas quedan marcadas en lugar de desaparecer.",
+    "Fecha, cuentakilómetros, coste y notas de cada visita, guardados mientras tengas el coche.",
 
   "features.due.title": "Vence por fecha y por distancia",
   "features.due.subtitle":
-    "Lo que llegue primero, contado desde los intervalos de cada mantenimiento.",
+    "Lo que llegue primero: los kilómetros que hagas o los meses que pasen.",
 
   "features.reminders.title": "Un recordatorio por mantenimiento",
   "features.reminders.subtitle": "El día en que vence, y nada más.",
@@ -191,6 +191,13 @@ export const es: Fragment = {
     other: "Empezar mis {count} días",
   },
   "offer.trial.decline": "No, gracias",
+  "offer.trial.gets.reminders": "Avisos antes de cada mantenimiento",
+  "offer.trial.gets.due": "Vence por fecha y distancia",
+  "offer.trial.gets.history": "Cada mantenimiento guardado siempre",
+  "offer.trial.gets.costs": "Mira lo que cuesta tu coche",
+  "offer.trial.gets.garage": "Vehículos ilimitados",
+  "offer.trial.gets.intervals": "Tus propios intervalos",
+  "offer.trial.gets.export": "Exporta todo en CSV",
   "offer.trial.legend": "Cómo funciona la oferta",
   "offer.trial.now.title": "Hoy",
   "offer.trial.now.body": "Se desbloquea todo: tu plan, tus recordatorios, tu historial completo.",

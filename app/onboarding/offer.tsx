@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Button } from "../../src/design/Button";
+import { Check } from "../../src/design/Check";
 import { ListRow } from "../../src/design/ListRow";
 import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
@@ -26,11 +27,12 @@ import { useFinish } from "../../src/onboarding/nav";
 const STEPS = ["now", "runs", "ends"] as const;
 
 /** Everything the trial opens, which is everything. The paywall before this
- *  one prints three of them and stops, because it is asking for money and a
- *  priced list has to be short. Nothing is being asked for here, so the list
- *  can be the whole product — a reader who has already declined once is
- *  reading to find the thing the three lines left out. */
-const FEATURES = ["reminders", "due", "history", "costs", "garage", "intervals"] as const;
+ *  one prints three of them with a sentence under each, because it is asking
+ *  for money in front of them. Nothing is being asked for here, so the list can
+ *  be the whole product — and a whole product only fits under an offer if each
+ *  line is a tick and five words. Reprinting the paywall's cards here made the
+ *  screen a second copy of the screen before it, twice as long. */
+const GETS = ["reminders", "due", "history", "costs", "garage", "intervals", "export"] as const;
 
 /**
  * The one retry, the last screen in the flow, and — once it has been declined
@@ -190,12 +192,16 @@ export default function OnboardingOffer() {
       </Text>
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
-          {FEATURES.map((id) => (
-            <ListRow
+          {GETS.map((id) => (
+            <View
               key={id}
-              title={t(`features.${id}.title`)}
-              subtitle={t(`features.${id}.subtitle`)}
-            />
+              style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
+            >
+              <Check />
+              <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
+                {t(`offer.trial.gets.${id}`)}
+              </Text>
+            </View>
           ))}
         </View>
       </Panel>

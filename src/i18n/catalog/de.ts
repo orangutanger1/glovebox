@@ -38,10 +38,11 @@ export const de: Fragment = {
   // features
   "features.history.title": "Jeder Service, für immer erfasst",
   "features.history.subtitle":
-    "Datum, Tachostand, Kosten und Notizen; gelöschte Zeilen werden markiert statt verworfen.",
+    "Datum, Tachostand, Kosten und Notizen zu jedem Besuch, so lange erhalten, wie dir das Auto gehört.",
 
   "features.due.title": "Fällig nach Datum und nach Strecke",
-  "features.due.subtitle": "Was zuerst kommt, gezählt aus den Intervallen jedes Service.",
+  "features.due.subtitle":
+    "Was zuerst kommt: die gefahrene Strecke oder die vergangenen Monate.",
 
   "features.reminders.title": "Eine Erinnerung pro Service",
   "features.reminders.subtitle": "Am Tag der Fälligkeit, und sonst nie.",
@@ -195,6 +196,13 @@ export const de: Fragment = {
     other: "{count} Tage starten",
   },
   "offer.trial.decline": "Nein danke",
+  "offer.trial.gets.reminders": "Erinnerung vor jedem Service",
+  "offer.trial.gets.due": "Fällig nach Datum und Strecke",
+  "offer.trial.gets.history": "Jeder Service bleibt erhalten",
+  "offer.trial.gets.costs": "Sieh, was dein Auto kostet",
+  "offer.trial.gets.garage": "Unbegrenzt viele Fahrzeuge",
+  "offer.trial.gets.intervals": "Eigene Serviceintervalle",
+  "offer.trial.gets.export": "Alles als CSV exportieren",
   "offer.trial.legend": "So läuft das Angebot",
   "offer.trial.now.title": "Heute",
   "offer.trial.now.body": "Alles wird freigeschaltet: dein Plan, deine Erinnerungen, dein komplettes Logbuch.",

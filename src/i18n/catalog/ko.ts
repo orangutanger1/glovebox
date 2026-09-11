@@ -45,10 +45,11 @@ export const ko: Fragment = {
   // features
   "features.history.title": "모든 정비를 계속 보관",
   "features.history.subtitle":
-    "날짜, 주행거리, 비용, 메모까지. 삭제한 행도 삭제 표시만 남고 버려지지 않아요.",
+    "정비할 때마다 날짜, 주행거리, 비용, 메모까지. 차를 갖고 있는 내내 남아요.",
 
   "features.due.title": "날짜와 주행거리로 오는 기한",
-  "features.due.subtitle": "정비별 주기에서 계산해서, 둘 중 먼저 오는 쪽이 기준이에요.",
+  "features.due.subtitle":
+    "주행한 거리와 지나간 개월 수 중 먼저 오는 쪽이 기한이에요.",
 
   "features.reminders.title": "정비마다 알림 한 번",
   "features.reminders.subtitle": "기한이 되는 날 한 번, 그 외에는 아무것도 없어요.",
@@ -193,6 +194,13 @@ export const ko: Fragment = {
     other: "{count}일 시작하기",
   },
   "offer.trial.decline": "괜찮아요",
+  "offer.trial.gets.reminders": "정비 전에 미리 알림",
+  "offer.trial.gets.due": "날짜와 주행거리로 기한 관리",
+  "offer.trial.gets.history": "모든 정비 기록 보관",
+  "offer.trial.gets.costs": "차에 드는 비용 확인",
+  "offer.trial.gets.garage": "차량 수 제한 없음",
+  "offer.trial.gets.intervals": "내게 맞춘 정비 주기",
+  "offer.trial.gets.export": "전부 CSV로 내보내기",
   "offer.trial.legend": "이 제안이 진행되는 방식",
   "offer.trial.now.title": "오늘",
   "offer.trial.now.body": "플랜, 알림, 전체 기록까지 모두 열립니다.",

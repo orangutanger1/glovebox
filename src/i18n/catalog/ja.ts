@@ -36,10 +36,11 @@ export const ja: Fragment = {
   // features
   "features.history.title": "すべての整備を、ずっと保存",
   "features.history.subtitle":
-    "日付、走行距離、費用、メモ。削除した行も削除済みとして残り、捨てられません。",
+    "入庫ごとの日付、走行距離、費用、メモ。車を手放すまでずっと残ります。",
 
   "features.due.title": "日付と距離の両方で期限を管理",
-  "features.due.subtitle": "整備ごとの間隔から数えて、先に来たほうが期限です。",
+  "features.due.subtitle":
+    "走った距離と経過した月数のうち、先に来たほうが期限です。",
 
   "features.reminders.title": "整備ごとに通知は1回",
   "features.reminders.subtitle": "期限の当日に1回だけ。それ以外は届きません。",
@@ -180,6 +181,13 @@ export const ja: Fragment = {
     other: "{count}日間を始める",
   },
   "offer.trial.decline": "今はけっこうです",
+  "offer.trial.gets.reminders": "整備の前に必ず通知",
+  "offer.trial.gets.due": "日付と距離の両方で期限管理",
+  "offer.trial.gets.history": "整備の記録はずっと保存",
+  "offer.trial.gets.costs": "車にかかる費用がわかる",
+  "offer.trial.gets.garage": "車両は台数無制限",
+  "offer.trial.gets.intervals": "自分に合わせた整備間隔",
+  "offer.trial.gets.export": "すべてCSVで書き出し",
   "offer.trial.legend": "オファーの流れ",
   "offer.trial.now.title": "今日",
   "offer.trial.now.body": "すべてが使えます。整備プラン、リマインダー、全記録。",

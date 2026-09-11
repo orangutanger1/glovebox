@@ -80,11 +80,11 @@ export const pl: Fragment = {
   // features
   "features.history.title": "Każdy serwis, zachowany na zawsze",
   "features.history.subtitle":
-    "Data, przebieg, koszt i notatki, a usunięte wiersze są oznaczane, nie kasowane.",
+    "Data, przebieg, koszt i notatki z każdej wizyty, zapisane tak długo, jak masz to auto.",
 
   "features.due.title": "Termin według daty i przebiegu",
   "features.due.subtitle":
-    "Liczy się to, co wypadnie pierwsze, według interwałów każdego serwisu.",
+    "Liczy się to, co wypadnie pierwsze: przejechane kilometry albo minione miesiące.",
 
   "features.reminders.title": "Jedno przypomnienie na serwis",
   "features.reminders.subtitle": "W dniu, w którym wypada termin, i nic poza tym.",
@@ -228,6 +228,13 @@ export const pl: Fragment = {
     other: "Zaczynam {count} dnia",
   },
   "offer.trial.decline": "Nie, dziękuję",
+  "offer.trial.gets.reminders": "Przypomnienie przed każdym serwisem",
+  "offer.trial.gets.due": "Termin według daty i przebiegu",
+  "offer.trial.gets.history": "Każdy serwis zapisany na zawsze",
+  "offer.trial.gets.costs": "Zobacz, ile kosztuje auto",
+  "offer.trial.gets.garage": "Nieograniczona liczba pojazdów",
+  "offer.trial.gets.intervals": "Własne interwały serwisowe",
+  "offer.trial.gets.export": "Eksport wszystkiego do CSV",
   "offer.trial.legend": "Jak działa oferta",
   "offer.trial.now.title": "Dziś",
   "offer.trial.now.body": "Wszystko się odblokowuje: plan, przypomnienia, pełny dziennik.",

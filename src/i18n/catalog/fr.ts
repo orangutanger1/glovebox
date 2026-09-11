@@ -42,11 +42,11 @@ export const fr: Fragment = {
   // features
   "features.history.title": "Chaque entretien, gardé pour toujours",
   "features.history.subtitle":
-    "Date, compteur, coût et notes, les lignes supprimées étant marquées plutôt qu'effacées.",
+    "Date, compteur, coût et notes à chaque passage, conservés tant que vous avez la voiture.",
 
   "features.due.title": "Échéance par date et par distance",
   "features.due.subtitle":
-    "La première des deux, comptée à partir des intervalles de chaque entretien.",
+    "La première des deux : les kilomètres parcourus ou les mois écoulés.",
 
   "features.reminders.title": "Un rappel par entretien",
   "features.reminders.subtitle": "Le jour de l'échéance, et rien d'autre, jamais.",
@@ -202,6 +202,13 @@ export const fr: Fragment = {
     other: "Commencer mes {count} jours",
   },
   "offer.trial.decline": "Non merci",
+  "offer.trial.gets.reminders": "Rappels avant chaque entretien",
+  "offer.trial.gets.due": "Échéance par date et distance",
+  "offer.trial.gets.history": "Chaque entretien conservé",
+  "offer.trial.gets.costs": "Voyez ce que coûte la voiture",
+  "offer.trial.gets.garage": "Véhicules illimités",
+  "offer.trial.gets.intervals": "Vos propres intervalles",
+  "offer.trial.gets.export": "Tout exporter en CSV",
   "offer.trial.legend": "Comment se passe l’offre",
   "offer.trial.now.title": "Aujourd’hui",
   "offer.trial.now.body": "Tout se débloque : votre plan, vos rappels, votre carnet complet.",

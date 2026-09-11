@@ -551,10 +551,11 @@ export const nl: Fragment = {
   // features
   "features.history.title": "Elk onderhoud, voor altijd bewaard",
   "features.history.subtitle":
-    "Datum, kilometerstand, kosten en notities, met verwijderde regels gemarkeerd in plaats van weggegooid.",
+    "Datum, kilometerstand, kosten en notities van elke beurt, bewaard zolang je de auto hebt.",
 
   "features.due.title": "Aan de beurt op datum en op afstand",
-  "features.due.subtitle": "Wat het eerst komt, geteld vanaf de intervallen per onderhoud.",
+  "features.due.subtitle":
+    "Wat het eerst komt: de kilometers die je rijdt of de maanden die verstrijken.",
 
   "features.reminders.title": "Eén herinnering per onderhoud",
   "features.reminders.subtitle": "Op de dag dat het aan de beurt is, en verder nooit iets.",
@@ -619,6 +620,13 @@ export const nl: Fragment = {
     other: "Start mijn {count} dagen",
   },
   "offer.trial.decline": "Nee bedankt",
+  "offer.trial.gets.reminders": "Herinnering voor elke beurt",
+  "offer.trial.gets.due": "Aan de beurt op datum en afstand",
+  "offer.trial.gets.history": "Elke beurt blijft bewaard",
+  "offer.trial.gets.costs": "Zie wat je auto kost",
+  "offer.trial.gets.garage": "Onbeperkt voertuigen",
+  "offer.trial.gets.intervals": "Je eigen intervallen",
+  "offer.trial.gets.export": "Alles exporteren als CSV",
   "offer.trial.legend": "Zo verloopt het aanbod",
   "offer.trial.now.title": "Vandaag",
   "offer.trial.now.body": "Alles gaat open: je plan, je herinneringen, je volledige logboek.",

@@ -66,6 +66,17 @@ export const offer: Fragment = {
   // to send them to any more, and a link promising one would be the last thing
   // read before the wall it actually leads to.
   "offer.trial.decline": "No thanks",
+  // The trial screen's own list, and deliberately not the paywall's. That one
+  // is three features with a sentence under each, in front of a price. This is
+  // everything the trial opens, so it has to be readable at a glance: a tick
+  // and at most five words a line, down the page.
+  "offer.trial.gets.reminders": "Reminders before every service",
+  "offer.trial.gets.due": "Due by date and distance",
+  "offer.trial.gets.history": "Every service kept forever",
+  "offer.trial.gets.costs": "See what your car costs",
+  "offer.trial.gets.garage": "Unlimited vehicles",
+  "offer.trial.gets.intervals": "Your own service schedules",
+  "offer.trial.gets.export": "Export everything as CSV",
   "offer.trial.legend": "How the offer runs",
   "offer.trial.now.title": "Today",
   "offer.trial.now.body": "Everything unlocks: your plan, your reminders, your full log.",

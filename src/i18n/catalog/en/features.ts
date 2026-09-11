@@ -9,10 +9,11 @@ import type { Fragment } from "../types";
 export const features: Fragment = {
   "features.history.title": "Every service, kept forever",
   "features.history.subtitle":
-    "Date, odometer, cost and notes, with deleted rows tombstoned rather than dropped.",
+    "Date, odometer, cost and notes on every visit, kept for as long as you own the car.",
 
   "features.due.title": "Due by date and by distance",
-  "features.due.subtitle": "Whichever comes first, counted from the intervals for each service.",
+  "features.due.subtitle":
+    "Whichever comes first: the distance you drive, or the months that pass.",
 
   "features.reminders.title": "One reminder per service",
   "features.reminders.subtitle": "On the day it comes due, and nothing else ever.",

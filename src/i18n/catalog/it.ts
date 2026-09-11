@@ -31,11 +31,11 @@ export const it: Fragment = {
 
   "features.history.title": "Ogni manutenzione, conservata per sempre",
   "features.history.subtitle":
-    "Data, contachilometri, costo e note, con le righe eliminate marcate invece che buttate via.",
+    "Data, contachilometri, costo e note di ogni intervento, conservati finché hai l'auto.",
 
   "features.due.title": "Scadenze per data e per chilometri",
   "features.due.subtitle":
-    "Vale la prima delle due, calcolata dagli intervalli di ogni tagliando.",
+    "Vale la prima delle due: i chilometri che percorri o i mesi che passano.",
 
   "features.reminders.title": "Un promemoria per tagliando",
   "features.reminders.subtitle": "Il giorno della scadenza, e nient'altro, mai.",
@@ -184,6 +184,13 @@ export const it: Fragment = {
     other: "Attiva {count} giorni",
   },
   "offer.trial.decline": "No grazie",
+  "offer.trial.gets.reminders": "Promemoria prima di ogni intervento",
+  "offer.trial.gets.due": "Scadenze per data e chilometri",
+  "offer.trial.gets.history": "Ogni intervento conservato",
+  "offer.trial.gets.costs": "Scopri quanto costa l'auto",
+  "offer.trial.gets.garage": "Veicoli illimitati",
+  "offer.trial.gets.intervals": "I tuoi intervalli",
+  "offer.trial.gets.export": "Esporta tutto in CSV",
   "offer.trial.legend": "Come funziona l’offerta",
   "offer.trial.now.title": "Oggi",
   "offer.trial.now.body": "Si sblocca tutto: il tuo piano, i tuoi promemoria, il registro completo.",

@@ -33,10 +33,11 @@ export const ptBR: Fragment = {
 
   "features.history.title": "Todo serviço, guardado para sempre",
   "features.history.subtitle":
-    "Data, odômetro, custo e observações, com as linhas apagadas marcadas em vez de descartadas.",
+    "Data, odômetro, custo e observações de cada visita, guardados enquanto o carro for seu.",
 
   "features.due.title": "Vence por data e por distância",
-  "features.due.subtitle": "O que vier primeiro, contado a partir dos intervalos de cada serviço.",
+  "features.due.subtitle":
+    "O que vier primeiro: os quilômetros que você roda ou os meses que passam.",
 
   "features.reminders.title": "Um lembrete por serviço",
   "features.reminders.subtitle": "No dia em que ele vence, e nada além disso.",
@@ -184,6 +185,13 @@ export const ptBR: Fragment = {
     other: "Começar meus {count} dias",
   },
   "offer.trial.decline": "Não, obrigado",
+  "offer.trial.gets.reminders": "Lembretes antes de cada serviço",
+  "offer.trial.gets.due": "Vence por data e distância",
+  "offer.trial.gets.history": "Todo serviço guardado para sempre",
+  "offer.trial.gets.costs": "Veja quanto o carro custa",
+  "offer.trial.gets.garage": "Veículos ilimitados",
+  "offer.trial.gets.intervals": "Seus próprios intervalos",
+  "offer.trial.gets.export": "Exporte tudo em CSV",
   "offer.trial.legend": "Como funciona a oferta",
   "offer.trial.now.title": "Hoje",
   "offer.trial.now.body": "Tudo é liberado: seu plano, seus lembretes, seu histórico completo.",
