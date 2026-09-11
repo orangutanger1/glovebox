@@ -221,8 +221,57 @@ export default function VehicleDetail() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }} edges={["bottom"]}>
       {/* The header is the only place the vehicle is named, so it is set from
-          the row rather than left as the route pattern. */}
-      <Stack.Screen options={{ title: vehicle?.name ?? t("vehicle.title") }} />
+          the row rather than left as the route pattern — and because it is the
+          name on the glass, it is also the control that changes it. Renaming
+          used to be a button under the whole service history, which is a long
+          way to scroll to fix a typo; the name is where anyone looks for it
+          first, and putting the control on the thing it edits is one fewer
+          button on a screen that already has four. `title` is kept in step
+          because it is what the screens pushed from here put on their back
+          chevron. */}
+      <Stack.Screen
+        options={{
+          title: vehicle?.name ?? t("vehicle.title"),
+          headerTitle: () => (
+            <Pressable
+              onPress={vehicle ? () => router.push(`/vehicle/${id}/edit`) : undefined}
+              disabled={!vehicle}
+              hitSlop={12}
+              accessibilityRole="button"
+              accessibilityLabel={t("vehicle.rename.title")}
+              style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}
+            >
+              {({ pressed }) => (
+                <>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...tokens.text.heading,
+                      color: pressed ? tokens.color.textMuted : tokens.color.text,
+                    }}
+                  >
+                    {vehicle?.name ?? t("vehicle.title")}
+                  </Text>
+                  {/* The affordance, and the whole of it. A name that can be
+                      edited has to say so, and a pencil says it in the space a
+                      header has — which is not enough space for a word, in any
+                      of eleven languages. */}
+                  {vehicle ? (
+                    <Text
+                      style={{
+                        ...tokens.text.caption,
+                        color: pressed ? tokens.color.text : tokens.color.textMuted,
+                      }}
+                    >
+                      {"\u270E"}
+                    </Text>
+                  ) : null}
+                </>
+              )}
+            </Pressable>
+          ),
+        }}
+      />
       <FlatList
         data={records}
         keyExtractor={(r) => r.id}
@@ -327,17 +376,12 @@ export default function VehicleDetail() {
         }
         ListFooterComponent={
           vehicle ? (
-            // Rename above delete, and separated from it. They are the two
-            // actions that change what the vehicle is rather than what it has
-            // done, but only one of them is irreversible, and the rename is
-            // here precisely so that correcting a name stops meaning deleting
-            // the car.
-            <View style={{ paddingTop: tokens.space.xl, gap: tokens.space.md }}>
-              <Button
-                label={t("vehicle.rename.title")}
-                variant="secondary"
-                onPress={() => router.push(`/vehicle/${id}/edit`)}
-              />
+            // Delete, alone. The rename that used to sit above it is the header
+            // now: it belongs on the name it changes, and the two were a pair
+            // only in the sense that both change what the vehicle is — one of
+            // them is a typo correction and the other takes a whole service
+            // history with it, and they should not have been a tap apart.
+            <View style={{ paddingTop: tokens.space.xl }}>
               <Button label={t("vehicle.deleteVehicle")} variant="danger" onPress={onDeleteVehicle} />
             </View>
           ) : null

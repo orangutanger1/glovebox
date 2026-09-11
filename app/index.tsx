@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { Alert, View, Text, Pressable } from "react-native";
+import { Swipeable } from "react-native-gesture-handler";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { Card } from "../src/design/Card";
@@ -11,8 +12,9 @@ import { ListRow } from "../src/design/ListRow";
 import { PressableScale } from "../src/design/PressableScale";
 import { Panel } from "../src/design/Surface";
 import { nextReminders } from "../src/notify/collect";
+import { rescheduleAll } from "../src/notify";
 import { tokens } from "../src/design/tokens";
-import { listVehicles, type Vehicle } from "../src/db/vehicles";
+import { listVehicles, softDeleteVehicle, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
 import { nextDue, dueStatus } from "../src/schedule";
 import { getIntervals } from "../src/db/intervals";
@@ -173,6 +175,37 @@ export default function Garage() {
     router.push(`/vehicle/${vehicles[0].id}/log`);
   }
 
+  /**
+   * Swiping a car out of the garage.
+   *
+   * The only way to do this used to be to open the car, scroll past its entire
+   * service history and find the button under it — a long walk for the user
+   * whose garage still holds a car they sold, and the wrong walk entirely for
+   * the one who added a duplicate by mistake and wants it gone from the list
+   * they are looking at. The gesture is the one the history rows already use,
+   * so the garage is not teaching a second way to delete something.
+   *
+   * The confirmation is the vehicle screen's, word for word and by name. A
+   * gesture is easier to make by accident than a button is to press by
+   * accident, so the one action that takes a whole service history out of the
+   * app has to ask the same question wherever it is started from. The row is
+   * tombstoned rather than dropped, so the records stay in the CSV export.
+   */
+  function onDeleteVehicle(vehicle: Vehicle) {
+    Alert.alert(t("vehicle.delete.title", { name: vehicle.name }), t("vehicle.delete.body"), [
+      { text: t("vehicle.delete.cancel"), style: "cancel" },
+      {
+        text: t("vehicle.delete.confirm"),
+        style: "destructive",
+        onPress: () => {
+          softDeleteVehicle(vehicle.id);
+          rescheduleAll().catch(() => {});
+          setVehicles(listVehicles());
+        },
+      },
+    ]);
+  }
+
   const single = vehicles.length === 1;
 
   /**
@@ -217,71 +250,94 @@ export default function Garage() {
         vehicles.map((v) => {
           const s = summarize(v);
           return (
-            <PressableScale
+            <Swipeable
               key={v.id}
-              accessibilityRole="button"
-              onPress={() => router.push(`/vehicle/${v.id}`)}
-            >
-              <Card status={s.status === "due" ? "overdue" : undefined}>
-                <View
+              // The same right-swipe action as a history row, at the same size
+              // and in the same red: one gesture for "take this out of the
+              // list", whichever list it is.
+              renderRightActions={() => (
+                <Pressable
+                  onPress={() => onDeleteVehicle(v)}
+                  accessibilityRole="button"
                   style={{
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    justifyContent: "space-between",
-                    gap: tokens.space.sm,
+                    justifyContent: "center",
+                    marginLeft: tokens.space.sm,
+                    paddingHorizontal: tokens.space.md,
+                    backgroundColor: tokens.color.red,
+                    borderRadius: tokens.radius.md,
                   }}
                 >
-                  <Text style={{ ...tokens.text.heading, color: tokens.color.text, flex: 1 }}>
-                    {v.name}
+                  <Text style={{ ...tokens.text.legend, color: tokens.color.white }}>
+                    {t("vehicle.swipe.delete")}
                   </Text>
+                </Pressable>
+              )}
+            >
+              <PressableScale
+                accessibilityRole="button"
+                onPress={() => router.push(`/vehicle/${v.id}`)}
+              >
+                <Card status={s.status === "due" ? "overdue" : undefined}>
                   <View
-                    style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "flex-start",
+                      justifyContent: "space-between",
+                      gap: tokens.space.sm,
+                    }}
                   >
-                    {s.status === "ok" ? null : (
-                      <Badge
-                        label={
-                          s.status === "due"
-                            ? t("garage.badge.overdue")
-                            : t("garage.badge.dueSoon")
-                        }
-                        tone={s.status}
-                      />
-                    )}
-                    <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>
+                    <Text style={{ ...tokens.text.heading, color: tokens.color.text, flex: 1 }}>
+                      {v.name}
+                    </Text>
+                    <View
+                      style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
+                    >
+                      {s.status === "ok" ? null : (
+                        <Badge
+                          label={
+                            s.status === "due"
+                              ? t("garage.badge.overdue")
+                              : t("garage.badge.dueSoon")
+                          }
+                          tone={s.status}
+                        />
+                      )}
+                      <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>
+                    </View>
                   </View>
-                </View>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "flex-end",
-                    paddingTop: tokens.space.xs,
-                  }}
-                >
-                  <Gauge
-                    legend={s.label}
-                    value={s.detail}
-                    lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
-                  />
-                  {/* An estimate says so in the legend rather than beside the
-                      number: the readout is a distance and the parenthesis would
-                      read as part of it. A reading the app worked out from the
-                      model year is still worth showing, and is not worth showing
-                      as though somebody had read it off the dash. */}
-                  <Gauge
-                    legend={
-                      v.odometer && v.odometer_estimated
-                        ? t("garage.odometer.estimated")
-                        : t("garage.odometer")
-                    }
-                    value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
-                    unit={v.odometer ? distanceUnitLabel() : undefined}
-                    align="right"
-                  />
-                </View>
-              </Card>
-            </PressableScale>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "flex-end",
+                      paddingTop: tokens.space.xs,
+                    }}
+                  >
+                    <Gauge
+                      legend={s.label}
+                      value={s.detail}
+                      lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
+                    />
+                    {/* An estimate says so in the legend rather than beside the
+                        number: the readout is a distance and the parenthesis would
+                        read as part of it. A reading the app worked out from the
+                        model year is still worth showing, and is not worth showing
+                        as though somebody had read it off the dash. */}
+                    <Gauge
+                      legend={
+                        v.odometer && v.odometer_estimated
+                          ? t("garage.odometer.estimated")
+                          : t("garage.odometer")
+                      }
+                      value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
+                      unit={v.odometer ? distanceUnitLabel() : undefined}
+                      align="right"
+                    />
+                  </View>
+                </Card>
+              </PressableScale>
+            </Swipeable>
           );
         })
       )}
