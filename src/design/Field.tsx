@@ -11,6 +11,11 @@ import {
 import { Well } from "./Surface";
 import { tokens } from "./tokens";
 
+/** The height of every well, whichever type sits in it. A comfortable tap
+ *  target, and the number that makes a text field and a numeric one the same
+ *  size on a screen that shows both. */
+const FIELD_HEIGHT = 48;
+
 /**
  * An input. It sits one value below the background, so the field is a place
  * text goes rather than a box drawn around some. The label above it is a
@@ -63,7 +68,7 @@ export function Field({
   const numeric = keyboardType === "numeric";
 
   return (
-    <View style={{ gap: tokens.space.xs }}>
+    <View style={{ gap: tokens.space.sm }}>
       <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{label}</Text>
       <Well
         focused={focused}
@@ -93,9 +98,22 @@ export function Field({
           inputAccessoryViewID={needsAccessory ? accessoryId : undefined}
           style={{
             ...(numeric ? tokens.text.readout : tokens.text.body),
+            // The type scale's line height is for paragraphs. iOS lays a
+            // TextInput's text against the top of its line box rather than
+            // centring it in it, so a line height taller than the glyphs sits
+            // the value low in the well and leaves a gap under the label —
+            // visible on every text field, because `body` carries one, and on
+            // no numeric field, because `readout` does not. A single-line
+            // input takes the size and the weight; the box does the spacing.
+            lineHeight: undefined,
             color: tokens.color.text,
             paddingHorizontal: tokens.space.md,
-            paddingVertical: tokens.space.sm + 4,
+            // A fixed box the text is centred in, rather than one grown from
+            // the glyphs: a 16pt name field and a 24pt mileage readout are
+            // then the same height, and two fields side by side line up
+            // whatever is typed into them.
+            minHeight: FIELD_HEIGHT,
+            paddingVertical: 0,
           }}
         />
       </Well>
