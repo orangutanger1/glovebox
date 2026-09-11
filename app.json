@@ -13,7 +13,7 @@
     "ios": {
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": false,
-      "buildNumber": "28",
+      "buildNumber": "29",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleLocalizations": [
