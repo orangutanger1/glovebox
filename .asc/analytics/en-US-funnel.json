@@ -1,0 +1,15 @@
+{
+	"generatedAt": "2026-09-03T19:01:07.615Z",
+	"locale": "en-US",
+	"source": "asc",
+	"from": "2026-08-28",
+	"to": "2026-08-28",
+	"impressions": 1273,
+	"pageViews": 45,
+	"installs": 10,
+	"retention": {
+		"installs": 5,
+		"deletions": 0,
+		"rate": 0
+	}
+}

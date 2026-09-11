@@ -1,62 +1,66 @@
 {
-  "de-DE": {
-    "name": "Wrenchy Pro (jährlich)",
-    "description": "Unbegrenzte Fahrzeuge und eigene Service-Intervalle"
+  "en-US": {
+    "name": "Wrenchy Pro (Annual)",
+    "description": "Every car, every record, every reminder"
   },
   "en-AU": {
     "name": "Wrenchy Pro (Annual)",
-    "description": "Unlimited vehicles and custom service intervals"
+    "description": "Every car, every record, every reminder"
   },
   "en-CA": {
     "name": "Wrenchy Pro (Annual)",
-    "description": "Unlimited vehicles and custom service intervals"
+    "description": "Every car, every record, every reminder"
   },
   "en-GB": {
     "name": "Wrenchy Pro (Annual)",
-    "description": "Unlimited vehicles and custom service intervals"
+    "description": "Every car, every record, every reminder"
+  },
+  "de-DE": {
+    "name": "Wrenchy Pro (jährlich)",
+    "description": "Jedes Auto, jeder Eintrag, jede Erinnerung"
   },
   "es-ES": {
     "name": "Wrenchy Pro (anual)",
-    "description": "Vehículos ilimitados e intervalos a medida"
+    "description": "Cada coche, cada registro, cada aviso"
   },
   "es-MX": {
     "name": "Wrenchy Pro (anual)",
-    "description": "Vehículos ilimitados e intervalos a medida"
-  },
-  "fr-CA": {
-    "name": "Wrenchy Pro (annuel)",
-    "description": "Véhicules illimités, intervalles personnalisés"
+    "description": "Cada carro, cada registro, cada aviso"
   },
   "fr-FR": {
     "name": "Wrenchy Pro (annuel)",
-    "description": "Véhicules illimités, intervalles personnalisés"
+    "description": "Chaque voiture, chaque relevé, chaque rappel"
+  },
+  "fr-CA": {
+    "name": "Wrenchy Pro (annuel)",
+    "description": "Chaque auto, chaque relevé, chaque rappel"
   },
   "it": {
     "name": "Wrenchy Pro (annuale)",
-    "description": "Veicoli illimitati e intervalli personalizzati"
+    "description": "Ogni auto, ogni intervento, ogni promemoria"
   },
   "ja": {
     "name": "Wrenchy Pro (年額)",
-    "description": "無制限の車両登録とカスタム整備間隔"
+    "description": "すべての車、すべての記録、すべての通知"
   },
   "ko": {
     "name": "Wrenchy Pro (연간)",
-    "description": "차량 무제한 등록과 맞춤 정비 주기"
+    "description": "모든 차, 모든 기록, 모든 알림"
   },
   "nl-NL": {
     "name": "Wrenchy Pro (jaarlijks)",
-    "description": "Onbeperkt voertuigen en eigen service-intervallen"
+    "description": "Elke auto, elke registratie, elke herinnering"
   },
   "pl": {
     "name": "Wrenchy Pro (rocznie)",
-    "description": "Nielimitowane pojazdy i własne interwały serwisowe"
+    "description": "Każde auto, każdy wpis, każde przypomnienie"
   },
   "pt-BR": {
     "name": "Wrenchy Pro (anual)",
-    "description": "Veículos ilimitados e intervalos personalizados"
+    "description": "Todo carro, todo registro, todo lembrete"
   },
   "sv": {
     "name": "Wrenchy Pro (årlig)",
-    "description": "Obegränsat med bilar och egna serviceintervall"
+    "description": "Varje bil, varje post, varje påminnelse"
   }
 }
