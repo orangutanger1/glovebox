@@ -434,13 +434,17 @@ export const nl: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Rijdend houden kost ongeveer {cost} per jaar.",
+  "onboardingC.cost.title": "Je auto heeft zo'n {cost} per jaar aan werk openstaan.",
   "onboardingC.cost.subtitle": "Bij de {distance} per jaar die je rijdt.",
   "onboardingC.cost.perYear": "Per jaar",
   "onboardingC.cost.fiveYears": "Over vijf jaar",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "van de auto's op de weg loopt achter op minstens één grote onderhoudsbeurt.",
   "onboardingC.cost.roadsidePercent": "{percent}%",
   "onboardingC.cost.roadside": "van de {calls} pechmeldingen die AAA in {year} behandelde waren sleepbeurten en lege accu's.",
-  "onboardingC.cost.source": "{rate} en {roadside}. Amerikaanse gemiddelden, in {currency}.",
+  "onboardingC.cost.tracked":
+    "Wrenchy zorgt voor de datum. Elke beurt van deze auto krijgt er een, met een seintje voordat hij verstrijkt.",
+  "onboardingC.cost.source": "{rate}, {roadside} en {overdue}. Amerikaanse cijfers, in {currency}.",
   "onboardingC.cost.continue": "Verder",
 
   "onboardingC.compare.title": "Op eigen houtje, of volgens een schema.",

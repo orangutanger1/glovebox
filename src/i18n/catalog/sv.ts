@@ -342,13 +342,17 @@ export const sv: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Att hålla den igång kostar runt {cost} per år.",
+  "onboardingC.cost.title": "Din bil har ungefär {cost} om året i arbete som ska göras.",
   "onboardingC.cost.subtitle": "Vid de {distance} per år du kör.",
   "onboardingC.cost.perYear": "Per år",
   "onboardingC.cost.fiveYears": "Över fem år",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "av bilarna på vägen är efter med minst en större service.",
   "onboardingC.cost.roadsidePercent": "{percent}\u00a0%",
   "onboardingC.cost.roadside": "av de {calls} vägassistanser AAA ryckte ut på {year} var bärgningar och urladdade batterier.",
-  "onboardingC.cost.source": "{rate} och {roadside}. Amerikanska genomsnitt, i {currency}.",
+  "onboardingC.cost.tracked":
+    "Wrenchys jobb är datumet. Varje service på den här bilen får ett, och en påminnelse innan det passerar.",
+  "onboardingC.cost.source": "{rate}, {roadside} och {overdue}. Amerikanska siffror, i {currency}.",
   "onboardingC.cost.continue": "Fortsätt",
 
   "onboardingC.compare.title": "På egen hand, eller efter ett schema.",

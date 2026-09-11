@@ -10,10 +10,11 @@ import { KM_PER_MILE, type DistanceUnit } from "../units";
  * and the screen prints where they came from. A statistic the user cannot chase
  * is indistinguishable from one we invented.
  *
- * Both are AAA's, both were read from AAA's own publications, and both are
- * recorded with the date they were published so a later reader can tell how
- * stale they have gone. AAA republishes Your Driving Costs every September; when
- * the 2026 edition lands, the number below changes and nothing else does.
+ * Two of the three are AAA's and the third is CARFAX's; all were read from the
+ * publisher's own release, and each is recorded with the date it was published
+ * so a later reader can tell how stale it has gone. AAA republishes Your
+ * Driving Costs every September; when the 2026 edition lands, the rate below
+ * changes and nothing else does.
  */
 
 /**
@@ -61,6 +62,40 @@ export const ROADSIDE = {
   source: "AAA",
   publishedAt: "2025-04",
   url: "https://newsroom.aaa.com/2025/04/aaa-urges-drivers-to-stay-proactive-on-auto-repair-and-maintenance/",
+} as const;
+
+/**
+ * How much of the country is behind on the work the figure above pays for.
+ *
+ * From CARFAX's release of 18 November 2025 (Centreville, Va.): "Nearly half of
+ * all drivers are behind on at least one major service", which the release puts
+ * at "roughly 41% of vehicles nationwide". CARFAX lists the major services it
+ * counts — brakes, steering and suspension, transmission fluid, coolant, engine
+ * and cabin air filters — and reports separately that almost 30% of cars are
+ * behind on tire rotations and nearly 20% on oil changes. Those two are not on
+ * the glass; one number is the point and three is a table.
+ *
+ * This is the figure the cost screen was missing, and the reason it now has a
+ * second one at all. AAA's rate says what the car costs; it says nothing about
+ * why a maintenance app should exist, because the bill arrives whether or not
+ * anyone is keeping a log. What this says is that the schedule the bill pays
+ * for is the thing people are actually behind on — which is the app's whole
+ * subject, stated by somebody who counted rather than by us.
+ *
+ * Not a savings claim, deliberately. "A log saves you $100 a visit" is the
+ * sentence this screen is structurally asking for; the only published version
+ * of it is AAA's 2015 Preventive Maintenance fact sheet, where 77% of AAA
+ * Approved Auto Repair shops estimated customers who forget recommended
+ * maintenance "could save, on average, $100 or more per visit". It is a decade
+ * old and it is a survey of shops' estimates, which is two reasons not to put a
+ * dollar figure on this screen's most important claim.
+ */
+export const OVERDUE = {
+  behindPct: 41,
+  year: 2025,
+  source: "CARFAX",
+  publishedAt: "2025-11",
+  url: "https://www.prnewswire.com/news-releases/carfax-nearly-half-of-drivers-in-the-us-behind-on-major-services-302618419.html",
 } as const;
 
 /** Rounded to this, for the same reason the odometer estimate is: a projection

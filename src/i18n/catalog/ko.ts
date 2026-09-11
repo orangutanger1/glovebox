@@ -337,13 +337,17 @@ export const ko: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "유지비는 연간 약 {cost}입니다.",
+  "onboardingC.cost.title": "이 차에는 연간 약 {cost}어치의 정비가 남아 있어요.",
   "onboardingC.cost.subtitle": "연간 {distance}를 주행할 때 기준이에요.",
   "onboardingC.cost.perYear": "연간",
   "onboardingC.cost.fiveYears": "5년 동안",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "의 차량이 주요 정비를 하나 이상 미루고 있어요.",
   "onboardingC.cost.roadsidePercent": "{percent}%",
   "onboardingC.cost.roadside": "AAA가 {year}년에 처리한 긴급출동 {calls}건 중 견인과 방전이 차지한 비율이에요.",
-  "onboardingC.cost.source": "{rate} 및 {roadside}. 미국 평균, {currency} 기준.",
+  "onboardingC.cost.tracked":
+    "Wrenchy가 맡는 건 날짜예요. 이 차의 모든 정비에 날짜를 붙이고, 지나기 전에 알려 드려요.",
+  "onboardingC.cost.source": "{rate}, {roadside}, {overdue}. 미국 기준, {currency}.",
   "onboardingC.cost.continue": "계속",
 
   "onboardingC.compare.title": "혼자 관리할까요, 일정에 맡길까요.",

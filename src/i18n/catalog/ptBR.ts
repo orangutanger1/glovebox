@@ -332,13 +332,17 @@ export const ptBR: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Manter o carro custa cerca de {cost} por ano.",
+  "onboardingC.cost.title": "Seu carro tem cerca de {cost} por ano de serviço a fazer.",
   "onboardingC.cost.subtitle": "Com os {distance} por ano que você dirige.",
   "onboardingC.cost.perYear": "Por ano",
   "onboardingC.cost.fiveYears": "Em cinco anos",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "dos carros na rua estão atrasados em pelo menos uma revisão importante.",
   "onboardingC.cost.roadsidePercent": "{percent}%",
   "onboardingC.cost.roadside": "dos {calls} chamados de assistência atendidos pela AAA em {year} foram reboques e baterias descarregadas.",
-  "onboardingC.cost.source": "{rate} e {roadside}. Médias dos EUA, em {currency}.",
+  "onboardingC.cost.tracked":
+    "O trabalho do Wrenchy é a data. Cada serviço deste carro ganha uma, e um aviso antes de ela passar.",
+  "onboardingC.cost.source": "{rate}, {roadside} e {overdue}. Dados dos EUA, em {currency}.",
   "onboardingC.cost.continue": "Continuar",
 
   "onboardingC.compare.title": "Por conta própria, ou com um calendário.",

@@ -49,6 +49,7 @@ const SAMPLES: Record<string, string | number> = {
   percent: 74,
   rate: "AAA Your Driving Costs 2025",
   roadside: "AAA 2025",
+  overdue: "CARFAX 2025",
   currency: "USD",
   default: "6 months · 5,000 mi",
   language: "English (US)",

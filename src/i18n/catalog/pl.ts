@@ -389,13 +389,17 @@ export const pl: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Utrzymanie kosztuje około {cost} rocznie.",
+  "onboardingC.cost.title": "Twoje auto ma około {cost} rocznie zaległej roboty.",
   "onboardingC.cost.subtitle": "Przy {distance} rocznie, które przejeżdżasz.",
   "onboardingC.cost.perYear": "Rocznie",
   "onboardingC.cost.fiveYears": "Przez pięć lat",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "aut na drogach ma opóźniony co najmniej jeden ważny przegląd.",
   "onboardingC.cost.roadsidePercent": "{percent}%",
   "onboardingC.cost.roadside": "z {calls} wezwań pomocy drogowej obsłużonych przez AAA w {year} roku to holowania i rozładowane akumulatory.",
-  "onboardingC.cost.source": "{rate} oraz {roadside}. Średnie amerykańskie, w {currency}.",
+  "onboardingC.cost.tracked":
+    "Wrenchy pilnuje terminu. Każda obsługa tego auta go dostaje, a przypomnienie przychodzi, zanim minie.",
+  "onboardingC.cost.source": "{rate}, {roadside} oraz {overdue}. Dane amerykańskie, w {currency}.",
   "onboardingC.cost.continue": "Dalej",
 
   "onboardingC.compare.title": "Na własną rękę albo według planu.",

@@ -318,13 +318,17 @@ export const ja: Fragment = {
   // The only figures in the flow that are not the user's own. Both are
   // AAA's, both are attributed on the glass, and the money stays in the
   // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "維持費は年間およそ{cost}です。",
+  "onboardingC.cost.title": "この車には年間およそ{cost}分の整備が控えています。",
   "onboardingC.cost.subtitle": "年間{distance}走る場合。",
   "onboardingC.cost.perYear": "年間",
   "onboardingC.cost.fiveYears": "5年間",
+  "onboardingC.cost.overduePercent": "{percent}%",
+  "onboardingC.cost.overdue": "の車が、主要な整備を1つ以上先延ばしにしています。",
   "onboardingC.cost.roadsidePercent": "{percent}%",
   "onboardingC.cost.roadside": "AAAが{year}年に対応した{calls}件のロードサービスのうち、レッカーとバッテリー上がりの割合。",
-  "onboardingC.cost.source": "{rate}、および{roadside}。米国平均、通貨は{currency}。",
+  "onboardingC.cost.tracked":
+    "Wrenchyの仕事は期日です。この車の整備すべてに期日が付き、過ぎる前に知らせます。",
+  "onboardingC.cost.source": "{rate}、{roadside}、{overdue}。米国のデータ、通貨は{currency}。",
   "onboardingC.cost.continue": "続ける",
 
   "onboardingC.compare.title": "自分で管理するか、計画に任せるか。",
