@@ -25,11 +25,12 @@ import type { Fragment } from "./types";
  * forking the term would fork sixty keys for a preference.
  */
 export const esMX: Fragment = {
-  "evidence.records.answer": "SQLite en tu celular. Exporta a CSV, gratis para siempre.",
-  "evidence.price.answer": "El plan gratis es una app completa. Un carro, historial sin límite.",
+  "evidence.records.answer": "SQLite en tu celular, y todo el historial sale en CSV.",
+  "evidence.price.answer":
+    "Una suscripción y nada más que comprar. Todos los carros, todos los registros.",
 
   "features.history.subtitle":
-    "Fecha, odómetro, costo y notas, con los registros borrados marcados en lugar de eliminados.",
+    "Fecha, odómetro, costo y notas de cada visita, guardados mientras tengas el carro.",
 
   "garage.odometer": "Odómetro",
 

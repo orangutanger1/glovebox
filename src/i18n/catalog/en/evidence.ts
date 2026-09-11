@@ -11,14 +11,16 @@ import type { Fragment } from "../types";
  */
 export const evidence: Fragment = {
   "evidence.records.label": "lost records, failed syncs, no way to get the data out",
-  "evidence.records.answer": "SQLite on your phone. Export to CSV, free forever.",
+  "evidence.records.answer": "SQLite on your phone, and the whole log comes out as a CSV.",
 
   "evidence.price.label": "the price, the paywall, or what it turned out to cost",
-  "evidence.price.answer": "Free tier is a whole usable app. One car, unlimited history.",
+  "evidence.price.answer":
+    "One subscription, nothing else to buy. Every car, every record.",
 
   "evidence.account.label": "an account and a login before anything worked",
   "evidence.account.answer": "No account. There is nothing to log into.",
 
   "evidence.crashes.label": "crashes, freezes, and files that would not open",
-  "evidence.crashes.answer": "Deleted records are tombstoned, never dropped.",
+  "evidence.crashes.answer":
+    "Your records sit in a database on the phone, not in a file that can fail to open.",
 };

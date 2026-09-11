@@ -18,16 +18,18 @@ import type { Fragment } from "./types";
  */
 export const it: Fragment = {
   "evidence.records.label": "registrazioni perse, sincronizzazioni fallite, dati impossibili da esportare",
-  "evidence.records.answer": "SQLite sul tuo telefono. Esportazione in CSV, gratis per sempre.",
+  "evidence.records.answer": "SQLite sul tuo telefono, e tutto il registro esce in CSV.",
 
   "evidence.price.label": "il prezzo, il paywall, o quanto è costato alla fine",
-  "evidence.price.answer": "La versione gratuita è un'app completa. Un'auto, storico illimitato.",
+  "evidence.price.answer":
+    "Un abbonamento, nient'altro da comprare. Ogni auto, ogni registrazione.",
 
   "evidence.account.label": "un account e un login prima di poter fare qualsiasi cosa",
   "evidence.account.answer": "Nessun account. Non c'è nulla a cui accedere.",
 
   "evidence.crashes.label": "crash, blocchi e file che non si aprivano",
-  "evidence.crashes.answer": "Le voci eliminate vengono marcate, mai buttate via.",
+  "evidence.crashes.answer":
+    "Le tue registrazioni stanno in un database sul telefono, non in un file che può non aprirsi più.",
 
   "features.history.title": "Ogni manutenzione, conservata per sempre",
   "features.history.subtitle":
@@ -42,7 +44,7 @@ export const it: Fragment = {
 
   "features.export.title": "Esporta tutto in CSV",
   "features.export.subtitle":
-    "Gratis per sempre e per tutti, così i tuoi dati non restano in ostaggio di un abbonamento.",
+    "Porti via tutto il registro come foglio di calcolo quando vuoi.",
 
   "features.costs.title": "Guarda quanto ti costa",
   "features.costs.subtitle":
@@ -140,8 +142,6 @@ export const it: Fragment = {
   "layout.fatal.body":
     "Non è stato eliminato nulla e il database è stato riportato al suo ultimo stato valido. Riapri l'app. Se continua a succedere, contatta l'assistenza prima di reinstallare: è la reinstallazione che farebbe perdere davvero i dati.",
 
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Gratis",
 
   "offer.features.title": "Cosa ottieni.",
 
@@ -420,7 +420,7 @@ export const it: Fragment = {
   "pain.records.legend": "La prova",
   "pain.records.headline": "Un tagliando non dimostrato è un tagliando non fatto",
   "pain.records.body": "Una garanzia, una vendita, una discussione in officina: ognuna chiede il documento.",
-  "pain.records.fix": "Un registro datato, esportabile in CSV. Gratis per sempre, per tutti.",
+  "pain.records.fix": "Un registro datato, e un foglio di calcolo quando ti serve.",
 
   "pain.resale.legend": "Rivendita",
   "pain.resale.headline": "Uno storico completo vale più di uno storico pulito",
@@ -620,7 +620,7 @@ export const it: Fragment = {
   "vehicleForms.log.notes": "Note (facoltativo)",
   "subscribed.title": "Pro è attivo.",
   "subscribed.body": "{vehicle} ora è nel programma. Ti avviseremo prima di ogni intervento, non dopo.",
-  "subscribed.unlocked": "Sbloccato anche",
+  "subscribed.unlocked": "Ora attivo",
   "subscribed.cta": "Vedi il programma",
   "fuel.title": "Carburante",
   "fuel.log": "Registra rifornimento",

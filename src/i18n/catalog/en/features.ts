@@ -20,7 +20,7 @@ export const features: Fragment = {
 
   "features.export.title": "Export everything as CSV",
   "features.export.subtitle":
-    "Free forever for everyone, so your records are never hostage to a subscription.",
+    "Take your whole log out as a spreadsheet whenever you want it.",
 
   "features.costs.title": "See what it's costing you",
   "features.costs.subtitle":

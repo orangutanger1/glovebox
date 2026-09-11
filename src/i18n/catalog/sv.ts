@@ -29,16 +29,17 @@ import type { Fragment } from "./types";
  */
 export const sv: Fragment = {
   "evidence.records.label": "förlorade uppgifter, trasig synk, ingen väg att få ut datan",
-  "evidence.records.answer": "SQLite i din telefon. Exportera till CSV, gratis för alltid.",
+  "evidence.records.answer": "SQLite i din telefon, och hela loggen kommer ut som CSV.",
 
   "evidence.price.label": "priset, betalväggen eller vad det visade sig kosta",
-  "evidence.price.answer": "Gratisversionen är en fullt användbar app. En bil, obegränsad historik.",
+  "evidence.price.answer": "Ett abonnemang, inget mer att köpa. Varje bil, varje post.",
 
   "evidence.account.label": "konto och inloggning innan något fungerade",
   "evidence.account.answer": "Inget konto. Det finns ingenting att logga in på.",
 
   "evidence.crashes.label": "krascher, appen som låser sig, filer som inte gick att öppna",
-  "evidence.crashes.answer": "Borttagna poster markeras bara som raderade, de kastas aldrig.",
+  "evidence.crashes.answer":
+    "Dina poster ligger i en databas i telefonen, inte i en fil som kan vägra öppna sig.",
 
   "features.history.title": "Varje service, sparad för alltid",
   "features.history.subtitle":
@@ -52,8 +53,7 @@ export const sv: Fragment = {
   "features.reminders.subtitle": "Den dag det ska göras, och aldrig något annat.",
 
   "features.export.title": "Exportera allt som CSV",
-  "features.export.subtitle":
-    "Gratis för alla, för alltid, så att dina uppgifter aldrig sitter fast bakom ett abonnemang.",
+  "features.export.subtitle": "Ta ut hela loggen som ett kalkylark när du vill.",
 
   "features.costs.title": "Se vad det kostar dig",
   "features.costs.subtitle":
@@ -151,8 +151,6 @@ export const sv: Fragment = {
   "layout.fatal.body":
     "Ingenting har raderats, och databasen återställdes till sitt senast fungerande läge. Öppna appen igen. Om det fortsätter hända, kontakta supporten innan du installerar om, för det är ominstallationen som faktiskt skulle förlora uppgifterna.",
 
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Gratis",
 
   "offer.features.title": "Det här får du.",
 
@@ -430,7 +428,7 @@ export const sv: Fragment = {
   "pain.records.legend": "Beviset",
   "pain.records.headline": "Obevisad service är ogjord service",
   "pain.records.body": "Ett garantiärende, en försäljning, ett gräl med verkstaden: alla frågar efter underlaget.",
-  "pain.records.fix": "En daterad logg, exporterbar som CSV. Gratis för alltid, för alla.",
+  "pain.records.fix": "En daterad logg, och ett kalkylark av den när du behöver det.",
 
   "pain.resale.legend": "Försäljning",
   "pain.resale.headline": "En komplett historik är värd mer än en fläckfri",
@@ -626,7 +624,7 @@ export const sv: Fragment = {
   "vehicleForms.log.notes": "Anteckningar (frivilligt)",
   "subscribed.title": "Pro är på.",
   "subscribed.body": "{vehicle} finns nu i schemat. Du får veta innan varje service förfaller, inte efteråt.",
-  "subscribed.unlocked": "Även upplåst",
+  "subscribed.unlocked": "Nu på",
   "subscribed.cta": "Visa schemat",
   "fuel.title": "Bränsle",
   "fuel.log": "Logga tankning",

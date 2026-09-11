@@ -922,15 +922,18 @@ describe("the screen after a purchase", () => {
     const shown = texts(render(Subscribed)).join(" ");
     expect(shown).toContain("Pro is on.");
     expect(shown).toContain("2019 Toyota");
-    // The two rows that sat behind the Pro badge before the money changed
-    // hands, described in the same words afterwards.
+    // Everything the subscription carries, in the same short lines the trial
+    // screen offered them in. With no free tier left there is no half of the
+    // list to leave out, and a receipt that named two of seven would be
+    // claiming the money bought less than it did.
     //
     // Read through `t` rather than pasted in: the claim is that this screen
-    // shows the same two feature rows the paywall did, not that they are
-    // phrased any particular way, and the pasted version went stale the first
-    // time the copy was edited.
-    expect(shown).toContain(t("features.garage.title"));
-    expect(shown).toContain(t("features.intervals.title"));
+    // shows the same lines the offer did, not that they are phrased any
+    // particular way, and the pasted version went stale the first time the
+    // copy was edited.
+    for (const id of ["history", "due", "reminders", "export", "costs", "garage", "intervals"]) {
+      expect(shown).toContain(t(`offer.trial.gets.${id}`));
+    }
   });
 
   test("the one action opens the car, not the garage", () => {

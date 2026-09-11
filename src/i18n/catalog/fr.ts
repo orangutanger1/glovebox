@@ -28,16 +28,18 @@ import type { Fragment } from "./types";
 export const fr: Fragment = {
   // evidence
   "evidence.records.label": "historiques perdus, synchros en échec, données impossibles à sortir",
-  "evidence.records.answer": "SQLite sur votre téléphone. Export CSV, gratuit pour toujours.",
+  "evidence.records.answer": "SQLite sur votre téléphone, et tout le carnet ressort en CSV.",
 
   "evidence.price.label": "le prix, le paywall, ou ce que ça a fini par coûter",
-  "evidence.price.answer": "La version gratuite est une vraie app. Une voiture, historique illimité.",
+  "evidence.price.answer":
+    "Un abonnement, rien d'autre à acheter. Toutes les voitures, tous les relevés.",
 
   "evidence.account.label": "un compte et une connexion avant que quoi que ce soit fonctionne",
   "evidence.account.answer": "Aucun compte. Il n'y a rien où se connecter.",
 
   "evidence.crashes.label": "plantages, blocages, et fichiers qui refusent de s'ouvrir",
-  "evidence.crashes.answer": "Les lignes supprimées sont marquées, jamais effacées.",
+  "evidence.crashes.answer":
+    "Vos relevés vivent dans une base de données sur le téléphone, pas dans un fichier qui refuse de s'ouvrir.",
 
   // features
   "features.history.title": "Chaque entretien, gardé pour toujours",
@@ -52,8 +54,7 @@ export const fr: Fragment = {
   "features.reminders.subtitle": "Le jour de l'échéance, et rien d'autre, jamais.",
 
   "features.export.title": "Tout exporter en CSV",
-  "features.export.subtitle":
-    "Gratuit pour toujours et pour tout le monde, pour que votre carnet ne soit jamais l'otage d'un abonnement.",
+  "features.export.subtitle": "Sortez tout votre carnet en tableur quand vous voulez.",
 
   "features.costs.title": "Voyez ce que ça vous coûte",
   "features.costs.subtitle":
@@ -158,8 +159,6 @@ export const fr: Fragment = {
     "Rien n'a été supprimé, et la base a été restaurée à son dernier état correct. Relancez l'app. Si cela se reproduit, contactez le support avant de réinstaller, car c'est la réinstallation qui ferait vraiment perdre le carnet.",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Gratuit",
 
   "offer.features.title": "Voilà ce que vous obtenez.",
 
@@ -441,7 +440,7 @@ export const fr: Fragment = {
   "pain.records.legend": "La preuve",
   "pain.records.headline": "Un entretien non prouvé est un entretien non fait",
   "pain.records.body": "Une garantie, une revente, un litige avec un garage : chacun réclame le relevé.",
-  "pain.records.fix": "Un carnet daté, exportable en CSV. Gratuit à vie, pour tout le monde.",
+  "pain.records.fix": "Un carnet daté, et un tableur dès que vous en avez besoin.",
 
   "pain.resale.legend": "Revente",
   "pain.resale.headline": "Un historique complet vaut mieux qu'un historique propre",
@@ -650,7 +649,7 @@ export const fr: Fragment = {
   "vehicleForms.log.notes": "Notes (facultatif)",
   "subscribed.title": "Pro est activé.",
   "subscribed.body": "{vehicle} est désormais au programme. Vous serez prévenu avant chaque entretien, pas après.",
-  "subscribed.unlocked": "Également débloqué",
+  "subscribed.unlocked": "Maintenant actif",
   "subscribed.cta": "Voir le programme",
   "fuel.title": "Carburant",
   "fuel.log": "Noter un plein",

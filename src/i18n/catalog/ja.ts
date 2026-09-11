@@ -22,16 +22,16 @@ import type { Fragment } from "./types";
 export const ja: Fragment = {
   // evidence
   "evidence.records.label": "整備記録の消失、同期の失敗、データを取り出せない",
-  "evidence.records.answer": "端末内のSQLiteに保存します。CSV書き出しは永久に無料です。",
+  "evidence.records.answer": "端末内のSQLiteに保存し、記録はまとめてCSVで取り出せます。",
 
   "evidence.price.label": "価格、ペイウォール、結局いくらかかったか",
-  "evidence.price.answer": "無料のままでもアプリとして完結します。1台、履歴は無制限。",
+  "evidence.price.answer": "サブスクひとつだけ。追加購入はなく、車も記録も無制限です。",
 
   "evidence.account.label": "使い始める前にアカウント登録とログインが必要",
   "evidence.account.answer": "アカウントはありません。ログインする先がそもそもありません。",
 
   "evidence.crashes.label": "クラッシュ、フリーズ、開けないファイル",
-  "evidence.crashes.answer": "削除した記録は削除済みとして残り、実データは捨てません。",
+  "evidence.crashes.answer": "記録は端末内のデータベースにあり、開かなくなるファイルには入っていません。",
 
   // features
   "features.history.title": "すべての整備を、ずっと保存",
@@ -46,8 +46,7 @@ export const ja: Fragment = {
   "features.reminders.subtitle": "期限の当日に1回だけ。それ以外は届きません。",
 
   "features.export.title": "すべてCSVで書き出し",
-  "features.export.subtitle":
-    "誰でも永久に無料です。整備記録がサブスクの人質になることはありません。",
+  "features.export.subtitle": "記録はいつでもまとめて表計算ファイルに書き出せます。",
 
   "features.costs.title": "いくらかかっているかが見える",
   "features.costs.subtitle":
@@ -143,8 +142,6 @@ export const ja: Fragment = {
     "削除されたものはありません。データベースは最後に正常だった状態に戻しました。アプリを開き直してください。これが続く場合は、再インストールする前にサポートへご連絡ください。記録を実際に失う原因になるのは、その再インストールです。",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "無料",
 
   "offer.features.title": "使えるようになるもの。",
 
@@ -400,7 +397,7 @@ export const ja: Fragment = {
   "pain.records.legend": "証拠",
   "pain.records.headline": "証明できない整備は、やっていない整備です",
   "pain.records.body": "保証の請求、売却、工場との言い分の食い違い。どれも求めるのは記録です。",
-  "pain.records.fix": "日付の入った記録をCSVで書き出せます。誰でも、ずっと無料で。",
+  "pain.records.fix": "日付の入った記録と、必要なときに出せる表計算ファイル。",
 
   "pain.resale.legend": "売却",
   "pain.resale.headline": "きれいな履歴より、そろった履歴のほうが高く付きます",
@@ -596,7 +593,7 @@ export const ja: Fragment = {
   "vehicleForms.log.notes": "メモ（任意）",
   "subscribed.title": "Pro が有効になりました。",
   "subscribed.body": "{vehicle} を整備計画に登録しました。期限が過ぎてからではなく、その前にお知らせします。",
-  "subscribed.unlocked": "同時に解放されたもの",
+  "subscribed.unlocked": "これが使えます",
   "subscribed.cta": "整備計画を見る",
   "fuel.title": "燃料",
   "fuel.log": "給油を記録",

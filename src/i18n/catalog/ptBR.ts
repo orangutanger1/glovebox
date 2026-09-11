@@ -20,16 +20,18 @@ import type { Fragment } from "./types";
  */
 export const ptBR: Fragment = {
   "evidence.records.label": "registros perdidos, sincronização falhando, sem como tirar os dados",
-  "evidence.records.answer": "SQLite no seu celular. Exportação em CSV, grátis para sempre.",
+  "evidence.records.answer": "SQLite no seu celular, e todo o histórico sai em CSV.",
 
   "evidence.price.label": "o preço, o paywall, ou quanto acabou custando",
-  "evidence.price.answer": "A versão grátis é um app inteiro e usável. Um carro, histórico ilimitado.",
+  "evidence.price.answer":
+    "Uma assinatura, nada mais para comprar. Todo carro, todo registro.",
 
   "evidence.account.label": "conta e login antes de qualquer coisa funcionar",
   "evidence.account.answer": "Sem conta. Não existe login nenhum aqui.",
 
   "evidence.crashes.label": "travamentos, congelamentos e arquivos que não abriam",
-  "evidence.crashes.answer": "Registros apagados ficam marcados, nunca são descartados.",
+  "evidence.crashes.answer":
+    "Seus registros ficam em um banco de dados no celular, não em um arquivo que pode não abrir.",
 
   "features.history.title": "Todo serviço, guardado para sempre",
   "features.history.subtitle":
@@ -43,8 +45,7 @@ export const ptBR: Fragment = {
   "features.reminders.subtitle": "No dia em que ele vence, e nada além disso.",
 
   "features.export.title": "Exporte tudo em CSV",
-  "features.export.subtitle":
-    "Grátis para sempre, para todos, para os seus registros nunca ficarem presos a uma assinatura.",
+  "features.export.subtitle": "Leve todo o histórico em uma planilha quando quiser.",
 
   "features.costs.title": "Veja quanto está custando",
   "features.costs.subtitle":
@@ -141,8 +142,6 @@ export const ptBR: Fragment = {
   "layout.fatal.body":
     "Nada foi apagado, e o banco de dados voltou ao último estado bom. Abra o app de novo. Se continuar acontecendo, fale com o suporte antes de reinstalar, porque é a reinstalação que perderia os registros de verdade.",
 
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Grátis",
 
   "offer.features.title": "O que você leva.",
 
@@ -419,7 +418,7 @@ export const ptBR: Fragment = {
   "pain.records.legend": "A prova",
   "pain.records.headline": "Serviço sem comprovação é serviço não feito",
   "pain.records.body": "Uma garantia, uma venda, uma discussão com a oficina: todas pedem o registro.",
-  "pain.records.fix": "Um histórico datado, exportável em CSV. De graça para sempre, para todos.",
+  "pain.records.fix": "Um histórico datado, e uma planilha dele sempre que precisar.",
 
   "pain.resale.legend": "Revenda",
   "pain.resale.headline": "Histórico completo vale mais que histórico limpo",
@@ -617,7 +616,7 @@ export const ptBR: Fragment = {
   "vehicleForms.log.notes": "Observações (opcional)",
   "subscribed.title": "O Pro está ligado.",
   "subscribed.body": "{vehicle} já está no plano. Você será avisado antes de cada serviço vencer, não depois.",
-  "subscribed.unlocked": "Também liberado",
+  "subscribed.unlocked": "Agora ativo",
   "subscribed.cta": "Ver o plano",
   "fuel.title": "Combustível",
   "fuel.log": "Registrar abastecimento",

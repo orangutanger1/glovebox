@@ -1,16 +1,19 @@
 import { t } from "../i18n";
 
 /**
- * What the app does, and which half of it costs money.
+ * What the app does, in one list, so a capability cannot be described one way
+ * before the paywall and another way after it.
  *
- * One list, read by the features screen, which shows every row with a Free/Pro
- * badge on it. It is a product decision written once: a row that said Free on
- * one screen and Pro on another would be a promise made before the paywall and
- * withdrawn after it.
+ * Every row used to carry a Free/Pro badge, and the `pro` flag that drove it
+ * survived the free tier by a release: with nothing free left, "which half
+ * costs money" has one answer and a flag saying so is a flag that can only be
+ * wrong. Each row now carries both shapes of its own copy instead — a title
+ * and a sentence where there is room for them, and a line of at most five
+ * words for the lists that sit under an offer.
  */
 export type FeatureId = (typeof ROWS)[number]["id"];
 
-export type Feature = { id: FeatureId; title: string; subtitle: string; pro?: boolean };
+export type Feature = { id: FeatureId; title: string; subtitle: string; line: string };
 
 /**
  * The gating, which is a product decision, kept here; the words, which are a
@@ -24,8 +27,8 @@ const ROWS = [
   { id: "reminders" },
   { id: "export" },
   { id: "costs" },
-  { id: "garage", pro: true },
-  { id: "intervals", pro: true },
+  { id: "garage" },
+  { id: "intervals" },
 ] as const;
 
 export function features(): Feature[] {
@@ -33,5 +36,6 @@ export function features(): Feature[] {
     ...row,
     title: t(`features.${row.id}.title`),
     subtitle: t(`features.${row.id}.subtitle`),
+    line: t(`offer.trial.gets.${row.id}`),
   }));
 }

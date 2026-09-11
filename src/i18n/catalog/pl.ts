@@ -65,17 +65,18 @@ export const pl: Fragment = {
 
   // evidence
   "evidence.records.label": "zgubione zapisy, nieudane synchronizacje, brak sposobu na wyjęcie danych",
-  "evidence.records.answer": "SQLite w twoim telefonie. Eksport do CSV, za darmo na zawsze.",
+  "evidence.records.answer": "SQLite w twoim telefonie, a cały rejestr wychodzi w CSV.",
 
   "evidence.price.label": "cena, paywall albo to, ile się w końcu okazało kosztować",
   "evidence.price.answer":
-    "Wersja darmowa to cała używalna aplikacja. Jeden samochód, nieograniczona historia.",
+    "Jedna subskrypcja i nic więcej do kupienia. Każde auto, każdy wpis.",
 
   "evidence.account.label": "konto i logowanie, zanim cokolwiek zadziałało",
   "evidence.account.answer": "Bez konta. Nie ma się do czego logować.",
 
   "evidence.crashes.label": "awarie, zawieszenia i pliki, które nie chciały się otworzyć",
-  "evidence.crashes.answer": "Usunięte wpisy są oznaczane, nigdy nie kasowane.",
+  "evidence.crashes.answer":
+    "Twoje wpisy siedzą w bazie danych w telefonie, nie w pliku, który może się nie otworzyć.",
 
   // features
   "features.history.title": "Każdy serwis, zachowany na zawsze",
@@ -90,8 +91,7 @@ export const pl: Fragment = {
   "features.reminders.subtitle": "W dniu, w którym wypada termin, i nic poza tym.",
 
   "features.export.title": "Eksport wszystkiego do CSV",
-  "features.export.subtitle":
-    "Za darmo i na zawsze, dla każdego, więc twoje zapisy nigdy nie są zakładnikiem subskrypcji.",
+  "features.export.subtitle": "Cały rejestr wyciągniesz do arkusza, kiedy tylko zechcesz.",
 
   "features.costs.title": "Zobacz, ile cię to kosztuje",
   "features.costs.subtitle":
@@ -176,8 +176,6 @@ export const pl: Fragment = {
     "Nic nie zostało usunięte, a baza wróciła do ostatniego dobrego stanu. Otwórz aplikację ponownie. Jeśli to się powtarza, odezwij się do pomocy, zanim przeinstalujesz — to przeinstalowanie naprawdę usunęłoby zapisy.",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Darmowy",
 
   "offer.features.title": "Co dostajesz.",
 
@@ -483,7 +481,7 @@ export const pl: Fragment = {
   "pain.records.legend": "Dowód",
   "pain.records.headline": "Nieudowodniony serwis to serwis niewykonany",
   "pain.records.body": "Gwarancja, sprzedaż, spór z warsztatem: każde pyta o zapis.",
-  "pain.records.fix": "Datowany rejestr, do eksportu w CSV. Za darmo na zawsze, dla każdego.",
+  "pain.records.fix": "Datowany rejestr i arkusz z niego, kiedy będzie potrzebny.",
 
   "pain.resale.legend": "Sprzedaż",
   "pain.resale.headline": "Pełna historia jest warta więcej niż czysta",
@@ -706,7 +704,7 @@ export const pl: Fragment = {
   "vehicleForms.log.notes": "Notatki (opcjonalnie)",
   "subscribed.title": "Pro jest włączone.",
   "subscribed.body": "{vehicle} jest już w harmonogramie. Dostaniesz znać, zanim przegląd stanie się wymagalny, a nie po fakcie.",
-  "subscribed.unlocked": "Odblokowano także",
+  "subscribed.unlocked": "Teraz działa",
   "subscribed.cta": "Zobacz harmonogram",
   "fuel.title": "Paliwo",
   "fuel.log": "Zapisz tankowanie",

@@ -68,7 +68,7 @@ export const pain: Fragment = {
   "pain.records.legend": "The proof",
   "pain.records.headline": "Unproven service is unperformed service",
   "pain.records.body": "A warranty claim, a resale, an argument with a shop: each asks for the record.",
-  "pain.records.fix": "A dated log, exportable as CSV. Free forever, for everyone.",
+  "pain.records.fix": "A dated log, and a spreadsheet of it whenever you need one.",
 
   "pain.resale.legend": "Resale",
   "pain.resale.headline": "A full history is worth more than a clean one",

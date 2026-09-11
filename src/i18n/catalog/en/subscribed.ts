@@ -15,7 +15,7 @@ export const subscribed: Fragment = {
   "subscribed.title": "Pro is on.",
   "subscribed.body":
     "{vehicle} is on the schedule now. You'll be told before each service is due, not after.",
-  "subscribed.unlocked": "Also unlocked",
+  "subscribed.unlocked": "Now on",
   // The car, not the garage. A free garage held one vehicle and now holds
   // several, but the schedule this user just paid to be warned about is on the
   // car itself.

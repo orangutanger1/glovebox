@@ -108,7 +108,7 @@ export const frCA: Fragment = {
   "pain.vehicleFallback": "auto",
 
   "evidence.price.answer":
-    "La version gratuite est une app complète. Une auto, historique illimité.",
+    "Un abonnement, rien d'autre à acheter. Toutes les autos, tous les relevés.",
 
   // "voiture" is the base French word; Québec says "auto", and the paywall
   // headline and its button are the two places the noun is spoken aloud.

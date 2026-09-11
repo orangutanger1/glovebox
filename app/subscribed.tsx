@@ -66,13 +66,14 @@ export default function Subscribed() {
     else router.replace("/");
   }
 
-  // The two rows that are actually behind the entitlement, read from the same
-  // list the help screen prints so a capability cannot be described one way
-  // before the money and another way after it. Two, not four: `features()`
-  // marks exactly `garage` and `intervals` as `pro`, and padding this panel
-  // with free capabilities would make the screen claim the subscription
-  // bought something it did not.
-  const unlocked = features().filter((f) => f.pro);
+  // Everything the subscription carries, which since the free tier went away
+  // is every row in the list. It used to be the two marked `pro`, because the
+  // other five were free and claiming them here would have been claiming the
+  // money bought something it did not. Nothing is free now, so the honest
+  // panel is the whole list — in the trial screen's short lines rather than
+  // the help screen's titles and sentences, because seven of those is a
+  // document and this screen is a receipt.
+  const unlocked = features();
 
   return (
     <Screen
@@ -112,16 +113,10 @@ export default function Subscribed() {
           </View>
         </Panel>
 
-        {/* The rows that were behind the badge on the help screen, now without
-            it. Reusing that copy rather than writing new lines is the point: a
-            capability described one way before the paywall and another way
-            after it is a promise quietly restated.
-            
-            Each row now carries its subtitle as well as its title. Two bare
-            lines left most of a phone's height empty under them, which read as
-            a screen that had failed to load rather than as a short list; the
-            subtitles are the same sentences the help screen already showed, so
-            nothing new is claimed and the panel has a body. */}
+        {/* What is now on, in the same words and the same order as the list
+            the trial screen offered — a tick and at most five words a line. A
+            capability described one way before the money and another way after
+            it is a promise quietly restated. */}
         <View style={{ gap: tokens.space.sm }}>
           <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
             {t("subscribed.unlocked")}
@@ -131,24 +126,15 @@ export default function Subscribed() {
               {unlocked.map((feature) => (
                 <View
                   key={feature.id}
-                  style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}
+                  style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
                 >
-                  {/* A tick: these rows are what the purchase just unlocked.
-                      The red lamp that used to mark them is the car's warning
-                      light, and it was the app celebrating in alarm colours.
-                      Nudged down to sit on the title's optical centre rather
-                      than the row's, now that the row is two lines tall. */}
-                  <View style={{ paddingTop: 2 }}>
-                    <Check />
-                  </View>
-                  <View style={{ flex: 1, gap: tokens.space.xs }}>
-                    <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
-                      {feature.title}
-                    </Text>
-                    <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-                      {feature.subtitle}
-                    </Text>
-                  </View>
+                  {/* A tick, not the red lamp that used to mark these rows: the
+                      lamp is the car's warning light, and it was the app
+                      celebrating in alarm colours. */}
+                  <Check />
+                  <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
+                    {feature.line}
+                  </Text>
                 </View>
               ))}
             </View>

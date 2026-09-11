@@ -19,8 +19,6 @@ import type { Fragment } from "../types";
  * that knows what this user will actually be charged.
  */
 export const offer: Fragment = {
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Free",
 
   "offer.features.title": "What you are getting.",
 

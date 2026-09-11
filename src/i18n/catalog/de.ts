@@ -23,17 +23,18 @@ import type { Fragment } from "./types";
 export const de: Fragment = {
   // evidence
   "evidence.records.label": "verlorene Daten, fehlgeschlagene Syncs, kein Weg, sie herauszubekommen",
-  "evidence.records.answer": "SQLite auf deinem Handy. CSV-Export, für immer kostenlos.",
+  "evidence.records.answer":
+    "SQLite auf deinem Handy, und das ganze Protokoll kommt als CSV heraus.",
 
   "evidence.price.label": "der Preis, die Paywall oder was es am Ende gekostet hat",
-  "evidence.price.answer":
-    "Die Gratisversion ist eine komplett nutzbare App. Ein Auto, unbegrenzte Historie.",
+  "evidence.price.answer": "Ein Abo, sonst nichts zu kaufen. Jedes Auto, jeder Eintrag.",
 
   "evidence.account.label": "ein Konto und ein Login, bevor überhaupt etwas ging",
   "evidence.account.answer": "Kein Konto. Es gibt nichts, wo du dich einloggen müsstest.",
 
   "evidence.crashes.label": "Abstürze, Hänger und Dateien, die sich nicht öffnen ließen",
-  "evidence.crashes.answer": "Gelöschte Einträge werden markiert, nie verworfen.",
+  "evidence.crashes.answer":
+    "Deine Einträge liegen in einer Datenbank auf dem Handy, nicht in einer Datei, die sich nicht mehr öffnen lässt.",
 
   // features
   "features.history.title": "Jeder Service, für immer erfasst",
@@ -48,8 +49,7 @@ export const de: Fragment = {
   "features.reminders.subtitle": "Am Tag der Fälligkeit, und sonst nie.",
 
   "features.export.title": "Alles als CSV exportieren",
-  "features.export.subtitle":
-    "Für immer kostenlos für alle, damit deine Daten nie an einem Abo hängen.",
+  "features.export.subtitle": "Hol dir dein ganzes Protokoll jederzeit als Tabelle heraus.",
 
   "features.costs.title": "Sieh, was es dich kostet",
   "features.costs.subtitle":
@@ -152,8 +152,6 @@ export const de: Fragment = {
     "Nichts wurde gelöscht, und die Datenbank wurde auf ihren letzten guten Stand zurückgesetzt. Öffne die App neu. Wenn das immer wieder passiert, wende dich an den Support, bevor du neu installierst – neu installieren wäre das, was die Daten wirklich verlieren würde.",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Gratis",
 
   "offer.features.title": "Das bekommst du.",
 
@@ -435,7 +433,7 @@ export const de: Fragment = {
   "pain.records.legend": "Der Nachweis",
   "pain.records.headline": "Ein Service ohne Nachweis gilt als nicht gemacht",
   "pain.records.body": "Garantiefall, Verkauf, Streit mit der Werkstatt: Jeder fragt nach dem Nachweis.",
-  "pain.records.fix": "Ein datiertes Protokoll, als CSV exportierbar. Für immer kostenlos, für alle.",
+  "pain.records.fix": "Ein datiertes Protokoll, und jederzeit eine Tabelle davon.",
 
   "pain.resale.legend": "Wiederverkauf",
   "pain.resale.headline": "Eine lückenlose Historie ist mehr wert als eine saubere",
@@ -639,7 +637,7 @@ export const de: Fragment = {
   "vehicleForms.log.notes": "Notizen (optional)",
   "subscribed.title": "Pro ist an.",
   "subscribed.body": "{vehicle} steht jetzt im Plan. Du wirst vor jeder fälligen Wartung informiert, nicht danach.",
-  "subscribed.unlocked": "Ebenfalls freigeschaltet",
+  "subscribed.unlocked": "Jetzt aktiv",
   "subscribed.cta": "Plan ansehen",
   "fuel.title": "Kraftstoff",
   "fuel.log": "Tanken erfassen",

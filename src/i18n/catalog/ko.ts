@@ -31,16 +31,16 @@ import type { Fragment } from "./types";
 export const ko: Fragment = {
   // evidence
   "evidence.records.label": "정비 기록 분실, 동기화 실패, 데이터를 빼낼 방법 없음",
-  "evidence.records.answer": "휴대폰 안 SQLite에 저장해요. CSV 내보내기는 영구 무료예요.",
+  "evidence.records.answer": "휴대폰 안 SQLite에 저장하고, 기록 전체를 CSV로 꺼낼 수 있어요.",
 
   "evidence.price.label": "가격, 결제 유도, 결국 들어간 비용",
-  "evidence.price.answer": "무료로도 앱 하나가 온전히 돌아가요. 차 한 대, 기록은 무제한.",
+  "evidence.price.answer": "구독 하나면 끝. 추가 결제 없이 차도 기록도 전부 포함이에요.",
 
   "evidence.account.label": "무엇을 하기도 전에 요구하는 계정과 로그인",
   "evidence.account.answer": "계정이 없어요. 로그인할 곳 자체가 없어요.",
 
   "evidence.crashes.label": "강제 종료, 멈춤, 열리지 않는 파일",
-  "evidence.crashes.answer": "삭제한 기록은 삭제 표시만 남기고, 실제로 버리지 않아요.",
+  "evidence.crashes.answer": "기록은 휴대폰 안 데이터베이스에 있어요. 열리지 않을 수 있는 파일이 아니에요.",
 
   // features
   "features.history.title": "모든 정비를 계속 보관",
@@ -55,8 +55,7 @@ export const ko: Fragment = {
   "features.reminders.subtitle": "기한이 되는 날 한 번, 그 외에는 아무것도 없어요.",
 
   "features.export.title": "전체 기록을 CSV로 내보내기",
-  "features.export.subtitle":
-    "누구에게나 영구 무료라서, 내 기록이 구독에 묶이는 일이 없어요.",
+  "features.export.subtitle": "기록 전체를 원할 때 언제든 스프레드시트로 내보낼 수 있어요.",
 
   "features.costs.title": "얼마나 드는지 한눈에",
   "features.costs.subtitle":
@@ -154,8 +153,6 @@ export const ko: Fragment = {
     "삭제된 것은 없고, 데이터베이스는 마지막 정상 상태로 되돌렸어요. 앱을 다시 열어 주세요. 계속 이러면 재설치하기 전에 먼저 문의해 주세요. 기록이 실제로 사라지는 건 재설치 쪽이에요.",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "무료",
 
   "offer.features.title": "받게 되는 것들이에요.",
 
@@ -423,7 +420,7 @@ export const ko: Fragment = {
   "pain.records.legend": "증빙",
   "pain.records.headline": "증명하지 못한 정비는 하지 않은 정비예요",
   "pain.records.body": "보증 청구, 중고 판매, 정비소와의 다툼. 전부 기록을 요구해요.",
-  "pain.records.fix": "날짜가 있는 기록, CSV로 내보내기. 누구에게나 영원히 무료예요.",
+  "pain.records.fix": "날짜가 있는 기록, 필요할 때 뽑는 스프레드시트.",
 
   "pain.resale.legend": "중고차 거래",
   "pain.resale.headline": "이력이 꽉 찬 차가 깨끗한 차보다 값이 나가요",
@@ -622,7 +619,7 @@ export const ko: Fragment = {
   "vehicleForms.log.notes": "메모(선택)",
   "subscribed.title": "Pro가 켜졌습니다.",
   "subscribed.body": "{vehicle}을(를) 정비 일정에 등록했습니다. 기한이 지난 뒤가 아니라 그전에 알려드립니다.",
-  "subscribed.unlocked": "함께 잠금 해제됨",
+  "subscribed.unlocked": "이제 쓸 수 있어요",
   "subscribed.cta": "일정 보기",
   "fuel.title": "연료",
   "fuel.log": "주유 기록",

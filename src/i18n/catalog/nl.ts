@@ -520,7 +520,8 @@ export const nl: Fragment = {
   "pain.records.legend": "Het bewijs",
   "pain.records.headline": "Onbewezen onderhoud is niet-uitgevoerd onderhoud",
   "pain.records.body": "Een garantieclaim, een verkoop, een discussie met de garage: elk vraagt om het bewijs.",
-  "pain.records.fix": "Een gedateerd logboek, te exporteren als CSV. Voor altijd gratis, voor iedereen.",
+  "pain.records.fix":
+    "Een gedateerd logboek, en een spreadsheet zodra je die nodig hebt.",
 
   "pain.resale.legend": "Verkoop",
   "pain.resale.headline": "Een volledige historie is meer waard dan een schone",
@@ -537,16 +538,19 @@ export const nl: Fragment = {
   // evidence
   "evidence.records.label":
     "verloren gegevens, mislukte synchronisaties, geen manier om de data eruit te krijgen",
-  "evidence.records.answer": "SQLite op je telefoon. Exporteren naar CSV, voor altijd gratis.",
+  "evidence.records.answer":
+    "SQLite op je telefoon, en het hele logboek komt er als CSV uit.",
 
   "evidence.price.label": "de prijs, de paywall, of wat het uiteindelijk bleek te kosten",
-  "evidence.price.answer": "De gratis versie is een volwaardige app. Eén auto, onbeperkte historie.",
+  "evidence.price.answer":
+    "Eén abonnement, verder niets te koop. Elke auto, elke registratie.",
 
   "evidence.account.label": "een account en een login voordat er iets werkte",
   "evidence.account.answer": "Geen account. Er is niets om op in te loggen.",
 
   "evidence.crashes.label": "crashes, vastlopers en bestanden die niet opengingen",
-  "evidence.crashes.answer": "Verwijderde regels worden gemarkeerd, nooit echt weggegooid.",
+  "evidence.crashes.answer":
+    "Je gegevens staan in een database op de telefoon, niet in een bestand dat kan weigeren te openen.",
 
   // features
   "features.history.title": "Elk onderhoud, voor altijd bewaard",
@@ -561,8 +565,7 @@ export const nl: Fragment = {
   "features.reminders.subtitle": "Op de dag dat het aan de beurt is, en verder nooit iets.",
 
   "features.export.title": "Alles exporteren als CSV",
-  "features.export.subtitle":
-    "Voor altijd gratis voor iedereen, zodat je administratie nooit gegijzeld wordt door een abonnement.",
+  "features.export.subtitle": "Haal je hele logboek er wanneer je wilt uit als spreadsheet.",
 
   "features.costs.title": "Zie wat het je kost",
   "features.costs.subtitle":
@@ -576,8 +579,6 @@ export const nl: Fragment = {
     "Pas ze aan zodra het instructieboekje het oneens is met de standaardwaarden.",
 
   // offer
-  "offer.badge.pro": "Pro",
-  "offer.badge.free": "Gratis",
 
   "offer.features.title": "Dit is wat je krijgt.",
 
@@ -647,7 +648,7 @@ export const nl: Fragment = {
   },
   "subscribed.title": "Pro staat aan.",
   "subscribed.body": "{vehicle} staat nu in het schema. Je hoort het voordat een beurt verloopt, niet erna.",
-  "subscribed.unlocked": "Ook ontgrendeld",
+  "subscribed.unlocked": "Nu actief",
   "subscribed.cta": "Bekijk het schema",
   "fuel.title": "Brandstof",
   "fuel.log": "Tankbeurt vastleggen",
