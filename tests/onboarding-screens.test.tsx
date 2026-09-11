@@ -77,7 +77,7 @@ import {
 import { setLanguage, t } from "../src/i18n";
 import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
-import { MAINTENANCE_RATE } from "../src/onboarding/cost";
+import { OVERDUE } from "../src/onboarding/cost";
 import { getDb } from "../src/db/client";
 import { ONBOARDING_NAME_KEY } from "../src/onboarding/state";
 import {
@@ -1037,22 +1037,26 @@ test("the outlook screen counts the year ahead and names what is next", () => {
   expect(printed).not.toMatch(/\{\w+\}/);
 });
 
-test("the cost screen prices the user's own mileage and says whose figures they are", () => {
+test("the cited screen leads on the overdue figure and says whose it is", () => {
   const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
   setOnboardingVehicleId(car.id);
   setAnswers({ drive: "high" });
 
   const printed = texts(render(OnboardingCost)).join(" ");
 
-  // 12,500 miles a year at AAA's 11.04 cents a mile, rounded to the nearest
-  // ten: $1,380. The number on the glass has to be this user's, not AAA's
-  // 15,000-mile assumption.
-  expect(printed).toContain("1,380");
+  // The headline, and the two services under it. This screen used to price the
+  // user's own mileage at AAA's rate; the money said nothing a cheaper car
+  // would not have said better, so the only figure left is the one about being
+  // behind on the work — which is what the app is for.
+  expect(printed).toContain(`${OVERDUE.behindPct}%`);
+  expect(printed).toContain(`${OVERDUE.tireRotationPct}%`);
+  expect(printed).toContain(`${OVERDUE.oilChangePct}%`);
+  // Nothing on this screen is priced any more, in any currency.
+  expect(printed).not.toMatch(/[$€£¥]/);
   // Attribution, on the screen, in the reader's language. A statistic nobody
   // can chase is indistinguishable from one we invented.
-  expect(printed).toContain("AAA");
-  expect(printed).toContain(MAINTENANCE_RATE.edition);
-  expect(printed).toContain(MAINTENANCE_RATE.currency);
+  expect(printed).toContain(OVERDUE.source);
+  expect(printed).toContain(String(OVERDUE.year));
   expect(printed).not.toMatch(/\{\w+\}/);
 });
 

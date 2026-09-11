@@ -349,21 +349,13 @@ export const fr: Fragment = {
   "onboardingC.outlook.odometer": "Aujourd’hui",
   "onboardingC.outlook.projected": "Dans un an",
   "onboardingC.outlook.continue": "Continuer",
-
-  // The only figures in the flow that are not the user's own. Both are
-  // AAA's, both are attributed on the glass, and the money stays in the
-  // currency they were published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Votre voiture a environ {cost} d’entretien à faire par an.",
-  "onboardingC.cost.subtitle": "Pour les {distance} par an que vous parcourez.",
-  "onboardingC.cost.perYear": "Par an",
-  "onboardingC.cost.fiveYears": "Sur cinq ans",
-  "onboardingC.cost.overduePercent": "{percent}%",
-  "onboardingC.cost.overdue": "des voitures en circulation ont au moins un entretien important en retard.",
-  "onboardingC.cost.roadsidePercent": "{percent}\u202f%",
-  "onboardingC.cost.roadside": "des {calls} dépannages traités par AAA en {year} étaient des remorquages et des batteries à plat.",
+  "onboardingC.cost.title": "{percent}% des voitures en circulation ont un entretien en retard.",
+  "onboardingC.cost.percent": "{percent}%",
+  "onboardingC.cost.tireRotations": "Permutation des pneus en retard",
+  "onboardingC.cost.oilChanges": "Vidange en retard",
   "onboardingC.cost.tracked":
     "Wrenchy s’occupe de la date. Chaque entretien de cette voiture en reçoit une, et un rappel avant qu’elle passe.",
-  "onboardingC.cost.source": "{rate}, {roadside} et {overdue}. Chiffres américains, en {currency}.",
+  "onboardingC.cost.source": "{overdue}. Chiffres américains.",
   "onboardingC.cost.continue": "Continuer",
 
   "onboardingC.compare.title": "Seul, ou selon un calendrier.",

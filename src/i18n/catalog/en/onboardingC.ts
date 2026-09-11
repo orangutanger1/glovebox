@@ -47,20 +47,16 @@ export const onboardingC: Fragment = {
   "onboardingC.outlook.projected": "In a year",
   "onboardingC.outlook.continue": "Continue",
 
-  // The only figures in the flow that are not the user's own. Two are AAA's
-  // and one is CARFAX's, all three are attributed on the glass, and the money
-  // stays in the currency it was published in. See src/onboarding/cost.ts.
-  "onboardingC.cost.title": "Your car has about {cost} a year of work due on it.",
-  "onboardingC.cost.subtitle": "At the {distance} a year you drive.",
-  "onboardingC.cost.perYear": "A year",
-  "onboardingC.cost.fiveYears": "Over five years",
-  "onboardingC.cost.overduePercent": "{percent}%",
-  "onboardingC.cost.overdue": "of cars on the road are behind on at least one major service.",
-  "onboardingC.cost.roadsidePercent": "{percent}%",
-  "onboardingC.cost.roadside": "of the {calls} roadside calls AAA answered in {year} were tows and flat batteries.",
+
+  // The only figure in the flow that is not the user's own. CARFAX's, counted
+  // from service records, attributed on the glass. See src/onboarding/cost.ts.
+  "onboardingC.cost.title": "{percent}% of cars on the road are overdue for a service.",
+  "onboardingC.cost.percent": "{percent}%",
+  "onboardingC.cost.tireRotations": "Behind on tire rotations",
+  "onboardingC.cost.oilChanges": "Behind on oil changes",
   "onboardingC.cost.tracked":
     "Wrenchy's job is the date. Every service on this car gets one, and a reminder before it passes.",
-  "onboardingC.cost.source": "{rate}, {roadside}, and {overdue}. US figures, in {currency}.",
+  "onboardingC.cost.source": "{overdue}. US figures.",
   "onboardingC.cost.continue": "Continue",
 
   // The counterpart of the cost screen, and the opposite kind of figure: not

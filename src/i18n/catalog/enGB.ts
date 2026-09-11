@@ -28,6 +28,7 @@ import type { Fragment } from "./types";
 export const enGB: Fragment = {
   // Spelling.
   "service.Tire Rotation": "Tyre Rotation",
+  "onboardingC.cost.tireRotations": "Behind on tyre rotations",
 
   // The legal test and the recurring paperwork, by their UK names.
   "service.Registration": "Road Tax",
