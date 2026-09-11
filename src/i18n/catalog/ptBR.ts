@@ -170,10 +170,6 @@ export const ptBR: Fragment = {
   "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Nenhum",
 
-  "offer.paywall.impact.legend": "O que isso vale",
-  "offer.paywall.impact.warned": "Avisado antes de custar, não depois.",
-  "offer.paywall.impact.upsell": "Você entra sabendo. Nada é vendido duas vezes para você.",
-  "offer.paywall.impact.resale": "Um histórico completo na venda, e isso aparece no preço.",
 
   "offer.trial.title": {
     one: "{count} dia com preço de estreia.",
@@ -332,8 +328,7 @@ export const ptBR: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rodízio de pneus atrasado",
   "onboardingC.cost.oilChanges": "Troca de óleo atrasada",
-  "onboardingC.cost.tracked":
-    "O trabalho do Wrenchy é a data. Cada serviço deste carro ganha uma, e um aviso antes de ela passar.",
+  "onboardingC.cost.tracked": "O Wrenchy acompanha os serviços que o seu carro precisa fazer.",
   "onboardingC.cost.source": "{overdue}. Dados dos EUA.",
   "onboardingC.cost.continue": "Continuar",
 

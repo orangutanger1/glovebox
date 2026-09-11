@@ -177,10 +177,6 @@ export const es: Fragment = {
   "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Ninguno",
 
-  "offer.paywall.impact.legend": "Lo que eso vale",
-  "offer.paywall.impact.warned": "Avisado antes de que cueste, no después.",
-  "offer.paywall.impact.upsell": "Entras sabiendo. Nada se te vende dos veces.",
-  "offer.paywall.impact.resale": "Un historial completo en la venta, y se nota en el precio.",
 
   "offer.trial.title": {
     one: "{count} día a precio de lanzamiento.",
@@ -343,8 +339,7 @@ export const es: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rotación de neumáticos pendiente",
   "onboardingC.cost.oilChanges": "Cambio de aceite pendiente",
-  "onboardingC.cost.tracked":
-    "Wrenchy se encarga de la fecha. Cada servicio de este coche tiene una, y un aviso antes de que pase.",
+  "onboardingC.cost.tracked": "Wrenchy lleva la cuenta de los servicios que le tocan a tu coche.",
   "onboardingC.cost.source": "{overdue}. Datos de EE. UU.",
   "onboardingC.cost.continue": "Continuar",
 

@@ -243,7 +243,7 @@ test("nothing in the flow sells the free tier", () => {
   expect(texts(render(OnboardingPaywall))).toContain("Keep my car on record");
 });
 
-test("the paywall argues consequence, and leaves the schedule to the ask", () => {
+test("the paywall names what is bought, and leaves the schedule to the ask", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
@@ -253,11 +253,14 @@ test("the paywall argues consequence, and leaves the schedule to the ask", () =>
 
   const printed = texts(render(OnboardingPaywall));
   // The headline sells the feeling, the gauges evidence it against this car,
-  // and three consequences say what the evidence is worth.
+  // and three features say what the subscription does about it.
   expect(printed).toContain("Cars don\u2019t warn you. This does.");
   expect(printed).toContain("2014 Ford F-150");
-  expect(printed).toContain("Warned before it costs you, not after.");
-  expect(printed).toContain("A full log at resale, and it shows in the price.");
+  expect(printed).toContain("One reminder per service");
+  expect(printed).toContain("Every service, kept forever");
+  // Three on the screen that asks for money, and no more. The longer list is
+  // on the trial screen behind it.
+  expect(printed).not.toContain("Unlimited vehicles");
   // The car's dated schedule belongs to the reminder ask on the screen before.
   // Reprinted here it put six rows of service names between the headline and
   // the only control on the one screen that asks for money.

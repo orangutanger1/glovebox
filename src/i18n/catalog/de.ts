@@ -181,10 +181,6 @@ export const de: Fragment = {
   "offer.paywall.nextUp": "Nächste Warnung",
   "offer.paywall.none": "Keine",
 
-  "offer.paywall.impact.legend": "Was das wert ist",
-  "offer.paywall.impact.warned": "Gewarnt, bevor es kostet, nicht danach.",
-  "offer.paywall.impact.upsell": "Du kommst informiert rein. Nichts wird dir zweimal verkauft.",
-  "offer.paywall.impact.resale": "Beim Verkauf ein vollständiges Scheckheft, das zeigt sich im Preis.",
 
   "offer.trial.title": {
     one: "{count} Tag zum Einstiegspreis.",
@@ -346,8 +342,7 @@ export const de: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Reifenwechsel überfällig",
   "onboardingC.cost.oilChanges": "Ölwechsel überfällig",
-  "onboardingC.cost.tracked":
-    "Wrenchy kümmert sich um den Termin. Jeder Service an diesem Auto bekommt einen – und eine Erinnerung, bevor er verstreicht.",
+  "onboardingC.cost.tracked": "Wrenchy behält im Blick, welche Services dein Auto braucht.",
   "onboardingC.cost.source": "{overdue}. US-Werte.",
   "onboardingC.cost.continue": "Weiter",
 

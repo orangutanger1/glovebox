@@ -180,10 +180,6 @@ export const sv: Fragment = {
   "offer.paywall.nextUp": "Nästa varning",
   "offer.paywall.none": "Ingen",
 
-  "offer.paywall.impact.legend": "Vad det är värt",
-  "offer.paywall.impact.warned": "Varnad innan det kostar, inte efter.",
-  "offer.paywall.impact.upsell": "Du går in och vet. Inget säljs till dig två gånger.",
-  "offer.paywall.impact.resale": "En komplett logg vid försäljning, och det syns på priset.",
 
   "offer.trial.title": {
     one: "{count} dag till introduktionspris.",
@@ -342,8 +338,7 @@ export const sv: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Efter med däckrotation",
   "onboardingC.cost.oilChanges": "Efter med oljebyte",
-  "onboardingC.cost.tracked":
-    "Wrenchys jobb är datumet. Varje service på den här bilen får ett, och en påminnelse innan det passerar.",
+  "onboardingC.cost.tracked": "Wrenchy håller koll på vilka servicetillfällen bilen behöver.",
   "onboardingC.cost.source": "{overdue}. Amerikanska siffror.",
   "onboardingC.cost.continue": "Fortsätt",
 

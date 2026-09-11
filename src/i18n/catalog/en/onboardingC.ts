@@ -54,8 +54,7 @@ export const onboardingC: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Behind on tire rotations",
   "onboardingC.cost.oilChanges": "Behind on oil changes",
-  "onboardingC.cost.tracked":
-    "Wrenchy's job is the date. Every service on this car gets one, and a reminder before it passes.",
+  "onboardingC.cost.tracked": "Wrenchy keeps track of the services your car is due for.",
   "onboardingC.cost.source": "{overdue}. US figures.",
   "onboardingC.cost.continue": "Continue",
 

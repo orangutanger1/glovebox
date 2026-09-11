@@ -182,10 +182,6 @@ export const ko: Fragment = {
   "offer.paywall.nextUp": "다음 알림",
   "offer.paywall.none": "없음",
 
-  "offer.paywall.impact.legend": "이게 주는 것",
-  "offer.paywall.impact.warned": "비용이 되기 전에 알려드려요. 그 뒤가 아니라.",
-  "offer.paywall.impact.upsell": "알고 들어가요. 같은 걸 두 번 팔리지 않아요.",
-  "offer.paywall.impact.resale": "팔 때 완전한 기록을. 가격에 드러나요.",
 
   "offer.trial.title": {
     other: "첫 {count}일은 특별 가격으로.",
@@ -337,8 +333,7 @@ export const ko: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "타이어 로테이션 지연",
   "onboardingC.cost.oilChanges": "엔진오일 교체 지연",
-  "onboardingC.cost.tracked":
-    "Wrenchy가 맡는 건 날짜예요. 이 차의 모든 정비에 날짜를 붙이고, 지나기 전에 알려 드려요.",
+  "onboardingC.cost.tracked": "Wrenchy가 차에 필요한 정비를 대신 챙겨 드려요.",
   "onboardingC.cost.source": "{overdue}. 미국 기준.",
   "onboardingC.cost.continue": "계속",
 

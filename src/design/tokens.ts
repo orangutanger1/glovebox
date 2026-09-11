@@ -49,6 +49,10 @@ export const tokens = {
     hairline: "rgba(255,255,255,0.07)",
     /** The same hairline with the light on it: focus, and a selected edge. */
     hairlineLit: "rgba(255,255,255,0.20)",
+    /** The bulb of an unlit lamp. Light enough to read as a bullet against a
+     *  panel, dark enough that a lit lamp beside it is unmistakably the one
+     *  that is on. */
+    unlitBulb: "rgba(255,255,255,0.16)",
     /** Kept for the screens that drew the old dark bevel edge. It is now the
      *  same hairline, so a stray border cannot reintroduce a bevel. */
     edge: "rgba(255,255,255,0.05)",

@@ -169,10 +169,6 @@ export const ja: Fragment = {
   "offer.paywall.nextUp": "次の警告",
   "offer.paywall.none": "なし",
 
-  "offer.paywall.impact.legend": "これで得られること",
-  "offer.paywall.impact.warned": "費用になる前に警告。後からではなく。",
-  "offer.paywall.impact.upsell": "わかった状態で入れます。同じものを二度売られません。",
-  "offer.paywall.impact.resale": "売るときに完全な記録を。価格に表れます。",
 
   "offer.trial.title": {
     other: "最初の{count}日間はお得な価格で。",
@@ -318,8 +314,7 @@ export const ja: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "タイヤローテーション遅れ",
   "onboardingC.cost.oilChanges": "オイル交換遅れ",
-  "onboardingC.cost.tracked":
-    "Wrenchyの仕事は期日です。この車の整備すべてに期日が付き、過ぎる前に知らせます。",
+  "onboardingC.cost.tracked": "Wrenchyが車に必要な整備を管理します。",
   "onboardingC.cost.source": "{overdue}。米国のデータ。",
   "onboardingC.cost.continue": "次へ",
 

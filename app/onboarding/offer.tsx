@@ -25,6 +25,13 @@ import { useFinish } from "../../src/onboarding/nav";
  *  would go stale the moment the offering's introductory period is edited. */
 const STEPS = ["now", "runs", "ends"] as const;
 
+/** Everything the trial opens, which is everything. The paywall before this
+ *  one prints three of them and stops, because it is asking for money and a
+ *  priced list has to be short. Nothing is being asked for here, so the list
+ *  can be the whole product — a reader who has already declined once is
+ *  reading to find the thing the three lines left out. */
+const FEATURES = ["reminders", "due", "history", "costs", "garage", "intervals"] as const;
+
 /**
  * The one retry, the last screen in the flow, and — once it has been declined
  * — the wall.
@@ -174,6 +181,20 @@ export default function OnboardingOffer() {
               key={step}
               title={t(`offer.trial.${step}.title`)}
               subtitle={t(`offer.trial.${step}.body`)}
+            />
+          ))}
+        </View>
+      </Panel>
+      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+        {t("offer.features.title")}
+      </Text>
+      <Panel>
+        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+          {FEATURES.map((id) => (
+            <ListRow
+              key={id}
+              title={t(`features.${id}.title`)}
+              subtitle={t(`features.${id}.subtitle`)}
             />
           ))}
         </View>

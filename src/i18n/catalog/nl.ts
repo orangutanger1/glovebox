@@ -434,8 +434,7 @@ export const nl: Fragment = {
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Bandenwissel te laat",
   "onboardingC.cost.oilChanges": "Olieverversing te laat",
-  "onboardingC.cost.tracked":
-    "Wrenchy zorgt voor de datum. Elke beurt van deze auto krijgt er een, met een seintje voordat hij verstrijkt.",
+  "onboardingC.cost.tracked": "Wrenchy houdt bij welke beurten je auto nodig heeft.",
   "onboardingC.cost.source": "{overdue}. Amerikaanse cijfers.",
   "onboardingC.cost.continue": "Doorgaan",
 
@@ -606,10 +605,6 @@ export const nl: Fragment = {
   "offer.paywall.nextUp": "Volgende waarschuwing",
   "offer.paywall.none": "Geen",
 
-  "offer.paywall.impact.legend": "Wat dat waard is",
-  "offer.paywall.impact.warned": "Gewaarschuwd voordat het geld kost, niet erna.",
-  "offer.paywall.impact.upsell": "Je komt binnen met de feiten. Niets wordt je twee keer verkocht.",
-  "offer.paywall.impact.resale": "Een volledig logboek bij verkoop, en dat zie je terug in de prijs.",
 
   "offer.trial.title": {
     one: "{count} dag voor introductieprijs.",

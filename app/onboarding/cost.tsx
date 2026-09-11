@@ -67,7 +67,7 @@ export default function OnboardingCost() {
           <View
             style={{
               flexDirection: "row",
-              alignItems: "flex-end",
+              alignItems: "flex-start",
               justifyContent: "space-between",
               gap: tokens.space.md,
             }}
@@ -97,6 +97,10 @@ export default function OnboardingCost() {
   );
 }
 
+/** One legend line, so a one-line legend reserves the height of the two-line
+ *  one beside it. */
+const LEGEND_LINE = 17;
+
 /** A legend over a percentage, which is the readout shape the rest of the app
  *  uses for every number a user reads. */
 function Figure({
@@ -116,7 +120,19 @@ function Figure({
         alignItems: align === "right" ? "flex-end" : "flex-start",
       }}
     >
-      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint, textAlign: align }}>
+      {/* Two lines' worth of room whether the legend needs them or not: one
+          of these wraps and the other does not, and without a floor under the
+          legend the two readouts sit at different heights. */}
+      <Text
+        numberOfLines={2}
+        style={{
+          ...tokens.text.legend,
+          color: tokens.color.textFaint,
+          textAlign: align,
+          lineHeight: LEGEND_LINE,
+          minHeight: LEGEND_LINE * 2,
+        }}
+      >
         {legend}
       </Text>
       <Text

@@ -14,15 +14,14 @@ import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { tNamed } from "../../src/onboarding";
 import { useAdvance, useFinish } from "../../src/onboarding/nav";
 
-/** Three consequences, not three features. Each is a thing that happens to the
- *  user rather than a capability the app has, and none of them names a number,
- *  a price or a percentage, so none of them goes stale when the offering is
- *  edited or has to be checked against the dashboard. */
-const IMPACT = [
-  "offer.paywall.impact.warned",
-  "offer.paywall.impact.upsell",
-  "offer.paywall.impact.resale",
-] as const;
+/** What the subscription is, in three lines: the reminder, the schedule it is
+ *  computed from, and the log both write to. Three and no more — this is the
+ *  screen asking for money, and a reader deciding whether to pay reads a short
+ *  list or none of it. The longer list is on the trial screen behind it.
+ *
+ *  Named by feature id and read from the features fragment, so a capability
+ *  cannot be described one way in the feature list and another here. */
+const FEATURES = ["reminders", "due", "history"] as const;
 
 /**
  * The offer, at the end of onboarding.
@@ -31,8 +30,8 @@ const IMPACT = [
  * a screen rather than a button: the headline, which sells the feeling and not
  * the product; the gauges, which are this user's own car by name with the
  * count and the date the quiz computed, so the headline is evidenced rather
- * than asserted; and three consequences underneath, which say what the
- * evidence is worth in the order the driver meets it.
+ * than asserted; and three features underneath, which say what the
+ * subscription actually does about it.
  *
  * The car's dated schedule is not here. It rode on this screen briefly, on the
  * theory that "Cars don't warn you. This does." is only a claim until the six
@@ -123,22 +122,20 @@ export default function OnboardingPaywall() {
         </View>
       </Panel>
 
-      {/* The argument the numbers above are evidence for. The gauges say what
-          is true of this car; these three say what it is worth, in the order
-          the user meets it: the warning that arrives in time, the shop visit
-          they walk into informed, and the log they hand over at the end. The
-          car's own dated schedule sits on the screen before this one, under
-          the reminder ask it belongs to; reprinting it here made this screen a
-          document and buried the offer below six rows of it. */}
+      {/* What the gauges above are bought with. These used to be three
+          consequences — warned in time, nothing sold to you twice, a log that
+          shows in the resale price — which sold a feeling the screen could not
+          show. The app is no longer freemium, so the honest thing to put in
+          front of the price is what the price buys. */}
       <View style={{ gap: tokens.space.sm }}>
         <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-          {t("offer.paywall.impact.legend")}
+          {t("offer.features.title")}
         </Text>
         <Panel>
           <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-            {IMPACT.map((key) => (
+            {FEATURES.map((id) => (
               <View
-                key={key}
+                key={id}
                 style={{
                   flexDirection: "row",
                   alignItems: "flex-start",
@@ -151,11 +148,14 @@ export default function OnboardingPaywall() {
                 <View style={{ paddingTop: 0 }}>
                   <Check />
                 </View>
-                <Text
-                  style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}
-                >
-                  {t(key)}
-                </Text>
+                <View style={{ flex: 1, gap: tokens.space.xs }}>
+                  <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
+                    {t(`features.${id}.title`)}
+                  </Text>
+                  <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                    {t(`features.${id}.subtitle`)}
+                  </Text>
+                </View>
               </View>
             ))}
           </View>
