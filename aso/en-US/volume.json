@@ -1,0 +1,31 @@
+{
+	"generatedAt": "2026-09-03T18:00:12.494Z",
+	"locale": "en-US",
+	"source": "apple-ads-suggestions",
+	"terms": {
+		"car maintenance tracker": {
+			"popularity": 6
+		},
+		"carmel car service": {
+			"popularity": 24
+		},
+		"prestige car service": {
+			"popularity": 28
+		},
+		"kiss car service": {
+			"popularity": 25
+		},
+		"440 car service": {
+			"popularity": 20
+		},
+		"car repair": {
+			"popularity": 9
+		},
+		"carfax car care": {
+			"popularity": 39
+		},
+		"car care": {
+			"popularity": 26
+		}
+	}
+}

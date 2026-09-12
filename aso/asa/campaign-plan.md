@@ -2,13 +2,13 @@
 
 Generated 2026-08-26T22:14:51.000Z from `/home/myen/glovebox/aso/en-US/scored.json`.
 
-Re-rendered 2026-08-26T22:27:03.342Z from `campaign-plan.json` — `ship ads plan --render`.
+Re-rendered 2026-09-10T22:40:00.288Z from `campaign-plan.json` — `ship ads plan --render`.
 
-This plan is **bound to a live account**: 71 Apple object id(s) recorded by `ship ads sync`, last at 2026-08-26T22:13:56.194Z. Hand-set bids, pruned ad groups and keywords outside the ASO set exist **only** in `campaign-plan.json`, so `ship ads plan` refuses to overwrite it without `--force`. To refresh this document alone, use `ship ads plan --render`.
+This plan is **bound to a live account**: 71 Apple object id(s) recorded by `ship ads sync`, last at 2026-09-10T22:40:00.206Z. Hand-set bids, pruned ad groups and keywords outside the ASO set exist **only** in `campaign-plan.json`, so `ship ads plan` refuses to overwrite it without `--force`. To refresh this document alone, use `ship ads plan --render`.
 
 - **Market**: US (locale en-US)
-- **Daily budget**: $32.00 across 4 campaigns — campaign — Apple Search Ads has no ad-group budget
-- **Split**: exact $12.00 · discovery $15.00 · competitor $4.00 · brand $1.00
+- **Daily budget**: $6.00 across 4 campaigns — campaign — Apple Search Ads has no ad-group budget
+- **Split**: exact $2.00 · discovery $1.50 · competitor $1.50 · brand $1.00
 - **Bids**: $0.30–$1.50 — 10 distinct bid(s)
 - **Stamped parameters are historical**: this plan was generated for $30.00/day with bids `$0.65 (--bid) × (0.75 + demand/200), clamped to [$0.30, $1.00]`, and has since been changed by hand or adopted from the account. Every number above and below is read from the campaigns, which is what `ship ads sync` pushes; `params` in `campaign-plan.json` records the run that first created them and is not re-derived.
 - **Demand floor**: aso.minVolume 0
@@ -26,7 +26,7 @@ Concretely: negate a keyword once it has taken at least 6 taps and spent more th
 
 One ad group per keyword, for creative control: an ad group is the smallest object that can carry its own Custom Product Page and its own bid. Budget is set on the campaign — Apple has no ad-group budget.
 
-$12.00/day ($360.00 over 30 days) · US · 15 ad group(s)
+$2.00/day ($360.00 over 30 days) · US · 15 ad group(s)
 
 | ad group | keywords | demand | bid | product page | incumbents |
 | --- | --- | ---: | ---: | --- | --- |
@@ -50,7 +50,7 @@ $12.00/day ($360.00 over 30 days) · US · 15 ad group(s)
 
 Broad match plus Search Match, with every Exact term negated so the two cannot cannibalise each other.
 
-$15.00/day ($450.00 over 30 days) · US · 1 ad group(s)
+$1.50/day ($450.00 over 30 days) · US · 1 ad group(s)
 
 | ad group | keywords | demand | bid | product page | incumbents |
 | --- | --- | ---: | ---: | --- | --- |
@@ -62,7 +62,7 @@ Negatives: `oil change reminder` (EXACT), `auto maintenance log` (EXACT), `free 
 
 Exact match on the apps you are compared to; your own name is negated here so Brand keeps that traffic at its own price.
 
-$4.00/day ($120.00 over 30 days) · US · 6 ad group(s)
+$1.50/day ($120.00 over 30 days) · US · 6 ad group(s)
 
 | ad group | keywords | demand | bid | product page | incumbents |
 | --- | --- | ---: | ---: | --- | --- |

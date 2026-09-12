@@ -1,1019 +1,2666 @@
 {
- "generatedAt": "2026-08-22T01:00:37.748Z",
- "locale": "en-US",
- "market": {
-  "country": "US",
-  "lang": "en_us"
- },
- "minVolume": 0,
- "terms": [
-  {
-   "keyword": "auto maintenance log",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 117,
-   "maxRatings": 126247,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 78,
-   "demand": 88,
-   "opportunity": 69,
-   "saturation": 12,
-   "clones": 0,
-   "newEntrants": 2,
-   "freshUnproven": 2,
-   "medianAgeDays": 1622,
-   "viability": 61,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "MyAutoLog: Car Maintenance Log",
-     "id": 6748665282,
-     "ratings": 61,
-     "stars": 4.93443,
-     "seller": "Tapronix LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "oil change reminder",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 9,
-   "maxRatings": 2886,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 80,
-   "demand": 88,
-   "opportunity": 70,
-   "saturation": 16,
-   "clones": 1,
-   "newEntrants": 2,
-   "freshUnproven": 2,
-   "medianAgeDays": 1550,
-   "viability": 59,
-   "top3": [
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    },
-    {
-     "name": "Car oil change tracker",
-     "id": 6749332409,
-     "ratings": 1,
-     "stars": 1,
-     "seller": "FatimaH Deeb"
-    },
-    {
-     "name": "Oil Change Reminder",
-     "id": 6794923439,
-     "ratings": 1,
-     "stars": 5,
-     "seller": "Sindre S\u00f8rensen"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "vehicle maintenance log",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 72,
-   "maxRatings": 126247,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 74,
-   "demand": 81,
-   "opportunity": 60,
-   "saturation": 6,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 1588,
-   "viability": 56,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Log: VML",
-     "id": 6744715294,
-     "ratings": 7,
-     "stars": 5,
-     "seller": "Zarqa Technologies, LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "fuel monitor service reminder",
-   "results": 8,
-   "exactTitleMatches": 1,
-   "medianRatings": 427,
-   "maxRatings": 29392,
-   "weakAppsTop10": 5,
-   "paidTop10": 1,
-   "competition": 62,
-   "demand": 88,
-   "opportunity": 55,
-   "saturation": 8,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2915,
-   "viability": 51,
-   "top3": [
-    {
-     "name": "Fuel Monitor Service Reminder",
-     "id": 1568656727,
-     "ratings": 2,
-     "stars": 1,
-     "seller": "Jaypalsinh Jadeja"
-    },
-    {
-     "name": "Fuelly: MPG & Service Tracker",
-     "id": 295905460,
-     "ratings": 29392,
-     "stars": 4.73789,
-     "seller": "Fuelly, LLC"
-    },
-    {
-     "name": "Fuel Pass BD",
-     "id": 6764436418,
-     "ratings": 0,
-     "stars": 0,
-     "seller": "EKKID LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "auto maintenance tracker",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 83,
-   "maxRatings": 126247,
-   "weakAppsTop10": 7,
-   "paidTop10": 0,
-   "competition": 75,
-   "demand": 88,
-   "opportunity": 66,
-   "saturation": 24,
-   "clones": 0,
-   "newEntrants": 4,
-   "freshUnproven": 4,
-   "medianAgeDays": 1017,
-   "viability": 50,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "MyAutoLog: Car Maintenance Log",
-     "id": 6748665282,
-     "ratings": 61,
-     "stars": 4.93443,
-     "seller": "Tapronix LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "vehicle maintenance tracker",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 610,
-   "maxRatings": 126247,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 60,
-   "demand": 88,
-   "opportunity": 53,
-   "saturation": 6,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2181,
-   "viability": 50,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Service Manager",
-     "id": 6737859842,
-     "ratings": 26,
-     "stars": 4.69231,
-     "seller": "Aren Baghramian"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car maintenance tracker",
-   "results": 10,
-   "exactTitleMatches": 2,
-   "medianRatings": 263,
-   "maxRatings": 126227,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 57,
-   "demand": 90,
-   "opportunity": 51,
-   "saturation": 10,
-   "clones": 1,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 1622,
-   "viability": 46,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126227,
-     "stars": 4.84019,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2886,
-     "stars": 4.33507,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "free car maintenance tracker",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 3,
-   "maxRatings": 126227,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 89,
-   "demand": 77,
-   "opportunity": 69,
-   "saturation": 36,
-   "clones": 0,
-   "newEntrants": 6,
-   "freshUnproven": 6,
-   "medianAgeDays": 243,
-   "viability": 44,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2886,
-     "stars": 4.33507,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126227,
-     "stars": 4.84019,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Maintenance: Car Tracker",
-     "id": 6778065486,
-     "ratings": 0,
-     "stars": 0,
-     "seller": "Starter Studio, Inc."
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car maintenance reminder",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 92,
-   "maxRatings": 126227,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 73,
-   "demand": 70,
-   "opportunity": 51,
-   "saturation": 15,
-   "clones": 0,
-   "newEntrants": 3,
-   "freshUnproven": 2,
-   "medianAgeDays": 1080,
-   "viability": 43,
-   "top3": [
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126227,
-     "stars": 4.84019,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Car Maintenance Tracker: CarIQ",
-     "id": 6759081863,
-     "ratings": 2,
-     "stars": 4.5,
-     "seller": "Meena Ranka"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "vehicle maintenance journal",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 879,
-   "maxRatings": 126247,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 63,
-   "demand": 67,
-   "opportunity": 42,
-   "saturation": 6,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2462,
-   "viability": 39,
-   "top3": [
-    {
-     "name": "Car Maintenance Tracker: CarIQ",
-     "id": 6759081863,
-     "ratings": 2,
-     "stars": 4.5,
-     "seller": "Meena Ranka"
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "vehicle maintenance",
-   "results": 10,
-   "exactTitleMatches": 2,
-   "medianRatings": 610,
-   "maxRatings": 126247,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 55,
-   "demand": 74,
-   "opportunity": 41,
-   "saturation": 10,
-   "clones": 1,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2181,
-   "viability": 37,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "Vehicle Service Manager",
-     "id": 6737859842,
-     "ratings": 26,
-     "stars": 4.69231,
-     "seller": "Aren Baghramian"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "auto maintenance",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 1007,
-   "maxRatings": 126247,
-   "weakAppsTop10": 5,
-   "paidTop10": 0,
-   "competition": 54,
-   "demand": 74,
-   "opportunity": 40,
-   "saturation": 10,
-   "clones": 1,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2525,
-   "viability": 36,
-   "top3": [
-    {
-     "name": "MyAutoLog: Car Maintenance Log",
-     "id": 6748665282,
-     "ratings": 61,
-     "stars": 4.93443,
-     "seller": "Tapronix LLC"
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car service tracker",
-   "results": 10,
-   "exactTitleMatches": 3,
-   "medianRatings": 109,
-   "maxRatings": 126247,
-   "weakAppsTop10": 7,
-   "paidTop10": 0,
-   "competition": 59,
-   "demand": 81,
-   "opportunity": 48,
-   "saturation": 30,
-   "clones": 3,
-   "newEntrants": 3,
-   "freshUnproven": 3,
-   "medianAgeDays": 1622,
-   "viability": 34,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "Fuelly: MPG & Service Tracker",
-     "id": 295905460,
-     "ratings": 29392,
-     "stars": 4.73789,
-     "seller": "Fuelly, LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car maintenance log",
-   "results": 10,
-   "exactTitleMatches": 5,
-   "medianRatings": 53,
-   "maxRatings": 126227,
-   "weakAppsTop10": 8,
-   "paidTop10": 0,
-   "competition": 55,
-   "demand": 90,
-   "opportunity": 50,
-   "saturation": 36,
-   "clones": 3,
-   "newEntrants": 4,
-   "freshUnproven": 4,
-   "medianAgeDays": 958,
-   "viability": 32,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2886,
-     "stars": 4.33507,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126227,
-     "stars": 4.84019,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "auto maintenance fuel diary",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 727,
-   "maxRatings": 126247,
-   "weakAppsTop10": 6,
-   "paidTop10": 4,
-   "competition": 59,
-   "demand": 60,
-   "opportunity": 35,
-   "saturation": 10,
-   "clones": 1,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 4347,
-   "viability": 32,
-   "top3": [
-    {
-     "name": "Auto Maintenance Fuel Diary",
-     "id": 6772425311,
-     "ratings": 0,
-     "stars": 0,
-     "seller": "Xiamen City Fanyou Network Technology Co., Ltd."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car care",
-   "results": 8,
-   "exactTitleMatches": 2,
-   "medianRatings": 2017,
-   "maxRatings": 661532,
-   "weakAppsTop10": 3,
-   "paidTop10": 1,
-   "competition": 42,
-   "demand": 81,
-   "opportunity": 34,
-   "saturation": 8,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 3135,
-   "viability": 31,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "CarCare App",
-     "id": 1538265753,
-     "ratings": 9,
-     "stars": 4.11111,
-     "seller": "Dropless Online Services"
-    },
-    {
-     "name": "CARFAX - New & Used Cars",
-     "id": 479267592,
-     "ratings": 367997,
-     "stars": 4.85385,
-     "seller": "CARFAX, Inc."
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car maintenance",
-   "results": 10,
-   "exactTitleMatches": 5,
-   "medianRatings": 610,
-   "maxRatings": 126227,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 40,
-   "demand": 84,
-   "opportunity": 34,
-   "saturation": 10,
-   "clones": 1,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 2181,
-   "viability": 31,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126227,
-     "stars": 4.84019,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2886,
-     "stars": 4.33507,
-     "seller": "Hai Nguyen"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "track car maintenance",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 407,
-   "maxRatings": 126247,
-   "weakAppsTop10": 6,
-   "paidTop10": 0,
-   "competition": 66,
-   "demand": 49,
-   "opportunity": 32,
-   "saturation": 9,
-   "clones": 0,
-   "newEntrants": 2,
-   "freshUnproven": 1,
-   "medianAgeDays": 2626,
-   "viability": 29,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "MyAutoLog: Car Maintenance Log",
-     "id": 6748665282,
-     "ratings": 61,
-     "stars": 4.93443,
-     "seller": "Tapronix LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "vehicle maintenance manager",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 746,
-   "maxRatings": 47721,
-   "weakAppsTop10": 5,
-   "paidTop10": 0,
-   "competition": 55,
-   "demand": 53,
-   "opportunity": 29,
-   "saturation": 0,
-   "clones": 0,
-   "newEntrants": 0,
-   "freshUnproven": 0,
-   "medianAgeDays": 3135,
-   "viability": 29,
-   "top3": [
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    },
-    {
-     "name": "Vehicle Service Manager",
-     "id": 6737859842,
-     "ratings": 26,
-     "stars": 4.69231,
-     "seller": "Aren Baghramian"
-    },
-    {
-     "name": "My Car - Vehicle Manager",
-     "id": 1165749302,
-     "ratings": 1147,
-     "stars": 4.69573,
-     "seller": "KineApps Oy"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "carfax car care",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 218362,
-   "maxRatings": 661532,
-   "weakAppsTop10": 2,
-   "paidTop10": 0,
-   "competition": 28,
-   "demand": 88,
-   "opportunity": 25,
-   "saturation": 0,
-   "clones": 0,
-   "newEntrants": 0,
-   "freshUnproven": 0,
-   "medianAgeDays": 5076,
-   "viability": 25,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "CARFAX - New & Used Cars",
-     "id": 479267592,
-     "ratings": 367997,
-     "stars": 4.85385,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "VIN Check Report for Used Cars",
-     "id": 1191483515,
-     "ratings": 2979,
-     "stars": 4.73884,
-     "seller": "VINDecoded LLC"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car service journal",
-   "results": 10,
-   "exactTitleMatches": 0,
-   "medianRatings": 2520,
-   "maxRatings": 126247,
-   "weakAppsTop10": 3,
-   "paidTop10": 1,
-   "competition": 48,
-   "demand": 47,
-   "opportunity": 23,
-   "saturation": 6,
-   "clones": 0,
-   "newEntrants": 1,
-   "freshUnproven": 1,
-   "medianAgeDays": 3460,
-   "viability": 22,
-   "top3": [
-    {
-     "name": "Car Maintenance Tracker: CarIQ",
-     "id": 6759081863,
-     "ratings": 2,
-     "stars": 4.5,
-     "seller": "Meena Ranka"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Car Care fuel & service log",
-     "id": 284946069,
-     "ratings": 131,
-     "stars": 4.0458,
-     "seller": "Karl Becker"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "car maintenance reminders",
-   "results": 10,
-   "exactTitleMatches": 1,
-   "medianRatings": 488,
-   "maxRatings": 126247,
-   "weakAppsTop10": 7,
-   "paidTop10": 0,
-   "competition": 64,
-   "demand": 29,
-   "opportunity": 19,
-   "saturation": 0,
-   "clones": 0,
-   "newEntrants": 0,
-   "freshUnproven": 0,
-   "medianAgeDays": 2181,
-   "viability": 19,
-   "top3": [
-    {
-     "name": "Car Maintenance Reminders",
-     "id": 1617869280,
-     "ratings": 172,
-     "stars": 4.47674,
-     "seller": "Sebastien Gamache"
-    },
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "Vehicle Maintenance Tracker",
-     "id": 1315913699,
-     "ratings": 2887,
-     "stars": 4.33391,
-     "seller": "Hai Nguyen"
-    }
-   ],
-   "demandSource": "rank"
-  },
-  {
-   "keyword": "my-car-care",
-   "results": 8,
-   "exactTitleMatches": 1,
-   "medianRatings": 27429,
-   "maxRatings": 153215,
-   "weakAppsTop10": 3,
-   "paidTop10": 0,
-   "competition": 39,
-   "demand": 40,
-   "opportunity": 16,
-   "saturation": 20,
-   "clones": 1,
-   "newEntrants": 2,
-   "freshUnproven": 2,
-   "medianAgeDays": 3657,
-   "viability": 13,
-   "top3": [
-    {
-     "name": "CARFAX Car Care",
-     "id": 552472249,
-     "ratings": 126247,
-     "stars": 4.84023,
-     "seller": "CARFAX, Inc."
-    },
-    {
-     "name": "My-Car-Care",
-     "id": 6755780300,
-     "ratings": 0,
-     "stars": 0,
-     "seller": "MyCarCare SIA"
-    },
-    {
-     "name": "My Firestone",
-     "id": 503947184,
-     "ratings": 58469,
-     "stars": 4.83954,
-     "seller": "Bridgestone Retail Operations"
-    }
-   ],
-   "demandSource": "rank"
-  }
- ],
- "relevanceFilter": {
-  "appliedAt": "2026-08-21",
-  "reason": "Harvest scores rank by weak-incumbent opportunity, which cannot see intent. Dropped games/simulators, limo & livery services, gig-economy mileage-deduction apps, loan calculators, physical car-care kiosks and repair-cost estimators. None of these share purchase intent with a consumer maintenance log, so taps on them cannot convert at any bid.",
-  "dropped": [
-   "car care kiosk",
-   "car calculator",
-   "car repair estimate",
-   "car service together",
-   "auto mechanic car repair",
-   "carmel car service",
-   "car repair simulator",
-   "car service logbook australia",
-   "car repair center 3d",
-   "car repair games",
-   "car cast",
-   "cheap car repair",
-   "car repair",
-   "mechanic -car repair",
-   "car service nyc",
-   "mileage tracker for work",
-   "elegance auto maintenance",
-   "mileage tracker for doordash",
-   "mileage tracker by driversnote",
-   "car camera",
-   "car camping",
-   "spiffy on-demand car care",
-   "car repair estimator repair+",
-   "mileage tracker by everlance",
-   "prestige car service",
-   "car repair!",
-   "car care credit",
-   "mileage tracker for running",
-   "kiss car service",
-   "440 car service",
-   "pink car service ltd",
-   "car car game",
-   "car service",
-   "car care inc.",
-   "mileage tracker walk",
-   "mileage tracker"
-  ]
- }
+	"generatedAt": "2026-09-03T17:59:42.050Z",
+	"locale": "en-US",
+	"market": {
+		"country": "US",
+		"lang": "en_us"
+	},
+	"minVolume": 0,
+	"terms": [
+		{
+			"keyword": "car care kiosk",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 86,
+			"maxRatings": 6080,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 78,
+			"demand": 60,
+			"opportunity": 47,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 0,
+			"commodityMatches": 0,
+			"commodityProven": 0,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 2327,
+			"viability": 47,
+			"top3": [
+				{
+					"name": "1A Auto: Parts & Repair Videos",
+					"id": 1611602138,
+					"ratings": 86,
+					"stars": 4.17441,
+					"seller": "1A Auto, Inc."
+				},
+				{
+					"name": "Carmin",
+					"id": 1527982107,
+					"ratings": 226,
+					"stars": 4.31858,
+					"seller": "Chuan Nguyen Van"
+				},
+				{
+					"name": "CarCare App",
+					"id": 1538265753,
+					"ratings": 9,
+					"stars": 4.11111,
+					"seller": "Dropless Online Services"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "auto maintenance log",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 121,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 77,
+			"demand": 88,
+			"opportunity": 68,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 30,
+			"commodityMatches": 3,
+			"commodityProven": 1,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 1447,
+			"viability": 42,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Car Maintenance Log :: AutoLog",
+					"id": 6777612793,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Mayur Beldar"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "auto maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 86,
+			"maxRatings": 126677,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 74,
+			"demand": 88,
+			"opportunity": 65,
+			"saturation": 24,
+			"clones": 0,
+			"commodity": 20,
+			"commodityMatches": 2,
+			"commodityProven": 2,
+			"newEntrants": 4,
+			"freshUnproven": 4,
+			"medianAgeDays": 1030,
+			"viability": 40,
+			"top3": [
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair games",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 27857,
+			"maxRatings": 98219,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 41,
+			"demand": 88,
+			"opportunity": 36,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 0,
+			"commodityMatches": 0,
+			"commodityProven": 0,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 1872,
+			"viability": 36,
+			"top3": [
+				{
+					"name": "Car Mechanic Simulator 21 Game",
+					"id": 1277581622,
+					"ratings": 27094,
+					"stars": 4.50509,
+					"seller": "Digital Melody S.A."
+				},
+				{
+					"name": "My Favorite Car",
+					"id": 1622638360,
+					"ratings": 817,
+					"stars": 3.70869,
+					"seller": "WORNOX GAMES  FZCO"
+				},
+				{
+					"name": "Retro Garage - Car Mechanic",
+					"id": 1532851708,
+					"ratings": 3827,
+					"stars": 4.83955,
+					"seller": "WM Games LTD"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "vehicle maintenance log",
+			"results": 10,
+			"exactTitleMatches": 2,
+			"medianRatings": 57,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 70,
+			"demand": 81,
+			"opportunity": 57,
+			"saturation": 16,
+			"clones": 1,
+			"commodity": 30,
+			"commodityMatches": 3,
+			"commodityProven": 1,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 991,
+			"viability": 34,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "MyAutoLog: Car Maintenance Log",
+					"id": 6748665282,
+					"ratings": 66,
+					"stars": 4.84848,
+					"seller": "Tapronix LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "vehicle maintenance journal",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 658,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 64,
+			"demand": 67,
+			"opportunity": 43,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 2475,
+			"viability": 34,
+			"top3": [
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair simulator",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 4502,
+			"maxRatings": 39529,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 50,
+			"demand": 81,
+			"opportunity": 41,
+			"saturation": 21,
+			"clones": 0,
+			"commodity": 0,
+			"commodityMatches": 0,
+			"commodityProven": 0,
+			"newEntrants": 4,
+			"freshUnproven": 3,
+			"medianAgeDays": 944,
+			"viability": 32,
+			"top3": [
+				{
+					"name": "Car Mechanic Simulator 21 Game",
+					"id": 1277581622,
+					"ratings": 27094,
+					"stars": 4.50509,
+					"seller": "Digital Melody S.A."
+				},
+				{
+					"name": "Car Dealer 26 Sales simulator",
+					"id": 6754604748,
+					"ratings": 282,
+					"stars": 4.53545,
+					"seller": "BIMBIS SOFTWARE SRL"
+				},
+				{
+					"name": "Car Sales Simulator 25",
+					"id": 6464597212,
+					"ratings": 37349,
+					"stars": 4.66716,
+					"seller": "SKYLOFT YAZILIM BILISIM VE TICARET ANONIM SIRKETI"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "fuel monitor service reminder",
+			"results": 8,
+			"exactTitleMatches": 1,
+			"medianRatings": 23,
+			"maxRatings": 29439,
+			"weakAppsTop10": 6,
+			"paidTop10": 1,
+			"competition": 75,
+			"demand": 88,
+			"opportunity": 66,
+			"saturation": 8,
+			"clones": 0,
+			"commodity": 50,
+			"commodityMatches": 4,
+			"commodityProven": 2,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 1440,
+			"viability": 30,
+			"top3": [
+				{
+					"name": "Fuel Monitor Service Reminder",
+					"id": 1568656727,
+					"ratings": 2,
+					"stars": 1,
+					"seller": "Jaypalsinh Jadeja"
+				},
+				{
+					"name": "Fuelly: MPG & Service Tracker",
+					"id": 295905460,
+					"ratings": 29439,
+					"stars": 4.73756,
+					"seller": "Fuelly, LLC"
+				},
+				{
+					"name": "Fuel Pass BD",
+					"id": 6764436418,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "EKKID LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "auto mechanic car repair",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 53,
+			"maxRatings": 37417,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 71,
+			"demand": 53,
+			"opportunity": 38,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 0,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 854,
+			"viability": 30,
+			"top3": [
+				{
+					"name": "Car Mechanic Simulator 21 Game",
+					"id": 1277581622,
+					"ratings": 27094,
+					"stars": 4.50509,
+					"seller": "Digital Melody S.A."
+				},
+				{
+					"name": "TRQ Auto Parts & DIY Repairs",
+					"id": 6479527035,
+					"ratings": 19,
+					"stars": 4.05263,
+					"seller": "1A Auto, Inc."
+				},
+				{
+					"name": "HowToo",
+					"id": 6753329721,
+					"ratings": 8,
+					"stars": 4.875,
+					"seller": "HowToo inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair center 3d",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 3375,
+			"maxRatings": 98219,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 46,
+			"demand": 67,
+			"opportunity": 31,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 1899,
+			"viability": 28,
+			"top3": [
+				{
+					"name": "Car Repair Center 3D",
+					"id": 6502993605,
+					"ratings": 48,
+					"stars": 4.27083,
+					"seller": "PSV STUDIO LTD"
+				},
+				{
+					"name": "Car Mechanic Shop Simulator 3D",
+					"id": 6503891930,
+					"ratings": 5177,
+					"stars": 4.65096,
+					"seller": "SKYLOFT YAZILIM BILISIM VE TICARET ANONIM SIRKETI"
+				},
+				{
+					"name": "My First Summer Car: Mechanic",
+					"id": 1635348570,
+					"ratings": 47,
+					"stars": 3.78723,
+					"seller": "Azat Dauletyarov"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "vehicle maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 612,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 59,
+			"demand": 88,
+			"opportunity": 52,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 3,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 2194,
+			"viability": 27,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "auto maintenance",
+			"results": 10,
+			"exactTitleMatches": 2,
+			"medianRatings": 612,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 54,
+			"demand": 74,
+			"opportunity": 40,
+			"saturation": 10,
+			"clones": 1,
+			"commodity": 30,
+			"commodityMatches": 3,
+			"commodityProven": 1,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 2542,
+			"viability": 25,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Auto Care Kit",
+					"id": 1453344602,
+					"ratings": 868,
+					"stars": 4.60369,
+					"seller": "Larry Aasen"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mechanic -car repair",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 30,
+			"maxRatings": 37417,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 73,
+			"demand": 47,
+			"opportunity": 34,
+			"saturation": 22,
+			"clones": 1,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 0,
+			"newEntrants": 3,
+			"freshUnproven": 3,
+			"medianAgeDays": 1156,
+			"viability": 24,
+			"top3": [
+				{
+					"name": "HowToo",
+					"id": 6753329721,
+					"ratings": 8,
+					"stars": 4.875,
+					"seller": "HowToo inc."
+				},
+				{
+					"name": "Mechanic -Car Repair",
+					"id": 6756779624,
+					"ratings": 3,
+					"stars": 5,
+					"seller": "Forwa Elade Wunde"
+				},
+				{
+					"name": "RepairSolutions2",
+					"id": 1462864362,
+					"ratings": 37417,
+					"stars": 4.80928,
+					"seller": "Innova Electronics"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "cheap car repair",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 48,
+			"maxRatings": 27094,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 76,
+			"demand": 40,
+			"opportunity": 30,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 0,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 750,
+			"viability": 24,
+			"top3": [
+				{
+					"name": "Cheap Car Mechanic Repair Shop",
+					"id": 6752009729,
+					"ratings": 1,
+					"stars": 2,
+					"seller": "Hamza Khan"
+				},
+				{
+					"name": "The Last Garage Mechanic",
+					"id": 6755296325,
+					"ratings": 5,
+					"stars": 2,
+					"seller": "TURBO GAMES LTD"
+				},
+				{
+					"name": "My Favorite Car",
+					"id": 1622638360,
+					"ratings": 817,
+					"stars": 3.70869,
+					"seller": "WORNOX GAMES  FZCO"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "oil change reminder",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 7,
+			"maxRatings": 2285,
+			"weakAppsTop10": 9,
+			"paidTop10": 0,
+			"competition": 85,
+			"demand": 88,
+			"opportunity": 75,
+			"saturation": 22,
+			"clones": 1,
+			"commodity": 60,
+			"commodityMatches": 6,
+			"commodityProven": 1,
+			"newEntrants": 3,
+			"freshUnproven": 3,
+			"medianAgeDays": 1341,
+			"viability": 23,
+			"top3": [
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "Oil Change Reminder",
+					"id": 6794923439,
+					"ratings": 1,
+					"stars": 5,
+					"seller": "Sindre Sørensen"
+				},
+				{
+					"name": "Car oil change tracker",
+					"id": 6749332409,
+					"ratings": 1,
+					"stars": 1,
+					"seller": "FatimaH Deeb"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "vehicle maintenance",
+			"results": 10,
+			"exactTitleMatches": 2,
+			"medianRatings": 1887,
+			"maxRatings": 407114,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 47,
+			"demand": 74,
+			"opportunity": 35,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 30,
+			"commodityMatches": 3,
+			"commodityProven": 2,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 2965,
+			"viability": 23,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "elegance auto maintenance",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 1577,
+			"maxRatings": 126677,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 53,
+			"demand": 53,
+			"opportunity": 28,
+			"saturation": 9,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 0,
+			"newEntrants": 2,
+			"freshUnproven": 1,
+			"medianAgeDays": 2538,
+			"viability": 23,
+			"top3": [
+				{
+					"name": "Elegance auto maintenance",
+					"id": 6450029455,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Media Solutions Services"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "auto maintenance fuel diary",
+			"results": 8,
+			"exactTitleMatches": 0,
+			"medianRatings": 1765,
+			"maxRatings": 126677,
+			"weakAppsTop10": 4,
+			"paidTop10": 2,
+			"competition": 57,
+			"demand": 60,
+			"opportunity": 34,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 38,
+			"commodityMatches": 3,
+			"commodityProven": 3,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4447,
+			"viability": 21,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Care fuel & service log",
+					"id": 284946069,
+					"ratings": 131,
+					"stars": 4.0458,
+					"seller": "Karl Becker"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car camping",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 15687,
+			"maxRatings": 379186,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 43,
+			"demand": 53,
+			"opportunity": 23,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 0,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 3370,
+			"viability": 21,
+			"top3": [
+				{
+					"name": "The Dyrt: RV & Free Camping",
+					"id": 1187626329,
+					"ratings": 122475,
+					"stars": 4.77862,
+					"seller": "The Dyrt, Inc"
+				},
+				{
+					"name": "park4night",
+					"id": 430946556,
+					"ratings": 113,
+					"stars": 4.39823,
+					"seller": "AppMobilEdition"
+				},
+				{
+					"name": "Hipcamp: Camping, RVs & Cabins",
+					"id": 1440066037,
+					"ratings": 54485,
+					"stars": 4.84724,
+					"seller": "HIPCAMP INC."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service together",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 2993,
+			"maxRatings": 84137,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 48,
+			"demand": 74,
+			"opportunity": 36,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 4,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 3585,
+			"viability": 20,
+			"top3": [
+				{
+					"name": "The Last Garage Mechanic",
+					"id": 6755296325,
+					"ratings": 5,
+					"stars": 2,
+					"seller": "TURBO GAMES LTD"
+				},
+				{
+					"name": "Car Mechanic Simulator 21 Game",
+					"id": 1277581622,
+					"ratings": 27094,
+					"stars": 4.50509,
+					"seller": "Digital Melody S.A."
+				},
+				{
+					"name": "My Favorite Car",
+					"id": 1622638360,
+					"ratings": 817,
+					"stars": 3.70869,
+					"seller": "WORNOX GAMES  FZCO"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car cast",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 5751,
+			"maxRatings": 57743,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 45,
+			"demand": 67,
+			"opportunity": 30,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 30,
+			"commodityMatches": 3,
+			"commodityProven": 1,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 1084,
+			"viability": 20,
+			"top3": [
+				{
+					"name": "Car Cast - Screen Mirror",
+					"id": 6474124223,
+					"ratings": 93,
+					"stars": 3.2043,
+					"seller": "Toxic Degu Ltd"
+				},
+				{
+					"name": "Cast2Car: Car Video Player",
+					"id": 6802499614,
+					"ratings": 2,
+					"stars": 3,
+					"seller": "Lyntra Technology Ltd"
+				},
+				{
+					"name": "WebLink Host",
+					"id": 1257907748,
+					"ratings": 4888,
+					"stars": 4.16817,
+					"seller": "Abalta Technologies, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car camera",
+			"results": 9,
+			"exactTitleMatches": 2,
+			"medianRatings": 12343,
+			"maxRatings": 3188603,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 39,
+			"demand": 60,
+			"opportunity": 23,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 22,
+			"commodityMatches": 2,
+			"commodityProven": 2,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 2954,
+			"viability": 18,
+			"top3": [
+				{
+					"name": "Viidure",
+					"id": 1489090807,
+					"ratings": 12541,
+					"stars": 4.3967,
+					"seller": "Shenzhen Xiaozhen Technology Co.,Ltd."
+				},
+				{
+					"name": "BVC Camera",
+					"id": 6473444406,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Maria Odintsova"
+				},
+				{
+					"name": "Car Camera DVR-Dashcam",
+					"id": 1190102060,
+					"ratings": 381,
+					"stars": 4.4147,
+					"seller": "APPASPECT TECHNOLOGIES PRIVATE LIMITED"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service logbook australia",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 3531,
+			"maxRatings": 817653,
+			"weakAppsTop10": 3,
+			"paidTop10": 1,
+			"competition": 42,
+			"demand": 81,
+			"opportunity": 34,
+			"saturation": 16,
+			"clones": 1,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 2,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 3663,
+			"viability": 17,
+			"top3": [
+				{
+					"name": "Car Service Logbook Australia",
+					"id": 6760217794,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Shehar Yar"
+				},
+				{
+					"name": "Mileage Tracker by Driversnote",
+					"id": 924418916,
+					"ratings": 38584,
+					"stars": 4.7839,
+					"seller": "Driversnote ApS"
+				},
+				{
+					"name": "Turo — Better car rental",
+					"id": 555063314,
+					"ratings": 817653,
+					"stars": 4.88189,
+					"seller": "Turo Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "vehicle maintenance manager",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 749,
+			"maxRatings": 47785,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 55,
+			"demand": 53,
+			"opportunity": 29,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 3,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 3148,
+			"viability": 17,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Vehicle Service Manager",
+					"id": 6737859842,
+					"ratings": 28,
+					"stars": 4.71429,
+					"seller": "Aren Baghramian"
+				},
+				{
+					"name": "My Car - Vehicle Manager",
+					"id": 1165749302,
+					"ratings": 1152,
+					"stars": 4.69965,
+					"seller": "KineApps Oy"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "spiffy on-demand car care",
+			"results": 9,
+			"exactTitleMatches": 1,
+			"medianRatings": 684,
+			"maxRatings": 24885,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 57,
+			"demand": 33,
+			"opportunity": 19,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 11,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 2872,
+			"viability": 17,
+			"top3": [
+				{
+					"name": "Spiffy On-Demand Car Care",
+					"id": 839092909,
+					"ratings": 6080,
+					"stars": 4.78257,
+					"seller": "Get Spiffy, Inc"
+				},
+				{
+					"name": "Washos: Mobile Car Detailing",
+					"id": 969349456,
+					"ratings": 3307,
+					"stars": 4.66132,
+					"seller": "Washos, Inc."
+				},
+				{
+					"name": "MobileWash Car Wash On-Demand",
+					"id": 1071673709,
+					"ratings": 2675,
+					"stars": 4.39888,
+					"seller": "Mobile Wash Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair estimate",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 13,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 84,
+			"demand": 60,
+			"opportunity": 50,
+			"saturation": 36,
+			"clones": 0,
+			"commodity": 50,
+			"commodityMatches": 5,
+			"commodityProven": 2,
+			"newEntrants": 7,
+			"freshUnproven": 5,
+			"medianAgeDays": 171,
+			"viability": 16,
+			"top3": [
+				{
+					"name": "Car Repair Estimator Repair+",
+					"id": 6794691916,
+					"ratings": 85,
+					"stars": 4.62352,
+					"seller": "Brite Technologies LLC"
+				},
+				{
+					"name": "Estimate Car Repair Cost AI",
+					"id": 6757721790,
+					"ratings": 38,
+					"stars": 4.68421,
+					"seller": "Volodymyr Bilous"
+				},
+				{
+					"name": "FairRide AI",
+					"id": 6760766758,
+					"ratings": 3,
+					"stars": 5,
+					"seller": "Fair AI LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "track car maintenance",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 2590,
+			"maxRatings": 126677,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 52,
+			"demand": 49,
+			"opportunity": 25,
+			"saturation": 3,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 4,
+			"newEntrants": 1,
+			"freshUnproven": 0,
+			"medianAgeDays": 2222,
+			"viability": 15,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "MyAutoLog: Car Maintenance Log",
+					"id": 6748665282,
+					"ratings": 66,
+					"stars": 4.84848,
+					"seller": "Tapronix LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car care credit",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 9138,
+			"maxRatings": 112646,
+			"weakAppsTop10": 0,
+			"paidTop10": 0,
+			"competition": 32,
+			"demand": 53,
+			"opportunity": 17,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 11,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 3962,
+			"viability": 15,
+			"top3": [
+				{
+					"name": "MySynchrony",
+					"id": 1280992496,
+					"ratings": 107763,
+					"stars": 4.79707,
+					"seller": "Synchrony Financial"
+				},
+				{
+					"name": "CareCredit Mobile",
+					"id": 1031312446,
+					"ratings": 63261,
+					"stars": 4.81127,
+					"seller": "Synchrony Financial"
+				},
+				{
+					"name": "Spiffy On-Demand Car Care",
+					"id": 839092909,
+					"ratings": 6080,
+					"stars": 4.78257,
+					"seller": "Get Spiffy, Inc"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service tracker",
+			"results": 10,
+			"exactTitleMatches": 3,
+			"medianRatings": 111,
+			"maxRatings": 126677,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 59,
+			"demand": 81,
+			"opportunity": 48,
+			"saturation": 30,
+			"clones": 3,
+			"commodity": 60,
+			"commodityMatches": 6,
+			"commodityProven": 3,
+			"newEntrants": 3,
+			"freshUnproven": 3,
+			"medianAgeDays": 1576,
+			"viability": 13,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Fuelly: MPG & Service Tracker",
+					"id": 295905460,
+					"ratings": 29439,
+					"stars": 4.73756,
+					"seller": "Fuelly, LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car calculator",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 842,
+			"maxRatings": 614888,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 55,
+			"demand": 74,
+			"opportunity": 41,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 4,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 3537,
+			"viability": 12,
+			"top3": [
+				{
+					"name": "Car Loan Calculator,Auto Lease",
+					"id": 1155867843,
+					"ratings": 1452,
+					"stars": 4.80234,
+					"seller": "giang pham"
+				},
+				{
+					"name": "Loan Calculator‰",
+					"id": 558688927,
+					"ratings": 105165,
+					"stars": 4.89159,
+					"seller": "Tim O's Studios, LLC"
+				},
+				{
+					"name": "Car & Auto Payment Calculator",
+					"id": 1202635718,
+					"ratings": 2241,
+					"stars": 4.08523,
+					"seller": "Michael Chu"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service journal",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 887,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 1,
+			"competition": 63,
+			"demand": 47,
+			"opportunity": 30,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 60,
+			"commodityMatches": 6,
+			"commodityProven": 4,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 3450,
+			"viability": 11,
+			"top3": [
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "Kiss Car Service",
+					"id": 909013764,
+					"ratings": 4156,
+					"stars": 4.7512,
+					"seller": "Steven Abreu"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service nyc",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 4555,
+			"maxRatings": 399168,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 39,
+			"demand": 67,
+			"opportunity": 26,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 56,
+			"commodityMatches": 5,
+			"commodityProven": 5,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4640,
+			"viability": 11,
+			"top3": [
+				{
+					"name": "Best Deal Car Service",
+					"id": 932157575,
+					"ratings": 2158,
+					"stars": 4.72567,
+					"seller": "Best Deal Private Car Service Inc."
+				},
+				{
+					"name": "Curb - Request & Pay for Taxis",
+					"id": 299226386,
+					"ratings": 142012,
+					"stars": 4.83915,
+					"seller": "Curb Mobility, LLC"
+				},
+				{
+					"name": "Diplo Car Service",
+					"id": 886825795,
+					"ratings": 1489,
+					"stars": 4.78172,
+					"seller": "First Class Car & Limousine Service Corp"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair estimator repair+",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 184,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 63,
+			"demand": 33,
+			"opportunity": 21,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 2,
+			"newEntrants": 3,
+			"freshUnproven": 1,
+			"medianAgeDays": 2665,
+			"viability": 11,
+			"top3": [
+				{
+					"name": "Car Repair Estimator Repair+",
+					"id": 6794691916,
+					"ratings": 85,
+					"stars": 4.62352,
+					"seller": "Brite Technologies LLC"
+				},
+				{
+					"name": "Estimate Car Repair Cost AI",
+					"id": 6757721790,
+					"ratings": 38,
+					"stars": 4.68421,
+					"seller": "Volodymyr Bilous"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "free car maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 3,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 89,
+			"demand": 77,
+			"opportunity": 69,
+			"saturation": 36,
+			"clones": 0,
+			"commodity": 80,
+			"commodityMatches": 8,
+			"commodityProven": 2,
+			"newEntrants": 6,
+			"freshUnproven": 6,
+			"medianAgeDays": 256,
+			"viability": 9,
+			"top3": [
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "Maintenance: Car Tracker",
+					"id": 6778065486,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Starter Studio, Inc."
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car maintenance reminder",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 96,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 73,
+			"demand": 70,
+			"opportunity": 51,
+			"saturation": 15,
+			"clones": 0,
+			"commodity": 80,
+			"commodityMatches": 8,
+			"commodityProven": 5,
+			"newEntrants": 3,
+			"freshUnproven": 2,
+			"medianAgeDays": 1093,
+			"viability": 9,
+			"top3": [
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car maintenance",
+			"results": 10,
+			"exactTitleMatches": 6,
+			"medianRatings": 265,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 42,
+			"demand": 84,
+			"opportunity": 35,
+			"saturation": 10,
+			"clones": 1,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 5,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 1635,
+			"viability": 9,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car maintenance reminders",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 489,
+			"maxRatings": 126677,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 64,
+			"demand": 29,
+			"opportunity": 19,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 50,
+			"commodityMatches": 5,
+			"commodityProven": 3,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 2194,
+			"viability": 9,
+			"top3": [
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "my-car-care",
+			"results": 8,
+			"exactTitleMatches": 1,
+			"medianRatings": 29100,
+			"maxRatings": 407114,
+			"weakAppsTop10": 2,
+			"paidTop10": 0,
+			"competition": 34,
+			"demand": 40,
+			"opportunity": 14,
+			"saturation": 13,
+			"clones": 1,
+			"commodity": 38,
+			"commodityMatches": 3,
+			"commodityProven": 1,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 4439,
+			"viability": 8,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "My-Car-Care",
+					"id": 6755780300,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "MyCarCare SIA"
+				},
+				{
+					"name": "My Firestone",
+					"id": 503947184,
+					"ratings": 58821,
+					"stars": 4.8399,
+					"seller": "Bridgestone Retail Operations"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker for doordash",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 28864,
+			"maxRatings": 111988,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 41,
+			"demand": 60,
+			"opportunity": 25,
+			"saturation": 6,
+			"clones": 0,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 6,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 3697,
+			"viability": 7,
+			"top3": [
+				{
+					"name": "MileIQ: Mileage Tracker & Log",
+					"id": 578830929,
+					"ratings": 111988,
+					"stars": 4.76656,
+					"seller": "MileIQ Inc."
+				},
+				{
+					"name": "Stride: Mileage & Tax Tracker",
+					"id": 1041591359,
+					"ratings": 95702,
+					"stars": 4.84046,
+					"seller": "Stride Health, Inc"
+				},
+				{
+					"name": "Mileage Tracker by Everlance",
+					"id": 985378916,
+					"ratings": 51825,
+					"stars": 4.83265,
+					"seller": "Everlance Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "carfax car care",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 220313,
+			"maxRatings": 665499,
+			"weakAppsTop10": 2,
+			"paidTop10": 0,
+			"competition": 28,
+			"demand": 39,
+			"opportunity": 11,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 40,
+			"commodityMatches": 4,
+			"commodityProven": 4,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 5089,
+			"viability": 7,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "CARFAX - New & Used Cars",
+					"id": 479267592,
+					"ratings": 368005,
+					"stars": 4.85379,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "VIN Check Report for Used Cars",
+					"id": 1191483515,
+					"ratings": 3010,
+					"stars": 4.73987,
+					"seller": "VINDecoded LLC"
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "car care inc.",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 12574,
+			"maxRatings": 817653,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 30,
+			"demand": 26,
+			"opportunity": 8,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 3788,
+			"viability": 7,
+			"top3": [
+				{
+					"name": "Car Care Inc.",
+					"id": 6448446762,
+					"ratings": 658,
+					"stars": 4.68389,
+					"seller": "Rollic Games Oyun Yazilim ve Pazarlama Anonim Sirketi"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Games ·",
+					"id": 1478453789,
+					"ratings": 107408,
+					"stars": 4.58093,
+					"seller": "C.A.R. GAMES INC."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car maintenance log",
+			"results": 10,
+			"exactTitleMatches": 7,
+			"medianRatings": 36,
+			"maxRatings": 126677,
+			"weakAppsTop10": 8,
+			"paidTop10": 0,
+			"competition": 56,
+			"demand": 90,
+			"opportunity": 50,
+			"saturation": 40,
+			"clones": 4,
+			"commodity": 80,
+			"commodityMatches": 8,
+			"commodityProven": 3,
+			"newEntrants": 4,
+			"freshUnproven": 4,
+			"medianAgeDays": 447,
+			"viability": 6,
+			"top3": [
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Car Maintenance Reminders",
+					"id": 1617869280,
+					"ratings": 175,
+					"stars": 4.46286,
+					"seller": "Sebastien Gamache"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker by everlance",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 25227,
+			"maxRatings": 111988,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 28,
+			"demand": 67,
+			"opportunity": 19,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 7,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4046,
+			"viability": 6,
+			"top3": [
+				{
+					"name": "Mileage Tracker by Everlance",
+					"id": 985378916,
+					"ratings": 51825,
+					"stars": 4.83265,
+					"seller": "Everlance Inc."
+				},
+				{
+					"name": "Stride: Mileage & Tax Tracker",
+					"id": 1041591359,
+					"ratings": 95702,
+					"stars": 4.84046,
+					"seller": "Stride Health, Inc"
+				},
+				{
+					"name": "Mile Logger - Mileage tracker",
+					"id": 1078393112,
+					"ratings": 3851,
+					"stars": 4.01454,
+					"seller": "Dajax LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker for running",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 110699,
+			"maxRatings": 751472,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 29,
+			"demand": 47,
+			"opportunity": 14,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 60,
+			"commodityMatches": 6,
+			"commodityProven": 6,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 5215,
+			"viability": 6,
+			"top3": [
+				{
+					"name": "Running Walking Tracker Goals",
+					"id": 1136617388,
+					"ratings": 106848,
+					"stars": 4.81941,
+					"seller": "AK Apptuitive GmbH"
+				},
+				{
+					"name": "Map My Run GPS Running Tracker",
+					"id": 291890420,
+					"ratings": 751472,
+					"stars": 4.83526,
+					"seller": "Outside Television Inc"
+				},
+				{
+					"name": "Strava: Run, Bike, Walk",
+					"id": 426826309,
+					"ratings": 371203,
+					"stars": 4.81134,
+					"seller": "Strava Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car car game",
+			"results": 9,
+			"exactTitleMatches": 0,
+			"medianRatings": 71724,
+			"maxRatings": 291041,
+			"weakAppsTop10": 0,
+			"paidTop10": 0,
+			"competition": 26,
+			"demand": 40,
+			"opportunity": 10,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 44,
+			"commodityMatches": 4,
+			"commodityProven": 4,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 3055,
+			"viability": 6,
+			"top3": [
+				{
+					"name": "Car Parking Multiplayer",
+					"id": 1374868881,
+					"ratings": 56707,
+					"stars": 4.34089,
+					"seller": "Aidana Kengbeiil"
+				},
+				{
+					"name": "Extreme Car Driving Simulator",
+					"id": 959498315,
+					"ratings": 71724,
+					"stars": 4.43363,
+					"seller": "AxesInMotion S.L."
+				},
+				{
+					"name": "Car Driving 2026 : School Game",
+					"id": 6443994440,
+					"ratings": 73997,
+					"stars": 4.51417,
+					"seller": "THP Soft Tech SRL"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "pink car service ltd",
+			"results": 8,
+			"exactTitleMatches": 0,
+			"medianRatings": 3157,
+			"maxRatings": 6256,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 51,
+			"demand": 26,
+			"opportunity": 13,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 63,
+			"commodityMatches": 5,
+			"commodityProven": 3,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4210,
+			"viability": 5,
+			"top3": [
+				{
+					"name": "Pink Car Service",
+					"id": 1260499997,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Pink Car Service Ltd"
+				},
+				{
+					"name": "Pink Car Service Drivers",
+					"id": 1259826590,
+					"ratings": 1,
+					"stars": 1,
+					"seller": "Pink Car Service Ltd"
+				},
+				{
+					"name": "Kiss Car Service",
+					"id": 909013764,
+					"ratings": 4156,
+					"stars": 4.7512,
+					"seller": "Steven Abreu"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker walk",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 220158,
+			"maxRatings": 751472,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 29,
+			"demand": 33,
+			"opportunity": 10,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 60,
+			"commodityMatches": 6,
+			"commodityProven": 6,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4964,
+			"viability": 4,
+			"top3": [
+				{
+					"name": "Running Walking Tracker Goals",
+					"id": 1136617388,
+					"ratings": 106848,
+					"stars": 4.81941,
+					"seller": "AK Apptuitive GmbH"
+				},
+				{
+					"name": "Map My Walk: Walking Tracker",
+					"id": 307861492,
+					"ratings": 480599,
+					"stars": 4.8297,
+					"seller": "Outside Television Inc"
+				},
+				{
+					"name": "Walking Distance Tracker",
+					"id": 893236820,
+					"ratings": 2968,
+					"stars": 4.52763,
+					"seller": "30 South LLC"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car service",
+			"results": 10,
+			"exactTitleMatches": 5,
+			"medianRatings": 5086,
+			"maxRatings": 17619695,
+			"weakAppsTop10": 0,
+			"paidTop10": 0,
+			"competition": 9,
+			"demand": 88,
+			"opportunity": 8,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 50,
+			"commodityMatches": 5,
+			"commodityProven": 5,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4624,
+			"viability": 4,
+			"top3": [
+				{
+					"name": "Prestige Car Service",
+					"id": 1018868114,
+					"ratings": 4555,
+					"stars": 4.7809,
+					"seller": "3210 WEBSTER Ave Prestige Car Service Inc"
+				},
+				{
+					"name": "Blacklane: Private Chauffeurs",
+					"id": 524123600,
+					"ratings": 37864,
+					"stars": 4.91504,
+					"seller": "Blacklane GmbH"
+				},
+				{
+					"name": "Kiss Car Service",
+					"id": 909013764,
+					"ratings": 4156,
+					"stars": 4.7512,
+					"seller": "Steven Abreu"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker for work",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 4251,
+			"maxRatings": 111988,
+			"weakAppsTop10": 3,
+			"paidTop10": 0,
+			"competition": 47,
+			"demand": 74,
+			"opportunity": 35,
+			"saturation": 12,
+			"clones": 0,
+			"commodity": 90,
+			"commodityMatches": 9,
+			"commodityProven": 7,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 3910,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "MileIQ: Mileage Tracker & Log",
+					"id": 578830929,
+					"ratings": 111988,
+					"stars": 4.76656,
+					"seller": "MileIQ Inc."
+				},
+				{
+					"name": "Stride: Mileage & Tax Tracker",
+					"id": 1041591359,
+					"ratings": 95702,
+					"stars": 4.84046,
+					"seller": "Stride Health, Inc"
+				},
+				{
+					"name": "Mileage Tracker by Driversnote",
+					"id": 924418916,
+					"ratings": 38584,
+					"stars": 4.7839,
+					"seller": "Driversnote ApS"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "carmel car service",
+			"results": 10,
+			"exactTitleMatches": 0,
+			"medianRatings": 1758,
+			"maxRatings": 655534,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 53,
+			"demand": 24,
+			"opportunity": 13,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 80,
+			"commodityMatches": 8,
+			"commodityProven": 8,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4089,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "Carmel - Car, Taxi & Limo",
+					"id": 573578466,
+					"ratings": 2027,
+					"stars": 4.07252,
+					"seller": "T BARON LTD"
+				},
+				{
+					"name": "Diplo Car Service",
+					"id": 886825795,
+					"ratings": 1489,
+					"stars": 4.78172,
+					"seller": "First Class Car & Limousine Service Corp"
+				},
+				{
+					"name": "Prestige Car Service",
+					"id": 1018868114,
+					"ratings": 4555,
+					"stars": 4.7809,
+					"seller": "3210 WEBSTER Ave Prestige Car Service Inc"
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "car care",
+			"results": 8,
+			"exactTitleMatches": 2,
+			"medianRatings": 2029,
+			"maxRatings": 665499,
+			"weakAppsTop10": 3,
+			"paidTop10": 1,
+			"competition": 42,
+			"demand": 26,
+			"opportunity": 11,
+			"saturation": 8,
+			"clones": 0,
+			"commodity": 75,
+			"commodityMatches": 6,
+			"commodityProven": 4,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 3148,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "CarCare App",
+					"id": 1538265753,
+					"ratings": 9,
+					"stars": 4.11111,
+					"seller": "Dropless Online Services"
+				},
+				{
+					"name": "CARFAX - New & Used Cars",
+					"id": 479267592,
+					"ratings": 368005,
+					"stars": 4.85379,
+					"seller": "CARFAX, Inc."
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "prestige car service",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 3224,
+			"maxRatings": 17619695,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 34,
+			"demand": 28,
+			"opportunity": 10,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 6,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4487,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "Prestige Car Service",
+					"id": 1018868114,
+					"ratings": 4555,
+					"stars": 4.7809,
+					"seller": "3210 WEBSTER Ave Prestige Car Service Inc"
+				},
+				{
+					"name": "Prestige 2 Car Service",
+					"id": 840853240,
+					"ratings": 1026,
+					"stars": 4.69786,
+					"seller": "3210 WEBSTER Ave Prestige Car Service Inc"
+				},
+				{
+					"name": "Kiss Car Service",
+					"id": 909013764,
+					"ratings": 4156,
+					"stars": 4.7512,
+					"seller": "Steven Abreu"
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "kiss car service",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 3224,
+			"maxRatings": 17619695,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 34,
+			"demand": 25,
+			"opportunity": 9,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 7,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4526,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "Kiss Car Service",
+					"id": 909013764,
+					"ratings": 4156,
+					"stars": 4.7512,
+					"seller": "Steven Abreu"
+				},
+				{
+					"name": "Prestige Car Service",
+					"id": 1018868114,
+					"ratings": 4555,
+					"stars": 4.7809,
+					"seller": "3210 WEBSTER Ave Prestige Car Service Inc"
+				},
+				{
+					"name": "Best Deal Car Service",
+					"id": 932157575,
+					"ratings": 2158,
+					"stars": 4.72567,
+					"seller": "Best Deal Private Car Service Inc."
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "car repair",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 15461,
+			"maxRatings": 213346,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 42,
+			"demand": 9,
+			"opportunity": 4,
+			"saturation": 9,
+			"clones": 0,
+			"commodity": 10,
+			"commodityMatches": 1,
+			"commodityProven": 1,
+			"newEntrants": 2,
+			"freshUnproven": 1,
+			"medianAgeDays": 1848,
+			"viability": 3,
+			"top3": [
+				{
+					"name": "Car Mechanic Simulator 21 Game",
+					"id": 1277581622,
+					"ratings": 27094,
+					"stars": 4.50509,
+					"seller": "Digital Melody S.A."
+				},
+				{
+					"name": "Retro Garage - Car Mechanic",
+					"id": 1532851708,
+					"ratings": 3827,
+					"stars": 4.83955,
+					"seller": "WM Games LTD"
+				},
+				{
+					"name": "1A Auto: Parts & Repair Videos",
+					"id": 1611602138,
+					"ratings": 86,
+					"stars": 4.17441,
+					"seller": "1A Auto, Inc."
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "mileage tracker by driversnote",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 4251,
+			"maxRatings": 111988,
+			"weakAppsTop10": 4,
+			"paidTop10": 0,
+			"competition": 46,
+			"demand": 53,
+			"opportunity": 24,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 90,
+			"commodityMatches": 9,
+			"commodityProven": 8,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4005,
+			"viability": 2,
+			"top3": [
+				{
+					"name": "Mileage Tracker by Driversnote",
+					"id": 924418916,
+					"ratings": 38584,
+					"stars": 4.7839,
+					"seller": "Driversnote ApS"
+				},
+				{
+					"name": "MileIQ: Mileage Tracker & Log",
+					"id": 578830929,
+					"ratings": 111988,
+					"stars": 4.76656,
+					"seller": "MileIQ Inc."
+				},
+				{
+					"name": "drivers note",
+					"id": 1590895981,
+					"ratings": 20,
+					"stars": 4.4,
+					"seller": "Petr Polasek"
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car repair!",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 23,
+			"maxRatings": 39529,
+			"weakAppsTop10": 7,
+			"paidTop10": 0,
+			"competition": 73,
+			"demand": 26,
+			"opportunity": 19,
+			"saturation": 18,
+			"clones": 0,
+			"commodity": 90,
+			"commodityMatches": 9,
+			"commodityProven": 4,
+			"newEntrants": 3,
+			"freshUnproven": 3,
+			"medianAgeDays": 700,
+			"viability": 2,
+			"top3": [
+				{
+					"name": "My Mechanic : Car Repair",
+					"id": 6761501636,
+					"ratings": 0,
+					"stars": 0,
+					"seller": "Ouz Baysal"
+				},
+				{
+					"name": "Car repair!",
+					"id": 1313408182,
+					"ratings": 9,
+					"stars": 4.33333,
+					"seller": "K.O. BOOBOO LAB LTD"
+				},
+				{
+					"name": "Car repair games. Mechanic.",
+					"id": 6743223154,
+					"ratings": 37,
+					"stars": 4.05405,
+					"seller": "Top Line Solutions Pte. Ltd."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "mileage tracker",
+			"results": 9,
+			"exactTitleMatches": 7,
+			"medianRatings": 38584,
+			"maxRatings": 111988,
+			"weakAppsTop10": 1,
+			"paidTop10": 0,
+			"competition": 7,
+			"demand": 81,
+			"opportunity": 6,
+			"saturation": 11,
+			"clones": 1,
+			"commodity": 89,
+			"commodityMatches": 8,
+			"commodityProven": 7,
+			"newEntrants": 1,
+			"freshUnproven": 1,
+			"medianAgeDays": 3978,
+			"viability": 1,
+			"top3": [
+				{
+					"name": "MileIQ: Mileage Tracker & Log",
+					"id": 578830929,
+					"ratings": 111988,
+					"stars": 4.76656,
+					"seller": "MileIQ Inc."
+				},
+				{
+					"name": "Stride: Mileage & Tax Tracker",
+					"id": 1041591359,
+					"ratings": 95702,
+					"stars": 4.84046,
+					"seller": "Stride Health, Inc"
+				},
+				{
+					"name": "Mileage Tracker by Everlance",
+					"id": 985378916,
+					"ratings": 51825,
+					"stars": 4.83265,
+					"seller": "Everlance Inc."
+				}
+			],
+			"demandSource": "rank"
+		},
+		{
+			"keyword": "car maintenance tracker",
+			"results": 10,
+			"exactTitleMatches": 2,
+			"medianRatings": 265,
+			"maxRatings": 126677,
+			"weakAppsTop10": 6,
+			"paidTop10": 0,
+			"competition": 57,
+			"demand": 6,
+			"opportunity": 3,
+			"saturation": 20,
+			"clones": 2,
+			"commodity": 70,
+			"commodityMatches": 7,
+			"commodityProven": 4,
+			"newEntrants": 2,
+			"freshUnproven": 2,
+			"medianAgeDays": 1635,
+			"viability": 1,
+			"top3": [
+				{
+					"name": "CARFAX Car Care",
+					"id": 552472249,
+					"ratings": 126677,
+					"stars": 4.84041,
+					"seller": "CARFAX, Inc."
+				},
+				{
+					"name": "Vehicle Maintenance Tracker",
+					"id": 1315913699,
+					"ratings": 2905,
+					"stars": 4.3191,
+					"seller": "Hai Nguyen"
+				},
+				{
+					"name": "Car Maintenance Tracker: CarIQ",
+					"id": 6759081863,
+					"ratings": 2,
+					"stars": 4.5,
+					"seller": "Meena Ranka"
+				}
+			],
+			"demandSource": "volume"
+		},
+		{
+			"keyword": "440 car service",
+			"results": 10,
+			"exactTitleMatches": 1,
+			"medianRatings": 1097,
+			"maxRatings": 4555,
+			"weakAppsTop10": 5,
+			"paidTop10": 0,
+			"competition": 54,
+			"demand": 20,
+			"opportunity": 11,
+			"saturation": 0,
+			"clones": 0,
+			"commodity": 100,
+			"commodityMatches": 10,
+			"commodityProven": 10,
+			"newEntrants": 0,
+			"freshUnproven": 0,
+			"medianAgeDays": 4170,
+			"viability": 0,
+			"top3": [
+				{
+					"name": "440 Car Service Black Inc",
+					"id": 991775367,
+					"ratings": 705,
+					"stars": 4.79148,
+					"seller": "440 CAR SERVICE INC"
+				},
+				{
+					"name": "Bee Bee Car Service",
+					"id": 1020290511,
+					"ratings": 4074,
+					"stars": 4.74178,
+					"seller": "BEE BEE CAR AND LIMO CORP"
+				},
+				{
+					"name": "Best Deal Car Service",
+					"id": 932157575,
+					"ratings": 2158,
+					"stars": 4.72567,
+					"seller": "Best Deal Private Car Service Inc."
+				}
+			],
+			"demandSource": "volume"
+		}
+	]
 }

@@ -1,17 +1,17 @@
 {
-	"generatedAt": "2026-08-31T21:29:34.098Z",
+	"generatedAt": "2026-09-10T22:40:00.218Z",
 	"retain": 12,
 	"pruned": [],
 	"artifacts": [
 		{
-			"file": "snapshot-2026-08-31.json",
+			"file": "snapshot-2026-09-10.json",
 			"kind": "snapshot",
-			"generatedAt": "2026-08-31T21:29:34.068Z",
+			"generatedAt": "2026-09-10T22:38:20.103Z",
 			"params": {
 				"org": "23259140",
 				"window": {
-					"from": "2026-08-02",
-					"to": "2026-08-31"
+					"from": "2026-08-12",
+					"to": "2026-09-10"
 				},
 				"performance": true
 			},
@@ -19,6 +19,71 @@
 		},
 		{
 			"file": "snapshot.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-09-10T22:38:20.103Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-08-12",
+					"to": "2026-09-10"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "snapshot-2026-09-04.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-09-04T22:17:38.885Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-08-06",
+					"to": "2026-09-04"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "mining-2026-09-04.json",
+			"kind": "mining",
+			"generatedAt": "2026-09-04T22:15:31.673Z",
+			"params": {
+				"window": {
+					"from": "2026-08-06",
+					"to": "2026-09-04"
+				},
+				"locale": "en-US",
+				"killRule": {
+					"targetCpi": 1.1,
+					"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+					"wasteThreshold": 2.2,
+					"minTaps": 6,
+					"baselineInstallRate": 0.4,
+					"confidence": 0.95,
+					"breakeven": 27.96,
+					"retentionMonths": 12,
+					"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+					"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+				},
+				"campaign": null
+			},
+			"killRule": {
+				"targetCpi": 1.1,
+				"source": "ads.targetCpi (/home/myen/glovebox/ship.config.json)",
+				"wasteThreshold": 2.2,
+				"minTaps": 6,
+				"baselineInstallRate": 0.4,
+				"confidence": 0.95,
+				"breakeven": 27.96,
+				"retentionMonths": 12,
+				"condition": "installs === 0 AND taps >= 6 AND spend > $2.20",
+				"derivation": "waste line = 2 × target CPI $1.10; 6 taps is the sample size at which a 40% tap→install keyword would have converted with 95% probability"
+			}
+		},
+		{
+			"file": "snapshot-2026-08-31.json",
 			"kind": "snapshot",
 			"generatedAt": "2026-08-31T21:29:34.068Z",
 			"params": {
