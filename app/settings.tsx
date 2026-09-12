@@ -156,7 +156,7 @@ export default function Settings() {
   // wastes their time.
   async function onIntervals() {
     try {
-      if (!(await isPro())) {
+      if ((await isPro()) !== true) {
         const purchased = await presentPaywall();
         if (!purchased) return;
         recordReviewEvent("purchase");

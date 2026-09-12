@@ -1,5 +1,9 @@
 import { AppState } from "react-native";
-import Purchases, { LOG_LEVEL, type PurchasesOffering } from "react-native-purchases";
+import Purchases, {
+  LOG_LEVEL,
+  type CustomerInfo,
+  type PurchasesOffering,
+} from "react-native-purchases";
 import RevenueCatUI, { PAYWALL_RESULT, type CustomerCenterCallbacks } from "react-native-purchases-ui";
 import { track } from "../analytics";
 
@@ -91,12 +95,58 @@ async function configured(): Promise<boolean> {
   }
 }
 
-export async function isPro(): Promise<boolean> {
+/**
+ * Whether this customer has paid, read off a `CustomerInfo`.
+ *
+ * The entitlement is the answer, and the active subscriptions are the check
+ * on it. Every product this app sells is Pro — there is one tier and nothing
+ * else to buy — so a receipt with a live subscription and no entitlement is not
+ * a customer who bought something lesser, it is a product that was never
+ * attached to the entitlement in the dashboard. That is exactly what shipped:
+ * `pro_weekly` was created for the discount offering on 2026-08-24 and left
+ * off `pro`, so every trial started from the second paywall was a purchase
+ * StoreKit honoured and the app did not. The buyer finished onboarding, killed
+ * the app, and was walled on the next launch by a screen whose buy button then
+ * told them they were already subscribed.
+ *
+ * So a live subscription counts, and the mismatch is reported rather than
+ * silently papered over: `entitlement_missing` names the products, which is
+ * the one line the dashboard needs to be fixed from.
+ */
+export function proFrom(info: CustomerInfo): boolean {
+  if (info.entitlements.active[ENTITLEMENT] !== undefined) return true;
+  const subscribed = info.activeSubscriptions ?? [];
+  if (subscribed.length === 0) return false;
+  const products = [...subscribed].sort().join(",");
+  // Once per product set per process: the customer-info listener fires on every
+  // refresh, and one line in the dashboard is the finding, not a hundred.
+  if (!reportedMissing.has(products)) {
+    reportedMissing.add(products);
+    track("entitlement_missing", { products });
+  }
+  return true;
+}
+
+const reportedMissing = new Set<string>();
+
+/**
+ * Whether this customer has paid, or `null` when the store could not say.
+ *
+ * `null` is not `false`. The SDK throws for "no key in this bundle", "no
+ * network and no cached receipt" and "native module missing", and none of
+ * those is a customer who declined to pay. The launch wall reads the
+ * difference — `isLocked` takes `null` and declines to lock on it — because a
+ * subscriber with no signal at launch must not be shown a paywall for the
+ * thing they are paying for. Screens that gate a single feature may still
+ * treat `null` as "not yet" and offer the sheet; the sheet itself checks the
+ * entitlement before it shows anything.
+ */
+export async function isPro(): Promise<boolean | null> {
   try {
     const info = await Purchases.getCustomerInfo();
-    return info.entitlements.active[ENTITLEMENT] !== undefined;
+    return proFrom(info);
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -220,6 +270,17 @@ export async function presentOffering(identifier?: string): Promise<PaywallOutco
           ? "dismissed"
           : "unavailable";
     track("paywall_closed", { offering, outcome, result });
+    // The sheet's word is StoreKit's word: the charge went through. Whether
+    // the app now thinks so is a separate question, and the one this module
+    // got wrong for two weeks — a product missing from the entitlement makes a
+    // purchase that succeeds and unlocks nothing. Still `purchased`, because
+    // the customer paid and the launch path grants a live subscription anyway;
+    // the report is so the dashboard mistake is seen the day it is made rather
+    // than the day a subscriber writes in.
+    if (outcome === "purchased") {
+      const pro = await isPro();
+      if (pro !== true) track("purchase_without_entitlement", { offering, pro });
+    }
     return outcome;
   } catch {
     // No API key in the build, no network, products not yet fetchable from the
@@ -246,7 +307,7 @@ export async function hasOffering(identifier: string): Promise<boolean> {
 
 export async function restore(): Promise<boolean> {
   const info = await Purchases.restorePurchases();
-  return info.entitlements.active[ENTITLEMENT] !== undefined;
+  return proFrom(info);
 }
 
 /**

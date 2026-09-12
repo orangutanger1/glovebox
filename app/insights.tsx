@@ -116,7 +116,7 @@ export default function Insights() {
    */
   async function onUnlockFuel() {
     try {
-      if (!(await isPro())) {
+      if ((await isPro()) !== true) {
         track("fuel_card_paywall");
         const purchased = await presentPaywall();
         if (!purchased) return;

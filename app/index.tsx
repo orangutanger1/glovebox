@@ -145,7 +145,7 @@ export default function Garage() {
     // unhandled rejection here is a button that does nothing and says nothing.
     if (vehicles.length >= 1) {
       try {
-        if (!(await isPro())) {
+        if ((await isPro()) !== true) {
           const purchased = await presentPaywall();
           if (!purchased) return;
           // Paying is the strongest thing a user can say about an app, and it

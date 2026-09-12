@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Purchases, { type CustomerInfo } from "react-native-purchases";
-import { ENTITLEMENT } from "./index";
+import { proFrom } from "./index";
 
 /**
  * Live entitlement state: `null` until it is known, then whether Pro is active.
@@ -23,7 +23,7 @@ export function useIsPro(): boolean | null {
 
     Purchases.getCustomerInfo()
       .then((info) => {
-        if (live) setPro(info.entitlements.active[ENTITLEMENT] !== undefined);
+        if (live) setPro(proFrom(info));
       })
       // No store, no key, no network. Treating that as "not Pro" matches
       // `isPro` and keeps the paid features gated rather than given away.
@@ -35,7 +35,7 @@ export function useIsPro(): boolean | null {
     // `removeCustomerInfoUpdateListener` — dropping it leaks a setState into an
     // unmounted screen on every entitlement change.
     const listener = (info: CustomerInfo) => {
-      if (live) setPro(info.entitlements.active[ENTITLEMENT] !== undefined);
+      if (live) setPro(proFrom(info));
     };
     Purchases.addCustomerInfoUpdateListener(listener);
 

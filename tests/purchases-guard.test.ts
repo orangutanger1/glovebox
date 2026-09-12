@@ -14,12 +14,21 @@ const presentPaywall = jest.fn(async (_params?: unknown) => "CANCELLED");
 const presentPaywallIfNeeded = jest.fn(async (_params?: unknown) => "CANCELLED");
 const presentCustomerCenter = jest.fn(async (_params?: unknown) => {});
 const getOfferings = jest.fn(async () => ({ all: {} }));
+type Info = { entitlements: { active: Record<string, unknown> }; activeSubscriptions: string[] };
+const FREE: Info = { entitlements: { active: {} }, activeSubscriptions: [] };
+const PRO: Info = { entitlements: { active: { pro: {} } }, activeSubscriptions: ["pro_monthly"] };
+/** A live receipt for a product nobody attached to the entitlement. */
+const ORPHAN: Info = { entitlements: { active: {} }, activeSubscriptions: ["pro_weekly"] };
+const getCustomerInfo = jest.fn(async (): Promise<Info> => FREE);
+const restorePurchases = jest.fn(async (): Promise<Info> => FREE);
 
 jest.mock("react-native-purchases", () => ({
   __esModule: true,
   default: {
     isConfigured: () => isConfigured(),
     getOfferings: () => getOfferings(),
+    getCustomerInfo: () => getCustomerInfo(),
+    restorePurchases: () => restorePurchases(),
     setLogLevel: jest.fn(),
     configure: jest.fn(),
   },
@@ -81,7 +90,14 @@ function appStateChange(next: string): void {
 const mockTrack = jest.fn();
 jest.mock("../src/analytics", () => ({ track: (...args: unknown[]) => mockTrack(...args) }));
 
-import { presentCustomerCenter as openCustomerCenter, presentOffering, presentPaywall as gatePaywall } from "../src/purchases";
+import {
+  isPro,
+  presentCustomerCenter as openCustomerCenter,
+  presentOffering,
+  presentPaywall as gatePaywall,
+  proFrom,
+  restore,
+} from "../src/purchases";
 
 beforeEach(() => {
   isConfigured.mockClear();
@@ -89,6 +105,8 @@ beforeEach(() => {
   presentPaywallIfNeeded.mockClear();
   presentCustomerCenter.mockClear();
   mockTrack.mockClear();
+  getCustomerInfo.mockReset().mockResolvedValue(FREE);
+  restorePurchases.mockReset().mockResolvedValue(FREE);
   mockAppState.currentState = "active";
   mockAppState.listeners = [];
 });
@@ -217,5 +235,84 @@ describe("the paywall stall watchdog", () => {
   test("drops its AppState listener once the sheet has settled", async () => {
     await presentOffering();
     expect(mockAppState.listeners).toHaveLength(0);
+  });
+});
+
+/**
+ * The entitlement, and the receipt that contradicts it.
+ *
+ * `pro_weekly` was created for the discount offering on 2026-08-24 and never
+ * attached to `pro`. StoreKit sold it, RevenueCat granted nothing, and every
+ * trial buyer was walled on their next cold launch by a paywall whose buy button
+ * then said "already subscribed". One tier, so a live subscription is Pro
+ * whatever the entitlement says — and the mismatch is reported, once, so the
+ * dashboard gets fixed instead of the symptom.
+ */
+describe("who counts as Pro", () => {
+  test("the entitlement, when it is there", () => {
+    expect(proFrom(PRO as never)).toBe(true);
+    expect(tracked()).not.toContain("entitlement_missing");
+  });
+
+  test("nobody with no entitlement and no subscription", () => {
+    expect(proFrom(FREE as never)).toBe(false);
+  });
+
+  test("a live subscription with no entitlement is Pro, and is reported once", () => {
+    expect(proFrom(ORPHAN as never)).toBe(true);
+    expect(proFrom(ORPHAN as never)).toBe(true);
+    expect(mockTrack).toHaveBeenCalledWith("entitlement_missing", { products: "pro_weekly" });
+    expect(tracked().filter((e) => e === "entitlement_missing")).toHaveLength(1);
+  });
+
+  test("a receipt with no subscription list at all is read as free, not thrown on", () => {
+    expect(proFrom({ entitlements: { active: {} } } as never)).toBe(false);
+  });
+
+  test("restore reads the receipt the same way", async () => {
+    restorePurchases.mockResolvedValueOnce(ORPHAN);
+    await expect(restore()).resolves.toBe(true);
+  });
+});
+
+/**
+ * `null` is a store that could not answer. It used to be `false`, and `false`
+ * at launch is a paywall — shown to whoever opened the app in a tunnel.
+ */
+describe("isPro", () => {
+  test("answers from the receipt", async () => {
+    getCustomerInfo.mockResolvedValueOnce(PRO);
+    await expect(isPro()).resolves.toBe(true);
+    getCustomerInfo.mockResolvedValueOnce(FREE);
+    await expect(isPro()).resolves.toBe(false);
+  });
+
+  test("is unknown, not free, when the SDK throws", async () => {
+    getCustomerInfo.mockRejectedValueOnce(new Error("There is no singleton instance"));
+    await expect(isPro()).resolves.toBeNull();
+  });
+});
+
+describe("a purchase the entitlement does not reflect", () => {
+  test("is still a purchase, and is reported", async () => {
+    presentPaywall.mockResolvedValueOnce("PURCHASED");
+    getCustomerInfo.mockResolvedValueOnce(FREE);
+    await expect(presentOffering()).resolves.toBe("purchased");
+    expect(mockTrack).toHaveBeenCalledWith("purchase_without_entitlement", {
+      offering: "current",
+      pro: false,
+    });
+  });
+
+  test("is not reported when the entitlement followed the purchase", async () => {
+    presentPaywall.mockResolvedValueOnce("PURCHASED");
+    getCustomerInfo.mockResolvedValueOnce(PRO);
+    await expect(presentOffering()).resolves.toBe("purchased");
+    expect(tracked()).not.toContain("purchase_without_entitlement");
+  });
+
+  test("is not checked for on a dismissal", async () => {
+    await presentOffering();
+    expect(getCustomerInfo).not.toHaveBeenCalled();
   });
 });

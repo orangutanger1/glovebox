@@ -20,9 +20,13 @@ jest.mock("expo-router", () => {
   Stack.Screen = () => null;
   return {
     Stack,
-    useRouter: () => ({ push: () => {}, replace: () => {}, navigate: () => {} }),
+    useRouter: () => ({ push: () => {}, replace: mockReplace, navigate: () => {} }),
   };
 });
+// Prefixed `mock` so the hoisted factories above and below may close over them.
+const mockReplace = jest.fn();
+let mockPro: boolean | null = false;
+let mockHasOffer = false;
 jest.mock("react-native-gesture-handler", () => {
   const { createElement } = require("react");
   return {
@@ -41,9 +45,9 @@ jest.mock("../src/db/client", () => ({
 }));
 jest.mock("../src/purchases", () => ({
   DISCOUNT_OFFERING: "discount",
-  hasOffering: async () => false,
+  hasOffering: async () => mockHasOffer,
   initPurchases: () => {},
-  isPro: async () => false,
+  isPro: async () => mockPro,
 }));
 jest.mock("../src/analytics", () => ({
   identifyFromPurchases: async () => {},
@@ -52,10 +56,12 @@ jest.mock("../src/analytics", () => ({
 }));
 jest.mock("../src/notify", () => ({ rescheduleAll: async () => {} }));
 jest.mock("../src/onboarding", () => ({ isOnboarded: () => true, getOnboardingStep: () => null }));
-jest.mock("../src/paywall", () => ({
-  resolveGrandfathered: () => true,
-  isLocked: () => false,
-}));
+let mockGrandfathered = true;
+jest.mock("../src/paywall", () => {
+  const { isLocked } = jest.requireActual("../src/paywall/state");
+  return { resolveGrandfathered: () => mockGrandfathered, isLocked };
+});
+const mockSyncQuickActions = jest.fn(async (_offer: boolean) => {});
 jest.mock("../src/onboarding/flow", () => ({ resumeRoute: () => "welcome" }));
 jest.mock("../src/review", () => ({ recordReviewEvent: () => {} }));
 jest.mock("../src/winback", () => ({ recordOpen: () => null, getWinbackShownAt: () => null }));
@@ -63,7 +69,7 @@ jest.mock("../src/winback/state", () => ({ shouldOfferWinback: () => false }));
 jest.mock("../src/quickactions", () => ({
   QUICK_ACTION_FEEDBACK: "feedback",
   QUICK_ACTION_TRIAL: "trial",
-  syncQuickActions: async () => {},
+  syncQuickActions: (offer: boolean) => mockSyncQuickActions(offer),
 }));
 jest.mock("../src/feedback", () => ({ openFeedback: async () => {} }));
 jest.mock("../src/i18n/preference", () => ({ bootLanguage: () => "en" }));
@@ -103,5 +109,54 @@ describe("the root layout mounts a navigator on the first commit", () => {
     act(() => {
       tree.unmount();
     });
+  });
+});
+
+/**
+ * What the launch does with the store's answer.
+ *
+ * Three answers, not two. `true` and `false` are a customer; `null` is a store
+ * that could not say — no key in the bundle, no network and no cached receipt —
+ * and it used to be folded into `false`. `false` at launch is the wall, so a
+ * subscriber who opened the app with no signal was shown a paywall for the
+ * thing they were paying for, and the menu offered them a trial.
+ */
+describe("the launch and the entitlement", () => {
+  async function launch(): Promise<void> {
+    let tree!: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(<RootLayout />);
+    });
+    await act(async () => {
+      tree.unmount();
+    });
+  }
+
+  beforeEach(() => {
+    mockReplace.mockClear();
+    mockSyncQuickActions.mockClear();
+    mockGrandfathered = false;
+    mockHasOffer = true;
+  });
+
+  test("walls a customer the store says has not paid", async () => {
+    mockPro = false;
+    await launch();
+    expect(mockReplace).toHaveBeenCalledWith("/onboarding/offer?walled=1");
+    expect(mockSyncQuickActions).toHaveBeenCalledWith(true);
+  });
+
+  test("lets a paying customer in", async () => {
+    mockPro = true;
+    await launch();
+    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockSyncQuickActions).toHaveBeenCalledWith(false);
+  });
+
+  test("does not wall, or offer a trial to, a customer the store could not describe", async () => {
+    mockPro = null;
+    await launch();
+    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockSyncQuickActions).toHaveBeenCalledWith(false);
   });
 });

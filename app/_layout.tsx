@@ -251,7 +251,11 @@ export default function RootLayout() {
     const lastShownAt = getWinbackShownAt();
     Promise.all([isPro(), hasOffering(DISCOUNT_OFFERING)])
       .then(([pro, hasOffer]) => {
-        void syncQuickActions(!pro && hasOffer);
+        // `null` is a store that could not answer, and everything below reads
+        // it the same way: no wall, no trial in the menu, no win-back. Each of
+        // those is an ask, and an ask made of someone who may already be paying
+        // is the one mistake worth more than the sale.
+        void syncQuickActions(pro === false && hasOffer);
 
         // The wall, for a user who has no entitlement and was never promised a
         // free app. It comes before the win-back on purpose: both are launch
@@ -276,7 +280,7 @@ export default function RootLayout() {
           lastOpenAt: previousOpen,
           lastShownAt,
           now: new Date(),
-          isPro: pro,
+          isPro: pro !== false,
           hasOffer,
         });
         if (due) router.replace("/winback");

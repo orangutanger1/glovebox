@@ -109,3 +109,11 @@ test("removes its listener on unmount", async () => {
   unmount();
   expect(mockListeners).toHaveLength(0);
 });
+
+test("a live subscription with no entitlement is Pro — the receipt outranks the dashboard", async () => {
+  // `pro_weekly` shipped unattached to `pro`; Settings must not sell a trial
+  // to the person paying for one.
+  mockCustomerInfo = Promise.resolve({ entitlements: { active: {} }, activeSubscriptions: ["pro_weekly"] });
+  const { seen } = await renderHook();
+  expect(seen[seen.length - 1]).toBe(true);
+});
