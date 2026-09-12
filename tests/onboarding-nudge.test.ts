@@ -34,7 +34,12 @@ import {
   cancelOnboardingNudges,
   RESUME_NUDGE_IDS,
 } from "../src/notify/resume";
-import { completeOnboarding, resetOnboarding, setOnboardingVehicleId } from "../src/onboarding";
+import {
+  completeOnboarding,
+  resetOnboarding,
+  setOnboardingStep,
+  setOnboardingVehicleId,
+} from "../src/onboarding";
 import { createVehicle } from "../src/db/vehicles";
 import { t } from "../src/i18n";
 
@@ -85,11 +90,85 @@ test("a finished flow is nudged about nothing", async () => {
   expect(cancelled).toEqual(RESUME_NUDGE_IDS);
 });
 
-test("rescheduling clears the previous pair rather than stacking a second", async () => {
+const HOUR = 60 * 60 * 1000;
+
+test("moving a step clears the previous pair rather than stacking a second", async () => {
+  setOnboardingStep("notify");
   await scheduleOnboardingNudges(NOW);
+  setOnboardingStep("drive");
   await scheduleOnboardingNudges(NOW + 60_000);
   expect(cancelled).toEqual([...RESUME_NUDGE_IDS, ...RESUME_NUDGE_IDS]);
   expect(scheduled).toHaveLength(4);
+  // Still two pending, and both counted from the second exit.
+  expect(scheduled.slice(2).map((s) => s.trigger.date.getTime() - (NOW + 60_000))).toEqual([
+    2 * HOUR,
+    24 * HOUR,
+  ]);
+});
+
+/**
+ * The bug this file exists to hold shut.
+ *
+ * `rescheduleAll` calls this on every cold start, so a user who abandons the
+ * flow and then opens the app — because the first nudge told them to — used to
+ * have the clock reset by that very launch, and be nudged again two hours
+ * later, indefinitely. Two pending at a time, unbounded deliveries.
+ */
+test("relaunching on the same step leaves the pending pair alone", async () => {
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+  expect(scheduled).toHaveLength(2);
+
+  // Three launches, no progress. Nothing cancelled, nothing armed.
+  scheduled.length = 0;
+  cancelled.length = 0;
+  await scheduleOnboardingNudges(NOW + 5 * 60_000);
+  await scheduleOnboardingNudges(NOW + 30 * 60_000);
+  await scheduleOnboardingNudges(NOW + 90 * 60_000);
+  expect(scheduled).toHaveLength(0);
+  expect(cancelled).toHaveLength(0);
+});
+
+test("a launch after the first nudge fired is owed the second, not a fresh pair", async () => {
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+
+  // The first nudge fires at +2h and the user opens the app from it, then gets
+  // one screen further before quitting again.
+  scheduled.length = 0;
+  setOnboardingStep("drive");
+  await scheduleOnboardingNudges(NOW + 3 * HOUR);
+
+  expect(scheduled).toHaveLength(1);
+  expect(scheduled[0].identifier).toBe(RESUME_NUDGE_IDS[1]);
+  expect(scheduled[0].trigger.date.getTime() - (NOW + 3 * HOUR)).toBe(24 * HOUR);
+});
+
+test("two is the lifetime cap, however many times the app is opened", async () => {
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+
+  scheduled.length = 0;
+  // A day and a half later both have fired. The user keeps opening the app and
+  // keeps moving through the flow without finishing it; nothing more is sent.
+  for (const [i, at] of [36, 48, 72, 96].entries()) {
+    setOnboardingStep(`step-${i}`);
+    await scheduleOnboardingNudges(NOW + at * HOUR);
+  }
+  expect(scheduled).toHaveLength(0);
+});
+
+test("a replay starts the quota over", async () => {
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+  await scheduleOnboardingNudges(NOW + 48 * HOUR);
+  completeOnboarding();
+  await scheduleOnboardingNudges(NOW + 49 * HOUR);
+
+  scheduled.length = 0;
+  resetOnboarding();
+  await scheduleOnboardingNudges(NOW + 50 * HOUR);
+  expect(scheduled).toHaveLength(2);
 });
 
 test("finishing cancels by identifier, leaving the service reminders alone", async () => {

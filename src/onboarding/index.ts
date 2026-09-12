@@ -9,8 +9,11 @@ import {
   ONBOARDING_VEHICLE_KEY,
   ONBOARDING_ANSWERS_KEY,
   ONBOARDING_NAME_KEY,
+  ONBOARDING_NUDGE_KEY,
   normalizeName,
+  parseNudgeState,
   type Answers,
+  type NudgeState,
 } from "./state";
 
 export function isOnboarded(): boolean {
@@ -65,6 +68,26 @@ export function setOnboardingName(raw: string): void {
 }
 
 /**
+ * What the app has already sent an unfinished flow, and when.
+ *
+ * Null until the first pair is armed, and null again once the flow is finished
+ * or replayed. Every reader treats null as "nothing sent yet".
+ */
+export function getNudgeState(): NudgeState | null {
+  return parseNudgeState(getState(ONBOARDING_NUDGE_KEY));
+}
+
+export function setNudgeState(state: NudgeState): void {
+  setState(ONBOARDING_NUDGE_KEY, JSON.stringify(state));
+}
+
+/** Dropped rather than zeroed, so "never armed" and "armed at epoch zero" stay
+ *  distinguishable to anything reading the row directly. */
+export function clearNudgeState(): void {
+  getDb().runSync("DELETE FROM app_state WHERE key = ?", [ONBOARDING_NUDGE_KEY]);
+}
+
+/**
  * A sentence in two versions: with the driver's name in it, and without.
  *
  * Every string the name appears in needs both, because the name cannot be
@@ -116,8 +139,13 @@ export function resetOnboarding(): void {
   // run's vehicle must stop being the one every step edits — and the previous
   // run's answers must stop describing it, or the replay opens on a symptoms
   // screen built from a quiz this user has not taken yet.
-  getDb().runSync("DELETE FROM app_state WHERE key IN (?, ?)", [
+  //
+  // The nudge record goes with them: a replay is a fresh run of the flow, and
+  // the two resume nudges are counted per run. Left behind, a user who had
+  // already been nudged twice would start the replay with the quota spent.
+  getDb().runSync("DELETE FROM app_state WHERE key IN (?, ?, ?)", [
     ONBOARDING_VEHICLE_KEY,
     ONBOARDING_ANSWERS_KEY,
+    ONBOARDING_NUDGE_KEY,
   ]);
 }

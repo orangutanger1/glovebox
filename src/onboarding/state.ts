@@ -59,6 +59,55 @@ export function normalizeName(raw: string): string | null {
 }
 
 /**
+ * The bookkeeping behind the two resume nudges.
+ *
+ * The nudges themselves are two pending notifications and nothing else, which
+ * was the whole bug: the scheduler cancels and re-arms from the current moment,
+ * and it is called from `rescheduleAll` on every cold start, so an abandoned
+ * flow was nudged, opened, re-armed, nudged again, for as long as the user kept
+ * opening the app. Two pending at a time, unbounded deliveries.
+ *
+ * iOS will not tell us what it delivered, so this is the app's own record of
+ * it: when the current pair was armed, the step it was armed for, and how many
+ * nudges had already gone out before that arming. `before` is frozen at arm
+ * time so that recounting the elapsed ones on each launch is idempotent —
+ * counting from `armedAt` every time and adding gives the same answer twice.
+ */
+export const ONBOARDING_NUDGE_KEY = "onboarding_nudge";
+
+export type NudgeState = {
+  /** When the pair currently pending was scheduled. */
+  armedAt: number;
+  /** The step the user was on then. A different step means real progress since,
+   *  which is the only thing that earns a re-arm. */
+  step: string | null;
+  /** Nudges delivered before `armedAt`, so the lifetime count survives one. */
+  before: number;
+};
+
+/**
+ * Tolerant for the same reason `parseAnswers` is: written by one build, read by
+ * the next, and on the launch path. A row that cannot be read means "never
+ * armed", which arms a fresh pair — the failure that sends one extra
+ * notification, not the one that sends an unbounded number.
+ */
+export function parseNudgeState(raw: string | null): NudgeState | null {
+  if (!raw) return null;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return null;
+  }
+  if (typeof parsed !== "object" || parsed === null) return null;
+  const record = parsed as Record<string, unknown>;
+  if (typeof record.armedAt !== "number" || !Number.isFinite(record.armedAt)) return null;
+  const before = typeof record.before === "number" && record.before >= 0 ? record.before : 0;
+  const step = typeof record.step === "string" ? record.step : null;
+  return { armedAt: record.armedAt, step, before: Math.floor(before) };
+}
+
+/**
  * The quiz answers that are not rows in another table.
  *
  * Year, make, model, mileage and the last service all land in `vehicles` and
