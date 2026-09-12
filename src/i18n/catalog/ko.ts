@@ -510,17 +510,17 @@ export const ko: Fragment = {
   "settings.replay.confirm": "다시 보기",
 
   // system
-  "system.notify.title": "\ub0b4 {vehicle}: {service} \uae30\ud55c\uc774\uc5d0\uc694",
-  "system.notify.title.named": "{name}님, {vehicle}: {service} 기한이에요",
-  "system.notify.body": "{date}에 마지막으로 했어요.",
+  "system.notify.title": "{service} 기한이에요",
+  "system.notify.title.named": "{name}님, {service} 기한이에요",
+  "system.notify.body": "{vehicle} · {date}에 마지막으로 했어요.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "내 {vehicle}: 설정이 아직 안 끝났어요",
-  "system.resume.first.title.named": "{name}님, {vehicle}: 설정이 아직 안 끝났어요",
-  "system.resume.first.body": "1분이면 정비 일정이 완성돼요.",
-  "system.resume.second.title": "내 {vehicle}: 아직 기다리는 중이에요",
-  "system.resume.second.title.named": "{name}님, {vehicle}: 아직 기다리는 중이에요",
-  "system.resume.second.body": "입력한 내용은 그대로 있어요. 이어서 하세요.",
+  "system.resume.first.title": "설정이 아직 안 끝났어요",
+  "system.resume.first.title.named": "{name}님, 설정이 아직 안 끝났어요",
+  "system.resume.first.body": "{vehicle} · 1분이면 정비 일정이 완성돼요.",
+  "system.resume.second.title": "이어서 하세요",
+  "system.resume.second.title.named": "{name}님, 이어서 하세요",
+  "system.resume.second.body": "{vehicle} · 입력한 내용은 그대로 있어요.",
 
   "system.notify.when.today": "\uc624\ub298",
   "system.notify.when.tomorrow": "\ub0b4\uc77c",

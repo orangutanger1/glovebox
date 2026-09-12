@@ -75,11 +75,19 @@ export async function rescheduleAll(): Promise<void> {
         // only option iOS gives — a pending notification is a fixed string —
         // and is harmless here: `rescheduleAll` runs on every launch and after
         // every write, so a name typed today is in every reminder by tomorrow.
+        // The service leads, because it is the payload and the title is the
+        // line iOS truncates: a name, a user-typed vehicle and "Brake
+        // Inspection" ran to seventy-odd characters against the forty iOS
+        // gives, and the word that fell off the end was always the service.
+        // The car moves to the body, which gets two lines and is not competing
+        // with the driver's name for them.
         title: tNamed("system.notify.title", {
-          vehicle: vehicleSentenceName(reminder.vehicleName),
           service: serviceName(reminder.serviceType),
         }),
-        body: t("system.notify.body", { date: formatDate(reminder.lastPerformedAt) }),
+        body: t("system.notify.body", {
+          vehicle: vehicleSentenceName(reminder.vehicleName),
+          date: formatDate(reminder.lastPerformedAt),
+        }),
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(reminder.dueAt) },
     });

@@ -11,17 +11,17 @@ import type { Fragment } from "../types";
  * translated, which is the half a person actually reads.
  */
 export const system: Fragment = {
-  "system.notify.title": "Your {vehicle}\u2019s {service} is due",
-  "system.notify.title.named": "{name}, your {vehicle}’s {service} is due",
-  "system.notify.body": "Last done {date}.",
+  "system.notify.title": "{service} is due",
+  "system.notify.title.named": "{name}, your {service} is due",
+  "system.notify.body": "{vehicle} · Last done {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Your {vehicle}: setup is half done",
-  "system.resume.first.title.named": "{name}, your {vehicle}: setup is half done",
-  "system.resume.first.body": "One more minute and the service schedule is ready.",
-  "system.resume.second.title": "Your {vehicle} is still waiting",
-  "system.resume.second.title.named": "{name}, your {vehicle} is still waiting",
-  "system.resume.second.body": "Nothing you entered was lost. Pick up where you stopped.",
+  "system.resume.first.title": "Setup is half done",
+  "system.resume.first.title.named": "{name}, setup is half done",
+  "system.resume.first.body": "{vehicle} · One more minute and the service schedule is ready.",
+  "system.resume.second.title": "Pick up where you stopped",
+  "system.resume.second.title.named": "{name}, pick up where you stopped",
+  "system.resume.second.body": "{vehicle} · Nothing you entered was lost.",
 
   "system.notify.when.today": "Today",
   "system.notify.when.tomorrow": "Tomorrow",

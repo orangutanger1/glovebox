@@ -151,8 +151,11 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
     await Notifications.scheduleNotificationAsync({
       identifier: nudge.id,
       content: {
-        title: tNamed(`system.resume.${nudge.key}.title`, { vehicle: vehicleName() }),
-        body: t(`system.resume.${nudge.key}.body`),
+        // Same shape as a service reminder, for the same reason: what the
+        // notification wants is in the title, and the car — which is as long
+        // as the user made it — is in the body.
+        title: tNamed(`system.resume.${nudge.key}.title`),
+        body: t(`system.resume.${nudge.key}.body`, { vehicle: vehicleName() }),
       },
       trigger: {
         type: SchedulableTriggerInputTypes.DATE,

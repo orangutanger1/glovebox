@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Image, View, Text, useWindowDimensions } from "react-native";
+import { View, Text } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
 import { Badge } from "../../src/design/Badge";
@@ -7,7 +7,7 @@ import { NotifyBanner } from "../../src/design/NotifyBanner";
 import { Button } from "../../src/design/Button";
 import { NotifyShade } from "../../src/design/NotifyShade";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, formatDueIn, getLanguage, t } from "../../src/i18n";
+import { formatDate, formatDueIn, t } from "../../src/i18n";
 import { vehicleSentenceName } from "../../src/format";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
@@ -23,17 +23,6 @@ import { trackNotificationPermission } from "../../src/analytics";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
-
-const NOTIFICATION = require("../../assets/onboarding/notification.png");
-
-/** The art is one fixed English still, so it is only ever shown to a reader of
- *  English. Everything else gets the banner drawn in code, in its own language,
- *  from its own car. */
-const ART_LANGUAGES = ["en", "en-GB", "en-AU", "en-CA"];
-
-/** The still's own pixel dimensions, which is the only place its shape is
- *  stated. The screen sizes it from these rather than trusting the file. */
-const ART = { width: 1100, height: 248 };
 
 /** The status is a state name the schedule computes, not copy: it reaches the
  *  faceplate through a key so no language is stuck with the English word. */
@@ -56,18 +45,18 @@ const SHOWN = 6;
  * prompt, opt-in collapses when it fires without context, and "allow
  * notifications?" on a screen of its own is context-free by construction.
  *
- * What sits on the glass is a picture of the reminder, seated in a dimmed
- * notification stack with the permission's current state stamped under it. The
- * art is a still of the real thing: the sentence on it is `system.notify.title`
- * and `system.notify.body` — the exact two lines the scheduler sends — over the
- * app's own icon, so nothing is promised here that the app does not deliver.
+ * What sits on the glass is the reminder itself, drawn in code and seated in a
+ * dimmed notification stack with the permission's current state stamped under
+ * it: `system.notify.title` and `system.notify.body`, the exact two lines the
+ * scheduler sends, rendered from `nextReminder` against this car's own records.
+ * Nothing is promised here that the app does not deliver.
  *
- * The still is English, so English is the only place it is shown. Every other
- * language draws the same banner in code instead — same layout, same two lines,
- * rendered from `nextReminder` through the catalog keys the scheduler will
- * actually send, against this car's own records. An English banner in the
- * middle of a French screen is worse than a banner that is one pixel-hint less
- * polished, and a screen that says "12 services on a schedule" in French over
+ * English used to get a fixed still of that banner instead, and every other
+ * language the drawn one. The still went when the copy was restructured to stop
+ * iOS truncating the service off the end of the title — a picture of a sentence
+ * the app no longer sends is the one thing this screen cannot show. Drawing it
+ * in every language was already the better half of that arrangement: it follows
+ * the catalog, and a screen that says "12 services on a schedule" in French over
  * "Last done May 4th" is the app losing the reader's language mid-sentence.
  *
  * A car whose services all carry mileage-only intervals has no next
@@ -90,20 +79,8 @@ export default function OnboardingNotify() {
   const [granted, setGranted] = useState<boolean | null>(null);
 
   const unit = getDistanceUnit();
-  const art = ART_LANGUAGES.includes(getLanguage());
-  // Measured, not expressed as a percentage. A percentage width plus an aspect
-  // ratio left the image at its intrinsic 1100pt, hanging a banner off both
-  // edges of the phone at four times the height it should be; an explicit
-  // number cannot be ignored. The gutter is the frame's own, doubled.
-  const { width: screenWidth } = useWindowDimensions();
-  const artWidth = Math.max(0, screenWidth - tokens.space.lg * 2);
-  // Only read for the locales that draw their own banner; the still needs no
-  // data at all. Once per mount either way — the records cannot change while
-  // the flow is on screen.
-  const reminder = useMemo(
-    () => (art ? undefined : nextReminder(vehicle?.id)),
-    [art, vehicle?.id]
-  );
+  // Once per mount — the records cannot change while the flow is on screen.
+  const reminder = useMemo(() => nextReminder(vehicle?.id), [vehicle?.id]);
 
   // Whether the stamp under the banner says reminders are off. Null until iOS
   // answers, and nothing is printed on a guess.
@@ -160,32 +137,19 @@ export default function OnboardingNotify() {
       })}
       footer={<Button label={t("offer.plan.cta")} onPress={onRemindMe} disabled={busy} />}
     >
-      {art || reminder ? (
+      {reminder ? (
         <View style={{ gap: tokens.space.lg }}>
           <NotifyShade>
-            {art ? (
-              <Image
-                source={NOTIFICATION}
-                style={{
-                  width: artWidth,
-                  height: Math.round((artWidth * ART.height) / ART.width),
-                }}
-                resizeMode="contain"
-                accessibilityIgnoresInvertColors
-                accessibilityLabel={t("offer.notify.title")}
-              />
-            ) : (
-              <NotifyBanner
-                title={t("system.notify.title", {
-                  vehicle: vehicleSentenceName(reminder!.vehicleName),
-                  service: serviceName(reminder!.serviceType),
-                })}
-                body={t("system.notify.body", {
-                  date: formatDate(reminder!.lastPerformedAt),
-                })}
-                when={formatDueIn(reminder!.dueAt)}
-              />
-            )}
+            <NotifyBanner
+              title={t("system.notify.title", {
+                service: serviceName(reminder.serviceType),
+              })}
+              body={t("system.notify.body", {
+                vehicle: vehicleSentenceName(reminder.vehicleName),
+                date: formatDate(reminder.lastPerformedAt),
+              })}
+              when={formatDueIn(reminder.dueAt)}
+            />
           </NotifyShade>
           {granted === false ? <RemindersOff /> : null}
         </View>

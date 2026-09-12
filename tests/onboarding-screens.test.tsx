@@ -751,6 +751,14 @@ test("the notify screen asks over a picture of the reminder itself", () => {
     odometer: 112000,
   });
   setOnboardingVehicleId(car.id);
+  // A car with a dated service has a next notification, which is what the
+  // banner is a picture of. Without one the screen shows the schedule instead,
+  // and that fallback has its own test below.
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
+  });
 
   const tree = render(OnboardingNotify);
   const printed = texts(tree);
@@ -760,17 +768,17 @@ test("the notify screen asks over a picture of the reminder itself", () => {
     "12 services on a schedule for your 2016 Subaru Outback.",
   );
 
-  // The evidence is the still of the banner, seated between two dimmed
-  // neighbours so it reads as a notification and not as a feature card. The
-  // schedule list it replaced was six service names between the promise and the
-  // only control on the screen.
-  const images = tree.root.findAll(
-    // Host nodes only: the composite `Image` and the host it renders both
-    // carry these props, and counting both says two banners where there is one.
-    (n) => typeof n.type === "string" && n.props.resizeMode === "contain",
-  );
-  expect(images).toHaveLength(1);
-  expect(images[0].props.accessibilityLabel).toBe("Never miss a service.");
+  // The evidence is the banner itself, drawn from the catalog keys the
+  // scheduler sends and seated between two dimmed neighbours so it reads as a
+  // notification and not as a feature card. It used to be a fixed English
+  // still; that went when the copy was restructured, because a picture of a
+  // sentence the app no longer sends is the one thing this screen cannot show.
+  // The schedule list both replaced was six service names between the promise
+  // and the only control on the screen.
+  expect(printed).toContain("Oil Change is due");
+  // The car is in the body, where iOS has room for it.
+  expect(printed.join(" ")).toContain("2016 Subaru Outback \u00b7 Last done");
+  expect(printed.join(" ")).not.toMatch(/\{\w+\}/);
 
   // One control, and one line of grey under the heading. The "Do it later"
   // deferral is gone: iOS's own alert carries the decline this screen used to
@@ -822,7 +830,7 @@ async function pressAndSettle(
   });
 }
 
-test("a language the still cannot speak draws the banner in code instead", () => {
+test("the banner is drawn in the reader's own language, from their own car", () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     year: 2016,
@@ -838,14 +846,19 @@ test("a language the still cannot speak draws the banner in code instead", () =>
   setLanguage("fr");
   try {
     const tree = render(OnboardingNotify);
-    // No English still on a French screen: the banner is rendered, from this
-    // car's own record, through the keys the scheduler actually sends.
+    // Never a still, in any language: the banner is rendered from this car's
+    // own record, through the keys the scheduler actually sends. An English
+    // picture on a French screen was the reason the drawn path existed, and a
+    // picture of superseded copy is why it is now the only path.
     expect(
       tree.root.findAll(
         (n) => typeof n.type === "string" && n.props.resizeMode === "contain",
       ),
     ).toHaveLength(0);
-    expect(texts(tree).join(" ")).toContain("2016 Subaru Outback");
+    const french = texts(tree).join(" ");
+    expect(french).toContain("2016 Subaru Outback");
+    expect(french).toContain("\u00e0 faire");
+    expect(french).not.toContain("is due");
   } finally {
     setLanguage("en");
   }

@@ -581,17 +581,17 @@ export const pl: Fragment = {
   "settings.replay.confirm": "Powtórz",
 
   // system
-  "system.notify.title": "Tw\u00f3j {vehicle}: {service} \u2014 termin",
-  "system.notify.title.named": "{name}, {vehicle}: {service} — termin",
-  "system.notify.body": "Ostatni raz: {date}.",
+  "system.notify.title": "{service} — termin",
+  "system.notify.title.named": "{name}, {service} — termin",
+  "system.notify.body": "{vehicle} · Ostatni raz: {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Twój {vehicle}: konfiguracja w połowie",
-  "system.resume.first.title.named": "{name}, {vehicle}: konfiguracja w połowie",
-  "system.resume.first.body": "Jeszcze minuta i plan przeglądów będzie gotowy.",
-  "system.resume.second.title": "Twój {vehicle}: wciąż czeka",
-  "system.resume.second.title.named": "{name}, {vehicle}: wciąż czeka",
-  "system.resume.second.body": "Nic z wpisanych danych nie przepadło. Wystarczy wrócić do miejsca, w którym przerwano.",
+  "system.resume.first.title": "Konfiguracja w połowie",
+  "system.resume.first.title.named": "{name}, konfiguracja w połowie",
+  "system.resume.first.body": "{vehicle} · Jeszcze minuta i plan przeglądów będzie gotowy.",
+  "system.resume.second.title": "Wróć do miejsca, w którym przerwano",
+  "system.resume.second.title.named": "{name}, wróć do miejsca, w którym przerwano",
+  "system.resume.second.body": "{vehicle} · Nic z wpisanych danych nie przepadło.",
 
   "system.notify.when.today": "Dzi\u015b",
   "system.notify.when.tomorrow": "Jutro",

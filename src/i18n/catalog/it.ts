@@ -511,17 +511,17 @@ export const it: Fragment = {
   "settings.replay.cancel": "Annulla",
   "settings.replay.confirm": "Rivedi",
 
-  "system.notify.title": "Il tuo {vehicle}: {service} da fare",
-  "system.notify.title.named": "{name}, il tuo {vehicle}: {service} da fare",
-  "system.notify.body": "Ultima volta {date}.",
+  "system.notify.title": "{service} da fare",
+  "system.notify.title.named": "{name}, {service} da fare",
+  "system.notify.body": "{vehicle} · Ultima volta {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Il tuo {vehicle}: configurazione a metà",
-  "system.resume.first.title.named": "{name}, il tuo {vehicle}: configurazione a metà",
-  "system.resume.first.body": "Ancora un minuto e il piano di manutenzione è pronto.",
-  "system.resume.second.title": "Il tuo {vehicle} sta ancora aspettando",
-  "system.resume.second.title.named": "{name}, il tuo {vehicle} sta ancora aspettando",
-  "system.resume.second.body": "Non hai perso nulla di ciò che hai inserito. Riprendi da dove eri.",
+  "system.resume.first.title": "Configurazione a metà",
+  "system.resume.first.title.named": "{name}, configurazione a metà",
+  "system.resume.first.body": "{vehicle} · Ancora un minuto e il piano di manutenzione è pronto.",
+  "system.resume.second.title": "Riprendi da dove eri",
+  "system.resume.second.title.named": "{name}, riprendi da dove eri",
+  "system.resume.second.body": "{vehicle} · Non hai perso nulla di ciò che hai inserito.",
 
   "system.notify.when.today": "Oggi",
   "system.notify.when.tomorrow": "Domani",

@@ -484,17 +484,17 @@ export const ja: Fragment = {
   "settings.replay.confirm": "やり直す",
 
   // system
-  "system.notify.title": "\u304a\u4f7f\u3044\u306e{vehicle}\uff1a{service}\u306e\u6642\u671f\u3067\u3059",
-  "system.notify.title.named": "{name}さん、{vehicle}：{service}の時期です",
-  "system.notify.body": "前回は{date}です。",
+  "system.notify.title": "{service}の時期です",
+  "system.notify.title.named": "{name}さん、{service}の時期です",
+  "system.notify.body": "{vehicle}・前回は{date}です。",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "お使いの{vehicle}：設定が途中です",
-  "system.resume.first.title.named": "{name}さん、{vehicle}：設定が途中です",
-  "system.resume.first.body": "あと1分でメンテナンス計画が完成します。",
-  "system.resume.second.title": "お使いの{vehicle}：まだお待ちしています",
-  "system.resume.second.title.named": "{name}さん、{vehicle}：まだお待ちしています",
-  "system.resume.second.body": "入力した内容は残っています。続きからどうぞ。",
+  "system.resume.first.title": "設定が途中です",
+  "system.resume.first.title.named": "{name}さん、設定が途中です",
+  "system.resume.first.body": "{vehicle}・あと1分でメンテナンス計画が完成します。",
+  "system.resume.second.title": "続きからどうぞ",
+  "system.resume.second.title.named": "{name}さん、続きからどうぞ",
+  "system.resume.second.body": "{vehicle}・入力した内容は残っています。",
 
   "system.notify.when.today": "\u4eca\u65e5",
   "system.notify.when.tomorrow": "\u660e\u65e5",

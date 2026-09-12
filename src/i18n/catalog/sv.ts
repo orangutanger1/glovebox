@@ -517,17 +517,17 @@ export const sv: Fragment = {
   "settings.replay.cancel": "Avbryt",
   "settings.replay.confirm": "Gör igen",
 
-  "system.notify.title": "Din {vehicle}: dags f\u00f6r {service}",
-  "system.notify.title.named": "{name}, din {vehicle}: dags för {service}",
-  "system.notify.body": "Gjordes senast {date}.",
+  "system.notify.title": "Dags för {service}",
+  "system.notify.title.named": "{name}, dags för {service}",
+  "system.notify.body": "{vehicle} · Gjordes senast {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Din {vehicle}: inställningen är halvklar",
-  "system.resume.first.title.named": "{name}, din {vehicle}: inställningen är halvklar",
-  "system.resume.first.body": "En minut till så är serviceplanen klar.",
-  "system.resume.second.title": "Din {vehicle} väntar fortfarande",
-  "system.resume.second.title.named": "{name}, din {vehicle} väntar fortfarande",
-  "system.resume.second.body": "Inget av det du fyllde i är borta. Fortsätt där du slutade.",
+  "system.resume.first.title": "Inställningen är halvklar",
+  "system.resume.first.title.named": "{name}, inställningen är halvklar",
+  "system.resume.first.body": "{vehicle} · En minut till så är serviceplanen klar.",
+  "system.resume.second.title": "Fortsätt där du slutade",
+  "system.resume.second.title.named": "{name}, fortsätt där du slutade",
+  "system.resume.second.body": "{vehicle} · Inget av det du fyllde i är borta.",
 
   "system.notify.when.today": "Idag",
   "system.notify.when.tomorrow": "I morgon",

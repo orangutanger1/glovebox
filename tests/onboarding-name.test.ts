@@ -78,9 +78,10 @@ test("tNamed picks the named sentence only when there is a name to put in it", (
 
 test("the named reminder keeps every other value the unnamed one carries", () => {
   setOnboardingName("Alex");
-  const title = tNamed("system.notify.title", { vehicle: "2016 Outback", service: "Oil Change" });
+  // The vehicle moved to the body when the title started truncating; what the
+  // named title still has to carry is the name and the service.
+  const title = tNamed("system.notify.title", { service: "Oil Change" });
   expect(title).toContain("Alex");
-  expect(title).toContain("2016 Outback");
   expect(title).toContain("Oil Change");
   expect(title).not.toMatch(/\{\w+\}/);
 });

@@ -508,17 +508,17 @@ export const ptBR: Fragment = {
   "settings.replay.cancel": "Cancelar",
   "settings.replay.confirm": "Refazer",
 
-  "system.notify.title": "Seu {vehicle}: {service} est\u00e1 na hora",
-  "system.notify.title.named": "{name}, seu {vehicle}: {service} está na hora",
-  "system.notify.body": "Última vez: {date}.",
+  "system.notify.title": "{service} está na hora",
+  "system.notify.title.named": "{name}, {service} está na hora",
+  "system.notify.body": "{vehicle} · Última vez: {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Seu {vehicle}: configuração pela metade",
-  "system.resume.first.title.named": "{name}, seu {vehicle}: configuração pela metade",
-  "system.resume.first.body": "Mais um minuto e o plano de manutenção fica pronto.",
-  "system.resume.second.title": "Seu {vehicle} ainda está esperando",
-  "system.resume.second.title.named": "{name}, seu {vehicle} ainda está esperando",
-  "system.resume.second.body": "Nada do que você digitou se perdeu. Continue de onde parou.",
+  "system.resume.first.title": "Configuração pela metade",
+  "system.resume.first.title.named": "{name}, configuração pela metade",
+  "system.resume.first.body": "{vehicle} · Mais um minuto e o plano de manutenção fica pronto.",
+  "system.resume.second.title": "Continue de onde parou",
+  "system.resume.second.title.named": "{name}, continue de onde parou",
+  "system.resume.second.body": "{vehicle} · Nada do que você digitou se perdeu.",
 
   "system.notify.when.today": "Hoje",
   "system.notify.when.tomorrow": "Amanh\u00e3",

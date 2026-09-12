@@ -527,17 +527,17 @@ export const de: Fragment = {
   "settings.replay.confirm": "Wiederholen",
 
   // system
-  "system.notify.title": "Ihr {vehicle}: {service} ist f\u00e4llig",
-  "system.notify.title.named": "{name}, {vehicle}: {service} ist fällig",
-  "system.notify.body": "Zuletzt {date}.",
+  "system.notify.title": "{service} ist fällig",
+  "system.notify.title.named": "{name}, {service} ist fällig",
+  "system.notify.body": "{vehicle} · Zuletzt {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Ihr {vehicle}: Einrichtung halb fertig",
-  "system.resume.first.title.named": "{name}, {vehicle}: Einrichtung halb fertig",
-  "system.resume.first.body": "Noch eine Minute, dann steht der Wartungsplan.",
-  "system.resume.second.title": "Ihr {vehicle} wartet noch",
-  "system.resume.second.title.named": "{name}, {vehicle} wartet noch",
-  "system.resume.second.body": "Nichts von Ihren Eingaben ist verloren. Machen Sie einfach weiter.",
+  "system.resume.first.title": "Einrichtung halb fertig",
+  "system.resume.first.title.named": "{name}, Einrichtung halb fertig",
+  "system.resume.first.body": "{vehicle} · Noch eine Minute, dann steht der Wartungsplan.",
+  "system.resume.second.title": "Machen Sie einfach weiter",
+  "system.resume.second.title.named": "{name}, machen Sie einfach weiter",
+  "system.resume.second.body": "{vehicle} · Nichts von Ihren Eingaben ist verloren.",
 
   "system.notify.when.today": "Heute",
   "system.notify.when.tomorrow": "Morgen",

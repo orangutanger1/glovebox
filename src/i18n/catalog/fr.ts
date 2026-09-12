@@ -537,17 +537,17 @@ export const fr: Fragment = {
   "settings.replay.confirm": "Revoir",
 
   // system
-  "system.notify.title": "Votre {vehicle}\u00a0: {service} \u00e0 faire",
-  "system.notify.title.named": "{name}, votre {vehicle} : {service} à faire",
-  "system.notify.body": "Dernière fois le {date}.",
+  "system.notify.title": "{service} à faire",
+  "system.notify.title.named": "{name}, {service} à faire",
+  "system.notify.body": "{vehicle} · Dernière fois le {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Votre {vehicle} : configuration inachevée",
-  "system.resume.first.title.named": "{name}, votre {vehicle} : configuration inachevée",
-  "system.resume.first.body": "Encore une minute et le programme d’entretien est prêt.",
-  "system.resume.second.title": "Votre {vehicle} attend toujours",
-  "system.resume.second.title.named": "{name}, votre {vehicle} attend toujours",
-  "system.resume.second.body": "Rien de ce que vous avez saisi n’est perdu. Reprenez où vous en étiez.",
+  "system.resume.first.title": "Configuration inachevée",
+  "system.resume.first.title.named": "{name}, configuration inachevée",
+  "system.resume.first.body": "{vehicle} · Encore une minute et le programme d’entretien est prêt.",
+  "system.resume.second.title": "Reprenez où vous en étiez",
+  "system.resume.second.title.named": "{name}, reprenez où vous en étiez",
+  "system.resume.second.body": "{vehicle} · Rien de ce que vous avez saisi n’est perdu.",
 
   "system.notify.when.today": "Aujourd\u2019hui",
   "system.notify.when.tomorrow": "Demain",

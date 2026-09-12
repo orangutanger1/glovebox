@@ -146,17 +146,17 @@ export const nl: Fragment = {
   "language.system": "Systeem",
 
   // system
-  "system.notify.title": "Jouw {vehicle}: {service} is aan de beurt",
-  "system.notify.title.named": "{name}, jouw {vehicle}: {service} is aan de beurt",
-  "system.notify.body": "Laatst gedaan op {date}.",
+  "system.notify.title": "{service} is aan de beurt",
+  "system.notify.title.named": "{name}, {service} is aan de beurt",
+  "system.notify.body": "{vehicle} · Laatst gedaan op {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Jouw {vehicle}: instellen is half klaar",
-  "system.resume.first.title.named": "{name}, jouw {vehicle}: instellen is half klaar",
-  "system.resume.first.body": "Nog één minuut en het onderhoudsschema staat.",
-  "system.resume.second.title": "Jouw {vehicle} wacht nog",
-  "system.resume.second.title.named": "{name}, jouw {vehicle} wacht nog",
-  "system.resume.second.body": "Niets van wat je invulde is weg. Ga verder waar je stopte.",
+  "system.resume.first.title": "Instellen is half klaar",
+  "system.resume.first.title.named": "{name}, instellen is half klaar",
+  "system.resume.first.body": "{vehicle} · Nog één minuut en het onderhoudsschema staat.",
+  "system.resume.second.title": "Ga verder waar je stopte",
+  "system.resume.second.title.named": "{name}, ga verder waar je stopte",
+  "system.resume.second.body": "{vehicle} · Niets van wat je invulde is weg.",
 
   "system.notify.when.today": "Vandaag",
   "system.notify.when.tomorrow": "Morgen",

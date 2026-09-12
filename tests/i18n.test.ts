@@ -36,6 +36,29 @@ const ICU = (
   globalThis as unknown as { ICU: { PluralRules: typeof Intl.PluralRules } }
 ).ICU.PluralRules;
 
+/** Every title iOS renders, named and unnamed. The bodies are exempt: a banner
+ *  gives those two lines, which is why the vehicle lives in them. */
+const NOTIFICATION_TITLES = [
+  "system.notify.title",
+  "system.notify.title.named",
+  "system.resume.first.title",
+  "system.resume.first.title.named",
+  "system.resume.second.title",
+  "system.resume.second.title.named",
+];
+
+/** The service types with the longest names; the check uses whichever of them
+ *  the language under test spells longest. */
+const LONGEST_SERVICE = ["Transmission Fluid", "Brake Inspection", "Cabin Air Filter"];
+
+/** What iOS shows of a title before it truncates, near enough. */
+const TITLE_BUDGET = 40;
+
+/** The same line once the user's own name is in front of it. Eight over, which
+ *  is what a long name costs and what the truncation then eats — the greeting,
+ *  not the service, because every catalog puts the name at one end. */
+const NAMED_BUDGET = 48;
+
 const placeholders = (entry: Entry): string[] => {
   const values = typeof entry === "string" ? [entry] : Object.values(entry);
   const names = new Set<string>();
@@ -129,6 +152,36 @@ describe("every shipped language", () => {
       }
     },
   );
+
+  /**
+   * A collapsed iOS banner gives the title roughly forty characters and then
+   * truncates, and what falls off the end of a notification title is the part
+   * that says why it was sent. The old copy spent that line on a name, a
+   * user-typed vehicle name and a service name at once and routinely ran past
+   * seventy — the service, which is the whole point of the message, was what
+   * went. The car moved to the body, which gets two lines.
+   *
+   * Two budgets, because only one of them is the app's to control. The copy and
+   * the service noun are ours, and against the longest service in the set they
+   * have to clear the line on their own. A name is the user's, capped at
+   * NAME_MAX_LENGTH and spent wherever the translator put it, so the named
+   * variants are held to a looser ceiling that still catches a catalog which has
+   * drifted back toward a sentence — not to forty, which no language in the set
+   * can meet while also greeting someone called Bartholomew.
+   */
+  test.each([...BASE, ...OVERLAY])("%s keeps its notification titles inside iOS's line", (language) => {
+    setLanguage(language);
+    const service = LONGEST_SERVICE.map((type) => serviceName(type)).sort(
+      (a, b) => b.length - a.length,
+    )[0];
+    const over: string[] = [];
+    for (const key of NOTIFICATION_TITLES) {
+      const rendered = t(key, { name: "Bartholomew", service });
+      const budget = key.endsWith(".named") ? NAMED_BUDGET : TITLE_BUDGET;
+      if (rendered.length > budget) over.push(`${key}: ${rendered.length} — ${rendered}`);
+    }
+    expect(over).toEqual([]);
+  });
 
   test("Polish carries the three forms Polish grammar needs", () => {
     // The one language in the set where one/other is not merely coarse but

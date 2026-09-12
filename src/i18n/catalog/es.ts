@@ -526,17 +526,17 @@ export const es: Fragment = {
   "settings.replay.confirm": "Repetir",
 
   // system
-  "system.notify.title": "A tu {vehicle} le toca {service}",
-  "system.notify.title.named": "{name}, a tu {vehicle} le toca {service}",
-  "system.notify.body": "Última vez: {date}.",
+  "system.notify.title": "Te toca {service}",
+  "system.notify.title.named": "{name}, te toca {service}",
+  "system.notify.body": "{vehicle} · Última vez: {date}.",
   // The two nudges an unfinished onboarding gets, two hours and a day
   // after the user walked away from it.
-  "system.resume.first.title": "Tu {vehicle}: configuración a medias",
-  "system.resume.first.title.named": "{name}, tu {vehicle}: configuración a medias",
-  "system.resume.first.body": "Un minuto más y el plan de mantenimiento queda listo.",
-  "system.resume.second.title": "Tu {vehicle} sigue esperando",
-  "system.resume.second.title.named": "{name}, tu {vehicle} sigue esperando",
-  "system.resume.second.body": "No se perdió nada de lo que pusiste. Sigue donde lo dejaste.",
+  "system.resume.first.title": "Configuración a medias",
+  "system.resume.first.title.named": "{name}, configuración a medias",
+  "system.resume.first.body": "{vehicle} · Un minuto más y el plan de mantenimiento queda listo.",
+  "system.resume.second.title": "Sigue donde lo dejaste",
+  "system.resume.second.title.named": "{name}, sigue donde lo dejaste",
+  "system.resume.second.body": "{vehicle} · No se perdió nada de lo que pusiste.",
 
   "system.notify.when.today": "Hoy",
   "system.notify.when.tomorrow": "Ma\u00f1ana",

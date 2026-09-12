@@ -42,6 +42,7 @@ import {
 import {
   completeOnboarding,
   resetOnboarding,
+  setOnboardingName,
   setOnboardingStep,
   setOnboardingVehicleId,
 } from "../src/onboarding";
@@ -74,17 +75,39 @@ test("the nudge names the car the half-written flow was about", async () => {
 
   await scheduleOnboardingNudges(NOW);
 
+  // In the body, which iOS gives two lines. The title carries the message and
+  // nothing of variable length, because the title is the line that truncates.
+  expect(scheduled[0].content.body).toContain("2016 Subaru Outback");
   // Not a template with a placeholder left in it, which is the failure mode a
   // notification has no screen to show it on.
-  expect(scheduled[0].content.title).toContain("2016 Subaru Outback");
-  expect(scheduled[0].content.title).not.toContain("{vehicle}");
-  expect(scheduled[0].content.body).toBe(t("system.resume.first.body"));
+  expect(scheduled[0].content.body).not.toContain("{vehicle}");
+  expect(scheduled[0].content.title).toBe(t("system.resume.first.title"));
 });
 
 test("a car that was never named still gets an honest sentence", async () => {
   await scheduleOnboardingNudges(NOW);
-  expect(scheduled[0].content.title).not.toContain("{vehicle}");
+  expect(scheduled[0].content.body).not.toContain("{vehicle}");
   expect(scheduled[0].content.title.length).toBeGreaterThan(0);
+});
+
+/**
+ * The budget iOS actually enforces. A collapsed banner gives the title roughly
+ * forty characters, and the old copy spent them on a name, a user-typed vehicle
+ * and a service name in one line — so the service, which is the whole point of
+ * the notification, was what fell off the end.
+ */
+test("the title stays inside what iOS will show of it", async () => {
+  const car = createVehicle({
+    name: "2016 Subaru Outback Limited 3.6R",
+    year: 2016,
+    odometer: 112000,
+  });
+  setOnboardingVehicleId(car.id);
+  setOnboardingName("Bartholomew");
+
+  await scheduleOnboardingNudges(NOW);
+
+  expect(scheduled[0].content.title.length).toBeLessThanOrEqual(40);
 });
 
 test("a finished flow is nudged about nothing", async () => {
