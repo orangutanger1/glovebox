@@ -7,7 +7,7 @@
  * having never once told the user what the money was for.
  *
  * The shape here is the conversion structure the product was modelled on:
- * quiz, then a computed result, then the cost of the problem, then the answer
+ * quiz, then a computed result, then the gap the app closes, then the answer
  * to it, then evidence, then the plan, then the offer. Every screen after the
  * quiz is built from the user's own answers, so none of it is a feature tour.
  *
@@ -57,6 +57,15 @@ export const FLOW = [
   "notify",
   "drive",
   "service",
+  // The one outside figure in the flow, placed on the answer it is about. The
+  // user has just said when the car was last serviced, and 41% of cars being
+  // behind on one is the sentence that follows. It used to sit beside
+  // "compare" at the end of the story, which put the flow's two statistic
+  // screens back to back: two figures in a row read as a slide deck, and the
+  // second was skimmed. Splitting them gives each one a page to itself. The
+  // screen carries nothing of the user's own, so it sits between two questions
+  // without depending on either.
+  "cost",
   "tracking",
   "worry",
   // The payoff, in the order that earns the ask.
@@ -67,18 +76,14 @@ export const FLOW = [
   // the argument for a reminder rather than a look at the dash.
   "outlook",
   "symptoms",
-  // What the symptoms cost, in the only two figures on this screen that are
-  // not the user's own: AAA's published maintenance rate per mile, multiplied
-  // by the mileage this user just told us they drive. The pain beat states the
-  // problem; this prices it, immediately before "help" answers it.
-  "cost",
-  // The second of the two figure screens, and the counterpart to "cost".
+  // The second of the two outside-figure screens, and the counterpart to
+  // "cost", which sits back inside the quiz.
   //
-  // "cost" is the money the car costs whatever anyone does. This is the gap
-  // between the two ways of spending it: kept to schedule against caught late.
-  // It is a chart rather than a paragraph because the whole claim is a
-  // comparison, and a comparison drawn is read in one look and a comparison
-  // written is read twice or not at all.
+  // "cost" is how many cars are behind. This is the gap between the two ways
+  // of spending on one: kept to schedule against caught late. It is a chart
+  // rather than a paragraph because the whole claim is a comparison, and a
+  // comparison drawn is read in one look and a comparison written is read
+  // twice or not at all.
   "compare",
   // "help" carries the Free/Pro boundary too: it used to be its own screen
   // here, and the tap between the promise and its price bought nothing.

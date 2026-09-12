@@ -118,13 +118,14 @@ test("the flow introduces itself before it interrogates", () => {
   expect(quizStep("name")).toBeNull();
 });
 
-test("the cost of the problem is stated between the symptoms and the answer", () => {
-  // "symptoms" names the problem, "cost" prices it, "compare" draws the gap
-  // the app closes, "help" answers it. Priced after the answer it is an
-  // invoice; priced before the problem it is a statistic with nothing to
-  // attach to.
-  expect(nextRoute("symptoms")).toBe("cost");
-  expect(nextRoute("cost")).toBe("compare");
+test("the two statistic screens are not back to back", () => {
+  // "cost" follows the last-service question it is about and is not one of
+  // the six questions; "compare" stays at the end of the story, between the
+  // symptoms and the answer. Side by side they read as a slide deck.
+  expect(nextRoute("service")).toBe("cost");
+  expect(nextRoute("cost")).toBe("tracking");
+  expect(quizStep("cost")).toBeNull();
+  expect(nextRoute("symptoms")).toBe("compare");
   expect(nextRoute("compare")).toBe("help");
 });
 
