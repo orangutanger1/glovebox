@@ -3,6 +3,7 @@ import { SchedulableTriggerInputTypes } from "expo-notifications";
 import { t } from "../i18n";
 import { vehicleSentenceName } from "../format";
 import { getVehicle } from "../db/vehicles";
+import type { NudgeState } from "../onboarding/state";
 import {
   isOnboarded,
   getOnboardingVehicleId,
@@ -51,6 +52,45 @@ function elapsed(armedAt: number, now: number): number {
 }
 
 /**
+ * Whether iOS is still holding a pair armed by a build that had no lifetime
+ * count. Tolerant of a platform that will not answer: an install we cannot ask
+ * is treated as new, which grants a quota rather than spending one.
+ */
+async function hasPendingNudges(): Promise<boolean> {
+  try {
+    const pending = await Notifications.getAllScheduledNotificationsAsync();
+    return pending.some((request) => RESUME_NUDGE_IDS.includes(request.identifier as never));
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Spends the quota of an install that was already mid-flow under the old build.
+ *
+ * Those are the installs that were in the loop, and how many nudges they have
+ * already had is not recoverable: iOS does not report deliveries, and the old
+ * code re-armed from the current moment on every launch, so the pair it left
+ * pending records when the user last opened the app rather than how many fired.
+ * Most of this cohort is past two. Seeding them spent is the answer that cannot
+ * send a third; the cost is the user who abandoned twenty minutes ago, had one,
+ * and now gets no second.
+ *
+ * Three conditions together, because a fresh install must not match: no record
+ * of its own, a step already recorded, and a pair of the old identifiers still
+ * pending. A new install reaches "step recorded and pending" only once the new
+ * code has armed it, and arming writes the record — so this stops matching
+ * after one launch and needs no migration flag of its own.
+ */
+async function adoptLegacyRun(step: string | null, now: number): Promise<NudgeState | null> {
+  if (step === null) return null;
+  if (!(await hasPendingNudges())) return null;
+  const adopted: NudgeState = { armedAt: now, step, before: LIFETIME };
+  setNudgeState(adopted);
+  return adopted;
+}
+
+/**
  * Arms the resume nudges, at most twice per run of onboarding.
  *
  * A no-op once onboarding is finished, which is what makes this safe to call
@@ -85,7 +125,9 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
   }
 
   const step = getOnboardingStep();
-  const previous = getNudgeState();
+  // An install with no record is either new or was mid-flow under the build
+  // that had no lifetime count. Only the second kind is left holding a pair.
+  const previous = getNudgeState() ?? (await adoptLegacyRun(step, now));
   const delivered = previous ? previous.before + elapsed(previous.armedAt, now) : 0;
 
   if (delivered >= LIFETIME) {

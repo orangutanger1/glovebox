@@ -18,6 +18,10 @@ jest.mock("../src/db/client", () => {
 // asked iOS to hold is the whole behaviour under test.
 const scheduled: { identifier?: string; content: { title: string; body: string }; trigger: { date: Date } }[] = [];
 const cancelled: string[] = [];
+// What iOS is holding. Only the legacy-adoption path reads it, and it is the
+// one input that distinguishes an install the old build left mid-loop from one
+// that has never run at all.
+let pending: { identifier: string }[] = [];
 jest.mock("expo-notifications", () => ({
   scheduleNotificationAsync: jest.fn(async (request: never) => {
     scheduled.push(request);
@@ -26,6 +30,7 @@ jest.mock("expo-notifications", () => ({
   cancelScheduledNotificationAsync: jest.fn(async (id: string) => {
     cancelled.push(id);
   }),
+  getAllScheduledNotificationsAsync: jest.fn(async () => pending),
   SchedulableTriggerInputTypes: { DATE: "date" },
 }));
 
@@ -48,6 +53,7 @@ const NOW = new Date("2026-09-09T12:00:00.000Z").getTime();
 beforeEach(() => {
   scheduled.length = 0;
   cancelled.length = 0;
+  pending = [];
   resetOnboarding();
 });
 
@@ -174,5 +180,48 @@ test("a replay starts the quota over", async () => {
 test("finishing cancels by identifier, leaving the service reminders alone", async () => {
   await cancelOnboardingNudges();
   expect(cancelled).toEqual(RESUME_NUDGE_IDS);
+  expect(scheduled).toHaveLength(0);
+});
+
+/**
+ * The cohort the fix cannot count, seeded rather than guessed.
+ *
+ * An install already mid-flow under the build with no lifetime count has no
+ * record of its own, so the ordinary path would read it as new and hand it a
+ * fresh pair — two more notifications to the users who had the most.
+ */
+test("an install the old build left mid-loop is adopted as spent", async () => {
+  setOnboardingStep("drive");
+  pending = RESUME_NUDGE_IDS.map((identifier) => ({ identifier }));
+
+  await scheduleOnboardingNudges(NOW);
+
+  expect(scheduled).toHaveLength(0);
+  // And the pair the old build left behind is taken out of the queue with it.
+  expect(cancelled).toEqual(RESUME_NUDGE_IDS);
+
+  // Spent for the rest of the run, however far the user gets.
+  setOnboardingStep("worry");
+  await scheduleOnboardingNudges(NOW + 6 * HOUR);
+  expect(scheduled).toHaveLength(0);
+});
+
+test("a fresh install is not mistaken for one of them", async () => {
+  // Nothing pending, which is the whole difference: the old build armed its
+  // pair on every launch, so an install still mid-flow under it always has one.
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+  expect(scheduled).toHaveLength(2);
+});
+
+test("adoption does not re-fire on the launch after it", async () => {
+  setOnboardingStep("drive");
+  pending = RESUME_NUDGE_IDS.map((identifier) => ({ identifier }));
+  await scheduleOnboardingNudges(NOW);
+
+  // The record now exists, so the pending check is never consulted again — and
+  // would not match anyway, since the adoption cancelled the pair.
+  cancelled.length = 0;
+  await scheduleOnboardingNudges(NOW + HOUR);
   expect(scheduled).toHaveLength(0);
 });
