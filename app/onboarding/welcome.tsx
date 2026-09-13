@@ -72,6 +72,7 @@ export default function Welcome() {
         <View style={{ flex: 1 }} />
         <Animated.View
           style={{
+            ...tokens.layout.column,
             paddingHorizontal: tokens.space.lg,
             paddingBottom: tokens.space.sm,
             gap: tokens.space.lg,

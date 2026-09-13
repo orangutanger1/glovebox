@@ -1,5 +1,5 @@
 {
-	"generatedAt": "2026-09-11T06:34:35.758Z",
+	"generatedAt": "2026-09-13T05:47:25.682Z",
 	"app": "Wrenchy",
 	"root": "store/screenshots",
 	"locales": [
@@ -7,41 +7,83 @@
 			"locale": "de-DE",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/de-DE/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3233505,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3055780,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3199776,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3042206,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2628353,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/de-DE/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2082850,
+							"bytes": 1732677,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2152636,
+							"bytes": 1791618,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2096270,
+							"bytes": 1731301,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2211394,
+							"bytes": 1823885,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1656410,
+							"bytes": 1328749,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -54,41 +96,83 @@
 			"locale": "en-AU",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/en-AU/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3227272,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3074027,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3206461,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3053891,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2622536,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-AU/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2083259,
+							"bytes": 1731555,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2167706,
+							"bytes": 1801292,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099038,
+							"bytes": 1732279,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2217433,
+							"bytes": 1823706,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1652234,
+							"bytes": 1327969,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -101,41 +185,83 @@
 			"locale": "en-CA",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/en-CA/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3227272,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3074027,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3206461,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3053891,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2622536,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-CA/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2083259,
+							"bytes": 1731555,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2167706,
+							"bytes": 1801292,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099038,
+							"bytes": 1732279,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2217433,
+							"bytes": 1823706,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1652234,
+							"bytes": 1327969,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -148,41 +274,83 @@
 			"locale": "en-GB",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/en-GB/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3227272,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3074027,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3206461,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3053891,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2622536,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-GB/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2083259,
+							"bytes": 1731555,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2167706,
+							"bytes": 1801292,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099038,
+							"bytes": 1732279,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2217433,
+							"bytes": 1823706,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1652234,
+							"bytes": 1327969,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -195,41 +363,83 @@
 			"locale": "en-US",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/en-US/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3227272,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3074027,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3206461,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3053891,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2622536,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/en-US/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2083259,
+							"bytes": 1731555,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2167706,
+							"bytes": 1801292,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099038,
+							"bytes": 1732279,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2217433,
+							"bytes": 1823706,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1652234,
+							"bytes": 1327969,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -242,41 +452,83 @@
 			"locale": "es-ES",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/es-ES/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3258669,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3067595,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3202538,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3059333,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2627333,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/es-ES/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2114961,
+							"bytes": 1755332,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2164878,
+							"bytes": 1799456,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2088300,
+							"bytes": 1726855,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2220844,
+							"bytes": 1831122,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1656142,
+							"bytes": 1331528,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -289,41 +541,83 @@
 			"locale": "es-MX",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/es-MX/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3256391,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3067595,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3202436,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3059345,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2627410,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/es-MX/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2115032,
+							"bytes": 1755364,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2164878,
+							"bytes": 1799456,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2088146,
+							"bytes": 1726789,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2220451,
+							"bytes": 1830898,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1656340,
+							"bytes": 1331588,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -336,41 +630,83 @@
 			"locale": "fr-CA",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/fr-CA/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3232908,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3057143,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3198814,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3041400,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2629517,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/fr-CA/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2082528,
+							"bytes": 1730521,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2154428,
+							"bytes": 1792264,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2104820,
+							"bytes": 1739156,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2207013,
+							"bytes": 1820735,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1657702,
+							"bytes": 1331594,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -383,41 +719,83 @@
 			"locale": "fr-FR",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/fr-FR/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3232908,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3057143,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3198814,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3041400,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2629517,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/fr-FR/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2082528,
+							"bytes": 1730521,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2154428,
+							"bytes": 1792264,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2104820,
+							"bytes": 1739156,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2207013,
+							"bytes": 1820735,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1657702,
+							"bytes": 1331594,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -430,41 +808,83 @@
 			"locale": "it",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/it/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3229370,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3066315,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3195454,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3046024,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2617257,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/it/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2072742,
+							"bytes": 1723158,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2163534,
+							"bytes": 1797651,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2084370,
+							"bytes": 1723067,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2211129,
+							"bytes": 1823824,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1648973,
+							"bytes": 1326140,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -477,41 +897,83 @@
 			"locale": "ja",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/ja/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3256432,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3074776,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3207914,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3071607,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2652255,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/ja/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2098168,
+							"bytes": 1743767,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2165701,
+							"bytes": 1798634,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2102695,
+							"bytes": 1736229,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2234051,
+							"bytes": 1839070,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1676268,
+							"bytes": 1345696,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -524,41 +986,83 @@
 			"locale": "ko",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/ko/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3238108,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3070523,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3190397,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3052469,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2614195,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/ko/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2099406,
+							"bytes": 1739152,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2168723,
+							"bytes": 1795578,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099152,
+							"bytes": 1726015,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2218074,
+							"bytes": 1817143,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1645087,
+							"bytes": 1313533,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -571,41 +1075,83 @@
 			"locale": "nl-NL",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/nl-NL/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3225903,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3063889,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3203007,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3062849,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2624227,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/nl-NL/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2073601,
+							"bytes": 1722659,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2159623,
+							"bytes": 1795348,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2086348,
+							"bytes": 1723889,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2223509,
+							"bytes": 1831215,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1654571,
+							"bytes": 1329183,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -618,41 +1164,83 @@
 			"locale": "pl",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/pl/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3237700,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3075274,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3198579,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3061749,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2628543,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/pl/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2080183,
+							"bytes": 1728608,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2168364,
+							"bytes": 1801708,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2091577,
+							"bytes": 1727727,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2222230,
+							"bytes": 1829684,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1656528,
+							"bytes": 1333238,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -665,41 +1253,83 @@
 			"locale": "pt-BR",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/pt-BR/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3242065,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3067087,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3215495,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3049952,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2628303,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/pt-BR/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2097098,
+							"bytes": 1742910,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2164398,
+							"bytes": 1799775,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2099020,
+							"bytes": 1733844,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2212690,
+							"bytes": 1826417,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1657417,
+							"bytes": 1332060,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -712,41 +1342,83 @@
 			"locale": "sv",
 			"groups": [
 				{
+					"displayType": "IPAD_PRO_3GEN_129",
+					"dir": "store/screenshots/sv/IPAD_PRO_3GEN_129",
+					"count": 5,
+					"files": [
+						{
+							"file": "01-oil-change.png",
+							"bytes": 3233920,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "02-log-service.png",
+							"bytes": 3063095,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "03-history.png",
+							"bytes": 3197866,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "04-garage.png",
+							"bytes": 3043426,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						},
+						{
+							"file": "05-private.png",
+							"bytes": 2622671,
+							"width": 2064,
+							"height": 2752,
+							"format": "png"
+						}
+					]
+				},
+				{
 					"displayType": "IPHONE_65",
 					"dir": "store/screenshots/sv/IPHONE_65",
 					"count": 5,
 					"files": [
 						{
 							"file": "01-oil-change.png",
-							"bytes": 2084274,
+							"bytes": 1731457,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "02-log-service.png",
-							"bytes": 2159259,
+							"bytes": 1795781,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "03-history.png",
-							"bytes": 2092537,
+							"bytes": 1727123,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "04-garage.png",
-							"bytes": 2209355,
+							"bytes": 1822039,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
 						},
 						{
 							"file": "05-private.png",
-							"bytes": 1652939,
+							"bytes": 1325778,
 							"width": 1284,
 							"height": 2778,
 							"format": "png"
@@ -758,7 +1430,7 @@
 	],
 	"totals": {
 		"locales": 16,
-		"groups": 16,
-		"files": 80
+		"groups": 32,
+		"files": 160
 	}
 }

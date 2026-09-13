@@ -276,6 +276,7 @@ export default function VehicleDetail() {
         data={records}
         keyExtractor={(r) => r.id}
         contentContainerStyle={{
+          ...tokens.layout.column,
           padding: tokens.space.md,
           paddingBottom: tokens.space.xxl + tokens.space.xl,
           gap: tokens.space.xs,

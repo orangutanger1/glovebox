@@ -95,6 +95,7 @@ export default function FuelHistory() {
         data={entries}
         keyExtractor={(e) => e.id}
         contentContainerStyle={{
+          ...tokens.layout.column,
           padding: tokens.space.md,
           paddingBottom: tokens.space.xxl + tokens.space.xl,
           gap: tokens.space.xs,

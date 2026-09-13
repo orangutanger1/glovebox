@@ -12,8 +12,9 @@
     ],
     "ios": {
       "bundleIdentifier": "com.idea6.carmaintenancelog",
-      "supportsTablet": false,
-      "buildNumber": "30",
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "buildNumber": "31",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleLocalizations": [

@@ -263,6 +263,7 @@ export function OnboardingScreen({
       >
         <ScrollView
           contentContainerStyle={{
+            ...tokens.layout.column,
             flexGrow: 1,
             paddingHorizontal: tokens.space.lg,
             paddingTop: tokens.space.md,
@@ -315,6 +316,7 @@ export function OnboardingScreen({
         {footer ? (
           <View
             style={{
+              ...tokens.layout.column,
               paddingHorizontal: tokens.space.lg,
               paddingTop: tokens.space.md,
               paddingBottom: tokens.space.sm,
@@ -338,11 +340,12 @@ export function OnboardingScreen({
               left: 0,
               right: 0,
               zIndex: 10,
+              alignItems: "center",
               paddingHorizontal: tokens.space.md,
               paddingTop: tokens.space.sm,
             }}
           >
-            {banner}
+            <View style={tokens.layout.column}>{banner}</View>
           </View>
         ) : null}
       </KeyboardAvoidingView>

@@ -39,6 +39,7 @@ export function Screen({
       >
         <ScrollView
           contentContainerStyle={{
+            ...tokens.layout.column,
             // The gutter is the lg step, not md. Content that starts 16px from
             // the edge of a phone reads as filling the screen; 24px is what
             // makes a list of cards read as a page with margins, and it is the
@@ -70,6 +71,7 @@ export function Screen({
           <Glass edge="top">
             <View
               style={{
+                ...tokens.layout.column,
                 paddingHorizontal: tokens.space.lg,
                 paddingTop: tokens.space.md,
                 paddingBottom: tokens.space.sm,

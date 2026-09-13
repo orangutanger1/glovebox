@@ -102,6 +102,20 @@ export const tokens = {
   },
 
   space: { xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48 },
+
+  layout: {
+    /** The widest a column of content is allowed to grow. Every screen is a
+     *  single column of cards and a button, and on an iPad that column
+     *  stretched to the full 1024pt of the glass: a card wider than a sentence
+     *  is long reads as a banner, and a primary button the width of a desk is
+     *  not a control. The cap is wide enough that a phone never meets it and
+     *  narrow enough that an iPad renders the same page with margins. */
+    maxWidth: 600,
+    /** Spread onto a scroll container's content style, or onto any full-width
+     *  block that sits outside one (a footer, a banner, a hero). `alignSelf`
+     *  centres the column in whatever is left over. */
+    column: { width: "100%", maxWidth: 600, alignSelf: "center" } as const,
+  },
   radius: { sm: 10, md: 14, lg: 20, pill: 999 },
 
   text: {
