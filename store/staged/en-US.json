@@ -19,5 +19,5 @@
     "inspectionTerm": "Safety/emissions inspection (varies by state)",
     "reasoning": "Primary locale. Recovered into the staged workflow from the canonical tree, which was the only place en-US existed - `ship meta stage` regenerates canonical from staged, so an unstaged primary locale was one `stage` away from being lost and was silently excluded from `ship meta lint`/`apply`."
   },
-  "whatsNew": "Wrenchy now asks your name, and your reminders use it.\n\nSetup gains two screens: the next twelve months of services for your car, and how many cars on the road are overdue for one, with the source of that figure printed on the screen.\n\nThe offer screens now list what the subscription covers, in plain words instead of jargon, and the indicator dots on the setup screens are legible again.\n\nFixed: turning reminders on from Settings takes effect immediately, and the fuel screen no longer shows a route name in its title bar.\n\nWrenchy is now a subscription. If you were already using it, nothing changes for you."
+  "whatsNew": "Bug fixes and better crash handling.\n\n- Reminder titles no longer cut off the service name\n- Setup follow-up reminders are capped at two\n- A live subscription is always recognized, even when the store is slow to answer\n- Crashes are now reported in more detail, so they get fixed faster"
 }
