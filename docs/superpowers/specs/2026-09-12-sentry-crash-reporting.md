@@ -38,6 +38,18 @@ replays a year, and both would be spent on questions
 throws red boxes on purpose and every one would be an issue against the
 production release.
 
+## Where it lives
+
+Org `inspiration-technologies` (US region), project `wrenchy`
+(`https://inspiration-technologies.sentry.io/projects/wrenchy/`), on the
+GitHub Student pack plan. The Claude Code MCP server `sentry`
+(`https://mcp.sentry.dev/mcp`, OAuth) is configured at user scope for reading
+issues from a session.
+
+`SENTRY_AUTH_TOKEN` in EAS is the org token `sentry-cli login` wrote to
+`~/.sentryclirc`, scope `org:ci`. If it is ever rotated, replace it in all
+three EAS environments as a **secret**; nothing else references it.
+
 ## Configuration
 
 | Variable | Secret? | Read by | Effect if unset |
