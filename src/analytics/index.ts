@@ -1,6 +1,7 @@
 import PostHog, { type PostHogCustomAppProperties } from "posthog-react-native";
 import Purchases from "react-native-purchases";
 import type * as UpdatesModule from "expo-updates";
+import { identifyCrashUser } from "../crash";
 
 /**
  * Product analytics, which exists here for exactly one question: where in
@@ -390,7 +391,13 @@ export async function identifyFromPurchases(): Promise<void> {
   if (!client) return;
   try {
     const id = await Purchases.getAppUserID();
-    if (id) client.identify(id);
+    if (!id) return;
+    client.identify(id);
+    // The same id on the crash reporter, which is what joins an issue to the
+    // person's funnel timeline. Without it Sentry and PostHog are two datasets
+    // with no column in common, and "which step were they on when it died" is
+    // the first question asked of every crash.
+    identifyCrashUser(id);
   } catch {
     /* an unconfigured SDK is not an analytics failure */
   }

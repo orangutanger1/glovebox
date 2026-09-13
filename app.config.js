@@ -17,16 +17,47 @@
  */
 const IS_DEV = process.env.APP_VARIANT === "development";
 
+/**
+ * The Sentry config plugin, added only when the build knows which project it
+ * is reporting to.
+ *
+ * It lives here rather than in app.json because its two required options are
+ * an organisation and a project slug, and a slug hard-coded in the committed
+ * config is a value that is wrong for every clone and silently wrong in CI.
+ * With the variables unset the plugin is simply absent: the SDK still reports
+ * — `EXPO_PUBLIC_SENTRY_DSN` is what turns reporting on — and what is lost is
+ * source map upload, so stacks arrive minified rather than not at all.
+ *
+ * What the plugin does that the SDK cannot: it wires the native iOS build to
+ * upload debug symbols and the bundle's source map under the same release and
+ * dist that `src/crash` reports with. That pairing is the whole difference
+ * between a stack naming your code and a stack naming a bytecode offset.
+ *
+ * `SENTRY_AUTH_TOKEN` is read by the upload step itself and is a real secret:
+ * it belongs in EAS as a secret-type environment variable, never in the repo.
+ */
+const SENTRY_ORG = process.env.SENTRY_ORG;
+const SENTRY_PROJECT = process.env.SENTRY_PROJECT;
+
+function withSentry(plugins) {
+  if (!SENTRY_ORG || !SENTRY_PROJECT) return plugins;
+  return [
+    ...plugins,
+    ["@sentry/react-native/expo", { organization: SENTRY_ORG, project: SENTRY_PROJECT }],
+  ];
+}
+
 module.exports = ({ config }) => {
-  if (!IS_DEV) return config;
+  const base = { ...config, plugins: withSentry(config.plugins ?? []) };
+  if (!IS_DEV) return base;
 
   return {
-    ...config,
+    ...base,
     name: "Wrenchy (dev)",
-    scheme: `${config.scheme}dev`,
+    scheme: `${base.scheme}dev`,
     ios: {
-      ...config.ios,
-      bundleIdentifier: `${config.ios.bundleIdentifier}.dev`,
+      ...base.ios,
+      bundleIdentifier: `${base.ios.bundleIdentifier}.dev`,
     },
   };
 };

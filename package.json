@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "./index.js",
   "dependencies": {
+    "@sentry/react-native": "^8.26.0",
     "expo": "~57.0.9",
     "expo-application": "~57.0.2",
     "expo-blur": "~57.0.2",

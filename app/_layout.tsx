@@ -14,6 +14,7 @@ import {
   reportFatals,
   track,
 } from "../src/analytics";
+import { flushCrashes, initCrashReporting, reportCrash } from "../src/crash";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { isLocked, resolveGrandfathered } from "../src/paywall";
@@ -72,7 +73,12 @@ function boot<T>(step: string, run: () => T): T | undefined {
     // lost if there is no network. A launch failure is worth two attempts.
     reportRaw("boot_failed", { step, message, stack });
     track("boot_failed", { step, message, stack });
+    // The third channel, and the only one that can name a line: the other two
+    // carry a Hermes bytecode offset in release. Same `step` label on all
+    // three, so an issue and a row are the same incident.
+    reportCrash(`boot:${step}`, e);
     flushNow();
+    flushCrashes();
     return undefined;
   }
 }
@@ -103,7 +109,9 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
     const detail = { message: error.message, stack: (error.stack ?? "").slice(0, 4000) };
     reportRaw("render_error", detail);
     track("render_error", detail);
+    reportCrash("render_error", error);
     flushNow();
+    flushCrashes();
   }, [error]);
 
   return (
@@ -178,6 +186,10 @@ export default function RootLayout() {
     // did on TestFlight.
     boot("analytics", () => {
       initAnalytics();
+      // Before `reportFatals`, so the SDK's own global handler is underneath
+      // ours and a fatal reaches both: the chain is called outward, and the
+      // handler installed last is the one that runs first.
+      initCrashReporting();
       reportFatals();
     });
 
@@ -189,7 +201,9 @@ export default function RootLayout() {
       // are gone".
       reportRaw("boot_failed", { step: "database", message: String(e) });
       track("boot_failed", { step: "database", message: String(e) });
+      reportCrash("boot:database", e);
       flushNow();
+      flushCrashes();
       setFatal(String(e));
       return;
     }
