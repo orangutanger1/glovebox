@@ -17,7 +17,7 @@ import { StepLamps } from "../design/StepLamps";
 import { tokens } from "../design/tokens";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
-import { track } from "../analytics";
+import { track, trackStepBack } from "../analytics";
 import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
 
 /**
@@ -203,10 +203,15 @@ export function OnboardingScreen({
    */
   function goBack() {
     if (onBack) {
+      // The symptoms pager, which moves between cards without leaving the
+      // route. Reported with the route it stayed on, so a page-back inside a
+      // screen is not counted as leaving it.
+      trackStepBack(route, route);
       onBack();
       return;
     }
     if (!previous) return;
+    trackStepBack(route, previous);
     setOnboardingStep(previous);
     // `back()` keeps the screen behind us alive with its state; `replace` is
     // the fallback for a deep link that made this screen the first one.

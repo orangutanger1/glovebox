@@ -9,6 +9,7 @@ import { getOnboardingName, setOnboardingName } from "../../src/onboarding";
 import { NAME_MAX_LENGTH, normalizeName } from "../../src/onboarding/state";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
+import { trackStepBlocked } from "../../src/analytics";
 
 /**
  * The introduction.
@@ -59,6 +60,11 @@ export default function OnboardingName() {
           // and one rule; a button that waits until it is pressed to say the
           // field is empty is telling the user something they can already see.
           disabled={name === null}
+          // A tap on the greyed button, which is the only trace a user who
+          // cannot get past this screen leaves. Without it the funnel sees a
+          // view and then silence here — the same rows as a user who never
+          // looked at the screen at all.
+          onBlockedPress={() => trackStepBlocked("name", value.trim() === "" ? "empty" : "invalid")}
         />
       }
     >

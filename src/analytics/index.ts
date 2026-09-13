@@ -122,7 +122,56 @@ function withFirstView(properties?: Props): Props {
   const key = typeof route === "string" ? route : "unknown";
   const first = !viewedRoutes.has(key);
   if (first) viewedRoutes.add(key);
+  arrivedAt.set(key, Date.now());
   return { ...properties, first_view: first };
+}
+
+/**
+ * When each route was last arrived at, so the event that leaves a screen can
+ * say how long it was on the glass.
+ *
+ * A view and a completion bound a step, and the funnel already had both ends
+ * for the six quiz screens and neither for the eleven narrative ones: a page
+ * of argument that is read and a page that is skipped past produce the same
+ * two rows. The duration is what separates them, and it is only knowable here
+ * because this is the one place that sees both ends.
+ *
+ * Written on every view rather than the first, since a user who walks back and
+ * forward is on the screen again and the second visit's duration is its own
+ * number. A route with no recorded arrival — an advance from a screen whose
+ * view never fired — reports null rather than a duration measured from zero.
+ */
+const arrivedAt = new Map<string, number>();
+
+function dwellMs(route: string): number | null {
+  const since = arrivedAt.get(route);
+  return since === undefined ? null : Date.now() - since;
+}
+
+/**
+ * A screen the user moved forward off.
+ *
+ * Emitted from the one navigation hook every screen advances through rather
+ * than from the screens, for the same reason the view is emitted from the
+ * shared frame: a funnel that depends on remembering to instrument a new
+ * screen is a funnel that silently develops holes. With this, every step has
+ * a matched pair of events and a drop-off rate that does not have to be
+ * inferred from the next screen's view count.
+ */
+export function trackStepAdvanced(route: string): void {
+  track("onboarding_step_advanced", { route, ms: dwellMs(route) });
+}
+
+/**
+ * A screen the user walked back off, and where they landed.
+ *
+ * `first_view` already flags the repeat arrival that a Back produces, which
+ * says a user hesitated somewhere without saying where they went to resolve
+ * it. This is the other half: the screen they left and the screen they went
+ * looking at, which is usually the question whose answer they doubted.
+ */
+export function trackStepBack(route: string, to: string | null): void {
+  track("onboarding_step_back", { route, to, ms: dwellMs(route) });
 }
 
 /**

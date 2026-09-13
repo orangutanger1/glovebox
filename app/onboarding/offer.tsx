@@ -19,6 +19,7 @@ import { isGrandfathered } from "../../src/paywall";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
+import { track } from "../../src/analytics";
 
 /** The three moments a trial has, in the order the user meets them: what opens
  *  now, the way out, and what happens if they do nothing. Named rather than
@@ -117,9 +118,12 @@ export default function OnboardingOffer() {
   }
 
   function onDecline() {
-    // The one promise that outlives the build that made it. An install that
-    // finished onboarding when there was a free tier keeps its garage; nobody
-    // else has one to be let into.
+    // The last decision in the flow, and the one the funnel could not see: the
+    // purchase events cover the sheet, and `onboarding_completed` only fires
+    // for a user who leaves. A decline here leaves the user on this screen
+    // forever, so without this event the walled install is indistinguishable
+    // from an install that quit on the paywall.
+    track("offer_declined", { walled: !isGrandfathered(), relaunched });
     if (isGrandfathered()) {
       finish("free");
       return;
@@ -132,13 +136,16 @@ export default function OnboardingOffer() {
     setBusy(true);
     setMsg(null);
     try {
-      if (await restore()) {
+      const found = await restore();
+      track("restore_attempted", { source: "onboarding_offer", found });
+      if (found) {
         recordReviewEvent("purchase");
         paid("paid");
         return;
       }
       setMsg(t("settings.restore.none"));
     } catch {
+      track("restore_attempted", { source: "onboarding_offer", found: null });
       setMsg(t("settings.store.error"));
     } finally {
       setBusy(false);

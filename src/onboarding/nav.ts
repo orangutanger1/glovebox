@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useRouter } from "expo-router";
 import { completeOnboarding, setOnboardingStep } from ".";
-import { track } from "../analytics";
+import { track, trackStepAdvanced } from "../analytics";
 import { cancelOnboardingNudges } from "../notify";
 import { nextRoute, type OnboardingRoute } from "./flow";
 
@@ -20,6 +20,10 @@ export function useAdvance(from: OnboardingRoute, mode: "push" | "replace" = "pu
   return useCallback(() => {
     const next = nextRoute(from);
     if (!next) return;
+    // The forward half of every step, recorded here because this is the only
+    // path forward: a screen cannot advance without saying so, and a screen
+    // added later is instrumented by using the hook it has to use anyway.
+    trackStepAdvanced(from);
     setOnboardingStep(next);
     const to = `/onboarding/${next}` as never;
     // `replace` is for the screens that advance themselves. Leaving one of

@@ -21,6 +21,7 @@ type Nav = typeof NavModule;
 const mockCapture = jest.fn<unknown, [string, Record<string, unknown>?]>();
 const mockIdentify = jest.fn();
 const mockReplace = jest.fn();
+const mockPush = jest.fn();
 const mockFlush = jest.fn();
 
 /**
@@ -62,7 +63,7 @@ jest.mock("react-native-purchases", () => ({
   default: { getAppUserID: async () => "rc-user" },
 }));
 
-jest.mock("expo-router", () => ({ useRouter: () => ({ replace: mockReplace }) }));
+jest.mock("expo-router", () => ({ useRouter: () => ({ replace: mockReplace, push: mockPush }) }));
 
 // `../src/onboarding` reaches expo-sqlite through the db client. Finishing
 // onboarding is about the event and the navigation, not about the row.
@@ -111,6 +112,7 @@ function onlyEvent(): { event: string; properties: Record<string, unknown> } {
 beforeEach(() => {
   mockCapture.mockReset();
   mockReplace.mockReset();
+  mockPush.mockReset();
   mockFlush.mockReset();
   constructedWith = undefined;
   mockUpdates.updateId = null;
@@ -305,6 +307,63 @@ test("a vehicle entry event carries the field and what happened, never a value",
     ["vehicle_entry", { field: "make", event: "focused" }],
     ["vehicle_entry", { field: "odometer", event: "skipped" }],
   ]);
+});
+
+/**
+ * The other end of every step. A view alone cannot tell a screen that was read
+ * from one that was tapped past, and cannot say where a user who walked back
+ * went looking.
+ */
+describe("leaving a step", () => {
+  test("advancing reports the screen and how long it was on the glass", () => {
+    const analytics = load("phc_test");
+    analytics.track("onboarding_step_viewed", { route: "cost", quiz_step: null });
+    analytics.trackStepAdvanced("cost");
+
+    const [event, properties] = mockCapture.mock.calls[1];
+    expect(event).toBe("onboarding_step_advanced");
+    expect(properties?.route).toBe("cost");
+    expect(typeof properties?.ms).toBe("number");
+    expect(properties?.ms as number).toBeGreaterThanOrEqual(0);
+  });
+
+  // A screen advanced off without a view recorded — a deep link, or a screen
+  // outside the frame — reports no duration rather than one measured from the
+  // epoch, which would land in every average as a fifty-six year dwell.
+  test("a step with no recorded arrival reports no duration", () => {
+    const analytics = load("phc_test");
+    analytics.trackStepAdvanced("welcome");
+    expect(onlyEvent()).toEqual({
+      event: "onboarding_step_advanced",
+      properties: { route: "welcome", ms: null },
+    });
+  });
+
+  test("going back names the screen left and the screen landed on", () => {
+    const analytics = load("phc_test");
+    analytics.trackStepBack("odometer", "vehicle");
+
+    const { event, properties } = onlyEvent();
+    expect(event).toBe("onboarding_step_back");
+    expect(properties.route).toBe("odometer");
+    expect(properties.to).toBe("vehicle");
+  });
+
+  // The forward hook is the only path forward, so it is where the funnel's
+  // forward half has to come from: a screen added later is instrumented by
+  // using the hook it already has to use.
+  test("the advance hook emits the step it left", () => {
+    process.env.EXPO_PUBLIC_POSTHOG_KEY = "phc_test";
+    jest.isolateModules(() => {
+      const analytics = require("../src/analytics") as Analytics;
+      analytics.initAnalytics();
+      const nav = require("../src/onboarding/nav") as Nav;
+      nav.useAdvance("welcome")();
+    });
+
+    expect(mockCapture.mock.calls[0][0]).toBe("onboarding_step_advanced");
+    expect(mockCapture.mock.calls[0][1]?.route).toBe("welcome");
+  });
 });
 
 /** The exit reason is the addition the revenue question depends on. */
