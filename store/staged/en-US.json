@@ -19,5 +19,5 @@
     "inspectionTerm": "Safety/emissions inspection (varies by state)",
     "reasoning": "Primary locale. Recovered into the staged workflow from the canonical tree, which was the only place en-US existed - `ship meta stage` regenerates canonical from staged, so an unstaged primary locale was one `stage` away from being lost and was silently excluded from `ship meta lint`/`apply`."
   },
-  "whatsNew": "Bug fixes and better crash handling.\n\n- Reminder titles no longer cut off the service name\n- Setup follow-up reminders are capped at two\n- A live subscription is always recognized, even when the store is slow to answer\n- Crashes are now reported in more detail, so they get fixed faster"
+  "whatsNew": "Bug fixes.\n\n- Settings now shows the date of your next reminder\n- Fuel economy on Insights no longer reads \"no data\" when your last full tank was over a year ago\n- A deleted car no longer counts toward your spending totals\n- Insights shows the name you gave your car\n- Services logged on the same day now list newest first\n- The setup plan no longer lists an inspection where your region has none"
 }

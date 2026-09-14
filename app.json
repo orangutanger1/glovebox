@@ -3,7 +3,7 @@
     "name": "Wrenchy",
     "slug": "car-maintenance-log",
     "scheme": "carmaintenancelog",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -14,7 +14,7 @@
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": true,
       "requireFullScreen": true,
-      "buildNumber": "32",
+      "buildNumber": "33",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleLocalizations": [
