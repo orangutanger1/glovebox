@@ -65,7 +65,7 @@ jest.mock("expo-notifications", () => ({
 jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
 
 import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";
-import { addRecord } from "../src/db/records";
+import { addRecord, listRecords } from "../src/db/records";
 import {
   getOnboardingName,
   getOnboardingVehicleId,
@@ -79,6 +79,8 @@ import { serviceName } from "../src/schedule/names";
 import { setDistanceUnit } from "../src/units";
 import { OVERDUE } from "../src/onboarding/cost";
 import { getDb } from "../src/db/client";
+import { setState } from "../src/db/state";
+import { GRANDFATHERED_KEY } from "../src/paywall/state";
 import { ONBOARDING_NAME_KEY } from "../src/onboarding/state";
 import {
   AVERAGE_DISTANCE_PER_YEAR,
@@ -454,9 +456,38 @@ test("the year comes off a drum, and never off a keyboard", () => {
   expect(getVehicle(getOnboardingVehicleId()!)!.year).toBe(DEFAULT_YEAR - 3);
 });
 
-test("a replay re-describes the car in the garage instead of adding one", () => {
-  // Walking onboarding again was the way past the one-car limit: the garage's
-  // Add button gated on Pro, and this screen wrote a row without asking.
+test("the service question replaces only the record it wrote", () => {
+  // It used to clear every record of the chosen type on the car. On a replay
+  // over a car with a history, that was the history.
+  const car = createVehicle({ name: "2014 Ford", odometer: 90_000 });
+  setOnboardingVehicleId(car.id);
+  const kept = addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: "2025-06-01T12:00:00.000Z",
+  });
+
+  let tree = render(OnboardingService);
+  press(tree, "Oil Change");
+  press(tree, "Last month");
+  press(tree, "Continue");
+  let records = listRecords(car.id);
+  expect(records).toHaveLength(2);
+  expect(records.some((r) => r.id === kept.id)).toBe(true);
+
+  // Back, and answered again: the quiz's own row is swapped, the old one stays.
+  tree = render(OnboardingService);
+  press(tree, "Tire Rotation");
+  press(tree, "3 months ago");
+  press(tree, "Continue");
+  records = listRecords(car.id);
+  expect(records.map((r) => r.service_type).sort()).toEqual(["Oil Change", "Tire Rotation"]);
+  expect(records.some((r) => r.id === kept.id)).toBe(true);
+});
+
+test("a replay adds a car, as the settings screen promises", () => {
+  // It used to adopt the newest car in the garage and overwrite its identity
+  // with a blank form — a Pro user replaying the flow lost a car's name.
   const before = listVehicles().length;
   const car = createVehicle({ name: "2014 Ford", year: 2014, make: "Ford" });
 
@@ -464,9 +495,29 @@ test("a replay re-describes the car in the garage instead of adding one", () => 
   type(tree, "Make", "Honda");
   press(tree, "Continue");
 
-  expect(listVehicles()).toHaveLength(before + 1);
-  expect(getVehicle(car.id)!.make).toBe("Honda");
-  expect(getOnboardingVehicleId()).toBe(car.id);
+  expect(listVehicles()).toHaveLength(before + 2);
+  expect(getVehicle(car.id)!.make).toBe("Ford");
+  expect(getOnboardingVehicleId()).not.toBe(car.id);
+});
+
+test("a grandfathered free garage re-describes its one car, prefilled", () => {
+  // The free garage holds one car, and walking the flow again was the way
+  // past that. That user gets the car they have — with its details already
+  // in the form, so a Continue that changes nothing changes nothing.
+  getDb().runSync("DELETE FROM vehicles");
+  setState(GRANDFATHERED_KEY, "true");
+  try {
+    const car = createVehicle({ name: "2014 Ford", year: 2014, make: "Ford", model: "Focus" });
+
+    const tree = render(OnboardingVehicle);
+    press(tree, "Continue");
+
+    expect(listVehicles()).toHaveLength(1);
+    expect(getVehicle(car.id)).toMatchObject({ year: 2014, make: "Ford", model: "Focus" });
+    expect(getOnboardingVehicleId()).toBe(car.id);
+  } finally {
+    setState(GRANDFATHERED_KEY, "false");
+  }
 });
 
 test("the odometer question starts empty on a car that has no reading yet", () => {

@@ -154,8 +154,31 @@ test("relaunching on the same step leaves the pending pair alone", async () => {
   await scheduleOnboardingNudges(NOW + 5 * 60_000);
   await scheduleOnboardingNudges(NOW + 30 * 60_000);
   await scheduleOnboardingNudges(NOW + 90 * 60_000);
-  expect(scheduled).toHaveLength(0);
+  // Re-armed at the same times (the caller may have wiped them), never
+  // cancelled and never moved.
   expect(cancelled).toHaveLength(0);
+  expect(new Set(scheduled.map((s) => s.trigger.date.getTime()))).toEqual(
+    new Set([NOW + 2 * HOUR, NOW + 24 * HOUR])
+  );
+});
+
+test("a relaunch that wiped the pending pair re-arms it at the original times", async () => {
+  // `rescheduleAll` cancels every pending notification before it calls the
+  // scheduler, so "leave the pair alone" has to mean "put it back exactly",
+  // not "do nothing" — doing nothing left the flow with no nudges at all.
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+  const armed = scheduled.map((s) => [s.identifier, s.trigger.date.getTime()]);
+
+  scheduled.length = 0;
+  await scheduleOnboardingNudges(NOW + 30 * 60_000);
+  expect(scheduled.map((s) => [s.identifier, s.trigger.date.getTime()])).toEqual(armed);
+
+  // After the first has fired, only the second is put back, still at its
+  // original time.
+  scheduled.length = 0;
+  await scheduleOnboardingNudges(NOW + 3 * HOUR);
+  expect(scheduled.map((s) => [s.identifier, s.trigger.date.getTime()])).toEqual([armed[1]]);
 });
 
 test("a launch after the first nudge fired is owed the second, not a fresh pair", async () => {

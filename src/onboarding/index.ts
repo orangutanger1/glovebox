@@ -9,6 +9,7 @@ import {
   ONBOARDING_VEHICLE_KEY,
   ONBOARDING_ANSWERS_KEY,
   ONBOARDING_NAME_KEY,
+  ONBOARDING_SERVICE_RECORD_KEY,
   ONBOARDING_NUDGE_KEY,
   normalizeName,
   parseNudgeState,
@@ -73,6 +74,18 @@ export function setOnboardingName(raw: string): void {
  * Null until the first pair is armed, and null again once the flow is finished
  * or replayed. Every reader treats null as "nothing sent yet".
  */
+export function getOnboardingServiceRecordId(): string | null {
+  return getState(ONBOARDING_SERVICE_RECORD_KEY);
+}
+
+export function setOnboardingServiceRecordId(recordId: string | null): void {
+  if (recordId === null) {
+    getDb().runSync("DELETE FROM app_state WHERE key = ?", [ONBOARDING_SERVICE_RECORD_KEY]);
+    return;
+  }
+  setState(ONBOARDING_SERVICE_RECORD_KEY, recordId);
+}
+
 export function getNudgeState(): NudgeState | null {
   return parseNudgeState(getState(ONBOARDING_NUDGE_KEY));
 }
@@ -143,9 +156,10 @@ export function resetOnboarding(): void {
   // The nudge record goes with them: a replay is a fresh run of the flow, and
   // the two resume nudges are counted per run. Left behind, a user who had
   // already been nudged twice would start the replay with the quota spent.
-  getDb().runSync("DELETE FROM app_state WHERE key IN (?, ?, ?)", [
+  getDb().runSync("DELETE FROM app_state WHERE key IN (?, ?, ?, ?)", [
     ONBOARDING_VEHICLE_KEY,
     ONBOARDING_ANSWERS_KEY,
     ONBOARDING_NUDGE_KEY,
+    ONBOARDING_SERVICE_RECORD_KEY,
   ]);
 }

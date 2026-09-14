@@ -2,11 +2,17 @@ import { useMemo, useState } from "react";
 import { Button } from "../../src/design/Button";
 import { ChipRow } from "../../src/design/ChipRow";
 import { getVehicle } from "../../src/db/vehicles";
-import { addRecord, listRecords, softDeleteRecord } from "../../src/db/records";
+import { addRecord, softDeleteRecord } from "../../src/db/records";
 import { t } from "../../src/i18n";
 import { serviceName } from "../../src/schedule/names";
 import { getDistanceUnit } from "../../src/units";
-import { getAnswers, getOnboardingVehicleId, setAnswers } from "../../src/onboarding";
+import {
+  getAnswers,
+  getOnboardingServiceRecordId,
+  getOnboardingVehicleId,
+  setAnswers,
+  setOnboardingServiceRecordId,
+} from "../../src/onboarding";
 import { distancePerYearFor, odometerDaysAgo } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
@@ -81,16 +87,16 @@ export default function OnboardingService() {
 
     if (vehicle) {
       // Stepping back into this screen and answering again must correct the
-      // record rather than stack a second one, and that includes changing
-      // which service it was: the row this run wrote last time is cleared
-      // whatever type it carried, and so is any row of the type now chosen.
+      // record rather than stack a second one, whatever type it carried, so
+      // the row this run wrote last time is cleared — and only that row. It
+      // used to clear every record of the chosen type on the car, which on a
+      // replay over a car with a year of oil changes deleted the lot.
       // Clearing runs even for "Not sure", which writes nothing, or a user who
       // downgraded their answer kept a date they had just taken back.
       const chosen = recordType(type);
-      const answeredBefore = saved.service ? recordType(saved.service) : null;
-      for (const r of listRecords(vehicle.id)) {
-        if (r.service_type === chosen || r.service_type === answeredBefore) softDeleteRecord(r.id);
-      }
+      const written = getOnboardingServiceRecordId();
+      if (written) softDeleteRecord(written);
+      setOnboardingServiceRecordId(null);
 
       if (daysAgo !== null) {
         // Noon local, the same as every other date this app stores: midnight
@@ -99,7 +105,7 @@ export default function OnboardingService() {
         const performed = new Date();
         performed.setDate(performed.getDate() - daysAgo);
         performed.setHours(12, 0, 0, 0);
-        addRecord({
+        const record = addRecord({
           vehicle_id: vehicle.id,
           service_type: chosen,
           performed_at: performed.toISOString(),
@@ -116,6 +122,7 @@ export default function OnboardingService() {
                   daysAgo
                 ),
         });
+        setOnboardingServiceRecordId(record.id);
       }
     }
 

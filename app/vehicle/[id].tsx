@@ -196,9 +196,14 @@ export default function VehicleDetail() {
           onPress: () => {
             softDeleteVehicle(vehicle.id);
             rescheduleAll().catch(() => {});
-            // replace, not back: the detail screen for a hidden vehicle would
-            // render an empty cluster if it were left on the stack.
-            router.replace("/");
+            // Back to the garage that is already underneath, when there is
+            // one; `replace("/")` from there stacked a second garage on top
+            // of the first, with a back chevron into a copy of itself. The
+            // detail screen for a hidden vehicle would render an empty
+            // cluster if it were left on the stack, so a deep link with
+            // nothing beneath still replaces.
+            if (router.canGoBack()) router.back();
+            else router.replace("/");
           },
         },
       ]

@@ -68,7 +68,13 @@ export default function Intervals() {
     }
     // Both boxes empty is a reset, not an error — setInterval drops the row and
     // the shipped default takes over again. The card above says so.
-    setInterval(editing, { months: m, distance: d });
+    // Whole units: the columns are integers and `addMonths` hands a fraction
+    // to `Date`, which truncates it, so "1.5" was stored as 1.5 and applied
+    // as 1. Rounded here, once, where the row that results is shown next.
+    setInterval(editing, {
+      months: m === undefined ? undefined : Math.max(1, Math.round(m)),
+      distance: d === undefined ? undefined : Math.max(1, Math.round(d)),
+    });
     // Reminders were scheduled against the old numbers. Not rescheduling here
     // is how a user changes their oil interval to 10,000 miles and keeps being
     // told it is due at 5,000.

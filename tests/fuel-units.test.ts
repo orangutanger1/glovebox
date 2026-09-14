@@ -1,3 +1,21 @@
+import Database from "better-sqlite3";
+
+// `src/fuel/format` now reads the distance unit, which reaches `src/db/client`
+// and, through it, `expo-sqlite` — an ES module this runner cannot parse. The
+// same in-memory database the other logic tests use keeps the graph resolvable.
+jest.mock("../src/db/client", () => {
+  const db = new Database(":memory:");
+  const { applyMigrations } = jest.requireActual("../src/db/schema");
+  applyMigrations((sql: string) => db.exec(sql), 0);
+  return {
+    getDb: () => ({
+      runSync: (sql: string, params: unknown[] = []) => db.prepare(sql).run(...params),
+      getFirstSync: (sql: string, params: unknown[] = []) => db.prepare(sql).get(...params) ?? null,
+      getAllSync: (sql: string, params: unknown[] = []) => db.prepare(sql).all(...params),
+    }),
+  };
+});
+
 import {
   betterEfficiency,
   efficiencyOf,
@@ -54,6 +72,33 @@ describe("efficiencyOf", () => {
     expect(efficiencyOf(100, 0, "mpg_us")).toBeNull();
     expect(efficiencyOf(-100, 10, "l_per_100km")).toBeNull();
     expect(efficiencyOf(100, NaN, "mpg_us")).toBeNull();
+  });
+});
+
+describe("the style follows the units, not the region alone", () => {
+  test("a US driver on kilometres gets L/100km with the gallons converted", () => {
+    expect(fuelUnitsFor("US", "km")).toEqual({
+      volume: "gal",
+      style: "l_per_100km_gal",
+      distance: "km",
+    });
+    // 500 km on 10 US gallons (37.85 L) is 7.57 L/100km.
+    expect(efficiencyOf(500, 10, "l_per_100km_gal")).toBeCloseTo(7.5708, 3);
+    expect(betterEfficiency("l_per_100km_gal")).toBe("lower");
+  });
+
+  test("a German driver on miles is quoted in imperial mpg over the litres bought", () => {
+    expect(fuelUnitsFor("DE", "mi")).toEqual({ volume: "L", style: "mpg_imp", distance: "mi" });
+  });
+
+  test("a British driver on kilometres gets plain L/100km", () => {
+    expect(fuelUnitsFor("GB", "km")).toEqual({ volume: "L", style: "l_per_100km", distance: "km" });
+  });
+
+  test("the gallon variant prints as L/100km", () => {
+    setLanguage("en");
+    expect(formatEfficiency(7.57, "l_per_100km_gal")).toBe("7.6 L/100km");
+    expect(efficiencyUnitLabel("l_per_100km_gal")).toBe("L/100km");
   });
 });
 

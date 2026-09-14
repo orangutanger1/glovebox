@@ -35,6 +35,10 @@ export const ONBOARDING_VEHICLE_KEY = "onboarding_vehicle_id";
  */
 export const ONBOARDING_NAME_KEY = "onboarding_name";
 
+/** The id of the service record the quiz wrote, so answering again replaces
+ *  that row and only that row. */
+export const ONBOARDING_SERVICE_RECORD_KEY = "onboarding_service_record_id";
+
 /**
  * The longest name the app will store.
  *

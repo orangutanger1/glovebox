@@ -12,6 +12,7 @@ jest.mock("../src/db/client", () => {
   applyMigrations((sql: string) => db.exec(sql), 0);
   return {
     getDb: () => ({
+      withTransactionSync: (fn: () => void) => fn(),
       runSync: (sql: string, params: unknown[] = []) => db.prepare(sql).run(...params),
       getFirstSync: (sql: string, params: unknown[] = []) => db.prepare(sql).get(...params) ?? null,
       getAllSync: (sql: string, params: unknown[] = []) => db.prepare(sql).all(...params),
@@ -21,10 +22,14 @@ jest.mock("../src/db/client", () => {
 
 import {
   KM_PER_MILE,
+  changeDistanceUnit,
   convertDistance,
   defaultUnitFor,
+  getDistanceUnit,
+  setDistanceUnit,
   type DistanceUnit,
 } from "../src/units";
+import { getDb } from "../src/db/client";
 import { defaultIntervals, dueStatus, inspectionMonthsFor } from "../src/schedule";
 import {
   DISTANCE_PER_YEAR,
@@ -67,6 +72,29 @@ describe("converting a reading", () => {
 
   test("returns whole units, because an odometer has no fraction", () => {
     expect(Number.isInteger(convertDistance(12345, "mi", "km"))).toBe(true);
+  });
+
+  test("switching the unit rewrites every stored distance, fills included", () => {
+    const db = getDb();
+    setDistanceUnit("mi");
+    db.runSync("INSERT INTO vehicles (id, name, odometer, created_at) VALUES (?, ?, ?, ?)", [
+      "u1", "Civic", 50000, "2026-01-01T00:00:00.000Z",
+    ]);
+    db.runSync(
+      `INSERT INTO fuel_entries (id, vehicle_id, filled_at, odometer, volume, full, created_at)
+       VALUES (?, ?, ?, ?, ?, 1, ?)`,
+      ["f1", "u1", "2026-01-02T00:00:00.000Z", 49700, 10, "2026-01-02T00:00:00.000Z"]
+    );
+
+    changeDistanceUnit("km");
+
+    expect(getDistanceUnit()).toBe("km");
+    expect(db.getFirstSync<{ odometer: number }>("SELECT odometer FROM vehicles WHERE id = 'u1'"))
+      .toEqual({ odometer: 80467 });
+    // The fill used to be left in miles under a vehicle now reading kilometres.
+    expect(
+      db.getFirstSync<{ odometer: number }>("SELECT odometer FROM fuel_entries WHERE id = 'f1'")
+    ).toEqual({ odometer: 79984 });
   });
 });
 

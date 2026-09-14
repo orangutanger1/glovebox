@@ -13,6 +13,7 @@ import {
   updateVehicleIdentity,
 } from "../../src/db/vehicles";
 import { getOnboardingVehicleId, setOnboardingVehicleId } from "../../src/onboarding";
+import { isGrandfathered } from "../../src/paywall";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { trackQuizAnswer, trackVehicleEntry } from "../../src/analytics";
@@ -32,6 +33,14 @@ const NEWEST_YEAR = new Date().getFullYear() + 1;
 /** Where the drum opens. The average car on the road is about twelve years
  *  old, so the median answer is a short flick in either direction. */
 const DEFAULT_YEAR = NEWEST_YEAR - 12;
+
+/** The one car a grandfathered free garage holds, when that is what a replay
+ *  is describing. Everyone else gets a new row. */
+function adoptable() {
+  if (!isGrandfathered()) return null;
+  const garage = listVehicles();
+  return garage.length === 1 ? garage[0] : null;
+}
 
 /**
  * The car.
@@ -68,9 +77,14 @@ export default function OnboardingVehicle() {
    * survived in component state. The answer does survive in the database,
    * which is the only copy that matters, so the fields are filled from it.
    */
+  // The car this screen is describing: the one this run created, if it has
+  // stepped back here, otherwise the one a free-garage replay is about to
+  // re-describe (see `adoptable`). Prefilled from it either way — a replay
+  // that opened blank over an existing car rewrote its make, model and year
+  // with the drum's default and an empty field the moment Continue was tapped.
   const saved = useMemo(() => {
     const ownedId = getOnboardingVehicleId();
-    return ownedId ? getVehicle(ownedId) : null;
+    return (ownedId ? getVehicle(ownedId) : null) ?? adoptable();
   }, []);
 
   const years = useMemo(
@@ -153,17 +167,15 @@ export default function OnboardingVehicle() {
       return;
     }
 
-    // A replay that this run does not own a car for. Onboarding used to write
-    // a new row here unconditionally, which made walking the flow again the
-    // one way to put a second, third and fourth car in a free garage: the
-    // gate on the garage's own Add button was the only thing enforcing the
-    // one-car limit, and this path went around it. The free garage holds one
-    // car, so a free user replaying the flow re-describes the car they have.
-    const garage = listVehicles();
-    const target = garage.length > 0 ? garage[garage.length - 1] : null;
-    if (target) {
-      updateVehicleIdentity(target.id, identity);
-      setOnboardingVehicleId(target.id);
+    // A replay that this run does not own a car for. The settings screen
+    // promises that one adds a vehicle, and for a subscriber it does. The one
+    // exception is the grandfathered free garage, which holds a single car:
+    // writing a new row here was the way around the gate on the garage's own
+    // Add button, so that user re-describes the car they have — the one the
+    // form was prefilled from, so nothing they leave alone changes.
+    if (saved) {
+      updateVehicleIdentity(saved.id, identity);
+      setOnboardingVehicleId(saved.id);
     } else {
       setOnboardingVehicleId(createVehicle(identity).id);
     }

@@ -72,6 +72,17 @@ export default function LogService() {
     setSaving(true);
     setError("");
 
+    // A minus sign in a numeric field is a typo, not a reading. The odometer
+    // has no negative side and a cost below zero is a refund this screen does
+    // not model; both used to be stored and then silently ignored downstream.
+    const odo = parseNumber(odometer);
+    const price = parseNumber(cost);
+    if ((odo !== undefined && odo < 0) || (price !== undefined && price < 0)) {
+      setError(t("vehicleForms.log.error"));
+      setSaving(false);
+      return;
+    }
+
     let performed: Date;
     if (daysAgo === CUSTOM) {
       // No validation branch left: the wheels cannot be parked on a date that
@@ -87,8 +98,8 @@ export default function LogService() {
         vehicle_id: id,
         service_type: type,
         performed_at: performed.toISOString(),
-        odometer: parseNumber(odometer),
-        cost: parseNumber(cost),
+        odometer: odo,
+        cost: price,
         notes: notes.trim() || undefined,
       });
     } catch {

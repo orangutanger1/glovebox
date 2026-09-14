@@ -41,6 +41,26 @@ function byOdometer(entries: readonly FuelEntry[]): FuelEntry[] {
   return [...entries].sort((a, b) => a.odometer - b.odometer);
 }
 
+/**
+ * One car's fills at a time, each run in odometer order.
+ *
+ * A tank is the distance between two full fills on the same odometer. The
+ * insights screen hands these functions every car's fills at once, and sorting
+ * them by odometer alone interleaved the cars: a full fill at 50,000 on one car
+ * followed by a full fill at 120,000 on another read as a 70,000-mile tank.
+ * Grouping first keeps each leg inside the car it was driven in; the totals
+ * across the groups are what the averages want.
+ */
+function perVehicle(entries: readonly FuelEntry[]): FuelEntry[][] {
+  const groups = new Map<string, FuelEntry[]>();
+  for (const entry of entries) {
+    const group = groups.get(entry.vehicle_id);
+    if (group) group.push(entry);
+    else groups.set(entry.vehicle_id, [entry]);
+  }
+  return [...groups.values()].map(byOdometer);
+}
+
 /** A row the arithmetic can stand on. `volume` and `odometer` are NOT NULL in
  *  the schema, so this only guards against a value that never parsed into a
  *  sane number. */
@@ -61,7 +81,11 @@ export function mpgSeries(
   entries: readonly FuelEntry[],
   style: EfficiencyStyle
 ): TankFigure[] {
-  const sorted = byOdometer(entries).filter(usable);
+  return perVehicle(entries).flatMap((group) => vehicleSeries(group, style));
+}
+
+function vehicleSeries(entries: readonly FuelEntry[], style: EfficiencyStyle): TankFigure[] {
+  const sorted = entries.filter(usable);
   const figures: TankFigure[] = [];
 
   // The last full fill we trust, and the fuel put in since it — partials
@@ -160,7 +184,19 @@ export function fuelSpendByMonth(
  * wrong number rather than a missing one.
  */
 export function costPerDistance(entries: readonly FuelEntry[]): number | null {
-  const sorted = byOdometer(entries).filter(usable);
+  let distance = 0;
+  let cost = 0;
+  for (const group of perVehicle(entries)) {
+    const leg = vehicleCostLegs(group);
+    distance += leg.distance;
+    cost += leg.cost;
+  }
+  if (distance <= 0) return null;
+  return cost / distance;
+}
+
+function vehicleCostLegs(entries: readonly FuelEntry[]): { distance: number; cost: number } {
+  const sorted = entries.filter(usable);
   let previousFull: FuelEntry | null = null;
   let costSince = 0;
   let pricedSince = true;
@@ -192,6 +228,5 @@ export function costPerDistance(entries: readonly FuelEntry[]): number | null {
     pricedSince = true;
   }
 
-  if (distance <= 0) return null;
-  return cost / distance;
+  return { distance, cost };
 }

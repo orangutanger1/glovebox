@@ -106,6 +106,12 @@ export function changeDistanceUnit(to: DistanceUnit): void {
       "UPDATE service_intervals SET distance = CAST(ROUND(distance * ?) AS INTEGER) WHERE distance IS NOT NULL",
       [factor]
     );
+    // Fills too. They were added after this function was written and were
+    // left in the old unit, so a switch put the tank legs in miles under a
+    // vehicle reading in kilometres.
+    db.runSync("UPDATE fuel_entries SET odometer = CAST(ROUND(odometer * ?) AS INTEGER)", [
+      factor,
+    ]);
     setDistanceUnit(to);
   });
 }

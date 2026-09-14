@@ -139,15 +139,37 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
     return;
   }
 
-  // Armed already, and the user has not moved since. Whatever is pending is
-  // still the right pair at the right times; touching it is the bug.
-  if (previous && previous.step === step) return;
+  // Armed already, and the user has not moved since. The pair is still the
+  // right pair at the right times, so the clock is not touched — but the
+  // notifications themselves are re-armed at those same times, because the
+  // caller has usually just wiped them: `rescheduleAll` cancels every pending
+  // notification before it gets here. Returning early kept the bookkeeping and
+  // lost the nudges, so any launch mid-flow silently switched them off. The
+  // identifiers are fixed, so re-arming one that is still pending replaces it
+  // rather than doubling it.
+  if (previous && previous.step === step) {
+    await arm(previous.armedAt, previous.before, now);
+    return;
+  }
 
   await cancelOnboardingNudges();
+  await arm(now, delivered, now);
+  setNudgeState({ armedAt: now, step, before: delivered });
+}
 
-  // The remainder, not a fresh pair. Someone who was nudged at two hours and
-  // then got one screen further is owed the day-out nudge and nothing else.
-  for (const nudge of NUDGES.slice(delivered)) {
+/**
+ * The pair minus the `skip` already delivered, minus any whose time has passed,
+ * at the times counted from `armedAt`.
+ *
+ * The remainder, not a fresh pair: someone who was nudged at two hours and then
+ * got one screen further is owed the day-out nudge and nothing else, and a
+ * relaunch on the same step is owed the ones still ahead of it at the moments
+ * they were already promised for.
+ */
+async function arm(armedAt: number, skip: number, now: number): Promise<void> {
+  for (const nudge of NUDGES.slice(skip)) {
+    const at = armedAt + nudge.afterHours * 60 * 60 * 1000;
+    if (at <= now) continue;
     await Notifications.scheduleNotificationAsync({
       identifier: nudge.id,
       content: {
@@ -157,14 +179,9 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
         title: tNamed(`system.resume.${nudge.key}.title`),
         body: t(`system.resume.${nudge.key}.body`, { vehicle: vehicleName() }),
       },
-      trigger: {
-        type: SchedulableTriggerInputTypes.DATE,
-        date: new Date(now + nudge.afterHours * 60 * 60 * 1000),
-      },
+      trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(at) },
     });
   }
-
-  setNudgeState({ armedAt: now, step, before: delivered });
 }
 
 /** The half-written car the nudge is about, or the honest stand-in for a run

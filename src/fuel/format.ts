@@ -1,7 +1,9 @@
 import { t } from "../i18n";
 import { deviceRegion } from "../i18n/device";
+import { getDistanceUnit } from "../units";
 import {
-  fuelUnitsFor,
+  efficiencyStyleFor,
+  volumeUnitFor,
   type EfficiencyStyle,
   type FuelUnits,
   type VolumeUnit,
@@ -15,13 +17,16 @@ import {
  * a non-breaking space before the unit and Japanese uses none, and a screen that
  * interpolated the halves itself would force English spacing on every reader.
  */
-let cached: FuelUnits | null = null;
+let cached: VolumeUnit | null = null;
 
-/** Read once. The region cannot change while the app is running, and this is
- *  called per rendered row. */
+/** The region's volume unit, read once — the region cannot change while the
+ *  app is running, and this is called per rendered row. The style is derived
+ *  on every call, because the distance unit it depends on can change in
+ *  Settings, and a cached "mpg" over kilometres was the bug. */
 export function currentFuelUnits(): FuelUnits {
-  cached ??= fuelUnitsFor(deviceRegion());
-  return cached;
+  cached ??= volumeUnitFor(deviceRegion());
+  const distance = getDistanceUnit();
+  return { volume: cached, style: efficiencyStyleFor(cached, distance), distance };
 }
 
 /** Tests switch regions; nothing in the app does. */
@@ -51,11 +56,11 @@ export function formatEfficiency(
   value: number,
   style: EfficiencyStyle = currentFuelUnits().style
 ): string {
-  return t(style === "l_per_100km" ? "unit.l100km" : "unit.mpg", { value: round(value) });
+  return t(style.startsWith("l_per_100km") ? "unit.l100km" : "unit.mpg", { value: round(value) });
 }
 
 export function efficiencyUnitLabel(
   style: EfficiencyStyle = currentFuelUnits().style
 ): string {
-  return t(style === "l_per_100km" ? "unit.l100km.label" : "unit.mpg.label");
+  return t(style.startsWith("l_per_100km") ? "unit.l100km.label" : "unit.mpg.label");
 }

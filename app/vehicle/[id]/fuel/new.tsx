@@ -65,7 +65,7 @@ export default function LogFuel() {
     // Both columns are NOT NULL, for a reason the user can be told: a fill
     // missing either can never produce a figure, and it would corrupt the tank
     // after it too. Refused here rather than thrown at the driver by SQLite.
-    if (odo === undefined || vol === undefined || vol <= 0) {
+    if (odo === undefined || odo < 0 || vol === undefined || vol <= 0) {
       setError(t("fuel.form.needOdometer"));
       return;
     }
@@ -84,6 +84,11 @@ export default function LogFuel() {
     }
 
     const price = parseNumber(cost);
+    if (price !== undefined && price < 0) {
+      setError(t("fuel.form.error"));
+      setSaving(false);
+      return;
+    }
     try {
       addFuelEntry({
         vehicle_id: id,

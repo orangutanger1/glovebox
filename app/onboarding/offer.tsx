@@ -102,15 +102,22 @@ export default function OnboardingOffer() {
     setMsg(null);
     try {
       const offering = (await hasOffering(DISCOUNT_OFFERING)) ? DISCOUNT_OFFERING : undefined;
-      if ((await presentOffering(offering)) === "purchased") {
+      const outcome = await presentOffering(offering);
+      if (outcome === "purchased") {
         recordReviewEvent("purchase");
         paid("trial");
         return;
       }
-      // Dismissed, or the sheet could not be presented. Either way the trial
-      // was not started and there is nothing further to ask, so this is the
-      // same decline as the link below and it leaves the user in the same
-      // place: here, with the offer still on the glass.
+      // A store that could not show a sheet is not a user who saw one and
+      // said no. Counting it as a decline hid the back button, flipped the
+      // footer to "restore" and logged `offer_declined` over a network blip.
+      if (outcome === "unavailable") {
+        setMsg(t("settings.store.error"));
+        return;
+      }
+      // Dismissed. The trial was not started and there is nothing further to
+      // ask, so this is the same decline as the link below and it leaves the
+      // user in the same place: here, with the offer still on the glass.
       onDecline();
     } finally {
       setBusy(false);

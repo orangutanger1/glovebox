@@ -171,3 +171,28 @@ describe("fuelSpendByMonth", () => {
     expect(series[0].total).toBe(0);
   });
 });
+
+describe("more than one car", () => {
+  const fill = (vehicle_id: string, odometer: number, volume: number, cost?: number): FuelEntry => ({
+    id: `${vehicle_id}-${odometer}`,
+    vehicle_id,
+    filled_at: "2026-01-01T12:00:00.000Z",
+    odometer,
+    volume,
+    cost,
+    full: 1,
+  });
+
+  test("a tank never spans two cars", () => {
+    // Sorted by odometer alone, a's 50,000 → b's 120,000 read as one tank.
+    const entries = [fill("a", 50000, 10), fill("b", 120000, 10), fill("a", 50300, 10), fill("b", 120400, 10)];
+    const series = mpgSeries(entries, "mpg_us");
+    expect(series.map((f) => f.distance)).toEqual([300, 400]);
+    expect(averageEfficiency(entries, "mpg_us")).toBeCloseTo(700 / 20, 6);
+  });
+
+  test("cost per distance sums each car's own legs", () => {
+    const entries = [fill("a", 50000, 10, 30), fill("b", 120000, 10, 40), fill("a", 50300, 10, 30), fill("b", 120400, 10, 40)];
+    expect(costPerDistance(entries)).toBeCloseTo(70 / 700, 6);
+  });
+});
