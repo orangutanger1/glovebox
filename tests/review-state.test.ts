@@ -5,6 +5,8 @@ import {
   SCORE_THRESHOLD,
   COOLDOWN_DAYS,
   MAX_ASKS,
+  ASK_WINDOW_DAYS,
+  spentAsks,
   type ReviewEvent,
   type ReviewEventKind,
 } from "../src/review/state";
@@ -89,8 +91,22 @@ test("asks again once the cooldown has elapsed", () => {
 test("stops asking after the number of prompts iOS will actually show", () => {
   const exhausted = state({
     events: events(["purchase", 0], ["log_service", 0], ["export", 0]),
-    lastAskedAt: daysAgo(365),
+    lastAskedAt: daysAgo(30),
     askCount: MAX_ASKS,
   });
   expect(shouldRequestReview(exhausted, NOW)).toBe(false);
+});
+
+test("the ask count is per year, not per install", () => {
+  // iOS's three-per-year quota renews; a count that never reset meant three
+  // asks in the first month and silence for the life of the install.
+  const renewed = state({
+    events: events(["purchase", 0], ["log_service", 0], ["export", 0]),
+    lastAskedAt: daysAgo(ASK_WINDOW_DAYS),
+    askCount: MAX_ASKS,
+  });
+  expect(spentAsks(renewed, NOW)).toBe(0);
+  expect(shouldRequestReview(renewed, NOW)).toBe(true);
+  expect(spentAsks({ lastAskedAt: daysAgo(ASK_WINDOW_DAYS - 1), askCount: 2 }, NOW)).toBe(2);
+  expect(spentAsks({ lastAskedAt: null, askCount: 2 }, NOW)).toBe(0);
 });

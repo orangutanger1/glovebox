@@ -2,6 +2,7 @@ import { getDb } from "../db/client";
 import { getState, setState } from "../db/state";
 import {
   shouldRequestReview,
+  spentAsks,
   REVIEW_LAST_ASKED_KEY,
   REVIEW_ASK_COUNT_KEY,
   type ReviewEvent,
@@ -84,13 +85,15 @@ export async function maybeRequestReview(): Promise<void> {
       lastAskedAt: getState(REVIEW_LAST_ASKED_KEY),
       askCount: Number.isFinite(askCount) ? askCount : 0,
     };
-    if (!shouldRequestReview(state, new Date())) return;
+    const now = new Date();
+    if (!shouldRequestReview(state, now)) return;
 
     const StoreReview = loadStoreReview();
     if (!(await StoreReview.hasAction())) return;
 
-    setState(REVIEW_LAST_ASKED_KEY, new Date().toISOString());
-    setState(REVIEW_ASK_COUNT_KEY, String(state.askCount + 1));
+    setState(REVIEW_LAST_ASKED_KEY, now.toISOString());
+    // Counted within the year, so a count that has aged out starts over.
+    setState(REVIEW_ASK_COUNT_KEY, String(spentAsks(state, now) + 1));
     await StoreReview.requestReview();
   } catch {
     // A rating prompt is the least important thing on screen. It never breaks

@@ -35,7 +35,6 @@ import { track } from "../src/analytics";
 import { distanceUnitLabel } from "../src/units/format";
 import { formatMoney } from "../src/money";
 import { serviceName } from "../src/schedule/names";
-import { vehicleDisplayName } from "../src/format";
 import { getLanguage, t } from "../src/i18n";
 
 /** A year, which is the window a maintenance bill is actually judged over —
@@ -101,9 +100,10 @@ export default function Insights() {
     useCallback(() => {
       setRecords(costedRecords());
       setFuel(allFuelEntries());
-      setNames(
-        Object.fromEntries(listVehicles().map((v) => [v.id, vehicleDisplayName(v)]))
-      );
+      // `name` is what the garage and the vehicle header print, and the one
+      // field a rename writes; deriving a label from year/make/model here
+      // showed the factory name to someone who had called the car "the truck".
+      setNames(Object.fromEntries(listVehicles().map((v) => [v.id, v.name])));
     }, [])
   );
 

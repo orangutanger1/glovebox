@@ -38,12 +38,14 @@ export function fuelEntriesForVehicle(vehicleId: string): FuelEntry[] {
  *  the insights screen sums across the whole garage on focus, and a round trip
  *  per vehicle turns a garage of eight into eight synchronous queries. */
 export function allFuelEntries(): FuelEntry[] {
+  // Live vehicles only, for the same reason `costedRecords` is.
   return rows(
     getDb().getAllSync<FuelEntry>(
-      `SELECT id, vehicle_id, filled_at, odometer, volume, cost, full
-       FROM fuel_entries
-       WHERE deleted_at IS NULL
-       ORDER BY vehicle_id ASC, odometer ASC`
+      `SELECT f.id, f.vehicle_id, f.filled_at, f.odometer, f.volume, f.cost, f.full
+       FROM fuel_entries f
+       JOIN vehicles v ON v.id = f.vehicle_id AND v.deleted_at IS NULL
+       WHERE f.deleted_at IS NULL
+       ORDER BY f.vehicle_id ASC, f.odometer ASC`
     )
   );
 }

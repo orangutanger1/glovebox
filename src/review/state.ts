@@ -41,7 +41,27 @@ export const COOLDOWN_DAYS = 14;
  */
 export const MAX_ASKS = 3;
 
+/** The window iOS counts those asks over. The count is per year, not per
+ *  install: a user asked three times in their first month was never asked
+ *  again, for as long as they kept the app. */
+export const ASK_WINDOW_DAYS = 365;
+
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * How many of the year's asks are spent. One timestamp rather than three: the
+ * count resets once the *last* ask is a year old, which is a little stricter
+ * than Apple's rolling window and never looser than it.
+ */
+export function spentAsks(
+  state: { lastAskedAt: string | null; askCount: number },
+  now: Date
+): number {
+  if (!state.lastAskedAt) return 0;
+  const since = now.getTime() - new Date(state.lastAskedAt).getTime();
+  if (Number.isFinite(since) && since >= ASK_WINDOW_DAYS * DAY_MS) return 0;
+  return state.askCount;
+}
 
 /**
  * Current happiness, with every event faded by its age.
@@ -79,7 +99,7 @@ export function shouldRequestReview(
   state: { events: ReviewEvent[]; lastAskedAt: string | null; askCount: number },
   now: Date
 ): boolean {
-  if (state.askCount >= MAX_ASKS) return false;
+  if (spentAsks(state, now) >= MAX_ASKS) return false;
 
   if (state.lastAskedAt) {
     const since = now.getTime() - new Date(state.lastAskedAt).getTime();

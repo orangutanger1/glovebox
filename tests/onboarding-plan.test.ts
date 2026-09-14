@@ -66,6 +66,21 @@ test("a service with nothing on file is due, not unknown", () => {
   expect(plan.dueNow).toBe(3);
 });
 
+test("a service with no interval in this market is not in the plan at all", () => {
+  // Inspection in Canada or Brazil ships as `{}`: no periodic test. Listing
+  // it as "nothing logged" told those drivers they were behind on a test
+  // their province never asks for.
+  const plan = buildPlan({
+    records: [],
+    intervals: { ...INTERVALS, Inspection: {} },
+    answers: {},
+    unit: "mi",
+    now: NOW,
+  });
+  expect(plan.items.map((i) => i.type)).not.toContain("Inspection");
+  expect(plan.dueNow).toBe(3);
+});
+
 test("Other is not a service and never appears in the plan", () => {
   const plan = buildPlan({
     records: [],

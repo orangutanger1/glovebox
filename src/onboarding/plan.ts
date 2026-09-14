@@ -118,6 +118,11 @@ export function buildPlan(input: {
     // is a real interval for scheduling one specific record, but as a line in
     // a plan it reads as a service called Other, which is not a service.
     if (type === "Other") continue;
+    // A service with no interval in this market — Inspection where there is
+    // no periodic test — is not due, logged or not. Listing it as "nothing
+    // logged" told every Canadian and Brazilian driver they were behind on a
+    // test their province never asks for.
+    if (interval.months === undefined && interval.distance === undefined) continue;
 
     let latest: { performed_at: string; odometer?: number } | undefined;
     for (const record of input.records) {

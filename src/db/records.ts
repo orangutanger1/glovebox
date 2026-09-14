@@ -103,12 +103,16 @@ export function allRecordsForExport(): (ServiceRecord & { vehicle_name: string }
  * a total must never count a service the user deleted.
  */
 export function costedRecords(): CostedRecord[] {
+  // Joined on a live vehicle: a deleted car's history is unreachable from
+  // the garage, and a total that still counted it disagreed with every row
+  // the user could see.
   return rows(
     getDb().getAllSync<CostedRecord>(
-      `SELECT vehicle_id, service_type, performed_at, cost
-       FROM service_records
-       WHERE deleted_at IS NULL
-       ORDER BY performed_at DESC`
+      `SELECT r.vehicle_id, r.service_type, r.performed_at, r.cost
+       FROM service_records r
+       JOIN vehicles v ON v.id = r.vehicle_id AND v.deleted_at IS NULL
+       WHERE r.deleted_at IS NULL
+       ORDER BY r.performed_at DESC`
     )
   );
 }

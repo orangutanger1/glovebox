@@ -14,8 +14,11 @@ jest.mock("../src/db/client", () => {
 });
 
 import { getDb } from "../src/db/client";
+import { addRecord, costedRecords } from "../src/db/records";
+import { softDeleteVehicle, undoDeleteVehicle } from "../src/db/vehicles";
 import {
   addFuelEntry,
+  allFuelEntries,
   allFuelForExport,
   fuelEntriesForVehicle,
   listFuelEntries,
@@ -25,6 +28,7 @@ import {
 
 beforeEach(() => {
   getDb().runSync("DELETE FROM fuel_entries", []);
+  getDb().runSync("DELETE FROM service_records", []);
   getDb().runSync("DELETE FROM vehicles", []);
   getDb().runSync("INSERT INTO vehicles (id, name, odometer, created_at) VALUES (?, ?, ?, ?)", [
     "v1",
@@ -113,4 +117,27 @@ test("the history reads newest first and the math reads oldest first", () => {
   add(1500, 12);
   expect(listFuelEntries("v1").map((r) => r.odometer)).toEqual([1500, 1200]);
   expect(fuelEntriesForVehicle("v1").map((r) => r.odometer)).toEqual([1200, 1500]);
+});
+
+test("a deleted vehicle's fills and services leave the garage totals, and return with it", () => {
+  // The rows stay on disk for the export; the insights screen sums only what
+  // the user can still reach from the garage.
+  add(1200, 10, { cost: 40 });
+  addRecord({
+    vehicle_id: "v1",
+    service_type: "Oil Change",
+    performed_at: "2026-03-01T12:00:00.000Z",
+    cost: 80,
+  });
+  expect(allFuelEntries()).toHaveLength(1);
+  expect(costedRecords()).toHaveLength(1);
+
+  softDeleteVehicle("v1");
+  expect(allFuelEntries()).toHaveLength(0);
+  expect(costedRecords()).toHaveLength(0);
+  expect(allFuelForExport()).toHaveLength(1);
+
+  undoDeleteVehicle("v1");
+  expect(allFuelEntries()).toHaveLength(1);
+  expect(costedRecords()).toHaveLength(1);
 });
