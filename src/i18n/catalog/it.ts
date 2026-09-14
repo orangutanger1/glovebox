@@ -154,6 +154,7 @@ export const it: Fragment = {
   "offer.plan.decline": "Non ora",
   "offer.notify.title": "Non perdere mai una manutenzione.",
   "offer.notify.off": "Promemoria disattivati",
+  "offer.notify.body": "Ultima volta {date}.",
   "offer.plan.status.due": "Da fare",
   "offer.plan.status.soon": "A breve",
   "offer.plan.status.ok": "OK",

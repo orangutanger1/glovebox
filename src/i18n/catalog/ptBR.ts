@@ -154,6 +154,7 @@ export const ptBR: Fragment = {
   "offer.plan.decline": "Agora não",
   "offer.notify.title": "Nunca perca uma revisão.",
   "offer.notify.off": "Lembretes desativados",
+  "offer.notify.body": "Última vez: {date}.",
   "offer.plan.status.due": "Vencido",
   "offer.plan.status.soon": "Logo",
   "offer.plan.status.ok": "OK",

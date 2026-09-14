@@ -8,7 +8,6 @@ import { Button } from "../../src/design/Button";
 import { NotifyShade } from "../../src/design/NotifyShade";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, formatDueIn, getLanguage, t } from "../../src/i18n";
-import { vehicleSentenceName } from "../../src/format";
 import { getDistanceUnit } from "../../src/units";
 import { serviceName } from "../../src/schedule/names";
 import { planBadge, planItemLine, planRowStatus } from "../../src/onboarding/plan";
@@ -66,8 +65,10 @@ const SHOWN = 6;
  *
  * The still is English, so English is the only place it is shown. Every other
  * language draws the same banner in code instead — same layout, same two lines,
- * rendered from `nextReminder` through the catalog keys the scheduler will
- * actually send, against this car's own records. An English banner in the
+ * rendered from `nextReminder` against this car's own records: the scheduler's
+ * own title, over a body that names only the date. The real body leads with
+ * the vehicle, but the subtitle above the banner has just said which car, and
+ * a body long enough to wrap turns the banner into a list row. An English banner in the
  * middle of a French screen is worse than a banner that is one pixel-hint less
  * polished, and a screen that says "12 services on a schedule" in French over
  * "Last done May 4th" is the app losing the reader's language mid-sentence.
@@ -181,8 +182,7 @@ export default function OnboardingNotify() {
                 title={t("system.notify.title", {
                   service: serviceName(reminder!.serviceType),
                 })}
-                body={t("system.notify.body", {
-                  vehicle: vehicleSentenceName(reminder!.vehicleName),
+                body={t("offer.notify.body", {
                   date: formatDate(reminder!.lastPerformedAt),
                 })}
                 when={formatDueIn(reminder!.dueAt)}

@@ -164,6 +164,7 @@ export const ko: Fragment = {
   "offer.plan.decline": "지금은 안 할게요",
   "offer.notify.title": "정비를 놓치지 마세요.",
   "offer.notify.off": "\uc54c\ub9bc \uaebc\uc9d0",
+  "offer.notify.body": "{date}에 마지막으로 했어요.",
   "offer.plan.status.due": "기한",
   "offer.plan.status.soon": "임박",
   "offer.plan.status.ok": "정상",

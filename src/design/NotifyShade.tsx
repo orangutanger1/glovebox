@@ -27,10 +27,10 @@ function GhostBanner() {
     <View
       style={{
         flexDirection: "row",
-        alignItems: "flex-start",
-        gap: 10,
-        padding: 12,
-        borderRadius: 22,
+        alignItems: "center",
+        gap: 12,
+        padding: 14,
+        borderRadius: 24,
         borderCurve: "continuous",
         borderWidth: 1,
         borderColor: "rgba(255,255,255,0.05)",
@@ -39,16 +39,15 @@ function GhostBanner() {
     >
       <View
         style={{
-          width: 38,
-          height: 38,
-          borderRadius: 9,
+          width: 48,
+          height: 48,
+          borderRadius: 11,
           backgroundColor: "rgba(255,255,255,0.05)",
         }}
       />
-      <View style={{ flex: 1, gap: 6, paddingTop: 4 }}>
+      <View style={{ flex: 1, gap: 8 }}>
         {bar("55%")}
-        {bar("90%")}
-        {bar("70%")}
+        {bar("85%")}
       </View>
     </View>
   );

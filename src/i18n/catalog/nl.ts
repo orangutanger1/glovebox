@@ -592,6 +592,7 @@ export const nl: Fragment = {
   "offer.plan.decline": "Nu niet",
   "offer.notify.title": "Mis nooit meer een onderhoudsbeurt.",
   "offer.notify.off": "Herinneringen uit",
+  "offer.notify.body": "Laatst gedaan op {date}.",
   "offer.plan.status.due": "Nu",
   "offer.plan.status.soon": "Binnenkort",
   "offer.plan.status.ok": "OK",

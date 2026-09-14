@@ -32,6 +32,7 @@ export const offer: Fragment = {
 
   "offer.notify.title": "Never miss a service.",
   "offer.notify.off": "Reminders off",
+  "offer.notify.body": "Last done {date}.",
   "offer.plan.status.due": "Due",
   "offer.plan.status.soon": "Soon",
   "offer.plan.status.ok": "OK",

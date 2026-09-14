@@ -163,6 +163,7 @@ export const sv: Fragment = {
   "offer.plan.decline": "Inte nu",
   "offer.notify.title": "Missa aldrig en service.",
   "offer.notify.off": "P\u00e5minnelser av",
+  "offer.notify.body": "Gjordes senast {date}.",
   "offer.plan.status.due": "Dags",
   "offer.plan.status.soon": "Snart",
   "offer.plan.status.ok": "OK",

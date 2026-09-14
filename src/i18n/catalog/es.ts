@@ -160,6 +160,7 @@ export const es: Fragment = {
   "offer.plan.decline": "Ahora no",
   "offer.notify.title": "No te pierdas ningún servicio.",
   "offer.notify.off": "Avisos desactivados",
+  "offer.notify.body": "Última vez: {date}.",
   "offer.plan.status.due": "Vence",
   "offer.plan.status.soon": "Pronto",
   "offer.plan.status.ok": "OK",

@@ -17,10 +17,18 @@ const ICON = require("../../assets/icon.png");
  * It is still not built from the app's own surfaces: drawing it in them is
  * what made an even earlier version read as a feature card.
  *
- * The layout is the real one: a large rounded-square app icon on the left; the
- * bold title and the lighter body stacked beside it; the arrival time in the top
- * corner. No separate app-name label — the icon is the app's identity, the way
- * iOS shows it on the lock screen and in a dropped banner.
+ * The layout is the real one: a large rounded-square app icon on the left,
+ * centred on the two text lines; the bold title and the lighter body stacked
+ * beside it; the arrival time in the top corner. No separate app-name label —
+ * the icon is the app's identity, the way iOS shows it on the lock screen and
+ * in a dropped banner.
+ *
+ * Proportions follow `assets/onboarding/notification.png`, the still English
+ * gets: the icon is about half the card's height, and each text line is one
+ * line. A body that wrapped to two lines pushed the icon up into the corner and
+ * read as a list row with a thumbnail, not a banner. The caller keeps the body
+ * short enough to hold that; the title is the service, which is capped by the
+ * i18n budget test.
  *
  * The strings come from the caller because the only honest source for them is
  * the scheduler's own copy, rendered against the user's own car.
@@ -45,11 +53,11 @@ export function NotifyBanner({
     <View
       style={{
         flexDirection: "row",
-        alignItems: "flex-start",
-        gap: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 12,
-        borderRadius: 22,
+        alignItems: "center",
+        gap: 12,
+        paddingVertical: 14,
+        paddingHorizontal: 14,
+        borderRadius: 24,
         // iOS continuous corners; ignored on platforms that lack it.
         borderCurve: "continuous",
         backgroundColor: "rgba(58,58,60,0.72)",
@@ -68,7 +76,7 @@ export function NotifyBanner({
     >
       <Image
         source={ICON}
-        style={{ width: 38, height: 38, borderRadius: 9 }}
+        style={{ width: 48, height: 48, borderRadius: 11 }}
         accessibilityIgnoresInvertColors
       />
       <View style={{ flex: 1, gap: 2 }}>
@@ -76,11 +84,11 @@ export function NotifyBanner({
           {/* Title bold, up to two lines, the way iOS truncates a collapsed
               banner; the timestamp sits in the top corner beside it. */}
           <Text
-            numberOfLines={2}
+            numberOfLines={1}
             style={{
               flex: 1,
-              fontSize: 15,
-              lineHeight: 20,
+              fontSize: 16,
+              lineHeight: 21,
               fontWeight: "600",
               color: LABEL,
             }}
@@ -100,8 +108,8 @@ export function NotifyBanner({
           </Text>
         </View>
         <Text
-          numberOfLines={2}
-          style={{ fontSize: 15, lineHeight: 20, color: BODY }}
+          numberOfLines={1}
+          style={{ fontSize: 16, lineHeight: 21, color: BODY }}
         >
           {body}
         </Text>
