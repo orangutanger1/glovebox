@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useFocusEffect } from "expo-router";
 import { Image, View, Text, useWindowDimensions } from "react-native";
 import { Panel } from "../../src/design/Surface";
 import { ListRow } from "../../src/design/ListRow";
@@ -109,16 +110,21 @@ export default function OnboardingNotify() {
   );
 
   // Whether the stamp under the banner says reminders are off. Null until iOS
-  // answers, and nothing is printed on a guess.
-  useEffect(() => {
-    let live = true;
-    reminderStatus()
-      .then((status) => live && setGranted(status.permission === "granted"))
-      .catch(() => {});
-    return () => {
-      live = false;
-    };
-  }, []);
+  // answers, and nothing is printed on a guess. Re-asked on every focus rather
+  // than once on mount: this screen stays mounted under the ones pushed after
+  // it, so a Back from the paywall lands on the same instance, and a stamp
+  // read before the tap that granted permission would still say off.
+  useFocusEffect(
+    useCallback(() => {
+      let live = true;
+      reminderStatus()
+        .then((status) => live && setGranted(status.permission === "granted"))
+        .catch(() => {});
+      return () => {
+        live = false;
+      };
+    }, [])
+  );
 
   async function onRemindMe() {
     if (busy) return;
@@ -128,6 +134,7 @@ export default function OnboardingNotify() {
       // this tap or the system has already refused to show one.
       if (await canAskPermission()) {
         const isGranted = await requestPermission();
+        setGranted(isGranted);
         trackNotificationPermission(isGranted ? "granted" : "denied");
         // The service the quiz already logged has a due date; without this it
         // gets no notification until some later cold start, because the launch

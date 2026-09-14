@@ -103,8 +103,19 @@ export default function OnboardingPaywall() {
     >
       <Panel>
         <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge legend={t("offer.paywall.vehicle")} value={vehicleName} />
+          {/* The name takes what the count leaves: a "2015 Toyota Corolla"
+              wraps to two lines rather than running into the "12". */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              gap: tokens.space.md,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <Gauge legend={t("offer.paywall.vehicle")} value={vehicleName} />
+            </View>
             <Gauge
               legend={t("offer.paywall.scheduled")}
               value={formatNumber(plan.items.length)}

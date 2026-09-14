@@ -25,13 +25,23 @@ export function Gauge({
   align?: "left" | "right";
 }) {
   return (
-    <View style={{ gap: 2, alignItems: align === "right" ? "flex-end" : "flex-start" }}>
+    <View
+      style={{
+        gap: 2,
+        flexShrink: 1,
+        alignItems: align === "right" ? "flex-end" : "flex-start",
+      }}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}>
         <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{legend}</Text>
         {lamp !== undefined ? <Lamp lit={lamp} /> : null}
       </View>
-      <View style={{ flexDirection: "row", alignItems: "baseline", gap: 4 }}>
-        <Text style={{ ...tokens.text.readout, color: tokens.color.text }}>{value}</Text>
+      {/* The readout may shrink and wrap — a long vehicle name is a value
+          too, and a gauge that will not give way rams into its neighbour. */}
+      <View style={{ flexDirection: "row", alignItems: "baseline", gap: 4, flexShrink: 1 }}>
+        <Text style={{ ...tokens.text.readout, color: tokens.color.text, flexShrink: 1 }}>
+          {value}
+        </Text>
         {unit ? (
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{unit}</Text>
         ) : null}
