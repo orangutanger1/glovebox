@@ -25,7 +25,7 @@ export function listRecords(vehicleId: string): ServiceRecord[] {
     getDb().getAllSync<ServiceRecord>(
       `SELECT * FROM service_records
        WHERE vehicle_id = ? AND deleted_at IS NULL
-       ORDER BY performed_at DESC`,
+       ORDER BY performed_at DESC, rowid DESC`,
       [vehicleId]
     )
   );

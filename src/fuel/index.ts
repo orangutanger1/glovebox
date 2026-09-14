@@ -135,9 +135,21 @@ export function latestEfficiency(
  */
 export function averageEfficiency(
   entries: readonly FuelEntry[],
-  style: EfficiencyStyle
+  style: EfficiencyStyle,
+  /**
+   * Which tanks count, judged by the full fill that closes each one. The
+   * series is always built from every entry so the fill that anchors the
+   * first in-window tank — necessarily outside the window — is still there;
+   * filtering the entries first threw that anchor away and, with one full
+   * fill inside the window, reported no data above a chart showing fills.
+   */
+  counts: (closingFill: FuelEntry) => boolean = () => true
 ): number | null {
-  const series = mpgSeries(entries, style);
+  const byId = new Map(entries.map((e) => [e.id, e]));
+  const series = mpgSeries(entries, style).filter((f) => {
+    const closing = byId.get(f.entryId);
+    return closing !== undefined && counts(closing);
+  });
   if (!series.length) return null;
   let distance = 0;
   let volume = 0;

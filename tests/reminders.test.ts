@@ -1,4 +1,4 @@
-import { selectReminders, triggerTime, MAX_SCHEDULED, type Reminder } from "../src/notify/select";
+import { scheduledAt, selectReminders, triggerTime, MAX_SCHEDULED, type Reminder } from "../src/notify/select";
 
 const NOW = new Date("2026-08-02T12:00:00.000Z").getTime();
 
@@ -50,11 +50,21 @@ test("stays under the iOS limit of 64 pending notifications", () => {
 });
 
 describe("triggerTime", () => {
-  test("reads the calendar components iOS hands back for a date trigger", () => {
+  test("prefers the due date stashed in content.data over the trigger", () => {
     // What `getAllScheduledNotificationsAsync` returns on iOS for a reminder
-    // scheduled as `{ type: "date", date }`: the SDK converts it to calendar
-    // components on the way in and serialises those on the way out. There is
-    // no `date` field on the round trip.
+    // scheduled as `{ type: "date", date }`: a time-interval trigger with no
+    // anchor. Only the stashed due date can say when it fires.
+    const due = "2027-03-14T13:00:00.000Z";
+    expect(
+      scheduledAt({ content: { data: { dueAt: due } }, trigger: { type: "timeInterval", seconds: 60 } }),
+    ).toBe(new Date(due).getTime());
+    expect(scheduledAt({ content: { data: {} }, trigger: { type: "timeInterval", seconds: 60 } })).toBeUndefined();
+    expect(scheduledAt({ content: { data: { dueAt: "garbage" } }, trigger: { type: "date", date: due } })).toBe(
+      new Date(due).getTime(),
+    );
+  });
+
+  test("reads calendar components when a platform hands them back", () => {
     const at = triggerTime({
       type: "calendar",
       repeats: false,

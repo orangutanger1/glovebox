@@ -303,14 +303,16 @@ export default function RootLayout() {
   const onQuickAction = useCallback(
     (action: QuickActions.Action) => {
       // `isOnboarded` reads the database, and a database the boot effect
-      // could not open throws again here. The fatal notice is already up;
-      // a menu tap is not worth a second crash on top of it.
+      // could not open throws again here. The fatal notice is already up
+      // and the failure already reported once; a menu tap is worth neither a
+      // second crash nor a second `boot_failed` for the same incident.
+      if (fatal !== null) return;
       const onboarded = boot("quickaction", isOnboarded);
       if (!onboarded) return;
       if (action.id === QUICK_ACTION_FEEDBACK) void openFeedback();
       else if (action.id === QUICK_ACTION_TRIAL) router.navigate("/trial");
     },
-    [router]
+    [router, fatal]
   );
 
   useQuickActionCallback(onQuickAction);

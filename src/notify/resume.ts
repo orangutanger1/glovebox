@@ -186,6 +186,7 @@ async function arm(armedAt: number, skip: number, now: number): Promise<void> {
         // as the user made it — is in the body.
         title: tNamed(`system.resume.${nudge.key}.title`),
         body: t(`system.resume.${nudge.key}.body`, { vehicle: vehicleName() }),
+        data: { dueAt: new Date(at).toISOString() },
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(at) },
     });

@@ -119,6 +119,20 @@ describe("averageEfficiency", () => {
   test("is nothing when no tank qualifies", () => {
     expect(averageEfficiency([fill(1000, 10)], "mpg_us")).toBeNull();
   });
+
+  test("a window keeps the anchor fill outside it, judging tanks by their closing fill", () => {
+    // Only full fills 13 months ago and this month: the old one anchors, the
+    // new one closes a tank inside the window. Filtering the entries first
+    // would have dropped the anchor and reported nothing.
+    const old = fill(1000, 10, { filled_at: "2025-08-01T12:00:00.000Z" });
+    const recent = fill(1400, 20, { filled_at: "2026-09-01T12:00:00.000Z" });
+    const inWindow = (f: FuelEntry) => f.filled_at >= "2026-01";
+    expect(averageEfficiency([old, recent], "mpg_us", inWindow)).toBeCloseTo(400 / 20, 6);
+    // And a tank closed by the old fill is left out.
+    const older = fill(500, 10, { filled_at: "2025-06-01T12:00:00.000Z" });
+    expect(averageEfficiency([older, old, recent], "mpg_us", inWindow)).toBeCloseTo(400 / 20, 6);
+    expect(averageEfficiency([older, old], "mpg_us", inWindow)).toBeNull();
+  });
 });
 
 describe("fuelSpend", () => {

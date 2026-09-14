@@ -163,8 +163,7 @@ export default function Insights() {
   // drawn from the same window the bars beneath it are — it used to average
   // every fill ever logged under that caption.
   const window = new Set(recentMonths(MONTHS));
-  const recentFills = fuel.filter((f) => window.has(monthOf(f.filled_at)));
-  const fuelAverage = averageEfficiency(recentFills, style);
+  const fuelAverage = averageEfficiency(fuel, style, (f) => window.has(monthOf(f.filled_at)));
   // Per 100 rather than per 1: fuel costs a fraction of a currency unit per
   // mile, and formatMoney is whole units by design — "$0" per mile is a figure
   // that tells the reader nothing. Scaling the distance is honest where

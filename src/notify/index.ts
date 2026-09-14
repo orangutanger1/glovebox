@@ -5,7 +5,7 @@ import { formatDate, t } from "../i18n";
 import { vehicleSentenceName } from "../format";
 import { tNamed } from "../onboarding";
 import { collectReminders } from "./collect";
-import { selectReminders, triggerTime } from "./select";
+import { scheduledAt, selectReminders } from "./select";
 import { scheduleOnboardingNudges } from "./resume";
 
 Notifications.setNotificationHandler({
@@ -88,6 +88,9 @@ export async function rescheduleAll(): Promise<void> {
           vehicle: vehicleSentenceName(reminder.vehicleName),
           date: formatDate(reminder.lastPerformedAt),
         }),
+        // iOS keeps a `DATE` trigger only as seconds-from-now, so the due
+        // date itself has to ride along for `reminderStatus` to read back.
+        data: { dueAt: reminder.dueAt },
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(reminder.dueAt) },
     });
@@ -108,7 +111,7 @@ export async function reminderStatus(): Promise<ReminderStatus> {
 
   const pending = await Notifications.getAllScheduledNotificationsAsync();
   const times = pending
-    .map((n) => triggerTime(n.trigger))
+    .map((n) => scheduledAt(n))
     .filter((at): at is number => at !== undefined)
     .sort((a, b) => a - b);
 

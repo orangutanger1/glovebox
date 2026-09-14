@@ -34,17 +34,29 @@ export function selectReminders(
 }
 
 /**
- * When a pending notification fires, read off whatever shape the platform
- * hands back — or `undefined` for a trigger that has no single time.
+ * When a pending notification fires, or `undefined` when the platform gives no
+ * single time back.
  *
- * The app schedules every reminder as a `DATE` trigger, and on iOS that comes
- * back from `getAllScheduledNotificationsAsync` as a *calendar* trigger: the
- * SDK converts the date into `UNCalendarNotificationTrigger` components on the
- * way in, and serialises those components on the way out. Reading `date` alone
- * found nothing on every device, so Settings never once printed the next date.
- * The components are in the phone's own zone, which is what `new Date(y, m…)`
- * builds.
+ * The app schedules every reminder as a `DATE` trigger, and on iOS the SDK
+ * turns that into a `UNTimeIntervalNotificationTrigger` (seconds from now) on
+ * the way in and serialises it as `{ type: "timeInterval", seconds }` on the
+ * way out — the original date is gone, and a `seconds` count with no anchor
+ * cannot rebuild it. So the schedule sites stash the due date in
+ * `content.data.dueAt`, and that is read first; the trigger is only a
+ * fallback for a platform that does hand a `date` or calendar components back.
  */
+export function scheduledAt(request: {
+  content?: { data?: Record<string, unknown> | null } | null;
+  trigger?: unknown;
+}): number | undefined {
+  const due = request.content?.data?.dueAt;
+  if (typeof due === "string" || typeof due === "number") {
+    const at = new Date(due).getTime();
+    if (!Number.isNaN(at)) return at;
+  }
+  return triggerTime(request.trigger);
+}
+
 export function triggerTime(trigger: unknown): number | undefined {
   if (!trigger || typeof trigger !== "object") return undefined;
   const t = trigger as {
