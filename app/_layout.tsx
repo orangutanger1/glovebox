@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -144,6 +144,10 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 export default function RootLayout() {
   const router = useRouter();
   const [fatal, setFatal] = useState<string | null>(null);
+  // Set synchronously beside `setFatal`: the quick-action hook delivers the
+  // launch action in its own mount effect, in the same commit as the boot
+  // effect, before the state above has re-rendered.
+  const dead = useRef(false);
   // Bumped when the language or the unit changes, and used as the tree's key:
   // every screen then rebuilds its sentences instead of keeping the ones it
   // formatted in the previous language.
@@ -182,6 +186,7 @@ export default function RootLayout() {
       reportCrash("boot:database", e);
       flushNow();
       flushCrashes();
+      dead.current = true;
       setFatal(String(e));
       return;
     }
@@ -303,16 +308,17 @@ export default function RootLayout() {
   const onQuickAction = useCallback(
     (action: QuickActions.Action) => {
       // `isOnboarded` reads the database, and a database the boot effect
-      // could not open throws again here. The fatal notice is already up
-      // and the failure already reported once; a menu tap is worth neither a
-      // second crash nor a second `boot_failed` for the same incident.
-      if (fatal !== null) return;
+      // could not open throws again here. The failure is already reported
+      // once; a menu tap is worth neither a second crash nor a second
+      // `boot_failed` for the same incident. A ref, not `fatal`: the launch
+      // action arrives before that state has re-rendered.
+      if (dead.current) return;
       const onboarded = boot("quickaction", isOnboarded);
       if (!onboarded) return;
       if (action.id === QUICK_ACTION_FEEDBACK) void openFeedback();
       else if (action.id === QUICK_ACTION_TRIAL) router.navigate("/trial");
     },
-    [router, fatal]
+    [router]
   );
 
   useQuickActionCallback(onQuickAction);
