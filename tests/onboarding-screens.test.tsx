@@ -954,7 +954,9 @@ describe("the screen after a purchase", () => {
     setOnboardingVehicleId(id);
 
     press(render(Subscribed), "See the schedule");
-    expect(navigated.at(-1)).toBe(`replace:/vehicle/${id}`);
+    // The garage underneath, the car on top: a stack of only the car had no
+    // back chevron, and the settings button lives on the garage.
+    expect(navigated.slice(-2)).toEqual(["replace:/", `/vehicle/${id}`]);
   });
 
   test("a car deleted out from under the flow still lands somewhere", () => {

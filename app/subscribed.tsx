@@ -60,10 +60,15 @@ export default function Subscribed() {
 
   function onFirstAction() {
     track("first_core_action", { source: "subscribed", action: "open_vehicle" });
-    // Replace, not push: this screen is the end of onboarding and must not sit
-    // behind the car for a back-swipe to walk into.
-    if (vehicle) router.replace(`/vehicle/${vehicle.id}` as never);
-    else router.replace("/");
+    // The garage first, then the car on top of it. This screen is the end of
+    // onboarding and must not sit behind the car for a back-swipe to walk
+    // into, so it is replaced — but replacing it with the car alone left the
+    // car as the whole stack: no back chevron, no route to the garage, and
+    // the settings button lives on the garage. A subscriber who landed here
+    // could rename the car and log a service and never find the rest of the
+    // app. Replace with the garage, push the car, and the chevron is back.
+    router.replace("/");
+    if (vehicle) router.push(`/vehicle/${vehicle.id}` as never);
   }
 
   // Everything the subscription carries, which since the free tier went away
@@ -84,7 +89,10 @@ export default function Subscribed() {
       footer={<Button label={t("subscribed.cta")} onPress={onFirstAction} />}
     >
       <View style={{ gap: tokens.space.lg }}>
-        <View style={{ gap: tokens.space.sm }}>
+        {/* Pushed down from the inset. Every other screen's title sits under a
+            44pt native header; this one has none, so with only the housing's
+            16pt the hero was pressed against the clock. */}
+        <View style={{ gap: tokens.space.sm, paddingTop: tokens.space.xl }}>
           <Text style={{ ...tokens.text.hero, color: tokens.color.text }}>
             {t("subscribed.title")}
           </Text>
