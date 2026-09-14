@@ -627,6 +627,7 @@ export const de: Fragment = {
   "vehicleForms.log.title": "Service eintragen",
   "vehicleForms.log.save": "Sichern",
   "vehicleForms.log.error": "Speichern nicht möglich. Deine Eingabe ist noch da. Versuch es erneut.",
+  "vehicleForms.number.invalid": "Diese Zahl konnte nicht gelesen werden. Nur Ziffern — 84.210 oder 45,5.",
   "vehicleForms.log.what": "Was",
   "vehicleForms.log.when": "Wann",
   "vehicleForms.log.today": "Heute",

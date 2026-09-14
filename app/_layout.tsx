@@ -151,28 +151,6 @@ export default function RootLayout() {
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
-  /**
-   * Home-screen menu taps, including the one that cold-launched the app.
-   *
-   * Handled here rather than through the package's `useQuickActionRouting`,
-   * which its own source warns against using in a root layout, and which would
-   * hand an https href to the router. A feedback row opens Safari; it is not a
-   * route.
-   *
-   * Suppressed mid-onboarding: someone halfway through setup who taps "Try Pro
-   * free" has no plan to buy Pro for yet, and dropping them on a paywall
-   * abandons a half-written car.
-   */
-  const onQuickAction = useCallback(
-    (action: QuickActions.Action) => {
-      if (!isOnboarded()) return;
-      if (action.id === QUICK_ACTION_FEEDBACK) void openFeedback();
-      else if (action.id === QUICK_ACTION_TRIAL) router.navigate("/trial");
-    },
-    [router]
-  );
-
-  useQuickActionCallback(onQuickAction);
 
   // Runs once on mount, not gated on route state — depending on the route
   // here would produce a redirect loop.
@@ -303,6 +281,39 @@ export default function RootLayout() {
         // No store, no offer to make. The garage is already on screen.
       });
   }, []);
+
+  /**
+   * Home-screen menu taps, including the one that cold-launched the app.
+   *
+   * Handled here rather than through the package's `useQuickActionRouting`,
+   * which its own source warns against using in a root layout, and which would
+   * hand an https href to the router. A feedback row opens Safari; it is not a
+   * route.
+   *
+   * Suppressed mid-onboarding: someone halfway through setup who taps "Try Pro
+   * free" has no plan to buy Pro for yet, and dropping them on a paywall
+   * abandons a half-written car.
+   *
+   * Declared after the boot effect, and that order matters: effects run in
+   * declaration order, and this one calls `isOnboarded()`, which opens the
+   * database. Declared first, a cold launch from the menu ran the migration
+   * here — outside `boot()` and the database try/catch — so a failed migration
+   * on that launch was an uncaught throw rather than the fatal notice.
+   */
+  const onQuickAction = useCallback(
+    (action: QuickActions.Action) => {
+      // `isOnboarded` reads the database, and a database the boot effect
+      // could not open throws again here. The fatal notice is already up;
+      // a menu tap is not worth a second crash on top of it.
+      const onboarded = boot("quickaction", isOnboarded);
+      if (!onboarded) return;
+      if (action.id === QUICK_ACTION_FEEDBACK) void openFeedback();
+      else if (action.id === QUICK_ACTION_TRIAL) router.navigate("/trial");
+    },
+    [router]
+  );
+
+  useQuickActionCallback(onQuickAction);
 
   // A dead database may not return early from here.
   //

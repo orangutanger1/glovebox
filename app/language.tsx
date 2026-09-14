@@ -13,6 +13,7 @@ import {
   bootLanguage,
 } from "../src/i18n/preference";
 import { notifyLocaleChanged } from "../src/i18n/epoch";
+import { rescheduleAll } from "../src/notify";
 
 /**
  * The language picker.
@@ -39,6 +40,9 @@ export default function LanguagePicker() {
     if (language === "system") bootLanguage();
     else setLanguage(language);
     notifyLocaleChanged();
+    // The reminder text is baked in at scheduling time, so the ones iOS is
+    // holding are still in the previous language until they are rebuilt.
+    rescheduleAll().catch(() => {});
     router.back();
   }
 

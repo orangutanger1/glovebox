@@ -81,9 +81,20 @@ export default function LogFuel() {
     } else {
       filled = new Date();
       filled.setDate(filled.getDate() - daysAgo);
+      // Noon local, the same as every other date this app stores: a row
+      // written at 9pm in New York serialises to the next UTC day, and the
+      // CSV and the monthly chart read the day straight off that string.
+      filled.setHours(12, 0, 0, 0);
     }
 
     const price = parseNumber(cost);
+    // Refused rather than dropped: a cost that was typed and did not parse
+    // used to land as NULL, and the fill then read as unpriced forever.
+    if (cost.trim() && price === undefined) {
+      setError(t("vehicleForms.number.invalid"));
+      setSaving(false);
+      return;
+    }
     if (price !== undefined && price < 0) {
       setError(t("fuel.form.error"));
       setSaving(false);

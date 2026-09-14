@@ -32,3 +32,37 @@ export function selectReminders(
     .sort((a, b) => new Date(a.dueAt).getTime() - new Date(b.dueAt).getTime())
     .slice(0, cap);
 }
+
+/**
+ * When a pending notification fires, read off whatever shape the platform
+ * hands back — or `undefined` for a trigger that has no single time.
+ *
+ * The app schedules every reminder as a `DATE` trigger, and on iOS that comes
+ * back from `getAllScheduledNotificationsAsync` as a *calendar* trigger: the
+ * SDK converts the date into `UNCalendarNotificationTrigger` components on the
+ * way in, and serialises those components on the way out. Reading `date` alone
+ * found nothing on every device, so Settings never once printed the next date.
+ * The components are in the phone's own zone, which is what `new Date(y, m…)`
+ * builds.
+ */
+export function triggerTime(trigger: unknown): number | undefined {
+  if (!trigger || typeof trigger !== "object") return undefined;
+  const t = trigger as {
+    date?: number | string;
+    dateComponents?: Record<string, unknown>;
+    seconds?: number;
+  };
+  if (t.date !== undefined) {
+    const at = new Date(t.date).getTime();
+    return Number.isNaN(at) ? undefined : at;
+  }
+  const c = t.dateComponents;
+  if (c) {
+    const n = (key: string, fallback: number) => (typeof c[key] === "number" ? (c[key] as number) : fallback);
+    if (typeof c.year !== "number" || typeof c.month !== "number" || typeof c.day !== "number") {
+      return undefined;
+    }
+    return new Date(n("year", 0), n("month", 1) - 1, n("day", 1), n("hour", 0), n("minute", 0), n("second", 0)).getTime();
+  }
+  return undefined;
+}

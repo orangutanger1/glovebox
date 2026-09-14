@@ -609,6 +609,7 @@ export const ko: Fragment = {
   "vehicleForms.log.title": "정비 기록하기",
   "vehicleForms.log.save": "저장",
   "vehicleForms.log.error": "저장하지 못했어요. 입력한 내용은 그대로 있어요. 다시 시도해 주세요.",
+  "vehicleForms.number.invalid": "이 숫자를 읽을 수 없어요. 숫자만 입력해 주세요 — 84,210 또는 45.5.",
   "vehicleForms.log.what": "정비 항목",
   "vehicleForms.log.when": "날짜",
   "vehicleForms.log.today": "오늘",

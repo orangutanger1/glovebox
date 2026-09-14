@@ -296,6 +296,7 @@ export const nl: Fragment = {
   "vehicleForms.log.save": "Bewaar",
   "vehicleForms.log.error":
     "Bewaren is niet gelukt. Wat je hebt ingevuld staat er nog. Probeer het opnieuw.",
+  "vehicleForms.number.invalid": "Dit getal kon niet worden gelezen. Alleen cijfers — 84.210 of 45,5.",
   "vehicleForms.log.what": "Wat",
   "vehicleForms.log.when": "Wanneer",
   "vehicleForms.log.today": "Vandaag",

@@ -10,6 +10,8 @@ import { costedRecords } from "../src/db/records";
 import { allFuelEntries } from "../src/db/fuel";
 import { listVehicles } from "../src/db/vehicles";
 import {
+  monthOf,
+  recentMonths,
   spendByMonth,
   spendByService,
   spendByVehicle,
@@ -157,7 +159,12 @@ export default function Insights() {
 
   const { style } = currentFuelUnits();
   const fuelUnlocked = pro === true || unlocked;
-  const fuelAverage = averageEfficiency(fuel, style);
+  // The caption under this figure says "last 12 months", so the figure is
+  // drawn from the same window the bars beneath it are — it used to average
+  // every fill ever logged under that caption.
+  const window = new Set(recentMonths(MONTHS));
+  const recentFills = fuel.filter((f) => window.has(monthOf(f.filled_at)));
+  const fuelAverage = averageEfficiency(recentFills, style);
   // Per 100 rather than per 1: fuel costs a fraction of a currency unit per
   // mile, and formatMoney is whole units by design — "$0" per mile is a figure
   // that tells the reader nothing. Scaling the distance is honest where

@@ -606,6 +606,7 @@ export const ptBR: Fragment = {
   "vehicleForms.log.title": "Registrar um serviço",
   "vehicleForms.log.save": "Salvar",
   "vehicleForms.log.error": "Não foi possível salvar. O que você digitou está aqui. Tente de novo.",
+  "vehicleForms.number.invalid": "Não foi possível ler esse número. Só dígitos — 84.210 ou 45,5.",
   "vehicleForms.log.what": "O quê",
   "vehicleForms.log.when": "Quando",
   "vehicleForms.log.today": "Hoje",

@@ -628,6 +628,7 @@ export const es: Fragment = {
   "vehicleForms.log.save": "Guardar",
   "vehicleForms.log.error":
     "No se ha podido guardar. Lo que has escrito sigue aquí. Inténtalo otra vez.",
+  "vehicleForms.number.invalid": "No se pudo leer ese número. Solo cifras: 84.210 o 45,5.",
   "vehicleForms.log.what": "Qué",
   "vehicleForms.log.when": "Cuándo",
   "vehicleForms.log.today": "Hoy",

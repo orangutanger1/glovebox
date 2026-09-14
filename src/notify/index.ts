@@ -5,7 +5,7 @@ import { formatDate, t } from "../i18n";
 import { vehicleSentenceName } from "../format";
 import { tNamed } from "../onboarding";
 import { collectReminders } from "./collect";
-import { selectReminders } from "./select";
+import { selectReminders, triggerTime } from "./select";
 import { scheduleOnboardingNudges } from "./resume";
 
 Notifications.setNotificationHandler({
@@ -108,11 +108,8 @@ export async function reminderStatus(): Promise<ReminderStatus> {
 
   const pending = await Notifications.getAllScheduledNotificationsAsync();
   const times = pending
-    .map((n) => {
-      const trigger = n.trigger as { date?: number | string } | null;
-      return trigger?.date === undefined ? NaN : new Date(trigger.date).getTime();
-    })
-    .filter((t) => !Number.isNaN(t))
+    .map((n) => triggerTime(n.trigger))
+    .filter((at): at is number => at !== undefined)
     .sort((a, b) => a - b);
 
   return {

@@ -21,6 +21,7 @@ export const vehicleForms: Fragment = {
   "vehicleForms.log.title": "Log a service",
   "vehicleForms.log.save": "Save",
   "vehicleForms.log.error": "Could not save. Your entry is still here. Try again.",
+  "vehicleForms.number.invalid": "A number here could not be read. Digits only — 84,210 or 45.5.",
   "vehicleForms.log.what": "What",
   "vehicleForms.log.when": "When",
   "vehicleForms.log.today": "Today",

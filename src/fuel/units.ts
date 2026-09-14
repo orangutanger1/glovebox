@@ -1,4 +1,4 @@
-import type { DistanceUnit } from "../units";
+import { defaultUnitFor, type DistanceUnit } from "../units/regions";
 
 /**
  * Which units a fill-up is entered and read in, derived from the phone's region
@@ -42,7 +42,7 @@ export function efficiencyStyleFor(volume: VolumeUnit, distance: DistanceUnit): 
 
 export function fuelUnitsFor(
   region: string | null | undefined,
-  distance: DistanceUnit = region && ["US", "GB"].includes(region.toUpperCase()) ? "mi" : "km"
+  distance: DistanceUnit = defaultUnitFor(region)
 ): FuelUnits {
   const volume = volumeUnitFor(region);
   return { volume, style: efficiencyStyleFor(volume, distance), distance };

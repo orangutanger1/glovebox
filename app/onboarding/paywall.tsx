@@ -68,6 +68,11 @@ export default function OnboardingPaywall() {
     if (busy) return;
     setBusy(true);
     const outcome = await presentOffering();
+    // Released before we leave, for the reason the notify screen gives: the
+    // trial screen is pushed on top of this one, and a Back from there returns
+    // to this instance. A `busy` left standing was a dead CTA on the screen
+    // that asks for money.
+    setBusy(false);
     if (outcome === "purchased") {
       // Recorded, never acted on. Nothing in onboarding may ask for a rating —
       // App Store Review Guideline 5.6.3 treats soliciting one before the user

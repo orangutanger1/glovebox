@@ -614,6 +614,7 @@ export const sv: Fragment = {
   "vehicleForms.log.title": "Logga en service",
   "vehicleForms.log.save": "Spara",
   "vehicleForms.log.error": "Kunde inte spara. Det du skrev finns kvar. Försök igen.",
+  "vehicleForms.number.invalid": "Det här talet gick inte att läsa. Bara siffror — 84 210 eller 45,5.",
   "vehicleForms.log.what": "Vad",
   "vehicleForms.log.when": "När",
   "vehicleForms.log.today": "I dag",

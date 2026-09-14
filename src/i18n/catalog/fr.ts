@@ -639,6 +639,7 @@ export const fr: Fragment = {
   "vehicleForms.log.title": "Noter un entretien",
   "vehicleForms.log.save": "Enregistrer",
   "vehicleForms.log.error": "Impossible d'enregistrer. Votre saisie est toujours là. Réessayez.",
+  "vehicleForms.number.invalid": "Ce nombre n’a pas pu être lu. Chiffres uniquement — 84 210 ou 45,5.",
   "vehicleForms.log.what": "Quoi",
   "vehicleForms.log.when": "Quand",
   "vehicleForms.log.today": "Aujourd'hui",

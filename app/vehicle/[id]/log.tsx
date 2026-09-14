@@ -77,6 +77,16 @@ export default function LogService() {
     // not model; both used to be stored and then silently ignored downstream.
     const odo = parseNumber(odometer);
     const price = parseNumber(cost);
+    // Something typed that did not parse is refused, not dropped. Both fields
+    // are optional, so an empty one is fine; a filled one that came back
+    // `undefined` used to be stored as NULL, which lost the reading with no
+    // word to the user — the same silent failure the onboarding odometer
+    // screen already reports.
+    if ((odometer.trim() && odo === undefined) || (cost.trim() && price === undefined)) {
+      setError(t("vehicleForms.number.invalid"));
+      setSaving(false);
+      return;
+    }
     if ((odo !== undefined && odo < 0) || (price !== undefined && price < 0)) {
       setError(t("vehicleForms.log.error"));
       setSaving(false);
@@ -91,6 +101,10 @@ export default function LogService() {
     } else {
       performed = new Date();
       performed.setDate(performed.getDate() - daysAgo);
+      // Noon local, the same as every other date this app stores: a row
+      // written at 9pm in New York serialises to the next UTC day, and the
+      // CSV and the monthly chart read the day straight off that string.
+      performed.setHours(12, 0, 0, 0);
     }
 
     try {

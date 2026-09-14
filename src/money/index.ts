@@ -44,15 +44,20 @@ export function defaultCurrencyFor(region: string | null | undefined): Currency 
 let cached: Currency | null = null;
 
 /**
- * The absent-key case is the one that matters, and it is the mirror of the
- * distance unit's.
+ * The row is written once, at boot, by `initCurrency`: the first launch that
+ * finds it missing stores the phone's regional default, and every launch after
+ * reads what is stored.
  *
- * Every build before this module rendered a cost as `$${cost}` regardless of
- * language, so an install from before this setting existed holds numbers that
- * were entered while the screen said dollars. Reading the phone's region here
- * would relabel those numbers on first launch abroad — the same silent
- * relabelling `getDistanceUnit` refuses to do. So a missing row reads as USD,
- * and fresh installs get a currency written from the region during onboarding.
+ * That first write is deliberately *not* skipped for an install from before
+ * this setting existed (2026-09-01). Every build before it rendered a cost as
+ * `$${cost}` regardless of language, but the number a German owner typed under
+ * that sign was the euros they paid, so stamping the region's currency on the
+ * update is the relabelling that makes the screen true rather than the one
+ * that makes it false. The unit setting refuses the same move because there a
+ * relabel changes the quantity; here it only changes the sign.
+ *
+ * A missing row read before that stamp — the fatal-database path, the tests —
+ * falls back to USD rather than to a guess.
  */
 export function getCurrency(): Currency {
   cached ??= getState(CURRENCY_KEY) ?? "USD";

@@ -4,27 +4,14 @@ import { deviceRegion } from "../i18n/device";
 
 export const DISTANCE_UNIT_KEY = "distance_unit";
 
-export type DistanceUnit = "mi" | "km";
+import { defaultUnitFor, type DistanceUnit } from "./regions";
+
+export { defaultUnitFor, type DistanceUnit } from "./regions";
 
 export const DISTANCE_UNITS: readonly DistanceUnit[] = ["mi", "km"];
 
 /** Exact, by definition: 1 international mile is 1.609344 km. */
 export const KM_PER_MILE = 1.609344;
-
-/**
- * The three storefronts whose drivers read miles off the dashboard.
- *
- * The United States, the United Kingdom, and Myanmar are the only places where
- * road distance is posted in miles; Liberia's signs are metric. Everywhere else
- * a car's odometer counts kilometres, and asking a German owner to enter 51,771
- * of something his cluster has never shown him is the version of this app that
- * gets deleted on the first screen.
- */
-const MILE_REGIONS: Record<string, true> = { US: true, GB: true, MM: true };
-
-export function defaultUnitFor(region: string | null | undefined): DistanceUnit {
-  return region && MILE_REGIONS[region.toUpperCase()] ? "mi" : "km";
-}
 
 /**
  * The unit every distance in the app is stored and shown in.
@@ -33,13 +20,15 @@ export function defaultUnitFor(region: string | null | undefined): DistanceUnit 
  * service type alone, so "oil change every 10,000" has exactly one meaning
  * across the garage and there is no honest way to give two cars different ones.
  *
- * The absent-key case is the one that matters. An install from before this
- * setting existed holds numbers a US-shaped app collected as miles, so a
- * missing row must read as `mi` regardless of what the phone's region says —
- * inferring the unit from the device would relabel that user's 51,771 miles as
- * kilometres the first time they opened the app abroad. Fresh installs get a
- * unit written from the region during onboarding, which is where
- * `defaultUnitFor` is called.
+ * The row is written once, at boot, by `initDistanceUnit`: the first launch
+ * that finds it missing stores the phone's regional default, and every launch
+ * after reads what is stored, so a user who changed it keeps their choice.
+ *
+ * A missing row *between* those two moments reads as `mi`, not as the region.
+ * That case is the fatal-database path and the tests, where nothing has been
+ * written, and the pre-setting install: this setting shipped on 2026-08-05,
+ * one day after the first store build, so the readings such an install holds
+ * were collected as miles and must not be relabelled on the way past.
  */
 let cached: DistanceUnit | null = null;
 

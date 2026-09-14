@@ -694,6 +694,7 @@ export const pl: Fragment = {
   "vehicleForms.log.title": "Zapisz serwis",
   "vehicleForms.log.save": "Zapisz",
   "vehicleForms.log.error": "Nie udało się zapisać. Twój wpis nadal tu jest. Spróbuj ponownie.",
+  "vehicleForms.number.invalid": "Nie udało się odczytać tej liczby. Tylko cyfry — 84 210 lub 45,5.",
   "vehicleForms.log.what": "Co",
   "vehicleForms.log.when": "Kiedy",
   "vehicleForms.log.today": "Dziś",

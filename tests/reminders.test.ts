@@ -1,4 +1,4 @@
-import { selectReminders, MAX_SCHEDULED, type Reminder } from "../src/notify/select";
+import { selectReminders, triggerTime, MAX_SCHEDULED, type Reminder } from "../src/notify/select";
 
 const NOW = new Date("2026-08-02T12:00:00.000Z").getTime();
 
@@ -47,4 +47,38 @@ test("over the cap, keeps the soonest and drops the rest", () => {
 
 test("stays under the iOS limit of 64 pending notifications", () => {
   expect(MAX_SCHEDULED).toBeLessThan(64);
+});
+
+describe("triggerTime", () => {
+  test("reads the calendar components iOS hands back for a date trigger", () => {
+    // What `getAllScheduledNotificationsAsync` returns on iOS for a reminder
+    // scheduled as `{ type: "date", date }`: the SDK converts it to calendar
+    // components on the way in and serialises those on the way out. There is
+    // no `date` field on the round trip.
+    const at = triggerTime({
+      type: "calendar",
+      repeats: false,
+      dateComponents: {
+        calendar: "gregorian",
+        timeZone: null,
+        isLeapMonth: false,
+        year: 2027,
+        month: 3,
+        day: 14,
+        hour: 9,
+        minute: 0,
+        second: 0,
+      },
+    });
+    expect(at).toBe(new Date(2027, 2, 14, 9, 0, 0, 0).getTime());
+  });
+
+  test("still reads a plain date, and refuses a trigger with no single time", () => {
+    const when = new Date("2027-03-14T13:00:00.000Z");
+    expect(triggerTime({ type: "date", date: when.getTime() })).toBe(when.getTime());
+    expect(triggerTime({ type: "date", date: when.toISOString() })).toBe(when.getTime());
+    expect(triggerTime({ type: "timeInterval", seconds: 60 })).toBeUndefined();
+    expect(triggerTime({ type: "calendar", dateComponents: { hour: 9, minute: 0 } })).toBeUndefined();
+    expect(triggerTime(null)).toBeUndefined();
+  });
 });

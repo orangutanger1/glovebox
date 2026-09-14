@@ -33,7 +33,10 @@ async function share(file: File): Promise<void> {
 export async function exportAndShare(): Promise<void> {
   const stamp = new Date().toISOString().slice(0, 10);
   const services = write(`car-maintenance-${stamp}.csv`, toCsv(allRecordsForExport()));
-  const fuel = write(`car-fuel-${stamp}.csv`, toFuelCsv(allFuelForExport()));
   await share(services);
-  await share(fuel);
+  // Only when there is something in it. A garage that has never logged a fill
+  // was handed a second share sheet for a file holding one header row.
+  const fills = allFuelForExport();
+  if (fills.length === 0) return;
+  await share(write(`car-fuel-${stamp}.csv`, toFuelCsv(fills)));
 }

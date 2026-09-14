@@ -583,6 +583,7 @@ export const ja: Fragment = {
   "vehicleForms.log.title": "整備を記録",
   "vehicleForms.log.save": "保存",
   "vehicleForms.log.error": "保存できませんでした。入力内容は残っています。もう一度お試しください。",
+  "vehicleForms.number.invalid": "この数値を読み取れませんでした。数字のみで入力してください（例: 84,210 または 45.5）。",
   "vehicleForms.log.what": "内容",
   "vehicleForms.log.when": "日付",
   "vehicleForms.log.today": "今日",

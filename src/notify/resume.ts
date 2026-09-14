@@ -44,11 +44,17 @@ export const RESUME_NUDGE_IDS = NUDGES.map((n) => n.id);
  *  The list is the cap: two defined, two sent, for the reasons above. */
 const LIFETIME = NUDGES.length;
 
-/** How many of a pair armed at `armedAt` iOS has had time to deliver by `now`.
- *  The app cannot ask iOS what it actually showed, and the trigger dates are the
- *  closest thing to a record of it. */
-function elapsed(armedAt: number, now: number): number {
-  return NUDGES.filter((n) => armedAt + n.afterHours * 60 * 60 * 1000 <= now).length;
+/** How many of the nudges armed at `armedAt` iOS has had time to deliver by
+ *  `now`. The app cannot ask iOS what it actually showed, and the trigger dates
+ *  are the closest thing to a record of it.
+ *
+ *  Only the nudges that were actually armed are counted — `arm` skips the
+ *  `before` already delivered, so a pair re-armed after the first fired holds
+ *  the day-out one alone. Counting the two-hour offset against that arming
+ *  read "both delivered" two hours in and cancelled the one still pending. */
+function elapsed(armedAt: number, before: number, now: number): number {
+  return NUDGES.slice(before).filter((n) => armedAt + n.afterHours * 60 * 60 * 1000 <= now)
+    .length;
 }
 
 /**
@@ -128,7 +134,9 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
   // An install with no record is either new or was mid-flow under the build
   // that had no lifetime count. Only the second kind is left holding a pair.
   const previous = getNudgeState() ?? (await adoptLegacyRun(step, now));
-  const delivered = previous ? previous.before + elapsed(previous.armedAt, now) : 0;
+  const delivered = previous
+    ? previous.before + elapsed(previous.armedAt, previous.before, now)
+    : 0;
 
   if (delivered >= LIFETIME) {
     // Spent. Anything still pending is cancelled rather than left to fire,

@@ -196,6 +196,32 @@ test("a launch after the first nudge fired is owed the second, not a fresh pair"
   expect(scheduled[0].trigger.date.getTime() - (NOW + 3 * HOUR)).toBe(24 * HOUR);
 });
 
+test("the second nudge survives launches between the first firing and its own time", async () => {
+  setOnboardingStep("notify");
+  await scheduleOnboardingNudges(NOW);
+  // First fired at +2h; the user moved one step and quit at +3h, so only the
+  // day-out nudge is pending, due at +27h.
+  setOnboardingStep("drive");
+  await scheduleOnboardingNudges(NOW + 3 * HOUR);
+
+  // Opened again at +6h on the same step. Nothing has fired since the re-arm,
+  // so the pending nudge is put back at the time it was promised for — not
+  // cancelled because the two-hour offset of a nudge that was never re-armed
+  // has "passed".
+  scheduled.length = 0;
+  cancelled.length = 0;
+  await scheduleOnboardingNudges(NOW + 6 * HOUR);
+  expect(cancelled).toEqual([]);
+  expect(scheduled.map((s) => s.identifier)).toEqual([RESUME_NUDGE_IDS[1]]);
+  expect(scheduled[0].trigger.date.getTime()).toBe(NOW + 27 * HOUR);
+
+  // And on a further step change, still owed the second and nothing more.
+  scheduled.length = 0;
+  setOnboardingStep("service");
+  await scheduleOnboardingNudges(NOW + 8 * HOUR);
+  expect(scheduled.map((s) => s.identifier)).toEqual([RESUME_NUDGE_IDS[1]]);
+});
+
 test("two is the lifetime cap, however many times the app is opened", async () => {
   setOnboardingStep("notify");
   await scheduleOnboardingNudges(NOW);

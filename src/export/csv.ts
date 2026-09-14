@@ -33,7 +33,7 @@ function header(): string[] {
 function cell(v: string | number | null | undefined): string {
   if (v === null || v === undefined) return "";
   const s = String(v);
-  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
 export function toCsv(rows: CsvRow[]): string {
