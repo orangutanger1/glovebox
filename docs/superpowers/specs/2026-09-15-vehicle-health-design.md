@@ -155,8 +155,8 @@ export async function fetchOpenRecalls(input: {
 - Result cached in `app_state` per vehicle as `{ count, at }` for 7 days so
   the vehicle screen does not hit the network on every focus.
 - This is the app's first outbound request. `app.json` needs no ATS
-  exception (HTTPS). The privacy label changes: year/make/model leave the
-  device. No identifier, no VIN, no odometer is sent.
+  exception (HTTPS). Year/make/model leave the device; no identifier, no
+  VIN, no odometer is sent (privacy-label consequence under Integration).
 
 ## Screens
 
