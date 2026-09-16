@@ -1,19 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Button } from "../../src/design/Button";
-import { Check } from "../../src/design/Check";
 import { ListRow } from "../../src/design/ListRow";
 import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
-import {
-  DISCOUNT_OFFERING,
-  INTRO_DAYS,
-  hasOffering,
-  presentOffering,
-  restore,
-} from "../../src/purchases";
+import { INTRO_DAYS, restore } from "../../src/purchases";
+import { buy, usePlans, type Plan } from "../../src/purchases/plans";
+import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
+import { BuyFooter } from "../../src/paywall/BuyFooter";
 import { recordReviewEvent } from "../../src/review";
 import { isGrandfathered } from "../../src/paywall";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -21,73 +16,55 @@ import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 import { track } from "../../src/analytics";
 
-/** The three moments a trial has, in the order the user meets them: what opens
- *  now, the way out, and what happens if they do nothing. Named rather than
- *  numbered — the day count lives in the title, and a row that said "Day 3"
- *  would go stale the moment the offering's introductory period is edited. */
+/** The three moments a trial has, in the order the user meets them. */
 const STEPS = ["now", "runs", "ends"] as const;
 
-/** Everything the trial opens, which is everything. The paywall before this
- *  one prints three of them with a sentence under each, because it is asking
- *  for money in front of them. Nothing is being asked for here, so the list can
- *  be the whole product — and a whole product only fits under an offer if each
- *  line is a tick and five words. Reprinting the paywall's cards here made the
- *  screen a second copy of the screen before it, twice as long. */
-const GETS = ["reminders", "due", "history", "costs", "garage", "intervals", "export"] as const;
-
 /**
- * The one retry, the last screen in the flow, and — once it has been declined
- * — the wall.
+ * The second ask, and, once there is nothing left to ask, the wall.
  *
- * The first paywall asks for money. This one asks for nothing, because it
- * sells the product that carries the App Store introductory offer — a free
- * trial, then it renews. That split is the whole reason there are two
- * paywalls: a trial shown first is given away to everyone who would have paid,
- * and a trial shown only to the people walking out is the cheapest conversion
- * in the funnel.
+ * The first paywall asks for money at full price. This one sells the product
+ * that carries the App Store introductory offer: a cheap first week, then it
+ * renews. The split is the whole reason there are two screens: a trial shown
+ * first is given to everyone who would have paid, and a trial shown to the
+ * people walking out is the cheapest conversion in the funnel.
  *
- * There used to be a separate wall behind this one, a screen headed "Wrenchy
- * is a subscription." that a decliner was pushed to and could not leave. It
- * was a second screen making the first screen's argument, one tap later and
- * with the offer taken off it. Declining now stays here: the same screen, the
- * same three rows, the same button — only the way out is gone. A user who has
- * said no is not shown a new page about saying no, they are shown that the
- * page they were already reading is the app.
+ * The price is drawn here now (see paywall.tsx for why the sheet went): one
+ * wide card, the standard price struck through beside the introductory one,
+ * "then {price} per week" under it. When StoreKit says this customer is not
+ * eligible, the card shows the plain weekly price and no strike-through, so
+ * nothing on the glass promises what Apple's sheet will not honour.
  *
- * That makes this the screen with no exit, so it carries what a screen with no
- * exit has to. Restore is not a courtesy row: a user who reinstalls, switches
- * device, or whose receipt has not synced arrives holding a live subscription
- * and no entitlement to show for it, and without this link their only route
- * back into an app they pay for is the App Store. Guideline 3.1.1 requires it,
- * and review looks for it on exactly this kind of screen. It takes the place
- * of "No thanks", because both are the same slot and only one of them is ever
- * the right offer.
+ * "I'd rather pay full price" is the soft decline: it is a true sentence, and
+ * it goes back to the paywall, which is the screen that sells full price.
  *
- * The offering is the introductory one wherever the dashboard has it, and the
- * plain current offering otherwise. A wall whose only button does nothing is
- * worse than a wall that asks full price.
+ * Relaunched with `walled=1` (a lapsed or never-subscribed install that
+ * finished onboarding), the same screen is the wall: no Back, no decline, and
+ * Restore where the decline was, because a wall has to carry the way in for
+ * the subscriber whose receipt has not synced (Guideline 3.1.1).
  */
 export default function OnboardingOffer() {
   const router = useRouter();
   const finish = useFinish();
-  // A launch that found no entitlement lands here already walled: the user has
-  // subscribed before, so there is no "no thanks" left to offer them.
   const { walled } = useLocalSearchParams<{ walled?: string }>();
   const relaunched = walled === "1";
-  const [declined, setDeclined] = useState(relaunched);
 
+  const { plans, loading, retry } = usePlans("discount");
+  const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
-  /**
-   * Where a successful purchase goes.
-   *
-   * `useFinish` is the end of onboarding: it records the exit, marks the flow
-   * complete and cancels the setup nudges. None of that is true of a lapsed
-   * subscriber who was sent here at launch — they finished onboarding months
-   * ago, and counting them as a completion would put a resubscribe in the
-   * middle of the funnel's denominator. They go straight to the garage.
-   */
+  useEffect(() => {
+    track("paywall_shown", { offering: "discount" });
+  }, []);
+  useEffect(() => {
+    if (plans) track("paywall_presented", { offering: "discount", ms: 0 });
+  }, [plans]);
+
+  const chosen: Plan | null =
+    plans?.find((p) => p.id === (selected ?? defaultPlan(plans))) ?? null;
+
+  /** Where a successful purchase goes. A relaunched subscriber finished
+   *  onboarding long ago and must not be counted as a completion. */
   function paid(exit: "trial" | "paid") {
     if (relaunched) {
       router.replace("/");
@@ -96,46 +73,31 @@ export default function OnboardingOffer() {
     finish(exit);
   }
 
-  async function onSeeOffer() {
-    if (busy) return;
+  async function onBuy() {
+    if (busy || !chosen) return;
     setBusy(true);
     setMsg(null);
     try {
-      const offering = (await hasOffering(DISCOUNT_OFFERING)) ? DISCOUNT_OFFERING : undefined;
-      const outcome = await presentOffering(offering);
+      const outcome = await buy(chosen, "discount");
       if (outcome === "purchased") {
         recordReviewEvent("purchase");
         paid("trial");
         return;
       }
-      // A store that could not show a sheet is not a user who saw one and
-      // said no. Counting it as a decline hid the back button, flipped the
-      // footer to "restore" and logged `offer_declined` over a network blip.
-      if (outcome === "unavailable") {
-        setMsg(t("settings.store.error"));
-        return;
-      }
-      // Dismissed. The trial was not started and there is nothing further to
-      // ask, so this is the same decline as the link below and it leaves the
-      // user in the same place: here, with the offer still on the glass.
-      onDecline();
+      if (outcome === "unavailable") setMsg(t("settings.store.error"));
     } finally {
       setBusy(false);
     }
   }
 
   function onDecline() {
-    // The last decision in the flow, and the one the funnel could not see: the
-    // purchase events cover the sheet, and `onboarding_completed` only fires
-    // for a user who leaves. A decline here leaves the user on this screen
-    // forever, so without this event the walled install is indistinguishable
-    // from an install that quit on the paywall.
+    // The last decision in the flow, and the one the funnel could not see.
     track("offer_declined", { walled: !isGrandfathered(), relaunched });
     if (isGrandfathered()) {
       finish("free");
       return;
     }
-    setDeclined(true);
+    router.back();
   }
 
   async function onRestore() {
@@ -162,31 +124,40 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
-      // The second ask, and the last screen that can use the name — same
-      // fallback as the first.
       title={tNamed("offer.trial.title", { count: INTRO_DAYS })}
-      // Once declined there is nowhere behind this screen to go back to: the
-      // paywall it came from is an ask this user has already refused.
-      hideBack={declined}
+      hideBack={relaunched}
       footer={
-        <>
-          <Button
-            label={t("offer.trial.cta", { count: INTRO_DAYS })}
-            onPress={onSeeOffer}
-            disabled={busy}
-          />
-          <Pressable
-            onPress={() => (declined ? void onRestore() : onDecline())}
-            disabled={busy}
-            style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
-          >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              {declined ? t("settings.restore") : t("offer.trial.decline")}
-            </Text>
-          </Pressable>
-        </>
+        <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore}>
+          {!relaunched && (
+            <Pressable
+              onPress={onDecline}
+              disabled={busy}
+              style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
+            >
+              <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+                {t("offer.trial.decline")}
+              </Text>
+            </Pressable>
+          )}
+        </BuyFooter>
       }
     >
+      {plans ? (
+        <PlanPicker
+          plans={plans}
+          selected={chosen?.id ?? defaultPlan(plans)}
+          onSelect={setSelected}
+          layout="cards"
+          offering="discount"
+        />
+      ) : (
+        <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
+          <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+            {loading ? t("paywall.loading") : t("paywall.retry")}
+          </Text>
+        </Pressable>
+      )}
+
       <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
         {t("offer.trial.legend")}
       </Text>
@@ -201,24 +172,7 @@ export default function OnboardingOffer() {
           ))}
         </View>
       </Panel>
-      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-        {t("offer.features.title")}
-      </Text>
-      <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
-          {GETS.map((id) => (
-            <View
-              key={id}
-              style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}
-            >
-              <Check />
-              <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
-                {t(`offer.trial.gets.${id}`)}
-              </Text>
-            </View>
-          ))}
-        </View>
-      </Panel>
+
       {msg !== null && (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>
       )}

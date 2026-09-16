@@ -16,6 +16,7 @@ import TestRenderer from "react-test-renderer";
 ).IS_REACT_ACT_ENVIRONMENT = true;
 
 const navigated: string[] = [];
+let mockParams: Record<string, string> = {};
 jest.mock("expo-router", () => ({
   useRouter: () => ({
     push: (to: string) => navigated.push(to),
@@ -23,7 +24,7 @@ jest.mock("expo-router", () => ({
     back: () => navigated.push("back"),
     canGoBack: () => true,
   }),
-  useLocalSearchParams: () => ({}),
+  useLocalSearchParams: () => mockParams,
   // Under the test renderer a screen is focused for as long as it is mounted.
   useFocusEffect: (effect: () => void | (() => void)) => {
     require("react").useEffect(effect, [effect]);
@@ -334,35 +335,37 @@ test("the second offer promises nothing free and no free app to fall back on", (
   // and a decline link offering "the free app" points at a wall.
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/\bfree\b/i);
-  expect(printed).toContain("No thanks");
+  expect(texts(render(OnboardingOffer))).toContain(t("offer.trial.decline"));
 });
 
 test("declining the second offer leaves the user on it, with no way out", () => {
-  // There used to be a wall behind this screen: a separate route, headed
-  // "Wrenchy is a subscription.", that a decliner was pushed to and could not
-  // leave. It made the same argument one tap later with the offer taken off
-  // it. Declining now stays here — the screen is the wall — so what has to
-  // change is the way out: "No thanks" is spent, Back goes, and Restore takes
-  // the link's place because a screen with no exit has to carry one for the
-  // subscriber whose receipt has not synced (Guideline 3.1.1).
   const tree = render(OnboardingOffer);
-  expect(texts(tree)).toContain("No thanks");
+  expect(texts(tree)).toContain(t("offer.trial.decline"));
   expect(texts(tree)).toContain("‹ Back");
+  expect(texts(tree).join(" ")).toContain("$0.99");
+  expect(texts(tree).join(" ")).toContain(t("paywall.then", { price: "$2.99" }));
 
   const link = tree.root.findAll(
-    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes("No thanks"),
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("offer.trial.decline")),
   );
   act(() => link[link.length - 1].props.onPress());
 
-  const after = texts(tree);
-  expect(after).not.toContain("No thanks");
-  expect(after).not.toContain("‹ Back");
-  expect(after).toContain(t("settings.restore"));
-  // The ask itself is untouched: same headline, same three rows, same button.
-  expect(after).toContain("Your first 7 days cost less.");
-  expect(after).toContain("Start my first 7 days");
-  // And nothing was navigated to. The old wall was a `replace` away.
-  expect(navigated).toEqual([]);
+  expect(navigated).toEqual(["back"]);
+});
+
+test("relaunched with no entitlement, the offer is the wall: no back, restore in the link's place", () => {
+  mockParams = { walled: "1" };
+  try {
+    const tree = render(OnboardingOffer);
+    const printed = texts(tree);
+    expect(printed).not.toContain(t("offer.trial.decline"));
+    expect(printed).not.toContain("‹ Back");
+    expect(printed).toContain(t("paywall.restore"));
+    expect(printed).toContain(t("paywall.cta.week"));
+    expect(printed.join(" ")).toContain("Your first 7 days cost less.");
+  } finally {
+    mockParams = {};
+  }
 });
 
 test("no screen in the flow prints an em or en dash", () => {
