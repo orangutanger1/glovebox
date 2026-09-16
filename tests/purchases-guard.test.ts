@@ -10,9 +10,15 @@
  * the contract, and this file is what stops it being refactored away.
  */
 const isConfigured = jest.fn(async () => true);
-const presentPaywall = jest.fn(async (_params?: unknown) => "CANCELLED");
-const presentPaywallIfNeeded = jest.fn(async (_params?: unknown) => "CANCELLED");
 const presentCustomerCenter = jest.fn(async (_params?: unknown) => {});
+const opened: { offering: string; source: string }[] = [];
+let mockOpenResult: "purchased" | "dismissed" | "unavailable" = "dismissed";
+jest.mock("../src/paywall/present", () => ({
+  openPaywall: async (offering: string, source: string) => {
+    opened.push({ offering, source });
+    return mockOpenResult;
+  },
+}));
 const getOfferings = jest.fn(async () => ({ all: {} }));
 type Info = { entitlements: { active: Record<string, unknown> }; activeSubscriptions: string[] };
 const FREE: Info = { entitlements: { active: {} }, activeSubscriptions: [] };
@@ -38,16 +44,7 @@ jest.mock("react-native-purchases", () => ({
 jest.mock("react-native-purchases-ui", () => ({
   __esModule: true,
   default: {
-    presentPaywall: (params: unknown) => presentPaywall(params),
-    presentPaywallIfNeeded: (params: unknown) => presentPaywallIfNeeded(params),
     presentCustomerCenter: (params: unknown) => presentCustomerCenter(params),
-  },
-  PAYWALL_RESULT: {
-    PURCHASED: "PURCHASED",
-    RESTORED: "RESTORED",
-    CANCELLED: "CANCELLED",
-    NOT_PRESENTED: "NOT_PRESENTED",
-    ERROR: "ERROR",
   },
 }));
 
@@ -97,14 +94,15 @@ import {
   presentPaywall as gatePaywall,
   proFrom,
   restore,
+  withStallWatch,
 } from "../src/purchases";
 
 beforeEach(() => {
   isConfigured.mockClear();
-  presentPaywall.mockClear();
-  presentPaywallIfNeeded.mockClear();
   presentCustomerCenter.mockClear();
   mockTrack.mockClear();
+  opened.length = 0;
+  mockOpenResult = "dismissed";
   getCustomerInfo.mockReset().mockResolvedValue(FREE);
   restorePurchases.mockReset().mockResolvedValue(FREE);
   mockAppState.currentState = "active";
@@ -120,7 +118,7 @@ test("an unconfigured SDK is never handed to the native paywall", async () => {
   isConfigured.mockResolvedValueOnce(false);
 
   await expect(presentOffering()).resolves.toBe("unavailable");
-  expect(presentPaywall).not.toHaveBeenCalled();
+  expect(opened).toEqual([]);
 });
 
 test("nor to the entitlement gate, nor to Customer Center", async () => {
@@ -129,15 +127,17 @@ test("nor to the entitlement gate, nor to Customer Center", async () => {
   await expect(gatePaywall()).resolves.toBe(false);
   await openCustomerCenter();
 
-  expect(presentPaywallIfNeeded).not.toHaveBeenCalled();
+  expect(opened).toEqual([]);
   expect(presentCustomerCenter).not.toHaveBeenCalled();
 
   isConfigured.mockResolvedValue(true);
 });
 
 test("a configured SDK still presents, and reports what came back", async () => {
-  await expect(presentOffering()).resolves.toBe("dismissed");
-  expect(presentPaywall).toHaveBeenCalledTimes(1);
+  getCustomerInfo.mockResolvedValueOnce(FREE);
+  mockOpenResult = "purchased";
+  await expect(gatePaywall()).resolves.toBe(true);
+  expect(opened).toEqual([{ offering: "default", source: "gate" }]);
 });
 
 test("an SDK that cannot answer whether it is configured is treated as unconfigured", async () => {
@@ -146,7 +146,7 @@ test("an SDK that cannot answer whether it is configured is treated as unconfigu
   isConfigured.mockRejectedValueOnce(new Error("native module not linked"));
 
   await expect(presentOffering()).resolves.toBe("unavailable");
-  expect(presentPaywall).not.toHaveBeenCalled();
+  expect(opened).toEqual([]);
 });
 
 /**
@@ -162,78 +162,59 @@ test("an SDK that cannot answer whether it is configured is treated as unconfigu
  */
 describe("the paywall stall watchdog", () => {
   /** A presentation that stays pending until the test decides otherwise. */
-  function pendingPaywall(): { settle: () => void } {
+  function pendingPresentation(): { settle: () => void; promise: Promise<string> } {
     let release: (value: string) => void = () => {};
-    presentPaywall.mockImplementationOnce(
-      () => new Promise<string>((resolve) => (release = resolve))
-    );
-    return { settle: () => release("CANCELLED") };
-  }
-
-  /**
-   * Runs the microtasks between the call and the sheet being asked for.
-   *
-   * `presentOffering` awaits the configured check first, so the watchdog's
-   * timer does not exist yet on the tick the call returns — advancing fake
-   * timers before this has run advances past nothing.
-   */
-  async function untilPresenting(): Promise<void> {
-    for (let tick = 0; tick < 20 && presentPaywall.mock.calls.length === 0; tick += 1) {
-      await Promise.resolve();
-    }
-    expect(presentPaywall).toHaveBeenCalled();
+    const promise = new Promise<string>((resolve) => (release = resolve));
+    return { promise, settle: () => release("CANCELLED") };
   }
 
   test("reports a sheet that never came up while the app was awake", async () => {
     jest.useFakeTimers();
-    const paywall = pendingPaywall();
-    const presenting = presentOffering();
-    await untilPresenting();
+    const paywall = pendingPresentation();
+    const watched = withStallWatch("current", paywall.promise);
 
     jest.advanceTimersByTime(8000);
     expect(tracked()).toContain("paywall_stalled");
 
     paywall.settle();
-    await presenting;
+    await watched;
     jest.useRealTimers();
   });
 
   test("stays silent when the user switched away mid-wait", async () => {
     jest.useFakeTimers();
-    const paywall = pendingPaywall();
-    const presenting = presentOffering();
-    await untilPresenting();
+    const paywall = pendingPresentation();
+    const watched = withStallWatch("current", paywall.promise);
 
     appStateChange("background");
     jest.advanceTimersByTime(8000);
     expect(tracked()).not.toContain("paywall_stalled");
 
-    // And the sheet that arrives on the next foreground is still reported as
-    // the presentation it is, late rather than lost.
     appStateChange("active");
     paywall.settle();
-    await presenting;
-    expect(tracked()).toContain("paywall_presented");
+    await watched;
     jest.useRealTimers();
   });
 
   test("stays silent when the sheet was asked for by an app already leaving", async () => {
     jest.useFakeTimers();
     mockAppState.currentState = "inactive";
-    const paywall = pendingPaywall();
-    const presenting = presentOffering();
-    await untilPresenting();
+    const paywall = pendingPresentation();
+    const watched = withStallWatch("current", paywall.promise);
 
     jest.advanceTimersByTime(8000);
     expect(tracked()).not.toContain("paywall_stalled");
 
     paywall.settle();
-    await presenting;
+    await watched;
     jest.useRealTimers();
   });
 
   test("drops its AppState listener once the sheet has settled", async () => {
-    await presentOffering();
+    const paywall = pendingPresentation();
+    const watched = withStallWatch("current", paywall.promise);
+    paywall.settle();
+    await watched;
     expect(mockAppState.listeners).toHaveLength(0);
   });
 });
@@ -293,64 +274,3 @@ describe("isPro", () => {
   });
 });
 
-describe("a purchase the entitlement does not reflect", () => {
-  test("is still a purchase, and is reported", async () => {
-    presentPaywall.mockResolvedValueOnce("PURCHASED");
-    getCustomerInfo.mockResolvedValueOnce(FREE);
-    await expect(presentOffering()).resolves.toBe("purchased");
-    expect(mockTrack).toHaveBeenCalledWith("purchase_without_entitlement", {
-      offering: "current",
-      pro: false,
-    });
-  });
-
-  test("is not reported when the entitlement followed the purchase", async () => {
-    presentPaywall.mockResolvedValueOnce("PURCHASED");
-    getCustomerInfo.mockResolvedValueOnce(PRO);
-    await expect(presentOffering()).resolves.toBe("purchased");
-    expect(tracked()).not.toContain("purchase_without_entitlement");
-  });
-
-  test("is not checked for on a dismissal", async () => {
-    await presentOffering();
-    expect(getCustomerInfo).not.toHaveBeenCalled();
-  });
-});
-
-/**
- * The sheet's "Restore purchases" returns RESTORED whether or not the receipt
- * held anything. Two installs on 2026-09-16 tapped it with nothing to restore
- * and were counted as trials: onboarding ended, `subscription_success` fired,
- * and the funnel gained two conversions RevenueCat had never seen.
- */
-describe("a restore from the sheet", () => {
-  test("is a purchase when the entitlement is live", async () => {
-    presentPaywall.mockResolvedValueOnce("RESTORED");
-    getCustomerInfo.mockResolvedValueOnce(PRO);
-    await expect(presentOffering()).resolves.toBe("purchased");
-    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
-      offering: "current",
-      outcome: "purchased",
-      result: "RESTORED",
-    });
-    expect(tracked()).not.toContain("purchase_without_entitlement");
-  });
-
-  test("that restored nothing is a dismissal", async () => {
-    presentPaywall.mockResolvedValueOnce("RESTORED");
-    getCustomerInfo.mockResolvedValueOnce(FREE);
-    await expect(presentOffering()).resolves.toBe("dismissed");
-    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
-      offering: "current",
-      outcome: "dismissed",
-      result: "RESTORED",
-    });
-    expect(tracked()).not.toContain("purchase_without_entitlement");
-  });
-
-  test("the store could not confirm is a dismissal, not a paid exit", async () => {
-    presentPaywall.mockResolvedValueOnce("RESTORED");
-    getCustomerInfo.mockRejectedValueOnce(new Error("offline"));
-    await expect(presentOffering()).resolves.toBe("dismissed");
-  });
-});

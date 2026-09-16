@@ -4,7 +4,7 @@ import Purchases, {
   type CustomerInfo,
   type PurchasesOffering,
 } from "react-native-purchases";
-import RevenueCatUI, { PAYWALL_RESULT, type CustomerCenterCallbacks } from "react-native-purchases-ui";
+import RevenueCatUI, { type CustomerCenterCallbacks } from "react-native-purchases-ui";
 import { track } from "../analytics";
 
 /**
@@ -41,15 +41,15 @@ export const DISCOUNT_OFFERING = "discount";
  * the same charge on the same day, so nothing here or in the copy depends on
  * the distinction.
  *
- * The offer exists in the United States only. Every other storefront buys
- * `pro_weekly` at its standard price with no introductory period — which the
- * copy survives, because it never names a price or a discount, and the sheet
- * shows whatever this storefront actually offers.
+ * The offer exists in every storefront since 2026-09-16, created from the US
+ * price point's equalisations (`asc subscriptions offers introductory
+ * import`). Eligibility is still StoreKit's call per customer, which is why
+ * `plans.ts` asks before it draws the intro price.
  *
  * The *price* is deliberately not here and is never in copy. StoreKit
  * localises and converts it per storefront, and a hardcoded "$0.99" is wrong
  * in every country that does not use dollars and stale the day the tier
- * changes. The RevenueCat sheet one tap away is the only thing that knows it.
+ * changes. StoreKit's own price string, read in plans.ts, is the only thing that knows it.
  */
 export const INTRO_DAYS = 7;
 
@@ -150,12 +150,20 @@ export async function isPro(): Promise<boolean | null> {
   }
 }
 
-export async function presentPaywall(): Promise<boolean> {
+/**
+ * The entitlement gate: shows the paywall only to a customer who is not Pro,
+ * and answers whether they are Pro afterwards. Used by every feature that is
+ * gated on the subscription (add a second vehicle, intervals, fuel insights).
+ *
+ * The paywall is the app's own screen now (`app/paywall.tsx`), reached
+ * through the promise bridge in `src/paywall/present`, so this still reads as
+ * "await the sheet" at every call site.
+ */
+export async function presentPaywall(source = "gate"): Promise<boolean> {
   if (!(await configured())) return false;
-  const result = await RevenueCatUI.presentPaywallIfNeeded({
-    requiredEntitlementIdentifier: ENTITLEMENT,
-  });
-  return result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED;
+  if ((await isPro()) === true) return true;
+  const { openPaywall } = await import("../paywall/present");
+  return (await openPaywall("default", source)) === "purchased";
 }
 
 /**
@@ -223,81 +231,26 @@ export function withStallWatch<T>(offering: string, presenting: Promise<T>): Pro
 }
 
 /**
- * Presents a specific offering's paywall, or the current one when no
- * identifier is given. Unlike `presentPaywall` this does not check the
- * entitlement first: the onboarding paywall is a screen the user navigated to,
- * and a screen that renders nothing is a dead end.
+ * Opens a specific offering's paywall, or the default when no identifier is
+ * given. Unlike `presentPaywall` this does not check the entitlement first:
+ * the onboarding screens navigate here on purpose, and a screen that shows
+ * nothing is a dead end.
+ *
+ * `paywall_shown` is emitted by the screen on mount, `paywall_presented` when
+ * it has prices to draw, `paywall_closed` by `buy` or by the screen's own
+ * close, so the funnel keeps its shape.
  */
-export async function presentOffering(identifier?: string): Promise<PaywallOutcome> {
-  const offering = identifier ?? "current";
+export async function presentOffering(
+  identifier?: string,
+  source = "offer"
+): Promise<PaywallOutcome> {
+  const offering = identifier === DISCOUNT_OFFERING ? "discount" : "default";
   if (!(await configured())) {
-    // The crash case, reported as its own reason so a build shipped without
-    // the key is one event in the funnel rather than a cliff of terminations.
-    track("paywall_unconfigured", { offering });
+    track("paywall_unconfigured", { offering: identifier ?? "current" });
     return "unavailable";
   }
-  try {
-    const params: { offering?: PurchasesOffering } = {};
-    if (identifier) {
-      const resolved = await offeringFor(identifier);
-      if (!resolved) {
-        // Distinct from a dismissal on purpose: this is a configuration fault,
-        // and counting it as a decline would understate the paywall's real
-        // conversion rate by however many builds shipped with it broken.
-        track("paywall_unavailable", { offering });
-        return "unavailable";
-      }
-      params.offering = resolved;
-    }
-    // Intent, not evidence. `paywall_shown` has always been emitted here, one
-    // line before the sheet is asked for, so it counts attempts — including
-    // the ones where RevenueCatUI never renders anything. It stays where it is
-    // so the existing funnel keeps comparing to itself.
-    track("paywall_shown", { offering });
-    const asked = Date.now();
-    const result = await withStallWatch(offering, RevenueCatUI.presentPaywall(params));
-    // Evidence. Only reachable once the sheet has actually come back, so
-    // `shown` minus `presented` is the number of paywalls that failed to
-    // appear at all — previously indistinguishable from a decline. `ms` is
-    // what separates a real decision from a sheet that returned instantly:
-    // a StoreKit checkout the user cancelled takes seconds, a paywall that
-    // could not load takes none.
-    track("paywall_presented", { offering, result, ms: Date.now() - asked });
-    let outcome: PaywallOutcome =
-      result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED
-        ? "purchased"
-        : result === PAYWALL_RESULT.CANCELLED
-          ? "dismissed"
-          : "unavailable";
-    if (result === PAYWALL_RESULT.RESTORED) {
-      // The sheet says RESTORED whenever its restore link was tapped, not
-      // when a receipt came back with something on it. A new install tapping
-      // it out of curiosity holds nothing, and counting that as a purchase
-      // ended onboarding as a trial and reported a subscriber who did not
-      // exist. Only a live entitlement makes a restore a purchase; anything
-      // else is the sheet being closed.
-      if ((await isPro()) !== true) outcome = "dismissed";
-    }
-    track("paywall_closed", { offering, outcome, result });
-    // The sheet's word is StoreKit's word: the charge went through. Whether
-    // the app now thinks so is a separate question, and the one this module
-    // got wrong for two weeks — a product missing from the entitlement makes a
-    // purchase that succeeds and unlocks nothing. Still `purchased`, because
-    // the customer paid and the launch path grants a live subscription anyway;
-    // the report is so the dashboard mistake is seen the day it is made rather
-    // than the day a subscriber writes in.
-    if (result === PAYWALL_RESULT.PURCHASED) {
-      const pro = await isPro();
-      if (pro !== true) track("purchase_without_entitlement", { offering, pro });
-    }
-    return outcome;
-  } catch {
-    // No API key in the build, no network, products not yet fetchable from the
-    // store. The flow must not strand the user on a screen whose only control
-    // just threw.
-    track("paywall_unavailable", { offering });
-    return "unavailable";
-  }
+  const { openPaywall } = await import("../paywall/present");
+  return openPaywall(offering, source);
 }
 
 async function offeringFor(identifier: string): Promise<PurchasesOffering | null> {
