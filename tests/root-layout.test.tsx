@@ -49,6 +49,7 @@ jest.mock("../src/purchases", () => ({
   initPurchases: () => {},
   isPro: async () => mockPro,
 }));
+jest.mock("../src/purchases/plans", () => ({ prefetchPlans: jest.fn() }));
 jest.mock("../src/analytics", () => ({
   identifyFromPurchases: async () => {},
   initAnalytics: () => {},

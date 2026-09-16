@@ -7,6 +7,7 @@ import * as QuickActions from "expo-quick-actions";
 import { useQuickActionCallback } from "expo-quick-actions/hooks";
 import { getDb } from "../src/db/client";
 import { DISCOUNT_OFFERING, hasOffering, initPurchases, isPro } from "../src/purchases";
+import { prefetchPlans } from "../src/purchases/plans";
 import {
   flushNow,
   identifyFromPurchases,
@@ -206,6 +207,9 @@ export default function RootLayout() {
     // cost on the insights screen formats through it.
     boot("currency", initCurrency);
     boot("purchases", initPurchases);
+    // Prices in hand before any paywall mounts. The sheet this replaced
+    // fetched on the tap and took a median 3.5 s to appear.
+    boot("plans", prefetchPlans);
     boot("identify", () => void identifyFromPurchases().catch(() => {}));
     // Weakest of the happiness signals and forgotten within a day. It is here
     // so that coming back repeatedly counts for something, never so that it
@@ -448,6 +452,13 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
             of `trial` nothing at all — it is a native paywall on a blank
             housing, not a page. */}
         <Stack.Screen name="winback" options={{ headerShown: false }} />
+        {/* Every feature gate awaits this route through `openPaywall`; a full
+            screen modal reads as the sheet it replaced, without the header
+            or swipe-back a normal push would add. */}
+        <Stack.Screen
+          name="paywall"
+          options={{ headerShown: false, presentation: "fullScreenModal" }}
+        />
         {/* No header, no back and no swipe. Being unable to leave without
             subscribing or restoring is what this screen is; a gesture out of
             it would drop the user into the garage it exists to close. */}
