@@ -208,6 +208,16 @@ describe("loadPlans", () => {
     expect(getOfferings).toHaveBeenCalledTimes(1);
   });
 
+  test("concurrent calls for different locales each fetch and cache their own", async () => {
+    const [enUS, enGB] = await Promise.all([
+      loadPlans("default", "en-US"),
+      loadPlans("default", "en-GB"),
+    ]);
+    expect(getOfferings).toHaveBeenCalledTimes(2);
+    expect(enUS?.find((p) => p.period === "year")?.perWeek).toBe("$1.54");
+    expect(enGB?.find((p) => p.period === "year")?.perWeek).toBe("US$1.54");
+  });
+
   test("treats an unknown eligibility as eligible and an ineligible one as not", async () => {
     checkEligibility.mockResolvedValueOnce({ pro_weekly: { status: 0, description: "" } });
     expect((await loadPlans("discount", "en-US"))?.[0].intro).not.toBeNull();

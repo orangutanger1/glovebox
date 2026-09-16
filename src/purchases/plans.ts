@@ -149,7 +149,7 @@ function offeringLabel(offering: OfferingId): string {
  * A failed fetch is not cached: the next screen asks again, because "no
  * network at boot" must not become "no prices for the rest of the session".
  */
-let inflight: Promise<Record<OfferingId, Plan[] | null>> | null = null;
+let inflight: { locale: string; promise: Promise<Record<OfferingId, Plan[] | null>> } | null = null;
 let cached: { locale: string; plans: Record<OfferingId, Plan[] | null> } | null = null;
 
 export function resetPlansForTests(): void {
@@ -215,16 +215,22 @@ export async function loadPlans(
   const label = offeringLabel(offering);
   if (!cached || cached.locale !== locale) {
     try {
-      // One fetch shared by concurrent callers; cleared in `finally` so a
-      // failure is retried by the next call rather than cached as null.
-      inflight ??= withStallWatch(label, fetchAll(locale));
-      const plans = await inflight;
+      // One fetch shared by concurrent callers of the *same* locale; a
+      // concurrent call for a different locale starts its own fetch rather
+      // than reusing one, so it never caches another locale's prices.
+      // Cleared in `finally` so a failure is retried by the next call rather
+      // than cached as null.
+      if (!inflight || inflight.locale !== locale) {
+        inflight = { locale, promise: withStallWatch(label, fetchAll(locale)) };
+      }
+      const request = inflight;
+      const plans = await request.promise;
       cached = { locale, plans };
     } catch {
       track("paywall_unavailable", { offering: label });
       return null;
     } finally {
-      inflight = null;
+      if (inflight?.locale === locale) inflight = null;
     }
   }
   const plans = cached.plans[offering];
