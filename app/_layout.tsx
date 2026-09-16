@@ -17,6 +17,7 @@ import {
 import { flushCrashes, initCrashReporting, reportCrash } from "../src/crash";
 import { rescheduleAll } from "../src/notify";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
+import { assignExperiments } from "../src/experiments";
 import { isLocked, resolveGrandfathered } from "../src/paywall";
 import { resumeRoute } from "../src/onboarding/flow";
 import { recordReviewEvent } from "../src/review";
@@ -217,6 +218,13 @@ export default function RootLayout() {
     const previousOpen = boot("open", recordOpen) ?? null;
 
     const onboarded = isOnboarded();
+
+    // The coin is tossed once, for a fresh install only, before anything
+    // routes on it: `resumeRoute` below reads the variant to decide which
+    // screens exist. An install already mid-flow or finished keeps the flow
+    // it started on and reports "unassigned". `boot` swallows a throw, and
+    // an install that could not be assigned is on the control flow.
+    boot("experiments", () => assignExperiments(!onboarded && getOnboardingStep() === null));
 
     // Stamped before anything can route on it, and only ever written once. An
     // install that had already finished onboarding when this build first ran

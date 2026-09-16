@@ -56,6 +56,14 @@ const mockUpdates = {
 
 jest.mock("expo-updates", () => mockUpdates);
 
+// The experiment bag rides beside the bundle identity on every event. Mutable
+// so one test is an unassigned install and the next is in an arm.
+let mockExperiments: Record<string, string> = { exp_onboarding_symptoms: "unassigned" };
+jest.mock("../src/experiments", () => ({
+  experimentProperties: () => mockExperiments,
+  getVariant: () => null,
+}));
+
 // Imported by the analytics module for the RevenueCat id join; nothing here
 // exercises it.
 jest.mock("react-native-purchases", () => ({
@@ -164,6 +172,7 @@ test("every event carries the update id that separates two populations on one bi
     ota_channel: "production",
     ota_runtime_version: "1.1.0",
     ota_created_at: "2026-08-26T12:00:00.000Z",
+    exp_onboarding_symptoms: "unassigned",
   });
 });
 
@@ -178,6 +187,20 @@ test("the bundle shipped inside the binary reports an id of its own, not a null"
   });
 });
 
+test("every event carries the experiment arm beside the bundle identity", () => {
+  mockExperiments = { exp_onboarding_symptoms: "no_symptoms" };
+  try {
+    load("phc_test");
+    expect(appProperties({ $os: "iOS" })).toMatchObject({
+      $os: "iOS",
+      ota_update_id: "embedded",
+      exp_onboarding_symptoms: "no_symptoms",
+    });
+  } finally {
+    mockExperiments = { exp_onboarding_symptoms: "unassigned" };
+  }
+});
+
 test("an expo-updates that cannot answer costs the identity, not the launch", () => {
   // The dev client, the web build and this runtime all reach the guarded read
   // and find nothing behind it. The device's own properties must still arrive.
@@ -190,7 +213,10 @@ test("an expo-updates that cannot answer costs the identity, not the launch", ()
 
   try {
     expect(() => load("phc_test")).not.toThrow();
-    expect(appProperties({ $app_version: "1.1.0" })).toEqual({ $app_version: "1.1.0" });
+    expect(appProperties({ $app_version: "1.1.0" })).toEqual({
+      $app_version: "1.1.0",
+      exp_onboarding_symptoms: "unassigned",
+    });
   } finally {
     Object.defineProperty(mockUpdates, "updateId", { configurable: true, writable: true, value: null });
   }

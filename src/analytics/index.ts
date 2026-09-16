@@ -2,6 +2,7 @@ import PostHog, { type PostHogCustomAppProperties } from "posthog-react-native";
 import Purchases from "react-native-purchases";
 import type * as UpdatesModule from "expo-updates";
 import { identifyCrashUser } from "../crash";
+import { experimentProperties } from "../experiments";
 
 /**
  * Product analytics, which exists here for exactly one question: where in
@@ -44,7 +45,14 @@ export function initAnalytics(): void {
     // The funnel is the point; page/tap autocapture would bury it in noise and
     // needs the provider component wrapped around the tree.
     captureAppLifecycleEvents: true,
-    customAppProperties: (native) => ({ ...native, ...bundleIdentity() }),
+    customAppProperties: (native) => ({
+      ...native,
+      ...bundleIdentity(),
+      // Read at event time, never stored: see `bundleIdentity` for why app
+      // properties rather than `register`. "unassigned" until the boot
+      // sequence has flipped the coin, and for every install it never does.
+      ...experimentProperties(),
+    }),
   });
 }
 
