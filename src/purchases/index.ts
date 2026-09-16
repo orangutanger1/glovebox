@@ -173,7 +173,7 @@ export type PaywallOutcome = "purchased" | "dismissed" | "unavailable";
  * appear has appeared well inside this. Anything past it is a sheet that never
  * came up.
  */
-const STALL_MS = 8000;
+export const STALL_MS = 8000;
 
 /**
  * Reports a paywall that neither appeared nor failed.
@@ -205,7 +205,7 @@ const STALL_MS = 8000;
  * this event answers is "was the app alive and waiting", and an app in the
  * background was not.
  */
-function withStallWatch<T>(offering: string, presenting: Promise<T>): Promise<T> {
+export function withStallWatch<T>(offering: string, presenting: Promise<T>): Promise<T> {
   // Sampled at the tap, not inside the timer: a sheet asked for while the app
   // was already on its way out has never had a foreground to appear in.
   let awake = AppState.currentState === "active";

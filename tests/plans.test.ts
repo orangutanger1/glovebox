@@ -1,9 +1,19 @@
 // Shaping is arithmetic on what StoreKit hands back. No SDK is reached here;
 // the offering is a fixture, and `react-native-purchases` is stubbed so the
 // module can be imported under ts-jest.
+const getOfferings = jest.fn();
+const checkEligibility = jest.fn();
+const purchasePackage = jest.fn();
+const getCustomerInfo = jest.fn();
 jest.mock("react-native-purchases", () => ({
   __esModule: true,
-  default: {},
+  default: {
+    getOfferings: () => getOfferings(),
+    checkTrialOrIntroductoryPriceEligibility: (ids: string[]) => checkEligibility(ids),
+    purchasePackage: (p: unknown) => purchasePackage(p),
+    getCustomerInfo: () => getCustomerInfo(),
+    isConfigured: async () => true,
+  },
   INTRO_ELIGIBILITY_STATUS: {
     INTRO_ELIGIBILITY_STATUS_UNKNOWN: 0,
     INTRO_ELIGIBILITY_STATUS_INELIGIBLE: 1,
@@ -14,10 +24,16 @@ jest.mock("react-native-purchases", () => ({
 jest.mock("react-native", () => ({
   AppState: { currentState: "active", addEventListener: () => ({ remove() {} }) },
 }));
-jest.mock("../src/analytics", () => ({ track: jest.fn() }));
+jest.mock("react-native-purchases-ui", () => ({
+  __esModule: true,
+  default: {},
+  PAYWALL_RESULT: { NOT_PRESENTED: "NOT_PRESENTED", ERROR: "ERROR", CANCELLED: "CANCELLED", PURCHASED: "PURCHASED", RESTORED: "RESTORED" },
+}));
+const mockTrack = jest.fn();
+jest.mock("../src/analytics", () => ({ track: (e: string, p?: unknown) => mockTrack(e, p) }));
 
 import type { PurchasesOffering, PurchasesPackage } from "react-native-purchases";
-import { shapePlans } from "../src/purchases/plans";
+import { loadPlans, buy, resetPlansForTests, shapePlans } from "../src/purchases/plans";
 
 function pkg(
   identifier: string,
@@ -149,4 +165,125 @@ test("a package whose period cannot be read is left out rather than mislabelled"
     pkg("$rc_annual", { identifier: "pro_annual", price: 79.99, priceString: "$79.99", currencyCode: "USD", subscriptionPeriod: "P1Y" }),
   ]);
   expect(shapePlans(odd, new Set(), "en-US").map((p) => p.id)).toEqual(["$rc_annual"]);
+});
+
+const DISCOUNT = offering([
+  pkg("$rc_weekly", {
+    identifier: "pro_weekly",
+    price: 2.99,
+    priceString: "$2.99",
+    currencyCode: "USD",
+    subscriptionPeriod: "P1W",
+    introPrice: { price: 0.99, priceString: "$0.99", cycles: 1 },
+  }),
+]);
+(DISCOUNT as { identifier: string }).identifier = "discount";
+
+const PRO = { entitlements: { active: { pro: {} } }, activeSubscriptions: ["pro_weekly"] };
+const FREE = { entitlements: { active: {} }, activeSubscriptions: [] };
+
+beforeEach(() => {
+  resetPlansForTests();
+  mockTrack.mockReset();
+  getOfferings.mockReset();
+  checkEligibility.mockReset();
+  purchasePackage.mockReset();
+  getCustomerInfo.mockReset();
+  getOfferings.mockResolvedValue({ current: USD, all: { default: USD, discount: DISCOUNT } });
+  checkEligibility.mockResolvedValue({ pro_weekly: { status: 2, description: "" } });
+});
+
+describe("loadPlans", () => {
+  test("reads the current offering for default and the named one for discount", async () => {
+    const def = await loadPlans("default", "en-US");
+    expect(def?.map((p) => p.id)).toEqual(["$rc_annual", "$rc_monthly", "$rc_weekly"]);
+    const disc = await loadPlans("discount", "en-US");
+    expect(disc?.map((p) => p.id)).toEqual(["$rc_weekly"]);
+    expect(disc?.[0].intro?.priceString).toBe("$0.99");
+  });
+
+  test("asks the store once and answers from memory after that", async () => {
+    await loadPlans("default", "en-US");
+    await loadPlans("default", "en-US");
+    expect(getOfferings).toHaveBeenCalledTimes(1);
+  });
+
+  test("treats an unknown eligibility as eligible and an ineligible one as not", async () => {
+    checkEligibility.mockResolvedValueOnce({ pro_weekly: { status: 0, description: "" } });
+    expect((await loadPlans("discount", "en-US"))?.[0].intro).not.toBeNull();
+    resetPlansForTests();
+    checkEligibility.mockResolvedValueOnce({ pro_weekly: { status: 1, description: "" } });
+    expect((await loadPlans("discount", "en-US"))?.[0].intro).toBeNull();
+  });
+
+  test("an eligibility call that throws costs the intro, not the plans", async () => {
+    checkEligibility.mockRejectedValueOnce(new Error("offline"));
+    const plans = await loadPlans("discount", "en-US");
+    expect(plans).toHaveLength(1);
+    expect(plans?.[0].intro).toBeNull();
+  });
+
+  test("a store that cannot answer is null, reported, and asked again next time", async () => {
+    getOfferings.mockRejectedValueOnce(new Error("no products"));
+    expect(await loadPlans("default", "en-US")).toBeNull();
+    expect(mockTrack).toHaveBeenCalledWith("paywall_unavailable", { offering: "current" });
+    expect(await loadPlans("default", "en-US")).not.toBeNull();
+    expect(getOfferings).toHaveBeenCalledTimes(2);
+  });
+
+  test("a missing discount offering is null and reported as unavailable", async () => {
+    getOfferings.mockResolvedValue({ current: USD, all: { default: USD } });
+    expect(await loadPlans("discount", "en-US")).toBeNull();
+    expect(mockTrack).toHaveBeenCalledWith("paywall_unavailable", { offering: "discount" });
+  });
+});
+
+describe("buy", () => {
+  test("a completed purchase is purchased, with the entitlement checked", async () => {
+    const [year] = (await loadPlans("default", "en-US"))!;
+    purchasePackage.mockResolvedValueOnce({ customerInfo: PRO, productIdentifier: "pro_annual" });
+    getCustomerInfo.mockResolvedValueOnce(PRO);
+    await expect(buy(year, "default")).resolves.toBe("purchased");
+    expect(purchasePackage).toHaveBeenCalledWith(year.package);
+    expect(mockTrack).toHaveBeenCalledWith("paywall_purchase_started", { offering: "current", plan: "$rc_annual" });
+    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
+      offering: "current",
+      outcome: "purchased",
+      result: "PURCHASED",
+      plan: "$rc_annual",
+    });
+    expect(mockTrack.mock.calls.map((c) => c[0])).not.toContain("purchase_without_entitlement");
+  });
+
+  test("a purchase the entitlement does not reflect is still a purchase, and reported", async () => {
+    const [year] = (await loadPlans("default", "en-US"))!;
+    purchasePackage.mockResolvedValueOnce({ customerInfo: FREE, productIdentifier: "pro_annual" });
+    getCustomerInfo.mockResolvedValueOnce(FREE);
+    await expect(buy(year, "default")).resolves.toBe("purchased");
+    expect(mockTrack).toHaveBeenCalledWith("purchase_without_entitlement", { offering: "current", pro: false });
+  });
+
+  test("the user backing out of Apple's sheet is a dismissal", async () => {
+    const [year] = (await loadPlans("default", "en-US"))!;
+    purchasePackage.mockRejectedValueOnce(Object.assign(new Error("cancelled"), { userCancelled: true }));
+    await expect(buy(year, "default")).resolves.toBe("dismissed");
+    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
+      offering: "current",
+      outcome: "dismissed",
+      result: "CANCELLED",
+      plan: "$rc_annual",
+    });
+  });
+
+  test("any other failure is unavailable", async () => {
+    const [week] = (await loadPlans("discount", "en-US"))!;
+    purchasePackage.mockRejectedValueOnce(new Error("store down"));
+    await expect(buy(week, "discount")).resolves.toBe("unavailable");
+    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
+      offering: "discount",
+      outcome: "unavailable",
+      result: "ERROR",
+      plan: "$rc_weekly",
+    });
+  });
 });

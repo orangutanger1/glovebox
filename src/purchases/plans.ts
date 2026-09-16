@@ -1,10 +1,12 @@
-import { AppState } from "react-native";
+import { useCallback, useEffect, useState } from "react";
 import Purchases, {
   INTRO_ELIGIBILITY_STATUS,
   type PurchasesOffering,
   type PurchasesPackage,
 } from "react-native-purchases";
 import { track } from "../analytics";
+import { DISCOUNT_OFFERING, isPro, withStallWatch } from "./index";
+import { getLanguage } from "../i18n";
 
 /**
  * The price list, shaped for the screens that draw it.
@@ -130,4 +132,171 @@ export function shapePlans(
     }
   }
   return plans;
+}
+
+/** The event-property name for an offering, kept as the sheet reported it so
+ *  the funnel keeps comparing to itself: "current" for the default. */
+function offeringLabel(offering: OfferingId): string {
+  return offering === "default" ? "current" : DISCOUNT_OFFERING;
+}
+
+/**
+ * One fetch per process, shared by every paywall. `_layout` calls
+ * `prefetchPlans` at boot, so by the time a screen mounts the promise has
+ * usually settled and the picker draws on its first frame. The sheet this
+ * replaces fetched on the tap and took a median 3.5 s to appear.
+ *
+ * A failed fetch is not cached: the next screen asks again, because "no
+ * network at boot" must not become "no prices for the rest of the session".
+ */
+let inflight: Promise<Record<OfferingId, Plan[] | null>> | null = null;
+let cached: { locale: string; plans: Record<OfferingId, Plan[] | null> } | null = null;
+
+export function resetPlansForTests(): void {
+  inflight = null;
+  cached = null;
+}
+
+/**
+ * Which products this customer may buy at their introductory price.
+ *
+ * StoreKit answers ELIGIBLE, INELIGIBLE, UNKNOWN or NO_INTRO_OFFER_EXISTS.
+ * UNKNOWN (offline, or a storefront that has not answered yet) is treated as
+ * eligible: StoreKit applies the offer itself at purchase time, so showing it
+ * to someone who turns out ineligible costs a surprised glance at Apple's
+ * sheet, and hiding it from someone eligible costs the conversion.
+ */
+async function eligibleProducts(ids: string[]): Promise<Set<string>> {
+  if (ids.length === 0) return new Set();
+  try {
+    const answer = await Purchases.checkTrialOrIntroductoryPriceEligibility(ids);
+    const eligible = new Set<string>();
+    for (const id of ids) {
+      const status = answer[id]?.status;
+      if (
+        status === INTRO_ELIGIBILITY_STATUS.INTRO_ELIGIBILITY_STATUS_ELIGIBLE ||
+        status === INTRO_ELIGIBILITY_STATUS.INTRO_ELIGIBILITY_STATUS_UNKNOWN
+      ) {
+        eligible.add(id);
+      }
+    }
+    return eligible;
+  } catch {
+    return new Set();
+  }
+}
+
+async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | null>> {
+  const offerings = await Purchases.getOfferings();
+  const def = offerings.current;
+  const disc = offerings.all[DISCOUNT_OFFERING] ?? null;
+  const withIntro = [def, disc]
+    .flatMap((o) => o?.availablePackages ?? [])
+    .filter((p) => p.product.introPrice)
+    .map((p) => p.product.identifier);
+  const eligible = await eligibleProducts(Array.from(new Set(withIntro)));
+  return {
+    default: def ? shapePlans(def, eligible, locale) : null,
+    discount: disc ? shapePlans(disc, eligible, locale) : null,
+  };
+}
+
+/**
+ * The plans for one offering, or null when the store could not answer.
+ *
+ * Wrapped in the stall watchdog so a fetch that hangs while the app is awake
+ * reports `paywall_stalled` exactly as a sheet that never came up did; the
+ * event keeps its meaning, "the user tapped and nothing arrived".
+ */
+export async function loadPlans(
+  offering: OfferingId,
+  locale: string = getLanguage()
+): Promise<Plan[] | null> {
+  const label = offeringLabel(offering);
+  if (!cached || cached.locale !== locale) {
+    try {
+      // One fetch shared by concurrent callers; cleared in `finally` so a
+      // failure is retried by the next call rather than cached as null.
+      inflight ??= withStallWatch(label, fetchAll(locale));
+      const plans = await inflight;
+      cached = { locale, plans };
+    } catch {
+      track("paywall_unavailable", { offering: label });
+      return null;
+    } finally {
+      inflight = null;
+    }
+  }
+  const plans = cached.plans[offering];
+  if (!plans) track("paywall_unavailable", { offering: label });
+  return plans;
+}
+
+/** Fire-and-forget warm-up for the boot sequence. Never throws. */
+export function prefetchPlans(): void {
+  void loadPlans("default").catch(() => {});
+}
+
+/**
+ * The plans for a screen. `loading` is true only while nothing has answered
+ * yet; a `null` with `loading` false is a store that could not, and `retry`
+ * asks again.
+ */
+export function usePlans(offering: OfferingId): {
+  plans: Plan[] | null;
+  loading: boolean;
+  retry: () => void;
+} {
+  const [plans, setPlans] = useState<Plan[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    let live = true;
+    setLoading(true);
+    loadPlans(offering).then((result) => {
+      if (!live) return;
+      setPlans(result);
+      setLoading(false);
+    });
+    return () => {
+      live = false;
+    };
+  }, [offering, attempt]);
+
+  const retry = useCallback(() => setAttempt((n) => n + 1), []);
+  return { plans, loading, retry };
+}
+
+export type PurchaseResult = "purchased" | "dismissed" | "unavailable";
+
+/**
+ * Buys one plan through the SDK. Apple's own payment sheet still appears;
+ * what is gone is RevenueCat's list in front of it.
+ *
+ * The outcome vocabulary and the entitlement check are the sheet's, moved:
+ * a purchase StoreKit honoured that the entitlement does not reflect is still
+ * `purchased` (the customer paid; the launch path grants a live subscription
+ * anyway) and is reported so the dashboard mistake is seen the day it is made.
+ */
+export async function buy(plan: Plan, offering: OfferingId): Promise<PurchaseResult> {
+  const label = offeringLabel(offering);
+  track("paywall_purchase_started", { offering: label, plan: plan.id });
+  try {
+    await Purchases.purchasePackage(plan.package);
+  } catch (error) {
+    const cancelled = (error as { userCancelled?: boolean | null })?.userCancelled === true;
+    const outcome: PurchaseResult = cancelled ? "dismissed" : "unavailable";
+    track("paywall_closed", {
+      offering: label,
+      outcome,
+      result: cancelled ? "CANCELLED" : "ERROR",
+      plan: plan.id,
+    });
+    return outcome;
+  }
+  track("paywall_closed", { offering: label, outcome: "purchased", result: "PURCHASED", plan: plan.id });
+  const pro = await isPro();
+  if (pro !== true) track("purchase_without_entitlement", { offering: label, pro });
+  return "purchased";
 }
