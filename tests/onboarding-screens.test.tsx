@@ -24,6 +24,10 @@ jest.mock("expo-router", () => ({
     canGoBack: () => true,
   }),
   useLocalSearchParams: () => ({}),
+  // Under the test renderer a screen is focused for as long as it is mounted.
+  useFocusEffect: (effect: () => void | (() => void)) => {
+    require("react").useEffect(effect, [effect]);
+  },
 }));
 
 jest.mock("../src/db/client", () => {
@@ -441,6 +445,7 @@ test("the quiz costs one typed number, and still yields a populated payoff", () 
   expect(printed.length).toBeGreaterThan(80);
 });
 
+
 test("the year comes off a drum, and never off a keyboard", () => {
   const tree = render(OnboardingVehicle);
   // The chip row of twenty-six years, and before it the numeric field with
@@ -819,16 +824,18 @@ test("the notify screen asks over a picture of the reminder itself", () => {
     "12 services on a schedule for your 2016 Subaru Outback.",
   );
 
-  // The evidence is the banner itself, drawn from the catalog keys the
-  // scheduler sends and seated between two dimmed neighbours so it reads as a
-  // notification and not as a feature card. It used to be a fixed English
-  // still; that went when the copy was restructured, because a picture of a
-  // sentence the app no longer sends is the one thing this screen cannot show.
-  // The schedule list both replaced was six service names between the promise
-  // and the only control on the screen.
-  expect(printed).toContain("Oil Change is due");
-  // The car is in the body, where iOS has room for it.
-  expect(printed.join(" ")).toContain("2016 Subaru Outback \u00b7 Last done");
+  // The evidence is a picture of the reminder. In English it is the still,
+  // sized from its own pixel dimensions and seated between two dimmed
+  // neighbours so it reads as a notification and not as a feature card; the
+  // drawn banner is what every other language gets (tested below). The
+  // schedule list both replaced was six service names between the promise
+  // and the only control on the screen, and none of them come back here.
+  const stills = tree.root.findAll(
+    (n) => typeof n.type === "string" && n.props.resizeMode === "contain",
+  );
+  expect(stills).toHaveLength(1);
+  expect(stills[0].props.accessibilityLabel).toBe("Never miss a service.");
+  expect(printed).not.toContain("Oil Change");
   expect(printed.join(" ")).not.toMatch(/\{\w+\}/);
 
   // One control, and one line of grey under the heading. The "Do it later"
