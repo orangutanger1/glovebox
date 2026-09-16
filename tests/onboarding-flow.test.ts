@@ -1,6 +1,12 @@
+// The flow reads the stored variant for its default `hidden` list, and the
+// store is the device database. These tests pass `hidden` explicitly, so the
+// store is stubbed to "never assigned" rather than opened.
+jest.mock("../src/experiments", () => ({ getVariant: () => null }));
+
 import {
   FLOW,
   QUIZ,
+  hiddenRoutes,
   nextRoute,
   previousRoute,
   quizStep,
@@ -132,4 +138,55 @@ test("the two statistic screens are not back to back", () => {
 test("route names are checked, not assumed", () => {
   expect(isOnboardingRoute("paywall")).toBe(true);
   expect(isOnboardingRoute("garage")).toBe(false);
+});
+
+describe("the no_symptoms variant", () => {
+  const hidden = hiddenRoutes("no_symptoms");
+
+  test("hides the pain beat and nothing else", () => {
+    expect(hidden).toEqual(["symptoms", "help"]);
+    expect(hiddenRoutes("control")).toEqual([]);
+    expect(hiddenRoutes(null)).toEqual([]);
+    expect(hiddenRoutes("half_symptoms")).toEqual([]);
+  });
+
+  test("walks forward through the flow minus the hidden screens", () => {
+    const walked: string[] = ["welcome"];
+    let at = nextRoute("welcome", hidden);
+    while (at) {
+      walked.push(at);
+      at = nextRoute(at, hidden);
+    }
+    expect(walked).toEqual(FLOW.filter((r) => !hidden.includes(r)));
+    expect(nextRoute("outlook", hidden)).toBe("compare");
+  });
+
+  test("walks back the same path", () => {
+    expect(previousRoute("compare", hidden)).toBe("outlook");
+    const walked: string[] = ["offer"];
+    let at = previousRoute("offer", hidden);
+    while (at) {
+      walked.push(at);
+      at = previousRoute(at, hidden);
+    }
+    // Back also steps over "analyzing", as it always has.
+    expect(walked).toEqual(
+      FLOW.filter((r) => !hidden.includes(r) && r !== "analyzing").reverse()
+    );
+  });
+
+  test("a persisted step on a hidden screen resumes on the next visible one", () => {
+    expect(resumeRoute("symptoms", hidden)).toBe("compare");
+    // "help" sits after "compare", so it resumes one further on.
+    expect(resumeRoute("help", hidden)).toBe("reviews");
+    expect(resumeRoute("outlook", hidden)).toBe("outlook");
+  });
+
+  test("with nothing hidden the graph is unchanged", () => {
+    expect(nextRoute("outlook")).toBe("symptoms");
+    expect(nextRoute("outlook", [])).toBe("symptoms");
+    expect(previousRoute("compare")).toBe("symptoms");
+    expect(previousRoute("reviews")).toBe("help");
+    expect(resumeRoute("symptoms")).toBe("symptoms");
+  });
 });

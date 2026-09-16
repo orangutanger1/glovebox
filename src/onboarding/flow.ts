@@ -1,3 +1,5 @@
+import { getVariant } from "../experiments";
+
 /**
  * The onboarding route graph.
  *
@@ -113,8 +115,29 @@ export function isOnboardingRoute(value: string): value is OnboardingRoute {
   return (FLOW as readonly string[]).includes(value);
 }
 
-export function nextRoute(route: OnboardingRoute): OnboardingRoute | null {
-  return FLOW[FLOW.indexOf(route) + 1] ?? null;
+/**
+ * Screens a variant does not show. The onboarding symptoms experiment hides
+ * the pain beat: the three red cards and the reply to them. Anything that is
+ * not a recognised variant — control, unassigned, a value this build does not
+ * know — hides nothing, so the control flow is also the fallback.
+ */
+export function hiddenRoutes(variant: string | null): readonly OnboardingRoute[] {
+  return variant === "no_symptoms" ? ["symptoms", "help"] : [];
+}
+
+/** What this install hides, from its stored variant. The default for every
+ *  caller that is not a test. */
+function activeHidden(): readonly OnboardingRoute[] {
+  return hiddenRoutes(getVariant("onboarding_symptoms"));
+}
+
+export function nextRoute(
+  route: OnboardingRoute,
+  hidden: readonly OnboardingRoute[] = activeHidden()
+): OnboardingRoute | null {
+  let i = FLOW.indexOf(route) + 1;
+  while (i < FLOW.length && hidden.includes(FLOW[i])) i += 1;
+  return FLOW[i] ?? null;
 }
 
 /**
@@ -125,9 +148,12 @@ export function nextRoute(route: OnboardingRoute): OnboardingRoute | null {
  */
 const TRANSIENT: readonly OnboardingRoute[] = ["analyzing"];
 
-export function previousRoute(route: OnboardingRoute): OnboardingRoute | null {
+export function previousRoute(
+  route: OnboardingRoute,
+  hidden: readonly OnboardingRoute[] = activeHidden()
+): OnboardingRoute | null {
   let i = FLOW.indexOf(route) - 1;
-  while (i >= 0 && TRANSIENT.includes(FLOW[i])) i -= 1;
+  while (i >= 0 && (TRANSIENT.includes(FLOW[i]) || hidden.includes(FLOW[i]))) i -= 1;
   return i >= 0 ? FLOW[i] : null;
 }
 
@@ -164,9 +190,14 @@ const RETIRED: Record<string, OnboardingRoute> = {
   features: "paywall",
 };
 
-/** Where a relaunch resumes. Anything unrecognised restarts the flow. */
-export function resumeRoute(step: string | null): OnboardingRoute {
+/** Where a relaunch resumes. Anything unrecognised restarts the flow; a step
+ *  this install's variant does not show resumes on the next screen it does. */
+export function resumeRoute(
+  step: string | null,
+  hidden: readonly OnboardingRoute[] = activeHidden()
+): OnboardingRoute {
   if (!step) return "welcome";
-  if (isOnboardingRoute(step)) return step;
-  return RETIRED[step] ?? "welcome";
+  const route = isOnboardingRoute(step) ? step : RETIRED[step];
+  if (!route) return "welcome";
+  return hidden.includes(route) ? (nextRoute(route, hidden) ?? "welcome") : route;
 }
