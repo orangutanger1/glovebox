@@ -42,9 +42,8 @@ export const esMX: Fragment = {
 
   "layout.settings": "Configuración",
 
-  "offer.paywall.title": "Los carros no avisan. Esto sí.",
+  "offer.paywall.title": "No vuelvas a saltarte un servicio.",
   "offer.paywall.subtitle": "Cada mantenimiento y cada lectura del odómetro, registrados.",
-  "offer.paywall.cta": "Dejar mi carro registrado",
   "offer.winback.title": "Dejaste de registrar.",
 
   "onboardingA.welcome.privacy": "Sin cuenta. Nada sale de tu celular.",

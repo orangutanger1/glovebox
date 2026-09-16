@@ -111,7 +111,6 @@ export const frCA: Fragment = {
     "Un abonnement, rien d'autre à acheter. Toutes les autos, tous les relevés.",
 
   // "voiture" is the base French word; Québec says "auto", and the paywall
-  // headline and its button are the two places the noun is spoken aloud.
-  "offer.paywall.title": "Les autos ne préviennent pas. Ceci, oui.",
-  "offer.paywall.cta": "Consigner mon auto",
+  // headline is where the noun is spoken aloud.
+  "offer.paywall.title": "Ne manquez plus jamais un entretien.",
 };

@@ -48,6 +48,11 @@ const SAMPLES: Record<string, string | number> = {
   overdue: "CARFAX 2025",
   default: "6 months · 5,000 mi",
   language: "English (US)",
+  // The paywall: prices and the trial's own price are StoreKit's already-
+  // localised strings, and the discount is arithmetic on them, not typed here.
+  price: "$4.99",
+  intro: "$0.99",
+  pct: 38,
 };
 
 const varsFor = (key: string, count?: number): Vars => {
@@ -124,8 +129,14 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //                              Pickup/Van where that is the owner's word.
     //                              wagon and coupe stay guarded — those are
     //                              Kombi, Break, Perua, Coupé.
+    //   paywall.title              "Wrenchy Pro" is the product's name, not a
+    //                              sentence to translate
+    //   paywall.review.quote/name  a customer's own words and her name, quoted
+    //                              rather than rewritten in translation
+    //   it paywall.privacy         Italian uses the English loanword "Privacy"
+    //   nl paywall.per.week        Dutch "per week" is spelled the same as English
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

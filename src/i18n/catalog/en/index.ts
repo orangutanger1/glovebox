@@ -12,6 +12,7 @@ import { onboardingA } from "./onboardingA";
 import { onboardingB } from "./onboardingB";
 import { onboardingC } from "./onboardingC";
 import { pain } from "./pain";
+import { paywall } from "./paywall";
 import { plan } from "./plan";
 import { service } from "./service";
 import { settings } from "./settings";
@@ -49,6 +50,7 @@ export const FRAGMENTS: Record<string, Fragment> = {
   onboardingB,
   onboardingC,
   pain,
+  paywall,
   plan,
   service,
   settings,

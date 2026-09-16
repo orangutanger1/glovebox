@@ -38,16 +38,33 @@ export const offer: Fragment = {
   "offer.plan.status.ok": "OK",
   "offer.plan.status.noRecord": "No record",
 
-  "offer.paywall.title": "Cars don’t warn you. This does.",
-  "offer.paywall.title.named": "{name}, cars don’t warn you. This does.",
+  "offer.paywall.title": "Never miss a service.",
+  "offer.paywall.title.named": "{name}, never miss a service.",
   "offer.paywall.subtitle": "Every service and every reading, on record.",
-  "offer.paywall.cta": "Keep my car on record",
   "offer.paywall.vehicle": "On record",
   "offer.paywall.scheduled": "Now tracked",
   "offer.paywall.services": { one: "service", other: "services" },
   "offer.paywall.dueNow": "Overdue today",
   "offer.paywall.nextUp": "Next warning",
   "offer.paywall.none": "None",
+  // The three benefit rows on the paywall, built from this user's own plan.
+  // They replace the four gauges: the same numbers, read as sentences, on the
+  // one screen where the reader is deciding rather than glancing.
+  "offer.paywall.point.tracked.title": "{vehicle} on record",
+  "offer.paywall.point.tracked.subtitle": {
+    one: "{count} service tracked, by date and by distance",
+    other: "{count} services tracked, by date and by distance",
+  },
+  "offer.paywall.point.due.title": {
+    one: "{count} service overdue today",
+    other: "{count} services overdue today",
+  },
+  "offer.paywall.point.due.none": "Nothing overdue today",
+  "offer.paywall.point.due.subtitle": "Next warning {date}",
+  "offer.paywall.point.due.noNext": "No warning needed yet",
+  "offer.paywall.point.reminders.title": "A reminder before each one",
+  "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
+  "offer.paywall.notNow": "Not now",
 
   "offer.trial.title": {
     one: "Your first {count} day costs less.",
@@ -64,7 +81,7 @@ export const offer: Fragment = {
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing
   // read before the wall it actually leads to.
-  "offer.trial.decline": "No thanks",
+  "offer.trial.decline": "I’d rather pay full price",
   // The trial screen's own list, and deliberately not the paywall's. That one
   // is three features with a sentence under each, in front of a price. This is
   // everything the trial opens, so it has to be readable at a glance: a tick
