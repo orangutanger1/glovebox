@@ -53,6 +53,25 @@ jest.mock("react-native-purchases-ui", () => ({
   PAYWALL_RESULT: {},
 }));
 jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
+// The money screens read the price list through this hook. Fixture plans
+// keep the test off the store and make the printed prices assertable.
+const mockPlans: Record<string, unknown[] | null> = {
+  default: [
+    { id: "$rc_annual", period: "year", package: {}, priceString: "$79.99", price: 79.99, currency: "USD", intro: null, perWeek: "$1.54", perMonth: "$6.67", savePct: 49 },
+    { id: "$rc_monthly", period: "month", package: {}, priceString: "$9.99", price: 9.99, currency: "USD", intro: null, perWeek: "$2.31", perMonth: "$9.99", savePct: 23 },
+    { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: null, perWeek: "$2.99", perMonth: "$12.96" },
+  ],
+  discount: [
+    { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: { priceString: "$0.99", price: 0.99, periods: 1 }, perWeek: "$2.99", perMonth: "$12.96" },
+  ],
+};
+const mockBuy = jest.fn(async (_plan: unknown, _offering: string) => "dismissed" as "dismissed" | "purchased" | "unavailable");
+jest.mock("../src/purchases/plans", () => ({
+  usePlans: (offering: string) => ({ plans: mockPlans[offering] ?? null, loading: false, retry: () => {} }),
+  buy: (plan: unknown, offering: string) => mockBuy(plan, offering),
+  prefetchPlans: () => {},
+}));
+jest.mock("expo-linking", () => ({ openURL: async () => {} }));
 // The notify screen fires the iOS permission prompt on its own button now, and
 // the year drum clicks. Neither native module exists under the test renderer.
 jest.mock("expo-notifications", () => ({
@@ -66,7 +85,11 @@ jest.mock("expo-notifications", () => ({
   AndroidImportance: { DEFAULT: 3 },
   SchedulableTriggerInputTypes: { DATE: "date" },
 }));
-jest.mock("expo-haptics", () => ({ selectionAsync: jest.fn(async () => {}) }));
+jest.mock("expo-haptics", () => ({
+  selectionAsync: jest.fn(async () => {}),
+  impactAsync: jest.fn(async () => {}),
+  ImpactFeedbackStyle: { Light: "light", Medium: "medium", Heavy: "heavy" },
+}));
 
 import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";
 import { addRecord, listRecords } from "../src/db/records";
@@ -246,7 +269,7 @@ test("nothing in the flow sells the free tier", () => {
   );
   // The button names an outcome. "See Wrenchy Pro" described navigation, which
   // is the one thing a paywall CTA must never spend itself on.
-  expect(texts(render(OnboardingPaywall))).toContain("Keep my car on record");
+  expect(texts(render(OnboardingPaywall))).toContain(t("paywall.cta.year"));
 });
 
 test("the paywall names what is bought, and leaves the schedule to the ask", () => {
@@ -258,20 +281,42 @@ test("the paywall names what is bought, and leaves the schedule to the ask", () 
   setOnboardingVehicleId(car.id);
 
   const printed = texts(render(OnboardingPaywall));
-  // The headline sells the feeling, the gauges evidence it against this car,
-  // and three features say what the subscription does about it.
-  expect(printed).toContain("Cars don\u2019t warn you. This does.");
-  expect(printed).toContain("2014 Ford F-150");
-  expect(printed).toContain("One reminder per service");
-  expect(printed).toContain("Every service, kept forever");
-  // Three on the screen that asks for money, and no more. The longer list is
-  // on the trial screen behind it.
-  expect(printed).not.toContain("Unlimited vehicles");
-  // The car's dated schedule belongs to the reminder ask on the screen before.
-  // Reprinted here it put six rows of service names between the headline and
-  // the only control on the one screen that asks for money.
+  // The headline is the promise; the three rows evidence it against this car;
+  // the price list is on the same screen, not a sheet away.
+  expect(printed).toContain(t("offer.paywall.title"));
+  expect(printed.join(" ")).toContain("2014 Ford F-150");
+  expect(printed.join(" ")).toContain(t("offer.paywall.point.reminders.title"));
+  expect(printed.join(" ")).toContain("$79.99");
+  expect(printed.join(" ")).toContain("$1.54");
+  expect(printed).toContain(t("paywall.cta.year"));
+  expect(printed).toContain(t("offer.paywall.notNow"));
+  // The car's dated schedule still belongs to the reminder ask.
   expect(printed).not.toContain(serviceName("Air Filter"));
   expect(printed).not.toContain("Nothing on file");
+});
+
+test("Not now on the paywall goes to the trial, and a buy ends the flow paid", async () => {
+  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  setOnboardingVehicleId(car.id);
+
+  const tree = render(OnboardingPaywall);
+  const notNow = tree.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("offer.paywall.notNow"))
+  );
+  act(() => notNow[notNow.length - 1].props.onPress());
+  expect(navigated).toEqual(["/onboarding/offer"]);
+
+  navigated.length = 0;
+  mockBuy.mockResolvedValueOnce("purchased");
+  const again = render(OnboardingPaywall);
+  const cta = again.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("paywall.cta.year"))
+  );
+  await act(async () => {
+    await cta[cta.length - 1].props.onPress();
+  });
+  expect(mockBuy).toHaveBeenCalledWith(expect.objectContaining({ id: "$rc_annual" }), "default");
+  expect(navigated.some((to) => to.includes("subscribed") || to.startsWith("replace:"))).toBe(true);
 });
 
 test("the second offer does not open with the way out", () => {

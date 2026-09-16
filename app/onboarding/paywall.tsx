@@ -1,182 +1,189 @@
-import { useState } from "react";
-import { View, Text } from "react-native";
-import { Button } from "../../src/design/Button";
-import { Panel } from "../../src/design/Surface";
-import { Gauge } from "../../src/design/Gauge";
+import { useEffect, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, formatNumber, t } from "../../src/i18n";
-import { presentOffering } from "../../src/purchases";
+import { formatDate, t } from "../../src/i18n";
+import { restore } from "../../src/purchases";
+import { buy, usePlans, type Plan } from "../../src/purchases/plans";
+import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
+import { BuyFooter } from "../../src/paywall/BuyFooter";
+import { ReviewCard } from "../../src/paywall/ReviewCard";
+import { IncludedStrip } from "../../src/paywall/IncludedStrip";
 import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { tNamed } from "../../src/onboarding";
 import { useAdvance, useFinish } from "../../src/onboarding/nav";
-
-/** What the subscription is, in three lines: the reminder, the schedule it is
- *  computed from, and the log both write to. Three and no more — this is the
- *  screen asking for money, and a reader deciding whether to pay reads a short
- *  list or none of it. The longer list is on the trial screen behind it.
- *
- *  Named by feature id and read from the features fragment, so a capability
- *  cannot be described one way in the feature list and another here. */
-const FEATURES = ["reminders", "due", "history"] as const;
+import { track } from "../../src/analytics";
 
 /**
- * The offer, at the end of onboarding.
+ * The first ask, with the price on it.
  *
- * The argument is built in three layers, and the layers are the reason this is
- * a screen rather than a button: the headline, which sells the feeling and not
- * the product; the gauges, which are this user's own car by name with the
- * count and the date the quiz computed, so the headline is evidenced rather
- * than asserted; and three features underneath, which say what the
- * subscription actually does about it.
+ * Until 2026-09-16 this screen was the argument and a RevenueCat sheet was
+ * the price list, a tap and a median 3.5 seconds away. On the first day with
+ * paid traffic 59 people saw that sheet and none bought; 35 more never opened
+ * the one after it. The list is drawn here now, under the argument, in the
+ * app's own material, so the reader who has just been shown their car's
+ * overdue count sees what it costs to fix that without leaving the page.
  *
- * The car's dated schedule is not here. It rode on this screen briefly, on the
- * theory that "Cars don't warn you. This does." is only a claim until the six
- * overdue rows sit under it, and what it produced was a page: six rows of
- * service names between the headline and the only control, on the one screen
- * in the flow that is asking for money. The list belongs to the reminder ask
- * on the screen before, which is the thing it is evidence for.
+ * Top to bottom: the promise, three rows that evidence it against this car,
+ * what the subscription includes, the one review the app has, the plans, the
+ * button. Everything fits without scrolling on a 4.7" screen; a scroll on a
+ * paywall is a fold, and what is below a fold is not read.
  *
- * The paywall itself is a native RevenueCat sheet configured in the dashboard,
- * so this screen is the argument and the sheet is the price list. It exists as
- * a route rather than a modal fired from the last step for one reason: the
- * user who closes the sheet has to land somewhere, and landing back in the
- * garage means the second offer can never be made.
- *
- * There is one control, and no free door. The "Start with the free app" link
- * that used to sit under it, and the free-mode landing that later replaced it
- * at the end of the flow, both spent the app's last screen selling the version
- * that earns nothing: a user shown a page of what is free forever has been
- * talked out of the trial they were one tap from. Declining both asks now ends
- * onboarding in the garage, with the plan they built already in it. Every
- * dismissal path leads to the trial screen, which is where the flow ends.
+ * "Not now" is the decline the sheet's close button used to be. It goes to
+ * the trial, which is the whole reason the trial exists. There is still no
+ * free door.
  */
 export default function OnboardingPaywall() {
   const advance = useAdvance("paywall");
   const finish = useFinish();
   const { vehicleName, plan } = useOnboardingFindings();
+  const { plans, loading, retry } = usePlans("default");
+  const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
 
-  // The soonest service still ahead. `plan.items` is sorted worst-first, so
-  // taking its head printed the most overdue row under a "Next up" legend.
-  const next = nextUp(plan);
+  // Shown once per mount, in the sheet's vocabulary, so the funnel's
+  // `paywall_shown → paywall_presented` step keeps meaning "tapped → drawn".
+  useEffect(() => {
+    track("paywall_shown", { offering: "current" });
+  }, []);
+  useEffect(() => {
+    if (plans) track("paywall_presented", { offering: "current", ms: 0 });
+  }, [plans]);
 
-  async function onSeeOffer() {
+  const chosen: Plan | null =
+    plans?.find((p) => p.id === (selected ?? defaultPlan(plans))) ?? null;
+
+  async function onBuy() {
+    if (busy || !chosen) return;
+    setBusy(true);
+    setMsg(null);
+    try {
+      const outcome = await buy(chosen, "default");
+      if (outcome === "purchased") {
+        // Recorded, never acted on: nothing in onboarding may ask for a rating
+        // (Guideline 5.6.3). This banks the signal for a later happy moment.
+        recordReviewEvent("purchase");
+        finish("paid");
+        return;
+      }
+      if (outcome === "unavailable") setMsg(t("settings.store.error"));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function onRestore() {
     if (busy) return;
     setBusy(true);
-    const outcome = await presentOffering();
-    // Released before we leave, for the reason the notify screen gives: the
-    // trial screen is pushed on top of this one, and a Back from there returns
-    // to this instance. A `busy` left standing was a dead CTA on the screen
-    // that asks for money.
-    setBusy(false);
-    if (outcome === "purchased") {
-      // Recorded, never acted on. Nothing in onboarding may ask for a rating —
-      // App Store Review Guideline 5.6.3 treats soliciting one before the user
-      // has meaningfully used the app as manipulating the App Store, and Apple
-      // rejects for it. This only banks the signal for a later happy moment.
-      recordReviewEvent("purchase");
-      finish("paid");
-      return;
+    setMsg(null);
+    try {
+      const found = await restore();
+      track("restore_attempted", { source: "onboarding_paywall", found });
+      if (found) {
+        recordReviewEvent("purchase");
+        finish("paid");
+        return;
+      }
+      setMsg(t("settings.restore.none"));
+    } catch {
+      track("restore_attempted", { source: "onboarding_paywall", found: null });
+      setMsg(t("settings.store.error"));
+    } finally {
+      setBusy(false);
     }
-    // A dismissal is the whole reason the trial exists, so it goes there —
-    // and so does a paywall that could not present at all, because the screen
-    // it advances to is now the end of the flow rather than a stop on the way
-    // to one. It falls back to the current offering when there is no discount
-    // offering to show, so it is never the dead button this branch used to
-    // route around.
+  }
+
+  function onNotNow() {
+    track("paywall_closed", { offering: "current", outcome: "dismissed", result: "DECLINED" });
     advance();
   }
+
+  const next = nextUp(plan);
+  const dueTitle =
+    plan.pastDue > 0
+      ? t("offer.paywall.point.due.title", { count: plan.pastDue })
+      : t("offer.paywall.point.due.none");
+  const dueSubtitle = next?.dueAt
+    ? t("offer.paywall.point.due.subtitle", { date: formatDate(next.dueAt) })
+    : t("offer.paywall.point.due.noNext");
+
+  const points: { title: string; subtitle: string }[] = [
+    {
+      title: t("offer.paywall.point.tracked.title", { vehicle: vehicleName }),
+      subtitle: t("offer.paywall.point.tracked.subtitle", { count: plan.items.length }),
+    },
+    { title: dueTitle, subtitle: dueSubtitle },
+    {
+      title: t("offer.paywall.point.reminders.title"),
+      subtitle: t("offer.paywall.point.reminders.subtitle"),
+    },
+  ];
 
   return (
     <OnboardingScreen
       route="paywall"
-      // The one screen in the flow that asks for money, addressed to the person
-      // who was asked their name on screen two. `tNamed` falls back to the
-      // unnamed sentence for an install that predates that screen.
       title={tNamed("offer.paywall.title")}
       subtitle={t("offer.paywall.subtitle")}
-      footer={<Button label={t("offer.paywall.cta")} onPress={onSeeOffer} disabled={busy} />}
-    >
-      <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-          {/* The name takes what the count leaves: a "2015 Toyota Corolla"
-              wraps to two lines rather than running into the "12". */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              gap: tokens.space.md,
-            }}
+      footer={
+        <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore}>
+          <Pressable
+            onPress={onNotNow}
+            disabled={busy}
+            style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
           >
-            <View style={{ flex: 1 }}>
-              <Gauge legend={t("offer.paywall.vehicle")} value={vehicleName} />
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+              {t("offer.paywall.notNow")}
+            </Text>
+          </Pressable>
+        </BuyFooter>
+      }
+    >
+      <View style={{ gap: tokens.space.sm + 2 }}>
+        {points.map((point) => (
+          <View
+            key={point.title}
+            style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}
+          >
+            <View style={{ paddingTop: 1 }}>
+              <Check size={14} />
             </View>
-            <Gauge
-              legend={t("offer.paywall.scheduled")}
-              value={formatNumber(plan.items.length)}
-              unit={t("offer.paywall.services", { count: plan.items.length })}
-              align="right"
-            />
+            <View style={{ flex: 1 }}>
+              <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>
+                {point.title}
+              </Text>
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{point.subtitle}</Text>
+            </View>
           </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Gauge
-              legend={t("offer.paywall.dueNow")}
-              value={formatNumber(plan.pastDue)}
-              lamp={plan.pastDue > 0}
-            />
-            <Gauge
-              legend={t("offer.paywall.nextUp")}
-              value={next?.dueAt ? formatDate(next.dueAt) : t("offer.paywall.none")}
-              align="right"
-            />
-          </View>
-        </View>
-      </Panel>
-
-      {/* What the gauges above are bought with. These used to be three
-          consequences — warned in time, nothing sold to you twice, a log that
-          shows in the resale price — which sold a feeling the screen could not
-          show. The app is no longer freemium, so the honest thing to put in
-          front of the price is what the price buys. */}
-      <View style={{ gap: tokens.space.sm }}>
-        <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-          {t("offer.features.title")}
-        </Text>
-        <Panel>
-          <View style={{ padding: tokens.space.md, gap: tokens.space.md }}>
-            {FEATURES.map((id) => (
-              <View
-                key={id}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "flex-start",
-                  gap: tokens.space.sm,
-                }}
-              >
-                {/* A tick, not a lamp. The lamp is the car's warning light and
-                    it is red; these three lines are what the user gets, and
-                    stamping the app's alarm signal on them said the opposite. */}
-                <View style={{ paddingTop: 0 }}>
-                  <Check />
-                </View>
-                <View style={{ flex: 1, gap: tokens.space.xs }}>
-                  <Text style={{ ...tokens.text.body, color: tokens.color.text }}>
-                    {t(`features.${id}.title`)}
-                  </Text>
-                  <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-                    {t(`features.${id}.subtitle`)}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </Panel>
+        ))}
       </View>
+
+      <IncludedStrip />
+
+      <ReviewCard />
+
+      {plans ? (
+        <PlanPicker
+          plans={plans}
+          selected={chosen?.id ?? defaultPlan(plans)}
+          onSelect={setSelected}
+          layout="rows"
+          offering="current"
+        />
+      ) : (
+        <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
+          <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+            {loading ? t("paywall.loading") : t("paywall.retry")}
+          </Text>
+        </Pressable>
+      )}
+
+      {msg !== null && (
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>
+      )}
     </OnboardingScreen>
   );
 }
