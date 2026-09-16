@@ -1,0 +1,79 @@
+import { getState, setState } from "../db/state";
+import { track } from "../analytics";
+
+/**
+ * A/B tests, assigned on the device.
+ *
+ * One registry, one row per experiment in `app_state`, one property per
+ * experiment on every analytics event. That is the whole system, and it is
+ * deliberately smaller than a feature-flag service: the split cannot be
+ * changed without shipping code, and in exchange the assignment is
+ * deterministic, works on a launch with no network, and cannot fall to
+ * control because a fetch was slow.
+ *
+ * Only a fresh install is assigned — one that has not finished onboarding
+ * and has no persisted step. An install already mid-flow when the experiment
+ * ships would see its screens change under it, and an install that finished
+ * under one build has already produced its outcome. Both report
+ * "unassigned" and behave as control.
+ *
+ * The row is written once and read on every launch. It is never rewritten,
+ * even when it holds a value this build does not recognise: the row is the
+ * record of what the install was shown, and a later build that overwrote it
+ * would count the same user in two arms.
+ */
+
+export const EXPERIMENTS = {
+  onboarding_symptoms: ["control", "no_symptoms"],
+} as const;
+
+export type ExperimentName = keyof typeof EXPERIMENTS;
+export type Variant<E extends ExperimentName> = (typeof EXPERIMENTS)[E][number];
+
+const NAMES = Object.keys(EXPERIMENTS) as ExperimentName[];
+const key = (name: ExperimentName) => `experiment.${name}`;
+
+/** The stored variant, or null when this install was never assigned or holds
+ *  a value this build does not know. Never throws. */
+export function getVariant<E extends ExperimentName>(name: E): Variant<E> | null {
+  let raw: string | null;
+  try {
+    raw = getState(key(name));
+  } catch {
+    return null;
+  }
+  const variants: readonly string[] = EXPERIMENTS[name];
+  return raw !== null && variants.includes(raw) ? (raw as Variant<E>) : null;
+}
+
+/**
+ * Coin-flips every registered experiment this install has no row for, when
+ * the install is eligible. Returns what it assigned, which is empty on every
+ * launch but the first.
+ */
+export function assignExperiments(
+  eligible: boolean,
+  random: () => number = Math.random
+): Partial<Record<ExperimentName, string>> {
+  const assigned: Partial<Record<ExperimentName, string>> = {};
+  if (!eligible) return assigned;
+  for (const name of NAMES) {
+    // A row of any value means the question was already answered for this
+    // install, even if the answer is one this build no longer recognises.
+    if (getState(key(name)) !== null) continue;
+    const variants = EXPERIMENTS[name];
+    const variant = variants[Math.min(variants.length - 1, Math.floor(random() * variants.length))];
+    setState(key(name), variant);
+    assigned[name] = variant;
+    track("experiment_assigned", { experiment: name, variant });
+  }
+  return assigned;
+}
+
+/** `exp_<name>` for every registered experiment, "unassigned" where there is
+ *  no usable row. Read by analytics on every event, so it must never throw. */
+export function experimentProperties(): Record<string, string> {
+  const props: Record<string, string> = {};
+  for (const name of NAMES) props[`exp_${name}`] = getVariant(name) ?? "unassigned";
+  return props;
+}
