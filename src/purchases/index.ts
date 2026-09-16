@@ -263,12 +263,21 @@ export async function presentOffering(identifier?: string): Promise<PaywallOutco
     // a StoreKit checkout the user cancelled takes seconds, a paywall that
     // could not load takes none.
     track("paywall_presented", { offering, result, ms: Date.now() - asked });
-    const outcome: PaywallOutcome =
+    let outcome: PaywallOutcome =
       result === PAYWALL_RESULT.PURCHASED || result === PAYWALL_RESULT.RESTORED
         ? "purchased"
         : result === PAYWALL_RESULT.CANCELLED
           ? "dismissed"
           : "unavailable";
+    if (result === PAYWALL_RESULT.RESTORED) {
+      // The sheet says RESTORED whenever its restore link was tapped, not
+      // when a receipt came back with something on it. A new install tapping
+      // it out of curiosity holds nothing, and counting that as a purchase
+      // ended onboarding as a trial and reported a subscriber who did not
+      // exist. Only a live entitlement makes a restore a purchase; anything
+      // else is the sheet being closed.
+      if ((await isPro()) !== true) outcome = "dismissed";
+    }
     track("paywall_closed", { offering, outcome, result });
     // The sheet's word is StoreKit's word: the charge went through. Whether
     // the app now thinks so is a separate question, and the one this module
@@ -277,7 +286,7 @@ export async function presentOffering(identifier?: string): Promise<PaywallOutco
     // the customer paid and the launch path grants a live subscription anyway;
     // the report is so the dashboard mistake is seen the day it is made rather
     // than the day a subscriber writes in.
-    if (outcome === "purchased") {
+    if (result === PAYWALL_RESULT.PURCHASED) {
       const pro = await isPro();
       if (pro !== true) track("purchase_without_entitlement", { offering, pro });
     }

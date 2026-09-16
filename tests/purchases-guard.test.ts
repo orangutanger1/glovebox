@@ -316,3 +316,41 @@ describe("a purchase the entitlement does not reflect", () => {
     expect(getCustomerInfo).not.toHaveBeenCalled();
   });
 });
+
+/**
+ * The sheet's "Restore purchases" returns RESTORED whether or not the receipt
+ * held anything. Two installs on 2026-09-16 tapped it with nothing to restore
+ * and were counted as trials: onboarding ended, `subscription_success` fired,
+ * and the funnel gained two conversions RevenueCat had never seen.
+ */
+describe("a restore from the sheet", () => {
+  test("is a purchase when the entitlement is live", async () => {
+    presentPaywall.mockResolvedValueOnce("RESTORED");
+    getCustomerInfo.mockResolvedValueOnce(PRO);
+    await expect(presentOffering()).resolves.toBe("purchased");
+    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
+      offering: "current",
+      outcome: "purchased",
+      result: "RESTORED",
+    });
+    expect(tracked()).not.toContain("purchase_without_entitlement");
+  });
+
+  test("that restored nothing is a dismissal", async () => {
+    presentPaywall.mockResolvedValueOnce("RESTORED");
+    getCustomerInfo.mockResolvedValueOnce(FREE);
+    await expect(presentOffering()).resolves.toBe("dismissed");
+    expect(mockTrack).toHaveBeenCalledWith("paywall_closed", {
+      offering: "current",
+      outcome: "dismissed",
+      result: "RESTORED",
+    });
+    expect(tracked()).not.toContain("purchase_without_entitlement");
+  });
+
+  test("the store could not confirm is a dismissal, not a paid exit", async () => {
+    presentPaywall.mockResolvedValueOnce("RESTORED");
+    getCustomerInfo.mockRejectedValueOnce(new Error("offline"));
+    await expect(presentOffering()).resolves.toBe("dismissed");
+  });
+});
