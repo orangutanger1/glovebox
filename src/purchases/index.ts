@@ -77,10 +77,11 @@ export function initPurchases(): void {
  * Whether the native SDK is holding a configuration, asked of the SDK rather
  * than inferred from `initPurchases` having run.
  *
- * Nothing may present RevenueCat UI without this. `RevenueCatUI.presentPaywall`
- * reaches `Purchases.shared` on the native side, and reading that singleton
- * before `configure` is a Swift `fatalError`: the process is killed, no
- * JavaScript exception is ever raised, and the app "just closes" on the tap.
+ * Nothing may present the paywall without this. `presentPaywall` routes to
+ * the `/paywall` screen through `openPaywall`, which reaches `Purchases.shared`
+ * on the native side, and reading that singleton before `configure` is a
+ * Swift `fatalError`: the process is killed, no JavaScript exception is ever
+ * raised, and the app "just closes" on the tap.
  * A build or an OTA update published without `EXPO_PUBLIC_RC_IOS_KEY` inlined
  * is enough to reach it, which is exactly what shipped: the key lives in the
  * EAS environment and an update published without `--environment production`
@@ -275,11 +276,12 @@ export async function restore(): Promise<boolean> {
 /**
  * The only way out of a subscription from inside the app.
  *
- * `presentPaywall` wraps `presentPaywallIfNeeded`, which does nothing once the
- * entitlement is active — correct for gating, but it left a subscriber with no
- * route to switch between monthly and annual, to cancel, or even to see what
- * they were paying for. Customer Center is RevenueCat's native sheet for all of
- * that; its contents are configured in the dashboard rather than built here.
+ * `presentPaywall` routes to the app's own paywall screen, which does nothing
+ * once the entitlement is active, correct for gating, but it left a subscriber
+ * with no route to switch between monthly and annual, to cancel, or even to
+ * see what they were paying for. Customer Center is RevenueCat's native sheet
+ * for all of that; its contents are configured in the dashboard rather than
+ * built here.
  *
  * The cancel path is also the app's only exit interview. The dashboard can put
  * a feedback row and a promotional offer on it; the callbacks are how the

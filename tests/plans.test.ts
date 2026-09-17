@@ -27,7 +27,6 @@ jest.mock("react-native", () => ({
 jest.mock("react-native-purchases-ui", () => ({
   __esModule: true,
   default: {},
-  PAYWALL_RESULT: { NOT_PRESENTED: "NOT_PRESENTED", ERROR: "ERROR", CANCELLED: "CANCELLED", PURCHASED: "PURCHASED", RESTORED: "RESTORED" },
 }));
 const mockTrack = jest.fn();
 jest.mock("../src/analytics", () => ({ track: (e: string, p?: unknown) => mockTrack(e, p) }));

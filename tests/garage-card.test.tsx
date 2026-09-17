@@ -51,7 +51,6 @@ jest.mock("../src/db/client", () => {
 jest.mock("react-native-purchases-ui", () => ({
   __esModule: true,
   default: {},
-  PAYWALL_RESULT: {},
 }));
 jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
 jest.mock("expo-notifications", () => ({

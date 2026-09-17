@@ -1,7 +1,7 @@
 /**
  * The one thing the paywall module must never do.
  *
- * `RevenueCatUI.presentPaywall` reaches `Purchases.shared` on the native side,
+ * `presentPaywall` reaches `Purchases.shared` on the native side,
  * and reading that singleton before `configure` is a Swift `fatalError`: the
  * process dies, no JavaScript exception is raised, and the app closes on the
  * tap with nothing to show for it. Every build that ships without
