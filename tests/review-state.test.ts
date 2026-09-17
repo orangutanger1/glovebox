@@ -1,6 +1,7 @@
 import {
   happinessScore,
   shouldRequestReview,
+  shouldRequestFirstActionReview,
   EVENT_WEIGHTS,
   SCORE_THRESHOLD,
   COOLDOWN_DAYS,
@@ -109,4 +110,30 @@ test("the ask count is per year, not per install", () => {
   expect(shouldRequestReview(renewed, NOW)).toBe(true);
   expect(spentAsks({ lastAskedAt: daysAgo(ASK_WINDOW_DAYS - 1), askCount: 2 }, NOW)).toBe(2);
   expect(spentAsks({ lastAskedAt: null, askCount: 2 }, NOW)).toBe(0);
+});
+
+describe("the subscriber's first-action ask", () => {
+  const first = (over: Partial<Parameters<typeof shouldRequestFirstActionReview>[0]> = {}) =>
+    ({ ...state(), asked: false, ...over });
+
+  test("asks a subscriber on a single tap, below the happiness threshold", () => {
+    const paid = first({ events: events(["purchase", 0]) });
+    expect(shouldRequestReview(paid, NOW)).toBe(false);
+    expect(shouldRequestFirstActionReview(paid, NOW)).toBe(true);
+  });
+
+  test("never asks an install that has not paid", () => {
+    expect(shouldRequestFirstActionReview(first({ events: events(["log_service", 0], ["export", 0]) }), NOW)).toBe(false);
+  });
+
+  test("is spent once, whatever iOS drew", () => {
+    expect(shouldRequestFirstActionReview(first({ events: events(["purchase", 0]), asked: true }), NOW)).toBe(false);
+  });
+
+  test("shares the engine's cooldown and yearly budget", () => {
+    const paid = events(["purchase", 0]);
+    expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(1), askCount: 1 }), NOW)).toBe(false);
+    expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(30), askCount: MAX_ASKS }), NOW)).toBe(false);
+    expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(30), askCount: 1 }), NOW)).toBe(true);
+  });
 });

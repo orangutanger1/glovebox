@@ -2,9 +2,11 @@ import { getDb } from "../db/client";
 import { getState, setState } from "../db/state";
 import {
   shouldRequestReview,
+  shouldRequestFirstActionReview,
   spentAsks,
   REVIEW_LAST_ASKED_KEY,
   REVIEW_ASK_COUNT_KEY,
+  REVIEW_FIRST_ACTION_KEY,
   type ReviewEvent,
   type ReviewEventKind,
 } from "./state";
@@ -79,24 +81,59 @@ function recentEvents(): ReviewEvent[] {
  */
 export async function maybeRequestReview(): Promise<void> {
   try {
-    const askCount = Number(getState(REVIEW_ASK_COUNT_KEY) ?? "0");
-    const state = {
-      events: recentEvents(),
-      lastAskedAt: getState(REVIEW_LAST_ASKED_KEY),
-      askCount: Number.isFinite(askCount) ? askCount : 0,
-    };
+    const state = readState();
     const now = new Date();
     if (!shouldRequestReview(state, now)) return;
-
-    const StoreReview = loadStoreReview();
-    if (!(await StoreReview.hasAction())) return;
-
-    setState(REVIEW_LAST_ASKED_KEY, now.toISOString());
-    // Counted within the year, so a count that has aged out starts over.
-    setState(REVIEW_ASK_COUNT_KEY, String(spentAsks(state, now) + 1));
-    await StoreReview.requestReview();
+    await ask(state, now);
   } catch {
     // A rating prompt is the least important thing on screen. It never breaks
     // the flow it hangs off.
   }
+}
+
+/**
+ * The subscriber's one extra ask, on their first tap on the car screen.
+ *
+ * Sits beside the happiness engine rather than inside it (see
+ * `shouldRequestFirstActionReview` for why the moment is worth a rule of its
+ * own). Call it from the controls on the vehicle screen that open something:
+ * log a service, log a fill-up, edit the car. Not from delete or undo, which
+ * are not the moment.
+ *
+ * The flag is set the moment the decision is yes, before StoreKit is asked,
+ * so a second tap during the await cannot spend the moment twice. An install
+ * that has not paid keeps the flag clear and is checked again next tap: the
+ * purchase may come later, from the settings screen, and the first tap after
+ * it is still the first tap that counts.
+ */
+export async function requestReviewOnFirstAction(): Promise<void> {
+  try {
+    const state = { ...readState(), asked: getState(REVIEW_FIRST_ACTION_KEY) !== null };
+    const now = new Date();
+    if (!shouldRequestFirstActionReview(state, now)) return;
+    setState(REVIEW_FIRST_ACTION_KEY, now.toISOString());
+    await ask(state, now);
+  } catch {
+    // Same as above: never the reason a tap on the car does nothing.
+  }
+}
+
+function readState(): { events: ReviewEvent[]; lastAskedAt: string | null; askCount: number } {
+  const askCount = Number(getState(REVIEW_ASK_COUNT_KEY) ?? "0");
+  return {
+    events: recentEvents(),
+    lastAskedAt: getState(REVIEW_LAST_ASKED_KEY),
+    askCount: Number.isFinite(askCount) ? askCount : 0,
+  };
+}
+
+/** Spends one of the year's asks and hands the prompt to StoreKit. */
+async function ask(state: { lastAskedAt: string | null; askCount: number }, now: Date): Promise<void> {
+  const StoreReview = loadStoreReview();
+  if (!(await StoreReview.hasAction())) return;
+
+  setState(REVIEW_LAST_ASKED_KEY, now.toISOString());
+  // Counted within the year, so a count that has aged out starts over.
+  setState(REVIEW_ASK_COUNT_KEY, String(spentAsks(state, now) + 1));
+  await StoreReview.requestReview();
 }

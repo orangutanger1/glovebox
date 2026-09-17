@@ -28,6 +28,7 @@ import { getDistanceUnit } from "../../src/units";
 import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
+import { requestReviewOnFirstAction } from "../../src/review";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -159,6 +160,16 @@ export default function VehicleDetail() {
 
   useFocusEffect(refresh);
 
+  // Every control on this screen that opens something goes through here.
+  // The first of those taps by a subscriber is the one moment the rating
+  // prompt is asked for outside the happiness engine (see `src/review`).
+  // The prompt is requested after the push, so it lands over the screen the
+  // tap opened rather than holding up the transition.
+  function open(path: string) {
+    router.push(path as never);
+    setTimeout(() => void requestReviewOnFirstAction(), 600);
+  }
+
   // Without this the pending timer fires after the screen is gone and sets
   // state on an unmounted component.
   useEffect(() => {
@@ -239,7 +250,7 @@ export default function VehicleDetail() {
           title: vehicle?.name ?? t("vehicle.title"),
           headerTitle: () => (
             <Pressable
-              onPress={vehicle ? () => router.push(`/vehicle/${id}/edit`) : undefined}
+              onPress={vehicle ? () => open(`/vehicle/${id}/edit`) : undefined}
               disabled={!vehicle}
               hitSlop={12}
               accessibilityRole="button"
@@ -364,7 +375,7 @@ export default function VehicleDetail() {
                 />
               ))}
               {fuel.length > RECENT_FILLS ? (
-                <Pressable onPress={() => router.push(`/vehicle/${id}/fuel`)}>
+                <Pressable onPress={() => open(`/vehicle/${id}/fuel`)}>
                   <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
                     {t("fuel.seeAll")}
                   </Text>
@@ -454,14 +465,14 @@ export default function VehicleDetail() {
             <View style={{ flex: 1 }}>
               <Button
                 label={t("vehicle.logService")}
-                onPress={() => router.push(`/vehicle/${id}/log`)}
+                onPress={() => open(`/vehicle/${id}/log`)}
               />
             </View>
             <View style={{ flex: 1 }}>
               <Button
                 label={t("fuel.log")}
                 variant="secondary"
-                onPress={() => router.push(`/vehicle/${id}/fuel/new`)}
+                onPress={() => open(`/vehicle/${id}/fuel/new`)}
               />
             </View>
           </View>

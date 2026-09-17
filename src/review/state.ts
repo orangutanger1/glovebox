@@ -1,5 +1,7 @@
 export const REVIEW_LAST_ASKED_KEY = "review_last_asked_at";
 export const REVIEW_ASK_COUNT_KEY = "review_ask_count";
+/** Set once the subscriber's first-action ask has been spent. */
+export const REVIEW_FIRST_ACTION_KEY = "review_first_action_asked";
 
 export type ReviewEventKind = "app_open" | "log_service" | "export" | "purchase";
 
@@ -99,12 +101,47 @@ export function shouldRequestReview(
   state: { events: ReviewEvent[]; lastAskedAt: string | null; askCount: number },
   now: Date
 ): boolean {
-  if (spentAsks(state, now) >= MAX_ASKS) return false;
+  if (!canAsk(state, now)) return false;
+  return happinessScore(state.events, now) >= SCORE_THRESHOLD;
+}
 
+/**
+ * The budget and the cooldown, without the happiness test. Both asks share
+ * them: iOS spends the same three prompts a year on either, and two asks a
+ * day apart are one ask the user is annoyed by twice.
+ */
+export function canAsk(
+  state: { lastAskedAt: string | null; askCount: number },
+  now: Date
+): boolean {
+  if (spentAsks(state, now) >= MAX_ASKS) return false;
   if (state.lastAskedAt) {
     const since = now.getTime() - new Date(state.lastAskedAt).getTime();
     if (!Number.isFinite(since) || since < COOLDOWN_DAYS * DAY_MS) return false;
   }
+  return true;
+}
 
-  return happinessScore(state.events, now) >= SCORE_THRESHOLD;
+/**
+ * The one ask that skips the score: a subscriber's first tap on the car.
+ *
+ * The happiness engine waits for a pattern of use, which is right for an
+ * install that has not paid. A user who has just paid and is now reaching
+ * for the thing they paid for is at the high point of the whole flow, and
+ * the engine's threshold puts the ask days past it. So this asks once, at
+ * that moment, and never again: `asked` is the install's record that the
+ * moment was spent, whether or not iOS drew anything.
+ *
+ * Still gated on a purchase event. A subscriber has meaningfully used the
+ * app in the sense Guideline 5.6.3 cares about: they read eleven screens
+ * about their own car and paid for the schedule it built. An unpaid install's
+ * first tap has done neither.
+ */
+export function shouldRequestFirstActionReview(
+  state: { events: ReviewEvent[]; lastAskedAt: string | null; askCount: number; asked: boolean },
+  now: Date
+): boolean {
+  if (state.asked) return false;
+  if (!state.events.some((e) => e.kind === "purchase")) return false;
+  return canAsk(state, now);
 }
