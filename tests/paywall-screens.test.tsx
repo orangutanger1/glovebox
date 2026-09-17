@@ -135,7 +135,9 @@ describe("PlanPicker", () => {
       render(createElement(PlanPicker, { plans: [INTRO], selected: "$rc_weekly", onSelect: () => {}, offering: "discount" }))
     ).join(" ");
     expect(withIntro).toContain("$0.99");
-    expect(withIntro).toContain(t("paywall.then", { price: "$2.99" }));
+    // The renewal is the footer's line, once. The card printing it too put
+    // the same two prices on the offer screen three times.
+    expect(withIntro).not.toContain(t("paywall.then", { price: "$2.99" }));
     const without = texts(
       render(createElement(PlanPicker, { plans: [WEEK], selected: "$rc_weekly", onSelect: () => {}, offering: "discount" }))
     ).join(" ");
@@ -149,7 +151,8 @@ describe("BuyFooter", () => {
     [YEAR, t("paywall.cta.year"), t("paywall.legal.year", { price: "$79.99" })],
     [MONTH, t("paywall.cta.month"), t("paywall.legal.month", { price: "$9.99" })],
     [WEEK, t("paywall.cta.week"), t("paywall.legal.week", { price: "$2.99" })],
-    [INTRO, t("paywall.cta.week"), t("paywall.legal.intro", { intro: "$0.99", price: "$2.99" })],
+    // Renewal only: the intro price is the card's headline, not the footer's.
+    [INTRO, t("paywall.cta.week"), t("paywall.legal.week", { price: "$2.99" })],
   ])("names the selected plan on the button and the renewal under it", (p, cta, legal) => {
     // Everything App Review looks for on a subscription screen: the price
     // and period before the button, the renewal line, Terms, Privacy, Restore.

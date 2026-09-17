@@ -194,10 +194,6 @@ export const ptBR: Fragment = {
     one: "{name}, {count} dia com preço de estreia.",
     other: "{name}, {count} dias com preço de estreia.",
   },
-  "offer.trial.subtitle": {
-    one: "Tudo do Pro por {intro} no primeiro {count} dia, depois {price} por semana. Cancele quando quiser.",
-    other: "Tudo do Pro por {intro} nos primeiros {count} dias, depois {price} por semana. Cancele quando quiser.",
-  },
   "offer.trial.cta": "Aproveitar a oferta agora",
   "offer.trial.decline": "Prefiro pagar o preço cheio",
   "offer.trial.gets.reminders": "Lembretes antes de cada serviço",
@@ -316,20 +312,19 @@ export const ptBR: Fragment = {
   "onboardingC.back": "Voltar",
   "onboardingC.question": "Pergunta {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Um serviço, acompanhado a partir de hoje.",
+    other: "{count} serviços, acompanhados a partir de hoje.",
+  },
+  "onboardingC.schedule.onWatch": "Acompanhados",
+  "onboardingC.schedule.status.fresh": "A partir de hoje",
+  "onboardingC.schedule.line.fresh": "Acompanhado a partir de hoje",
   "onboardingC.results.overdue": {
     one: "Um serviço já está atrasado.",
     other: "{count} serviços já estão atrasados.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} serviço ainda não tem registro.",
-    other: "{count} serviços ainda não têm registro.",
-  },
-  "onboardingC.results.noneYet": "Nada está atrasado ainda.",
-  "onboardingC.results.clear": "Nada está atrasado, e nada está perto de vencer.",
   "onboardingC.results.subtitle": "Seu {vehicle}, {distance} por ano.",
   "onboardingC.results.continue": "Continuar",
-  "onboardingC.results.dueNow": "Vence agora",
-  "onboardingC.results.soon": "Logo",
   "onboardingC.results.onFile": "Registrados",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Vencido",
@@ -337,16 +332,10 @@ export const ptBR: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Sem registro",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "Os próximos doze meses",
-  "onboardingC.outlook.subtitle": "Seu {vehicle}, {distance} por ano.",
-  "onboardingC.outlook.dueWithinYear": "Em um ano",
-  "onboardingC.outlook.nextUp": "Próximo",
-  "onboardingC.outlook.none": "Sem data",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Hoje",
   "onboardingC.outlook.projected": "Daqui a um ano",
-  "onboardingC.outlook.continue": "Continuar",
   "onboardingC.cost.title": "{percent}% dos carros na rua estão com uma revisão atrasada.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rodízio de pneus atrasado",
@@ -696,14 +685,12 @@ export const ptBR: Fragment = {
   "paywall.billed.year": "cobrado {price} por ano",
   "paywall.save": "Economize {pct}%",
   "paywall.intro.label": "Sua primeira semana",
-  "paywall.then": "depois {price} por semana",
   "paywall.cta.week": "Continuar com semanal",
   "paywall.cta.month": "Continuar com mensal",
   "paywall.cta.year": "Continuar com anual",
   "paywall.legal.week": "Renova a {price} por semana. Cancele quando quiser.",
   "paywall.legal.month": "Renova a {price} por mês. Cancele quando quiser.",
   "paywall.legal.year": "Renova a {price} por ano. Cancele quando quiser.",
-  "paywall.legal.intro": "{intro} na primeira semana, depois {price} por semana. Cancele quando quiser.",
   "paywall.terms": "Termos",
   "paywall.privacy": "Privacidade",
   "paywall.restore": "Restaurar",

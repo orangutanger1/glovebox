@@ -194,10 +194,6 @@ export const it: Fragment = {
     one: "{name}, {count} giorno a prezzo di lancio.",
     other: "{name}, {count} giorni a prezzo di lancio.",
   },
-  "offer.trial.subtitle": {
-    one: "Tutto Pro per {intro} il primo {count} giorno, poi {price} a settimana. Disdici quando vuoi.",
-    other: "Tutto Pro per {intro} i primi {count} giorni, poi {price} a settimana. Disdici quando vuoi.",
-  },
   "offer.trial.cta": "Approfitta subito dell’offerta",
   "offer.trial.decline": "Preferisco pagare il prezzo pieno",
   "offer.trial.gets.reminders": "Promemoria prima di ogni intervento",
@@ -317,20 +313,19 @@ export const it: Fragment = {
   "onboardingC.back": "Indietro",
   "onboardingC.question": "Domanda {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Un intervento, seguito da oggi.",
+    other: "{count} interventi, seguiti da oggi.",
+  },
+  "onboardingC.schedule.onWatch": "Seguiti",
+  "onboardingC.schedule.status.fresh": "Da oggi",
+  "onboardingC.schedule.line.fresh": "Seguito da oggi",
   "onboardingC.results.overdue": {
     one: "Un tagliando è già scaduto.",
     other: "{count} tagliandi sono già scaduti.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} intervento non ha ancora uno storico.",
-    other: "{count} interventi non hanno ancora uno storico.",
-  },
-  "onboardingC.results.noneYet": "Ancora niente di scaduto.",
-  "onboardingC.results.clear": "Niente è scaduto, e niente è vicino alla scadenza.",
   "onboardingC.results.subtitle": "La tua {vehicle}, {distance} all'anno.",
   "onboardingC.results.continue": "Continua",
-  "onboardingC.results.dueNow": "Da fare ora",
-  "onboardingC.results.soon": "A breve",
   "onboardingC.results.onFile": "In archivio",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Da fare",
@@ -338,16 +333,10 @@ export const it: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Nessuno storico",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "I prossimi dodici mesi",
-  "onboardingC.outlook.subtitle": "La tua {vehicle}, {distance} all'anno.",
-  "onboardingC.outlook.dueWithinYear": "Entro un anno",
-  "onboardingC.outlook.nextUp": "Prossimo",
-  "onboardingC.outlook.none": "Senza data",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Oggi",
   "onboardingC.outlook.projected": "Tra un anno",
-  "onboardingC.outlook.continue": "Continua",
   "onboardingC.cost.title": "Il {percent}% delle auto in circolazione ha un tagliando scaduto.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rotazione gomme in ritardo",
@@ -700,14 +689,12 @@ export const it: Fragment = {
   "paywall.billed.year": "addebitato {price} all’anno",
   "paywall.save": "Risparmi il {pct}%",
   "paywall.intro.label": "La tua prima settimana",
-  "paywall.then": "poi {price} a settimana",
   "paywall.cta.week": "Continua con settimanale",
   "paywall.cta.month": "Continua con mensile",
   "paywall.cta.year": "Continua con annuale",
   "paywall.legal.week": "Si rinnova a {price} a settimana. Disdici quando vuoi.",
   "paywall.legal.month": "Si rinnova a {price} al mese. Disdici quando vuoi.",
   "paywall.legal.year": "Si rinnova a {price} all’anno. Disdici quando vuoi.",
-  "paywall.legal.intro": "{intro} per la prima settimana, poi {price} a settimana. Disdici quando vuoi.",
   "paywall.terms": "Termini",
   "paywall.privacy": "Privacy",
   "paywall.restore": "Ripristina",

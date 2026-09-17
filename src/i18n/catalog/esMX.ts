@@ -70,10 +70,6 @@ export const esMX: Fragment = {
   "onboardingB.service.title": "¿Qué fue lo último que le hicieron?",
   "onboardingB.tracking.receipts": "Recibos en el carro",
 
-  "onboardingC.results.noBaseline": {
-    one: "{count} servicio todavía no tiene registro.",
-    other: "{count} servicios todavía no tienen registro.",
-  },
 
   "pain.overdue.body":
     "En tu {vehicle}, hoy. Nada en el tablero te lo va a avisar, porque el foco se prende después del daño, no antes.",

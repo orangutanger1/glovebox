@@ -203,10 +203,6 @@ export const sv: Fragment = {
     one: "{name}, {count} dag till introduktionspris.",
     other: "{name}, {count} dagar till introduktionspris.",
   },
-  "offer.trial.subtitle": {
-    one: "Allt i Pro för {intro} den första {count} dagen, sedan {price} per vecka. Avsluta när du vill.",
-    other: "Allt i Pro för {intro} de första {count} dagarna, sedan {price} per vecka. Avsluta när du vill.",
-  },
   "offer.trial.cta": "Ta erbjudandet nu",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",
@@ -325,20 +321,19 @@ export const sv: Fragment = {
   "onboardingC.back": "Tillbaka",
   "onboardingC.question": "Fråga {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "En service, bevakad från i dag.",
+    other: "{count} servicar, bevakade från i dag.",
+  },
+  "onboardingC.schedule.onWatch": "Bevakade",
+  "onboardingC.schedule.status.fresh": "Från i dag",
+  "onboardingC.schedule.line.fresh": "Bevakad från i dag",
   "onboardingC.results.overdue": {
     one: "En service är redan försenad.",
     other: "{count} servicepunkter är redan försenade.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} service saknar ännu uppgifter.",
-    other: "{count} servicetillfällen saknar ännu uppgifter.",
-  },
-  "onboardingC.results.noneYet": "Inget är försenat än.",
-  "onboardingC.results.clear": "Inget är försenat, och inget är nära.",
   "onboardingC.results.subtitle": "Din {vehicle}, {distance} per år.",
   "onboardingC.results.continue": "Fortsätt",
-  "onboardingC.results.dueNow": "Dags nu",
-  "onboardingC.results.soon": "Snart",
   "onboardingC.results.onFile": "Loggat",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Dags",
@@ -346,16 +341,10 @@ export const sv: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Inga uppgifter",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "De kommande tolv månaderna",
-  "onboardingC.outlook.subtitle": "Din {vehicle}, {distance} per år.",
-  "onboardingC.outlook.dueWithinYear": "Inom ett år",
-  "onboardingC.outlook.nextUp": "Närmast",
-  "onboardingC.outlook.none": "Inget datum",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Idag",
   "onboardingC.outlook.projected": "Om ett år",
-  "onboardingC.outlook.continue": "Fortsätt",
   "onboardingC.cost.title": "{percent}% av bilarna på vägen är försenade med en service.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Efter med däckrotation",
@@ -704,14 +693,12 @@ export const sv: Fragment = {
   "paywall.billed.year": "{price} debiteras per år",
   "paywall.save": "Spara {pct}%",
   "paywall.intro.label": "Din första vecka",
-  "paywall.then": "sedan {price} per vecka",
   "paywall.cta.week": "Fortsätt veckovis",
   "paywall.cta.month": "Fortsätt månadsvis",
   "paywall.cta.year": "Fortsätt årsvis",
   "paywall.legal.week": "Förnyas för {price} per vecka. Avsluta när du vill.",
   "paywall.legal.month": "Förnyas för {price} per månad. Avsluta när du vill.",
   "paywall.legal.year": "Förnyas för {price} per år. Avsluta när du vill.",
-  "paywall.legal.intro": "{intro} första veckan, sedan {price} per vecka. Avsluta när du vill.",
   "paywall.terms": "Villkor",
   "paywall.privacy": "Integritet",
   "paywall.restore": "Återställ",

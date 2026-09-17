@@ -77,13 +77,6 @@ export const offer: Fragment = {
     one: "{name}, your first {count} day costs less.",
     other: "{name}, your first {count} days cost less.",
   },
-  // Under the title, with the two prices StoreKit returned. It is the one
-  // sentence on the screen that says what the offer is before the reader
-  // reaches the card.
-  "offer.trial.subtitle": {
-    one: "Everything in Pro for {intro} your first {count} day, then {price} per week. Cancel anytime.",
-    other: "Everything in Pro for {intro} your first {count} days, then {price} per week. Cancel anytime.",
-  },
   "offer.trial.cta": "Claim your offer now",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing

@@ -211,10 +211,6 @@ export const fr: Fragment = {
     one: "{name}, {count} jour au prix de lancement.",
     other: "{name}, {count} jours au prix de lancement.",
   },
-  "offer.trial.subtitle": {
-    one: "Tout Pro pour {intro} le premier {count} jour, puis {price} par semaine. Annulable à tout moment.",
-    other: "Tout Pro pour {intro} les {count} premiers jours, puis {price} par semaine. Annulable à tout moment.",
-  },
   "offer.trial.cta": "Profiter de l’offre maintenant",
   "offer.trial.decline": "Je préfère payer le plein tarif",
   "offer.trial.gets.reminders": "Rappels avant chaque entretien",
@@ -336,20 +332,19 @@ export const fr: Fragment = {
   "onboardingC.back": "Retour",
   "onboardingC.question": "Question {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Un entretien, suivi dès aujourd’hui.",
+    other: "{count} entretiens, suivis dès aujourd’hui.",
+  },
+  "onboardingC.schedule.onWatch": "Suivis",
+  "onboardingC.schedule.status.fresh": "Dès aujourd’hui",
+  "onboardingC.schedule.line.fresh": "Suivi dès aujourd’hui",
   "onboardingC.results.overdue": {
     one: "Un entretien est déjà en retard.",
     other: "{count} entretiens sont déjà en retard.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} entretien n’a encore aucun enregistrement.",
-    other: "{count} entretiens n’ont encore aucun enregistrement.",
-  },
-  "onboardingC.results.noneYet": "Rien n'est en retard pour l'instant.",
-  "onboardingC.results.clear": "Rien n'est en retard, et rien n'approche.",
   "onboardingC.results.subtitle": "Votre {vehicle}, {distance} par an.",
   "onboardingC.results.continue": "Continuer",
-  "onboardingC.results.dueNow": "À faire",
-  "onboardingC.results.soon": "Bientôt",
   "onboardingC.results.onFile": "Au carnet",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "À faire",
@@ -357,16 +352,10 @@ export const fr: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Aucun suivi",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "Les douze prochains mois",
-  "onboardingC.outlook.subtitle": "Votre {vehicle}, {distance} par an.",
-  "onboardingC.outlook.dueWithinYear": "Dans un an",
-  "onboardingC.outlook.nextUp": "Prochainement",
-  "onboardingC.outlook.none": "Sans date",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Aujourd’hui",
   "onboardingC.outlook.projected": "Dans un an",
-  "onboardingC.outlook.continue": "Continuer",
   "onboardingC.cost.title": "{percent}% des voitures en circulation ont un entretien en retard.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Permutation des pneus en retard",
@@ -729,14 +718,12 @@ export const fr: Fragment = {
   "paywall.billed.year": "facturé {price} par an",
   "paywall.save": "Économisez {pct}%",
   "paywall.intro.label": "Votre première semaine",
-  "paywall.then": "puis {price} par semaine",
   "paywall.cta.week": "Continuer en hebdomadaire",
   "paywall.cta.month": "Continuer en mensuel",
   "paywall.cta.year": "Continuer en annuel",
   "paywall.legal.week": "Renouvelé à {price} par semaine. Annulable à tout moment.",
   "paywall.legal.month": "Renouvelé à {price} par mois. Annulable à tout moment.",
   "paywall.legal.year": "Renouvelé à {price} par an. Annulable à tout moment.",
-  "paywall.legal.intro": "{intro} la première semaine, puis {price} par semaine. Annulable à tout moment.",
   "paywall.terms": "Conditions",
   "paywall.privacy": "Confidentialité",
   "paywall.restore": "Restaurer",

@@ -400,20 +400,19 @@ export const nl: Fragment = {
   "onboardingC.back": "Terug",
   "onboardingC.question": "Vraag {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Eén beurt, vanaf vandaag in de gaten.",
+    other: "{count} beurten, vanaf vandaag in de gaten.",
+  },
+  "onboardingC.schedule.onWatch": "In de gaten",
+  "onboardingC.schedule.status.fresh": "Vanaf vandaag",
+  "onboardingC.schedule.line.fresh": "Vanaf vandaag in de gaten",
   "onboardingC.results.overdue": {
     one: "Eén onderhoudsbeurt is al te laat.",
     other: "{count} onderhoudsbeurten zijn al te laat.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} onderhoudsbeurt heeft nog geen gegevens.",
-    other: "{count} onderhoudsbeurten hebben nog geen gegevens.",
-  },
-  "onboardingC.results.noneYet": "Er is nog niets te laat.",
-  "onboardingC.results.clear": "Niets is te laat, en niets komt in de buurt.",
   "onboardingC.results.subtitle": "Je {vehicle}, {distance} per jaar.",
   "onboardingC.results.continue": "Verder",
-  "onboardingC.results.dueNow": "Nu aan de beurt",
-  "onboardingC.results.soon": "Binnenkort",
   "onboardingC.results.onFile": "Vastgelegd",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Nu",
@@ -421,16 +420,10 @@ export const nl: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Geen gegevens",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "De komende twaalf maanden",
-  "onboardingC.outlook.subtitle": "Je {vehicle}, {distance} per jaar.",
-  "onboardingC.outlook.dueWithinYear": "Binnen een jaar",
-  "onboardingC.outlook.nextUp": "Straks",
-  "onboardingC.outlook.none": "Geen datum",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Vandaag",
   "onboardingC.outlook.projected": "Over een jaar",
-  "onboardingC.outlook.continue": "Verder",
   "onboardingC.cost.title": "{percent}% van de auto's op de weg is te laat voor een beurt.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Bandenwissel te laat",
@@ -632,10 +625,6 @@ export const nl: Fragment = {
     one: "{name}, {count} dag voor introductieprijs.",
     other: "{name}, {count} dagen voor introductieprijs.",
   },
-  "offer.trial.subtitle": {
-    one: "Alles van Pro voor {intro} de eerste {count} dag, daarna {price} per week. Altijd opzegbaar.",
-    other: "Alles van Pro voor {intro} de eerste {count} dagen, daarna {price} per week. Altijd opzegbaar.",
-  },
   "offer.trial.cta": "Aanbieding nu claimen",
   "offer.trial.decline": "Ik betaal liever de volle prijs",
   "offer.trial.gets.reminders": "Herinnering voor elke beurt",
@@ -728,14 +717,12 @@ export const nl: Fragment = {
   "paywall.billed.year": "{price} per jaar afgeschreven",
   "paywall.save": "Bespaar {pct}%",
   "paywall.intro.label": "Je eerste week",
-  "paywall.then": "daarna {price} per week",
   "paywall.cta.week": "Doorgaan met wekelijks",
   "paywall.cta.month": "Doorgaan met maandelijks",
   "paywall.cta.year": "Doorgaan met jaarlijks",
   "paywall.legal.week": "Verlengt voor {price} per week. Altijd opzegbaar.",
   "paywall.legal.month": "Verlengt voor {price} per maand. Altijd opzegbaar.",
   "paywall.legal.year": "Verlengt voor {price} per jaar. Altijd opzegbaar.",
-  "paywall.legal.intro": "{intro} voor de eerste week, daarna {price} per week. Altijd opzegbaar.",
   "paywall.terms": "Voorwaarden",
   "paywall.privacy": "Privacy",
   "paywall.restore": "Herstellen",

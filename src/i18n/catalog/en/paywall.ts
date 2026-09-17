@@ -29,7 +29,6 @@ export const paywall: Fragment = {
   "paywall.billed.year": "billed {price} per year",
   "paywall.save": "Save {pct}%",
   "paywall.intro.label": "Your first week",
-  "paywall.then": "then {price} per week",
 
   "paywall.cta.week": "Continue with weekly",
   "paywall.cta.month": "Continue with monthly",
@@ -38,7 +37,6 @@ export const paywall: Fragment = {
   "paywall.legal.week": "Renews at {price} per week. Cancel anytime.",
   "paywall.legal.month": "Renews at {price} per month. Cancel anytime.",
   "paywall.legal.year": "Renews at {price} per year. Cancel anytime.",
-  "paywall.legal.intro": "{intro} for the first week, then {price} per week. Cancel anytime.",
   "paywall.terms": "Terms",
   "paywall.privacy": "Privacy",
   "paywall.restore": "Restore",

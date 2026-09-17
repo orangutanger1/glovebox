@@ -40,11 +40,12 @@ export function BuyFooter({
   children?: React.ReactNode;
 }) {
   const label = plan ? (labelOverride ?? t(`paywall.cta.${plan.period}`)) : t("paywall.loading");
-  const legal = plan
-    ? plan.intro
-      ? t("paywall.legal.intro", { intro: plan.intro.priceString, price: plan.priceString })
-      : t(`paywall.legal.${plan.period}`, { price: plan.priceString })
-    : "";
+  // The renewal, whether or not an introductory price comes first. The intro
+  // price is the card's headline directly above; this line used to repeat it,
+  // and with the subtitle doing the same the offer screen said "$0.99, then
+  // $3.99" three times over. What review needs here is the price the plan
+  // renews at, once, with "cancel anytime".
+  const legal = plan ? t(`paywall.legal.${plan.period}`, { price: plan.priceString }) : "";
 
   return (
     <View style={{ gap: tokens.space.sm }}>

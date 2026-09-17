@@ -15,20 +15,23 @@ export const onboardingC: Fragment = {
   "onboardingC.back": "Back",
   "onboardingC.question": "Question {step} / {total}",
 
+  // The payoff page. On a fresh install the app has one record or none, and
+  // the honest headline is what it now watches, not what it has not been
+  // told. A row it starts from today says so instead of "No record".
+  "onboardingC.schedule.title": {
+    one: "One service, on watch from today.",
+    other: "{count} services, on watch from today.",
+  },
+  "onboardingC.schedule.onWatch": "On watch",
+  "onboardingC.schedule.status.fresh": "From today",
+  "onboardingC.schedule.line.fresh": "Watched from today",
+
   "onboardingC.results.overdue": {
     one: "One service is already overdue.",
     other: "{count} services are already overdue.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "One service has no record yet.",
-    other: "{count} services have no record yet.",
-  },
-  "onboardingC.results.noneYet": "Nothing is overdue yet.",
-  "onboardingC.results.clear": "Nothing is overdue, and nothing is close.",
   "onboardingC.results.subtitle": "Your {vehicle}, {distance} a year.",
   "onboardingC.results.continue": "Continue",
-  "onboardingC.results.dueNow": "Due now",
-  "onboardingC.results.soon": "Soon",
   "onboardingC.results.onFile": "On file",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Due",
@@ -36,16 +39,10 @@ export const onboardingC: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "No record",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "The next twelve months",
-  "onboardingC.outlook.subtitle": "Your {vehicle}, {distance} a year.",
-  "onboardingC.outlook.dueWithinYear": "Due in a year",
-  "onboardingC.outlook.nextUp": "Next up",
-  "onboardingC.outlook.none": "No date",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Today",
   "onboardingC.outlook.projected": "In a year",
-  "onboardingC.outlook.continue": "Continue",
 
 
   // The only figure in the flow that is not the user's own. CARFAX's, counted

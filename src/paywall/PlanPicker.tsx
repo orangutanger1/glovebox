@@ -87,10 +87,11 @@ function headline(plan: Plan): { figure: string; unit: string } {
   return { figure: plan.perWeek, unit: t("paywall.per.week") };
 }
 
-/** The line under the figure: what is actually billed, or what follows the
- *  introductory week. */
+/** The line under the figure: what is actually billed. An introductory plan
+ *  gets none — the renewal is the footer's one legal line, and printing it
+ *  here as well put the same two prices on the glass three times. */
 function billed(plan: Plan): string | null {
-  if (plan.intro) return t("paywall.then", { price: plan.priceString });
+  if (plan.intro) return null;
   if (plan.period === "year") return t("paywall.billed.year", { price: plan.priceString });
   if (plan.period === "month") return t("paywall.billed.month", { price: plan.priceString });
   return null;

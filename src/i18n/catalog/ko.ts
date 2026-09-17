@@ -196,9 +196,6 @@ export const ko: Fragment = {
   "offer.trial.title.named": {
     other: "{name}님, 첫 {count}일은 특별 가격으로.",
   },
-  "offer.trial.subtitle": {
-    other: "처음 {count}일은 {intro}로 Pro 전체 이용, 이후 주 {price}. 언제든 해지할 수 있어요.",
-  },
   "offer.trial.cta": "지금 혜택 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",
@@ -317,16 +314,17 @@ export const ko: Fragment = {
   "onboardingC.back": "뒤로",
   "onboardingC.question": "질문 {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    other: "{count}개 정비 항목을 오늘부터 지켜봅니다.",
+  },
+  "onboardingC.schedule.onWatch": "지켜보는 중",
+  "onboardingC.schedule.status.fresh": "오늘부터",
+  "onboardingC.schedule.line.fresh": "오늘부터 지켜봅니다",
   "onboardingC.results.overdue": {
     other: "정비 {count}건이 이미 기한을 넘겼어요.",
   },
-  "onboardingC.results.noBaseline": { other: "{count}개 정비에 아직 기록이 없습니다." },
-  "onboardingC.results.noneYet": "아직 기한을 넘긴 건 없어요.",
-  "onboardingC.results.clear": "기한을 넘긴 것도, 임박한 것도 없어요.",
   "onboardingC.results.subtitle": "{vehicle}, 연간 {distance}.",
   "onboardingC.results.continue": "계속",
-  "onboardingC.results.dueNow": "지금 기한",
-  "onboardingC.results.soon": "임박",
   "onboardingC.results.onFile": "기록 있음",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "기한",
@@ -334,16 +332,10 @@ export const ko: Fragment = {
   "onboardingC.results.status.ok": "정상",
   "onboardingC.results.status.noRecord": "기록 없음",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "앞으로 12개월",
-  "onboardingC.outlook.subtitle": "{vehicle}, 연간 {distance}.",
-  "onboardingC.outlook.dueWithinYear": "1년 안에",
-  "onboardingC.outlook.nextUp": "다음 정비",
-  "onboardingC.outlook.none": "날짜 없음",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "오늘",
   "onboardingC.outlook.projected": "1년 후",
-  "onboardingC.outlook.continue": "계속",
   "onboardingC.cost.title": "도로 위 차량의 {percent}%가 정비 시기를 넘겼어요.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "타이어 로테이션 지연",
@@ -693,14 +685,12 @@ export const ko: Fragment = {
   "paywall.billed.year": "매년 {price} 청구",
   "paywall.save": "{pct}% 절약",
   "paywall.intro.label": "첫 주",
-  "paywall.then": "이후 주 {price}",
   "paywall.cta.week": "주간 플랜으로 계속",
   "paywall.cta.month": "월간 플랜으로 계속",
   "paywall.cta.year": "연간 플랜으로 계속",
   "paywall.legal.week": "주 {price}로 자동 갱신됩니다. 언제든 해지할 수 있어요.",
   "paywall.legal.month": "월 {price}로 자동 갱신됩니다. 언제든 해지할 수 있어요.",
   "paywall.legal.year": "연 {price}로 자동 갱신됩니다. 언제든 해지할 수 있어요.",
-  "paywall.legal.intro": "첫 주는 {intro}, 이후 주 {price}. 언제든 해지할 수 있어요.",
   "paywall.terms": "이용약관",
   "paywall.privacy": "개인정보",
   "paywall.restore": "복원",

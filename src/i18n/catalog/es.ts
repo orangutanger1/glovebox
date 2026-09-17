@@ -200,10 +200,6 @@ export const es: Fragment = {
     one: "{name}, {count} día a precio de lanzamiento.",
     other: "{name}, {count} días a precio de lanzamiento.",
   },
-  "offer.trial.subtitle": {
-    one: "Todo Pro por {intro} el primer {count} día, luego {price} a la semana. Cancela cuando quieras.",
-    other: "Todo Pro por {intro} los primeros {count} días, luego {price} a la semana. Cancela cuando quieras.",
-  },
   "offer.trial.cta": "Aprovechar la oferta ahora",
   "offer.trial.decline": "Prefiero pagar el precio completo",
   "offer.trial.gets.reminders": "Avisos antes de cada mantenimiento",
@@ -326,20 +322,19 @@ export const es: Fragment = {
   "onboardingC.back": "Atrás",
   "onboardingC.question": "Pregunta {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Un servicio, vigilado desde hoy.",
+    other: "{count} servicios, vigilados desde hoy.",
+  },
+  "onboardingC.schedule.onWatch": "Vigilados",
+  "onboardingC.schedule.status.fresh": "Desde hoy",
+  "onboardingC.schedule.line.fresh": "Vigilado desde hoy",
   "onboardingC.results.overdue": {
     one: "Un mantenimiento ya está vencido.",
     other: "{count} mantenimientos ya están vencidos.",
   },
-  "onboardingC.results.noBaseline": {
-    one: "{count} servicio aún no tiene registro.",
-    other: "{count} servicios aún no tienen registro.",
-  },
-  "onboardingC.results.noneYet": "Todavía no hay nada vencido.",
-  "onboardingC.results.clear": "No hay nada vencido ni nada cerca de estarlo.",
   "onboardingC.results.subtitle": "Tu {vehicle}, {distance} al año.",
   "onboardingC.results.continue": "Continuar",
-  "onboardingC.results.dueNow": "Vence ya",
-  "onboardingC.results.soon": "Pronto",
   "onboardingC.results.onFile": "Registrados",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "Vence",
@@ -347,16 +342,10 @@ export const es: Fragment = {
   "onboardingC.results.status.ok": "OK",
   "onboardingC.results.status.noRecord": "Sin registro",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "Los próximos doce meses",
-  "onboardingC.outlook.subtitle": "Tu {vehicle}, {distance} al año.",
-  "onboardingC.outlook.dueWithinYear": "En un año",
-  "onboardingC.outlook.nextUp": "Lo siguiente",
-  "onboardingC.outlook.none": "Sin fecha",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "Hoy",
   "onboardingC.outlook.projected": "Dentro de un año",
-  "onboardingC.outlook.continue": "Continuar",
   "onboardingC.cost.title": "El {percent}% de los coches que circulan tienen un servicio vencido.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rotación de neumáticos pendiente",
@@ -718,14 +707,12 @@ export const es: Fragment = {
   "paywall.billed.year": "se cobra {price} al año",
   "paywall.save": "Ahorra {pct}%",
   "paywall.intro.label": "Tu primera semana",
-  "paywall.then": "después {price} por semana",
   "paywall.cta.week": "Continuar con semanal",
   "paywall.cta.month": "Continuar con mensual",
   "paywall.cta.year": "Continuar con anual",
   "paywall.legal.week": "Se renueva a {price} por semana. Cancela cuando quieras.",
   "paywall.legal.month": "Se renueva a {price} al mes. Cancela cuando quieras.",
   "paywall.legal.year": "Se renueva a {price} al año. Cancela cuando quieras.",
-  "paywall.legal.intro": "{intro} la primera semana, después {price} por semana. Cancela cuando quieras.",
   "paywall.terms": "Condiciones",
   "paywall.privacy": "Privacidad",
   "paywall.restore": "Restaurar",

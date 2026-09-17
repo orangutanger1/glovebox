@@ -183,9 +183,6 @@ export const ja: Fragment = {
   "offer.trial.title.named": {
     other: "{name}さん、最初の{count}日間はお得な価格で。",
   },
-  "offer.trial.subtitle": {
-    other: "最初の{count}日間は{intro}でPro全機能、その後は週{price}。いつでも解約できます。",
-  },
   "offer.trial.cta": "今すぐオファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
@@ -300,14 +297,15 @@ export const ja: Fragment = {
   "onboardingC.back": "戻る",
   "onboardingC.question": "質問 {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    other: "{count}件の整備を今日から見守ります。",
+  },
+  "onboardingC.schedule.onWatch": "見守り中",
+  "onboardingC.schedule.status.fresh": "今日から",
+  "onboardingC.schedule.line.fresh": "今日から見守ります",
   "onboardingC.results.overdue": { other: "{count}件の整備がすでに期限切れです。" },
-  "onboardingC.results.noBaseline": { other: "{count}件の整備にまだ記録がありません。" },
-  "onboardingC.results.noneYet": "まだ期限切れはありません。",
-  "onboardingC.results.clear": "期限切れも、期限が近いものもありません。",
   "onboardingC.results.subtitle": "{vehicle}、年間{distance}。",
   "onboardingC.results.continue": "続ける",
-  "onboardingC.results.dueNow": "期限到来",
-  "onboardingC.results.soon": "まもなく",
   "onboardingC.results.onFile": "記録あり",
   "onboardingC.results.onFileValue": "{logged} / {total}",
   "onboardingC.results.status.due": "期限",
@@ -315,16 +313,10 @@ export const ja: Fragment = {
   "onboardingC.results.status.ok": "問題なし",
   "onboardingC.results.status.noRecord": "記録なし",
 
-  // The twelve-month projection, between the results and the notification
-  // ask. Counts and dates the scheduler already computes; no score.
-  "onboardingC.outlook.title": "これからの12か月",
-  "onboardingC.outlook.subtitle": "{vehicle}、年間{distance}。",
-  "onboardingC.outlook.dueWithinYear": "1年以内",
-  "onboardingC.outlook.nextUp": "次回",
-  "onboardingC.outlook.none": "日付なし",
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
   "onboardingC.outlook.odometer": "現在",
   "onboardingC.outlook.projected": "1年後",
-  "onboardingC.outlook.continue": "続ける",
   "onboardingC.cost.title": "走っている車の{percent}%が、整備の時期を過ぎています。",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "タイヤローテーション遅れ",
@@ -667,14 +659,12 @@ export const ja: Fragment = {
   "paywall.billed.year": "年ごとに{price}を請求",
   "paywall.save": "{pct}%お得",
   "paywall.intro.label": "最初の1週間",
-  "paywall.then": "その後は週{price}",
   "paywall.cta.week": "週額プランで続ける",
   "paywall.cta.month": "月額プランで続ける",
   "paywall.cta.year": "年額プランで続ける",
   "paywall.legal.week": "週{price}で自動更新。いつでも解約できます。",
   "paywall.legal.month": "月{price}で自動更新。いつでも解約できます。",
   "paywall.legal.year": "年{price}で自動更新。いつでも解約できます。",
-  "paywall.legal.intro": "最初の1週間は{intro}、その後は週{price}。いつでも解約できます。",
   "paywall.terms": "利用規約",
   "paywall.privacy": "プライバシー",
   "paywall.restore": "復元",

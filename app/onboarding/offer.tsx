@@ -137,19 +137,12 @@ export default function OnboardingOffer() {
     }
   }
 
-  // The one sentence that says what the offer is, with both of StoreKit's
-  // prices in it. Only once a plan is in hand: a sentence with the prices
-  // blank is worse than no sentence.
-  const subtitle =
-    chosen?.intro
-      ? t("offer.trial.subtitle", {
-          count: INTRO_DAYS,
-          intro: chosen.intro.priceString,
-          price: chosen.priceString,
-        })
-      : hasIntro
-        ? undefined
-        : t("offer.paywall.subtitle");
+  // No sentence under the title while the offer is on. The title already says
+  // the first week costs less, the card says what it costs, and the footer
+  // says what it renews at; a subtitle with both prices in it was the same
+  // fact a third time, in the way of the list. The ineligible customer gets
+  // the paywall's sentence, because their title is the plain one.
+  const subtitle = hasIntro ? undefined : t("offer.paywall.subtitle");
 
   return (
     <OnboardingScreen

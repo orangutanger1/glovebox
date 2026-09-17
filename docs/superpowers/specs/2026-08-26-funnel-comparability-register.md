@@ -460,3 +460,34 @@ Read `subscription_success` from `ota_update_id` of this build onward only, and
 treat the ledger as the count for everything before it. `paywall_purchase_started`
 is unchanged and was honest throughout: 3 persons tapped Buy against 153
 paywall viewers, and 2 of the 3 paid. The loss is at the tap, not at checkout.
+
+### 2026-09-17 — the payoff pair becomes one page, under a second experiment
+
+**`route=results` and `route=outlook` end with this build; `route=schedule`
+begins.** On a fresh install the two screens read "12 services have no record
+yet" and then projected twelve months from that nothing. They are folded into
+one page — what the app watches from today, what it has on file, and where the
+odometer lands in a year at the stated rate — and the page itself is under
+test:
+
+| `exp_onboarding_payoff` | flow after `analyzing` |
+| --- | --- |
+| `condensed` | `schedule` → `symptoms` … |
+| `none` | `symptoms` … (no payoff screen) |
+| `unassigned` (mid-flow when this build arrived) | `schedule`, behaves as `condensed` |
+
+Assigned independently of `exp_onboarding_symptoms`, by the same
+fresh-install rule. Read each on its own margin; the 2×2 is too thin at ~40
+installs/day. Installs parked on `results` or `outlook` resume on `schedule`.
+
+**The offer screen's price is stated once per fact.** Card: the standard price
+struck, the intro price as the figure. Footer: `paywall.legal.week`, the
+renewal. Gone: the subtitle with both prices, the card's "then {price} per
+week" line, `paywall.legal.intro`. `paywall_shown`/`paywall_closed` on
+`offering=discount` are unchanged in meaning.
+
+**`default/$rc_weekly` moves to `pro_weekly_standard`, no intro.** It sold
+`pro_weekly`, the product the $0.99 intro is attached to, so StoreKit applied
+the intro on the first paywall and the second had nothing left to offer.
+`paywall_plan_selected {plan:"$rc_weekly", offering:"current"}` before the
+switch is a different price than after it.
