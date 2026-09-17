@@ -135,17 +135,6 @@ export default function PaywallRoute() {
           }}
         >
           <Text style={{ color: tokens.color.text, fontSize: 16, lineHeight: 18 }}>✕</Text>
-          {/* Visually hidden: carries the same word as `accessibilityLabel`
-              so the close row is findable by its rendered text, like every
-              other pressable on this screen, instead of by reaching into
-              props. */}
-          <Text
-            style={{ position: "absolute", opacity: 0, width: 0, height: 0 }}
-            importantForAccessibility="no-hide-descendants"
-            accessibilityElementsHidden
-          >
-            {t("paywall.close")}
-          </Text>
         </Pressable>
       </View>
 

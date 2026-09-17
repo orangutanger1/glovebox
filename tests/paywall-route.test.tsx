@@ -64,6 +64,7 @@ function texts(tree: TestRenderer.ReactTestRenderer): string[] {
 function pressable(tree: TestRenderer.ReactTestRenderer, label: string) {
   const hits = tree.root.findAll((n) => {
     if (typeof n.props.onPress !== "function") return false;
+    if (n.props.accessibilityLabel === label) return true;
     try {
       return n
         .findAllByType("Text" as never)
