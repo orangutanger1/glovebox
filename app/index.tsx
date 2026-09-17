@@ -139,10 +139,9 @@ export default function Garage() {
     // Paywall before the form, never after. Making someone fill in a form and
     // then telling them it costs money is the worst version of this moment.
     //
-    // Wrapped for the same reason Settings wraps its copy of this gate:
-    // `presentPaywall` rejects when RevenueCat has no products to show — no
-    // API key in the build, no network, StoreKit still fetching — and an
-    // unhandled rejection here is a button that does nothing and says nothing.
+    // Wrapped for the same reason Settings wraps its copy of this gate: the
+    // full-screen route can still leave without an answer (a navigation
+    // reset, an unmount), so this awaits that answer rather than a rejection.
     if (vehicles.length >= 1) {
       try {
         if ((await isPro()) !== true) {

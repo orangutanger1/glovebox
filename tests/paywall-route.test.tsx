@@ -98,7 +98,7 @@ test("draws the plans, the review, and the footer, and reports the show", () => 
   expect(printed.join(" ")).toContain("surpasses them all");
   expect(printed).toContain(t("paywall.cta.year"));
   expect(mockTrack).toHaveBeenCalledWith("paywall_shown", { offering: "current" });
-  expect(mockTrack).toHaveBeenCalledWith("paywall_presented", { offering: "current", ms: 0 });
+  expect(mockTrack).toHaveBeenCalledWith("paywall_presented", { offering: "current", ms: expect.any(Number) });
 });
 
 test("closing settles the caller as dismissed and leaves", () => {

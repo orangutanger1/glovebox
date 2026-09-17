@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ListRow } from "../../src/design/ListRow";
@@ -53,15 +53,23 @@ export default function OnboardingOffer() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+  const mounted = useRef(Date.now());
+
   useEffect(() => {
     track("paywall_shown", { offering: "discount" });
   }, []);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: "discount", ms: 0 });
+    if (plans) track("paywall_presented", { offering: "discount", ms: Date.now() - mounted.current });
   }, [plans]);
 
   const chosen: Plan | null =
     plans?.find((p) => p.id === (selected ?? defaultPlan(plans))) ?? null;
+  // Optimistic while the plans are still loading (`chosen` is null): most
+  // customers are eligible, so the trial framing is the one worth drawing
+  // first. Once a plan is chosen, an ineligible customer gets the plain
+  // title, and never the intro rows and legend a sheet down the line will
+  // not honour.
+  const hasIntro = chosen ? chosen.intro !== null : true;
 
   /** Where a successful purchase goes. A relaunched subscriber finished
    *  onboarding long ago and must not be counted as a completion. */
@@ -124,7 +132,11 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
-      title={tNamed("offer.trial.title", { count: INTRO_DAYS })}
+      title={
+        hasIntro
+          ? tNamed("offer.trial.title", { count: INTRO_DAYS })
+          : tNamed("offer.paywall.title")
+      }
       hideBack={relaunched}
       footer={
         <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore}>
@@ -158,20 +170,24 @@ export default function OnboardingOffer() {
         </Pressable>
       )}
 
-      <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-        {t("offer.trial.legend")}
-      </Text>
-      <Panel>
-        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
-          {STEPS.map((step) => (
-            <ListRow
-              key={step}
-              title={t(`offer.trial.${step}.title`)}
-              subtitle={t(`offer.trial.${step}.body`)}
-            />
-          ))}
-        </View>
-      </Panel>
+      {hasIntro && (
+        <>
+          <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
+            {t("offer.trial.legend")}
+          </Text>
+          <Panel>
+            <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+              {STEPS.map((step) => (
+                <ListRow
+                  key={step}
+                  title={t(`offer.trial.${step}.title`)}
+                  subtitle={t(`offer.trial.${step}.body`)}
+                />
+              ))}
+            </View>
+          </Panel>
+        </>
+      )}
 
       {msg !== null && (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>

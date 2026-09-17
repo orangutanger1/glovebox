@@ -125,9 +125,9 @@ export default function Insights() {
         recordReviewEvent("purchase");
       }
     } catch {
-      // `presentPaywall` rejects when RevenueCat has no products to show — no
-      // API key in the build, no network, StoreKit still fetching. Unhandled,
-      // that is a card that does nothing and says nothing.
+      // `presentPaywall` never rejects now; this stays as the catch-all for
+      // whatever the entitlement check itself throws (no network, no API key
+      // in the build), so a broken store still leaves the card saying so.
       setMsg(t("settings.store.error"));
       return;
     }

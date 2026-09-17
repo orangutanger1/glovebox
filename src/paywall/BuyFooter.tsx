@@ -51,9 +51,9 @@ export function BuyFooter({
         </Text>
       )}
       <View style={{ flexDirection: "row", justifyContent: "center", gap: tokens.space.md }}>
-        <Link label={t("paywall.terms")} onPress={() => void Linking.openURL(TERMS_URL)} />
+        <Link label={t("paywall.terms")} onPress={() => void Linking.openURL(TERMS_URL).catch(() => {})} />
         <Dot />
-        <Link label={t("paywall.privacy")} onPress={() => void Linking.openURL(PRIVACY_URL)} />
+        <Link label={t("paywall.privacy")} onPress={() => void Linking.openURL(PRIVACY_URL).catch(() => {})} />
         <Dot />
         <Link label={t("paywall.restore")} onPress={onRestore} disabled={busy} />
       </View>

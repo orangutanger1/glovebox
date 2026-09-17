@@ -95,6 +95,19 @@ describe("PlanPicker", () => {
     expect(defaultPlan([WEEK])).toBe("$rc_weekly");
   });
 
+  test("an empty list has no default rather than throwing", () => {
+    expect(defaultPlan([])).toBe("");
+  });
+
+  test("the intro headline only shows on a plan that actually bills weekly", () => {
+    const introYear = plan({ ...YEAR, intro: { priceString: "$0.99", price: 0.99, periods: 1 } });
+    const printed = texts(
+      render(createElement(PlanPicker, { plans: [introYear], selected: "$rc_annual", onSelect: () => {}, offering: "current" }))
+    ).join(" ");
+    expect(printed).not.toContain(t("paywall.intro.label"));
+    expect(printed).toContain(t("paywall.per.week"));
+  });
+
   test("prints every plan with its store price and the derived per-period figure", () => {
     const tree = render(
       createElement(PlanPicker, { plans: [YEAR, MONTH, WEEK], selected: "$rc_annual", onSelect: () => {}, offering: "current" })

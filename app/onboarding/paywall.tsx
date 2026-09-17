@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
@@ -45,13 +45,15 @@ export default function OnboardingPaywall() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
+  const mounted = useRef(Date.now());
+
   // Shown once per mount, in the sheet's vocabulary, so the funnel's
   // `paywall_shown → paywall_presented` step keeps meaning "tapped → drawn".
   useEffect(() => {
     track("paywall_shown", { offering: "current" });
   }, []);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: "current", ms: 0 });
+    if (plans) track("paywall_presented", { offering: "current", ms: Date.now() - mounted.current });
   }, [plans]);
 
   const chosen: Plan | null =

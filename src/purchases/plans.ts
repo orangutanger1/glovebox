@@ -164,7 +164,9 @@ export function resetPlansForTests(): void {
  * UNKNOWN (offline, or a storefront that has not answered yet) is treated as
  * eligible: StoreKit applies the offer itself at purchase time, so showing it
  * to someone who turns out ineligible costs a surprised glance at Apple's
- * sheet, and hiding it from someone eligible costs the conversion.
+ * sheet, and hiding it from someone eligible costs the conversion. A call
+ * that throws outright is the same "we could not ask" case as UNKNOWN, so it
+ * is treated the same way rather than as a blanket ineligibility.
  */
 async function eligibleProducts(ids: string[]): Promise<Set<string>> {
   if (ids.length === 0) return new Set();
@@ -182,8 +184,16 @@ async function eligibleProducts(ids: string[]): Promise<Set<string>> {
     }
     return eligible;
   } catch {
-    return new Set();
+    return new Set(ids);
   }
+}
+
+/** An offering with no package the picker can label honestly is the same as
+ *  no offering at all: `defaultPlan` and every screen that reads `plans[0]`
+ *  need "nothing to draw", not an empty array they would have to check for
+ *  separately. */
+function usable(plans: Plan[]): Plan[] | null {
+  return plans.length > 0 ? plans : null;
 }
 
 async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | null>> {
@@ -196,8 +206,8 @@ async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | nul
     .map((p) => p.product.identifier);
   const eligible = await eligibleProducts(Array.from(new Set(withIntro)));
   return {
-    default: def ? shapePlans(def, eligible, locale) : null,
-    discount: disc ? shapePlans(disc, eligible, locale) : null,
+    default: def ? usable(shapePlans(def, eligible, locale)) : null,
+    discount: disc ? usable(shapePlans(disc, eligible, locale)) : null,
   };
 }
 
@@ -207,13 +217,25 @@ async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | nul
  * Wrapped in the stall watchdog so a fetch that hangs while the app is awake
  * reports `paywall_stalled` exactly as a sheet that never came up did; the
  * event keeps its meaning, "the user tapped and nothing arrived".
+ *
+ * `silent` is for the boot-time warm-up: nobody asked for a paywall yet, so a
+ * failure here is not the user's "tapped and nothing arrived" moment and must
+ * not wear the stall watchdog or `paywall_unavailable`. Screens always call
+ * with reporting on.
  */
 export async function loadPlans(
   offering: OfferingId,
-  locale: string = getLanguage()
+  locale: string = getLanguage(),
+  options: { silent?: boolean } = {}
 ): Promise<Plan[] | null> {
+  const silent = options.silent ?? false;
   const label = offeringLabel(offering);
-  if (!cached || cached.locale !== locale) {
+  // A `null` for the requested offering is not cached: it means the store
+  // has not (yet) got this offering, and the next call — typically the
+  // screen's own "Try again" — must ask again rather than replay the same
+  // null for the rest of the session.
+  const stale = !cached || cached.locale !== locale || cached.plans[offering] === null;
+  if (stale) {
     try {
       // One fetch shared by concurrent callers of the *same* locale; a
       // concurrent call for a different locale starts its own fetch rather
@@ -221,26 +243,29 @@ export async function loadPlans(
       // Cleared in `finally` so a failure is retried by the next call rather
       // than cached as null.
       if (!inflight || inflight.locale !== locale) {
-        inflight = { locale, promise: withStallWatch(label, fetchAll(locale)) };
+        const attempt = fetchAll(locale);
+        inflight = { locale, promise: silent ? attempt : withStallWatch(label, attempt) };
       }
       const request = inflight;
       const plans = await request.promise;
       cached = { locale, plans };
     } catch {
-      track("paywall_unavailable", { offering: label });
+      if (!silent) track("paywall_unavailable", { offering: label });
       return null;
     } finally {
       if (inflight?.locale === locale) inflight = null;
     }
   }
-  const plans = cached.plans[offering];
-  if (!plans) track("paywall_unavailable", { offering: label });
+  const plans = cached!.plans[offering];
+  if (!plans && !silent) track("paywall_unavailable", { offering: label });
   return plans;
 }
 
-/** Fire-and-forget warm-up for the boot sequence. Never throws. */
+/** Fire-and-forget warm-up for the boot sequence. Never throws, and never
+ *  reports: nobody has asked for a paywall yet, so a failed warm-up is not
+ *  the "tapped and nothing arrived" event `paywall_unavailable` describes. */
 export function prefetchPlans(): void {
-  void loadPlans("default").catch(() => {});
+  void loadPlans("default", undefined, { silent: true }).catch(() => {});
 }
 
 /**

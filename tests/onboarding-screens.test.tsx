@@ -337,7 +337,7 @@ test("the second offer promises nothing free and no free app to fall back on", (
   expect(texts(render(OnboardingOffer))).toContain(t("offer.trial.decline"));
 });
 
-test("declining the second offer leaves the user on it, with no way out", () => {
+test("declining the second offer goes back to the paywall that sells full price", () => {
   const tree = render(OnboardingOffer);
   expect(texts(tree)).toContain(t("offer.trial.decline"));
   expect(texts(tree)).toContain("‹ Back");
@@ -350,6 +350,24 @@ test("declining the second offer leaves the user on it, with no way out", () => 
   act(() => link[link.length - 1].props.onPress());
 
   expect(navigated).toEqual(["back"]);
+});
+
+test("an ineligible customer on the second offer gets the plain title, no intro rows", () => {
+  // Nothing on the glass may promise an introductory week StoreKit will not
+  // honour: no trial title, no "today/while it runs/when it ends" legend.
+  const original = mockPlans.discount;
+  mockPlans.discount = [
+    { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: null, perWeek: "$2.99", perMonth: "$12.96" },
+  ];
+  try {
+    const printed = texts(render(OnboardingOffer));
+    expect(printed).toContain(t("offer.paywall.title"));
+    expect(printed).not.toContain("Your first 7 days cost less.");
+    expect(printed).not.toContain(t("offer.trial.legend"));
+    expect(printed).not.toContain(t("offer.trial.now.title"));
+  } finally {
+    mockPlans.discount = original;
+  }
 });
 
 test("relaunched with no entitlement, the offer is the wall: no back, restore in the link's place", () => {

@@ -26,6 +26,7 @@ import type { Plan } from "../purchases/plans";
  */
 
 export function defaultPlan(plans: Plan[]): string {
+  if (plans.length === 0) return "";
   let best = plans[0];
   for (const plan of plans) if ((plan.savePct ?? -1) > (best.savePct ?? -1)) best = plan;
   return best.id;
@@ -76,7 +77,12 @@ function Tick({ on }: { on: boolean }) {
 /** The comparison figure and its unit. Yearly and monthly compare per week;
  *  the weekly plan is its own figure. */
 function headline(plan: Plan): { figure: string; unit: string } {
-  if (plan.intro) return { figure: plan.intro.priceString, unit: t("paywall.intro.label") };
+  // "Your first week" only reads true on a plan that actually bills weekly;
+  // an annual or monthly plan with an intro price still bills annually or
+  // monthly after it, so it gets the standard headline instead.
+  if (plan.intro && plan.period === "week") {
+    return { figure: plan.intro.priceString, unit: t("paywall.intro.label") };
+  }
   if (plan.period === "week") return { figure: plan.priceString, unit: t("paywall.per.week") };
   return { figure: plan.perWeek, unit: t("paywall.per.week") };
 }

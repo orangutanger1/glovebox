@@ -32,7 +32,7 @@ const mockTrack = jest.fn();
 jest.mock("../src/analytics", () => ({ track: (e: string, p?: unknown) => mockTrack(e, p) }));
 
 import type { PurchasesOffering, PurchasesPackage } from "react-native-purchases";
-import { loadPlans, buy, resetPlansForTests, shapePlans } from "../src/purchases/plans";
+import { loadPlans, buy, prefetchPlans, resetPlansForTests, shapePlans } from "../src/purchases/plans";
 
 function pkg(
   identifier: string,
@@ -225,11 +225,40 @@ describe("loadPlans", () => {
     expect((await loadPlans("discount", "en-US"))?.[0].intro).toBeNull();
   });
 
-  test("an eligibility call that throws costs the intro, not the plans", async () => {
+  test("an eligibility call that throws is treated as UNKNOWN, not ineligible", async () => {
+    // The docblock on `eligibleProducts` argues UNKNOWN (offline) should be
+    // treated as eligible; a thrown call is the same "could not ask" case and
+    // must not quietly hide the intro price instead.
     checkEligibility.mockRejectedValueOnce(new Error("offline"));
     const plans = await loadPlans("discount", "en-US");
     expect(plans).toHaveLength(1);
-    expect(plans?.[0].intro).toBeNull();
+    expect(plans?.[0].intro).not.toBeNull();
+  });
+
+  test("an offering with no packages the picker can label is null, not an empty list", async () => {
+    const unusable = offering([
+      pkg("$rc_lifetime", {
+        identifier: "pro_life",
+        price: 199,
+        priceString: "$199",
+        currencyCode: "USD",
+        subscriptionPeriod: null as unknown as string,
+      }),
+    ]);
+    getOfferings.mockResolvedValue({ current: unusable, all: { default: unusable } });
+    expect(await loadPlans("default", "en-US")).toBeNull();
+    expect(mockTrack).toHaveBeenCalledWith("paywall_unavailable", { offering: "current" });
+  });
+
+  test("a null offering is not cached, so a retry refetches once the store has it", async () => {
+    getOfferings.mockResolvedValueOnce({ current: USD, all: { default: USD } });
+    expect(await loadPlans("discount", "en-US")).toBeNull();
+    expect(mockTrack).toHaveBeenCalledWith("paywall_unavailable", { offering: "discount" });
+
+    getOfferings.mockResolvedValueOnce({ current: USD, all: { default: USD, discount: DISCOUNT } });
+    const disc = await loadPlans("discount", "en-US");
+    expect(disc?.map((p) => p.id)).toEqual(["$rc_weekly"]);
+    expect(getOfferings).toHaveBeenCalledTimes(2);
   });
 
   test("a store that cannot answer is null, reported, and asked again next time", async () => {
@@ -244,6 +273,18 @@ describe("loadPlans", () => {
     getOfferings.mockResolvedValue({ current: USD, all: { default: USD } });
     expect(await loadPlans("discount", "en-US")).toBeNull();
     expect(mockTrack).toHaveBeenCalledWith("paywall_unavailable", { offering: "discount" });
+  });
+});
+
+describe("prefetchPlans", () => {
+  test("a failing store at boot tracks nothing; nobody asked for a paywall yet", async () => {
+    getOfferings.mockRejectedValueOnce(new Error("no network"));
+    prefetchPlans();
+    // Flush the microtask queue `loadPlans`'s catch runs on.
+    await Promise.resolve();
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(mockTrack).not.toHaveBeenCalled();
   });
 });
 

@@ -41,12 +41,13 @@ export default function PaywallRoute() {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const answered = useRef(false);
+  const mounted = useRef(Date.now());
 
   useEffect(() => {
     track("paywall_shown", { offering: label });
   }, [label]);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: label, ms: 0 });
+    if (plans) track("paywall_presented", { offering: label, ms: Date.now() - mounted.current });
   }, [plans, label]);
 
   function settle(result: PurchaseResult) {
