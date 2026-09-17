@@ -303,6 +303,12 @@ describe("buy", () => {
       plan: "$rc_annual",
     });
     expect(mockTrack.mock.calls.map((c) => c[0])).not.toContain("purchase_without_entitlement");
+    // The sale, reported once, from the transaction. It used to come from a
+    // mount effect on `/subscribed` — a screen a restore reaches too — and the
+    // funnel counted seven subscribers against a ledger showing two.
+    expect(mockTrack.mock.calls.filter((c) => c[0] === "subscription_success")).toEqual([
+      ["subscription_success", { offering: "current", plan: "$rc_annual", pro: true }],
+    ]);
   });
 
   test("a purchase the entitlement does not reflect is still a purchase, and reported", async () => {
@@ -311,6 +317,23 @@ describe("buy", () => {
     getCustomerInfo.mockResolvedValueOnce(FREE);
     await expect(buy(year, "default")).resolves.toBe("purchased");
     expect(mockTrack).toHaveBeenCalledWith("purchase_without_entitlement", { offering: "current", pro: false });
+    // A sale the dashboard cannot see is still a sale: the disagreement rides
+    // on the event rather than suppressing it.
+    expect(mockTrack).toHaveBeenCalledWith("subscription_success", {
+      offering: "current",
+      plan: "$rc_annual",
+      pro: false,
+    });
+  });
+
+  test.each([
+    ["dismissed", Object.assign(new Error("cancelled"), { userCancelled: true })],
+    ["unavailable", new Error("store down")],
+  ] as const)("a purchase that ends %s is not a sale", async (_outcome, error) => {
+    const [year] = (await loadPlans("default", "en-US"))!;
+    purchasePackage.mockRejectedValueOnce(error);
+    await buy(year, "default");
+    expect(mockTrack.mock.calls.map((c) => c[0])).not.toContain("subscription_success");
   });
 
   test("the user backing out of Apple's sheet is a dismissal", async () => {

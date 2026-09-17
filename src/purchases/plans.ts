@@ -329,5 +329,13 @@ export async function buy(plan: Plan, offering: OfferingId): Promise<PurchaseRes
   track("paywall_closed", { offering: label, outcome: "purchased", result: "PURCHASED", plan: plan.id });
   const pro = await isPro();
   if (pro !== true) track("purchase_without_entitlement", { offering: label, pro });
+  // The sale, reported from the transaction that made it and from nowhere
+  // else. It used to be a mount effect on `/subscribed`, which is a screen and
+  // not a purchase: a restore routed there too, and the effect re-ran whenever
+  // the plan it drew recomputed. Seven people and thirteen events stood for
+  // two subscriptions. StoreKit has now honoured this purchase, so this fires
+  // once per sale, and `pro` carries the entitlement disagreement rather than
+  // suppressing the event — a sale the dashboard cannot see is still a sale.
+  track("subscription_success", { offering: label, plan: plan.id, pro });
   return "purchased";
 }

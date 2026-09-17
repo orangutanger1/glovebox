@@ -268,9 +268,22 @@ export async function hasOffering(identifier: string): Promise<boolean> {
   }
 }
 
+/**
+ * Hands an existing subscription back to an install that has lost it.
+ *
+ * The event fires here rather than at the four call sites because a restore is
+ * one thing wherever it is tapped, and because the thing it must never again
+ * be confused with is a sale. `subscription_success` used to cover both: every
+ * successful restore — a reinstall by one of the two real subscribers, a
+ * family-shared entitlement, a sandbox tester — was booked as a new
+ * subscription, and the funnel reported numbers the store ledger flatly denied.
+ * A restore adds no revenue and no subscriber. It has its own name.
+ */
 export async function restore(): Promise<boolean> {
   const info = await Purchases.restorePurchases();
-  return proFrom(info);
+  const found = proFrom(info);
+  if (found) track("subscription_restored");
+  return found;
 }
 
 /**

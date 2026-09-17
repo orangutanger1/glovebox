@@ -45,10 +45,10 @@ export function useAdvance(from: OnboardingRoute, mode: "push" | "replace" = "pu
  * like a mystery rather than a paywall nobody accepted. Still one exit path:
  * the reason is an argument, not a second function.
  */
-export function useFinish(): (exit: "paid" | "trial" | "free") => void {
+export function useFinish(): (exit: "paid" | "trial" | "restored" | "free") => void {
   const router = useRouter();
   return useCallback(
-    (exit: "paid" | "trial" | "free") => {
+    (exit: "paid" | "trial" | "restored" | "free") => {
       // The denominator for every drop-off rate: the count of users who
       // reached the garage at all, now split by what they agreed to on the way.
       track("onboarding_completed", { exit });
@@ -65,6 +65,12 @@ export function useFinish(): (exit: "paid" | "trial" | "free") => void {
       // was one row in a list — nothing naming what they had bought, and no
       // next action. `/subscribed` is that missing beat, and it owns the move
       // to the car afterwards.
+      // `restored` lands here too: an install that has just been handed its
+      // subscription back owes the same naming of what it now has as one that
+      // has just bought it. It is a separate reason rather than a fourth
+      // caller of "paid" because it adds no subscriber and no revenue, and
+      // counting it as a sale is exactly what made the funnel disagree with
+      // both stores.
       if (exit !== "free") {
         router.replace("/subscribed");
         return;

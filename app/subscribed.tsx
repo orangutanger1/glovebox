@@ -46,17 +46,20 @@ export default function Subscribed() {
   const { vehicle, vehiclePhrase, plan } = useOnboardingFindings();
   const next = nextUp(plan);
 
+  // The denominator for `first_core_action` below, and nothing more. This used
+  // to fire `subscription_success` — the sale is now reported by `buy()`, from
+  // the transaction, because this screen is reached by a restore as well as by
+  // a purchase and is not evidence of either. The deps are empty on purpose:
+  // the old list re-ran the event every time the plan recomputed, so one
+  // arrival counted several times.
   useEffect(() => {
-    // The counterpart to `onboarding_completed`. That event says the flow ended
-    // and how; this one says the subscriber reached the screen that tells them
-    // what they bought, which is the denominator for whether the first action
-    // below is ever taken.
-    track("subscription_success", {
+    track("subscribed_screen_viewed", {
       due_now: plan.dueNow,
       scheduled: plan.items.length,
       has_vehicle: vehicle !== null,
     });
-  }, [plan.dueNow, plan.items.length, vehicle]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function onFirstAction() {
     track("first_core_action", { source: "subscribed", action: "open_vehicle" });

@@ -93,7 +93,7 @@ export default function OnboardingPaywall() {
       track("restore_attempted", { source: "onboarding_paywall", found });
       if (found) {
         recordReviewEvent("purchase");
-        finish("paid");
+        finish("restored");
         return;
       }
       setMsg(t("settings.restore.none"));

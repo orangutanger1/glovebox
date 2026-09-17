@@ -256,6 +256,23 @@ describe("who counts as Pro", () => {
   });
 });
 
+describe("restore", () => {
+  // A restore is not a sale. It used to route to the screen that fired
+  // `subscription_success`, and the funnel counted reinstalls and family
+  // shares as new subscribers against a ledger showing two.
+  test("a subscription handed back is reported as restored, never as a sale", async () => {
+    restorePurchases.mockResolvedValueOnce(PRO);
+    await expect(restore()).resolves.toBe(true);
+    expect(tracked()).toContain("subscription_restored");
+    expect(tracked()).not.toContain("subscription_success");
+  });
+
+  test("nothing to restore reports nothing", async () => {
+    await expect(restore()).resolves.toBe(false);
+    expect(tracked()).not.toContain("subscription_restored");
+  });
+});
+
 /**
  * `null` is a store that could not answer. It used to be `false`, and `false`
  * at launch is a paywall — shown to whoever opened the app in a tunnel.

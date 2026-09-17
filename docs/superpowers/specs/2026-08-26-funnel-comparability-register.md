@@ -432,3 +432,31 @@ measured against, so neither ships before the trigger.
 to one device in Anaheim on builds 22 and 23, the same geography as the
 `entry-bootstrap` crash reports, and both stores report zero. Treat
 install→paid as 0 and do not let the event count contradict the ledger.
+
+### 2026-09-17 — `subscription_success` moved to the transaction
+
+**`subscription_success` before this build is not a count of sales, and the
+two series do not join.** RevenueCat reports 2 subscribers ever (both on the
+trial paywall; the default paywall is 0 for 168 viewers). PostHog reported 7
+persons and 13 events. Two inflators, both in `app/subscribed.tsx`:
+
+1. The event was a mount effect on `/subscribed`, and `useFinish("paid")` was
+   also the restore path from both onboarding paywalls. Every successful
+   restore — a reinstall, a family share, a sandbox tester — booked a sale.
+   53 persons attempted a restore in the 14 days to today.
+2. The effect's deps were `[plan.dueNow, plan.items.length, vehicle]`, so one
+   arrival fired again whenever the plan recomputed.
+
+From this build:
+
+| event | fires from | meaning |
+| --- | --- | --- |
+| `subscription_success` | `buy()` in `src/purchases/plans.ts`, after StoreKit honours the purchase | one sale; carries `offering`, `plan`, `pro` |
+| `subscription_restored` | `restore()` in `src/purchases/index.ts`, when the receipt holds Pro | an entitlement handed back; not a sale |
+| `subscribed_screen_viewed` | `/subscribed`, once per mount | the denominator for `first_core_action`; the old props ride here |
+| `onboarding_completed {exit:"restored"}` | `useFinish` | was `exit:"paid"` for a restore; `paid` now means paid |
+
+Read `subscription_success` from `ota_update_id` of this build onward only, and
+treat the ledger as the count for everything before it. `paywall_purchase_started`
+is unchanged and was honest throughout: 3 persons tapped Buy against 153
+paywall viewers, and 2 of the 3 paid. The loss is at the tap, not at checkout.

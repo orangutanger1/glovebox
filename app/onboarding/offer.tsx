@@ -81,7 +81,7 @@ export default function OnboardingOffer() {
 
   /** Where a successful purchase goes. A relaunched subscriber finished
    *  onboarding long ago and must not be counted as a completion. */
-  function paid(exit: "trial" | "paid") {
+  function paid(exit: "trial" | "paid" | "restored") {
     if (relaunched) {
       router.replace("/");
       return;
@@ -125,7 +125,7 @@ export default function OnboardingOffer() {
       track("restore_attempted", { source: "onboarding_offer", found });
       if (found) {
         recordReviewEvent("purchase");
-        paid("paid");
+        paid("restored");
         return;
       }
       setMsg(t("settings.restore.none"));
