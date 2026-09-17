@@ -394,6 +394,24 @@ test("with no standard price to beat, the second offer gets the plain title and 
   }
 });
 
+test("the second offer sells the yearly alone when the store returns more than one plan", () => {
+  // The old weekly stays on the offering while the yearly waits on review, so
+  // the installed bundle keeps a button. This bundle shows one card.
+  const original = mockPlans.discount;
+  mockPlans.discount = [
+    ...(original as unknown[]),
+    { id: "$rc_weekly", period: "week", package: {}, priceString: "$3.99", price: 3.99, currency: "USD", intro: { priceString: "$0.99", price: 0.99, periods: 1 }, perWeek: "$3.99", perMonth: "$17.29" },
+  ];
+  try {
+    const printed = texts(render(OnboardingOffer)).join(" ");
+    expect(printed).toContain("$29.99");
+    expect(printed).not.toContain("$0.99");
+    expect(printed).not.toContain(t("paywall.period.week"));
+  } finally {
+    mockPlans.discount = original;
+  }
+});
+
 test("relaunched with no entitlement, the offer is the wall: no back, restore in the link's place", () => {
   mockParams = { walled: "1" };
   try {

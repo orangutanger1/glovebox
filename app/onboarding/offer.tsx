@@ -52,7 +52,14 @@ export default function OnboardingOffer() {
   const { walled } = useLocalSearchParams<{ walled?: string }>();
   const relaunched = walled === "1";
 
-  const { plans, loading, retry } = usePlans("discount");
+  const { plans: offered, loading, retry } = usePlans("discount");
+  // One plan. The screen sells the yearly at the offer price and nothing
+  // beside it — a second card is a comparison the reader makes instead of a
+  // decision. The offering can carry more than one package while a new
+  // product waits on App Store review (the old weekly stays on it so the
+  // installed bundle keeps a button); until StoreKit returns the yearly, the
+  // screen sells what it has.
+  const plans = offered && offered.some((p) => p.period === "year") ? offered.filter((p) => p.period === "year") : offered;
   const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
