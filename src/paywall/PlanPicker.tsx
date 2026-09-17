@@ -91,7 +91,9 @@ function headline(plan: Plan): { figure: string; unit: string } {
  *  gets none — the renewal is the footer's one legal line, and printing it
  *  here as well put the same two prices on the glass three times. */
 function billed(plan: Plan): string | null {
-  if (plan.intro) return null;
+  // Same rule for the exit offer's yearly: the footer says what it renews
+  // at, once, and the card does not say it again.
+  if (plan.intro || plan.compareAt) return null;
   if (plan.period === "year") return t("paywall.billed.year", { price: plan.priceString });
   if (plan.period === "month") return t("paywall.billed.month", { price: plan.priceString });
   return null;
@@ -175,7 +177,10 @@ export function PlanPicker({
                   </Text>
                   <Tick on={on} />
                 </View>
-                {plan.intro && (
+                {/* The price this one beats: the standard price when an
+                    intro is on, or the first screen's price on the exit
+                    offer. One line, struck through, in StoreKit's string. */}
+                {(plan.intro || plan.compareAt) && (
                   <Text
                     style={{
                       ...tokens.text.caption,
@@ -183,7 +188,7 @@ export function PlanPicker({
                       textDecorationLine: "line-through",
                     }}
                   >
-                    {plan.priceString}
+                    {plan.compareAt ? plan.compareAt.priceString : plan.priceString}
                   </Text>
                 )}
                 <View style={{ flexDirection: "row", alignItems: "baseline", gap: tokens.space.xs }}>
@@ -193,8 +198,11 @@ export function PlanPicker({
                 {under && (
                   <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{under}</Text>
                 )}
-                {plan.id === bestId && plan.savePct !== undefined && (
-                  <Mark label={t("paywall.save", { pct: plan.savePct })} />
+                {plan.compareAt ? (
+                  <Mark label={t("paywall.save", { pct: plan.compareAt.pct })} />
+                ) : (
+                  plan.id === bestId &&
+                  plan.savePct !== undefined && <Mark label={t("paywall.save", { pct: plan.savePct })} />
                 )}
               </Frame>
             </View>

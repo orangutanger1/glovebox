@@ -196,14 +196,8 @@ export const de: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Am Tag der Fälligkeit, und nie aufdringlich.",
 
 
-  "offer.trial.title": {
-    one: "{count} Tag zum Einstiegspreis.",
-    other: "{count} Tage zum Einstiegspreis.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} Tag zum Einstiegspreis.",
-    other: "{name}, {count} Tage zum Einstiegspreis.",
-  },
+  "offer.deal.title": "Dasselbe Pro, für weniger.",
+  "offer.deal.title.named": "{name}, dasselbe Pro für weniger.",
   "offer.trial.cta": "Angebot jetzt sichern",
   "offer.trial.decline": "Lieber den vollen Preis zahlen",
   "offer.trial.gets.reminders": "Erinnerung vor jedem Service",
@@ -213,13 +207,6 @@ export const de: Fragment = {
   "offer.trial.gets.garage": "Unbegrenzt viele Fahrzeuge",
   "offer.trial.gets.intervals": "Eigene Serviceintervalle",
   "offer.trial.gets.export": "Alles als CSV exportieren",
-  "offer.trial.legend": "So läuft das Angebot",
-  "offer.trial.now.title": "Heute",
-  "offer.trial.now.body": "Alles wird freigeschaltet: dein Plan, deine Erinnerungen, dein komplettes Logbuch.",
-  "offer.trial.runs.title": "Während der Testphase",
-  "offer.trial.runs.body": "Jede fällige Wartung deines Autos wird überwacht, nicht auswendig gelernt.",
-  "offer.trial.ends.title": "Wenn sie endet",
-  "offer.trial.ends.body": "Danach verlängert es sich zum regulären Preis. Du entscheidest vorher.",
 
   "offer.winback.title": "Du hast aufgehört einzutragen.",
   "offer.winback.decline": "Bring mich einfach in meine Garage",
@@ -227,10 +214,7 @@ export const de: Fragment = {
     "Deine Daten sind genau da, wo du sie gelassen hast. Nichts ist abgelaufen, nichts wurde gelöscht, und nichts muss neu eingerichtet werden.",
   "offer.winback.feedback": "Sag uns, was schiefgelaufen ist",
   "offer.winback.feedbackNote": "Ein kurzes Formular, öffnet sich in Safari",
-  "offer.winback.caption": {
-    one: "Oder gib ihm noch eine Chance: {count} Tag Pro zum Einstiegspreis. Kündige vorher, dann bleibt es dabei.",
-    other: "Oder gib ihm noch eine Chance: {count} Tage Pro zum Einstiegspreis. Kündige vorher, dann bleibt es dabei.",
-  },
+  "offer.winback.caption": "Oder noch ein Versuch: ein Jahr Pro zum Angebotspreis. Jederzeit kündbar.",
 
   // onboardingA
   "onboardingA.continue": "Weiter",
@@ -559,10 +543,7 @@ export const de: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro testen",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} Tag zum Einstiegspreis, danach verlängert es sich",
-    other: "{count} Tage zum Einstiegspreis, danach verlängert es sich",
-  },
+  "system.quickaction.trial.subtitle": "Ein Jahr Pro zum Angebotspreis",
   "system.quickaction.feedback.title": "Feedback senden",
   "system.quickaction.feedback.subtitle": "Sag uns, was schiefgelaufen ist",
 

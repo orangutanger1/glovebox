@@ -192,14 +192,8 @@ export const es: Fragment = {
   "offer.paywall.point.reminders.subtitle": "El día que toca, y nunca insistiendo.",
 
 
-  "offer.trial.title": {
-    one: "{count} día a precio de lanzamiento.",
-    other: "{count} días a precio de lanzamiento.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} día a precio de lanzamiento.",
-    other: "{name}, {count} días a precio de lanzamiento.",
-  },
+  "offer.deal.title": "El mismo Pro, por menos.",
+  "offer.deal.title.named": "{name}, el mismo Pro por menos.",
   "offer.trial.cta": "Aprovechar la oferta ahora",
   "offer.trial.decline": "Prefiero pagar el precio completo",
   "offer.trial.gets.reminders": "Avisos antes de cada mantenimiento",
@@ -209,13 +203,6 @@ export const es: Fragment = {
   "offer.trial.gets.garage": "Vehículos ilimitados",
   "offer.trial.gets.intervals": "Tus propios intervalos",
   "offer.trial.gets.export": "Exporta todo en CSV",
-  "offer.trial.legend": "Cómo funciona la oferta",
-  "offer.trial.now.title": "Hoy",
-  "offer.trial.now.body": "Se desbloquea todo: tu plan, tus recordatorios, tu historial completo.",
-  "offer.trial.runs.title": "Mientras dura",
-  "offer.trial.runs.body": "Cada servicio que le toca a tu coche queda vigilado, no memorizado.",
-  "offer.trial.ends.title": "Cuando termina",
-  "offer.trial.ends.body": "Después se renueva al precio normal. Tú decides antes.",
 
   "offer.winback.title": "Has dejado de registrar.",
   "offer.winback.decline": "Llévame a mi garaje",
@@ -223,10 +210,7 @@ export const es: Fragment = {
     "Tus registros están exactamente donde los dejaste. Nada ha caducado, nada se ha borrado y no hay que configurar nada otra vez.",
   "offer.winback.feedback": "Cuéntanos qué falló",
   "offer.winback.feedbackNote": "Un formulario corto, se abre en Safari",
-  "offer.winback.caption": {
-    one: "O dale otra oportunidad: {count} día de Pro a precio de lanzamiento. Cancela antes de que acabe y ahí queda.",
-    other: "O dale otra oportunidad: {count} días de Pro a precio de lanzamiento. Cancela antes de que acaben y ahí queda.",
-  },
+  "offer.winback.caption": "O inténtalo una vez más: un año de Pro al precio de oferta. Cancela cuando quieras.",
 
   // onboardingA
   "onboardingA.continue": "Continuar",
@@ -558,10 +542,7 @@ export const es: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Prueba Pro",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} día a precio de lanzamiento y luego se renueva",
-    other: "{count} días a precio de lanzamiento y luego se renueva",
-  },
+  "system.quickaction.trial.subtitle": "Un año de Pro al precio de oferta",
   "system.quickaction.feedback.title": "Enviar comentarios",
   "system.quickaction.feedback.subtitle": "Cuéntanos qué falló",
 

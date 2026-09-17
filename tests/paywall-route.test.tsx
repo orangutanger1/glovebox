@@ -27,7 +27,7 @@ jest.mock("react-native-purchases", () => ({ __esModule: true, default: {} }));
 jest.mock("react-native-purchases-ui", () => ({ __esModule: true, default: {} }));
 const mockTrack = jest.fn();
 jest.mock("../src/analytics", () => ({ track: (e: string, p?: unknown) => mockTrack(e, p) }));
-jest.mock("../src/purchases", () => ({ restore: async () => false, DISCOUNT_OFFERING: "discount", INTRO_DAYS: 7 }));
+jest.mock("../src/purchases", () => ({ restore: async () => false, DISCOUNT_OFFERING: "discount" }));
 jest.mock("../src/review", () => ({ recordReviewEvent: jest.fn() }));
 
 const settled: string[] = [];

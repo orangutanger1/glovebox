@@ -177,12 +177,8 @@ export const ja: Fragment = {
   "offer.paywall.point.reminders.subtitle": "期限当日に一度だけ。しつこく通知しません。",
 
 
-  "offer.trial.title": {
-    other: "最初の{count}日間はお得な価格で。",
-  },
-  "offer.trial.title.named": {
-    other: "{name}さん、最初の{count}日間はお得な価格で。",
-  },
+  "offer.deal.title": "同じProを、もっと安く。",
+  "offer.deal.title.named": "{name}さん、同じProをもっと安く。",
   "offer.trial.cta": "今すぐオファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
@@ -192,13 +188,6 @@ export const ja: Fragment = {
   "offer.trial.gets.garage": "車両は台数無制限",
   "offer.trial.gets.intervals": "自分に合わせた整備間隔",
   "offer.trial.gets.export": "すべてCSVで書き出し",
-  "offer.trial.legend": "オファーの流れ",
-  "offer.trial.now.title": "今日",
-  "offer.trial.now.body": "すべてが使えます。整備プラン、リマインダー、全記録。",
-  "offer.trial.runs.title": "期間中は",
-  "offer.trial.runs.body": "必要な整備はアプリが見張ります。覚えておく必要はありません。",
-  "offer.trial.ends.title": "期間が終わったら",
-  "offer.trial.ends.body": "その後は通常価格で更新されます。それまでにお決めください。",
 
   "offer.winback.title": "記録が止まっています。",
   "offer.winback.decline": "ガレージへ進む",
@@ -206,9 +195,7 @@ export const ja: Fragment = {
     "整備記録は置いたときのままです。期限切れも削除もなく、設定をやり直す必要もありません。",
   "offer.winback.feedback": "うまくいかなかった点を教えてください",
   "offer.winback.feedbackNote": "短いフォームです。Safariで開きます",
-  "offer.winback.caption": {
-    other: "もう一度試すこともできます。Proを{count}日間、導入価格で。終了前に解約すればそこで終わりです。",
-  },
+  "offer.winback.caption": "もう一度だけ：Pro 1年をオファー価格で。いつでも解約できます。",
 
   // onboardingA
   "onboardingA.continue": "続ける",
@@ -513,9 +500,7 @@ export const ja: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Proを試す",
-  "system.quickaction.trial.subtitle": {
-    other: "{count}日間は導入価格、その後は更新されます",
-  },
+  "system.quickaction.trial.subtitle": "Pro 1年をオファー価格で",
   "system.quickaction.feedback.title": "フィードバックを送る",
   "system.quickaction.feedback.subtitle": "うまくいかなかった点を教えてください",
 

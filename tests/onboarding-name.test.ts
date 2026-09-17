@@ -91,7 +91,7 @@ test("every language has both halves of every named pair", () => {
   // itself into a push notification the moment that user types a name.
   const PAIRS = [
     "offer.paywall.title",
-    "offer.trial.title",
+    "offer.deal.title",
     "system.notify.title",
     "system.resume.first.title",
     "system.resume.second.title",

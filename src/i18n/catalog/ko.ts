@@ -190,12 +190,8 @@ export const ko: Fragment = {
   "offer.paywall.point.reminders.subtitle": "기한 당일에 한 번만, 귀찮게 하지 않아요.",
 
 
-  "offer.trial.title": {
-    other: "첫 {count}일은 특별 가격으로.",
-  },
-  "offer.trial.title.named": {
-    other: "{name}님, 첫 {count}일은 특별 가격으로.",
-  },
+  "offer.deal.title": "같은 Pro를 더 저렴하게.",
+  "offer.deal.title.named": "{name}님, 같은 Pro를 더 저렴하게.",
   "offer.trial.cta": "지금 혜택 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",
@@ -205,13 +201,6 @@ export const ko: Fragment = {
   "offer.trial.gets.garage": "차량 수 제한 없음",
   "offer.trial.gets.intervals": "내게 맞춘 정비 주기",
   "offer.trial.gets.export": "전부 CSV로 내보내기",
-  "offer.trial.legend": "이 제안이 진행되는 방식",
-  "offer.trial.now.title": "오늘",
-  "offer.trial.now.body": "플랜, 알림, 전체 기록까지 모두 열립니다.",
-  "offer.trial.runs.title": "체험 기간에는",
-  "offer.trial.runs.body": "차에 필요한 정비를 앱이 지켜봅니다. 외울 필요가 없습니다.",
-  "offer.trial.ends.title": "체험이 끝나면",
-  "offer.trial.ends.body": "이후에는 정가로 갱신됩니다. 그전에 결정하시면 됩니다.",
 
   "offer.winback.title": "기록이 멈춰 있어요.",
   "offer.winback.decline": "그냥 차고로 갈게요",
@@ -219,9 +208,7 @@ export const ko: Fragment = {
     "기록은 두고 간 그대로예요. 만료된 것도, 삭제된 것도 없고, 다시 설정할 것도 없어요.",
   "offer.winback.feedback": "무엇이 문제였는지 알려주세요",
   "offer.winback.feedbackNote": "짧은 양식이고, Safari에서 열려요",
-  "offer.winback.caption": {
-    other: "아니면 한 번 더 해 볼까요. Pro {count}일을 특별 가격으로. 끝나기 전에 해지하면 거기서 끝이에요.",
-  },
+  "offer.winback.caption": "한 번 더 해보기: Pro 1년을 특가로. 언제든 해지할 수 있습니다.",
 
   // onboardingA
   "onboardingA.continue": "계속",
@@ -539,9 +526,7 @@ export const ko: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro 써 보기",
-  "system.quickaction.trial.subtitle": {
-    other: "{count}일은 특별 가격, 이후 갱신돼요",
-  },
+  "system.quickaction.trial.subtitle": "Pro 1년을 특가로",
   "system.quickaction.feedback.title": "의견 보내기",
   "system.quickaction.feedback.subtitle": "무엇이 문제였는지 알려주세요",
 

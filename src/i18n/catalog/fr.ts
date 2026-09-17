@@ -203,14 +203,8 @@ export const fr: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Le jour de l’échéance, jamais de relance.",
 
 
-  "offer.trial.title": {
-    one: "{count} jour au prix de lancement.",
-    other: "{count} jours au prix de lancement.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} jour au prix de lancement.",
-    other: "{name}, {count} jours au prix de lancement.",
-  },
+  "offer.deal.title": "Le même Pro, pour moins.",
+  "offer.deal.title.named": "{name}, le même Pro pour moins.",
   "offer.trial.cta": "Profiter de l’offre maintenant",
   "offer.trial.decline": "Je préfère payer le plein tarif",
   "offer.trial.gets.reminders": "Rappels avant chaque entretien",
@@ -220,13 +214,6 @@ export const fr: Fragment = {
   "offer.trial.gets.garage": "Véhicules illimités",
   "offer.trial.gets.intervals": "Vos propres intervalles",
   "offer.trial.gets.export": "Tout exporter en CSV",
-  "offer.trial.legend": "Comment se passe l’offre",
-  "offer.trial.now.title": "Aujourd’hui",
-  "offer.trial.now.body": "Tout se débloque : votre plan, vos rappels, votre carnet complet.",
-  "offer.trial.runs.title": "Pendant l’essai",
-  "offer.trial.runs.body": "Chaque entretien dû sur votre voiture est surveillé, pas mémorisé.",
-  "offer.trial.ends.title": "À la fin",
-  "offer.trial.ends.body": "L’abonnement se renouvelle ensuite au prix normal. Vous décidez avant.",
 
   "offer.winback.title": "Vous avez arrêté de noter.",
   "offer.winback.decline": "Emmenez-moi juste à mon garage",
@@ -234,10 +221,7 @@ export const fr: Fragment = {
     "Votre carnet est exactement là où vous l'avez laissé. Rien n'a expiré, rien n'a été supprimé, et rien n'est à reconfigurer.",
   "offer.winback.feedback": "Dites-nous ce qui n'a pas marché",
   "offer.winback.feedbackNote": "Un formulaire court, s'ouvre dans Safari",
-  "offer.winback.caption": {
-    one: "Ou retentez le coup : {count} jour de Pro au prix de lancement. Résiliez avant la fin et cela s’arrête là.",
-    other: "Ou retentez le coup : {count} jours de Pro au prix de lancement. Résiliez avant la fin et cela s’arrête là.",
-  },
+  "offer.winback.caption": "Ou retentez le coup : un an de Pro au prix de l’offre. Annulable à tout moment.",
 
   // onboardingA
   "onboardingA.continue": "Continuer",
@@ -570,10 +554,7 @@ export const fr: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Essayer Pro",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} jour au prix de lancement, puis renouvellement",
-    other: "{count} jours au prix de lancement, puis renouvellement",
-  },
+  "system.quickaction.trial.subtitle": "Un an de Pro au prix de l’offre",
   "system.quickaction.feedback.title": "Envoyer un retour",
   "system.quickaction.feedback.subtitle": "Dites-nous ce qui n'a pas marché",
 

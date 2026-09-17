@@ -43,6 +43,11 @@ export type Plan = {
   /** Saving against the weekly plan of the same offering, whole percent.
    *  Undefined on the weekly plan and when there is no weekly plan. */
   savePct?: number;
+  /** The standard offering's price for the same period, when this plan
+   *  undercuts it. Set only on the discount offering: it is the figure the
+   *  exit screen strikes through, and the saving beside it. Undefined when
+   *  the standard offering has no such plan or is not cheaper-than. */
+  compareAt?: { priceString: string; price: number; pct: number };
 };
 
 export type OfferingId = "default" | "discount";
@@ -196,6 +201,32 @@ function usable(plans: Plan[]): Plan[] | null {
   return plans.length > 0 ? plans : null;
 }
 
+/**
+ * Stamps each discount plan with the standard price it undercuts.
+ *
+ * The exit screen sells a yearly plan for less than the first screen asked,
+ * and the argument is the gap: the standard figure struck through above the
+ * offer figure. Nothing in the catalog knows either number, so the gap is
+ * read here from the two offerings side by side — same period, standard
+ * price higher — and formatted in StoreKit's own strings. A discount plan
+ * with no standard counterpart, or one that is not actually cheaper, gets
+ * no strike-through: the screen then shows a plain price rather than a
+ * comparison that would not survive a second look.
+ */
+export function markCompareAt(discount: Plan[], standard: Plan[] | null): Plan[] {
+  if (!standard) return discount;
+  for (const plan of discount) {
+    const full = standard.find((p) => p.period === plan.period);
+    if (!full || full.price <= plan.price || full.currency !== plan.currency) continue;
+    plan.compareAt = {
+      priceString: full.priceString,
+      price: full.price,
+      pct: Math.round((1 - plan.price / full.price) * 100),
+    };
+  }
+  return discount;
+}
+
 async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | null>> {
   const offerings = await Purchases.getOfferings();
   const def = offerings.current;
@@ -205,9 +236,10 @@ async function fetchAll(locale: string): Promise<Record<OfferingId, Plan[] | nul
     .filter((p) => p.product.introPrice)
     .map((p) => p.product.identifier);
   const eligible = await eligibleProducts(Array.from(new Set(withIntro)));
+  const standard = def ? usable(shapePlans(def, eligible, locale)) : null;
   return {
-    default: def ? usable(shapePlans(def, eligible, locale)) : null,
-    discount: disc ? usable(shapePlans(disc, eligible, locale)) : null,
+    default: standard,
+    discount: disc ? usable(markCompareAt(shapePlans(disc, eligible, locale), standard)) : null,
   };
 }
 

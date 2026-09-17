@@ -226,18 +226,8 @@ export const pl: Fragment = {
   "offer.paywall.point.reminders.subtitle": "W dniu terminu, bez nagabywania.",
 
 
-  "offer.trial.title": {
-    one: "{count} dzień w cenie startowej.",
-    few: "{count} dni w cenie startowej.",
-    many: "{count} dni w cenie startowej.",
-    other: "{count} dnia w cenie startowej.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} dzień w cenie startowej.",
-    few: "{name}, {count} dni w cenie startowej.",
-    many: "{name}, {count} dni w cenie startowej.",
-    other: "{name}, {count} dnia w cenie startowej.",
-  },
+  "offer.deal.title": "To samo Pro, taniej.",
+  "offer.deal.title.named": "{name}, to samo Pro taniej.",
   "offer.trial.cta": "Skorzystaj z oferty teraz",
   "offer.trial.decline": "Wolę zapłacić pełną cenę",
   "offer.trial.gets.reminders": "Przypomnienie przed każdym serwisem",
@@ -247,13 +237,6 @@ export const pl: Fragment = {
   "offer.trial.gets.garage": "Nieograniczona liczba pojazdów",
   "offer.trial.gets.intervals": "Własne interwały serwisowe",
   "offer.trial.gets.export": "Eksport wszystkiego do CSV",
-  "offer.trial.legend": "Jak działa oferta",
-  "offer.trial.now.title": "Dziś",
-  "offer.trial.now.body": "Wszystko się odblokowuje: plan, przypomnienia, pełny dziennik.",
-  "offer.trial.runs.title": "W czasie okresu próbnego",
-  "offer.trial.runs.body": "Każdy przegląd, który należy się autu, jest pilnowany, a nie zapamiętywany.",
-  "offer.trial.ends.title": "Gdy się skończy",
-  "offer.trial.ends.body": "Potem odnawia się w cenie standardowej. Decydujesz wcześniej.",
 
   "offer.winback.title": "Dawno nic nie zapisujesz.",
   "offer.winback.decline": "Po prostu przejdź do garażu",
@@ -261,12 +244,7 @@ export const pl: Fragment = {
     "Twoje zapisy są dokładnie tam, gdzie były. Nic nie wygasło, nic nie zostało usunięte i nic nie wymaga ustawiania od nowa.",
   "offer.winback.feedback": "Napisz, co poszło nie tak",
   "offer.winback.feedbackNote": "Krótki formularz, otwiera się w Safari",
-  "offer.winback.caption": {
-    one: "Albo spróbuj jeszcze raz: {count} dzień Pro w cenie startowej. Anuluj przed końcem i na tym się skończy.",
-    few: "Albo spróbuj jeszcze raz: {count} dni Pro w cenie startowej. Anuluj przed końcem i na tym się skończy.",
-    many: "Albo spróbuj jeszcze raz: {count} dni Pro w cenie startowej. Anuluj przed końcem i na tym się skończy.",
-    other: "Albo spróbuj jeszcze raz: {count} dnia Pro w cenie startowej. Anuluj przed końcem i na tym się skończy.",
-  },
+  "offer.winback.caption": "Albo spróbuj jeszcze raz: rok Pro w cenie oferty. Anuluj w każdej chwili.",
 
   // onboardingA
   "onboardingA.continue": "Dalej",
@@ -625,12 +603,7 @@ export const pl: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Wypróbuj Pro",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} dzień w cenie startowej, potem odnawia się",
-    few: "{count} dni w cenie startowej, potem odnawia się",
-    many: "{count} dni w cenie startowej, potem odnawia się",
-    other: "{count} dnia w cenie startowej, potem odnawia się",
-  },
+  "system.quickaction.trial.subtitle": "Rok Pro w cenie oferty",
   "system.quickaction.feedback.title": "Wyślij opinię",
   "system.quickaction.feedback.subtitle": "Napisz, co poszło nie tak",
 

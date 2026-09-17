@@ -19,7 +19,6 @@ const mockRestore = jest.fn(async () => false);
 jest.mock("../src/purchases", () => ({
   restore: () => mockRestore(),
   DISCOUNT_OFFERING: "discount",
-  INTRO_DAYS: 7,
 }));
 
 import type { Plan } from "../src/purchases/plans";

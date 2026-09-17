@@ -195,14 +195,8 @@ export const sv: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Samma dag det är dags, aldrig tjatigt.",
 
 
-  "offer.trial.title": {
-    one: "{count} dag till introduktionspris.",
-    other: "{count} dagar till introduktionspris.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} dag till introduktionspris.",
-    other: "{name}, {count} dagar till introduktionspris.",
-  },
+  "offer.deal.title": "Samma Pro, för mindre.",
+  "offer.deal.title.named": "{name}, samma Pro för mindre.",
   "offer.trial.cta": "Ta erbjudandet nu",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",
@@ -212,13 +206,6 @@ export const sv: Fragment = {
   "offer.trial.gets.garage": "Obegränsat med fordon",
   "offer.trial.gets.intervals": "Egna serviceintervall",
   "offer.trial.gets.export": "Exportera allt som CSV",
-  "offer.trial.legend": "Så fungerar erbjudandet",
-  "offer.trial.now.title": "I dag",
-  "offer.trial.now.body": "Allt låses upp: din plan, dina påminnelser, hela loggboken.",
-  "offer.trial.runs.title": "Under provperioden",
-  "offer.trial.runs.body": "Varje service bilen ska ha bevakas, den behöver inte kommas ihåg.",
-  "offer.trial.ends.title": "När den tar slut",
-  "offer.trial.ends.body": "Sedan förnyas det till ordinarie pris. Du bestämmer innan dess.",
 
   "offer.winback.title": "Du slutade logga.",
   "offer.winback.decline": "Ta mig bara till garaget",
@@ -226,10 +213,7 @@ export const sv: Fragment = {
     "Dina uppgifter ligger exakt där du lämnade dem. Ingenting har gått ut, ingenting har raderats och ingenting behöver ställas in igen.",
   "offer.winback.feedback": "Berätta vad som gick fel",
   "offer.winback.feedbackNote": "Ett kort formulär, öppnas i Safari",
-  "offer.winback.caption": {
-    one: "Eller ge det ett försök till: {count} dag av Pro till introduktionspris. Säg upp innan den tar slut, så stannar det där.",
-    other: "Eller ge det ett försök till: {count} dagar av Pro till introduktionspris. Säg upp innan de tar slut, så stannar det där.",
-  },
+  "offer.winback.caption": "Eller ge det ett försök till: ett år Pro till erbjudandepriset. Avsluta när du vill.",
 
   "onboardingA.continue": "Fortsätt",
 
@@ -549,10 +533,7 @@ export const sv: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Testa Pro",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} dag till introduktionspris, sedan förnyas det",
-    other: "{count} dagar till introduktionspris, sedan förnyas det",
-  },
+  "system.quickaction.trial.subtitle": "Ett år Pro till erbjudandepriset",
   "system.quickaction.feedback.title": "Skicka feedback",
   "system.quickaction.feedback.subtitle": "Berätta vad som gick fel",
 

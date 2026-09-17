@@ -48,10 +48,7 @@ export const system: Fragment = {
   "system.csv.cell.no": "No",
 
   "system.quickaction.trial.title": "Try Pro",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} day at the introductory price, then it renews",
-    other: "{count} days at the introductory price, then it renews",
-  },
+  "system.quickaction.trial.subtitle": "A year of Pro at the offer price",
   "system.quickaction.feedback.title": "Send feedback",
   "system.quickaction.feedback.subtitle": "Tell us what went wrong",
 

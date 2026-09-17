@@ -1,22 +1,16 @@
 import type { Fragment } from "../types";
 
 /**
- * The end of onboarding — features, plan, paywall, the introductory offer —
- * plus the winback launch, which makes the same offer to a returning user.
+ * The end of onboarding — features, plan, paywall, the exit offer — plus the
+ * winback launch, which makes the same offer to a returning user.
  *
  * They share one namespace because they share one argument: the two screens
- * that name the introductory period must say the same number of days in the
- * same words, and a translator editing them in two fragments will eventually
- * edit only one of them.
+ * that describe the offer must describe the same thing in the same words, and
+ * a translator editing them in two fragments will eventually edit only one.
  *
- * Every sentence carrying that length is a plural entry even though the
- * shipped value is never one day. The number comes from the RevenueCat
- * offering, not from the build, so a one-day intro is a dashboard edit away
- * and the languages with more than two forms need it regardless.
- *
- * No sentence here names a price. StoreKit localises and converts the
- * introductory price per storefront; the sheet one tap away is the only thing
- * that knows what this user will actually be charged.
+ * No sentence here names a price or a period. StoreKit localises both per
+ * storefront and the offering is a dashboard edit away; the card draws the
+ * figures, and the sentences say "for less" and "at the offer price".
  */
 export const offer: Fragment = {
 
@@ -69,14 +63,11 @@ export const offer: Fragment = {
   "offer.paywall.point.reminders.title": "A reminder before each service",
   "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
 
-  "offer.trial.title": {
-    one: "Your first {count} day costs less.",
-    other: "Your first {count} days cost less.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, your first {count} day costs less.",
-    other: "{name}, your first {count} days cost less.",
-  },
+  // The exit offer: a yearly plan for less than the first screen asked. No
+  // number in the sentence — the card shows both prices in StoreKit's own
+  // strings, and "for less" is true in every storefront the day either moves.
+  "offer.deal.title": "The same Pro, for less.",
+  "offer.deal.title.named": "{name}, the same Pro for less.",
   "offer.trial.cta": "Claim your offer now",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing
@@ -93,13 +84,6 @@ export const offer: Fragment = {
   "offer.trial.gets.garage": "Unlimited vehicles",
   "offer.trial.gets.intervals": "Your own service schedules",
   "offer.trial.gets.export": "Export everything as CSV",
-  "offer.trial.legend": "How the offer runs",
-  "offer.trial.now.title": "Today",
-  "offer.trial.now.body": "Everything unlocks: your plan, your reminders, your full log.",
-  "offer.trial.runs.title": "While it runs",
-  "offer.trial.runs.body": "Every service your car is due for is watched, not remembered.",
-  "offer.trial.ends.title": "When it ends",
-  "offer.trial.ends.body": "It renews at the standard price. You decide before then.",
 
   "offer.winback.title": "You stopped logging.",
   "offer.winback.decline": "Just take me to my garage",
@@ -107,9 +91,5 @@ export const offer: Fragment = {
     "Your records are exactly where you left them. Nothing expired, nothing was deleted, and nothing needs setting up again.",
   "offer.winback.feedback": "Tell us what went wrong",
   "offer.winback.feedbackNote": "A short form, opens in Safari",
-  "offer.winback.caption": {
-    one: "Or give it one more go: {count} day of Pro at the introductory price. Cancel before it ends and it stops there.",
-    other:
-      "Or give it one more go: {count} days of Pro at the introductory price. Cancel before they end and it stops there.",
-  },
+  "offer.winback.caption": "Or give it one more go: a year of Pro at the offer price. Cancel anytime.",
 };

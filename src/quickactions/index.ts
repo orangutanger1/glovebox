@@ -1,5 +1,4 @@
 import * as QuickActions from "expo-quick-actions";
-import { INTRO_DAYS } from "../purchases";
 import { t } from "../i18n";
 
 /**
@@ -31,7 +30,7 @@ export function quickActionItems(canTrial: boolean): QuickActions.Action[] {
     items.push({
       id: QUICK_ACTION_TRIAL,
       title: t("system.quickaction.trial.title"),
-      subtitle: t("system.quickaction.trial.subtitle", { count: INTRO_DAYS }),
+      subtitle: t("system.quickaction.trial.subtitle"),
       // SF Symbols rather than a branded glyph: these sit directly above
       // Apple's own rows, and anything off-weight looks like a mistake.
       icon: "symbol:gift",

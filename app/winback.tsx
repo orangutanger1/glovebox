@@ -7,7 +7,7 @@ import { ListRow } from "../src/design/ListRow";
 import { Panel } from "../src/design/Surface";
 import { tokens } from "../src/design/tokens";
 import { t } from "../src/i18n";
-import { DISCOUNT_OFFERING, INTRO_DAYS, presentOffering } from "../src/purchases";
+import { DISCOUNT_OFFERING, presentOffering } from "../src/purchases";
 import { openFeedback } from "../src/feedback";
 import { recordReviewEvent } from "../src/review";
 import { markWinbackShown } from "../src/winback";
@@ -91,7 +91,7 @@ export default function Winback() {
       </Panel>
 
       <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-        {t("offer.winback.caption", { count: INTRO_DAYS })}
+        {t("offer.winback.caption")}
       </Text>
     </Screen>
   );

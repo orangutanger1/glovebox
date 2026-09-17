@@ -61,8 +61,10 @@ const mockPlans: Record<string, unknown[] | null> = {
     { id: "$rc_monthly", period: "month", package: {}, priceString: "$9.99", price: 9.99, currency: "USD", intro: null, perWeek: "$2.31", perMonth: "$9.99", savePct: 23 },
     { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: null, perWeek: "$2.99", perMonth: "$12.96" },
   ],
+  // The exit offer: the yearly at a lower price, stamped with the standard
+  // yearly it undercuts (see `markCompareAt`).
   discount: [
-    { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: { priceString: "$0.99", price: 0.99, periods: 1 }, perWeek: "$2.99", perMonth: "$12.96" },
+    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50", compareAt: { priceString: "$79.99", price: 79.99, pct: 63 } },
   ],
 };
 const mockBuy = jest.fn(async (_plan: unknown, _offering: string) => "dismissed" as "dismissed" | "purchased" | "unavailable");
@@ -340,11 +342,11 @@ test("the second offer does not open with the way out", () => {
   // renewal terms and Apple's required disclosure on the sheet one tap away.
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/cancel in settings/i);
-  expect(texts(render(OnboardingOffer))).toContain("Your first 7 days cost less.");
+  expect(texts(render(OnboardingOffer))).toContain("The same Pro, for less.");
 });
 
 test("the second offer promises nothing free and no free app to fall back on", () => {
-  // The app has no free tier and this screen sells a paid introductory week.
+  // The app has no free tier and this screen sells a paid yearly plan.
   // A screen that still says "free" is a promise the sheet behind it breaks,
   // and a decline link offering "the free app" points at a wall.
   const printed = texts(render(OnboardingOffer)).join(" ");
@@ -357,11 +359,13 @@ test("declining the second offer goes back to the paywall that sells full price"
   expect(texts(tree)).toContain(t("offer.trial.decline"));
   expect(texts(tree)).toContain("‹ Back");
   const printed = texts(tree).join(" ");
-  // The intro price once (the card), the renewal once (the footer). The
-  // subtitle and the card's "then" line used to make it three of each.
-  expect(printed.split("$0.99").length - 1).toBe(1);
-  expect(printed).toContain(t("paywall.legal.week", { price: "$2.99" }));
-  expect(printed).not.toContain(t("paywall.then", { price: "$2.99" }));
+  // The standard yearly struck once (the card), the offer price once (the
+  // footer's renewal line), the saving beside them. Nothing about a week.
+  expect(printed.split("$79.99").length - 1).toBe(1);
+  expect(printed.split("$29.99").length - 1).toBe(1);
+  expect(printed).toContain(t("paywall.save", { pct: 63 }));
+  expect(printed).toContain(t("paywall.legal.year", { price: "$29.99" }));
+  expect(printed).not.toMatch(/first (7 )?days?|first week/i);
 
   const link = tree.root.findAll(
     (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("offer.trial.decline")),
@@ -371,19 +375,20 @@ test("declining the second offer goes back to the paywall that sells full price"
   expect(navigated).toEqual(["back"]);
 });
 
-test("an ineligible customer on the second offer gets the plain title, no intro rows", () => {
-  // Nothing on the glass may promise an introductory week StoreKit will not
-  // honour: no trial title, no "today/while it runs/when it ends" legend.
+test("with no standard price to beat, the second offer gets the plain title and no strike-through", () => {
+  // The gap is the argument. A store that returned the discount offering but
+  // not the standard one has no gap to show, and the screen must not claim
+  // one: plain title, plain price, no saving.
   const original = mockPlans.discount;
   mockPlans.discount = [
-    { id: "$rc_weekly", period: "week", package: {}, priceString: "$2.99", price: 2.99, currency: "USD", intro: null, perWeek: "$2.99", perMonth: "$12.96" },
+    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50" },
   ];
   try {
     const printed = texts(render(OnboardingOffer));
     expect(printed).toContain(t("offer.paywall.title"));
-    expect(printed).not.toContain("Your first 7 days cost less.");
-    expect(printed).not.toContain(t("offer.trial.legend"));
-    expect(printed).not.toContain(t("offer.trial.now.title"));
+    expect(printed).not.toContain("The same Pro, for less.");
+    expect(printed.join(" ")).not.toContain("$79.99");
+    expect(printed.join(" ")).not.toMatch(/Save \d+%/);
   } finally {
     mockPlans.discount = original;
   }
@@ -398,7 +403,7 @@ test("relaunched with no entitlement, the offer is the wall: no back, restore in
     expect(printed).not.toContain("‹ Back");
     expect(printed).toContain(t("paywall.restore"));
     expect(printed).toContain(t("offer.trial.cta"));
-    expect(printed.join(" ")).toContain("Your first 7 days cost less.");
+    expect(printed.join(" ")).toContain("The same Pro, for less.");
   } finally {
     mockParams = {};
   }

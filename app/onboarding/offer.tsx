@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { ListRow } from "../../src/design/ListRow";
-import { Panel } from "../../src/design/Surface";
 import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
-import { INTRO_DAYS, restore } from "../../src/purchases";
+import { restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
 import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
@@ -18,29 +16,27 @@ import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 import { track } from "../../src/analytics";
 
-/** The three moments a trial has, in the order the user meets them. */
-const STEPS = ["now", "runs", "ends"] as const;
-
 /**
  * The second ask, and, once there is nothing left to ask, the wall.
  *
- * The first paywall asks for money at full price. This one sells the product
- * that carries the App Store introductory offer: a cheap first week, then it
- * renews. The split is the whole reason there are two screens: a trial shown
- * first is given to everyone who would have paid, and a trial shown to the
- * people walking out is the cheapest conversion in the funnel.
+ * The first paywall asks for money at the standard prices. This one sells a
+ * yearly plan at a lower one, from the `discount` offering, and nothing else.
+ * The split is the whole reason there are two screens: a cheaper price shown
+ * first is given to everyone who would have paid the standard one, and shown
+ * to the people walking out it is the cheapest conversion in the funnel.
  *
- * The price is drawn here now (see paywall.tsx for why the sheet went): one
- * wide card in the footer, the standard price struck through beside the
- * introductory one, "then {price} per week" under it. Above it, under the
- * title: the offer in one sentence with both prices, the list of what the
- * week opens, and how the offer runs. When StoreKit says this customer is
- * not eligible, the title is the plain one, the sentence is the paywall's,
- * the card shows the plain weekly price with no strike-through, and the
- * legend is gone, so nothing on the glass promises what Apple's sheet will
- * not honour. In sandbox that is what a tester who has already bought the
- * weekly product on this Apple ID sees; the offer is not missing, they have
- * used it.
+ * It used to sell a weekly product with a $0.99 introductory week. That put
+ * the intro on the first screen too — StoreKit attaches an intro to the
+ * product, not the screen — and a week that renews at the weekly price is a
+ * worse deal than it reads. A yearly plan at a plain lower price has no
+ * eligibility rule to trip over and no renewal surprise.
+ *
+ * The price is drawn here (see paywall.tsx for why the sheet went): one wide
+ * card in the footer, the first screen's yearly price struck through, the
+ * per-week figure under it and the saving beside it. `compareAt` is read off
+ * the standard offering in `plans.ts`; when the store has no standard yearly
+ * to compare with, the card shows a plain price and the title is the plain
+ * one, so nothing on the glass claims a gap it cannot show.
  *
  * "I'd rather pay full price" is the soft decline: it is a true sentence, and
  * it goes back to the paywall, which is the screen that sells full price.
@@ -72,12 +68,10 @@ export default function OnboardingOffer() {
 
   const chosen: Plan | null =
     plans?.find((p) => p.id === (selected ?? defaultPlan(plans))) ?? null;
-  // Optimistic while the plans are still loading (`chosen` is null): most
-  // customers are eligible, so the trial framing is the one worth drawing
-  // first. Once a plan is chosen, an ineligible customer gets the plain
-  // title, and never the intro rows and legend a sheet down the line will
-  // not honour.
-  const hasIntro = chosen ? chosen.intro !== null : true;
+  // Optimistic while the plans are still loading (`chosen` is null): the
+  // deal is the framing worth drawing first. Once a plan is in hand, a store
+  // that could not show the gap gets the plain title.
+  const hasDeal = chosen ? chosen.compareAt !== undefined : true;
 
   /** Where a successful purchase goes. A relaunched subscriber finished
    *  onboarding long ago and must not be counted as a completion. */
@@ -137,21 +131,16 @@ export default function OnboardingOffer() {
     }
   }
 
-  // No sentence under the title while the offer is on. The title already says
-  // the first week costs less, the card says what it costs, and the footer
-  // says what it renews at; a subtitle with both prices in it was the same
-  // fact a third time, in the way of the list. The ineligible customer gets
-  // the paywall's sentence, because their title is the plain one.
-  const subtitle = hasIntro ? undefined : t("offer.paywall.subtitle");
+  // No sentence under the title while the deal is on. The title says it is
+  // the same Pro for less, the card shows the two prices, and the footer says
+  // what it renews at; a subtitle would be one of those a second time, in
+  // the way of the list. Without a gap to show, the paywall's sentence.
+  const subtitle = hasDeal ? undefined : t("offer.paywall.subtitle");
 
   return (
     <OnboardingScreen
       route="offer"
-      title={
-        hasIntro
-          ? tNamed("offer.trial.title", { count: INTRO_DAYS })
-          : tNamed("offer.paywall.title")
-      }
+      title={hasDeal ? tNamed("offer.deal.title") : tNamed("offer.paywall.title")}
       subtitle={subtitle}
       hideBack={relaunched}
       footer={
@@ -179,7 +168,7 @@ export default function OnboardingOffer() {
             busy={busy}
             onBuy={onBuy}
             onRestore={onRestore}
-            label={chosen?.intro ? t("offer.trial.cta") : undefined}
+            label={chosen?.compareAt ? t("offer.trial.cta") : undefined}
           >
             {!relaunched && (
               <Pressable
@@ -196,7 +185,7 @@ export default function OnboardingOffer() {
         </>
       }
     >
-      {/* Everything the week opens, a tick and a line each. This is the list
+      {/* Everything the plan opens, a tick and a line each. This is the list
           the paywall compressed into chips; here it gets the page, because
           the screen has no car-specific rows to make the argument for it. */}
       <View style={{ gap: tokens.space.sm + 2 }}>
@@ -209,25 +198,6 @@ export default function OnboardingOffer() {
           </View>
         ))}
       </View>
-
-      {hasIntro && (
-        <>
-          <Text style={{ ...tokens.text.legend, color: tokens.color.textFaint }}>
-            {t("offer.trial.legend")}
-          </Text>
-          <Panel>
-            <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
-              {STEPS.map((step) => (
-                <ListRow
-                  key={step}
-                  title={t(`offer.trial.${step}.title`)}
-                  subtitle={t(`offer.trial.${step}.body`)}
-                />
-              ))}
-            </View>
-          </Panel>
-        </>
-      )}
     </OnboardingScreen>
   );
 }

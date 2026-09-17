@@ -173,10 +173,7 @@ export const nl: Fragment = {
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro proberen",
-  "system.quickaction.trial.subtitle": {
-    one: "{count} dag voor introductieprijs, daarna loopt het door",
-    other: "{count} dagen voor introductieprijs, daarna loopt het door",
-  },
+  "system.quickaction.trial.subtitle": "Een jaar Pro voor de aanbiedingsprijs",
   "system.quickaction.feedback.title": "Feedback sturen",
   "system.quickaction.feedback.subtitle": "Vertel ons wat er misging",
 
@@ -617,14 +614,8 @@ export const nl: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Op de dag zelf, en nooit zeurend.",
 
 
-  "offer.trial.title": {
-    one: "{count} dag voor introductieprijs.",
-    other: "{count} dagen voor introductieprijs.",
-  },
-  "offer.trial.title.named": {
-    one: "{name}, {count} dag voor introductieprijs.",
-    other: "{name}, {count} dagen voor introductieprijs.",
-  },
+  "offer.deal.title": "Dezelfde Pro, voor minder.",
+  "offer.deal.title.named": "{name}, dezelfde Pro voor minder.",
   "offer.trial.cta": "Aanbieding nu claimen",
   "offer.trial.decline": "Ik betaal liever de volle prijs",
   "offer.trial.gets.reminders": "Herinnering voor elke beurt",
@@ -634,13 +625,6 @@ export const nl: Fragment = {
   "offer.trial.gets.garage": "Onbeperkt voertuigen",
   "offer.trial.gets.intervals": "Je eigen intervallen",
   "offer.trial.gets.export": "Alles exporteren als CSV",
-  "offer.trial.legend": "Zo verloopt het aanbod",
-  "offer.trial.now.title": "Vandaag",
-  "offer.trial.now.body": "Alles gaat open: je plan, je herinneringen, je volledige logboek.",
-  "offer.trial.runs.title": "Zolang hij loopt",
-  "offer.trial.runs.body": "Elke beurt die je auto nodig heeft wordt bewaakt, niet onthouden.",
-  "offer.trial.ends.title": "Als hij afloopt",
-  "offer.trial.ends.body": "Daarna verlengt het tegen de normale prijs. Je beslist daarvoor.",
 
   "offer.winback.title": "Je bent gestopt met vastleggen.",
   "offer.winback.decline": "Breng me gewoon naar mijn garage",
@@ -648,10 +632,7 @@ export const nl: Fragment = {
     "Je gegevens staan precies waar je ze hebt achtergelaten. Niets is verlopen, niets is verwijderd en niets hoeft opnieuw te worden ingesteld.",
   "offer.winback.feedback": "Vertel ons wat er misging",
   "offer.winback.feedbackNote": "Een kort formulier, opent in Safari",
-  "offer.winback.caption": {
-    one: "Of geef het nog één kans: {count} dag Pro voor introductieprijs. Zeg op voordat het afloopt en daar blijft het bij.",
-    other: "Of geef het nog één kans: {count} dagen Pro voor introductieprijs. Zeg op voordat ze aflopen en daar blijft het bij.",
-  },
+  "offer.winback.caption": "Of probeer het nog eens: een jaar Pro voor de aanbiedingsprijs. Altijd opzegbaar.",
   "subscribed.title": "Pro staat aan.",
   "subscribed.body": "{vehicle} staat nu in het schema. Je hoort het voordat een beurt verloopt, niet erna.",
   "subscribed.unlocked": "Nu actief",

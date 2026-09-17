@@ -8,50 +8,24 @@ import RevenueCatUI, { type CustomerCenterCallbacks } from "react-native-purchas
 import { track } from "../analytics";
 
 /**
- * The offering that carries the introductory offer, and the only one that does.
+ * The offering the exit screen and the wall sell from, and the only one that
+ * undercuts the standard prices.
  *
- * The intro deliberately does not appear on the first paywall. On the App
- * Store an introductory offer is attached to a *product* and applied
- * automatically by StoreKit to any eligible buyer — so "hide the cheap first
- * week on paywall one, show it on paywall two" cannot be done by hiding words.
- * The two paywalls have to sell different products, and they do: the default
- * offering sells products with no introductory offer, and this one sells
- * `pro_weekly`, whose first week is a pay-up-front introductory price.
- * Buying a no-intro product does not consume the subscription group's
- * introductory-offer eligibility, so a user who says no to the first paywall
- * is still eligible at the second.
+ * It carries one package: a yearly plan at a lower price than the standard
+ * offering's yearly. It used to carry `pro_weekly` with a $0.99 introductory
+ * week, and that was the wrong shape twice over. On the App Store an
+ * introductory offer is attached to a *product* and applied by StoreKit to
+ * any eligible buyer, so the same product on the first paywall showed the
+ * intro there too and the second screen had nothing left to offer. And a
+ * cheap week that renews weekly is a worse deal than it reads.
  *
- * It exists entirely in the RevenueCat dashboard — an offering with this
- * identifier and a paywall attached. No offering, no screen: the flow goes
- * straight to the wall rather than promising a price that cannot be bought.
+ * A separate product at a plain lower price has no eligibility rule for
+ * StoreKit to apply and no renewal surprise. The gap between the two yearly
+ * prices is read off the two offerings in `plans.ts` (`compareAt`); no price
+ * is in copy, because StoreKit localises both per storefront and a hardcoded
+ * figure is wrong in every country that does not use dollars.
  */
 export const DISCOUNT_OFFERING = "discount";
-
-/**
- * The length of that introductory period, in days, for copy that names it.
- *
- * Must match the introductory offer on every product in the offering above.
- * `asc subscriptions offers introductory list --subscription-id <id>` is the
- * source of truth; today `pro_weekly` is ONE_WEEK / PAY_AS_YOU_GO over one
- * period, which is exactly what this file assumes.
- *
- * Pay-as-you-go rather than pay-up-front because Apple rejects a ONE_WEEK
- * pay-up-front offer outright ("Provided duration is not supported by
- * PAY_UP_FRONT"). Over a single period of a weekly subscription the two are
- * the same charge on the same day, so nothing here or in the copy depends on
- * the distinction.
- *
- * The offer exists in every storefront since 2026-09-16, created from the US
- * price point's equalisations (`asc subscriptions offers introductory
- * import`). Eligibility is still StoreKit's call per customer, which is why
- * `plans.ts` asks before it draws the intro price.
- *
- * The *price* is deliberately not here and is never in copy. StoreKit
- * localises and converts it per storefront, and a hardcoded "$0.99" is wrong
- * in every country that does not use dollars and stale the day the tier
- * changes. StoreKit's own price string, read in plans.ts, is the only thing that knows it.
- */
-export const INTRO_DAYS = 7;
 
 export const ENTITLEMENT = "pro";
 

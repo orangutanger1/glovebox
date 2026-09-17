@@ -491,3 +491,22 @@ week" line, `paywall.legal.intro`. `paywall_shown`/`paywall_closed` on
 the intro on the first paywall and the second had nothing left to offer.
 `paywall_plan_selected {plan:"$rc_weekly", offering:"current"}` before the
 switch is a different price than after it.
+
+### 2026-09-17 — the exit offer is a cheaper yearly, not a cheaper week
+
+**`offering=discount` sells a different product from this build.** It was
+`$rc_weekly` → `pro_weekly` with a $0.99 introductory week; it is now
+`$rc_annual` → `pro_annual_discount` at $29.99/yr flat (US base, equalised),
+renewing at that price. The weekly package is off the offering. `paywall_shown`,
+`paywall_closed`, `paywall_purchase_started` and `subscription_success` on
+`offering=discount` keep their names and change their meaning: `plan` goes from
+`$rc_weekly` to `$rc_annual`, and a sale is worth $29.99 rather than $0.99.
+
+Copy: `offer.trial.title` → `offer.deal.title` ("The same Pro, for less."),
+the how-it-runs panel is gone, the winback caption and the Try Pro quick action
+no longer name a week. `INTRO_DAYS` is gone from the code.
+
+The comparison the screen draws — the standard yearly struck through, the
+saving beside it — is `compareAt`, read off the `default` offering at fetch
+time. A store that returns `discount` without `default` shows a plain price and
+the plain title.
