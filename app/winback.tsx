@@ -59,7 +59,7 @@ export default function Winback() {
       footer={
         <>
           <Button
-            label={t("offer.trial.cta", { count: INTRO_DAYS })}
+            label={t("offer.trial.cta")}
             onPress={onStartTrial}
             disabled={busy}
           />

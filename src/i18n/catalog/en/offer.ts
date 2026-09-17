@@ -59,12 +59,15 @@ export const offer: Fragment = {
     one: "{count} service overdue today",
     other: "{count} services overdue today",
   },
-  "offer.paywall.point.due.none": "Nothing overdue today",
   "offer.paywall.point.due.subtitle": "Next warning {date}",
   "offer.paywall.point.due.noNext": "No warning needed yet",
-  "offer.paywall.point.reminders.title": "A reminder before each one",
+  // Drawn in place of the overdue row when nothing is overdue, which on a
+  // fresh install is always: the user has logged nothing yet, so "nothing
+  // overdue today" was the app congratulating them on an empty record.
+  "offer.paywall.point.history.title": "A full history when you sell",
+  "offer.paywall.point.history.subtitle": "Every service, cost and reading, kept forever and exportable.",
+  "offer.paywall.point.reminders.title": "A reminder before each service",
   "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
-  "offer.paywall.notNow": "Not now",
 
   "offer.trial.title": {
     one: "Your first {count} day costs less.",
@@ -74,10 +77,14 @@ export const offer: Fragment = {
     one: "{name}, your first {count} day costs less.",
     other: "{name}, your first {count} days cost less.",
   },
-  "offer.trial.cta": {
-    one: "Start my first {count} day",
-    other: "Start my first {count} days",
+  // Under the title, with the two prices StoreKit returned. It is the one
+  // sentence on the screen that says what the offer is before the reader
+  // reaches the card.
+  "offer.trial.subtitle": {
+    one: "Everything in Pro for {intro} your first {count} day, then {price} per week. Cancel anytime.",
+    other: "Everything in Pro for {intro} your first {count} days, then {price} per week. Cancel anytime.",
   },
+  "offer.trial.cta": "Claim your offer now",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing
   // read before the wall it actually leads to.

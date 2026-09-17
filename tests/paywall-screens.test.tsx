@@ -118,7 +118,6 @@ describe("PlanPicker", () => {
     expect(printed).toContain("$9.99");
     expect(printed).toContain("$2.99");
     expect(printed).toContain(t("paywall.save", { pct: 49 }));
-    expect(printed).toContain(t("paywall.bestValue"));
   });
 
   test("a tap selects and is reported", () => {
@@ -180,11 +179,10 @@ describe("BuyFooter", () => {
   });
 });
 
-test("the review card quotes the review and says where it came from", () => {
+test("the review card quotes the review and signs it", () => {
   const printed = texts(render(createElement(ReviewCard)));
   expect(printed.join(" ")).toContain("surpasses them all");
   expect(printed).toContain(t("paywall.review.name"));
-  expect(printed).toContain(t("paywall.review.source"));
 });
 
 test("no paywall component prints an em or en dash", () => {

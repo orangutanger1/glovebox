@@ -5,7 +5,7 @@ import { t } from "../i18n";
 /** Everything the subscription opens, as a row of quiet chips. The trial
  *  screen's list with the sentences taken off: seven things in two lines,
  *  read in one look, under a legend that says what the list is. */
-const GETS = ["reminders", "due", "history", "costs", "garage", "intervals", "export"] as const;
+export const GETS = ["reminders", "due", "history", "costs", "garage", "intervals", "export"] as const;
 
 export function IncludedStrip() {
   return (

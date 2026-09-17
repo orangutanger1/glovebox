@@ -9,6 +9,7 @@ import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
 import { ReviewCard } from "../../src/paywall/ReviewCard";
 import { IncludedStrip } from "../../src/paywall/IncludedStrip";
+import { CloseButton } from "../../src/paywall/CloseButton";
 import { recordReviewEvent } from "../../src/review";
 import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -28,14 +29,19 @@ import { track } from "../../src/analytics";
  * overdue count sees what it costs to fix that without leaving the page.
  *
  * Top to bottom: the promise, three rows that evidence it against this car,
- * what the subscription includes, the one review the app has, the plans, the
- * button. Everything fits without scrolling on a 4.7" screen; a scroll on a
- * paywall is a fold, and what is below a fold is not read.
+ * what the subscription includes, the one review the app has. The plans and
+ * the button are in the footer, pinned under the scroll, so the price list
+ * is on the glass from the first frame to the last however far the argument
+ * above it runs; a plan that scrolls away with the review is a plan the
+ * reader has to go and find again once they have decided.
  *
- * "Not now" is the decline the sheet's close button used to be. It goes to
- * the trial, which is the whole reason the trial exists. There is still no
- * free door.
+ * The close is the decline the sheet's close button used to be, and it goes
+ * where "Not now" went: to the trial, which is the whole reason the trial
+ * exists. It arrives late (see `CloseButton`). There is still no free door.
  */
+
+/** How long the screen has no exit drawn on it. */
+const CLOSE_AFTER_MS = 4000;
 export default function OnboardingPaywall() {
   const advance = useAdvance("paywall");
   const finish = useFinish();
@@ -99,26 +105,35 @@ export default function OnboardingPaywall() {
     }
   }
 
-  function onNotNow() {
+  function onClose() {
     track("paywall_closed", { offering: "current", outcome: "dismissed", result: "DECLINED" });
     advance();
   }
 
+  // The middle row is the overdue count when there is one. When there is not,
+  // which on a fresh install is always, it is the history benefit instead:
+  // "nothing overdue today" was true only because nothing had been logged,
+  // and a paywall congratulating an empty record is not evidence of anything.
   const next = nextUp(plan);
-  const dueTitle =
+  const middle =
     plan.pastDue > 0
-      ? t("offer.paywall.point.due.title", { count: plan.pastDue })
-      : t("offer.paywall.point.due.none");
-  const dueSubtitle = next?.dueAt
-    ? t("offer.paywall.point.due.subtitle", { date: formatDate(next.dueAt) })
-    : t("offer.paywall.point.due.noNext");
+      ? {
+          title: t("offer.paywall.point.due.title", { count: plan.pastDue }),
+          subtitle: next?.dueAt
+            ? t("offer.paywall.point.due.subtitle", { date: formatDate(next.dueAt) })
+            : t("offer.paywall.point.due.noNext"),
+        }
+      : {
+          title: t("offer.paywall.point.history.title"),
+          subtitle: t("offer.paywall.point.history.subtitle"),
+        };
 
   const points: { title: string; subtitle: string }[] = [
     {
       title: t("offer.paywall.point.tracked.title", { vehicle: vehicleName }),
       subtitle: t("offer.paywall.point.tracked.subtitle", { count: plan.items.length }),
     },
-    { title: dueTitle, subtitle: dueSubtitle },
+    middle,
     {
       title: t("offer.paywall.point.reminders.title"),
       subtitle: t("offer.paywall.point.reminders.subtitle"),
@@ -130,18 +145,29 @@ export default function OnboardingPaywall() {
       route="paywall"
       title={tNamed("offer.paywall.title")}
       subtitle={t("offer.paywall.subtitle")}
+      trailing={<CloseButton onPress={onClose} disabled={busy} delayMs={CLOSE_AFTER_MS} />}
       footer={
-        <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore}>
-          <Pressable
-            onPress={onNotNow}
-            disabled={busy}
-            style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
-          >
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-              {t("offer.paywall.notNow")}
-            </Text>
-          </Pressable>
-        </BuyFooter>
+        <>
+          {plans ? (
+            <PlanPicker
+              plans={plans}
+              selected={chosen?.id ?? defaultPlan(plans)}
+              onSelect={setSelected}
+              layout="rows"
+              offering="current"
+            />
+          ) : (
+            <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                {loading ? t("paywall.loading") : t("paywall.retry")}
+              </Text>
+            </Pressable>
+          )}
+          {msg !== null && (
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>{msg}</Text>
+          )}
+          <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore} />
+        </>
       }
     >
       <View style={{ gap: tokens.space.sm + 2 }}>
@@ -166,26 +192,6 @@ export default function OnboardingPaywall() {
       <IncludedStrip />
 
       <ReviewCard />
-
-      {plans ? (
-        <PlanPicker
-          plans={plans}
-          selected={chosen?.id ?? defaultPlan(plans)}
-          onSelect={setSelected}
-          layout="rows"
-          offering="current"
-        />
-      ) : (
-        <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
-          <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-            {loading ? t("paywall.loading") : t("paywall.retry")}
-          </Text>
-        </Pressable>
-      )}
-
-      {msg !== null && (
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>
-      )}
     </OnboardingScreen>
   );
 }

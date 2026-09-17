@@ -289,22 +289,38 @@ test("the paywall names what is bought, and leaves the schedule to the ask", () 
   expect(printed.join(" ")).toContain("$79.99");
   expect(printed.join(" ")).toContain("$1.54");
   expect(printed).toContain(t("paywall.cta.year"));
-  expect(printed).toContain(t("offer.paywall.notNow"));
+  // A fresh install has nothing overdue, and the row says something the app
+  // does rather than congratulating an empty record.
+  expect(printed.join(" ")).toContain(t("offer.paywall.point.history.title"));
+  expect(printed.join(" ")).not.toMatch(/nothing overdue/i);
+  // No decline under the button, and no close until it has been read a while.
+  expect(printed).not.toContain("Not now");
+  expect(printed).not.toContain("✕");
   // The car's dated schedule still belongs to the reminder ask.
   expect(printed).not.toContain(serviceName("Air Filter"));
   expect(printed).not.toContain("Nothing on file");
 });
 
-test("Not now on the paywall goes to the trial, and a buy ends the flow paid", async () => {
+test("the paywall's close arrives after a pause, goes to the trial, and a buy ends the flow paid", async () => {
   const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
   setOnboardingVehicleId(car.id);
 
-  const tree = render(OnboardingPaywall);
-  const notNow = tree.root.findAll(
-    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("offer.paywall.notNow"))
-  );
-  act(() => notNow[notNow.length - 1].props.onPress());
-  expect(navigated).toEqual(["/onboarding/offer"]);
+  jest.useFakeTimers();
+  try {
+    const tree = render(OnboardingPaywall);
+    const findClose = () =>
+      tree.root.findAll((n) => n.props.accessibilityLabel === t("paywall.close") && typeof n.props.onPress === "function");
+    expect(findClose()).toHaveLength(0);
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    const close = findClose();
+    expect(close).toHaveLength(1);
+    act(() => close[0].props.onPress());
+    expect(navigated).toEqual(["/onboarding/offer"]);
+  } finally {
+    jest.useRealTimers();
+  }
 
   navigated.length = 0;
   mockBuy.mockResolvedValueOnce("purchased");
@@ -378,7 +394,7 @@ test("relaunched with no entitlement, the offer is the wall: no back, restore in
     expect(printed).not.toContain(t("offer.trial.decline"));
     expect(printed).not.toContain("‹ Back");
     expect(printed).toContain(t("paywall.restore"));
-    expect(printed).toContain(t("paywall.cta.week"));
+    expect(printed).toContain(t("offer.trial.cta"));
     expect(printed.join(" ")).toContain("Your first 7 days cost less.");
   } finally {
     mockParams = {};

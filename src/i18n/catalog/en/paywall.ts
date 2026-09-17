@@ -28,7 +28,6 @@ export const paywall: Fragment = {
   "paywall.billed.month": "billed {price} per month",
   "paywall.billed.year": "billed {price} per year",
   "paywall.save": "Save {pct}%",
-  "paywall.bestValue": "Best value",
   "paywall.intro.label": "Your first week",
   "paywall.then": "then {price} per week",
 
@@ -50,6 +49,7 @@ export const paywall: Fragment = {
 
   "paywall.review.quote":
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "App Store review",
+  // First name and an initial: a customer's full surname on a sales screen is
+  // more of her than she put in the review's byline.
+  "paywall.review.name": "Tracy D.",
 };

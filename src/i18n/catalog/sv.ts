@@ -187,12 +187,12 @@ export const sv: Fragment = {
     one: "{count} service försenad i dag",
     other: "{count} servicar försenade i dag",
   },
-  "offer.paywall.point.due.none": "Inget försenat i dag",
   "offer.paywall.point.due.subtitle": "Nästa varning {date}",
   "offer.paywall.point.due.noNext": "Ingen varning behövs ännu",
+  "offer.paywall.point.history.title": "Hela historiken när du säljer",
+  "offer.paywall.point.history.subtitle": "Varje service, kostnad och mätarställning, sparad för alltid och exporterbar.",
   "offer.paywall.point.reminders.title": "En påminnelse före varje",
   "offer.paywall.point.reminders.subtitle": "Samma dag det är dags, aldrig tjatigt.",
-  "offer.paywall.notNow": "Inte nu",
 
 
   "offer.trial.title": {
@@ -203,10 +203,11 @@ export const sv: Fragment = {
     one: "{name}, {count} dag till introduktionspris.",
     other: "{name}, {count} dagar till introduktionspris.",
   },
-  "offer.trial.cta": {
-    one: "Starta min {count} dag",
-    other: "Starta mina {count} dagar",
+  "offer.trial.subtitle": {
+    one: "Allt i Pro för {intro} den första {count} dagen, sedan {price} per vecka. Avsluta när du vill.",
+    other: "Allt i Pro för {intro} de första {count} dagarna, sedan {price} per vecka. Avsluta när du vill.",
   },
+  "offer.trial.cta": "Ta erbjudandet nu",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",
   "offer.trial.gets.due": "Dags efter datum och sträcka",
@@ -702,7 +703,6 @@ export const sv: Fragment = {
   "paywall.billed.month": "{price} debiteras per månad",
   "paywall.billed.year": "{price} debiteras per år",
   "paywall.save": "Spara {pct}%",
-  "paywall.bestValue": "Bäst värde",
   "paywall.intro.label": "Din första vecka",
   "paywall.then": "sedan {price} per vecka",
   "paywall.cta.week": "Fortsätt veckovis",
@@ -720,6 +720,5 @@ export const sv: Fragment = {
   "paywall.retry": "Försök igen",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "App Store-recension",
+  "paywall.review.name": "Tracy D.",
 };

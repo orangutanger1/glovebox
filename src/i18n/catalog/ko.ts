@@ -182,12 +182,12 @@ export const ko: Fragment = {
   "offer.paywall.point.tracked.title": "{vehicle} 기록 완료",
   "offer.paywall.point.tracked.subtitle": { other: "정비 {count}건을 날짜와 거리로 관리" },
   "offer.paywall.point.due.title": { other: "오늘 기준 {count}건 기한 초과" },
-  "offer.paywall.point.due.none": "오늘 기한을 넘긴 항목 없음",
   "offer.paywall.point.due.subtitle": "다음 알림 {date}",
   "offer.paywall.point.due.noNext": "아직 알림이 필요하지 않아요",
+  "offer.paywall.point.history.title": "판매할 때 필요한 전체 이력",
+  "offer.paywall.point.history.subtitle": "모든 정비, 비용, 기록을 영구 보관하고 내보낼 수 있어요.",
   "offer.paywall.point.reminders.title": "정비마다 미리 알림",
   "offer.paywall.point.reminders.subtitle": "기한 당일에 한 번만, 귀찮게 하지 않아요.",
-  "offer.paywall.notNow": "나중에",
 
 
   "offer.trial.title": {
@@ -196,9 +196,10 @@ export const ko: Fragment = {
   "offer.trial.title.named": {
     other: "{name}님, 첫 {count}일은 특별 가격으로.",
   },
-  "offer.trial.cta": {
-    other: "{count}일 시작하기",
+  "offer.trial.subtitle": {
+    other: "처음 {count}일은 {intro}로 Pro 전체 이용, 이후 주 {price}. 언제든 해지할 수 있어요.",
   },
+  "offer.trial.cta": "지금 혜택 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",
   "offer.trial.gets.due": "날짜와 주행거리로 기한 관리",
@@ -691,7 +692,6 @@ export const ko: Fragment = {
   "paywall.billed.month": "매월 {price} 청구",
   "paywall.billed.year": "매년 {price} 청구",
   "paywall.save": "{pct}% 절약",
-  "paywall.bestValue": "최고 혜택",
   "paywall.intro.label": "첫 주",
   "paywall.then": "이후 주 {price}",
   "paywall.cta.week": "주간 플랜으로 계속",
@@ -709,6 +709,5 @@ export const ko: Fragment = {
   "paywall.retry": "다시 시도",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "App Store 리뷰",
+  "paywall.review.name": "Tracy D.",
 };

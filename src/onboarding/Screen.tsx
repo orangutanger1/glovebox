@@ -65,6 +65,7 @@ export function OnboardingScreen({
   tone = "housing",
   onBack,
   hideBack = false,
+  trailing,
   banner,
 }: {
   route: OnboardingRoute;
@@ -107,6 +108,10 @@ export function OnboardingScreen({
    *  wall: the ask behind it has already been refused, and a Back that walks
    *  the user into a refused ask is an exit that is not one. */
   hideBack?: boolean;
+  /** A control at the far right of the header band, across from Back. For
+   *  the paywall's late-arriving close: the header is the one place a reader
+   *  looks for a way out, and drawing it there keeps the footer for the ask. */
+  trailing?: ReactNode;
   /** A node dropped over the very top of the screen, above the content and
    *  outside the scroll — where iOS delivers a notification banner. Non-
    *  interactive: it never intercepts the scroll or a tap beneath it. */
@@ -308,6 +313,7 @@ export function OnboardingScreen({
                 </>
               ) : null
             )}
+            {trailing ? <View style={{ marginLeft: "auto" }}>{trailing}</View> : null}
           </View>
 
           {body}

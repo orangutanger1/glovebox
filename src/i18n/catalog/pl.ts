@@ -218,12 +218,12 @@ export const pl: Fragment = {
     many: "{count} serwisów zaległych dziś",
     other: "{count} serwisu zaległego dziś",
   },
-  "offer.paywall.point.due.none": "Nic dziś nie zalega",
   "offer.paywall.point.due.subtitle": "Następne ostrzeżenie {date}",
   "offer.paywall.point.due.noNext": "Na razie żadne ostrzeżenie nie jest potrzebne",
+  "offer.paywall.point.history.title": "Pełna historia przy sprzedaży",
+  "offer.paywall.point.history.subtitle": "Każdy serwis, koszt i odczyt, zachowany na zawsze i do wyeksportowania.",
   "offer.paywall.point.reminders.title": "Przypomnienie przed każdym",
   "offer.paywall.point.reminders.subtitle": "W dniu terminu, bez nagabywania.",
-  "offer.paywall.notNow": "Nie teraz",
 
 
   "offer.trial.title": {
@@ -238,12 +238,13 @@ export const pl: Fragment = {
     many: "{name}, {count} dni w cenie startowej.",
     other: "{name}, {count} dnia w cenie startowej.",
   },
-  "offer.trial.cta": {
-    one: "Zaczynam {count} dzień",
-    few: "Zaczynam {count} dni",
-    many: "Zaczynam {count} dni",
-    other: "Zaczynam {count} dnia",
+  "offer.trial.subtitle": {
+    one: "Całe Pro za {intro} przez pierwszy {count} dzień, potem {price} tygodniowo. Anuluj w każdej chwili.",
+    few: "Całe Pro za {intro} przez pierwsze {count} dni, potem {price} tygodniowo. Anuluj w każdej chwili.",
+    many: "Całe Pro za {intro} przez pierwsze {count} dni, potem {price} tygodniowo. Anuluj w każdej chwili.",
+    other: "Całe Pro za {intro} przez pierwsze {count} dnia, potem {price} tygodniowo. Anuluj w każdej chwili.",
   },
+  "offer.trial.cta": "Skorzystaj z oferty teraz",
   "offer.trial.decline": "Wolę zapłacić pełną cenę",
   "offer.trial.gets.reminders": "Przypomnienie przed każdym serwisem",
   "offer.trial.gets.due": "Termin według daty i przebiegu",
@@ -786,7 +787,6 @@ export const pl: Fragment = {
   "paywall.billed.month": "{price} pobierane co miesiąc",
   "paywall.billed.year": "{price} pobierane co rok",
   "paywall.save": "Oszczędzasz {pct}%",
-  "paywall.bestValue": "Najkorzystniej",
   "paywall.intro.label": "Twój pierwszy tydzień",
   "paywall.then": "potem {price} tygodniowo",
   "paywall.cta.week": "Dalej z planem tygodniowym",
@@ -804,6 +804,5 @@ export const pl: Fragment = {
   "paywall.retry": "Spróbuj ponownie",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "Recenzja w App Store",
+  "paywall.review.name": "Tracy D.",
 };

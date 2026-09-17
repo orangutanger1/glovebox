@@ -248,7 +248,7 @@ describe("t", () => {
     // differ by the digit. What is being asserted is the wording around it:
     // blank the number out and English changes, Japanese does not.
     const sentence = (count: number) =>
-      t("offer.trial.cta", { count }).replace(String(count), "#");
+      t("offer.trial.title", { count }).replace(String(count), "#");
 
     setLanguage("en");
     expect(sentence(1)).not.toBe(sentence(3));

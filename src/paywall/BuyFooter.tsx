@@ -26,15 +26,20 @@ export function BuyFooter({
   busy,
   onBuy,
   onRestore,
+  label: labelOverride,
   children,
 }: {
   plan: Plan | null;
   busy: boolean;
   onBuy: () => void;
   onRestore: () => void;
+  /** Replaces the per-period CTA once a plan is in hand. The trial screen
+   *  sells an introductory week, and "Continue with weekly" on it names the
+   *  renewal rather than the offer. */
+  label?: string;
   children?: React.ReactNode;
 }) {
-  const label = plan ? t(`paywall.cta.${plan.period}`) : t("paywall.loading");
+  const label = plan ? (labelOverride ?? t(`paywall.cta.${plan.period}`)) : t("paywall.loading");
   const legal = plan
     ? plan.intro
       ? t("paywall.legal.intro", { intro: plan.intro.priceString, price: plan.priceString })

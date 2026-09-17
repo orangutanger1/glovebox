@@ -169,12 +169,12 @@ export const ja: Fragment = {
   "offer.paywall.point.tracked.title": "{vehicle}を記録済み",
   "offer.paywall.point.tracked.subtitle": { other: "{count}件の整備を日付と距離で管理" },
   "offer.paywall.point.due.title": { other: "本日{count}件が期限超過" },
-  "offer.paywall.point.due.none": "本日の期限超過はありません",
   "offer.paywall.point.due.subtitle": "次の通知 {date}",
   "offer.paywall.point.due.noNext": "今はまだ通知の必要はありません",
+  "offer.paywall.point.history.title": "売却時に役立つ完全な履歴",
+  "offer.paywall.point.history.subtitle": "すべての整備・費用・記録を永久に保存、書き出しも可能。",
   "offer.paywall.point.reminders.title": "各整備の前にリマインド",
   "offer.paywall.point.reminders.subtitle": "期限当日に一度だけ。しつこく通知しません。",
-  "offer.paywall.notNow": "今はしない",
 
 
   "offer.trial.title": {
@@ -183,9 +183,10 @@ export const ja: Fragment = {
   "offer.trial.title.named": {
     other: "{name}さん、最初の{count}日間はお得な価格で。",
   },
-  "offer.trial.cta": {
-    other: "{count}日間を始める",
+  "offer.trial.subtitle": {
+    other: "最初の{count}日間は{intro}でPro全機能、その後は週{price}。いつでも解約できます。",
   },
+  "offer.trial.cta": "今すぐオファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
   "offer.trial.gets.due": "日付と距離の両方で期限管理",
@@ -665,7 +666,6 @@ export const ja: Fragment = {
   "paywall.billed.month": "月ごとに{price}を請求",
   "paywall.billed.year": "年ごとに{price}を請求",
   "paywall.save": "{pct}%お得",
-  "paywall.bestValue": "一番お得",
   "paywall.intro.label": "最初の1週間",
   "paywall.then": "その後は週{price}",
   "paywall.cta.week": "週額プランで続ける",
@@ -683,6 +683,5 @@ export const ja: Fragment = {
   "paywall.retry": "再試行",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "App Storeレビュー",
+  "paywall.review.name": "Tracy D.",
 };

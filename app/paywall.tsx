@@ -10,6 +10,7 @@ import { PlanPicker, defaultPlan } from "../src/paywall/PlanPicker";
 import { BuyFooter } from "../src/paywall/BuyFooter";
 import { ReviewCard } from "../src/paywall/ReviewCard";
 import { IncludedStrip } from "../src/paywall/IncludedStrip";
+import { CloseButton } from "../src/paywall/CloseButton";
 import { settlePaywall } from "../src/paywall/present";
 import { recordReviewEvent } from "../src/review";
 import { track } from "../src/analytics";
@@ -111,55 +112,41 @@ export default function PaywallRoute() {
     }
   }
 
+  // The plans ride in the footer with the button, under the glass, so the
+  // price is on the glass however far the reader scrolls the argument.
   return (
     <Screen
       edges={["top", "bottom"]}
-      footer={<BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore} />}
+      footer={
+        <>
+          {plans ? (
+            <PlanPicker
+              plans={plans}
+              selected={chosen?.id ?? defaultPlan(plans)}
+              onSelect={setSelected}
+              offering={label}
+            />
+          ) : (
+            <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                {loading ? t("paywall.loading") : t("paywall.retry")}
+              </Text>
+            </Pressable>
+          )}
+          {msg !== null && (
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>{msg}</Text>
+          )}
+          <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore} />
+        </>
+      }
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <Text style={{ ...tokens.text.title, color: tokens.color.text }}>{t("paywall.title")}</Text>
-        <Pressable
-          onPress={onClose}
-          disabled={busy}
-          hitSlop={12}
-          accessibilityRole="button"
-          accessibilityLabel={t("paywall.close")}
-          style={{
-            width: 32,
-            height: 32,
-            borderRadius: 16,
-            backgroundColor: tokens.color.surfaceHi,
-            borderWidth: 1,
-            borderColor: tokens.color.hairline,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={{ color: tokens.color.text, fontSize: 16, lineHeight: 18 }}>✕</Text>
-        </Pressable>
+        <CloseButton onPress={onClose} disabled={busy} />
       </View>
 
       <IncludedStrip />
       <ReviewCard />
-
-      {plans ? (
-        <PlanPicker
-          plans={plans}
-          selected={chosen?.id ?? defaultPlan(plans)}
-          onSelect={setSelected}
-          offering={label}
-        />
-      ) : (
-        <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
-          <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-            {loading ? t("paywall.loading") : t("paywall.retry")}
-          </Text>
-        </Pressable>
-      )}
-
-      {msg !== null && (
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>
-      )}
     </Screen>
   );
 }

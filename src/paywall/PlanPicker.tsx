@@ -17,10 +17,10 @@ import type { Plan } from "../purchases/plans";
  * compares on, and the amount actually billed underneath so the comparison
  * figure is never mistaken for the charge.
  *
- * Selection is the app's own: a lit hairline and a tick, no new hue. The
- * "best value" and "save" marks are green because green is the one colour
- * the system spends on a good, settled fact, and a saving computed from the
- * store's own prices is one.
+ * Selection is the app's own: a lit hairline and a tick, no new hue. The one
+ * "save" mark is green because green is the one colour the system spends on
+ * a good, settled fact, and a saving computed from the store's own prices is
+ * one.
  *
  * Nothing here is a price. Every string is StoreKit's or arithmetic on it.
  */
@@ -162,46 +162,57 @@ export function PlanPicker({
           const { figure, unit } = headline(plan);
           const under = billed(plan);
           return (
-            <Frame key={plan.id} on={on} onPress={() => choose(plan)} style={{ flex: 1, gap: tokens.space.sm }}>
-              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <Text style={{ ...tokens.text.legend, color: on ? tokens.color.text : tokens.color.textMuted }}>
-                  {t(`paywall.period.${plan.period}`)}
-                </Text>
-                <Tick on={on} />
-              </View>
-              {plan.intro && (
-                <Text
-                  style={{
-                    ...tokens.text.caption,
-                    color: tokens.color.textFaint,
-                    textDecorationLine: "line-through",
-                  }}
-                >
-                  {plan.priceString}
-                </Text>
-              )}
-              <View style={{ flexDirection: "row", alignItems: "baseline", gap: tokens.space.xs }}>
-                <Text style={{ ...tokens.text.readout, fontSize: 28, color: tokens.color.text }}>{figure}</Text>
-                <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{unit}</Text>
-              </View>
-              {under && (
-                <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{under}</Text>
-              )}
-              {(plan.savePct !== undefined || plan.id === bestId) && (
-                <View style={{ flexDirection: "row", gap: tokens.space.xs, flexWrap: "wrap" }}>
-                  {plan.id === bestId && <Mark label={t("paywall.bestValue")} />}
-                  {plan.savePct !== undefined && <Mark label={t("paywall.save", { pct: plan.savePct })} />}
+            // The Pressable is the flex child, not the animated card inside
+            // it: `flex: 1` on the inner view is measured against a parent
+            // that hugs its content, and a lone card shrank to the width of
+            // its own price and sat in the top-left corner of the row.
+            <View key={plan.id} style={{ flex: 1 }}>
+              <Frame on={on} onPress={() => choose(plan)} style={{ gap: tokens.space.sm }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                  <Text style={{ ...tokens.text.legend, color: on ? tokens.color.text : tokens.color.textMuted }}>
+                    {t(`paywall.period.${plan.period}`)}
+                  </Text>
+                  <Tick on={on} />
                 </View>
-              )}
-            </Frame>
+                {plan.intro && (
+                  <Text
+                    style={{
+                      ...tokens.text.caption,
+                      color: tokens.color.textFaint,
+                      textDecorationLine: "line-through",
+                    }}
+                  >
+                    {plan.priceString}
+                  </Text>
+                )}
+                <View style={{ flexDirection: "row", alignItems: "baseline", gap: tokens.space.xs }}>
+                  <Text style={{ ...tokens.text.readout, fontSize: 28, color: tokens.color.text }}>{figure}</Text>
+                  <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{unit}</Text>
+                </View>
+                {under && (
+                  <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{under}</Text>
+                )}
+                {plan.id === bestId && plan.savePct !== undefined && (
+                  <Mark label={t("paywall.save", { pct: plan.savePct })} />
+                )}
+              </Frame>
+            </View>
           );
         })}
       </View>
     );
   }
 
+  // Rows are two lines tall and no more. They ride in a footer pinned under
+  // the argument, and every point they take is a point the argument loses:
+  // at the first size the three of them plus the button left two bullet
+  // points visible above the fold. The figure and its unit share a baseline,
+  // and the one green mark on the list is the saving on the best plan, in
+  // the heading line where "Best value" used to be; a plan that is selected
+  // by default and marked as the cheapest does not also need to be called
+  // the best.
   return (
-    <View style={{ gap: tokens.space.sm }}>
+    <View style={{ gap: tokens.space.sm - 2 }}>
       {plans.map((plan) => {
         const on = plan.id === selected;
         const { figure, unit } = headline(plan);
@@ -211,22 +222,31 @@ export function PlanPicker({
             key={plan.id}
             on={on}
             onPress={() => choose(plan)}
-            style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: tokens.space.sm + 4,
+              paddingVertical: tokens.space.sm + 2,
+              paddingHorizontal: tokens.space.md - 2,
+            }}
           >
             <Tick on={on} />
-            <View style={{ flex: 1, gap: 2 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm, flexWrap: "wrap" }}>
-                <Text style={{ ...tokens.text.heading, color: tokens.color.text }}>
+            <View style={{ flex: 1, gap: 1 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
+                <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>
                   {t(`paywall.period.${plan.period}`)}
                 </Text>
-                {plan.id === bestId && <Mark label={t("paywall.bestValue")} />}
-                {plan.savePct !== undefined && <Mark label={t("paywall.save", { pct: plan.savePct })} />}
+                {plan.id === bestId && plan.savePct !== undefined && (
+                  <Mark label={t("paywall.save", { pct: plan.savePct })} />
+                )}
               </View>
               {under && (
-                <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{under}</Text>
+                <Text style={{ ...tokens.text.footnote, fontSize: 12, lineHeight: 16, color: tokens.color.textMuted }}>
+                  {under}
+                </Text>
               )}
             </View>
-            <View style={{ alignItems: "flex-end" }}>
+            <View style={{ alignItems: "flex-end", gap: 1 }}>
               {plan.intro && (
                 <Text
                   style={{ ...tokens.text.caption, color: tokens.color.textFaint, textDecorationLine: "line-through" }}
@@ -234,8 +254,10 @@ export function PlanPicker({
                   {plan.priceString}
                 </Text>
               )}
-              <Text style={{ ...tokens.text.readout, color: tokens.color.text }}>{figure}</Text>
-              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{unit}</Text>
+              <View style={{ flexDirection: "row", alignItems: "baseline", gap: tokens.space.xs }}>
+                <Text style={{ ...tokens.text.readout, fontSize: 20, color: tokens.color.text }}>{figure}</Text>
+                <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{unit}</Text>
+              </View>
             </View>
           </Frame>
         );

@@ -9,6 +9,8 @@ import { INTRO_DAYS, restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
 import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
+import { GETS } from "../../src/paywall/IncludedStrip";
+import { Check } from "../../src/design/Check";
 import { recordReviewEvent } from "../../src/review";
 import { isGrandfathered } from "../../src/paywall";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -29,10 +31,16 @@ const STEPS = ["now", "runs", "ends"] as const;
  * people walking out is the cheapest conversion in the funnel.
  *
  * The price is drawn here now (see paywall.tsx for why the sheet went): one
- * wide card, the standard price struck through beside the introductory one,
- * "then {price} per week" under it. When StoreKit says this customer is not
- * eligible, the card shows the plain weekly price and no strike-through, so
- * nothing on the glass promises what Apple's sheet will not honour.
+ * wide card in the footer, the standard price struck through beside the
+ * introductory one, "then {price} per week" under it. Above it, under the
+ * title: the offer in one sentence with both prices, the list of what the
+ * week opens, and how the offer runs. When StoreKit says this customer is
+ * not eligible, the title is the plain one, the sentence is the paywall's,
+ * the card shows the plain weekly price with no strike-through, and the
+ * legend is gone, so nothing on the glass promises what Apple's sheet will
+ * not honour. In sandbox that is what a tester who has already bought the
+ * weekly product on this Apple ID sees; the offer is not missing, they have
+ * used it.
  *
  * "I'd rather pay full price" is the soft decline: it is a true sentence, and
  * it goes back to the paywall, which is the screen that sells full price.
@@ -129,6 +137,20 @@ export default function OnboardingOffer() {
     }
   }
 
+  // The one sentence that says what the offer is, with both of StoreKit's
+  // prices in it. Only once a plan is in hand: a sentence with the prices
+  // blank is worse than no sentence.
+  const subtitle =
+    chosen?.intro
+      ? t("offer.trial.subtitle", {
+          count: INTRO_DAYS,
+          intro: chosen.intro.priceString,
+          price: chosen.priceString,
+        })
+      : hasIntro
+        ? undefined
+        : t("offer.paywall.subtitle");
+
   return (
     <OnboardingScreen
       route="offer"
@@ -137,38 +159,63 @@ export default function OnboardingOffer() {
           ? tNamed("offer.trial.title", { count: INTRO_DAYS })
           : tNamed("offer.paywall.title")
       }
+      subtitle={subtitle}
       hideBack={relaunched}
       footer={
-        <BuyFooter plan={chosen} busy={busy} onBuy={onBuy} onRestore={onRestore}>
-          {!relaunched && (
-            <Pressable
-              onPress={onDecline}
-              disabled={busy}
-              style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
-            >
-              <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-                {t("offer.trial.decline")}
+        <>
+          {plans ? (
+            <PlanPicker
+              plans={plans}
+              selected={chosen?.id ?? defaultPlan(plans)}
+              onSelect={setSelected}
+              layout="cards"
+              offering="discount"
+            />
+          ) : (
+            <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                {loading ? t("paywall.loading") : t("paywall.retry")}
               </Text>
             </Pressable>
           )}
-        </BuyFooter>
+          {msg !== null && (
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>{msg}</Text>
+          )}
+          <BuyFooter
+            plan={chosen}
+            busy={busy}
+            onBuy={onBuy}
+            onRestore={onRestore}
+            label={chosen?.intro ? t("offer.trial.cta") : undefined}
+          >
+            {!relaunched && (
+              <Pressable
+                onPress={onDecline}
+                disabled={busy}
+                style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
+              >
+                <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+                  {t("offer.trial.decline")}
+                </Text>
+              </Pressable>
+            )}
+          </BuyFooter>
+        </>
       }
     >
-      {plans ? (
-        <PlanPicker
-          plans={plans}
-          selected={chosen?.id ?? defaultPlan(plans)}
-          onSelect={setSelected}
-          layout="cards"
-          offering="discount"
-        />
-      ) : (
-        <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
-          <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
-            {loading ? t("paywall.loading") : t("paywall.retry")}
-          </Text>
-        </Pressable>
-      )}
+      {/* Everything the week opens, a tick and a line each. This is the list
+          the paywall compressed into chips; here it gets the page, because
+          the screen has no car-specific rows to make the argument for it. */}
+      <View style={{ gap: tokens.space.sm + 2 }}>
+        {GETS.map((id) => (
+          <View key={id} style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
+            <Check size={14} />
+            <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
+              {t(`offer.trial.gets.${id}`)}
+            </Text>
+          </View>
+        ))}
+      </View>
 
       {hasIntro && (
         <>
@@ -187,10 +234,6 @@ export default function OnboardingOffer() {
             </View>
           </Panel>
         </>
-      )}
-
-      {msg !== null && (
-        <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>{msg}</Text>
       )}
     </OnboardingScreen>
   );

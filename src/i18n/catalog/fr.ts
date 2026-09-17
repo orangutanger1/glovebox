@@ -195,12 +195,12 @@ export const fr: Fragment = {
     one: "{count} entretien en retard aujourd’hui",
     other: "{count} entretiens en retard aujourd’hui",
   },
-  "offer.paywall.point.due.none": "Rien en retard aujourd’hui",
   "offer.paywall.point.due.subtitle": "Prochaine alerte {date}",
   "offer.paywall.point.due.noNext": "Aucune alerte nécessaire pour l’instant",
+  "offer.paywall.point.history.title": "Un historique complet à la revente",
+  "offer.paywall.point.history.subtitle": "Chaque entretien, coût et relevé, conservé pour toujours et exportable.",
   "offer.paywall.point.reminders.title": "Un rappel avant chacun",
   "offer.paywall.point.reminders.subtitle": "Le jour de l’échéance, jamais de relance.",
-  "offer.paywall.notNow": "Pas maintenant",
 
 
   "offer.trial.title": {
@@ -211,10 +211,11 @@ export const fr: Fragment = {
     one: "{name}, {count} jour au prix de lancement.",
     other: "{name}, {count} jours au prix de lancement.",
   },
-  "offer.trial.cta": {
-    one: "Commencer mon {count} jour",
-    other: "Commencer mes {count} jours",
+  "offer.trial.subtitle": {
+    one: "Tout Pro pour {intro} le premier {count} jour, puis {price} par semaine. Annulable à tout moment.",
+    other: "Tout Pro pour {intro} les {count} premiers jours, puis {price} par semaine. Annulable à tout moment.",
   },
+  "offer.trial.cta": "Profiter de l’offre maintenant",
   "offer.trial.decline": "Je préfère payer le plein tarif",
   "offer.trial.gets.reminders": "Rappels avant chaque entretien",
   "offer.trial.gets.due": "Échéance par date et distance",
@@ -727,7 +728,6 @@ export const fr: Fragment = {
   "paywall.billed.month": "facturé {price} par mois",
   "paywall.billed.year": "facturé {price} par an",
   "paywall.save": "Économisez {pct}%",
-  "paywall.bestValue": "Meilleure offre",
   "paywall.intro.label": "Votre première semaine",
   "paywall.then": "puis {price} par semaine",
   "paywall.cta.week": "Continuer en hebdomadaire",
@@ -745,6 +745,5 @@ export const fr: Fragment = {
   "paywall.retry": "Réessayer",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "Avis App Store",
+  "paywall.review.name": "Tracy D.",
 };

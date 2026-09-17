@@ -184,12 +184,12 @@ export const es: Fragment = {
     one: "{count} mantenimiento vencido hoy",
     other: "{count} mantenimientos vencidos hoy",
   },
-  "offer.paywall.point.due.none": "Nada vencido hoy",
   "offer.paywall.point.due.subtitle": "Próximo aviso {date}",
   "offer.paywall.point.due.noNext": "Aún no hace falta ningún aviso",
+  "offer.paywall.point.history.title": "El historial completo al vender",
+  "offer.paywall.point.history.subtitle": "Cada mantenimiento, gasto y lectura, guardado para siempre y exportable.",
   "offer.paywall.point.reminders.title": "Un recordatorio antes de cada uno",
   "offer.paywall.point.reminders.subtitle": "El día que toca, y nunca insistiendo.",
-  "offer.paywall.notNow": "Ahora no",
 
 
   "offer.trial.title": {
@@ -200,10 +200,11 @@ export const es: Fragment = {
     one: "{name}, {count} día a precio de lanzamiento.",
     other: "{name}, {count} días a precio de lanzamiento.",
   },
-  "offer.trial.cta": {
-    one: "Empezar mi {count} día",
-    other: "Empezar mis {count} días",
+  "offer.trial.subtitle": {
+    one: "Todo Pro por {intro} el primer {count} día, luego {price} a la semana. Cancela cuando quieras.",
+    other: "Todo Pro por {intro} los primeros {count} días, luego {price} a la semana. Cancela cuando quieras.",
   },
+  "offer.trial.cta": "Aprovechar la oferta ahora",
   "offer.trial.decline": "Prefiero pagar el precio completo",
   "offer.trial.gets.reminders": "Avisos antes de cada mantenimiento",
   "offer.trial.gets.due": "Vence por fecha y distancia",
@@ -716,7 +717,6 @@ export const es: Fragment = {
   "paywall.billed.month": "se cobra {price} al mes",
   "paywall.billed.year": "se cobra {price} al año",
   "paywall.save": "Ahorra {pct}%",
-  "paywall.bestValue": "Mejor precio",
   "paywall.intro.label": "Tu primera semana",
   "paywall.then": "después {price} por semana",
   "paywall.cta.week": "Continuar con semanal",
@@ -734,6 +734,5 @@ export const es: Fragment = {
   "paywall.retry": "Reintentar",
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
-  "paywall.review.name": "Tracy Deckenbach",
-  "paywall.review.source": "Reseña en App Store",
+  "paywall.review.name": "Tracy D.",
 };
