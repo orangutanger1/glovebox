@@ -177,9 +177,9 @@ export const ja: Fragment = {
   "offer.paywall.point.reminders.subtitle": "期限当日に一度だけ。しつこく通知しません。",
 
 
-  "offer.deal.title": "同じProを、もっと安く。",
-  "offer.deal.title.named": "{name}さん、同じProをもっと安く。",
-  "offer.trial.cta": "今すぐオファーを受け取る",
+  "offer.deal.title": "期間限定オファー。",
+  "offer.deal.title.named": "{name}さん、期間限定オファーです。",
+  "offer.trial.cta": "オファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
   "offer.trial.gets.due": "日付と距離の両方で期限管理",

@@ -365,17 +365,26 @@ describe("markCompareAt", () => {
   const plan = (id: string, period: Plan["period"], price: number, currency = "USD"): Plan =>
     ({ id, period, price, priceString: `$${price}`, currency, intro: null, perWeek: "", perMonth: "", package: {} }) as unknown as Plan;
 
-  test("stamps a discount plan with the dearer standard plan of the same period", () => {
+  test("compares the discount yearly to the standard weekly, per week", () => {
+    // $29.99 a year is $0.58 a week against $3.99: the weekly is the figure
+    // struck through, and the saving is between the two weekly costs.
+    const standard = [plan("$rc_annual", "year", 79.99), plan("$rc_weekly", "week", 3.99)];
+    const [deal] = markCompareAt([plan("$rc_annual", "year", 29.99)], standard);
+    expect(deal.compareAt).toEqual({ priceString: "$3.99", price: 3.99, pct: 86 });
+  });
+
+  test("falls back to the standard plan of the same period when there is no weekly", () => {
     const [deal] = markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_annual", "year", 79.99)]);
     expect(deal.compareAt).toEqual({ priceString: "$79.99", price: 79.99, pct: 63 });
   });
 
   test("leaves the plan alone when there is nothing to beat", () => {
-    // No standard offering, no plan of that period, a standard that is not
-    // dearer, or a different currency: each is a gap the screen cannot show.
+    // No standard offering, no comparable plan, a standard that is not
+    // dearer per week, or a different currency: each is a gap the screen
+    // cannot show.
     expect(markCompareAt([plan("$rc_annual", "year", 29.99)], null)[0].compareAt).toBeUndefined();
     expect(markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_monthly", "month", 9.99)])[0].compareAt).toBeUndefined();
     expect(markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_annual", "year", 29.99)])[0].compareAt).toBeUndefined();
-    expect(markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_annual", "year", 79.99, "GBP")])[0].compareAt).toBeUndefined();
+    expect(markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_weekly", "week", 3.99, "GBP")])[0].compareAt).toBeUndefined();
   });
 });

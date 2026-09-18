@@ -196,9 +196,9 @@ export const de: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Am Tag der Fälligkeit, und nie aufdringlich.",
 
 
-  "offer.deal.title": "Dasselbe Pro, für weniger.",
-  "offer.deal.title.named": "{name}, dasselbe Pro für weniger.",
-  "offer.trial.cta": "Angebot jetzt sichern",
+  "offer.deal.title": "Zeitlich begrenztes Angebot.",
+  "offer.deal.title.named": "{name}, ein zeitlich begrenztes Angebot.",
+  "offer.trial.cta": "Angebot sichern",
   "offer.trial.decline": "Lieber den vollen Preis zahlen",
   "offer.trial.gets.reminders": "Erinnerung vor jedem Service",
   "offer.trial.gets.due": "Fällig nach Datum und Strecke",

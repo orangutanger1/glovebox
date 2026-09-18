@@ -226,9 +226,9 @@ export const pl: Fragment = {
   "offer.paywall.point.reminders.subtitle": "W dniu terminu, bez nagabywania.",
 
 
-  "offer.deal.title": "To samo Pro, taniej.",
-  "offer.deal.title.named": "{name}, to samo Pro taniej.",
-  "offer.trial.cta": "Skorzystaj z oferty teraz",
+  "offer.deal.title": "Oferta ograniczona czasowo.",
+  "offer.deal.title.named": "{name}, oferta ograniczona czasowo.",
+  "offer.trial.cta": "Skorzystaj z oferty",
   "offer.trial.decline": "Wolę zapłacić pełną cenę",
   "offer.trial.gets.reminders": "Przypomnienie przed każdym serwisem",
   "offer.trial.gets.due": "Termin według daty i przebiegu",

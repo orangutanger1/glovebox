@@ -190,9 +190,9 @@ export const ko: Fragment = {
   "offer.paywall.point.reminders.subtitle": "기한 당일에 한 번만, 귀찮게 하지 않아요.",
 
 
-  "offer.deal.title": "같은 Pro를 더 저렴하게.",
-  "offer.deal.title.named": "{name}님, 같은 Pro를 더 저렴하게.",
-  "offer.trial.cta": "지금 혜택 받기",
+  "offer.deal.title": "기간 한정 특가.",
+  "offer.deal.title.named": "{name}님, 기간 한정 특가입니다.",
+  "offer.trial.cta": "특가 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",
   "offer.trial.gets.due": "날짜와 주행거리로 기한 관리",

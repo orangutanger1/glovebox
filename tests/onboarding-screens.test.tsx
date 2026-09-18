@@ -64,7 +64,7 @@ const mockPlans: Record<string, unknown[] | null> = {
   // The exit offer: the yearly at a lower price, stamped with the standard
   // yearly it undercuts (see `markCompareAt`).
   discount: [
-    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50", compareAt: { priceString: "$79.99", price: 79.99, pct: 63 } },
+    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50", compareAt: { priceString: "$3.99", price: 3.99, pct: 86 } },
   ],
 };
 const mockBuy = jest.fn(async (_plan: unknown, _offering: string) => "dismissed" as "dismissed" | "purchased" | "unavailable");
@@ -342,7 +342,7 @@ test("the second offer does not open with the way out", () => {
   // renewal terms and Apple's required disclosure on the sheet one tap away.
   const printed = texts(render(OnboardingOffer)).join(" ");
   expect(printed).not.toMatch(/cancel in settings/i);
-  expect(texts(render(OnboardingOffer))).toContain("The same Pro, for less.");
+  expect(texts(render(OnboardingOffer))).toContain("Limited time offer.");
 });
 
 test("the second offer promises nothing free and no free app to fall back on", () => {
@@ -359,11 +359,12 @@ test("declining the second offer goes back to the paywall that sells full price"
   expect(texts(tree)).toContain(t("offer.trial.decline"));
   expect(texts(tree)).toContain("‹ Back");
   const printed = texts(tree).join(" ");
-  // The standard yearly struck once (the card), the offer price once (the
-  // footer's renewal line), the saving beside them. Nothing about a week.
-  expect(printed.split("$79.99").length - 1).toBe(1);
+  // The standard weekly struck once (the card), the yearly price once (the
+  // footer's renewal line), the saving beside them. Nothing about a first
+  // week.
+  expect(printed.split("$3.99").length - 1).toBe(1);
   expect(printed.split("$29.99").length - 1).toBe(1);
-  expect(printed).toContain(t("paywall.save", { pct: 63 }));
+  expect(printed).toContain(t("paywall.save", { pct: 86 }));
   expect(printed).toContain(t("paywall.legal.year", { price: "$29.99" }));
   expect(printed).not.toMatch(/first (7 )?days?|first week/i);
 
@@ -386,8 +387,8 @@ test("with no standard price to beat, the second offer gets the plain title and 
   try {
     const printed = texts(render(OnboardingOffer));
     expect(printed).toContain(t("offer.paywall.title"));
-    expect(printed).not.toContain("The same Pro, for less.");
-    expect(printed.join(" ")).not.toContain("$79.99");
+    expect(printed).not.toContain("Limited time offer.");
+    expect(printed.join(" ")).not.toContain("$3.99");
     expect(printed.join(" ")).not.toMatch(/Save \d+%/);
   } finally {
     mockPlans.discount = original;
@@ -421,7 +422,7 @@ test("relaunched with no entitlement, the offer is the wall: no back, restore in
     expect(printed).not.toContain("‹ Back");
     expect(printed).toContain(t("paywall.restore"));
     expect(printed).toContain(t("offer.trial.cta"));
-    expect(printed.join(" ")).toContain("The same Pro, for less.");
+    expect(printed.join(" ")).toContain("Limited time offer.");
   } finally {
     mockParams = {};
   }

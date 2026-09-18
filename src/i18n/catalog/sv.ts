@@ -195,9 +195,9 @@ export const sv: Fragment = {
   "offer.paywall.point.reminders.subtitle": "Samma dag det är dags, aldrig tjatigt.",
 
 
-  "offer.deal.title": "Samma Pro, för mindre.",
-  "offer.deal.title.named": "{name}, samma Pro för mindre.",
-  "offer.trial.cta": "Ta erbjudandet nu",
+  "offer.deal.title": "Tidsbegränsat erbjudande.",
+  "offer.deal.title.named": "{name}, ett tidsbegränsat erbjudande.",
+  "offer.trial.cta": "Ta erbjudandet",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",
   "offer.trial.gets.due": "Dags efter datum och sträcka",
