@@ -1,17 +1,17 @@
 {
-	"generatedAt": "2026-09-10T22:40:00.218Z",
+	"generatedAt": "2026-09-17T22:26:13.017Z",
 	"retain": 12,
 	"pruned": [],
 	"artifacts": [
 		{
-			"file": "snapshot-2026-09-10.json",
+			"file": "snapshot-2026-09-17.json",
 			"kind": "snapshot",
-			"generatedAt": "2026-09-10T22:38:20.103Z",
+			"generatedAt": "2026-09-17T22:26:12.690Z",
 			"params": {
 				"org": "23259140",
 				"window": {
-					"from": "2026-08-12",
-					"to": "2026-09-10"
+					"from": "2026-08-19",
+					"to": "2026-09-17"
 				},
 				"performance": true
 			},
@@ -19,6 +19,20 @@
 		},
 		{
 			"file": "snapshot.json",
+			"kind": "snapshot",
+			"generatedAt": "2026-09-17T22:26:12.690Z",
+			"params": {
+				"org": "23259140",
+				"window": {
+					"from": "2026-08-19",
+					"to": "2026-09-17"
+				},
+				"performance": true
+			},
+			"killRule": null
+		},
+		{
+			"file": "snapshot-2026-09-10.json",
 			"kind": "snapshot",
 			"generatedAt": "2026-09-10T22:38:20.103Z",
 			"params": {
