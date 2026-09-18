@@ -205,3 +205,16 @@ test("coming up lists the reminders this car would actually get", () => {
   // cannot disagree about what is next.
   expect(printed).toContain(formatDate(nextReminders(car.id, 1)[0].dueAt));
 });
+
+test("a catch-all service is logged, not scheduled", () => {
+  // Onboarding writes "Something else" as an "Other" record. It has no shipped
+  // interval, so it is neither the next reminder nor the card's headline.
+  const car = listVehicles()[0];
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Other",
+    performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
+  });
+  expect(nextReminders(car.id, 10).map((r) => r.serviceType)).not.toContain("Other");
+  expect(texts(render().root)).not.toContain(serviceName("Other"));
+});

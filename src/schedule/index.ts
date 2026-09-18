@@ -54,6 +54,15 @@ export function inspectionMonthsFor(region: string | null | undefined): number |
  * default schedule that looked machine-translated in exactly the way the copy
  * is not.
  */
+/*
+ * "Other" is in both tables with no interval. It has to be a key: it is the
+ * log form's catch-all and what onboarding writes for "Something else", so it
+ * needs a name in the picker and a row on the intervals screen. It must not
+ * have a cadence: it shipped with twelve months for a while, and "Other is
+ * due" went out as a push and sat on the garage card a year after whatever it
+ * was, while the plan screens were skipping it by name. An owner who wants a
+ * catch-all on a schedule gives it one on the intervals screen.
+ */
 const DEFAULTS_MI: Record<string, Interval> = {
   "Oil Change": { months: 6, distance: 5000 },
   "Tire Rotation": { months: 6, distance: 6000 },
@@ -67,7 +76,7 @@ const DEFAULTS_MI: Record<string, Interval> = {
   "Spark Plugs": { distance: 60000 },
   Registration: { months: 12 },
   Inspection: { months: 12 },
-  Other: { months: 12 },
+  Other: {},
 };
 
 const DEFAULTS_KM: Record<string, Interval> = {
@@ -83,7 +92,7 @@ const DEFAULTS_KM: Record<string, Interval> = {
   "Spark Plugs": { distance: 100000 },
   Registration: { months: 12 },
   Inspection: { months: 12 },
-  Other: { months: 12 },
+  Other: {},
 };
 
 /**

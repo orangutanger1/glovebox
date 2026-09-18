@@ -141,10 +141,24 @@ test("an omitted unit reads as miles, the unit every pre-setting install stored"
 
 test("every default interval specifies months or a distance, in both units", () => {
   for (const unit of ["mi", "km"] as const) {
-    for (const [, iv] of Object.entries(defaultIntervals(unit))) {
+    for (const [type, iv] of Object.entries(defaultIntervals(unit))) {
+      if (type === "Other") continue;
       expect(iv.months !== undefined || iv.distance !== undefined).toBe(true);
     }
   }
+});
+
+test("Other ships no interval, so it never comes due and never notifies on its own", () => {
+  // "Other" is the log form's catch-all and the onboarding "Something else".
+  // With a shipped twelve months it produced a reminder titled "Other" a year
+  // after whatever it was, on the garage card and in a push, while the plan
+  // screens skipped it by name. It stays a service the user can log and can
+  // give an interval; it is not one the app has an opinion about.
+  for (const unit of ["mi", "km"] as const) {
+    expect(defaultIntervals(unit).Other).toEqual({});
+  }
+  expect(nextDue({ lastPerformedAt: "2026-01-15T17:00:00.000Z", interval: defaultIntervals("mi").Other }))
+    .toEqual({});
 });
 
 test("the kilometre defaults are round metric numbers, not converted miles", () => {

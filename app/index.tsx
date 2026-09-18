@@ -57,7 +57,10 @@ function summarize(vehicle: Vehicle): Summary {
     if (seen.has(r.service_type)) continue;
     seen.add(r.service_type);
     const interval = intervals[r.service_type];
-    if (!interval) continue;
+    // An empty interval — "Other", or an inspection in a market with no test
+    // — is a service the app has no opinion about. It is not "on schedule",
+    // and it must not take the headline from a service that has one.
+    if (!interval || (interval.months === undefined && interval.distance === undefined)) continue;
     const due = nextDue({
       lastPerformedAt: r.performed_at,
       lastOdometer: r.odometer,

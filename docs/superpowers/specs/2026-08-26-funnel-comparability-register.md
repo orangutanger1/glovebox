@@ -525,3 +525,8 @@ attempt — so one view produced several rows with a rising `ms`. Count distinct
 viewers, not events, for `offering=discount` between the 2026-09-17 build and
 this fix; `paywall_shown` on the same offering was never affected.
 
+**"Other" no longer schedules.** It shipped with a twelve-month interval, so a
+"Something else" answered in onboarding put a reminder titled "Other" in the
+notification queue and on the garage card a year out. It has no interval now
+unless the owner sets one. Reminder counts (`reminderStatus`, the Settings
+row) drop by one for every install that had logged an Other.
