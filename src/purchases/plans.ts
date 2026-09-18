@@ -215,9 +215,13 @@ function usable(plans: Plan[]): Plan[] | null {
  * side and formatted in StoreKit's own strings.
  *
  * With no standard weekly, the standard plan of the same period stands in,
- * compared on the same per-week basis. A discount plan nothing standard is
- * dearer than gets no strike-through: the screen shows a plain price rather
- * than a comparison that would not survive a second look.
+ * compared on the same per-week basis — and struck through per week too, as
+ * `perWeek`, since the headline it sits beside is per week. Striking that
+ * plan's own price put "$79.99" over "$0.58 per week": two bases on one
+ * line, showing a gap other than the one the percentage claims. A discount
+ * plan nothing standard is dearer than gets no strike-through: the screen
+ * shows a plain price rather than a comparison that would not survive a
+ * second look.
  */
 export function markCompareAt(discount: Plan[], standard: Plan[] | null): Plan[] {
   if (!standard) return discount;
@@ -230,7 +234,7 @@ export function markCompareAt(discount: Plan[], standard: Plan[] | null): Plan[]
     const theirs = weeklyPrice(full.price, full.period);
     if (theirs <= mine) continue;
     plan.compareAt = {
-      priceString: full.priceString,
+      priceString: full.period === "week" ? full.priceString : full.perWeek,
       price: full.price,
       pct: Math.round((1 - mine / theirs) * 100),
     };

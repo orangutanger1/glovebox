@@ -362,8 +362,8 @@ describe("buy", () => {
 });
 
 describe("markCompareAt", () => {
-  const plan = (id: string, period: Plan["period"], price: number, currency = "USD"): Plan =>
-    ({ id, period, price, priceString: `$${price}`, currency, intro: null, perWeek: "", perMonth: "", package: {} }) as unknown as Plan;
+  const plan = (id: string, period: Plan["period"], price: number, currency = "USD", perWeek = ""): Plan =>
+    ({ id, period, price, priceString: `$${price}`, currency, intro: null, perWeek, perMonth: "", package: {} }) as unknown as Plan;
 
   test("compares the discount yearly to the standard weekly, per week", () => {
     // $29.99 a year is $0.58 a week against $3.99: the weekly is the figure
@@ -373,9 +373,15 @@ describe("markCompareAt", () => {
     expect(deal.compareAt).toEqual({ priceString: "$3.99", price: 3.99, pct: 86 });
   });
 
-  test("falls back to the standard plan of the same period when there is no weekly", () => {
-    const [deal] = markCompareAt([plan("$rc_annual", "year", 29.99)], [plan("$rc_annual", "year", 79.99)]);
-    expect(deal.compareAt).toEqual({ priceString: "$79.99", price: 79.99, pct: 63 });
+  test("falls back to the standard plan of the same period when there is no weekly, struck per week", () => {
+    // The card's headline is per week, so the figure struck through beside it
+    // has to be per week too: "$79.99" struck over "$0.58 per week" is two
+    // bases on one line, and the gap it shows is not the gap it claims.
+    const [deal] = markCompareAt(
+      [plan("$rc_annual", "year", 29.99)],
+      [plan("$rc_annual", "year", 79.99, "USD", "$1.54")]
+    );
+    expect(deal.compareAt).toEqual({ priceString: "$1.54", price: 79.99, pct: 63 });
   });
 
   test("leaves the plan alone when there is nothing to beat", () => {
