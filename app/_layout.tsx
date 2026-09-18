@@ -487,7 +487,7 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
             eleven languages. Blank header title because the body prints one. */}
         <Stack.Screen
           name="vehicle/[id]/edit"
-          options={{ title: t("vehicle.rename.title"), headerTitle: "" }}
+          options={{ title: t("vehicle.edit.title"), headerTitle: "" }}
         />
         {/* Both fuel routes were missing from this list, and a route with no
             entry here gets no title at all — so the header printed the route

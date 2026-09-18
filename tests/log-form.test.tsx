@@ -110,10 +110,3 @@ test("the odometer is prefilled from the vehicle's last known reading", () => {
   expect(field(render(), ODO).props.value).toBe("51771");
 });
 
-test("a reading the app estimated is not prefilled", () => {
-  // Same rule as the fuel form: an estimate from the model year is not a
-  // reading, and a service saved with it untouched put the app's guess into
-  // the log under a date the guess was never about.
-  getDb().runSync("UPDATE vehicles SET odometer_estimated = 1 WHERE id = 'v1'", []);
-  expect(field(render(), ODO).props.value).toBe("");
-});

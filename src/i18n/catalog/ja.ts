@@ -72,7 +72,6 @@ export const ja: Fragment = {
 
   "garage.odometer": "走行距離",
   "garage.odometer.notSet": "未設定",
-  "garage.odometer.estimated": "走行距離（推定）",
 
   "garage.over": "{distance}超過",
   "garage.dueNow": "期限到来",
@@ -524,7 +523,6 @@ export const ja: Fragment = {
 
   "vehicle.odometer": "走行距離",
   "vehicle.odometer.notSet": "未設定",
-  "vehicle.odometer.estimated": "走行距離（推定）",
   "vehicle.lastService": "前回の整備",
   "vehicle.lastService.none": "まだありません",
 
@@ -549,7 +547,8 @@ export const ja: Fragment = {
   "vehicle.undo": "元に戻す",
   "vehicle.logService": "整備を記録",
 
-  "vehicle.rename.title": "車両名を変更",
+  "vehicle.edit.title": "車両を編集",
+  "vehicle.edit.odometerHint": "ここに入力した値は、より小さくても現在の走行距離を置き換えます。空欄のままにすると変更されません。",
   "vehicle.deleteVehicle": "車を削除",
   "vehicle.delete.title": "{name}を削除しますか？",
   "vehicle.delete.body":
@@ -608,6 +607,7 @@ export const ja: Fragment = {
   "fuel.form.save": "給油を保存",
   "fuel.form.error": "この給油を保存できませんでした。",
   "fuel.form.needOdometer": "走行距離計の値と給油量を入力してください。",
+  "fuel.form.sameOdometer": "前回の給油時と同じ走行距離です。現在のオドメーターの値を入力してください。",
   "fuel.card.title": "燃料",
   "fuel.card.spend": "燃料費",
   "fuel.card.perDistance": "100{unit}あたりの費用",

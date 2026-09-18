@@ -79,10 +79,9 @@ export function addFuelEntry(e: {
   // The reason fuel earns its place in the rest of the app: services are logged
   // yearly and fills weekly, so this is what keeps every mileage-based due date
   // honest in between. Guarded the way addRecord guards it — a fill logged for
-  // an older date must never walk the odometer backwards — and it clears the
-  // estimate flag, because a number read off the dash retires a guess.
+  // an older date must never walk the odometer backwards.
   getDb().runSync(
-    `UPDATE vehicles SET odometer = ?, odometer_estimated = NULL
+    `UPDATE vehicles SET odometer = ?
      WHERE id = ? AND (odometer IS NULL OR odometer < ?)`,
     [row.odometer, row.vehicle_id, row.odometer]
   );

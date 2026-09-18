@@ -72,7 +72,6 @@ export const es: Fragment = {
 
   "garage.odometer": "Cuentakilómetros",
   "garage.odometer.notSet": "Sin definir",
-  "garage.odometer.estimated": "Cuentakilómetros (est.)",
 
   "garage.over": "{distance} de retraso",
   "garage.dueNow": "vence ya",
@@ -566,7 +565,6 @@ export const es: Fragment = {
 
   "vehicle.odometer": "Cuentakilómetros",
   "vehicle.odometer.notSet": "Sin definir",
-  "vehicle.odometer.estimated": "Cuentakilómetros (est.)",
   "vehicle.lastService": "Último mantenimiento",
   "vehicle.lastService.none": "Ninguno aún",
 
@@ -592,7 +590,8 @@ export const es: Fragment = {
   "vehicle.undo": "Deshacer",
   "vehicle.logService": "Registrar un mantenimiento",
 
-  "vehicle.rename.title": "Cambiar el nombre del vehículo",
+  "vehicle.edit.title": "Editar vehículo",
+  "vehicle.edit.odometerHint": "Una lectura escrita aquí sustituye a la del vehículo, aunque sea menor. Déjalo en blanco para conservarla.",
   "vehicle.deleteVehicle": "Borrar vehículo",
   "vehicle.delete.title": "¿Borrar {name}?",
   "vehicle.delete.body":
@@ -652,6 +651,7 @@ export const es: Fragment = {
   "fuel.form.save": "Guardar repostaje",
   "fuel.form.error": "No se pudo guardar el repostaje.",
   "fuel.form.needOdometer": "Indica el cuentakilómetros y cuánto combustible entró.",
+  "fuel.form.sameOdometer": "Es la lectura de tu último repostaje. Escribe lo que marca el cuentakilómetros ahora.",
   "fuel.card.title": "Combustible",
   "fuel.card.spend": "Gasto en combustible",
   "fuel.card.perDistance": "Coste por 100 {unit}",

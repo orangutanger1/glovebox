@@ -104,3 +104,29 @@ test("migration 7 preserves rows written under v6", () => {
     (db.prepare("SELECT name FROM vehicles WHERE id='v1'").get() as { name: string }).name
   ).toBe("Civic");
 });
+
+test("migration 8 retires an estimated reading rather than promoting it", () => {
+  // The estimate path is gone: nothing has been able to write one since the
+  // odometer question became required, and the flag's readers went with it.
+  // A row still carrying one from an older build must not become a reading
+  // by default — that is the app's arithmetic presented with the confidence
+  // of a number read off the dash, which is what every screen refused to do
+  // while the flag existed. It becomes "not set", and the edit screen is
+  // where the owner puts the real one.
+  const { db, exec } = open();
+  // A v7 database in miniature: only the columns the migration touches.
+  db.exec(`
+    CREATE TABLE vehicles (id TEXT PRIMARY KEY, name TEXT, odometer INTEGER,
+      odometer_estimated INTEGER, created_at TEXT);
+    INSERT INTO vehicles VALUES ('est', 'Guessed', 94500, 1, '2026-01-01T00:00:00.000Z');
+    INSERT INTO vehicles VALUES ('read', 'Read', 84210, NULL, '2026-01-01T00:00:00.000Z');
+  `);
+  applyMigrations(exec, 7);
+  const rows = db
+    .prepare("SELECT id, odometer, odometer_estimated FROM vehicles ORDER BY id")
+    .all() as { id: string; odometer: number | null; odometer_estimated: number | null }[];
+  expect(rows).toEqual([
+    { id: "est", odometer: null, odometer_estimated: null },
+    { id: "read", odometer: 84210, odometer_estimated: null },
+  ]);
+});

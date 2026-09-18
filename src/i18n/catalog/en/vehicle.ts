@@ -21,8 +21,6 @@ export const vehicle: Fragment = {
 
   "vehicle.odometer": "Odometer",
   "vehicle.odometer.notSet": "Not set",
-  /** A reading estimated from the model year, never presented as a reading. */
-  "vehicle.odometer.estimated": "Odometer (est.)",
   "vehicle.lastService": "Last service",
   "vehicle.lastService.none": "None yet",
 
@@ -48,7 +46,9 @@ export const vehicle: Fragment = {
   "vehicle.undo": "Undo",
   "vehicle.logService": "Log a service",
 
-  "vehicle.rename.title": "Rename vehicle",
+  "vehicle.edit.title": "Edit vehicle",
+  /** Under the odometer field on the edit screen, the one write that may lower the reading. */
+  "vehicle.edit.odometerHint": "Typed here, the reading replaces what the car has — lower is allowed. Leave it blank to keep it.",
   "vehicle.deleteVehicle": "Delete vehicle",
   "vehicle.delete.title": "Delete {name}?",
   "vehicle.delete.body":

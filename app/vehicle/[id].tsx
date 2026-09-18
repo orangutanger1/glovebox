@@ -20,7 +20,7 @@ import {
 import { listFuelEntries, type FuelRow } from "../../src/db/fuel";
 import { averageEfficiency, latestEfficiency } from "../../src/fuel";
 import { currentFuelUnits, formatEfficiency, formatVolume } from "../../src/fuel/format";
-import { nextDue, dueStatus } from "../../src/schedule";
+import { dueStates } from "../../src/schedule/due";
 import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
 import { t, formatNumber, formatDate } from "../../src/i18n";
@@ -33,38 +33,26 @@ import { requestReviewOnFirstAction } from "../../src/review";
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
 function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
-  const seen = new Set<string>();
-  const now = new Date().toISOString();
-  const items: DueItem[] = [];
-  const intervals = getIntervals();
   const unit = getDistanceUnit();
+  const items: DueItem[] = [];
 
-  for (const r of records) {
-    if (seen.has(r.service_type)) continue;
-    seen.add(r.service_type);
-    const interval = intervals[r.service_type];
-    if (!interval) continue;
-    const due = nextDue({
-      lastPerformedAt: r.performed_at,
-      lastOdometer: r.odometer,
-      interval,
-    });
-    const status = dueStatus({ ...due, now, odometer: vehicle.odometer, unit });
-    if (status === "ok") continue;
-
-    const overBy =
-      due.dueOdometer !== undefined && vehicle.odometer !== undefined
-        ? vehicle.odometer - due.dueOdometer
-        : undefined;
+  for (const s of dueStates({
+    records,
+    intervals: getIntervals(),
+    odometer: vehicle.odometer,
+    unit,
+    now: new Date().toISOString(),
+  })) {
+    if (s.status === "ok") continue;
     const line =
-      status === "due" && overBy !== undefined && overBy > 0
-        ? t("vehicle.over", { distance: formatDistance(overBy, unit) })
-        : due.dueAt
-          ? t("vehicle.dueOn", { date: formatDate(due.dueAt) })
-          : status === "due"
+      s.status === "due" && s.overBy !== undefined
+        ? t("vehicle.over", { distance: formatDistance(s.overBy, unit) })
+        : s.dueAt
+          ? t("vehicle.dueOn", { date: formatDate(s.dueAt) })
+          : s.status === "due"
             ? t("vehicle.dueNow")
             : t("vehicle.dueSoon");
-    items.push({ type: r.service_type, status, line });
+    items.push({ type: s.type, status: s.status, line });
   }
   return items;
 }
@@ -254,7 +242,7 @@ export default function VehicleDetail() {
               disabled={!vehicle}
               hitSlop={12}
               accessibilityRole="button"
-              accessibilityLabel={t("vehicle.rename.title")}
+              accessibilityLabel={t("vehicle.edit.title")}
               style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}
             >
               {({ pressed }) => (
@@ -306,11 +294,7 @@ export default function VehicleDetail() {
                   style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}
                 >
                   <Gauge
-                    legend={
-                      vehicle?.odometer && vehicle.odometer_estimated
-                        ? t("vehicle.odometer.estimated")
-                        : t("vehicle.odometer")
-                    }
+                    legend={t("vehicle.odometer")}
                     value={
                       vehicle?.odometer
                         ? formatNumber(vehicle.odometer)

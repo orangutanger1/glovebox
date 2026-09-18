@@ -1,6 +1,7 @@
 import { formatDate, t } from "../i18n";
 import { formatDistance } from "../units/format";
-import { DUE_HOUR, dueStatus, nextDue, type Interval } from "../schedule";
+import { DUE_HOUR, type Interval } from "../schedule";
+import { dueStates } from "../schedule/due";
 import type { DistanceUnit } from "../units";
 import type { Answers, DriveAnswer } from "./state";
 
@@ -112,6 +113,19 @@ export function buildPlan(input: {
   const nowIso = now.toISOString();
   const distancePerYear = distancePerYearFor(input.answers, input.unit);
 
+  // What each logged service's state is comes from the one loop the garage
+  // and the reminder scheduler use, so this plan cannot say "three due" while
+  // the garage card says two.
+  const states = new Map(
+    dueStates({
+      records: input.records,
+      intervals: input.intervals,
+      odometer: input.odometer,
+      unit: input.unit,
+      now: nowIso,
+    }).map((s) => [s.type, s])
+  );
+
   const items: PlanItem[] = [];
   for (const [type, interval] of Object.entries(input.intervals)) {
     // "Other" is the bucket the log form drops anything unrecognised into. It
@@ -124,13 +138,8 @@ export function buildPlan(input: {
     // test their province never asks for.
     if (interval.months === undefined && interval.distance === undefined) continue;
 
-    let latest: { performed_at: string; odometer?: number } | undefined;
-    for (const record of input.records) {
-      if (record.service_type !== type) continue;
-      if (!latest || record.performed_at > latest.performed_at) latest = record;
-    }
-
-    if (!latest) {
+    const due = states.get(type);
+    if (!due) {
       // Nothing on file. Treated as due rather than unknown, which is the same
       // direction the quiz's "not sure" answer errs in: the cost of being told
       // to check something that is fine is a glance, and the cost of the
@@ -138,13 +147,7 @@ export function buildPlan(input: {
       items.push({ type, status: "due", logged: false, projected: false });
       continue;
     }
-
-    const due = nextDue({
-      lastPerformedAt: latest.performed_at,
-      lastOdometer: latest.odometer,
-      interval,
-    });
-    const status = dueStatus({ ...due, now: nowIso, odometer: input.odometer, unit: input.unit });
+    const status = due.status;
 
     // A distance interval has no date of its own, so a service like spark plugs
     // at 60,000 miles would otherwise appear in the plan with no when at all.

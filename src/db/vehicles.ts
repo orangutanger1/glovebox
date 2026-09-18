@@ -9,10 +9,6 @@ export type Vehicle = {
   model?: string;
   year?: number;
   odometer?: number;
-  /** 1 when `odometer` is the app's arithmetic rather than a reading the user
-   *  gave us. Absent on every reading that came from a person, which is what
-   *  every row written before the column existed is. */
-  odometer_estimated?: number;
   /** Absent means unknown: nothing has ever answered for this vehicle. */
   body_style?: BodyStyle;
   created_at: string;
@@ -130,11 +126,10 @@ export function undoDeleteVehicle(vehicleId: string): void {
   getDb().runSync("UPDATE vehicles SET deleted_at = NULL WHERE id = ?", [vehicleId]);
 }
 
-/** Same guarded high-water-mark update addRecord already relies on — never lowers a reading.
- *  A real reading retires the estimate it overtakes. */
+/** Same guarded high-water-mark update addRecord already relies on — never lowers a reading. */
 export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
   getDb().runSync(
-    `UPDATE vehicles SET odometer = ?, odometer_estimated = NULL
+    `UPDATE vehicles SET odometer = ?
      WHERE id = ? AND (odometer IS NULL OR odometer < ?)`,
     [odometer, vehicleId, odometer]
   );
@@ -172,37 +167,16 @@ export function rewindOdometer(vehicleId: string, removed: number): void {
 }
 
 /**
- * Stores a reading the app worked out from the model year rather than one the
- * user read off the dash, and says so in the row.
- *
- * Set outright rather than as a high-water mark, and for the same reason
- * `setOdometerReading` is: the annual-mileage answer on the next question
- * refines this number, and a refinement that can only ever go up is not a
- * refinement. The flag is what keeps every gauge in the app from presenting
- * arithmetic with the confidence of a reading.
- */
-export function setOdometerEstimate(vehicleId: string, odometer: number): void {
-  getDb().runSync("UPDATE vehicles SET odometer = ?, odometer_estimated = 1 WHERE id = ?", [
-    odometer,
-    vehicleId,
-  ]);
-}
-
-/**
  * Sets the reading to exactly what was given, up or down.
  *
- * Only onboarding uses this, and only for the question that asks for the
- * reading directly. Everywhere else a mileage arrives attached to a service
- * that happened, so the high-water rule is right: a job logged at 40,000 on a
- * car showing 84,000 must not wind the dash back. Here the number IS the dash,
- * and a user who stepped back to fix a fat-fingered 842,100 was being told the
- * field had accepted a correction that the guard then threw away.
+ * Two screens use this: the onboarding question that asks for the reading
+ * directly, and the edit screen. Everywhere else a mileage arrives attached to
+ * a service that happened, so the high-water rule is right: a job logged at
+ * 40,000 on a car showing 84,000 must not wind the dash back. Here the number
+ * IS the dash, and a user who stepped back to fix a fat-fingered 842,100 was
+ * being told the field had accepted a correction that the guard then threw
+ * away.
  */
 export function setOdometerReading(vehicleId: string, odometer: number): void {
-  // Clears the estimate flag: a number the user typed into the odometer question
-  // is the dash, whatever the app had guessed before they got round to reading it.
-  getDb().runSync("UPDATE vehicles SET odometer = ?, odometer_estimated = NULL WHERE id = ?", [
-    odometer,
-    vehicleId,
-  ]);
+  getDb().runSync("UPDATE vehicles SET odometer = ? WHERE id = ?", [odometer, vehicleId]);
 }

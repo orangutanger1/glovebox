@@ -81,7 +81,6 @@ export const ko: Fragment = {
 
   "garage.odometer": "주행거리",
   "garage.odometer.notSet": "미입력",
-  "garage.odometer.estimated": "주행거리(추정)",
 
   "garage.over": "{distance} 초과",
   "garage.dueNow": "지금 기한",
@@ -550,7 +549,6 @@ export const ko: Fragment = {
 
   "vehicle.odometer": "주행거리",
   "vehicle.odometer.notSet": "미입력",
-  "vehicle.odometer.estimated": "주행거리(추정)",
   "vehicle.lastService": "마지막 정비",
   "vehicle.lastService.none": "아직 없음",
 
@@ -575,7 +573,8 @@ export const ko: Fragment = {
   "vehicle.undo": "되돌리기",
   "vehicle.logService": "정비 기록하기",
 
-  "vehicle.rename.title": "차량 이름 변경",
+  "vehicle.edit.title": "차량 편집",
+  "vehicle.edit.odometerHint": "여기에 입력한 값은 더 낮더라도 현재 주행거리를 대체합니다. 비워 두면 그대로 유지됩니다.",
   "vehicle.deleteVehicle": "차량 삭제",
   "vehicle.delete.title": "{name}, 삭제할까요?",
   "vehicle.delete.body":
@@ -634,6 +633,7 @@ export const ko: Fragment = {
   "fuel.form.save": "주유 저장",
   "fuel.form.error": "이 주유를 저장하지 못했습니다.",
   "fuel.form.needOdometer": "주행거리계 값과 주유량을 입력하세요.",
+  "fuel.form.sameOdometer": "지난 주유 때와 같은 주행거리입니다. 지금 계기판에 표시된 값을 입력하세요.",
   "fuel.card.title": "연료",
   "fuel.card.spend": "연료비",
   "fuel.card.perDistance": "100{unit}당 비용",

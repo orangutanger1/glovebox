@@ -40,7 +40,6 @@ export const nl: Fragment = {
 
   "garage.odometer": "Kilometerstand",
   "garage.odometer.notSet": "Niet ingevuld",
-  "garage.odometer.estimated": "Kilometerstand (schatting)",
 
   "garage.over": "{distance} overschreden",
   "garage.dueNow": "nu aan de beurt",
@@ -68,7 +67,6 @@ export const nl: Fragment = {
 
   "vehicle.odometer": "Kilometerstand",
   "vehicle.odometer.notSet": "Niet ingevuld",
-  "vehicle.odometer.estimated": "Kilometerstand (schatting)",
   "vehicle.lastService": "Laatste onderhoud",
   "vehicle.lastService.none": "Nog niets",
 
@@ -93,7 +91,8 @@ export const nl: Fragment = {
   "vehicle.undo": "Herstel",
   "vehicle.logService": "Onderhoud vastleggen",
 
-  "vehicle.rename.title": "Voertuig hernoemen",
+  "vehicle.edit.title": "Voertuig bewerken",
+  "vehicle.edit.odometerHint": "Een stand die je hier invult vervangt de huidige, ook als die lager is. Laat leeg om hem te behouden.",
   "vehicle.deleteVehicle": "Voertuig verwijderen",
   "vehicle.delete.title": "{name} verwijderen?",
   "vehicle.delete.body":
@@ -662,6 +661,7 @@ export const nl: Fragment = {
   "fuel.form.save": "Tankbeurt opslaan",
   "fuel.form.error": "Deze tankbeurt kon niet worden opgeslagen.",
   "fuel.form.needOdometer": "Vul de kilometerstand in en hoeveel brandstof erin ging.",
+  "fuel.form.sameOdometer": "Dat is de stand van je vorige tankbeurt. Vul in wat de teller nu aangeeft.",
   "fuel.card.title": "Brandstof",
   "fuel.card.spend": "Brandstofkosten",
   "fuel.card.perDistance": "Kosten per 100 {unit}",

@@ -111,10 +111,6 @@ import { getDb } from "../src/db/client";
 import { setState } from "../src/db/state";
 import { GRANDFATHERED_KEY } from "../src/paywall/state";
 import { ONBOARDING_NAME_KEY } from "../src/onboarding/state";
-import {
-  AVERAGE_DISTANCE_PER_YEAR,
-  estimateOdometer,
-} from "../src/onboarding/estimate";
 import OnboardingName from "../app/onboarding/name";
 import OnboardingVehicle from "../app/onboarding/vehicle";
 import OnboardingOdometer from "../app/onboarding/odometer";
@@ -157,6 +153,20 @@ function render(Component: () => ReactElement): TestRenderer.ReactTestRenderer {
     tree = TestRenderer.create(createElement(Component));
   });
   mounted.push(tree);
+  return tree;
+}
+
+/**
+ * Render and let the mount-time promises land inside act. OnboardingNotify
+ * reads the permission status asynchronously and sets state when it arrives;
+ * rendered synchronously, that update fired after the test had moved on and
+ * React logged it as an update outside act.
+ */
+async function renderSettled(
+  Component: () => ReactElement,
+): Promise<TestRenderer.ReactTestRenderer> {
+  const tree = render(Component);
+  await act(async () => {});
   return tree;
 }
 
@@ -428,7 +438,7 @@ test("relaunched with no entitlement, the offer is the wall: no back, restore in
   }
 });
 
-test("no screen in the flow prints an em or en dash", () => {
+test("no screen in the flow prints an em or en dash", async () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
@@ -463,7 +473,7 @@ test("no screen in the flow prints an em or en dash", () => {
   ];
 
   for (const Screen of screens) {
-    const printed = texts(render(Screen)).join(" ");
+    const printed = texts(await renderSettled(Screen)).join(" ");
     expect(printed).not.toMatch(/[\u2013\u2014]/);
   }
 });
@@ -537,9 +547,7 @@ test("the quiz costs one typed number, and still yields a populated payoff", () 
   press(drive, "Continue");
 
   const car = getVehicle(getOnboardingVehicleId()!)!;
-  // The reading is the user's, so nothing about it is flagged as arithmetic.
   expect(car.odometer).toBe(84210);
-  expect(car.odometer_estimated).toBeUndefined();
 
   // The payoff screen is the whole argument for the paywall, so the walk has
   // to arrive at a populated one rather than an empty state.
@@ -690,9 +698,7 @@ test("a typed reading is still the answer the screen wants", () => {
 
   // The notification ask sits between the odometer and the mileage rate.
   expect(navigated).toContain("/onboarding/notify");
-  const saved = getVehicle(car.id)!;
-  expect(saved.odometer).toBe(84210);
-  expect(saved.odometer_estimated).toBeUndefined();
+  expect(getVehicle(car.id)!.odometer).toBe(84210);
 });
 
 test("the evidence screen will not let you continue until you have scrolled it", () => {
@@ -905,7 +911,7 @@ test("the price boundary is never drawn before the paywall", () => {
   expect(printed.join(" ")).not.toContain("What you are getting.");
 });
 
-test("the notify screen asks over a picture of the reminder itself", () => {
+test("the notify screen asks over a picture of the reminder itself", async () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     make: "Subaru",
@@ -923,7 +929,7 @@ test("the notify screen asks over a picture of the reminder itself", () => {
     performed_at: new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString(),
   });
 
-  const tree = render(OnboardingNotify);
+  const tree = await renderSettled(OnboardingNotify);
   const printed = texts(tree);
   // The promise, and the count behind it, over this car by name.
   expect(printed).toContain("Never miss a service.");
@@ -995,7 +1001,7 @@ async function pressAndSettle(
   });
 }
 
-test("the banner is drawn in the reader's own language, from their own car", () => {
+test("the banner is drawn in the reader's own language, from their own car", async () => {
   const car = createVehicle({
     name: "2016 Subaru Outback",
     year: 2016,
@@ -1010,7 +1016,7 @@ test("the banner is drawn in the reader's own language, from their own car", () 
 
   setLanguage("fr");
   try {
-    const tree = render(OnboardingNotify);
+    const tree = await renderSettled(OnboardingNotify);
     // Never a still, in any language: the banner is rendered from this car's
     // own record, through the keys the scheduler actually sends. An English
     // picture on a French screen was the reason the drawn path existed, and a

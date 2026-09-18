@@ -1,7 +1,7 @@
 import { listVehicles } from "../db/vehicles";
 import { listRecords } from "../db/records";
 import { getIntervals } from "../db/intervals";
-import { nextDue } from "../schedule";
+import { dueStates } from "../schedule/due";
 import { selectReminders, type Reminder } from "./select";
 
 /**
@@ -21,34 +21,27 @@ import { selectReminders, type Reminder } from "./select";
  */
 export function collectReminders(vehicleId?: string): Reminder[] {
   const intervals = getIntervals();
+  const now = new Date().toISOString();
   const out: Reminder[] = [];
 
   for (const vehicle of listVehicles()) {
     if (vehicleId && vehicle.id !== vehicleId) continue;
-    const records = listRecords(vehicle.id);
-    const latestByType = new Map<string, (typeof records)[number]>();
-    for (const r of records) {
-      if (!latestByType.has(r.service_type))
-        latestByType.set(r.service_type, r);
-    }
-
-    for (const [serviceType, record] of latestByType) {
-      const interval = intervals[serviceType];
-      if (!interval) continue;
-      // A service with only a mileage interval produces no dueAt and so never
-      // notifies. There is no live odometer to trigger from; its due state is
-      // shown in the app instead.
-      const { dueAt } = nextDue({
-        lastPerformedAt: record.performed_at,
-        lastOdometer: record.odometer,
-        interval,
-      });
-      if (!dueAt) continue;
+    // A service with only a mileage interval produces no dueAt and so never
+    // notifies. There is no live odometer to trigger from; its due state is
+    // shown in the app instead. The unit and odometer are not passed for the
+    // same reason: nothing here reads the distance status.
+    for (const s of dueStates({
+      records: listRecords(vehicle.id),
+      intervals,
+      unit: "mi",
+      now,
+    })) {
+      if (!s.dueAt) continue;
       out.push({
         vehicleName: vehicle.name,
-        serviceType,
-        dueAt,
-        lastPerformedAt: record.performed_at,
+        serviceType: s.type,
+        dueAt: s.dueAt,
+        lastPerformedAt: s.last.performed_at,
       });
     }
   }

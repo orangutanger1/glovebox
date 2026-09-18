@@ -42,6 +42,8 @@ export const fuel: Fragment = {
   "fuel.form.save": "Save fill-up",
   "fuel.form.error": "That fill-up could not be saved.",
   "fuel.form.needOdometer": "Enter the odometer reading and how much fuel went in.",
+  /** The previous fill's reading, exactly — zero distance, no figure, and the volume folds into the next tank. */
+  "fuel.form.sameOdometer": "That is the reading on your last fill-up. Enter what the odometer shows now.",
 
   "fuel.card.title": "Fuel",
   "fuel.card.spend": "Fuel spend",

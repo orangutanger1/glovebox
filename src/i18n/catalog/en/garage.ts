@@ -23,10 +23,6 @@ export const garage: Fragment = {
 
   "garage.odometer": "Odometer",
   "garage.odometer.notSet": "Not set",
-  // The same gauge, on a reading the app worked out from the model year rather
-  // than one the owner read off the dash. Said in the legend, not next to the
-  // number, which is a distance and would read as part of it.
-  "garage.odometer.estimated": "Odometer (est.)",
 
   // `{distance}` arrives already formatted and already carrying the reader's
   // unit, so this message never mentions one.

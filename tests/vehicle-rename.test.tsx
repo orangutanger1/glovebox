@@ -143,3 +143,60 @@ test("renameVehicle touches one column", () => {
   expect(saved.make).toBe("Honda");
   expect(saved.odometer).toBe(84210);
 });
+
+/**
+ * The odometer, beside the name.
+ *
+ * Every other odometer write in the app is a high-water mark, which is right
+ * when the number arrives attached to a service that happened and wrong when
+ * the number itself was the typo. A fill logged at 842,100 could be deleted
+ * and `rewindOdometer` would take the mark back down; a reading typed wrong
+ * into onboarding and never overtaken had no way off the dash at all. This
+ * field sets the reading outright, so a correction can go down.
+ */
+test("the reading arrives in the odometer field, ready to be corrected", () => {
+  expect(field(render(), "Odometer (mi)").props.value).toBe("84210");
+});
+
+test("saving a lower odometer sets it outright, not as a high-water mark", () => {
+  const tree = render();
+  act(() => field(tree, "Odometer (mi)").props.onChangeText("48210"));
+  act(() => button(tree, "Save").props.onPress());
+
+  const saved = getVehicle("v1")!;
+  expect(saved.odometer).toBe(48210);
+  expect(saved.name).toBe("2019 Honda Civic");
+  expect(navigated).toContain("back");
+});
+
+test("a car with no reading starts empty and takes a typed one", () => {
+  // The NULL case: `rewindOdometer` lands here when the row that set the mark
+  // is deleted and nothing else carries a reading. This field is the way back.
+  getDb().runSync("UPDATE vehicles SET odometer = NULL WHERE id = 'v1'", []);
+  const tree = render();
+  expect(field(tree, "Odometer (mi)").props.value).toBe("");
+  act(() => field(tree, "Odometer (mi)").props.onChangeText("91,250"));
+  act(() => button(tree, "Save").props.onPress());
+  expect(getVehicle("v1")!.odometer).toBe(91250);
+});
+
+test("a blank odometer keeps the reading the car already has", () => {
+  const tree = render();
+  act(() => field(tree, "Odometer (mi)").props.onChangeText(""));
+  act(() => field(tree, "Name").props.onChangeText("Wagon"));
+  act(() => button(tree, "Save").props.onPress());
+
+  const saved = getVehicle("v1")!;
+  expect(saved.name).toBe("Wagon");
+  expect(saved.odometer).toBe(84210);
+});
+
+test("a reading that cannot be read is refused, not dropped", () => {
+  const tree = render();
+  act(() => field(tree, "Odometer (mi)").props.onChangeText("about 80k"));
+  act(() => button(tree, "Save").props.onPress());
+
+  expect(getVehicle("v1")!.odometer).toBe(84210);
+  expect(navigated).not.toContain("back");
+  expect(JSON.stringify(tree.toJSON())).toContain("could not be read");
+});

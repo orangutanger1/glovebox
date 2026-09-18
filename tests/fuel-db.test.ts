@@ -73,15 +73,12 @@ test("a partial is stored as 0, not dropped", () => {
   expect(listFuelEntries("v1")[0].full).toBe(0);
 });
 
-test("a fill past the vehicle's reading advances the odometer and clears the estimate", () => {
-  getDb().runSync("UPDATE vehicles SET odometer_estimated = 1 WHERE id = 'v1'", []);
+test("a fill past the vehicle's reading advances the odometer", () => {
   add(1200, 12);
-  const v = getDb().getFirstSync(
-    "SELECT odometer, odometer_estimated FROM vehicles WHERE id='v1'",
-    []
-  ) as { odometer: number; odometer_estimated: number | null };
+  const v = getDb().getFirstSync("SELECT odometer FROM vehicles WHERE id='v1'", []) as {
+    odometer: number;
+  };
   expect(v.odometer).toBe(1200);
-  expect(v.odometer_estimated).toBeNull();
 });
 
 test("a fill behind the vehicle's reading never walks the odometer backwards", () => {

@@ -530,3 +530,24 @@ this fix; `paywall_shown` on the same offering was never affected.
 notification queue and on the garage card a year out. It has no interval now
 unless the owner sets one. Reminder counts (`reminderStatus`, the Settings
 row) drop by one for every install that had logged an Other.
+
+### 2026-09-17 — the fuel form no longer submits the previous fill's reading
+
+**`fuel_logged` per view drops, and the fills behind it change shape.** The
+form's odometer field was prefilled with the vehicle's reading, which after
+any fill is exactly the previous fill's odometer — the one value that yields
+no efficiency figure and folds the volume into the next tank. The field now
+starts empty with that reading as its placeholder, and a save whose odometer
+equals the latest live fill's is refused with a message
+(`fuel.form.sameOdometer`). Expect a lower `fuel_logged` count per form open
+from this build, and treat a pair of fills at one odometer before it as one
+tank, not two. No new event: a refused save is not counted, the same as the
+missing-volume refusal.
+
+**The odometer estimate is gone, not just unreachable.** Nothing could write
+one since the odometer question became required (2026-09-04), and the flag's
+readers went with it in this build. Migration 8 sets any reading still marked
+as an estimate to "not set" rather than promoting it to a reading. No event
+moves; the garage and vehicle gauges lose the "(est.)" legend, and a car whose
+reading was cleared shows "Not set" until the owner types one on the edit
+screen (which now carries an odometer field beside the name).

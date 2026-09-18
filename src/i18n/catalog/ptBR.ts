@@ -70,7 +70,6 @@ export const ptBR: Fragment = {
 
   "garage.odometer": "Odômetro",
   "garage.odometer.notSet": "Não informado",
-  "garage.odometer.estimated": "Odômetro (est.)",
 
   "garage.over": "{distance} de atraso",
   "garage.dueNow": "vence agora",
@@ -546,7 +545,6 @@ export const ptBR: Fragment = {
 
   "vehicle.odometer": "Odômetro",
   "vehicle.odometer.notSet": "Não informado",
-  "vehicle.odometer.estimated": "Odômetro (est.)",
   "vehicle.lastService": "Último serviço",
   "vehicle.lastService.none": "Nenhum ainda",
 
@@ -572,7 +570,8 @@ export const ptBR: Fragment = {
   "vehicle.undo": "Desfazer",
   "vehicle.logService": "Registrar um serviço",
 
-  "vehicle.rename.title": "Renomear veículo",
+  "vehicle.edit.title": "Editar veículo",
+  "vehicle.edit.odometerHint": "Uma leitura digitada aqui substitui a do veículo, mesmo que seja menor. Deixe em branco para mantê-la.",
   "vehicle.deleteVehicle": "Apagar veículo",
   "vehicle.delete.title": "Apagar {name}?",
   "vehicle.delete.body":
@@ -630,6 +629,7 @@ export const ptBR: Fragment = {
   "fuel.form.save": "Salvar abastecimento",
   "fuel.form.error": "Não foi possível salvar esse abastecimento.",
   "fuel.form.needOdometer": "Informe o odômetro e quanto combustível entrou.",
+  "fuel.form.sameOdometer": "Essa é a leitura do seu último abastecimento. Informe o que o odômetro marca agora.",
   "fuel.card.title": "Combustível",
   "fuel.card.spend": "Gasto com combustível",
   "fuel.card.perDistance": "Custo por 100 {unit}",

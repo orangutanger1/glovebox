@@ -10,7 +10,7 @@ import { Button } from "../../../../src/design/Button";
 import { DateWheel } from "../../../../src/design/DateWheel";
 import { tokens } from "../../../../src/design/tokens";
 import { getVehicle } from "../../../../src/db/vehicles";
-import { addFuelEntry } from "../../../../src/db/fuel";
+import { addFuelEntry, listFuelEntries } from "../../../../src/db/fuel";
 import { rescheduleAll } from "../../../../src/notify";
 import { recordReviewEvent, maybeRequestReview } from "../../../../src/review";
 import { track } from "../../../../src/analytics";
@@ -43,14 +43,18 @@ export default function LogFuel() {
   const router = useRouter();
   const vehicle = getVehicle(id);
 
-  // Prefilled so the user edits three digits instead of typing six, and it gets
-  // the autofocus: it is the field the pump is already showing them.
-  // The last reading, so the user edits three digits rather than typing six.
-  // Not an estimate: that is the app's arithmetic, and saved untouched it
-  // would enter the log as if somebody had read it off the dash.
-  const [odometer, setOdometer] = useState(
-    vehicle?.odometer && !vehicle.odometer_estimated ? String(vehicle.odometer) : ""
-  );
+  // Empty, with the last reading as the placeholder, and it gets the autofocus:
+  // it is the field the pump is already showing them.
+  //
+  // It used to be prefilled with the reading — "edit three digits, not six".
+  // After any fill the reading IS the previous fill's odometer, the one value
+  // that yields no figure: zero distance, and `vehicleSeries` folds the volume
+  // into the tank after it. A driver who saved the default untouched logged
+  // exactly that, and the 2026-09-17 audit found the test documenting it as
+  // deliberate. The six digits stay on the glass to copy from; they are no
+  // longer what Save submits.
+  const [odometer, setOdometer] = useState("");
+  const lastReading = vehicle?.odometer ? String(vehicle.odometer) : undefined;
   const [volume, setVolume] = useState("");
   const [cost, setCost] = useState("");
   // On by default, matching the column default, so a row written by a user who
@@ -72,6 +76,14 @@ export default function LogFuel() {
     // after it too. Refused here rather than thrown at the driver by SQLite.
     if (odo === undefined || odo < 0 || vol === undefined || vol <= 0) {
       setError(t("fuel.form.needOdometer"));
+      return;
+    }
+    // The previous fill's reading, exactly. Live rows only: a fill deleted at
+    // this reading is not the previous fill, and the odometer really can read
+    // this now. Newest-by-odometer first is the order `listFuelEntries` reads.
+    const previous = listFuelEntries(id)[0];
+    if (previous && previous.odometer === odo) {
+      setError(t("fuel.form.sameOdometer"));
       return;
     }
 
@@ -157,6 +169,7 @@ export default function LogFuel() {
         <Field
           label={t("fuel.form.odometer", { unit: distanceUnitLabel(unit) })}
           value={odometer}
+          placeholder={lastReading}
           onChangeText={setOdometer}
           keyboardType="numeric"
           autoFocus

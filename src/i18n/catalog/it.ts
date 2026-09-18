@@ -70,7 +70,6 @@ export const it: Fragment = {
 
   "garage.odometer": "Contachilometri",
   "garage.odometer.notSet": "Non impostato",
-  "garage.odometer.estimated": "Contachilometri (stima)",
 
   "garage.over": "{distance} oltre",
   "garage.dueNow": "da fare ora",
@@ -549,7 +548,6 @@ export const it: Fragment = {
 
   "vehicle.odometer": "Contachilometri",
   "vehicle.odometer.notSet": "Non impostato",
-  "vehicle.odometer.estimated": "Contachilometri (stima)",
   "vehicle.lastService": "Ultimo tagliando",
   "vehicle.lastService.none": "Ancora nessuno",
 
@@ -575,7 +573,8 @@ export const it: Fragment = {
   "vehicle.undo": "Annulla",
   "vehicle.logService": "Registra un tagliando",
 
-  "vehicle.rename.title": "Rinomina il veicolo",
+  "vehicle.edit.title": "Modifica veicolo",
+  "vehicle.edit.odometerHint": "Un valore inserito qui sostituisce quello del veicolo, anche se più basso. Lascia vuoto per conservarlo.",
   "vehicle.deleteVehicle": "Elimina veicolo",
   "vehicle.delete.title": "Eliminare {name}?",
   "vehicle.delete.body":
@@ -634,6 +633,7 @@ export const it: Fragment = {
   "fuel.form.save": "Salva rifornimento",
   "fuel.form.error": "Non è stato possibile salvare il rifornimento.",
   "fuel.form.needOdometer": "Inserisci il contachilometri e quanto carburante è entrato.",
+  "fuel.form.sameOdometer": "È la lettura del tuo ultimo rifornimento. Inserisci quanto segna ora il contachilometri.",
   "fuel.card.title": "Carburante",
   "fuel.card.spend": "Spesa carburante",
   "fuel.card.perDistance": "Costo per 100 {unit}",

@@ -5,8 +5,9 @@ import TestRenderer from "react-test-renderer";
 /**
  * The fuel form, rendered.
  *
- * What a render proves and a pure test cannot: the odometer arrives prefilled
- * so the user edits three digits instead of typing six, the "Filled the tank"
+ * What a render proves and a pure test cannot: the odometer starts empty with
+ * the last reading as its placeholder, a fill at the previous fill's reading
+ * is refused rather than folded into the next tank, the "Filled the tank"
  * toggle starts on so a row written by someone who never touched it matches
  * what the schema assumes, and a fill with no price still saves — logging is
  * free and frictionless or the log never fills up.
@@ -149,20 +150,17 @@ function saveButton(tree: TestRenderer.ReactTestRenderer) {
 const ODO = t("fuel.form.odometer", { unit: distanceUnitLabel("mi") });
 const VOL = () => t("fuel.form.volume", { unit: volumeUnitLabel() });
 
-test("the odometer is prefilled from the vehicle's last known reading", () => {
-  // Three digits to edit, not six to type. The form has under twenty seconds.
-  const tree = render();
-  expect(field(tree, ODO).props.value).toBe("51771");
-  expect(field(tree, ODO).props.autoFocus).toBe(true);
-});
-
-test("a reading the app estimated is not prefilled", () => {
-  // The prefill is "the last reading, edit three digits". An estimate from
-  // the model year is not a reading, and a user who saved it untouched wrote
-  // the app's arithmetic into the log as if it were read off the dash.
-  getDb().runSync("UPDATE vehicles SET odometer_estimated = 1 WHERE id = 'v1'", []);
+test("the odometer starts empty, with the last reading as the placeholder", () => {
+  // The value used to be the reading itself, "edit three digits, not six".
+  // After any fill the reading IS the previous fill's odometer, so a driver
+  // who saved it untouched logged two fills at one reading: no distance, no
+  // efficiency figure, and the volume silently folded into the next tank
+  // (see `vehicleSeries`). The number is still on the glass, as the
+  // placeholder, so the six digits are in front of them to copy from.
   const tree = render();
   expect(field(tree, ODO).props.value).toBe("");
+  expect(field(tree, ODO).props.placeholder).toBe("51771");
+  expect(field(tree, ODO).props.autoFocus).toBe(true);
 });
 
 test("the filled-the-tank toggle starts on", () => {
@@ -234,4 +232,40 @@ test("the save reports whether the tank was filled", async () => {
     event: "fuel_logged",
     props: { full: true, priced: false },
   });
+});
+
+test("a fill at the previous fill's reading is refused, with a message", async () => {
+  // The one value that yields no figure: two fills at one odometer are zero
+  // distance, and `vehicleSeries` folds the second one's volume into the tank
+  // after it. Before this the form offered exactly that value as the default.
+  getDb().runSync(
+    "INSERT INTO fuel_entries (id, vehicle_id, filled_at, odometer, volume, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+    ["f1", "v1", "2026-09-01T12:00:00.000Z", 51771, 11, "2026-09-01T12:00:00.000Z"]
+  );
+  const tree = render();
+  act(() => field(tree, ODO).props.onChangeText("51,771"));
+  act(() => field(tree, VOL()).props.onChangeText("12"));
+  await act(async () => {
+    await saveButton(tree).props.onPress();
+  });
+  expect(fuelEntriesForVehicle("v1")).toHaveLength(1);
+  expect(navigated).not.toContain("back");
+  expect(texts(tree.root)).toContain(t("fuel.form.sameOdometer"));
+});
+
+test("a deleted fill at that reading does not block it", async () => {
+  // Only live rows count. A fill fat-fingered at this reading and deleted is
+  // not the previous fill; the odometer really can read this now.
+  getDb().runSync(
+    "INSERT INTO fuel_entries (id, vehicle_id, filled_at, odometer, volume, deleted_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    ["f1", "v1", "2026-09-01T12:00:00.000Z", 51771, 11, "2026-09-02T12:00:00.000Z", "2026-09-01T12:00:00.000Z"]
+  );
+  const tree = render();
+  act(() => field(tree, ODO).props.onChangeText("51771"));
+  act(() => field(tree, VOL()).props.onChangeText("12"));
+  await act(async () => {
+    await saveButton(tree).props.onPress();
+  });
+  expect(fuelEntriesForVehicle("v1")).toHaveLength(1);
+  expect(navigated).toContain("back");
 });

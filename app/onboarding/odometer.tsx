@@ -26,8 +26,8 @@ import { distanceUnitLabel } from "../../src/units/format";
  * reading is what dates half the schedule, and an "I'll add it later" here
  * bought a completed flow whose findings were computed from the app's own
  * arithmetic and presented as the user's car. The friction is one number off
- * the dash, and the estimate that used to stand in for it is still available
- * from the garage afterwards.
+ * the dash. (The estimate that used to stand in for it is gone altogether; a
+ * reading typed wrong is corrected on the vehicle's edit screen.)
  */
 export default function OnboardingOdometer() {
   const advance = useAdvance("odometer");
@@ -41,12 +41,8 @@ export default function OnboardingOdometer() {
   // `== null`, not `=== undefined`: SQLite hands back a JSON null for a row
   // that has never had a reading, and `String(null)` put the literal text
   // "null" in the field on the first pass through this question.
-  //
-  // An estimate from an older build is not poured into the field either. It is
-  // the app's arithmetic, not the user's answer, and prefilling it would turn
-  // Continue into a typed reading that nobody ever read off a dash.
   const [odometer, setOdometer] = useState(
-    saved?.odometer == null || saved.odometer_estimated ? "" : String(saved.odometer)
+    saved?.odometer == null ? "" : String(saved.odometer)
   );
   // What the drums show before there is anything to show: a plausible reading,
   // drawn once per mount so it does not re-roll on every render. The moment the

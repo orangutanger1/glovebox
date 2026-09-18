@@ -128,6 +128,22 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
         ON fuel_entries (vehicle_id, odometer);
     `,
   },
+  // The estimate path (migration 5) is retired. The odometer question became
+  // required, so nothing could write an estimate on a fresh install, and the
+  // 2026-09-17 audit found the flag's readers guarding a case that no longer
+  // arose. The readers are gone with it. A row still carrying an estimate from
+  // an older build is not promoted to a reading — that is the app's arithmetic
+  // presented with the confidence of a number read off the dash — it becomes
+  // "not set", and the edit screen is where the owner puts the real one.
+  // The column stays: SQLite cannot drop one cheaply, and a NULL reads as
+  // "not an estimate" to every version of the code.
+  {
+    version: 8,
+    sql: `
+      UPDATE vehicles SET odometer = NULL, odometer_estimated = NULL
+       WHERE odometer_estimated = 1;
+    `,
+  },
 ];
 
 /**

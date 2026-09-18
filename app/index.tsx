@@ -16,7 +16,7 @@ import { rescheduleAll } from "../src/notify";
 import { tokens } from "../src/design/tokens";
 import { listVehicles, softDeleteVehicle, type Vehicle } from "../src/db/vehicles";
 import { listRecords } from "../src/db/records";
-import { nextDue, dueStatus } from "../src/schedule";
+import { dueStates } from "../src/schedule/due";
 import { getIntervals } from "../src/db/intervals";
 import { isPro, presentPaywall } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
@@ -45,45 +45,35 @@ const UPCOMING = 3;
  */
 function summarize(vehicle: Vehicle): Summary {
   const records = listRecords(vehicle.id);
-  const seen = new Set<string>();
-  const now = new Date().toISOString();
   const rank = { due: 2, soon: 1, ok: 0 } as const;
-  const intervals = getIntervals();
   const unit = getDistanceUnit();
 
   let best: Summary | null = null;
 
-  for (const r of records) {
-    if (seen.has(r.service_type)) continue;
-    seen.add(r.service_type);
-    const interval = intervals[r.service_type];
-    // An empty interval — "Other", or an inspection in a market with no test
-    // — is a service the app has no opinion about. It is not "on schedule",
-    // and it must not take the headline from a service that has one.
-    if (!interval || (interval.months === undefined && interval.distance === undefined)) continue;
-    const due = nextDue({
-      lastPerformedAt: r.performed_at,
-      lastOdometer: r.odometer,
-      interval,
-    });
-    const status = dueStatus({ ...due, now, odometer: vehicle.odometer, unit });
-    if (best && rank[status] <= rank[best.status]) continue;
+  // Which services are due is decided in one place (`dueStates`): an empty
+  // interval — "Other", or an inspection in a market with no test — is a
+  // service the app has no opinion about, and it never takes the headline
+  // from a service that has one.
+  for (const s of dueStates({
+    records,
+    intervals: getIntervals(),
+    odometer: vehicle.odometer,
+    unit,
+    now: new Date().toISOString(),
+  })) {
+    if (best && rank[s.status] <= rank[best.status]) continue;
 
-    const overBy =
-      due.dueOdometer !== undefined && vehicle.odometer !== undefined
-        ? vehicle.odometer - due.dueOdometer
-        : undefined;
     const detail =
-      status === "due" && overBy !== undefined && overBy > 0
-        ? t("garage.over", { distance: formatDistance(overBy, unit) })
-        : status === "due"
+      s.status === "due" && s.overBy !== undefined
+        ? t("garage.over", { distance: formatDistance(s.overBy, unit) })
+        : s.status === "due"
           ? t("garage.dueNow")
-          : due.dueAt
-            ? formatDate(due.dueAt)
-            : status === "soon"
+          : s.dueAt
+            ? formatDate(s.dueAt)
+            : s.status === "soon"
               ? t("garage.dueSoon")
               : t("garage.onSchedule");
-    best = { status, label: serviceName(r.service_type), detail };
+    best = { status: s.status, label: serviceName(s.type), detail };
   }
 
   // No record carries a known interval — say that, rather than claiming
@@ -321,17 +311,8 @@ export default function Garage() {
                       value={s.detail}
                       lamp={s.status === "due" ? true : s.status === "soon" ? false : undefined}
                     />
-                    {/* An estimate says so in the legend rather than beside the
-                        number: the readout is a distance and the parenthesis would
-                        read as part of it. A reading the app worked out from the
-                        model year is still worth showing, and is not worth showing
-                        as though somebody had read it off the dash. */}
                     <Gauge
-                      legend={
-                        v.odometer && v.odometer_estimated
-                          ? t("garage.odometer.estimated")
-                          : t("garage.odometer")
-                      }
+                      legend={t("garage.odometer")}
                       value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
                       unit={v.odometer ? distanceUnitLabel() : undefined}
                       align="right"

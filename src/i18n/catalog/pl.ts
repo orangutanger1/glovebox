@@ -48,7 +48,6 @@ export const pl: Fragment = {
 
   "garage.odometer": "Przebieg",
   "garage.odometer.notSet": "Nie podano",
-  "garage.odometer.estimated": "Przebieg (szac.)",
 
   "garage.over": "{distance} ponad limit",
   "garage.dueNow": "do wykonania",
@@ -627,7 +626,6 @@ export const pl: Fragment = {
 
   "vehicle.odometer": "Przebieg",
   "vehicle.odometer.notSet": "Nie podano",
-  "vehicle.odometer.estimated": "Przebieg (szac.)",
   "vehicle.lastService": "Ostatni serwis",
   "vehicle.lastService.none": "Jeszcze żadnego",
 
@@ -653,7 +651,8 @@ export const pl: Fragment = {
   "vehicle.undo": "Cofnij",
   "vehicle.logService": "Zapisz serwis",
 
-  "vehicle.rename.title": "Zmień nazwę pojazdu",
+  "vehicle.edit.title": "Edytuj pojazd",
+  "vehicle.edit.odometerHint": "Wpisany tu przebieg zastępuje obecny, także gdy jest niższy. Zostaw puste, aby go zachować.",
   "vehicle.deleteVehicle": "Usuń pojazd",
   "vehicle.delete.title": "Usunąć {name}?",
   "vehicle.delete.body":
@@ -712,6 +711,7 @@ export const pl: Fragment = {
   "fuel.form.save": "Zapisz tankowanie",
   "fuel.form.error": "Nie udało się zapisać tankowania.",
   "fuel.form.needOdometer": "Podaj stan licznika i ile paliwa wlano.",
+  "fuel.form.sameOdometer": "To przebieg z ostatniego tankowania. Wpisz, co licznik pokazuje teraz.",
   "fuel.card.title": "Paliwo",
   "fuel.card.spend": "Wydatki na paliwo",
   "fuel.card.perDistance": "Koszt na 100 {unit}",

@@ -79,7 +79,6 @@ export const sv: Fragment = {
 
   "garage.odometer": "Mätarställning",
   "garage.odometer.notSet": "Inte angiven",
-  "garage.odometer.estimated": "Mätarställning (ca)",
 
   "garage.over": "{distance} över",
   "garage.dueNow": "dags nu",
@@ -555,7 +554,6 @@ export const sv: Fragment = {
 
   "vehicle.odometer": "Mätarställning",
   "vehicle.odometer.notSet": "Inte angiven",
-  "vehicle.odometer.estimated": "Mätarställning (ca)",
   "vehicle.lastService": "Senaste service",
   "vehicle.lastService.none": "Ingen än",
 
@@ -580,7 +578,8 @@ export const sv: Fragment = {
   "vehicle.undo": "Ångra",
   "vehicle.logService": "Logga en service",
 
-  "vehicle.rename.title": "Byt namn på fordonet",
+  "vehicle.edit.title": "Redigera fordon",
+  "vehicle.edit.odometerHint": "En ställning som anges här ersätter fordonets, även om den är lägre. Lämna tomt för att behålla den.",
   "vehicle.deleteVehicle": "Ta bort fordon",
   "vehicle.delete.title": "Ta bort {name}?",
   "vehicle.delete.body":
@@ -638,6 +637,7 @@ export const sv: Fragment = {
   "fuel.form.save": "Spara tankning",
   "fuel.form.error": "Tankningen kunde inte sparas.",
   "fuel.form.needOdometer": "Fyll i mätarställningen och hur mycket bränsle som gick in.",
+  "fuel.form.sameOdometer": "Det är ställningen från din senaste tankning. Ange vad mätaren visar nu.",
   "fuel.card.title": "Bränsle",
   "fuel.card.spend": "Bränslekostnad",
   "fuel.card.perDistance": "Kostnad per 100 {unit}",

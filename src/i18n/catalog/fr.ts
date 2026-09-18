@@ -83,7 +83,6 @@ export const fr: Fragment = {
 
   "garage.odometer": "Compteur",
   "garage.odometer.notSet": "Non renseigné",
-  "garage.odometer.estimated": "Compteur (est.)",
 
   "garage.over": "{distance} de dépassement",
   "garage.dueNow": "à faire",
@@ -578,7 +577,6 @@ export const fr: Fragment = {
 
   "vehicle.odometer": "Compteur",
   "vehicle.odometer.notSet": "Non renseigné",
-  "vehicle.odometer.estimated": "Compteur (est.)",
   "vehicle.lastService": "Dernier entretien",
   "vehicle.lastService.none": "Aucun pour l'instant",
 
@@ -604,7 +602,8 @@ export const fr: Fragment = {
   "vehicle.undo": "Annuler",
   "vehicle.logService": "Noter un entretien",
 
-  "vehicle.rename.title": "Renommer le véhicule",
+  "vehicle.edit.title": "Modifier le véhicule",
+  "vehicle.edit.odometerHint": "Un relevé saisi ici remplace celui du véhicule, même s’il est plus bas. Laissez vide pour le conserver.",
   "vehicle.deleteVehicle": "Supprimer le véhicule",
   "vehicle.delete.title": "Supprimer {name}\u00a0?",
   "vehicle.delete.body":
@@ -663,6 +662,7 @@ export const fr: Fragment = {
   "fuel.form.save": "Enregistrer le plein",
   "fuel.form.error": "Ce plein n’a pas pu être enregistré.",
   "fuel.form.needOdometer": "Indique le compteur et la quantité de carburant.",
+  "fuel.form.sameOdometer": "C’est le relevé de ton dernier plein. Saisis ce que le compteur affiche maintenant.",
   "fuel.card.title": "Carburant",
   "fuel.card.spend": "Dépenses carburant",
   "fuel.card.perDistance": "Coût pour 100 {unit}",

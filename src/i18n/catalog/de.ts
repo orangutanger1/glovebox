@@ -76,7 +76,6 @@ export const de: Fragment = {
 
   "garage.odometer": "Tachostand",
   "garage.odometer.notSet": "Nicht gesetzt",
-  "garage.odometer.estimated": "Tachostand (gesch.)",
 
   "garage.over": "{distance} drüber",
   "garage.dueNow": "jetzt fällig",
@@ -567,7 +566,6 @@ export const de: Fragment = {
 
   "vehicle.odometer": "Tachostand",
   "vehicle.odometer.notSet": "Nicht gesetzt",
-  "vehicle.odometer.estimated": "Tachostand (gesch.)",
   "vehicle.lastService": "Letzter Service",
   "vehicle.lastService.none": "Noch keiner",
 
@@ -592,7 +590,8 @@ export const de: Fragment = {
   "vehicle.undo": "Rückgängig",
   "vehicle.logService": "Service eintragen",
 
-  "vehicle.rename.title": "Fahrzeug umbenennen",
+  "vehicle.edit.title": "Fahrzeug bearbeiten",
+  "vehicle.edit.odometerHint": "Ein hier eingegebener Stand ersetzt den aktuellen – auch nach unten. Leer lassen, um ihn zu behalten.",
   "vehicle.deleteVehicle": "Fahrzeug löschen",
   "vehicle.delete.title": "{name} löschen?",
   "vehicle.delete.body":
@@ -651,6 +650,7 @@ export const de: Fragment = {
   "fuel.form.save": "Tankfüllung sichern",
   "fuel.form.error": "Diese Tankfüllung konnte nicht gesichert werden.",
   "fuel.form.needOdometer": "Trag den Tachostand ein und wie viel getankt wurde.",
+  "fuel.form.sameOdometer": "Das ist der Stand deiner letzten Tankfüllung. Gib den aktuellen Kilometerstand ein.",
   "fuel.card.title": "Kraftstoff",
   "fuel.card.spend": "Kraftstoffkosten",
   "fuel.card.perDistance": "Kosten pro 100 {unit}",
