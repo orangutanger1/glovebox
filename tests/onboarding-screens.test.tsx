@@ -1195,11 +1195,11 @@ test("both asks address the driver by name, and neither breaks without one", () 
   expect(unnamed).toContain(t("offer.paywall.title"));
 
   setOnboardingName("Alex");
-  for (const Screen of [OnboardingPaywall, OnboardingOffer]) {
-    const printed = texts(render(Screen)).join(" ");
-    expect(printed).toContain("Alex");
-    expect(printed).not.toMatch(/\{\w+\}/);
-  }
+  expect(texts(render(OnboardingPaywall)).join(" ")).toContain("Alex");
+  // The exit offer's headline is the offer, not a greeting: no name on it.
+  const offer = texts(render(OnboardingOffer)).join(" ");
+  expect(offer).not.toContain("Alex");
+  expect(offer).not.toMatch(/\{\w+\}/);
 });
 
 test("the schedule page says what is watched, not what is missing", () => {

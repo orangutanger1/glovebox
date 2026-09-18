@@ -197,7 +197,6 @@ export const de: Fragment = {
 
 
   "offer.deal.title": "Zeitlich begrenztes Angebot.",
-  "offer.deal.title.named": "{name}, ein zeitlich begrenztes Angebot.",
   "offer.trial.cta": "Angebot sichern",
   "offer.trial.decline": "Lieber den vollen Preis zahlen",
   "offer.trial.gets.reminders": "Erinnerung vor jedem Service",

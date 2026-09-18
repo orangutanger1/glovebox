@@ -66,9 +66,9 @@ export const offer: Fragment = {
   // The exit offer: a yearly plan for less than the first screen asked. No
   // number in the sentence — the card shows both prices in StoreKit's own
   // strings. "Limited time" is true of the screen: it is the one place the
-  // price is offered, and the flow does not come back to it.
+  // price is offered, and the flow does not come back to it. No `.named`
+  // twin on purpose — the headline is the offer, not a greeting.
   "offer.deal.title": "Limited time offer.",
-  "offer.deal.title.named": "{name}, a limited time offer.",
   "offer.trial.cta": "Claim your offer",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing

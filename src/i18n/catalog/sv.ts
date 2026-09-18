@@ -196,7 +196,6 @@ export const sv: Fragment = {
 
 
   "offer.deal.title": "Tidsbegränsat erbjudande.",
-  "offer.deal.title.named": "{name}, ett tidsbegränsat erbjudande.",
   "offer.trial.cta": "Ta erbjudandet",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",

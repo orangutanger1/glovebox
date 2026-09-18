@@ -147,7 +147,8 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
-      title={hasDeal ? tNamed("offer.deal.title") : tNamed("offer.paywall.title")}
+      // No name on the deal headline: "Limited time offer." is the whole line.
+      title={hasDeal ? t("offer.deal.title") : tNamed("offer.paywall.title")}
       subtitle={subtitle}
       hideBack={relaunched}
       footer={

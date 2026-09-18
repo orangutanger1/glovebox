@@ -615,7 +615,6 @@ export const nl: Fragment = {
 
 
   "offer.deal.title": "Tijdelijke aanbieding.",
-  "offer.deal.title.named": "{name}, een tijdelijke aanbieding.",
   "offer.trial.cta": "Aanbieding claimen",
   "offer.trial.decline": "Ik betaal liever de volle prijs",
   "offer.trial.gets.reminders": "Herinnering voor elke beurt",

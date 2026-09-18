@@ -193,7 +193,6 @@ export const es: Fragment = {
 
 
   "offer.deal.title": "Oferta por tiempo limitado.",
-  "offer.deal.title.named": "{name}, una oferta por tiempo limitado.",
   "offer.trial.cta": "Aprovechar la oferta",
   "offer.trial.decline": "Prefiero pagar el precio completo",
   "offer.trial.gets.reminders": "Avisos antes de cada mantenimiento",
