@@ -1,5 +1,6 @@
 import { getDb } from "./client";
-import { rows } from "./row";
+import { row, rows } from "./row";
+import { rewindOdometer, setOdometerIfHigher } from "./vehicles";
 import type { FuelEntry } from "../fuel";
 
 export type FuelRow = FuelEntry & { deleted_at?: string; created_at: string };
@@ -88,17 +89,31 @@ export function addFuelEntry(e: {
   return row;
 }
 
+function odometerOf(entryId: string): { vehicle_id: string; odometer: number } | null {
+  return row(
+    getDb().getFirstSync<{ vehicle_id: string; odometer: number }>(
+      "SELECT vehicle_id, odometer FROM fuel_entries WHERE id = ?",
+      [entryId]
+    )
+  );
+}
+
 /** Never deletes. Sets a tombstone so the row stays recoverable and stays in
- *  the export. */
+ *  the export. The vehicle's reading follows the row out if this is the row
+ *  that set it — see `rewindOdometer`. */
 export function softDeleteFuelEntry(entryId: string): void {
+  const e = odometerOf(entryId);
   getDb().runSync("UPDATE fuel_entries SET deleted_at = ? WHERE id = ?", [
     new Date().toISOString(),
     entryId,
   ]);
+  if (e) rewindOdometer(e.vehicle_id, e.odometer);
 }
 
 export function undoDeleteFuelEntry(entryId: string): void {
   getDb().runSync("UPDATE fuel_entries SET deleted_at = NULL WHERE id = ?", [entryId]);
+  const e = odometerOf(entryId);
+  if (e) setOdometerIfHigher(e.vehicle_id, e.odometer);
 }
 
 /** Includes soft-deleted rows: export must never lose anything. */

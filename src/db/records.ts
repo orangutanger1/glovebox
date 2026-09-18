@@ -1,5 +1,6 @@
 import { getDb } from "./client";
-import { rows } from "./row";
+import { row, rows } from "./row";
+import { rewindOdometer, setOdometerIfHigher } from "./vehicles";
 import type { CostedRecord } from "../insights";
 
 export type ServiceRecord = {
@@ -66,16 +67,30 @@ export function addRecord(r: {
   return row;
 }
 
-/** Never deletes. Sets a tombstone so the row stays recoverable. */
+function odometerOf(recordId: string): { vehicle_id: string; odometer?: number } | null {
+  return row(
+    getDb().getFirstSync<{ vehicle_id: string; odometer?: number }>(
+      "SELECT vehicle_id, odometer FROM service_records WHERE id = ?",
+      [recordId]
+    )
+  );
+}
+
+/** Never deletes. Sets a tombstone so the row stays recoverable. The vehicle's
+ *  reading follows the row out if this is the row that set it. */
 export function softDeleteRecord(recordId: string): void {
+  const r = odometerOf(recordId);
   getDb().runSync("UPDATE service_records SET deleted_at = ? WHERE id = ?", [
     new Date().toISOString(),
     recordId,
   ]);
+  if (r?.odometer !== undefined) rewindOdometer(r.vehicle_id, r.odometer);
 }
 
 export function undoDelete(recordId: string): void {
   getDb().runSync("UPDATE service_records SET deleted_at = NULL WHERE id = ?", [recordId]);
+  const r = odometerOf(recordId);
+  if (r?.odometer !== undefined) setOdometerIfHigher(r.vehicle_id, r.odometer);
 }
 
 /** Includes soft-deleted rows: export must never lose anything. */

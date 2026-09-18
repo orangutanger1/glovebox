@@ -141,6 +141,37 @@ export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
 }
 
 /**
+ * The other half of the high-water rule: a row that raised the reading and is
+ * then deleted takes the reading back down with it.
+ *
+ * Until this existed the mark only ever went up. A fill fat-fingered at
+ * 842,100 put 842,100 on the dash, every distance-based service went "due",
+ * and deleting the fill changed nothing — the only way the number came off
+ * was deleting the car and its whole history with it.
+ *
+ * Only a delete of the row that set the mark moves it: a deleted row below
+ * the reading was never what the reading was based on. It lands on the
+ * highest surviving reading across the services and the fills, or on "not
+ * set" when nothing survives — the app no longer knows a reading, and saying
+ * so is better than keeping the number the user just said was wrong.
+ */
+export function rewindOdometer(vehicleId: string, removed: number): void {
+  getDb().runSync(
+    `UPDATE vehicles SET odometer = (
+       SELECT MAX(o) FROM (
+         SELECT odometer AS o FROM service_records
+          WHERE vehicle_id = ? AND deleted_at IS NULL AND odometer IS NOT NULL
+         UNION ALL
+         SELECT odometer AS o FROM fuel_entries
+          WHERE vehicle_id = ? AND deleted_at IS NULL
+       )
+     )
+     WHERE id = ? AND odometer IS NOT NULL AND odometer <= ?`,
+    [vehicleId, vehicleId, vehicleId, removed]
+  );
+}
+
+/**
  * Stores a reading the app worked out from the model year rather than one the
  * user read off the dash, and says so in the row.
  *
