@@ -93,14 +93,26 @@ export function spendByService(records: readonly CostedRecord[]): SpendBucket[] 
   return groupBy(records, (r) => r.service_type);
 }
 
-/** The "YYYY-MM" a record falls in, read off the stored string rather than
- *  parsed into a Date. `performed_at` is written as noon local and serialised,
- *  and re-parsing it into the reader's zone can walk a record across a month
- *  boundary — the log already shows this row under the date in its own string,
- *  and a monthly chart that disagrees with the list beneath it is worse than a
- *  chart that is a few hours naive. */
+/** The "YYYY-MM" a record falls in, on the reader's own calendar.
+ *
+ *  Parsed into a local Date rather than sliced off the stored string. The
+ *  string is UTC; the history list dates every row through `formatDate`,
+ *  which is local; and the two disagree by a day for a few hours either side
+ *  of midnight UTC. Records are written at noon local, which keeps them on
+ *  the same UTC day in every zone up to ±12 — and New Zealand's summer is
+ *  UTC+13, where noon on the 1st is 23:00 on the last day of the previous
+ *  month in the string. A chart that filed that row under one month while
+ *  the list beneath it printed the other was the thing to avoid. */
 export function monthOf(performedAt: string): string {
-  return performedAt.slice(0, 7);
+  return localDay(performedAt).slice(0, 7);
+}
+
+/** "YYYY-MM-DD" on the reader's calendar, for the same reason as `monthOf`:
+ *  the one date a row is ever shown under is the local one. */
+export function localDay(iso: string): string {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 /** The `count` months ending with the one containing `now`, oldest first. */

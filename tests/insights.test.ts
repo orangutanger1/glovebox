@@ -94,7 +94,11 @@ describe("the monthly series", () => {
     expect(series.reduce((n, b) => n + b.total, 0)).toBe(120);
   });
 
-  test("the month is read off the stored string, not a reparsed date", () => {
+  test("the month is the reader's own calendar month, as the log prints it", () => {
     expect(monthOf("2026-03-31T12:00:00.000Z")).toBe("2026-03");
+    // 03:00Z on 1 March is still the evening of 28 February in New York. The
+    // history list dates this row by the local clock, and a chart that read
+    // the UTC string filed it under March while the row beneath said February.
+    expect(monthOf("2026-03-01T03:00:00.000Z")).toBe("2026-02");
   });
 });

@@ -57,7 +57,7 @@ test("writes one line per record", () => {
     {
       vehicle_name: "Civic",
       service_type: "Oil Change",
-      performed_at: "2026-01-15T00:00:00.000Z",
+      performed_at: "2026-01-15T17:00:00.000Z",
       odometer: 50000,
       cost: 49.99,
       notes: "Mobil 1",
@@ -75,7 +75,7 @@ test("the cells stay machine-readable whatever the header says", () => {
     {
       vehicle_name: "Civic",
       service_type: "Oil Change",
-      performed_at: "2026-01-15T00:00:00.000Z",
+      performed_at: "2026-01-15T17:00:00.000Z",
       odometer: 51771,
       cost: 49.99,
       notes: "Mobil 1",
@@ -92,7 +92,7 @@ test("quotes and escapes fields containing commas or quotes", () => {
     {
       vehicle_name: "Civic",
       service_type: "Other",
-      performed_at: "2026-01-15T00:00:00.000Z",
+      performed_at: "2026-01-15T17:00:00.000Z",
       notes: 'Replaced belt, hose, and "the thing"',
     },
   ]);
@@ -104,8 +104,8 @@ test("marks soft-deleted rows instead of omitting them", () => {
     {
       vehicle_name: "Civic",
       service_type: "Oil Change",
-      performed_at: "2026-01-15T00:00:00.000Z",
-      deleted_at: "2026-02-01T00:00:00.000Z",
+      performed_at: "2026-01-15T17:00:00.000Z",
+      deleted_at: "2026-02-01T17:00:00.000Z",
     },
   ]);
   expect(out.trim().endsWith(",deleted")).toBe(true);
@@ -171,4 +171,18 @@ test("the existing service export is untouched", () => {
   // Its column set is a contract someone's spreadsheet keys off, which is the
   // whole reason fuel went into a second file.
   expect(toCsv([])).toBe(HEADER);
+});
+
+test("the date column is the reader's own calendar day, as the log prints it", () => {
+  // 03:00Z on 1 March is the evening of 28 February in New York. Records are
+  // stored at noon local, which lands on the same UTC day everywhere except
+  // UTC+13 and beyond — and New Zealand's summer is UTC+13.
+  const out = toCsv([
+    { vehicle_name: "Civic", service_type: "Oil Change", performed_at: "2026-03-01T03:00:00.000Z" },
+  ]);
+  expect(out.split("\n")[1].split(",")[2]).toBe("2026-02-28");
+  const fuel = toFuelCsv([
+    { vehicle_name: "Civic", filled_at: "2026-03-01T03:00:00.000Z", odometer: 1, volume: 1, full: 1 },
+  ]);
+  expect(fuel.split("\n")[1].split(",")[1]).toBe("2026-02-28");
 });

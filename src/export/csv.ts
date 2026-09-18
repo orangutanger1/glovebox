@@ -1,6 +1,7 @@
 import { t } from "../i18n";
 import { distanceUnitLabel } from "../units/format";
 import { volumeUnitLabel } from "../fuel/format";
+import { localDay } from "../insights";
 
 export type CsvRow = {
   vehicle_name: string;
@@ -43,7 +44,7 @@ export function toCsv(rows: CsvRow[]): string {
       [
         cell(r.vehicle_name),
         cell(r.service_type),
-        cell(r.performed_at.slice(0, 10)),
+        cell(localDay(r.performed_at)),
         cell(r.odometer),
         cell(r.cost),
         cell(r.notes),
@@ -95,7 +96,7 @@ export function toFuelCsv(rows: FuelCsvRow[]): string {
     lines.push(
       [
         cell(r.vehicle_name),
-        cell(r.filled_at.slice(0, 10)),
+        cell(localDay(r.filled_at)),
         cell(r.odometer),
         cell(r.volume),
         cell(r.cost),
