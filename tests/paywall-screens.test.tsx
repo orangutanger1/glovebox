@@ -132,16 +132,19 @@ describe("PlanPicker", () => {
   test("the intro price is drawn only when the plan carries one", () => {
     const withIntro = texts(
       render(createElement(PlanPicker, { plans: [INTRO], selected: "$rc_weekly", onSelect: () => {}, offering: "discount" }))
-    ).join(" ");
-    expect(withIntro).toContain("$0.99");
+    );
+    expect(withIntro.join(" ")).toContain("$0.99");
     // The renewal is the footer's line, once. The card printing it too put
-    // the same two prices on the offer screen three times.
-    expect(withIntro).not.toContain(t("paywall.then", { price: "$2.99" }));
+    // the same two prices on the offer screen three times. On the card the
+    // standard price appears exactly once: struck through above the intro
+    // figure, never again as a "then $2.99 per week" line under it.
+    expect(withIntro.filter((line) => line.includes("$2.99"))).toHaveLength(1);
     const without = texts(
       render(createElement(PlanPicker, { plans: [WEEK], selected: "$rc_weekly", onSelect: () => {}, offering: "discount" }))
-    ).join(" ");
-    expect(without).not.toContain("$0.99");
-    expect(without).not.toContain(t("paywall.then", { price: "$2.99" }));
+    );
+    expect(without.join(" ")).not.toContain("$0.99");
+    // And once here too: as the headline, with nothing repeating it.
+    expect(without.filter((line) => line.includes("$2.99"))).toHaveLength(1);
   });
 });
 
