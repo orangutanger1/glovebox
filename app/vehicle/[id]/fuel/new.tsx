@@ -45,7 +45,12 @@ export default function LogFuel() {
 
   // Prefilled so the user edits three digits instead of typing six, and it gets
   // the autofocus: it is the field the pump is already showing them.
-  const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
+  // The last reading, so the user edits three digits rather than typing six.
+  // Not an estimate: that is the app's arithmetic, and saved untouched it
+  // would enter the log as if somebody had read it off the dash.
+  const [odometer, setOdometer] = useState(
+    vehicle?.odometer && !vehicle.odometer_estimated ? String(vehicle.odometer) : ""
+  );
   const [volume, setVolume] = useState("");
   const [cost, setCost] = useState("");
   // On by default, matching the column default, so a row written by a user who

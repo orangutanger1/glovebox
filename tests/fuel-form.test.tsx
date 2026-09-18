@@ -156,6 +156,15 @@ test("the odometer is prefilled from the vehicle's last known reading", () => {
   expect(field(tree, ODO).props.autoFocus).toBe(true);
 });
 
+test("a reading the app estimated is not prefilled", () => {
+  // The prefill is "the last reading, edit three digits". An estimate from
+  // the model year is not a reading, and a user who saved it untouched wrote
+  // the app's arithmetic into the log as if it were read off the dash.
+  getDb().runSync("UPDATE vehicles SET odometer_estimated = 1 WHERE id = 'v1'", []);
+  const tree = render();
+  expect(field(tree, ODO).props.value).toBe("");
+});
+
 test("the filled-the-tank toggle starts on", () => {
   // On by default, matching the column default, so a row written by a user who
   // never touched it is honest rather than merely present.

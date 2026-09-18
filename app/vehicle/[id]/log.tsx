@@ -58,7 +58,12 @@ export default function LogService() {
   const [customDate, setCustomDate] = useState(() => partsFromDate(new Date()));
   // Prefilled so the user edits three digits instead of typing six. This field
   // gets autofocus, not the type chips — the chips are already answered.
-  const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
+  // The last reading, so the user edits three digits rather than typing six.
+  // Not an estimate: that is the app's arithmetic, and saved untouched it
+  // would enter the log as if somebody had read it off the dash.
+  const [odometer, setOdometer] = useState(
+    vehicle?.odometer && !vehicle.odometer_estimated ? String(vehicle.odometer) : ""
+  );
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
