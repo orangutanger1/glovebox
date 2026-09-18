@@ -394,7 +394,7 @@ describe("leaving a step", () => {
 
 /** The exit reason is the addition the revenue question depends on. */
 describe("finishing onboarding", () => {
-  const finish = (exit: "paid" | "trial" | "restored" | "free") => {
+  const finish = (exit: "paid" | "restored" | "free") => {
     process.env.EXPO_PUBLIC_POSTHOG_KEY = "phc_test";
     jest.isolateModules(() => {
       const analytics = require("../src/analytics") as Analytics;
@@ -408,7 +408,7 @@ describe("finishing onboarding", () => {
     mockGrandfathered = false;
   });
 
-  test.each(["paid", "trial", "restored", "free"] as const)("%s is reported as the exit", (exit) => {
+  test.each(["paid", "restored", "free"] as const)("%s is reported as the exit", (exit) => {
     finish(exit);
     expect(onlyEvent()).toEqual({ event: "onboarding_completed", properties: { exit } });
   });
@@ -416,7 +416,7 @@ describe("finishing onboarding", () => {
   // Where the flow lets go of the user is part of the exit, not a detail of it.
   // `restored` is here because the screen is owed to anyone who now has the
   // subscription, and separate from "paid" because it is not a sale.
-  test.each(["paid", "trial", "restored"] as const)("%s is owed a screen naming it", (exit) => {
+  test.each(["paid", "restored"] as const)("%s is owed a screen naming it", (exit) => {
     // A paying exit owes the subscriber a screen naming what they bought and
     // one action to take. The garage is one row in a list.
     finish(exit);

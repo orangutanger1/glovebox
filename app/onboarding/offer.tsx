@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { tokens } from "../../src/design/tokens";
@@ -59,7 +59,16 @@ export default function OnboardingOffer() {
   // product waits on App Store review (the old weekly stays on it so the
   // installed bundle keeps a button); until StoreKit returns the yearly, the
   // screen sells what it has.
-  const plans = offered && offered.some((p) => p.period === "year") ? offered.filter((p) => p.period === "year") : offered;
+  //
+  // Memoised on `offered`: the `paywall_presented` effect below keys on this
+  // list, and a `filter` rebuilt on every render re-fired it on every tap.
+  const plans = useMemo(
+    () =>
+      offered && offered.some((p) => p.period === "year")
+        ? offered.filter((p) => p.period === "year")
+        : offered,
+    [offered]
+  );
   const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -82,7 +91,7 @@ export default function OnboardingOffer() {
 
   /** Where a successful purchase goes. A relaunched subscriber finished
    *  onboarding long ago and must not be counted as a completion. */
-  function paid(exit: "trial" | "paid" | "restored") {
+  function paid(exit: "paid" | "restored") {
     if (relaunched) {
       router.replace("/");
       return;
@@ -98,7 +107,10 @@ export default function OnboardingOffer() {
       const outcome = await buy(chosen, "discount");
       if (outcome === "purchased") {
         recordReviewEvent("purchase");
-        paid("trial");
+        // A sale at a flat price. It was "trial" while the offering carried an
+        // introductory week; nothing on it trials now, and the exit reason
+        // says what was bought rather than what this screen used to sell.
+        paid("paid");
         return;
       }
       if (outcome === "unavailable") setMsg(t("settings.store.error"));

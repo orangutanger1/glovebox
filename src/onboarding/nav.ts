@@ -44,11 +44,17 @@ export function useAdvance(from: OnboardingRoute, mode: "push" | "replace" = "pu
  * the same outcome, which is how thirty-two installs and no subscribers looked
  * like a mystery rather than a paywall nobody accepted. Still one exit path:
  * the reason is an argument, not a second function.
+ *
+ * "trial" is gone from the vocabulary: no offering carries an introductory
+ * period any more (2026-09-17), so no screen can produce it, and a type that
+ * still offered it invited the discount sale to be filed under it.
  */
-export function useFinish(): (exit: "paid" | "trial" | "restored" | "free") => void {
+export type OnboardingExit = "paid" | "restored" | "free";
+
+export function useFinish(): (exit: OnboardingExit) => void {
   const router = useRouter();
   return useCallback(
-    (exit: "paid" | "trial" | "restored" | "free") => {
+    (exit: OnboardingExit) => {
       // The denominator for every drop-off rate: the count of users who
       // reached the garage at all, now split by what they agreed to on the way.
       track("onboarding_completed", { exit });

@@ -510,3 +510,18 @@ The comparison the screen draws — the standard yearly struck through, the
 saving beside it — is `compareAt`, read off the `default` offering at fetch
 time. A store that returns `discount` without `default` shows a plain price and
 the plain title.
+
+**`onboarding_completed {exit:"trial"}` is retired; the discount sale is
+`exit:"paid"`.** The offer screen kept reporting `trial` after the product it
+sold stopped trialling, so from the 2026-09-17 build until this fix a $29.99
+yearly bought on the exit screen was filed as a trial start. Read `trial`
+before this as "bought from the exit offer", and after it as impossible. The
+offering is on `subscription_success {offering:"discount"}`, which is the
+event to count sales by anyway.
+
+**`paywall_presented {offering:"discount"}` was over-counted on the same
+build.** The screen re-emitted it on every re-render — every tap, every buy
+attempt — so one view produced several rows with a rising `ms`. Count distinct
+viewers, not events, for `offering=discount` between the 2026-09-17 build and
+this fix; `paywall_shown` on the same offering was never affected.
+
