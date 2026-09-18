@@ -45,13 +45,12 @@ export function initAnalytics(): void {
     // The funnel is the point; page/tap autocapture would bury it in noise and
     // needs the provider component wrapped around the tree.
     captureAppLifecycleEvents: true,
+    // Evaluated once, here, and stamped on every event: see `bundleIdentity`
+    // for why app properties rather than `register`. Nothing that changes
+    // after this line belongs in it — the experiment arm is read in `track`.
     customAppProperties: (native) => ({
       ...native,
       ...bundleIdentity(),
-      // Read at event time, never stored: see `bundleIdentity` for why app
-      // properties rather than `register`. "unassigned" until the boot
-      // sequence has flipped the coin, and for every install it never does.
-      ...experimentProperties(),
     }),
   });
 }
@@ -189,7 +188,14 @@ export function trackStepBack(route: string, to: string | null): void {
  */
 export function track(event: string, properties?: Props): void {
   try {
-    const props = event === STEP_VIEWED ? withFirstView(properties) : properties;
+    // The arm is read when the event fires. The client is built before the
+    // boot sequence flips the coin, so anything read at construction would
+    // say "unassigned" for the whole install. "unassigned" still means the
+    // install was never eligible — or the event fired before assignment.
+    const props = {
+      ...(event === STEP_VIEWED ? withFirstView(properties) : properties),
+      ...experimentProperties(),
+    };
     // `capture` is declared to return void, but it has handed back a promise
     // across SDK versions. An unhandled rejection from telemetry is still a
     // red box in a dev build and a logged crash report in a release one.

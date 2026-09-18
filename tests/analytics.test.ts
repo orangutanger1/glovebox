@@ -58,7 +58,9 @@ jest.mock("expo-updates", () => mockUpdates);
 
 // The experiment bag rides beside the bundle identity on every event. Mutable
 // so one test is an unassigned install and the next is in an arm.
-let mockExperiments: Record<string, string> = { exp_onboarding_symptoms: "unassigned" };
+/** Empty by default — as if no experiment were registered — so every event
+ *  assertion below stays exact. The experiment test sets its own. */
+let mockExperiments: Record<string, string> = {};
 jest.mock("../src/experiments", () => ({
   experimentProperties: () => mockExperiments,
   getVariant: () => null,
@@ -172,7 +174,6 @@ test("every event carries the update id that separates two populations on one bi
     ota_channel: "production",
     ota_runtime_version: "1.1.0",
     ota_created_at: "2026-08-26T12:00:00.000Z",
-    exp_onboarding_symptoms: "unassigned",
   });
 });
 
@@ -187,17 +188,23 @@ test("the bundle shipped inside the binary reports an id of its own, not a null"
   });
 });
 
-test("every event carries the experiment arm beside the bundle identity", () => {
-  mockExperiments = { exp_onboarding_symptoms: "no_symptoms" };
+test("the experiment arm is read when the event fires, not when the client was built", () => {
+  // The SDK evaluates `customAppProperties` once, in its constructor, and
+  // stamps that snapshot on every event. The client is built before the boot
+  // sequence flips the coin, so an arm read there is "unassigned" forever.
+  // The arm has to be read per event, from `track`.
   try {
-    load("phc_test");
-    expect(appProperties({ $os: "iOS" })).toMatchObject({
-      $os: "iOS",
-      ota_update_id: "embedded",
+    const analytics = load("phc_test");
+    mockExperiments = { exp_onboarding_symptoms: "no_symptoms" };
+    analytics.track("paywall_shown", { offering: "current" });
+
+    expect(mockCapture).toHaveBeenCalledWith("paywall_shown", {
+      offering: "current",
       exp_onboarding_symptoms: "no_symptoms",
     });
+    expect(appProperties()).not.toHaveProperty("exp_onboarding_symptoms");
   } finally {
-    mockExperiments = { exp_onboarding_symptoms: "unassigned" };
+    mockExperiments = {};
   }
 });
 
@@ -215,7 +222,6 @@ test("an expo-updates that cannot answer costs the identity, not the launch", ()
     expect(() => load("phc_test")).not.toThrow();
     expect(appProperties({ $app_version: "1.1.0" })).toEqual({
       $app_version: "1.1.0",
-      exp_onboarding_symptoms: "unassigned",
     });
   } finally {
     Object.defineProperty(mockUpdates, "updateId", { configurable: true, writable: true, value: null });
