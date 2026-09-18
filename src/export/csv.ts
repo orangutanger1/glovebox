@@ -31,9 +31,16 @@ function header(): string[] {
   ];
 }
 
+/** What a spreadsheet reads as the start of a formula. A note is text the
+ *  user typed; Excel and Sheets would otherwise evaluate "=1+1", or worse,
+ *  "=HYPERLINK(...)", the moment their own export is opened. The leading
+ *  apostrophe is the convention both honour for "this is text". Numbers are
+ *  never touched: they arrive as numbers, and "-" cannot lead one here. */
+const FORMULA_LEAD = /^[=+\-@\t\r]/;
+
 function cell(v: string | number | null | undefined): string {
   if (v === null || v === undefined) return "";
-  const s = String(v);
+  const s = typeof v === "string" && FORMULA_LEAD.test(v) ? `'${v}` : String(v);
   return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 

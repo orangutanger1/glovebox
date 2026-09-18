@@ -186,3 +186,26 @@ test("the date column is the reader's own calendar day, as the log prints it", (
   ]);
   expect(fuel.split("\n")[1].split(",")[1]).toBe("2026-02-28");
 });
+
+test("a note that would open as a formula is exported as text", () => {
+  // Excel and Sheets evaluate a cell beginning with =, +, - or @. A note the
+  // user typed is a note, and their own spreadsheet should never run it.
+  const row = (notes: string) =>
+    toCsv([
+      { vehicle_name: "Civic", service_type: "Oil Change", performed_at: "2026-01-15T17:00:00.000Z", notes },
+    ])
+      .split("\n")[1]
+      .split(",")[5];
+  expect(row("=1+1")).toBe("'=1+1");
+  expect(row("+1")).toBe("'+1");
+  expect(row("-5 quarts")).toBe("'-5 quarts");
+  expect(row("@home")).toBe("'@home");
+  expect(row("Mobil 1")).toBe("Mobil 1");
+});
+
+test("a numeric cell is never prefixed", () => {
+  const out = toCsv([
+    { vehicle_name: "Civic", service_type: "Oil Change", performed_at: "2026-01-15T17:00:00.000Z", odometer: 50000, cost: 49.99 },
+  ]);
+  expect(out.split("\n")[1].split(",").slice(3, 5)).toEqual(["50000", "49.99"]);
+});
