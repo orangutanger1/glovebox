@@ -70,15 +70,13 @@ export const FLOW = [
   "cost",
   "tracking",
   "worry",
-  // The payoff, in the order that earns the ask.
+  // The payoff, in the order that earns the ask. The loader used to land on
+  // a results page — first two screens ("results", "outlook"), then one
+  // ("schedule") — that on a fresh install told the user what they had just
+  // not typed. The `onboarding_payoff` experiment tried the flow with no
+  // page there at all, and that arm converted; the loader now lands on the
+  // pain beat.
   "analyzing",
-  // One page: what the app now watches for this car, and where the odometer
-  // lands in a year at the rate the user drives. It replaced two — "results"
-  // (the car today) and "outlook" (twelve months on) — which on a fresh
-  // install read "12 services have no record yet" and then projected a year
-  // from that nothing. The `onboarding_payoff` experiment also tries the flow
-  // with no payoff screen at all; see `hiddenRoutes`.
-  "schedule",
   "symptoms",
   // The second of the two outside-figure screens, and the counterpart to
   // "cost", which sits back inside the quiz.
@@ -120,16 +118,13 @@ export function isOnboardingRoute(value: string): value is OnboardingRoute {
 /** The variants that shape the flow, one slot per experiment. */
 export type FlowVariants = {
   symptoms?: string | null;
-  payoff?: string | null;
 };
 
 /**
  * Screens the install's variants do not show. The symptoms experiment hides
- * the pain beat: the three red cards and the reply to them. The payoff
- * experiment's "none" arm hides the schedule page, so the loader lands on
- * whatever comes next. Anything that is not a recognised variant — control,
- * unassigned, a value this build does not know — hides nothing, so the
- * fallback flow is the fuller one.
+ * the pain beat: the three red cards and the reply to them. Anything that is
+ * not a recognised variant — control, unassigned, a value this build does not
+ * know — hides nothing, so the fallback flow is the fuller one.
  */
 export function hiddenRoutes(variants: FlowVariants | string | null): readonly OnboardingRoute[] {
   // A bare string is the symptoms variant: the shape every caller used before
@@ -138,17 +133,13 @@ export function hiddenRoutes(variants: FlowVariants | string | null): readonly O
   const v: FlowVariants = typeof variants === "string" || variants === null ? { symptoms: variants } : variants;
   const hidden: OnboardingRoute[] = [];
   if (v.symptoms === "no_symptoms") hidden.push("symptoms", "help");
-  if (v.payoff === "none") hidden.push("schedule");
   return hidden;
 }
 
 /** What this install hides, from its stored variants. The default for every
  *  caller that is not a test. */
 function activeHidden(): readonly OnboardingRoute[] {
-  return hiddenRoutes({
-    symptoms: getVariant("onboarding_symptoms"),
-    payoff: getVariant("onboarding_payoff"),
-  });
+  return hiddenRoutes({ symptoms: getVariant("onboarding_symptoms") });
 }
 
 export function nextRoute(
@@ -208,10 +199,12 @@ const RETIRED: Record<string, OnboardingRoute> = {
   // resumes on the paywall, which now carries the plan it used to lead to; the
   // rows it was showing are two screens behind and were read on the way.
   features: "paywall",
-  // The two payoff screens, folded into one. An install parked on either
-  // resumes on the page that replaced them.
-  results: "schedule",
-  outlook: "schedule",
+  // The payoff pages: two, then one, then none. An install parked on any of
+  // them resumes on what now follows the loader; `resumeRoute` steps past it
+  // for an arm that hides it.
+  results: "symptoms",
+  outlook: "symptoms",
+  schedule: "symptoms",
 };
 
 /** Where a relaunch resumes. Anything unrecognised restarts the flow; a step
