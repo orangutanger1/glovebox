@@ -239,6 +239,14 @@ describe("parseNumber, separators the app itself prints", () => {
     expect(parseNumber("50000 miles")).toBe(50000);
   });
 
+  it("does not read 'mil' as a unit", () => {
+    // "80 mil" is eighty thousand in Spanish and Portuguese, and a Swedish
+    // mil is ten kilometres — neither is a distance in the user's unit, so
+    // stripping it silently filed "80 mil" as 80.
+    expect(parseNumber("80 mil")).toBeUndefined();
+    expect(parseNumber("80 mils")).toBeUndefined();
+  });
+
   it("still rejects text, and does not read a suffix as a number", () => {
     expect(parseNumber("about 80k")).toBeUndefined();
     expect(parseNumber("abc")).toBeUndefined();

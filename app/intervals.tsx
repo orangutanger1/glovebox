@@ -9,7 +9,7 @@ import { ListRow } from "../src/design/ListRow";
 import { tokens } from "../src/design/tokens";
 import type { Interval } from "../src/schedule";
 import { serviceName, serviceOptions } from "../src/schedule/names";
-import { getIntervals, listIntervalOverrides, setInterval, getDefaultIntervals } from "../src/db/intervals";
+import { getIntervals, listIntervalOverrides, saveInterval, getDefaultIntervals } from "../src/db/intervals";
 import { rescheduleAll } from "../src/notify";
 import { parseNumber } from "../src/format";
 import { t } from "../src/i18n";
@@ -66,12 +66,14 @@ export default function Intervals() {
       setMsg(t("intervals.error.positive"));
       return;
     }
-    // Both boxes empty is a reset, not an error — setInterval drops the row and
-    // the shipped default takes over again. The card above says so.
+    // Both boxes empty is a reset, not an error — saveInterval drops the row
+    // and the shipped default takes over again. The card above says so. So is
+    // saving the default's own numbers back, which is what Save on an
+    // untouched form does: the fields open prefilled with what is in force.
     // Whole units: the columns are integers and `addMonths` hands a fraction
     // to `Date`, which truncates it, so "1.5" was stored as 1.5 and applied
     // as 1. Rounded here, once, where the row that results is shown next.
-    setInterval(editing, {
+    saveInterval(editing, {
       months: m === undefined ? undefined : Math.max(1, Math.round(m)),
       distance: d === undefined ? undefined : Math.max(1, Math.round(d)),
     });

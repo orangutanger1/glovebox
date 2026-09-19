@@ -144,6 +144,27 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
        WHERE odometer_estimated = 1;
     `,
   },
+  // The reading the owner typed onto the dash, kept beside the working
+  // reading. `odometer` is a high-water mark over every row, and
+  // `rewindOdometer` lowers it when the row that set it is deleted — but a
+  // reading typed on the odometer screen or the edit screen has no row behind
+  // it, and the log form prefills that same number, so the first service
+  // logged *equals* the reading without having raised it. Deleting that row
+  // rewound the reading to NULL: the number read off the dash, gone with a
+  // row that never set it. The rewind now lands no lower than this column.
+  //
+  // Seeded from `odometer` for every existing car. Nothing records where an
+  // installed reading came from, and the one thing this migration must not
+  // do is make an owner's reading deletable by a row that never set it. The
+  // cost is a typo already on the dash at upgrade time, which the edit screen
+  // corrects in one field — the same place a rewound reading was recovered.
+  {
+    version: 9,
+    sql: `
+      ALTER TABLE vehicles ADD COLUMN odometer_dash INTEGER;
+      UPDATE vehicles SET odometer_dash = odometer WHERE odometer IS NOT NULL;
+    `,
+  },
 ];
 
 /**

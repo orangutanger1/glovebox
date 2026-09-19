@@ -84,10 +84,22 @@ function weeklyPrice(price: number, period: PlanPeriod): number {
 }
 
 const formatters: Record<string, Intl.NumberFormat> = {};
+/**
+ * A derived price in the product's currency.
+ *
+ * Falls back to the number with the code beside it when the runtime has no
+ * currency data for the pair, the same way `formatMoney` does: Hermes ships a
+ * reduced ICU, and a throw here rejected the whole offering, which left the
+ * paywall on "Retry" with nothing to sell.
+ */
 function money(locale: string, currency: string, value: number): string {
   const key = `${locale}|${currency}`;
-  formatters[key] ??= new Intl.NumberFormat(locale, { style: "currency", currency });
-  return formatters[key].format(value);
+  try {
+    formatters[key] ??= new Intl.NumberFormat(locale, { style: "currency", currency });
+    return formatters[key].format(value);
+  } catch {
+    return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }).format(value)} ${currency}`;
+  }
 }
 
 /**

@@ -35,13 +35,18 @@ export function resetFuelUnits(): void {
 }
 
 /**
- * One decimal place, always.
+ * One decimal place, at most.
  *
  * A hand-typed odometer and a pump that stops on a round number do not support
  * more, and "32.456 mpg" claims a precision the inputs never had.
+ *
+ * Handed on as a number, not a string: `t` runs every number through
+ * `formatNumber`, which is where the reader's decimal mark and grouping come
+ * from. Stringified here, the figure skipped that and a German reader saw
+ * "7.8 L/100km" under a "51.771 km" reading.
  */
-function round(value: number): string {
-  return (Math.round(value * 10) / 10).toString();
+function round(value: number): number {
+  return Math.round(value * 10) / 10;
 }
 
 export function formatVolume(value: number, unit: VolumeUnit = currentFuelUnits().volume): string {

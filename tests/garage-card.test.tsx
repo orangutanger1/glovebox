@@ -218,3 +218,16 @@ test("a catch-all service is logged, not scheduled", () => {
   expect(nextReminders(car.id, 10).map((r) => r.serviceType)).not.toContain("Other");
   expect(texts(render().root)).not.toContain(serviceName("Other"));
 });
+
+test("a reading of zero is a reading, not 'not set'", () => {
+  const car = listVehicles()[0];
+  const { getDb } = require("../src/db/client");
+  getDb().runSync("UPDATE vehicles SET odometer = 0 WHERE id = ?", [car.id]);
+  try {
+    const printed = texts(render().root);
+    expect(printed).not.toContain(t("garage.odometer.notSet"));
+    expect(printed).toContain("0");
+  } finally {
+    getDb().runSync("UPDATE vehicles SET odometer = 101475 WHERE id = ?", [car.id]);
+  }
+});

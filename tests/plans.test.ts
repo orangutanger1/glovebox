@@ -139,6 +139,18 @@ test("formats in the product's currency, not the phone's, and honours zero-decim
   expect(shapePlans(gbp, new Set(), "en-GB")[0].perWeek).toBe("£1.54");
 });
 
+test("a currency the runtime cannot format still yields a plan", () => {
+  // Hermes ships a reduced ICU. `formatMoney` already falls back to the
+  // grouped number with the code beside it; a throw here instead took the
+  // whole offering down and left the paywall on "Retry" for good.
+  const odd = offering([
+    pkg("$rc_annual", { identifier: "pro_annual", price: 52, priceString: "52 ??", currencyCode: "??", subscriptionPeriod: "P1Y" }),
+  ]);
+  const [year] = shapePlans(odd, new Set(), "en-US");
+  expect(year.perWeek).toBe("1 ??");
+  expect(year.perMonth).toBe("4.33 ??");
+});
+
 test("the intro price rides only when this product is eligible", () => {
   const discount = offering([
     pkg("$rc_weekly", {

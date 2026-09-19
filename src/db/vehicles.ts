@@ -9,6 +9,9 @@ export type Vehicle = {
   model?: string;
   year?: number;
   odometer?: number;
+  /** The reading the owner typed directly, as opposed to one a row raised.
+   *  The floor `rewindOdometer` lands on; see `setOdometerReading`. */
+  odometer_dash?: number;
   /** Absent means unknown: nothing has ever answered for this vehicle. */
   body_style?: BodyStyle;
   created_at: string;
@@ -45,12 +48,20 @@ export function createVehicle(v: {
   odometer?: number;
   body_style?: BodyStyle;
 }): Vehicle {
-  const row: Vehicle = { id: id(), created_at: new Date().toISOString(), ...v };
+  const row: Vehicle = {
+    id: id(),
+    created_at: new Date().toISOString(),
+    ...v,
+    // A reading given at creation was read off the dash, same as one typed
+    // on the edit screen: it is the floor a rewind may land on.
+    ...(v.odometer === undefined ? {} : { odometer_dash: v.odometer }),
+  };
   getDb().runSync(
-    `INSERT INTO vehicles (id, name, make, model, year, odometer, body_style, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO vehicles
+       (id, name, make, model, year, odometer, odometer_dash, body_style, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [row.id, row.name, row.make ?? null, row.model ?? null, row.year ?? null,
-     row.odometer ?? null, row.body_style ?? null, row.created_at]
+     row.odometer ?? null, row.odometer_dash ?? null, row.body_style ?? null, row.created_at]
   );
   return row;
 }
@@ -144,11 +155,17 @@ export function setOdometerIfHigher(vehicleId: string, odometer: number): void {
  * and deleting the fill changed nothing — the only way the number came off
  * was deleting the car and its whole history with it.
  *
- * Only a delete of the row that set the mark moves it: a deleted row below
- * the reading was never what the reading was based on. It lands on the
- * highest surviving reading across the services and the fills, or on "not
- * set" when nothing survives — the app no longer knows a reading, and saying
- * so is better than keeping the number the user just said was wrong.
+ * Only a delete of a row at the mark moves it: a deleted row below the
+ * reading was never what the reading was based on. It lands on the highest
+ * surviving reading across the services, the fills and the reading the owner
+ * typed themselves (`odometer_dash`), or on "not set" when none of those
+ * exist — the app no longer knows a reading, and saying so is better than
+ * keeping the number the user just said was wrong.
+ *
+ * The typed reading is in the set because a row can *equal* the mark without
+ * having raised it: the log form prefills the dash reading, so the first
+ * service logged after onboarding sits exactly on it. Without the floor,
+ * deleting that row took the owner's own number off the dash.
  */
 export function rewindOdometer(vehicleId: string, removed: number): void {
   getDb().runSync(
@@ -159,10 +176,13 @@ export function rewindOdometer(vehicleId: string, removed: number): void {
          UNION ALL
          SELECT odometer AS o FROM fuel_entries
           WHERE vehicle_id = ? AND deleted_at IS NULL
+         UNION ALL
+         SELECT odometer_dash AS o FROM vehicles
+          WHERE id = ? AND odometer_dash IS NOT NULL
        )
      )
      WHERE id = ? AND odometer IS NOT NULL AND odometer <= ?`,
-    [vehicleId, vehicleId, vehicleId, removed]
+    [vehicleId, vehicleId, vehicleId, vehicleId, removed]
   );
 }
 
@@ -176,7 +196,14 @@ export function rewindOdometer(vehicleId: string, removed: number): void {
  * IS the dash, and a user who stepped back to fix a fat-fingered 842,100 was
  * being told the field had accepted a correction that the guard then threw
  * away.
+ *
+ * Written to both columns: this is the one number the owner read off the
+ * dash, so it is also the floor a later `rewindOdometer` may land on.
  */
 export function setOdometerReading(vehicleId: string, odometer: number): void {
-  getDb().runSync("UPDATE vehicles SET odometer = ? WHERE id = ?", [odometer, vehicleId]);
+  getDb().runSync("UPDATE vehicles SET odometer = ?, odometer_dash = ? WHERE id = ?", [
+    odometer,
+    odometer,
+    vehicleId,
+  ]);
 }

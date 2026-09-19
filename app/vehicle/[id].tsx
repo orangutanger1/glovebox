@@ -71,8 +71,11 @@ const RECENT_FILLS = 3;
  */
 function recordSubtitle(record: ServiceRecord): string {
   const date = formatDate(record.performed_at);
-  const distance = record.odometer ? formatDistance(record.odometer) : undefined;
-  const cost = record.cost ? formatMoney(record.cost) : undefined;
+  // Presence, not truthiness: a reading of 0 and a job that cost nothing are
+  // both facts the owner typed, and `?` on them hid the one and made the
+  // other read as unpriced while the insights total counted it.
+  const distance = record.odometer !== undefined ? formatDistance(record.odometer) : undefined;
+  const cost = record.cost !== undefined ? formatMoney(record.cost) : undefined;
   if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
   if (distance) return t("vehicle.row.dateDistance", { date, distance });
   if (cost) return t("vehicle.row.dateCost", { date, cost });
@@ -119,7 +122,7 @@ function FuelSummary({ entries }: { entries: FuelRow[] }) {
 function fillSubtitle(entry: FuelRow): string {
   const date = formatDate(entry.filled_at);
   const distance = formatDistance(entry.odometer);
-  const cost = entry.cost ? formatMoney(entry.cost) : undefined;
+  const cost = entry.cost !== undefined ? formatMoney(entry.cost) : undefined;
   return cost
     ? t("vehicle.row.dateDistanceCost", { date, distance, cost })
     : t("vehicle.row.dateDistance", { date, distance });
@@ -296,11 +299,11 @@ export default function VehicleDetail() {
                   <Gauge
                     legend={t("vehicle.odometer")}
                     value={
-                      vehicle?.odometer
+                      vehicle?.odometer !== undefined
                         ? formatNumber(vehicle.odometer)
                         : t("vehicle.odometer.notSet")
                     }
-                    unit={vehicle?.odometer ? distanceUnitLabel() : undefined}
+                    unit={vehicle?.odometer !== undefined ? distanceUnitLabel() : undefined}
                   />
                   <Gauge
                     legend={t("vehicle.lastService")}

@@ -71,6 +71,29 @@ export function setInterval(serviceType: string, interval: Interval): void {
   );
 }
 
+/**
+ * What the intervals screen's Save calls.
+ *
+ * The editor opens prefilled with the numbers in force, so a Save on an
+ * untouched form handed `setInterval` the shipped default. That wrote a row:
+ * the service read "Custom" for numbers the user never chose, and a later
+ * unit switch converted the row (5,000 mi → 8,047 km) where the default
+ * table would have said 10,000. A figure equal to the default is the user
+ * saying "normal", which is what clearing the row already means.
+ */
+export function saveInterval(serviceType: string, interval: Interval): void {
+  const shipped = getDefaultIntervals()[serviceType];
+  if (
+    shipped !== undefined &&
+    shipped.months === interval.months &&
+    shipped.distance === interval.distance
+  ) {
+    clearInterval(serviceType);
+    return;
+  }
+  setInterval(serviceType, interval);
+}
+
 export function clearInterval(serviceType: string): void {
   getDb().runSync("DELETE FROM service_intervals WHERE service_type = ?", [serviceType]);
 }

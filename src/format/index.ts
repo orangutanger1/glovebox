@@ -2,9 +2,14 @@ import { t } from "../i18n";
 
 /** Trailing distance units, in the languages the app ships. Stripped only from
  *  the end of the string, and only as a whole token: removing letters wherever
- *  they appear would turn "about 80k" into 80. */
+ *  they appear would turn "about 80k" into 80.
+ *
+ *  "mil" is deliberately not here. It is a unit in Swedish — ten kilometres,
+ *  so a reading in it is not a reading in the user's unit — and in Spanish
+ *  and Portuguese it is the word for thousand: "80 mil" was being filed as
+ *  80. Rejected, so the owner sees the field refuse it instead. */
 const UNIT_SUFFIX =
-  /[ \u00A0\u202F\u2009]*(?:mi|mi\.|mls|miles?|km|kms|kilometers?|kilometres?|milhas|millas|milles|meilen|mijl|mil|km\/h)\.?$/iu;
+  /[ \u00A0\u202F\u2009]*(?:mi|mi\.|mls|miles?|km|kms|kilometers?|kilometres?|milhas|millas|milles|meilen|mijl|km\/h)\.?$/iu;
 
 /** Everything a locale uses to group thousands that is not "." or ",": the
  *  ASCII space, NBSP, narrow NBSP and thin space (fr, pl, sv, ru), and the

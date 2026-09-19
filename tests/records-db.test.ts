@@ -15,6 +15,7 @@ jest.mock("../src/db/client", () => {
 
 import { getDb } from "../src/db/client";
 import { addRecord, softDeleteRecord, undoDelete } from "../src/db/records";
+import { createVehicle, getVehicle, setOdometerReading } from "../src/db/vehicles";
 import { addFuelEntry } from "../src/db/fuel";
 
 beforeEach(() => {
@@ -87,5 +88,62 @@ describe("the vehicle's reading after a service is deleted", () => {
     expect(reading()).toBe(1200);
     undoDelete(latest.id);
     expect(reading()).toBe(1500);
+  });
+});
+
+describe("a reading the owner typed onto the dash", () => {
+  // The onboarding odometer screen and the edit screen write the reading
+  // directly; no row stands behind it. The log form then prefills that same
+  // number, so the first service logged is a row that *equals* the reading
+  // without having raised it. Deleting that row used to rewind the reading to
+  // NULL — the number the owner read off the dash, gone with a row that
+  // never set it.
+  const dash = (n: number) => {
+    getDb().runSync("UPDATE vehicles SET odometer = NULL, odometer_dash = NULL WHERE id='v1'", []);
+    setOdometerReading("v1", n);
+  };
+
+  test("survives deleting a service logged at the prefilled reading", () => {
+    dash(84210);
+    const prefilled = log(84210);
+    softDeleteRecord(prefilled.id);
+    expect(reading()).toBe(84210);
+  });
+
+  test("survives the onboarding 'Just now' answer being taken back", () => {
+    dash(84210);
+    const justNow = log(84210);
+    softDeleteRecord(justNow.id);
+    const sixMonthsAgo = log(80000);
+    expect(reading()).toBe(84210);
+    expect(sixMonthsAgo.odometer).toBe(80000);
+  });
+
+  test("still lets a typo'd row above it be taken back down to it", () => {
+    dash(84210);
+    const typo = log(842100);
+    expect(reading()).toBe(842100);
+    softDeleteRecord(typo.id);
+    expect(reading()).toBe(84210);
+  });
+
+  test("a lower reading typed on the edit screen wins over an older dash reading", () => {
+    dash(84210);
+    setOdometerReading("v1", 84000);
+    const row = log(84000);
+    softDeleteRecord(row.id);
+    expect(reading()).toBe(84000);
+  });
+
+  test("a vehicle created with a reading treats it as the dash reading", () => {
+    const v = createVehicle({ name: "Golf", odometer: 50000 });
+    const row = addRecord({
+      vehicle_id: v.id,
+      service_type: "Wiper Blades",
+      performed_at: "2026-03-01T12:00:00.000Z",
+      odometer: 50000,
+    });
+    softDeleteRecord(row.id);
+    expect(getVehicle(v.id)?.odometer).toBe(50000);
   });
 });

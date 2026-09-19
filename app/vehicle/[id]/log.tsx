@@ -59,7 +59,9 @@ export default function LogService() {
   // Prefilled so the user edits three digits instead of typing six. This field
   // gets autofocus, not the type chips — the chips are already answered.
   // The last reading, so the user edits three digits rather than typing six.
-  const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
+  const [odometer, setOdometer] = useState(
+    vehicle?.odometer === undefined ? "" : String(vehicle.odometer)
+  );
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");

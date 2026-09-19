@@ -89,7 +89,10 @@ test("fuel entries are indexed by odometer, which is their true order", () => {
 
 test("migration 7 preserves rows written under v6", () => {
   const { db, exec } = open();
-  applyMigrations(exec, 0);
+  // A database as v6 left it, not a fully migrated one: replaying an
+  // ALTER TABLE ... ADD COLUMN over a table that already has the column is
+  // an error, and the device never does it — user_version gates every step.
+  for (const m of MIGRATIONS) if (m.version <= 6) exec(m.sql);
   db.prepare("INSERT INTO vehicles (id, name, created_at) VALUES (?, ?, ?)").run(
     "v1", "Civic", "2026-01-01T00:00:00.000Z"
   );
@@ -128,5 +131,24 @@ test("migration 8 retires an estimated reading rather than promoting it", () => 
   expect(rows).toEqual([
     { id: "est", odometer: null, odometer_estimated: null },
     { id: "read", odometer: 84210, odometer_estimated: null },
+  ]);
+});
+
+test("migration 9 seeds the dash reading from the reading every existing car already has", () => {
+  const { db, exec } = open();
+  for (const m of MIGRATIONS) if (m.version <= 8) exec(m.sql);
+  db.prepare("INSERT INTO vehicles (id, name, odometer, created_at) VALUES (?, ?, ?, ?)").run(
+    "v1", "Civic", 84210, "2026-01-01T00:00:00.000Z"
+  );
+  db.prepare("INSERT INTO vehicles (id, name, created_at) VALUES (?, ?, ?)").run(
+    "v2", "Golf", "2026-01-01T00:00:00.000Z"
+  );
+  applyMigrations(exec, 8);
+  const rows = db
+    .prepare("SELECT id, odometer, odometer_dash FROM vehicles ORDER BY id")
+    .all() as { id: string; odometer: number | null; odometer_dash: number | null }[];
+  expect(rows).toEqual([
+    { id: "v1", odometer: 84210, odometer_dash: 84210 },
+    { id: "v2", odometer: null, odometer_dash: null },
   ]);
 });

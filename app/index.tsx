@@ -313,8 +313,12 @@ export default function Garage() {
                     />
                     <Gauge
                       legend={t("garage.odometer")}
-                      value={v.odometer ? formatNumber(v.odometer) : t("garage.odometer.notSet")}
-                      unit={v.odometer ? distanceUnitLabel() : undefined}
+                      value={
+                        v.odometer !== undefined
+                          ? formatNumber(v.odometer)
+                          : t("garage.odometer.notSet")
+                      }
+                      unit={v.odometer !== undefined ? distanceUnitLabel() : undefined}
                       align="right"
                     />
                   </View>

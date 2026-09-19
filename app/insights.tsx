@@ -151,7 +151,14 @@ export default function Insights() {
           <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
             {t("insights.empty.body")}
           </Text>
-          <Button label={t("insights.empty.cta")} onPress={() => router.replace("/")} />
+          {/* Back to the garage underneath, when there is one: `replace("/")`
+              stacked a second garage on the first, with a back chevron into
+              a copy of itself. A deep link with nothing beneath still
+              replaces. */}
+          <Button
+            label={t("insights.empty.cta")}
+            onPress={() => (router.canGoBack() ? router.back() : router.replace("/"))}
+          />
         </Card>
       </Screen>
     );

@@ -220,3 +220,11 @@ test("fuel is its own section: the service totals are untouched", () => {
   expect(printed).toContain(t("fuel.card.spend"));
   expect(printed).toContain(formatMoney(85));
 });
+
+test("the empty screen's way out is Back, not a second garage on the stack", () => {
+  // Insights is pushed from the garage. `replace("/")` put a new garage on
+  // top of the one underneath, with a back chevron into a copy of itself.
+  const tree = render();
+  act(() => button(tree, t("insights.empty.cta")).props.onPress());
+  expect(navigated).toEqual(["back"]);
+});

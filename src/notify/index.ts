@@ -52,10 +52,34 @@ export async function canAskPermission(): Promise<boolean> {
 }
 
 /**
+ * The rebuild in progress, if any. Each call queues behind the previous one.
+ *
+ * Fifteen call sites fire `rescheduleAll` without awaiting it — a logged
+ * service and a Back, a delete and another delete, Settings mounting while
+ * its reminder row is tapped. Two rebuilds in flight at once interleaved as
+ * clear, clear, schedule, schedule: the second clear wiped the first run's
+ * half-built queue and then both runs scheduled the rest, so iOS ended up
+ * holding every reminder twice. Service reminders carry no identifier, so
+ * nothing on the OS side collapsed the copies.
+ *
+ * Queued rather than coalesced: the later call was made after a later write,
+ * and it must run against those rows. A run that fails does not poison the
+ * chain — the next caller starts fresh.
+ */
+let queue: Promise<void> = Promise.resolve();
+
+/**
  * Clears and rebuilds every scheduled notification from the current records.
  * Cheap enough to call after any write; avoids drift between DB and OS state.
+ * Runs are serialised; see `queue`.
  */
-export async function rescheduleAll(): Promise<void> {
+export function rescheduleAll(): Promise<void> {
+  const run = queue.then(rebuild);
+  queue = run.catch(() => {});
+  return run;
+}
+
+async function rebuild(): Promise<void> {
   const { status } = await Notifications.getPermissionsAsync();
   if (status !== "granted") return;
 

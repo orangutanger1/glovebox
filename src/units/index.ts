@@ -88,6 +88,10 @@ export function changeDistanceUnit(to: DistanceUnit): void {
       [factor]
     );
     db.runSync(
+      "UPDATE vehicles SET odometer_dash = CAST(ROUND(odometer_dash * ?) AS INTEGER) WHERE odometer_dash IS NOT NULL",
+      [factor]
+    );
+    db.runSync(
       "UPDATE service_records SET odometer = CAST(ROUND(odometer * ?) AS INTEGER) WHERE odometer IS NOT NULL",
       [factor]
     );

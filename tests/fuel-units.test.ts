@@ -129,4 +129,18 @@ describe("formatting a fill", () => {
     expect(formatEfficiency(7.8123, "l_per_100km")).toBe("7.8 L/100km");
     expect(efficiencyUnitLabel("l_per_100km")).toBe("L/100km");
   });
+
+  test("the figure is grouped and pointed for the reader's language", () => {
+    // Every other number in the app goes through `formatNumber`; a fuel
+    // figure that kept the English point was the one line a German reader
+    // saw "7.8" on a screen that printed "51.771 km" beside it.
+    setLanguage("de");
+    try {
+      expect(formatEfficiency(7.8123, "l_per_100km")).toBe("7,8 L/100km");
+      expect(formatVolume(1234.5, "L")).toBe("1.234,5 L");
+      expect(formatVolume(48, "L")).toBe("48 L");
+    } finally {
+      setLanguage("en");
+    }
+  });
 });

@@ -51,7 +51,9 @@ export default function EditVehicle() {
   const vehicle = useMemo(() => (id ? getVehicle(id) : null), [id]);
   const [name, setName] = useState(vehicle?.name ?? "");
   // The reading, so the user edits three digits rather than typing six.
-  const [odometer, setOdometer] = useState(vehicle?.odometer ? String(vehicle.odometer) : "");
+  const [odometer, setOdometer] = useState(
+    vehicle?.odometer === undefined ? "" : String(vehicle.odometer)
+  );
   const [error, setError] = useState("");
 
   const unit = getDistanceUnit();

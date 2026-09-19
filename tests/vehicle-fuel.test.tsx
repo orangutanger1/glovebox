@@ -213,3 +213,27 @@ test("Log fuel routes to the form, beside Log service", () => {
   act(() => buttons.find((b) => b.props.label === t("fuel.log"))!.props.onPress());
   expect(navigated).toEqual(["/vehicle/v1/fuel/new"]);
 });
+
+test("a service that cost nothing prints its price rather than hiding it", () => {
+  // A warranty job or a free recall is priced at zero, and the insights total
+  // counts it as priced. The row read as unpriced — `cost ?` is false on 0 —
+  // so the list and the total disagreed about whether the owner had said.
+  addRecord({
+    vehicle_id: "v1",
+    service_type: "Oil Change",
+    performed_at: "2026-02-01T12:00:00.000Z",
+    odometer: 900,
+    cost: 0,
+  });
+  fill(1200, 12, { cost: 0 });
+  const printed = texts(render().root);
+  const priced = printed.filter((s) => s.includes("$0"));
+  expect(priced).toHaveLength(2);
+});
+
+test("a reading of zero is a reading, not 'not set'", () => {
+  getDb().runSync("UPDATE vehicles SET odometer = 0 WHERE id = 'v1'", []);
+  const printed = texts(render().root);
+  expect(printed).not.toContain(t("vehicle.odometer.notSet"));
+  expect(printed).toContain("0");
+});

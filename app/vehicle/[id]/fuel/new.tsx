@@ -54,7 +54,7 @@ export default function LogFuel() {
   // deliberate. The six digits stay on the glass to copy from; they are no
   // longer what Save submits.
   const [odometer, setOdometer] = useState("");
-  const lastReading = vehicle?.odometer ? String(vehicle.odometer) : undefined;
+  const lastReading = vehicle?.odometer === undefined ? undefined : String(vehicle.odometer);
   const [volume, setVolume] = useState("");
   const [cost, setCost] = useState("");
   // On by default, matching the column default, so a row written by a user who

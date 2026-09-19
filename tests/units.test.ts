@@ -77,9 +77,10 @@ describe("converting a reading", () => {
   test("switching the unit rewrites every stored distance, fills included", () => {
     const db = getDb();
     setDistanceUnit("mi");
-    db.runSync("INSERT INTO vehicles (id, name, odometer, created_at) VALUES (?, ?, ?, ?)", [
-      "u1", "Civic", 50000, "2026-01-01T00:00:00.000Z",
-    ]);
+    db.runSync(
+      "INSERT INTO vehicles (id, name, odometer, odometer_dash, created_at) VALUES (?, ?, ?, ?, ?)",
+      ["u1", "Civic", 50000, 48000, "2026-01-01T00:00:00.000Z"]
+    );
     db.runSync(
       `INSERT INTO fuel_entries (id, vehicle_id, filled_at, odometer, volume, full, created_at)
        VALUES (?, ?, ?, ?, ?, 1, ?)`,
@@ -89,8 +90,11 @@ describe("converting a reading", () => {
     changeDistanceUnit("km");
 
     expect(getDistanceUnit()).toBe("km");
-    expect(db.getFirstSync<{ odometer: number }>("SELECT odometer FROM vehicles WHERE id = 'u1'"))
-      .toEqual({ odometer: 80467 });
+    expect(
+      db.getFirstSync<{ odometer: number; odometer_dash: number }>(
+        "SELECT odometer, odometer_dash FROM vehicles WHERE id = 'u1'"
+      )
+    ).toEqual({ odometer: 80467, odometer_dash: 77249 });
     // The fill used to be left in miles under a vehicle now reading kilometres.
     expect(
       db.getFirstSync<{ odometer: number }>("SELECT odometer FROM fuel_entries WHERE id = 'f1'")

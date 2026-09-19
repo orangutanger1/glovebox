@@ -261,6 +261,20 @@ test("a service is filed at the mileage the car was showing when it happened", (
   expect(oil.status).toBe("due");
 });
 
+test("taking back a 'Just now' answer leaves the typed reading on the dash", () => {
+  answerVehicle("2019 Honda Civic", 2019);
+  setOdometerReading(getOnboardingVehicleId()!, 84210);
+  setAnswers({ drive: "high" });
+  // "Just now" files the service at today's reading exactly — a row that
+  // equals the mark without having raised it. Stepping back and answering
+  // again deletes that row, and the dash reading has to survive the delete.
+  answerService("Oil Change", 0);
+  answerService("Oil Change", 180);
+  expect(getVehicle(getOnboardingVehicleId()!)?.odometer).toBe(84210);
+  answerService("Oil Change", null);
+  expect(getVehicle(getOnboardingVehicleId()!)?.odometer).toBe(84210);
+});
+
 /**
  * What `app/onboarding/vehicle.tsx` does on Continue for a user who tapped a
  * year and a make and left the model alone. The model is optional now: nothing

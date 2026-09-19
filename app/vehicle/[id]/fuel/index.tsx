@@ -31,7 +31,8 @@ const UNDO_WINDOW_MS = 8000;
 function fillSubtitle(entry: FuelRow): string {
   const date = formatDate(entry.filled_at);
   const distance = formatDistance(entry.odometer);
-  const cost = entry.cost ? formatMoney(entry.cost) : undefined;
+  // Presence, not truthiness: a fill that cost nothing is priced at zero.
+  const cost = entry.cost !== undefined ? formatMoney(entry.cost) : undefined;
   return cost
     ? t("vehicle.row.dateDistanceCost", { date, distance, cost })
     : t("vehicle.row.dateDistance", { date, distance });
@@ -66,11 +67,13 @@ export default function FuelHistory() {
   /**
    * No `rescheduleAll` here, unlike the service history's delete.
    *
-   * A reminder is derived from the vehicle's odometer, and deleting a fill
-   * never walks that reading backwards — the highest reading the car ever had
-   * is still the reading it has. What the delete does change is the next full
-   * tank's figure, which is inherent to the math and needs no invalidation:
-   * nothing is cached, so the next render recomputes it.
+   * Deleting a fill can lower the vehicle's reading (`rewindOdometer`), but
+   * no scheduled notification reads that reading: a reminder is a date, and
+   * a mileage-only interval never schedules one (see `collectReminders`).
+   * Only a service row carries a date, and only its delete rebuilds the
+   * queue. What the delete does change is the next full tank's figure, which
+   * is inherent to the math and needs no invalidation: nothing is cached, so
+   * the next render recomputes it.
    */
   function onDelete(entryId: string) {
     softDeleteFuelEntry(entryId);
