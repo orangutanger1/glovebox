@@ -150,6 +150,7 @@ export const sv: Fragment = {
   "layout.fatal.body":
     "Ingenting har raderats, och databasen återställdes till sitt senast fungerande läge. Öppna appen igen. Om det fortsätter hända, kontakta supporten innan du installerar om, för det är ominstallationen som faktiskt skulle förlora uppgifterna.",
 
+
   "offer.features.title": "Det här får du.",
 
   "offer.plan.title": "Så här ser planen ut.",
@@ -302,6 +303,30 @@ export const sv: Fragment = {
   "onboardingC.back": "Tillbaka",
   "onboardingC.question": "Fråga {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "En service, bevakad från i dag.",
+    other: "{count} servicar, bevakade från i dag.",
+  },
+  "onboardingC.schedule.onWatch": "Bevakade",
+  "onboardingC.schedule.status.fresh": "Från i dag",
+  "onboardingC.schedule.line.fresh": "Bevakad från i dag",
+  "onboardingC.results.overdue": {
+    one: "En service är redan försenad.",
+    other: "{count} servicepunkter är redan försenade.",
+  },
+  "onboardingC.results.subtitle": "Din {vehicle}, {distance} per år.",
+  "onboardingC.results.continue": "Fortsätt",
+  "onboardingC.results.onFile": "Loggat",
+  "onboardingC.results.onFileValue": "{logged} / {total}",
+  "onboardingC.results.status.due": "Dags",
+  "onboardingC.results.status.soon": "Snart",
+  "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Inga uppgifter",
+
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
+  "onboardingC.outlook.odometer": "Idag",
+  "onboardingC.outlook.projected": "Om ett år",
   "onboardingC.cost.title": "{percent}% av bilarna på vägen är försenade med en service.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Efter med däckrotation",
@@ -434,6 +459,7 @@ export const sv: Fragment = {
   "settings.export.error": "Kunde inte öppna delningsrutan. Dina uppgifter är oförändrade.",
 
   "settings.intervals": "Serviceintervall",
+
 
   "settings.language": "Språk: {language}",
   "settings.units": "Enhet: {unit}",

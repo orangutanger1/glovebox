@@ -299,6 +299,28 @@ export const ko: Fragment = {
   "onboardingC.back": "뒤로",
   "onboardingC.question": "질문 {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    other: "{count}개 정비 항목을 오늘부터 지켜봅니다.",
+  },
+  "onboardingC.schedule.onWatch": "지켜보는 중",
+  "onboardingC.schedule.status.fresh": "오늘부터",
+  "onboardingC.schedule.line.fresh": "오늘부터 지켜봅니다",
+  "onboardingC.results.overdue": {
+    other: "정비 {count}건이 이미 기한을 넘겼어요.",
+  },
+  "onboardingC.results.subtitle": "{vehicle}, 연간 {distance}.",
+  "onboardingC.results.continue": "계속",
+  "onboardingC.results.onFile": "기록 있음",
+  "onboardingC.results.onFileValue": "{logged} / {total}",
+  "onboardingC.results.status.due": "기한",
+  "onboardingC.results.status.soon": "임박",
+  "onboardingC.results.status.ok": "정상",
+  "onboardingC.results.status.noRecord": "기록 없음",
+
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
+  "onboardingC.outlook.odometer": "오늘",
+  "onboardingC.outlook.projected": "1년 후",
   "onboardingC.cost.title": "도로 위 차량의 {percent}%가 정비 시기를 넘겼어요.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "타이어 로테이션 지연",
@@ -432,6 +454,7 @@ export const ko: Fragment = {
   "settings.export.error": "공유 시트를 열지 못했어요. 기록은 그대로예요.",
 
   "settings.intervals": "정비 주기",
+
 
   "settings.language": "언어: {language}",
   "settings.units": "단위: {unit}",

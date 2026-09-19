@@ -63,8 +63,8 @@ describe("on a runtime with no Intl.PluralRules, which is every iPhone", () => {
   test("and Polish still gets the ending its grammar needs", () => {
     setLanguage("pl");
     resetFormatters();
-    const few = t("pain.overdue.headline", { count: 2 });
-    const many = t("pain.overdue.headline", { count: 5 });
+    const few = t("onboardingC.results.overdue", { count: 2 });
+    const many = t("onboardingC.results.overdue", { count: 5 });
     expect(few).not.toEqual(many);
     expect(few).not.toContain("{");
     expect(many).not.toContain("{");

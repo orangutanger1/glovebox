@@ -120,6 +120,7 @@ import OnboardingAnalyzing from "../app/onboarding/analyzing";
 import OnboardingService from "../app/onboarding/service";
 import OnboardingTracking from "../app/onboarding/tracking";
 import OnboardingWorry from "../app/onboarding/worry";
+import OnboardingSchedule from "../app/onboarding/schedule";
 import OnboardingCost from "../app/onboarding/cost";
 import OnboardingCompare from "../app/onboarding/compare";
 import OnboardingSymptoms from "../app/onboarding/symptoms";
@@ -461,6 +462,7 @@ test("no screen in the flow prints an em or en dash", async () => {
     OnboardingService,
     OnboardingTracking,
     OnboardingWorry,
+    OnboardingSchedule,
     OnboardingSymptoms,
     OnboardingCost,
     OnboardingCompare,
@@ -531,7 +533,7 @@ test("the car screen refuses nothing, because it was refusing installs", () => {
   expect(saved.make).toBeUndefined();
 });
 
-test("the quiz costs one typed number, and still names the car", () => {
+test("the quiz costs one typed number, and still yields a populated payoff", () => {
   // Every screen in the flow is mandatory now, so the odometer is the one
   // keystroke the walk cannot avoid: the make is still optional and the year
   // is still a drum. This walks it the way a thumb does, plus that one number.
@@ -548,9 +550,9 @@ test("the quiz costs one typed number, and still names the car", () => {
   const car = getVehicle(getOnboardingVehicleId()!)!;
   expect(car.odometer).toBe(84210);
 
-  // The comparison names the car, so the walk has to arrive at a populated
-  // screen rather than an empty state.
-  const printed = texts(render(OnboardingCompare)).join(" ");
+  // The payoff screen is the whole argument for the paywall, so the walk has
+  // to arrive at a populated one rather than an empty state.
+  const printed = texts(render(OnboardingSchedule)).join(" ");
   // A car with no make is named "My car" on a garage row, and a sentence that
   // already says "Your" needs the common noun instead — "Your My car" was the
   // string bug this asserts against.
@@ -803,10 +805,10 @@ test("the loader draws a bar and holds the screen for the whole readout", () => 
   step(650);
   step(650);
   step(650);
-  expect(navigated).not.toContain("replace:/onboarding/symptoms");
+  expect(navigated).not.toContain("replace:/onboarding/schedule");
 
   step(700);
-  expect(navigated).toContain("replace:/onboarding/symptoms");
+  expect(navigated).toContain("replace:/onboarding/schedule");
   jest.useRealTimers();
 });
 
@@ -847,7 +849,7 @@ test("the loader cannot be skipped", () => {
       .findAll((n) => typeof n.props.onPress === "function")
       .filter((n) => stringsIn(n).includes("Working out the schedule.")),
   ).toHaveLength(0);
-  expect(navigated).not.toContain("replace:/onboarding/symptoms");
+  expect(navigated).not.toContain("replace:/onboarding/schedule");
   jest.useRealTimers();
 });
 
@@ -1205,6 +1207,51 @@ test("both asks address the driver by name, and neither breaks without one", () 
   const offer = texts(render(OnboardingOffer)).join(" ");
   expect(offer).not.toContain("Alex");
   expect(offer).not.toMatch(/\{\w+\}/);
+});
+
+test("the schedule page says what is watched, not what is missing", () => {
+  // A fresh install: one record, eleven services with none. The old results
+  // screen headlined "11 services have no record yet" and stamped "No record"
+  // down the list, which is the app telling the user what they just did not
+  // type. The page now leads on what it watches from today.
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date().toISOString(),
+    odometer: 112000,
+  });
+  setAnswers({ drive: "high" });
+
+  const printed = texts(render(OnboardingSchedule)).join(" ");
+  expect(printed).toMatch(/on watch from today/);
+  expect(printed).not.toMatch(/no record/i);
+  expect(printed).not.toMatch(/nothing on file/i);
+  expect(printed).toContain(t("onboardingC.schedule.onWatch"));
+  expect(printed).toContain(t("onboardingC.schedule.status.fresh"));
+  // The one projection, and it is a distance off the user's own reading, not
+  // a score: a stray percentage here would be the only invented figure in the
+  // flow.
+  expect(printed).toContain(t("onboardingC.outlook.projected"));
+  expect(printed).not.toMatch(/\d+\s*%/);
+  expect(printed).not.toMatch(/\{\w+\}/);
+});
+
+test("the schedule page still leads on the overdue count when there is one", () => {
+  const car = createVehicle({ name: "2016 Subaru Outback", year: 2016, odometer: 112000 });
+  setOnboardingVehicleId(car.id);
+  // Logged long ago and far back: genuinely past its interval.
+  addRecord({
+    vehicle_id: car.id,
+    service_type: "Oil Change",
+    performed_at: new Date(Date.now() - 400 * 86400000).toISOString(),
+    odometer: 60000,
+  });
+  setAnswers({ drive: "high" });
+
+  const printed = texts(render(OnboardingSchedule)).join(" ");
+  expect(printed).toContain(t("onboardingC.results.overdue", { count: 1 }));
 });
 
 test("the cited screen leads on the overdue figure and says whose it is", () => {

@@ -25,9 +25,13 @@ import { track } from "../analytics";
 
 export const EXPERIMENTS = {
   onboarding_symptoms: ["control", "no_symptoms"],
-  // `onboarding_payoff` ("condensed" | "none", 2026-09-16 to 09-18) is over:
-  // "none" won and the schedule page is gone from the flow. Its `app_state`
-  // row is left where it is, unread.
+  // The payoff after the loader. It used to be two screens — "12 services
+  // have no record yet" and "The next twelve months" — that on a fresh install
+  // stated the obvious and projected from nothing. "condensed" is the two
+  // folded into one honest page; "none" goes from the loader straight on.
+  // There is no arm that keeps the old pair. Pulled 2026-09-18 on 4/23 vs
+  // 0/15 paid, put back 2026-09-19 to run longer: too few installs to call.
+  onboarding_payoff: ["condensed", "none"],
 } as const;
 
 export type ExperimentName = keyof typeof EXPERIMENTS;

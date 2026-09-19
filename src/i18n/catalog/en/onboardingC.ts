@@ -15,6 +15,36 @@ export const onboardingC: Fragment = {
   "onboardingC.back": "Back",
   "onboardingC.question": "Question {step} / {total}",
 
+  // The payoff page. On a fresh install the app has one record or none, and
+  // the honest headline is what it now watches, not what it has not been
+  // told. A row it starts from today says so instead of "No record".
+  "onboardingC.schedule.title": {
+    one: "One service, on watch from today.",
+    other: "{count} services, on watch from today.",
+  },
+  "onboardingC.schedule.onWatch": "On watch",
+  "onboardingC.schedule.status.fresh": "From today",
+  "onboardingC.schedule.line.fresh": "Watched from today",
+
+  "onboardingC.results.overdue": {
+    one: "One service is already overdue.",
+    other: "{count} services are already overdue.",
+  },
+  "onboardingC.results.subtitle": "Your {vehicle}, {distance} a year.",
+  "onboardingC.results.continue": "Continue",
+  "onboardingC.results.onFile": "On file",
+  "onboardingC.results.onFileValue": "{logged} / {total}",
+  "onboardingC.results.status.due": "Due",
+  "onboardingC.results.status.soon": "Soon",
+  "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "No record",
+
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
+  "onboardingC.outlook.odometer": "Today",
+  "onboardingC.outlook.projected": "In a year",
+
+
   // The only figure in the flow that is not the user's own. CARFAX's, counted
   // from service records, attributed on the glass. See src/onboarding/cost.ts.
   "onboardingC.cost.title": "{percent}% of cars on the road are overdue for a service.",

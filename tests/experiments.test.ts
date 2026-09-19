@@ -31,26 +31,32 @@ import {
 import { getDb } from "../src/db/client";
 import { getState, setState } from "../src/db/state";
 
-const UNASSIGNED = { exp_onboarding_symptoms: "unassigned" };
+const UNASSIGNED = { exp_onboarding_symptoms: "unassigned", exp_onboarding_payoff: "unassigned" };
 
 beforeEach(() => {
   tracked.length = 0;
   getDb().runSync("DELETE FROM app_state", []);
 });
 
-test("the registry holds the one running experiment", () => {
-  expect(EXPERIMENTS).toEqual({ onboarding_symptoms: ["control", "no_symptoms"] });
+test("the registry holds two experiments with two variants each", () => {
+  expect(EXPERIMENTS.onboarding_symptoms).toEqual(["control", "no_symptoms"]);
+  expect(EXPERIMENTS.onboarding_payoff).toEqual(["condensed", "none"]);
 });
 
 test("a fresh install is assigned once, persisted, and never re-flipped", () => {
   const first = assignExperiments(true, () => 0.99);
-  expect(first).toEqual({ onboarding_symptoms: "no_symptoms" });
+  expect(first).toEqual({ onboarding_symptoms: "no_symptoms", onboarding_payoff: "none" });
   expect(getState("experiment.onboarding_symptoms")).toBe("no_symptoms");
   expect(getVariant("onboarding_symptoms")).toBe("no_symptoms");
+  expect(getVariant("onboarding_payoff")).toBe("none");
   expect(tracked).toEqual([
     {
       event: "experiment_assigned",
       props: { experiment: "onboarding_symptoms", variant: "no_symptoms" },
+    },
+    {
+      event: "experiment_assigned",
+      props: { experiment: "onboarding_payoff", variant: "none" },
     },
   ]);
 
@@ -58,27 +64,33 @@ test("a fresh install is assigned once, persisted, and never re-flipped", () => 
   const second = assignExperiments(true, () => 0);
   expect(second).toEqual({});
   expect(getVariant("onboarding_symptoms")).toBe("no_symptoms");
-  expect(tracked).toHaveLength(1);
+  expect(getVariant("onboarding_payoff")).toBe("none");
+  expect(tracked).toHaveLength(2);
 });
 
 test("the flip honours the random source", () => {
   assignExperiments(true, () => 0);
   expect(getVariant("onboarding_symptoms")).toBe("control");
+  expect(getVariant("onboarding_payoff")).toBe("condensed");
   getDb().runSync("DELETE FROM app_state", []);
   assignExperiments(true, () => 0.5);
   expect(getVariant("onboarding_symptoms")).toBe("no_symptoms");
+  expect(getVariant("onboarding_payoff")).toBe("none");
 });
 
-test("a row for a retired experiment is left alone and not reported", () => {
-  // Assigned under the build that ran `onboarding_payoff`: the row stays as
-  // the record of what this install saw, and this build neither reads it,
-  // rewrites it, nor stamps a property for it.
+test("an install assigned under the one-experiment build is not re-flipped, and the new one is unassigned", () => {
+  // Mid-flow when this build arrived: it keeps its symptoms arm and is not
+  // eligible for the payoff coin, so it sees the fuller (condensed) flow and
+  // reports "unassigned" for it.
   setState("experiment.onboarding_symptoms", "control");
-  setState("experiment.onboarding_payoff", "condensed");
-  expect(assignExperiments(true, () => 0.99)).toEqual({});
-  expect(experimentProperties()).toEqual({ exp_onboarding_symptoms: "control" });
-  expect(getState("experiment.onboarding_payoff")).toBe("condensed");
-  expect(tracked).toHaveLength(0);
+  expect(assignExperiments(false)).toEqual({});
+  expect(experimentProperties()).toEqual({
+    exp_onboarding_symptoms: "control",
+    exp_onboarding_payoff: "unassigned",
+  });
+  // Fresh and eligible with one row already: only the missing coin is tossed.
+  expect(assignExperiments(true, () => 0.99)).toEqual({ onboarding_payoff: "none" });
+  expect(getVariant("onboarding_symptoms")).toBe("control");
 });
 
 test("an ineligible install is left alone and reports unassigned", () => {
@@ -91,7 +103,11 @@ test("an ineligible install is left alone and reports unassigned", () => {
 
 test("properties carry the stored variant", () => {
   setState("experiment.onboarding_symptoms", "control");
-  expect(experimentProperties()).toEqual({ exp_onboarding_symptoms: "control" });
+  setState("experiment.onboarding_payoff", "condensed");
+  expect(experimentProperties()).toEqual({
+    exp_onboarding_symptoms: "control",
+    exp_onboarding_payoff: "condensed",
+  });
 });
 
 test("a stored value outside the variant list reads as unassigned", () => {
@@ -100,9 +116,12 @@ test("a stored value outside the variant list reads as unassigned", () => {
   expect(getVariant("onboarding_symptoms")).toBeNull();
   expect(experimentProperties()).toEqual(UNASSIGNED);
   // And it is not overwritten: the row is the record of what this install got.
+  // The other experiment, with no row, is still assigned.
   assignExperiments(true, () => 0);
   expect(getState("experiment.onboarding_symptoms")).toBe("half_symptoms");
-  expect(tracked).toEqual([]);
+  expect(tracked).toEqual([
+    { event: "experiment_assigned", props: { experiment: "onboarding_payoff", variant: "condensed" } },
+  ]);
 });
 
 test("properties never throw when the database is unavailable", () => {

@@ -307,6 +307,30 @@ export const de: Fragment = {
   "onboardingC.back": "Zurück",
   "onboardingC.question": "Frage {step} / {total}",
 
+  "onboardingC.schedule.title": {
+    one: "Ein Service, ab heute im Blick.",
+    other: "{count} Services, ab heute im Blick.",
+  },
+  "onboardingC.schedule.onWatch": "Im Blick",
+  "onboardingC.schedule.status.fresh": "Ab heute",
+  "onboardingC.schedule.line.fresh": "Ab heute im Blick",
+  "onboardingC.results.overdue": {
+    one: "Ein Service ist schon überfällig.",
+    other: "{count} Services sind schon überfällig.",
+  },
+  "onboardingC.results.subtitle": "{vehicle}, {distance} pro Jahr.",
+  "onboardingC.results.continue": "Weiter",
+  "onboardingC.results.onFile": "Erfasst",
+  "onboardingC.results.onFileValue": "{logged} / {total}",
+  "onboardingC.results.status.due": "Fällig",
+  "onboardingC.results.status.soon": "Bald",
+  "onboardingC.results.status.ok": "OK",
+  "onboardingC.results.status.noRecord": "Kein Eintrag",
+
+  // The two odometer gauges on the payoff page: the reading typed, and where
+  // it lands in a year at the stated rate.
+  "onboardingC.outlook.odometer": "Heute",
+  "onboardingC.outlook.projected": "In einem Jahr",
   "onboardingC.cost.title": "{percent}% der Autos auf der Straße sind mit einer Wartung überfällig.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Reifenwechsel überfällig",
@@ -443,6 +467,7 @@ export const de: Fragment = {
   "settings.export.error": "Das Teilen-Fenster ließ sich nicht öffnen. Deine Daten sind unverändert.",
 
   "settings.intervals": "Serviceintervalle",
+
 
   "settings.language": "Sprache: {language}",
   "settings.units": "Einheit: {unit}",
