@@ -35,18 +35,23 @@ import { usePressScale } from "./press";
 
 const FACE = {
   primary: tokens.color.white,
+  // The one lit button in the app: the exit offer's claim, where the saving
+  // above it is already green and the button is the same fact, pressed.
+  accent: tokens.color.green,
   secondary: tokens.color.surfaceHi,
   danger: tokens.color.red,
 };
 
 const FG = {
   primary: tokens.color.housing,
+  accent: tokens.color.housing,
   secondary: tokens.color.text,
   danger: tokens.color.white,
 };
 
 const BORDER = {
   primary: "transparent",
+  accent: "transparent",
   secondary: tokens.color.hairline,
   danger: "transparent",
 };
@@ -70,7 +75,7 @@ export function Button({
 }: {
   label: string;
   onPress: () => void;
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "accent" | "secondary" | "danger";
   disabled?: boolean;
   /**
    * Called instead of `onPress` when the button is disabled and tapped. Supply

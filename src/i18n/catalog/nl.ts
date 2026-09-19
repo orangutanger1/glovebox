@@ -587,7 +587,8 @@ export const nl: Fragment = {
   "offer.paywall.point.reminders.title": "Een herinnering vóór elke beurt",
   "offer.paywall.point.reminders.subtitle": "Op de dag zelf, en nooit zeurend.",
 
-  "offer.deal.title": "Tijdelijke aanbieding.",
+  "offer.deal.title": "Tijdelijke aanbieding",
+  "offer.deal.pct": "{pct}% korting",
   "offer.trial.cta": "Aanbieding claimen",
   "offer.trial.decline": "Ik betaal liever de volle prijs",
   "offer.trial.gets.reminders": "Herinnering voor elke beurt",

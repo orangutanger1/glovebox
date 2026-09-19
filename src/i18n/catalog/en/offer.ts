@@ -63,12 +63,14 @@ export const offer: Fragment = {
   "offer.paywall.point.reminders.title": "A reminder before each service",
   "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
 
-  // The exit offer: a yearly plan for less than the first screen asked. No
-  // number in the sentence — the card shows both prices in StoreKit's own
-  // strings. "Limited time" is true of the screen: it is the one place the
-  // price is offered, and the flow does not come back to it. No `.named`
-  // twin on purpose — the headline is the offer, not a greeting.
-  "offer.deal.title": "Limited time offer.",
+  // The exit offer: a yearly plan for less than the first screen asked.
+  // "Limited time" is true of the screen: it is the one place the price is
+  // offered, and the flow does not come back to it. It is the eyebrow over
+  // the saving, which is the headline — the one figure that says why this
+  // screen exists, in the biggest type in the flow. No `.named` twin on
+  // purpose: the headline is the offer, not a greeting.
+  "offer.deal.title": "Limited time offer",
+  "offer.deal.pct": "{pct}% off",
   "offer.trial.cta": "Claim your offer",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing

@@ -183,7 +183,8 @@ export const it: Fragment = {
   "offer.paywall.point.reminders.title": "Un promemoria prima di ognuno",
   "offer.paywall.point.reminders.subtitle": "Il giorno della scadenza, senza insistere.",
 
-  "offer.deal.title": "Offerta a tempo limitato.",
+  "offer.deal.title": "Offerta a tempo limitato",
+  "offer.deal.pct": "{pct}% di sconto",
   "offer.trial.cta": "Approfitta dell’offerta",
   "offer.trial.decline": "Preferisco pagare il prezzo pieno",
   "offer.trial.gets.reminders": "Promemoria prima di ogni intervento",

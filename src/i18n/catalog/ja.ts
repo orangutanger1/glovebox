@@ -175,7 +175,8 @@ export const ja: Fragment = {
   "offer.paywall.point.reminders.title": "各整備の前にリマインド",
   "offer.paywall.point.reminders.subtitle": "期限当日に一度だけ。しつこく通知しません。",
 
-  "offer.deal.title": "期間限定オファー。",
+  "offer.deal.title": "期間限定オファー",
+  "offer.deal.pct": "{pct}%オフ",
   "offer.trial.cta": "オファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",

@@ -183,7 +183,8 @@ export const ptBR: Fragment = {
   "offer.paywall.point.reminders.title": "Um lembrete antes de cada um",
   "offer.paywall.point.reminders.subtitle": "No dia em que vence, e nunca insistindo.",
 
-  "offer.deal.title": "Oferta por tempo limitado.",
+  "offer.deal.title": "Oferta por tempo limitado",
+  "offer.deal.pct": "{pct}% de desconto",
   "offer.trial.cta": "Aproveitar a oferta",
   "offer.trial.decline": "Prefiro pagar o preço cheio",
   "offer.trial.gets.reminders": "Lembretes antes de cada serviço",

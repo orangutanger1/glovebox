@@ -188,7 +188,8 @@ export const ko: Fragment = {
   "offer.paywall.point.reminders.title": "정비마다 미리 알림",
   "offer.paywall.point.reminders.subtitle": "기한 당일에 한 번만, 귀찮게 하지 않아요.",
 
-  "offer.deal.title": "기간 한정 특가.",
+  "offer.deal.title": "기간 한정 특가",
+  "offer.deal.pct": "{pct}% 할인",
   "offer.trial.cta": "특가 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",

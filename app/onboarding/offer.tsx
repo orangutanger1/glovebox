@@ -5,7 +5,8 @@ import { tokens } from "../../src/design/tokens";
 import { t } from "../../src/i18n";
 import { restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
-import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
+import { defaultPlan } from "../../src/paywall/PlanPicker";
+import { Button } from "../../src/design/Button";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
 import { GETS } from "../../src/paywall/IncludedStrip";
 import { Check } from "../../src/design/Check";
@@ -31,12 +32,16 @@ import { track } from "../../src/analytics";
  * worse deal than it reads. A yearly plan at a plain lower price has no
  * eligibility rule to trip over and no renewal surprise.
  *
- * The price is drawn here (see paywall.tsx for why the sheet went): one wide
- * card in the footer, the first screen's yearly price struck through, the
- * per-week figure under it and the saving beside it. `compareAt` is read off
- * the standard offering in `plans.ts`; when the store has no standard yearly
- * to compare with, the card shows a plain price and the title is the plain
- * one, so nothing on the glass claims a gap it cannot show.
+ * The page is the deal, read top to bottom in the order a stranger reads
+ * a sale: the eyebrow says what kind of screen this is, the saving is the
+ * headline in the biggest type in the flow, the list says what the money
+ * opens, and the price sits directly over the button that pays it, the
+ * standard weekly struck through beside it. No card: one plan is not a
+ * choice, and a selected card with nothing to select it against is a
+ * control with no job. `compareAt` is read off the standard offering in
+ * `plans.ts`; when the store has no standard yearly to compare with there
+ * is no saving to headline, so the screen falls back to the paywall's title
+ * and a plain price, and nothing on the glass claims a gap it cannot show.
  *
  * "I'd rather pay full price" is the soft decline: it is a true sentence, and
  * it goes back to the paywall, which is the screen that sells full price.
@@ -69,7 +74,6 @@ export default function OnboardingOffer() {
         : offered,
     [offered]
   );
-  const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
@@ -83,7 +87,7 @@ export default function OnboardingOffer() {
   }, [plans]);
 
   const chosen: Plan | null =
-    plans?.find((p) => p.id === (selected ?? defaultPlan(plans))) ?? null;
+    plans?.find((p) => p.id === defaultPlan(plans)) ?? null;
   // Optimistic while the plans are still loading (`chosen` is null): the
   // deal is the framing worth drawing first. Once a plan is in hand, a store
   // that could not show the gap gets the plain title.
@@ -150,74 +154,134 @@ export default function OnboardingOffer() {
     }
   }
 
-  // No sentence under the title while the deal is on. The title says it is
-  // the same Pro for less, the card shows the two prices, and the footer says
-  // what it renews at; a subtitle would be one of those a second time, in
-  // the way of the list. Without a gap to show, the paywall's sentence.
+  // Without a gap to show, the paywall's sentence under the plain title.
   const subtitle = hasDeal ? undefined : t("offer.paywall.subtitle");
 
   return (
     <OnboardingScreen
       route="offer"
-      // No name on the deal headline: "Limited time offer." is the whole line.
-      title={hasDeal ? t("offer.deal.title") : tNamed("offer.paywall.title")}
+      // While the deal is on, the headline is the saving, drawn in the body
+      // below; the screen's own title slot stays empty.
+      title={hasDeal ? undefined : tNamed("offer.paywall.title")}
       subtitle={subtitle}
       hideBack={relaunched}
       footer={
         <>
-          {plans ? (
-            <PlanPicker
-              plans={plans}
-              selected={chosen?.id ?? defaultPlan(plans)}
-              onSelect={setSelected}
-              layout="cards"
-              offering="discount"
-            />
-          ) : (
+          {msg !== null && (
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>{msg}</Text>
+          )}
+          {plans === null ? (
             <Pressable onPress={retry} disabled={loading} style={{ alignItems: "center", padding: tokens.space.md }}>
               <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
                 {loading ? t("paywall.loading") : t("paywall.retry")}
               </Text>
             </Pressable>
-          )}
-          {msg !== null && (
-            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>{msg}</Text>
-          )}
+          ) : null}
           <BuyFooter
             plan={chosen}
             busy={busy}
             onBuy={onBuy}
             onRestore={onRestore}
+            variant={hasDeal ? "accent" : "primary"}
             label={chosen?.compareAt ? t("offer.trial.cta") : undefined}
+            lead={chosen ? <PriceLine plan={chosen} /> : null}
           >
             {!relaunched && (
-              <Pressable
-                onPress={onDecline}
-                disabled={busy}
-                style={{ alignItems: "center", paddingVertical: tokens.space.xs }}
-              >
-                <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-                  {t("offer.trial.decline")}
-                </Text>
-              </Pressable>
+              <Button label={t("offer.trial.decline")} onPress={onDecline} disabled={busy} variant="secondary" />
             )}
           </BuyFooter>
         </>
       }
     >
+      {hasDeal && (
+        <View style={{ alignItems: "center", gap: tokens.space.sm, marginBottom: tokens.space.xl }}>
+          {/* The eyebrow is the one tracked, uppercased label in the app,
+              because it is the one label whose job is to be a stamp rather
+              than a name: it says what kind of page this is, and gets out of
+              the way of the figure. */}
+          <Text
+            style={{
+              ...tokens.text.legend,
+              color: tokens.color.textMuted,
+              letterSpacing: 2.4,
+              textTransform: "uppercase",
+              textAlign: "center",
+            }}
+          >
+            {t("offer.deal.title")}
+          </Text>
+          {/* The figure waits for the store: a percentage drawn before the
+              prices it is computed from would be the one invented number on
+              the page. The eyebrow holds the slot until it lands. */}
+          {chosen?.compareAt && (
+            <Text
+              style={{
+                ...tokens.text.hero,
+                fontSize: 56,
+                lineHeight: 62,
+                letterSpacing: -1.6,
+                color: tokens.color.green,
+                textAlign: "center",
+                textTransform: "uppercase",
+                ...tokens.text.numeric,
+              }}
+            >
+              {t("offer.deal.pct", { pct: chosen.compareAt.pct })}
+            </Text>
+          )}
+        </View>
+      )}
       {/* Everything the plan opens, a tick and a line each. This is the list
           the paywall compressed into chips; here it gets the page, because
           the screen has no car-specific rows to make the argument for it. */}
-      <View style={{ gap: tokens.space.sm + 2 }}>
+      <View style={{ gap: tokens.space.md, paddingHorizontal: tokens.space.sm }}>
         {GETS.map((id) => (
-          <View key={id} style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
-            <Check size={14} />
-            <Text style={{ ...tokens.text.body, color: tokens.color.text, flex: 1 }}>
+          <View key={id} style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
+            <Check size={17} filled={hasDeal} />
+            <Text style={{ ...tokens.text.body, fontSize: 17, color: tokens.color.text, flex: 1 }}>
               {t(`offer.trial.gets.${id}`)}
             </Text>
           </View>
         ))}
       </View>
     </OnboardingScreen>
+  );
+}
+
+/**
+ * The price, once, over the button: the standard weekly struck through, then
+ * what this plan costs per week, in the type the readouts use. The renewal
+ * line under the button says the yearly total; this line says the weekly
+ * figure the saving was computed from, so the two prices on the glass are
+ * the two the percentage is about.
+ */
+function PriceLine({ plan }: { plan: Plan }) {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "baseline",
+        justifyContent: "center",
+        gap: tokens.space.sm,
+        paddingBottom: tokens.space.xs,
+      }}
+    >
+      {plan.compareAt && (
+        <Text
+          style={{
+            ...tokens.text.heading,
+            color: tokens.color.textFaint,
+            textDecorationLine: "line-through",
+            ...tokens.text.numeric,
+          }}
+        >
+          {plan.compareAt.priceString}
+        </Text>
+      )}
+      <Text style={{ ...tokens.text.hero, color: tokens.color.text, ...tokens.text.numeric }}>
+        {plan.perWeek}
+        <Text style={{ ...tokens.text.heading, color: tokens.color.textMuted }}>{` ${t("paywall.per.week")}`}</Text>
+      </Text>
+    </View>
   );
 }

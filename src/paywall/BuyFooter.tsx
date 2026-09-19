@@ -27,6 +27,8 @@ export function BuyFooter({
   onBuy,
   onRestore,
   label: labelOverride,
+  variant = "primary",
+  lead,
   children,
 }: {
   plan: Plan | null;
@@ -37,6 +39,10 @@ export function BuyFooter({
    *  sells an introductory week, and "Continue with weekly" on it names the
    *  renewal rather than the offer. */
   label?: string;
+  /** The button's face. The exit offer lights its claim green. */
+  variant?: "primary" | "accent";
+  /** Printed directly above the button: the offer screen's price line. */
+  lead?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   const label = plan ? (labelOverride ?? t(`paywall.cta.${plan.period}`)) : t("paywall.loading");
@@ -49,7 +55,8 @@ export function BuyFooter({
 
   return (
     <View style={{ gap: tokens.space.sm }}>
-      <Button label={label} onPress={onBuy} disabled={busy || plan === null} />
+      {lead}
+      <Button label={label} onPress={onBuy} disabled={busy || plan === null} variant={variant} />
       {children}
       {legal !== "" && (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>

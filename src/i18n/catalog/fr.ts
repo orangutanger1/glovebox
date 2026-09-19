@@ -201,7 +201,8 @@ export const fr: Fragment = {
   "offer.paywall.point.reminders.title": "Un rappel avant chacun",
   "offer.paywall.point.reminders.subtitle": "Le jour de l’échéance, jamais de relance.",
 
-  "offer.deal.title": "Offre à durée limitée.",
+  "offer.deal.title": "Offre à durée limitée",
+  "offer.deal.pct": "{pct}% de réduction",
   "offer.trial.cta": "Profiter de l’offre",
   "offer.trial.decline": "Je préfère payer le plein tarif",
   "offer.trial.gets.reminders": "Rappels avant chaque entretien",

@@ -16,7 +16,7 @@ import { tokens } from "./tokens";
  * that says a system is on — so the tick borrows it, and sits in a washed disc
  * so the mark is a fitting on the panel rather than a character in the line.
  */
-export function Check({ size }: { size?: number }) {
+export function Check({ size, filled = false }: { size?: number; filled?: boolean }) {
   const glyph = size ?? tokens.text.body.fontSize;
   const disc = Math.round(glyph * 1.4);
 
@@ -28,9 +28,12 @@ export function Check({ size }: { size?: number }) {
         borderRadius: disc / 2,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: tokens.color.greenWash,
+        // Filled, the disc is the colour and the tick is cut out of it: the
+        // exit offer's list, where seven washed rings read as a form and
+        // seven solid marks read as a receipt.
+        backgroundColor: filled ? tokens.color.green : tokens.color.greenWash,
         borderWidth: 1,
-        borderColor: tokens.color.greenGlow,
+        borderColor: filled ? tokens.color.green : tokens.color.greenGlow,
       }}
     >
       <Text
@@ -39,7 +42,7 @@ export function Check({ size }: { size?: number }) {
           fontSize: glyph * 0.72,
           lineHeight: glyph * 0.9,
           fontWeight: "700",
-          color: tokens.color.green,
+          color: filled ? tokens.color.housing : tokens.color.green,
         }}
       >
         ✓
