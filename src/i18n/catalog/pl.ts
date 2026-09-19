@@ -224,7 +224,6 @@ export const pl: Fragment = {
   "offer.paywall.point.reminders.title": "Przypomnienie przed każdym",
   "offer.paywall.point.reminders.subtitle": "W dniu terminu, bez nagabywania.",
 
-
   "offer.deal.title": "Oferta ograniczona czasowo.",
   "offer.trial.cta": "Skorzystaj z oferty",
   "offer.trial.decline": "Wolę zapłacić pełną cenę",
@@ -341,34 +340,6 @@ export const pl: Fragment = {
   "onboardingC.back": "Wstecz",
   "onboardingC.question": "Pytanie {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Jedna usługa, pod kontrolą od dziś.",
-    few: "{count} usługi, pod kontrolą od dziś.",
-    many: "{count} usług, pod kontrolą od dziś.",
-    other: "{count} usługi, pod kontrolą od dziś.",
-  },
-  "onboardingC.schedule.onWatch": "Pod kontrolą",
-  "onboardingC.schedule.status.fresh": "Od dziś",
-  "onboardingC.schedule.line.fresh": "Pod kontrolą od dziś",
-  "onboardingC.results.overdue": {
-    one: "Jeden serwis jest już po terminie.",
-    few: "{count} serwisy są już po terminie.",
-    many: "{count} serwisów jest już po terminie.",
-    other: "{count} serwisu jest już po terminie.",
-  },
-  "onboardingC.results.subtitle": "{vehicle}, {distance} rocznie.",
-  "onboardingC.results.continue": "Dalej",
-  "onboardingC.results.onFile": "Zapisane",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "Termin",
-  "onboardingC.results.status.soon": "Wkrótce",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Brak wpisu",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Dziś",
-  "onboardingC.outlook.projected": "Za rok",
   "onboardingC.cost.title": "{percent}% aut na drogach ma zaległy przegląd.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Zaległa rotacja opon",
@@ -512,7 +483,6 @@ export const pl: Fragment = {
     "Nie udało się otworzyć okna udostępniania. Twoje zapisy są nienaruszone.",
 
   "settings.intervals": "Interwały serwisowe",
-
 
   "settings.language": "Język: {language}",
   "settings.units": "Jednostki: {unit}",

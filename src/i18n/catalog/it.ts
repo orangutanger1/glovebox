@@ -141,7 +141,6 @@ export const it: Fragment = {
   "layout.fatal.body":
     "Non è stato eliminato nulla e il database è stato riportato al suo ultimo stato valido. Riapri l'app. Se continua a succedere, contatta l'assistenza prima di reinstallare: è la reinstallazione che farebbe perdere davvero i dati.",
 
-
   "offer.features.title": "Cosa ottieni.",
 
   "offer.plan.title": "Ecco il piano.",
@@ -183,7 +182,6 @@ export const it: Fragment = {
   "offer.paywall.point.history.subtitle": "Ogni intervento, costo e lettura, conservato per sempre ed esportabile.",
   "offer.paywall.point.reminders.title": "Un promemoria prima di ognuno",
   "offer.paywall.point.reminders.subtitle": "Il giorno della scadenza, senza insistere.",
-
 
   "offer.deal.title": "Offerta a tempo limitato.",
   "offer.trial.cta": "Approfitta dell’offerta",
@@ -295,30 +293,6 @@ export const it: Fragment = {
   "onboardingC.back": "Indietro",
   "onboardingC.question": "Domanda {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Un intervento, seguito da oggi.",
-    other: "{count} interventi, seguiti da oggi.",
-  },
-  "onboardingC.schedule.onWatch": "Seguiti",
-  "onboardingC.schedule.status.fresh": "Da oggi",
-  "onboardingC.schedule.line.fresh": "Seguito da oggi",
-  "onboardingC.results.overdue": {
-    one: "Un tagliando è già scaduto.",
-    other: "{count} tagliandi sono già scaduti.",
-  },
-  "onboardingC.results.subtitle": "La tua {vehicle}, {distance} all'anno.",
-  "onboardingC.results.continue": "Continua",
-  "onboardingC.results.onFile": "In archivio",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "Da fare",
-  "onboardingC.results.status.soon": "A breve",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Nessuno storico",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Oggi",
-  "onboardingC.outlook.projected": "Tra un anno",
   "onboardingC.cost.title": "Il {percent}% delle auto in circolazione ha un tagliando scaduto.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rotazione gomme in ritardo",
@@ -452,7 +426,6 @@ export const it: Fragment = {
     "Non è stato possibile aprire la condivisione. I tuoi dati non sono cambiati.",
 
   "settings.intervals": "Intervalli dei tagliandi",
-
 
   "settings.language": "Lingua: {language}",
   "settings.units": "Unità: {unit}",

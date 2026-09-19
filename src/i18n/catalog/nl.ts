@@ -192,7 +192,6 @@ export const nl: Fragment = {
 
   "settings.intervals": "Onderhoudsintervallen",
 
-
   "settings.language": "Taal: {language}",
   "settings.units": "Eenheden: {unit}",
   "settings.units.title": "Overschakelen naar {unit}?",
@@ -396,30 +395,6 @@ export const nl: Fragment = {
   "onboardingC.back": "Terug",
   "onboardingC.question": "Vraag {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Eén beurt, vanaf vandaag in de gaten.",
-    other: "{count} beurten, vanaf vandaag in de gaten.",
-  },
-  "onboardingC.schedule.onWatch": "In de gaten",
-  "onboardingC.schedule.status.fresh": "Vanaf vandaag",
-  "onboardingC.schedule.line.fresh": "Vanaf vandaag in de gaten",
-  "onboardingC.results.overdue": {
-    one: "Eén onderhoudsbeurt is al te laat.",
-    other: "{count} onderhoudsbeurten zijn al te laat.",
-  },
-  "onboardingC.results.subtitle": "Je {vehicle}, {distance} per jaar.",
-  "onboardingC.results.continue": "Verder",
-  "onboardingC.results.onFile": "Vastgelegd",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "Nu",
-  "onboardingC.results.status.soon": "Binnenkort",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Geen gegevens",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Vandaag",
-  "onboardingC.outlook.projected": "Over een jaar",
   "onboardingC.cost.title": "{percent}% van de auto's op de weg is te laat voor een beurt.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Bandenwissel te laat",
@@ -611,7 +586,6 @@ export const nl: Fragment = {
   "offer.paywall.point.history.subtitle": "Elke beurt, kostenpost en stand, voor altijd bewaard en te exporteren.",
   "offer.paywall.point.reminders.title": "Een herinnering vóór elke beurt",
   "offer.paywall.point.reminders.subtitle": "Op de dag zelf, en nooit zeurend.",
-
 
   "offer.deal.title": "Tijdelijke aanbieding.",
   "offer.trial.cta": "Aanbieding claimen",

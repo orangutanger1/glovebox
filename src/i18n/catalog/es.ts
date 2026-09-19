@@ -190,7 +190,6 @@ export const es: Fragment = {
   "offer.paywall.point.reminders.title": "Un recordatorio antes de cada uno",
   "offer.paywall.point.reminders.subtitle": "El día que toca, y nunca insistiendo.",
 
-
   "offer.deal.title": "Oferta por tiempo limitado.",
   "offer.trial.cta": "Aprovechar la oferta",
   "offer.trial.decline": "Prefiero pagar el precio completo",
@@ -304,30 +303,6 @@ export const es: Fragment = {
   "onboardingC.back": "Atrás",
   "onboardingC.question": "Pregunta {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Un servicio, vigilado desde hoy.",
-    other: "{count} servicios, vigilados desde hoy.",
-  },
-  "onboardingC.schedule.onWatch": "Vigilados",
-  "onboardingC.schedule.status.fresh": "Desde hoy",
-  "onboardingC.schedule.line.fresh": "Vigilado desde hoy",
-  "onboardingC.results.overdue": {
-    one: "Un mantenimiento ya está vencido.",
-    other: "{count} mantenimientos ya están vencidos.",
-  },
-  "onboardingC.results.subtitle": "Tu {vehicle}, {distance} al año.",
-  "onboardingC.results.continue": "Continuar",
-  "onboardingC.results.onFile": "Registrados",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "Vence",
-  "onboardingC.results.status.soon": "Pronto",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Sin registro",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Hoy",
-  "onboardingC.outlook.projected": "Dentro de un año",
   "onboardingC.cost.title": "El {percent}% de los coches que circulan tienen un servicio vencido.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rotación de neumáticos pendiente",
@@ -466,7 +441,6 @@ export const es: Fragment = {
     "No se ha podido abrir el menú de compartir. Tus registros no han cambiado.",
 
   "settings.intervals": "Intervalos de mantenimiento",
-
 
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidades: {unit}",

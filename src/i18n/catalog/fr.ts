@@ -201,7 +201,6 @@ export const fr: Fragment = {
   "offer.paywall.point.reminders.title": "Un rappel avant chacun",
   "offer.paywall.point.reminders.subtitle": "Le jour de l’échéance, jamais de relance.",
 
-
   "offer.deal.title": "Offre à durée limitée.",
   "offer.trial.cta": "Profiter de l’offre",
   "offer.trial.decline": "Je préfère payer le plein tarif",
@@ -314,30 +313,6 @@ export const fr: Fragment = {
   "onboardingC.back": "Retour",
   "onboardingC.question": "Question {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Un entretien, suivi dès aujourd’hui.",
-    other: "{count} entretiens, suivis dès aujourd’hui.",
-  },
-  "onboardingC.schedule.onWatch": "Suivis",
-  "onboardingC.schedule.status.fresh": "Dès aujourd’hui",
-  "onboardingC.schedule.line.fresh": "Suivi dès aujourd’hui",
-  "onboardingC.results.overdue": {
-    one: "Un entretien est déjà en retard.",
-    other: "{count} entretiens sont déjà en retard.",
-  },
-  "onboardingC.results.subtitle": "Votre {vehicle}, {distance} par an.",
-  "onboardingC.results.continue": "Continuer",
-  "onboardingC.results.onFile": "Au carnet",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "À faire",
-  "onboardingC.results.status.soon": "Bientôt",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Aucun suivi",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Aujourd’hui",
-  "onboardingC.outlook.projected": "Dans un an",
   "onboardingC.cost.title": "{percent}% des voitures en circulation ont un entretien en retard.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Permutation des pneus en retard",
@@ -474,7 +449,6 @@ export const fr: Fragment = {
   "settings.export.error": "Impossible d'ouvrir la feuille de partage. Votre carnet est inchangé.",
 
   "settings.intervals": "Intervalles d'entretien",
-
 
   // `{unit}`, `{from}` and `{to}` arrive as the literal abbreviations "mi"/"km",
   // so they are left alone; the 50 000 reading keeps its from-unit figure and

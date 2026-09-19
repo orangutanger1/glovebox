@@ -175,7 +175,6 @@ export const ja: Fragment = {
   "offer.paywall.point.reminders.title": "各整備の前にリマインド",
   "offer.paywall.point.reminders.subtitle": "期限当日に一度だけ。しつこく通知しません。",
 
-
   "offer.deal.title": "期間限定オファー。",
   "offer.trial.cta": "オファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
@@ -282,26 +281,6 @@ export const ja: Fragment = {
   "onboardingC.back": "戻る",
   "onboardingC.question": "質問 {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    other: "{count}件の整備を今日から見守ります。",
-  },
-  "onboardingC.schedule.onWatch": "見守り中",
-  "onboardingC.schedule.status.fresh": "今日から",
-  "onboardingC.schedule.line.fresh": "今日から見守ります",
-  "onboardingC.results.overdue": { other: "{count}件の整備がすでに期限切れです。" },
-  "onboardingC.results.subtitle": "{vehicle}、年間{distance}。",
-  "onboardingC.results.continue": "続ける",
-  "onboardingC.results.onFile": "記録あり",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "期限",
-  "onboardingC.results.status.soon": "まもなく",
-  "onboardingC.results.status.ok": "問題なし",
-  "onboardingC.results.status.noRecord": "記録なし",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "現在",
-  "onboardingC.outlook.projected": "1年後",
   "onboardingC.cost.title": "走っている車の{percent}%が、整備の時期を過ぎています。",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "タイヤローテーション遅れ",
@@ -431,7 +410,6 @@ export const ja: Fragment = {
   "settings.export.error": "共有シートを開けませんでした。記録はそのままです。",
 
   "settings.intervals": "整備間隔",
-
 
   "settings.language": "言語：{language}",
   "settings.units": "単位：{unit}",

@@ -141,7 +141,6 @@ export const ptBR: Fragment = {
   "layout.fatal.body":
     "Nada foi apagado, e o banco de dados voltou ao último estado bom. Abra o app de novo. Se continuar acontecendo, fale com o suporte antes de reinstalar, porque é a reinstalação que perderia os registros de verdade.",
 
-
   "offer.features.title": "O que você leva.",
 
   "offer.plan.title": "Este é o plano.",
@@ -183,7 +182,6 @@ export const ptBR: Fragment = {
   "offer.paywall.point.history.subtitle": "Cada serviço, custo e leitura, guardado para sempre e exportável.",
   "offer.paywall.point.reminders.title": "Um lembrete antes de cada um",
   "offer.paywall.point.reminders.subtitle": "No dia em que vence, e nunca insistindo.",
-
 
   "offer.deal.title": "Oferta por tempo limitado.",
   "offer.trial.cta": "Aproveitar a oferta",
@@ -294,30 +292,6 @@ export const ptBR: Fragment = {
   "onboardingC.back": "Voltar",
   "onboardingC.question": "Pergunta {step} / {total}",
 
-  "onboardingC.schedule.title": {
-    one: "Um serviço, acompanhado a partir de hoje.",
-    other: "{count} serviços, acompanhados a partir de hoje.",
-  },
-  "onboardingC.schedule.onWatch": "Acompanhados",
-  "onboardingC.schedule.status.fresh": "A partir de hoje",
-  "onboardingC.schedule.line.fresh": "Acompanhado a partir de hoje",
-  "onboardingC.results.overdue": {
-    one: "Um serviço já está atrasado.",
-    other: "{count} serviços já estão atrasados.",
-  },
-  "onboardingC.results.subtitle": "Seu {vehicle}, {distance} por ano.",
-  "onboardingC.results.continue": "Continuar",
-  "onboardingC.results.onFile": "Registrados",
-  "onboardingC.results.onFileValue": "{logged} / {total}",
-  "onboardingC.results.status.due": "Vencido",
-  "onboardingC.results.status.soon": "Logo",
-  "onboardingC.results.status.ok": "OK",
-  "onboardingC.results.status.noRecord": "Sem registro",
-
-  // The two odometer gauges on the payoff page: the reading typed, and where
-  // it lands in a year at the stated rate.
-  "onboardingC.outlook.odometer": "Hoje",
-  "onboardingC.outlook.projected": "Daqui a um ano",
   "onboardingC.cost.title": "{percent}% dos carros na rua estão com uma revisão atrasada.",
   "onboardingC.cost.percent": "{percent}%",
   "onboardingC.cost.tireRotations": "Rodízio de pneus atrasado",
@@ -450,7 +424,6 @@ export const ptBR: Fragment = {
     "Não foi possível abrir o compartilhamento. Os seus registros não mudaram.",
 
   "settings.intervals": "Intervalos de revisão",
-
 
   "settings.language": "Idioma: {language}",
   "settings.units": "Unidade: {unit}",
