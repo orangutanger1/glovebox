@@ -1,7 +1,7 @@
 {
 	"name": "Wrenchy",
 	"bundleId": "com.idea6.carmaintenancelog",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"appDir": ".",
 	"asc": {
 		"appId": "6797103341",
@@ -11,7 +11,7 @@
 	},
 	"eas": {
 		"projectId": "fd84867d-9447-4a57-991a-d7e6a8ef1ac6",
-		"owner": "nakodan-capital",
+		"owner": "mayfield",
 		"profile": "production",
 		"platform": "ios",
 		"channel": "production"
