@@ -4,6 +4,8 @@ import { t } from "../i18n";
 import { vehicleSentenceName } from "../format";
 import { getVehicle } from "../db/vehicles";
 import type { NudgeState } from "../onboarding/state";
+import { isAskStep } from "../onboarding/routes";
+import { readFindings } from "../onboarding/usePlan";
 import {
   isOnboarded,
   getOnboardingVehicleId,
@@ -15,33 +17,44 @@ import {
 } from "../onboarding";
 
 /**
- * The two notifications an unfinished setup gets.
+ * The seven notifications an unfinished setup gets.
  *
- * Onboarding asks for notification permission immediately after the results
- * screen, five screens before the flow ends, and the whole reason it asks that
- * early is this: a user who quits partway through has a half-written car in the
- * database and no way to be told so. Without these, permission granted mid-flow
- * bought the app nothing until the user came back on their own — the service
- * reminders it schedules are all months out, and a car with one logged service
- * frequently has none at all.
+ * Onboarding asks for notification permission two questions into the quiz,
+ * and the whole reason it asks that early is this: a user who quits partway
+ * through has a half-written car in the database and no way to be told so.
+ * Without these, permission granted mid-flow bought the app nothing until the
+ * user came back on their own — the service reminders it schedules are all
+ * months out, and a car with one logged service frequently has none at all.
  *
- * Two, not five. The first catches the interruption — a call, a train stop —
- * while the user still remembers what they were doing. The second catches the
- * next day, which is the last point at which "finish setting up your car" is a
- * reminder rather than an advert. Anything after that is a third ask for
- * attention from someone who has now twice declined to give it, and the app
- * that sends it is the app that gets notifications turned off entirely.
+ * The cadence is front-loaded and then slow. The first two catch the
+ * interruption — a call, a train stop — while the user still remembers what
+ * they were doing. The next three are the days after, when the install is
+ * still on the phone and the reason it was installed is still true. The last
+ * two, at three weeks and a month, are for the user who kept the app without
+ * opening it: the one who was never coming back has deleted it by then, and
+ * iOS never delivers to a deleted app. Every message is a reason to come
+ * back, never a complaint about not having done so — a nudge that sounds
+ * disappointed is the one that gets notifications turned off.
  */
 const NUDGES = [
-  { id: "onboarding-resume-1", afterHours: 2, key: "first" },
-  { id: "onboarding-resume-2", afterHours: 24, key: "second" },
+  { id: "onboarding-resume-1", afterHours: 1, key: "first" },
+  { id: "onboarding-resume-2", afterHours: 3, key: "second" },
+  { id: "onboarding-resume-3", afterHours: 24, key: "third" },
+  { id: "onboarding-resume-4", afterHours: 72, key: "fourth" },
+  { id: "onboarding-resume-5", afterHours: 168, key: "fifth" },
+  { id: "onboarding-resume-6", afterHours: 504, key: "sixth" },
+  { id: "onboarding-resume-7", afterHours: 720, key: "seventh" },
 ] as const;
+
+type NudgeKey = (typeof NUDGES)[number]["key"];
+/** The catalog suffixes, in delivery order. Exported for the tests. */
+export const NUDGE_KEYS: readonly NudgeKey[] = NUDGES.map((n) => n.key);
 
 /** Exported so the schedule rebuild can clear them without knowing the copy. */
 export const RESUME_NUDGE_IDS = NUDGES.map((n) => n.id);
 
 /** How many resume nudges one run of onboarding is ever allowed to deliver.
- *  The list is the cap: two defined, two sent, for the reasons above. */
+ *  The list is the cap: seven defined, seven sent, for the reasons above. */
 const LIFETIME = NUDGES.length;
 
 /** How many of the nudges armed at `armedAt` iOS has had time to deliver by
@@ -112,11 +125,11 @@ async function adoptLegacyRun(step: string | null, now: number): Promise<NudgeSt
  * was enforcing it.
  *
  * So two things are checked before anything is scheduled. The lifetime count —
- * the nudges already delivered plus the ones this pair has had time to deliver —
- * stops at two and never arms again for this run. And a launch that finds the
- * user on the same step they were on when the current pair was armed leaves that
- * pair exactly where it is: opening the app and closing it again is not progress
- * and must not reset the clock.
+ * the nudges already delivered plus the ones this set has had time to deliver —
+ * stops at the length of `NUDGES` and never arms again for this run. And a
+ * launch that finds the user on the same step they were on when the current
+ * set was armed leaves that set exactly where it is: opening the app and
+ * closing it again is not progress and must not reset the clock.
  *
  * Re-arming on a *changed* step is kept, because that was the original intent
  * and it is still right: a user who quits, comes back, gets three screens
@@ -166,31 +179,72 @@ export async function scheduleOnboardingNudges(now: number = Date.now()): Promis
 }
 
 /**
- * The pair minus the `skip` already delivered, minus any whose time has passed,
+ * The set minus the `skip` already delivered, minus any whose time has passed,
  * at the times counted from `armedAt`.
  *
- * The remainder, not a fresh pair: someone who was nudged at two hours and then
- * got one screen further is owed the day-out nudge and nothing else, and a
+ * The remainder, not a fresh set: someone who was nudged at three hours and
+ * then got one screen further is owed the later three and nothing else, and a
  * relaunch on the same step is owed the ones still ahead of it at the moments
  * they were already promised for.
  */
 async function arm(armedAt: number, skip: number, now: number): Promise<void> {
-  for (const nudge of NUDGES.slice(skip)) {
+  const remaining = NUDGES.slice(skip).filter((n) => armedAt + n.afterHours * 60 * 60 * 1000 > now);
+  if (remaining.length === 0) return;
+  // Which of the two message sets depends on where the run stopped. A user parked
+  // at the ask has answered everything and the plan is built; "finish setting
+  // up your car" is untrue of them, and the message that brings them back is
+  // the plan itself.
+  const content = isAskStep(getOnboardingStep()) ? askCopy() : setupCopy();
+  for (const nudge of remaining) {
     const at = armedAt + nudge.afterHours * 60 * 60 * 1000;
-    if (at <= now) continue;
     await Notifications.scheduleNotificationAsync({
       identifier: nudge.id,
-      content: {
-        // Same shape as a service reminder, for the same reason: what the
-        // notification wants is in the title, and the car — which is as long
-        // as the user made it — is in the body.
-        title: tNamed(`system.resume.${nudge.key}.title`),
-        body: t(`system.resume.${nudge.key}.body`, { vehicle: vehicleName() }),
-        data: { dueAt: new Date(at).toISOString() },
-      },
+      content: { ...content[nudge.key], data: { dueAt: new Date(at).toISOString() } },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(at) },
     });
   }
+}
+
+type Copy = Record<NudgeKey, { title: string; body: string }>;
+
+/** Every nudge's title and body from one key prefix, with the same variables
+ *  in each. `override` swaps in a body computed some other way. */
+function copyFrom(prefix: string, vars: Record<string, string | number>, override: Partial<Record<NudgeKey, string>> = {}): Copy {
+  const out = {} as Copy;
+  for (const key of NUDGE_KEYS) {
+    out[key] = {
+      title: tNamed(`${prefix}.${key}.title`),
+      body: override[key] ?? t(`${prefix}.${key}.body`, vars),
+    };
+  }
+  return out;
+}
+
+/** "Your plan is almost ready", for a run that stopped inside the quiz. Same
+ *  shape as a service reminder, for the same reason: what the notification
+ *  wants is in the title, and the car — which is as long as the user made it —
+ *  is in the body. */
+function setupCopy(): Copy {
+  return copyFrom("system.resume", { vehicle: vehicleName() });
+}
+
+/**
+ * The plan, for a run that stopped at the ask. Built from the same findings
+ * the paywall was drawn from, so the count the notification names is the
+ * count the user was shown. Only services with a history behind them count —
+ * `pastDue` and `soon` — because a service the app has never been told about
+ * is unknown, not late, and a notification that inflates the number is one
+ * the user checks once and then distrusts. A car with nothing behind on it
+ * gets the schedule sold instead of a zero.
+ */
+function askCopy(): Copy {
+  const { vehiclePhrase: vehicle, plan } = readFindings();
+  const count = plan.pastDue + plan.soon;
+  return copyFrom(
+    "system.resume.ask",
+    { vehicle, count },
+    count > 0 ? {} : { first: t("system.resume.ask.first.body.zero", { vehicle }) },
+  );
 }
 
 /** The half-written car the nudge is about, or the honest stand-in for a run

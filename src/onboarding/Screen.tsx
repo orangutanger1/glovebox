@@ -18,7 +18,8 @@ import { tokens } from "../design/tokens";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
 import { track, trackStepBack } from "../analytics";
-import { previousRoute, quizStep, type OnboardingRoute } from "./flow";
+import { isAskStep, previousRoute, quizStep, type OnboardingRoute } from "./flow";
+import { scheduleOnboardingNudges } from "../notify/resume";
 
 /**
  * The frame every onboarding screen after the hook is built in.
@@ -128,6 +129,14 @@ export function OnboardingScreen({
   // what the funnel needs to order its steps.
   useEffect(() => {
     track("onboarding_step_viewed", { route, quiz_step: quiz?.step ?? null });
+    // The resume nudges are otherwise re-armed only by `rescheduleAll`, which
+    // runs on launch and after a write — and the last write in the flow is the
+    // quiz's service record, a dozen screens before the paywall. Left there, a
+    // user who closed the app on the offer was told two hours later to finish
+    // setting up a car they had finished setting up. Re-arming on arrival at
+    // the ask switches the pair to the copy about the plan; it spends nothing
+    // from the quota, and a relaunch on the same step keeps the clock.
+    if (isAskStep(route)) void scheduleOnboardingNudges().catch(() => {});
   }, [route, quiz?.step]);
 
   /**

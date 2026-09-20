@@ -38,14 +38,25 @@ const ICU = (
 
 /** Every title iOS renders, named and unnamed. The bodies are exempt: a banner
  *  gives those two lines, which is why the vehicle lives in them. */
+const NUDGE_KEYS = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh"];
+/** Both sets of resume nudges — the quiz's and the ask's — as key prefixes. */
+const NUDGE_PREFIXES = NUDGE_KEYS.flatMap((k) => [`system.resume.${k}`, `system.resume.ask.${k}`]);
+
 const NOTIFICATION_TITLES = [
   "system.notify.title",
   "system.notify.title.named",
-  "system.resume.first.title",
-  "system.resume.first.title.named",
-  "system.resume.second.title",
-  "system.resume.second.title.named",
+  ...NUDGE_PREFIXES.flatMap((p) => [`${p}.title`, `${p}.title.named`]),
 ];
+
+/** The bodies that carry a user-typed vehicle name, and the two lines a
+ *  collapsed banner gives them. The budget is checked with a long name so the
+ *  sentence after it is never the part that gets cut. */
+const NOTIFICATION_BODIES = [
+  ...NUDGE_PREFIXES.map((p) => `${p}.body`),
+  "system.resume.ask.first.body.zero",
+];
+const BODY_BUDGET = 110;
+const LONG_VEHICLE = "2016 Subaru Outback 3.6R";
 
 /** The service types with the longest names; the check uses whichever of them
  *  the language under test spells longest. */
@@ -179,6 +190,18 @@ describe("every shipped language", () => {
       const rendered = t(key, { name: "Bartholomew", service });
       const budget = key.endsWith(".named") ? NAMED_BUDGET : TITLE_BUDGET;
       if (rendered.length > budget) over.push(`${key}: ${rendered.length} — ${rendered}`);
+    }
+    expect(over).toEqual([]);
+  });
+
+  test.each([...BASE, ...OVERLAY])("%s keeps the selling nudges inside two banner lines", (language) => {
+    setLanguage(language);
+    const over: string[] = [];
+    for (const key of NOTIFICATION_BODIES) {
+      for (const count of [1, 2, 5, 12]) {
+        const rendered = t(key, { vehicle: LONG_VEHICLE, count });
+        if (rendered.length > BODY_BUDGET) over.push(`${key}: ${rendered.length} — ${rendered}`);
+      }
     }
     expect(over).toEqual([]);
   });
