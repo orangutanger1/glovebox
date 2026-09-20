@@ -90,7 +90,9 @@ jest.mock("expo-notifications", () => ({
 jest.mock("expo-haptics", () => ({
   selectionAsync: jest.fn(async () => {}),
   impactAsync: jest.fn(async () => {}),
+  notificationAsync: jest.fn(async () => {}),
   ImpactFeedbackStyle: { Light: "light", Medium: "medium", Heavy: "heavy" },
+  NotificationFeedbackType: { Success: "success", Warning: "warning", Error: "error" },
 }));
 
 import { createVehicle, getVehicle, listVehicles } from "../src/db/vehicles";

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
 import { formatDate, t } from "../../src/i18n";
@@ -72,6 +73,9 @@ export default function OnboardingPaywall() {
     try {
       const outcome = await buy(chosen, "default");
       if (outcome === "purchased") {
+        // The receipt, felt: the same success the log gives a saved service,
+        // for the one tap in the app that cost money.
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
         // Recorded, never acted on: nothing in onboarding may ask for a rating
         // (Guideline 5.6.3). This banks the signal for a later happy moment.
         recordReviewEvent("purchase");

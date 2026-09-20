@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
+import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../src/design/Screen";
 import { tokens } from "../src/design/tokens";
@@ -81,6 +82,9 @@ export default function PaywallRoute() {
     try {
       const outcome = await buy(chosen, offering);
       if (outcome === "purchased") {
+        // The receipt, felt: the same success the log gives a saved service,
+        // for the one tap in the app that cost money.
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
         recordReviewEvent("purchase");
         leave("purchased");
         return;

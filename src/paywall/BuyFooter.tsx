@@ -56,7 +56,7 @@ export function BuyFooter({
   return (
     <View style={{ gap: tokens.space.sm }}>
       {lead}
-      <Button label={label} onPress={onBuy} disabled={busy || plan === null} variant={variant} />
+      <Button label={label} onPress={onBuy} disabled={busy || plan === null} variant={variant} weight="heavy" />
       {children}
       {legal !== "" && (
         <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint, textAlign: "center" }}>

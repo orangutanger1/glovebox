@@ -71,12 +71,19 @@ export function Button({
   onPress,
   variant = "primary",
   disabled = false,
+  weight = "light",
   onBlockedPress,
 }: {
   label: string;
   onPress: () => void;
   variant?: "primary" | "accent" | "secondary" | "danger";
   disabled?: boolean;
+  /**
+   * How hard the press is felt. Light everywhere, which is the weight of a
+   * Continue. "heavy" is for the one press in the app that commits money: a
+   * purchase should land in the hand like a decision, not like the next page.
+   */
+  weight?: "light" | "heavy";
   /**
    * Called instead of `onPress` when the button is disabled and tapped. Supply
    * it and the control stays live so the tap can be counted; omit it and
@@ -98,7 +105,9 @@ export function Button({
       return;
     }
     // Fire and forget: a failed haptic must never block the action.
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+    Haptics.impactAsync(
+      weight === "heavy" ? Haptics.ImpactFeedbackStyle.Heavy : Haptics.ImpactFeedbackStyle.Light,
+    ).catch(() => {});
     onPress();
   }
 
