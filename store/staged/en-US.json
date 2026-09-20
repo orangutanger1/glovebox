@@ -19,5 +19,5 @@
     "inspectionTerm": "Safety/emissions inspection (varies by state)",
     "reasoning": "Primary locale. Recovered into the staged workflow from the canonical tree, which was the only place en-US existed - `ship meta stage` regenerates canonical from staged, so an unstaged primary locale was one `stage` away from being lost and was silently excluded from `ship meta lint`/`apply`."
   },
-  "whatsNew": "A faster subscription screen.\n\n- Prices are drawn by the app and load with it, so nothing waits on a tap\n- Every plan is on screen while you read what Pro includes\n- Restore Purchases fixed when no subscription is found\n- Small fixes"
+  "whatsNew": "Reminders that help you finish.\n\n- Step away mid-setup and Wrenchy reminds you to come back — by name, with your car\n- Reminders taper off over a month, then stop\n- Small fixes"
 }
