@@ -386,6 +386,13 @@ test("declining the second offer goes back to the paywall that sells full price"
   );
   act(() => link[link.length - 1].props.onPress());
 
+  // "What stopped you?" comes first, once per install; skipping it carries the
+  // decline through to the paywall.
+  const skip = tree.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("survey.objection.skip")),
+  );
+  if (skip.length > 0) act(() => skip[skip.length - 1].props.onPress());
+
   expect(navigated).toEqual(["back"]);
 });
 
@@ -880,7 +887,7 @@ test("the last question requires an answer, like every other one", () => {
     tree.root.findAll((n) => n.props.label === "Continue")[0].props.disabled,
   ).toBe(false);
   press(tree, "Continue");
-  expect(navigated).toContain("/onboarding/analyzing");
+  expect(navigated).toContain("/onboarding/source");
 
   // And the screens that read the answer still have three true cards to draw.
   const symptoms = texts(render(OnboardingSymptoms)).join(" ");

@@ -720,4 +720,20 @@ export const ptBR: Fragment = {
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
   "paywall.review.name": "Tracy D.",
+  // survey
+  "survey.source.title": "Como você conheceu o app?",
+  "survey.source.tiktok": "TikTok",
+  "survey.source.instagram": "Instagram",
+  "survey.source.youtube": "YouTube",
+  "survey.source.app_store": "Buscando na App Store",
+  "survey.source.friend": "Um amigo ou familiar",
+  "survey.source.other": "Outro lugar",
+  "survey.objection.title": "O que te impediu?",
+  "survey.objection.subtitle": "Um toque. Mostra o que devemos melhorar.",
+  "survey.objection.price": "É caro demais",
+  "survey.objection.try_first": "Quero testar primeiro",
+  "survey.objection.browsing": "Só estou olhando",
+  "survey.objection.no_car": "Não tenho carro",
+  "survey.objection.other": "Outra coisa",
+  "survey.objection.skip": "Pular",
 };

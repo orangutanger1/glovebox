@@ -66,6 +66,12 @@ jest.mock("../src/experiments", () => ({
   getVariant: () => null,
 }));
 
+// The onboarding source answer, stamped the same way as the experiment arm.
+let mockSource: Record<string, string> = {};
+jest.mock("../src/survey", () => ({
+  sourceProperties: () => mockSource,
+}));
+
 // Imported by the analytics module for the RevenueCat id join; nothing here
 // exercises it.
 jest.mock("react-native-purchases", () => ({
@@ -205,6 +211,23 @@ test("the experiment arm is read when the event fires, not when the client was b
     expect(appProperties()).not.toHaveProperty("exp_onboarding_symptoms");
   } finally {
     mockExperiments = {};
+  }
+});
+
+test("where the install came from is read when the event fires", () => {
+  // Answered near the end of onboarding, so every event before it says
+  // "unanswered" and every event after it carries the answer.
+  try {
+    const analytics = load("phc_test");
+    mockSource = { heard_from: "tiktok" };
+    analytics.track("paywall_shown", { offering: "current" });
+
+    expect(mockCapture).toHaveBeenCalledWith("paywall_shown", {
+      offering: "current",
+      heard_from: "tiktok",
+    });
+  } finally {
+    mockSource = {};
   }
 });
 

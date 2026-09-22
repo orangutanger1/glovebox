@@ -551,3 +551,25 @@ as an estimate to "not set" rather than promoting it to a reading. No event
 moves; the garage and vehicle gauges lose the "(est.)" legend, and a car whose
 reading was cleared shows "Not set" until the owner types one on the edit
 screen (which now carries an odometer field beside the name).
+
+### 2026-09-22 — a source question before the loader, and an objection sheet on the offer
+
+**One more screen in the flow: `source`, between `worry` and `analyzing`.**
+"How did you hear about us?" — TikTok, Instagram, YouTube, App Store search,
+a friend, somewhere else — answered like a quiz question but not counted as
+one (no "QUESTION n / 6"). Step counts from `analyzing` on lose whatever this
+screen drops; compare `worry → analyzing` before this build with
+`worry → source → analyzing` after it. Back from `analyzing`, `schedule` and
+(with the page hidden) `compare` now lands on `source`, not `worry`.
+
+**New: `source_answered {source}`**, and `heard_from` on every event from then
+on ("unanswered" before the answer and on every earlier build). The answer is
+also set on the PostHog person (`$set`) and as a RevenueCat attribute
+`heard_from`, so revenue can be filtered by it on the RevenueCat side.
+
+**New: `paywall_objection {reason, trigger, offering}`** on the exit offer.
+"What stopped you?" — price, try_first, browsing, no_car, other, or `skipped` —
+asked once per install, on whichever comes first: the decline button
+(`trigger: "declined"`) or backing out of Apple's payment sheet
+(`trigger: "sheet_cancelled"`). `offer_declined` still fires at the tap, before
+the sheet; the decline then carries on as before. No other event moves.

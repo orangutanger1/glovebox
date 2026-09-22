@@ -723,4 +723,20 @@ export const ko: Fragment = {
   "paywall.review.quote": 
     "Compared to other apps I tried like MyAutoLog, Carfax, or what have you not, this app absolutely surpasses them all in terms of functionality, design, and ease of use.",
   "paywall.review.name": "Tracy D.",
+  // survey
+  "survey.source.title": "저희 앱을 어떻게 알게 되셨나요?",
+  "survey.source.tiktok": "TikTok",
+  "survey.source.instagram": "Instagram",
+  "survey.source.youtube": "YouTube",
+  "survey.source.app_store": "App Store 검색",
+  "survey.source.friend": "친구나 가족",
+  "survey.source.other": "기타 경로",
+  "survey.objection.title": "구매를 망설인 이유는?",
+  "survey.objection.subtitle": "한 번만 탭하세요. 무엇을 고칠지 알려줍니다.",
+  "survey.objection.price": "너무 비싸요",
+  "survey.objection.try_first": "먼저 써보고 싶어요",
+  "survey.objection.browsing": "그냥 둘러보는 중이에요",
+  "survey.objection.no_car": "차가 없어요",
+  "survey.objection.other": "기타",
+  "survey.objection.skip": "건너뛰기",
 };

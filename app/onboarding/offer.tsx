@@ -17,6 +17,8 @@ import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 import { track } from "../../src/analytics";
+import { recordObjection, shouldAskObjection, type Objection, type ObjectionTrigger } from "../../src/survey";
+import { ObjectionSheet } from "../../src/survey/ObjectionSheet";
 
 /**
  * The second ask, and, once there is nothing left to ask, the wall.
@@ -77,6 +79,9 @@ export default function OnboardingOffer() {
   );
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  // "What stopped you?", when it is open, and what opened it. Asked once per
+  // install, on the first of the two ways a user says no here.
+  const [asking, setAsking] = useState<ObjectionTrigger | null>(null);
 
   const mounted = useRef(Date.now());
 
@@ -122,6 +127,9 @@ export default function OnboardingOffer() {
         return;
       }
       if (outcome === "unavailable") setMsg(t("settings.store.error"));
+      // Backed out of Apple's sheet: wanted the deal, balked at the charge.
+      // The user stays on the offer either way.
+      if (outcome === "dismissed" && shouldAskObjection()) setAsking("sheet_cancelled");
     } finally {
       setBusy(false);
     }
@@ -130,6 +138,23 @@ export default function OnboardingOffer() {
   function onDecline() {
     // The last decision in the flow, and the one the funnel could not see.
     track("offer_declined", { walled: !isGrandfathered(), relaunched });
+    // Asked before leaving, then the decline carries on as if it had not been.
+    if (shouldAskObjection()) {
+      setAsking("declined");
+      return;
+    }
+    leave();
+  }
+
+  function onObjection(reason: Objection | null) {
+    const trigger = asking;
+    setAsking(null);
+    if (!trigger) return;
+    recordObjection(reason, trigger, "discount");
+    if (trigger === "declined") leave();
+  }
+
+  function leave() {
     if (isGrandfathered()) {
       finish("free");
       return;
@@ -194,6 +219,7 @@ export default function OnboardingOffer() {
               <Button label={t("offer.trial.decline")} onPress={onDecline} disabled={busy} variant="secondary" />
             )}
           </BuyFooter>
+          <ObjectionSheet visible={asking !== null} onDone={onObjection} />
         </>
       }
     >

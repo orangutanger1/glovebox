@@ -135,8 +135,9 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //                              rather than rewritten in translation
     //   it paywall.privacy         Italian uses the English loanword "Privacy"
     //   nl paywall.per.week        Dutch "per week" is spelled the same as English
+    //   *  survey.source.(tiktok|instagram|youtube)  brand names, never translated
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$|^survey\.source\.(tiktok|instagram|youtube)$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

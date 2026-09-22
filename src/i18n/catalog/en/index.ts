@@ -17,6 +17,7 @@ import { plan } from "./plan";
 import { service } from "./service";
 import { settings } from "./settings";
 import { subscribed } from "./subscribed";
+import { survey } from "./survey";
 import { system } from "./system";
 import { unit } from "./unit";
 import { vehicle } from "./vehicle";
@@ -55,6 +56,7 @@ export const FRAGMENTS: Record<string, Fragment> = {
   service,
   settings,
   subscribed,
+  survey,
   system,
   unit,
   vehicle,

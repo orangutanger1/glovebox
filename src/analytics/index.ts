@@ -3,6 +3,7 @@ import Purchases from "react-native-purchases";
 import type * as UpdatesModule from "expo-updates";
 import { identifyCrashUser } from "../crash";
 import { experimentProperties } from "../experiments";
+import { sourceProperties } from "../survey";
 
 /**
  * Product analytics, which exists here for exactly one question: where in
@@ -195,6 +196,8 @@ export function track(event: string, properties?: Props): void {
     const props = {
       ...(event === STEP_VIEWED ? withFirstView(properties) : properties),
       ...experimentProperties(),
+      // Where the install came from, once the onboarding question is answered.
+      ...sourceProperties(),
     };
     // `capture` is declared to return void, but it has handed back a promise
     // across SDK versions. An unhandled rejection from telemetry is still a

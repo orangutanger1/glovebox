@@ -68,6 +68,8 @@ jest.mock("../src/purchases/plans", () => {
   };
 });
 jest.mock("../src/purchases", () => ({ restore: async () => false }));
+// The survey sets a RevenueCat attribute; nothing here reads it.
+jest.mock("react-native-purchases", () => ({ __esModule: true, default: { setAttributes: () => {} } }));
 jest.mock("expo-notifications", () => ({
   cancelScheduledNotificationAsync: jest.fn(async () => {}),
   setNotificationHandler: jest.fn(),
@@ -83,6 +85,7 @@ jest.mock("expo-haptics", () => ({
 
 import { setLanguage, t } from "../src/i18n";
 import OnboardingOffer from "../app/onboarding/offer";
+import { getDb } from "../src/db/client";
 
 beforeAll(() => setLanguage("en"));
 beforeEach(() => {
@@ -90,11 +93,21 @@ beforeEach(() => {
   navigated.length = 0;
 });
 
+// Unmounted after each test: the objection sheet's cards animate in, and an
+// animation still running when the environment is torn down throws.
+const mounted: TestRenderer.ReactTestRenderer[] = [];
+afterEach(() => {
+  act(() => {
+    for (const tree of mounted.splice(0)) tree.unmount();
+  });
+});
+
 function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(createElement(OnboardingOffer));
   });
+  mounted.push(tree);
   return tree;
 }
 
@@ -134,4 +147,45 @@ test("buying the discount yearly is a paid exit, not a trial", async () => {
   await tap(tree, t("offer.trial.cta"));
   expect(tracked).toContainEqual({ event: "onboarding_completed", props: { exit: "paid" } });
   expect(navigated).toContain("replace:/subscribed");
+});
+
+const objections = () => tracked.filter((e) => e.event === "paywall_objection");
+
+test("backing out of Apple's sheet asks what stopped them, once, and stays on the offer", async () => {
+  getDb().runSync("DELETE FROM app_state", []);
+  const tree = render();
+  mockBuy.mockResolvedValueOnce("dismissed");
+  await tap(tree, t("offer.trial.cta"));
+  expect(stringsIn(tree.root)).toContain(t("survey.objection.title"));
+
+  await tap(tree, t("survey.objection.try_first"));
+  expect(objections()).toEqual([
+    {
+      event: "paywall_objection",
+      props: { reason: "try_first", trigger: "sheet_cancelled", offering: "discount" },
+    },
+  ]);
+  expect(navigated).toEqual([]);
+
+  // The ask is spent: a second cancel goes straight back to the offer.
+  mockBuy.mockResolvedValueOnce("dismissed");
+  await tap(tree, t("offer.trial.cta"));
+  expect(objections()).toHaveLength(1);
+});
+
+test("declining asks first, and a skip still carries the decline through", async () => {
+  getDb().runSync("DELETE FROM app_state", []);
+  const tree = render();
+  await tap(tree, t("offer.trial.decline"));
+  expect(tracked.some((e) => e.event === "offer_declined")).toBe(true);
+  expect(navigated).toEqual([]);
+
+  await tap(tree, t("survey.objection.skip"));
+  expect(objections()).toEqual([
+    {
+      event: "paywall_objection",
+      props: { reason: "skipped", trigger: "declined", offering: "discount" },
+    },
+  ]);
+  expect(navigated).toEqual(["back"]);
 });

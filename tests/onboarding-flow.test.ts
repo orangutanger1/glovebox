@@ -29,9 +29,15 @@ test("the flow is a single chain with a start and an end", () => {
 
 test("back steps over analyzing, which advances itself", () => {
   // Landing on it from the schedule would push the user straight forward again
-  // and make the last quiz question unreachable.
-  expect(previousRoute("schedule")).toBe("worry");
-  expect(previousRoute("analyzing")).toBe("worry");
+  // and make the screen before it unreachable.
+  expect(previousRoute("schedule")).toBe("source");
+  expect(previousRoute("analyzing")).toBe("source");
+});
+
+test("the source question sits between the last quiz question and the loader", () => {
+  expect(nextRoute("worry")).toBe("source");
+  expect(nextRoute("source")).toBe("analyzing");
+  expect(QUIZ).not.toContain("source");
 });
 
 test("every quiz screen is numbered and no other screen is", () => {
@@ -210,7 +216,7 @@ describe("the onboarding_payoff experiment", () => {
     const both = hiddenRoutes({ symptoms: "no_symptoms", payoff: "none" });
     expect(both).toEqual(["symptoms", "help", "schedule"]);
     expect(nextRoute("analyzing", both)).toBe("compare");
-    expect(previousRoute("compare", both)).toBe("worry");
+    expect(previousRoute("compare", both)).toBe("source");
   });
 
   test("an install parked on the page, or on either screen it replaced, resumes past it", () => {

@@ -51,6 +51,13 @@ export const FLOW = [
   "cost",
   "tracking",
   "worry",
+  // Where the install came from. Not a quiz question — it changes nothing
+  // the app computes, so it gets no counter — but the one answer the event
+  // stream cannot infer: the install spikes come from TikTok slideshows and
+  // arrive with no campaign attached. Last before the loader, where the user
+  // has momentum and has already answered six questions; asked first, it
+  // reads as a sign-up form.
+  "source",
   // The payoff, in the order that earns the ask.
   "analyzing",
   // One page: what the app now watches for this car, and where the odometer
