@@ -45,8 +45,15 @@ const SPACING = /[\s\u00A0\u202F\u2009'\u2019\u02BC]/g;
  * Anything with a letter still in it after a trailing unit is stripped is
  * rejected rather than coerced: "about 80k" is not 80, and `Number` would
  * otherwise take "1e5" and "0x20" as readings nobody typed.
+ *
+ * `fraction: "always"` drops the three-digit rule for a quantity that is never
+ * in the thousands. A pump prints volume to three places — "11.482" gallons,
+ * "42,317" litres — and read as grouping that was an 11,482-gallon fill.
  */
-export function parseNumber(s: string): number | undefined {
+export function parseNumber(
+  s: string,
+  { fraction: lone = "grouped" }: { fraction?: "grouped" | "always" } = {}
+): number | undefined {
   const cleaned = s
     .trim()
     .replace(/^[$£€¥]/, "")
@@ -70,7 +77,7 @@ export function parseNumber(s: string): number | undefined {
     const at = dots === 1 ? lastDot : lastComma;
     // Exactly three trailing digits is the grouped form the app itself prints;
     // any other run is a fraction the user meant.
-    if (digits.length - at - 1 !== 3) decimalAt = at;
+    if (lone === "always" || digits.length - at - 1 !== 3) decimalAt = at;
   }
 
   const whole = (decimalAt === -1 ? digits : digits.slice(0, decimalAt)).replace(/[.,]/g, "");

@@ -185,6 +185,18 @@ test("saving writes the fill and returns to the vehicle", async () => {
   expect(navigated).toContain("back");
 });
 
+test("a volume read off the pump to three places is a fraction, not thousands", async () => {
+  // Pumps print volume to three decimals. The odometer's rule — one separator
+  // and three digits is grouping — filed "11.482" gallons as 11,482.
+  const tree = render();
+  act(() => field(tree, ODO).props.onChangeText("52071"));
+  act(() => field(tree, VOL()).props.onChangeText("11.482"));
+  await act(async () => {
+    await saveButton(tree).props.onPress();
+  });
+  expect(fuelEntriesForVehicle("v1")[0].volume).toBeCloseTo(11.482, 6);
+});
+
 test("a fill with no cost is still saved, with no cost", async () => {
   // The whole gating argument depends on this: logging is free and must stay
   // frictionless, and a user who did not note the price still logs the tank.

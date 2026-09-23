@@ -211,6 +211,13 @@ describe("parseNumber, separators the app itself prints", () => {
     expect(parseNumber("1.234.567")).toBe(1234567);
   });
 
+  it("reads a lone separator as a decimal when asked, for quantities never in the thousands", () => {
+    expect(parseNumber("11.482", { fraction: "always" })).toBe(11.482);
+    expect(parseNumber("42,317", { fraction: "always" })).toBe(42.317);
+    expect(parseNumber("12.4", { fraction: "always" })).toBe(12.4);
+    expect(parseNumber("1.234,5", { fraction: "always" })).toBe(1234.5);
+  });
+
   it("reads space-grouped readings, including the non-breaking spaces", () => {
     expect(parseNumber("84 210")).toBe(84210);
     expect(parseNumber("84 210")).toBe(84210);

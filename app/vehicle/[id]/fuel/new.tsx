@@ -70,7 +70,7 @@ export default function LogFuel() {
   async function onSave() {
     if (saving) return;
     const odo = parseNumber(odometer);
-    const vol = parseNumber(volume);
+    const vol = parseNumber(volume, { fraction: "always" });
     // Both columns are NOT NULL, for a reason the user can be told: a fill
     // missing either can never produce a figure, and it would corrupt the tank
     // after it too. Refused here rather than thrown at the driver by SQLite.
