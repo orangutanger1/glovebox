@@ -82,6 +82,15 @@ export default function OnboardingOffer() {
   // "What stopped you?", when it is open, and what opened it. Asked once per
   // install, on the first of the two ways a user says no here.
   const [asking, setAsking] = useState<ObjectionTrigger | null>(null);
+  // The same trigger, read synchronously. Two taps in one frame (an option
+  // and Skip) both saw `asking` from the same render, so each recorded an
+  // answer and each ran the decline — two `router.back()`s popped past the
+  // paywall.
+  const askingRef = useRef<ObjectionTrigger | null>(null);
+  function ask(trigger: ObjectionTrigger) {
+    askingRef.current = trigger;
+    setAsking(trigger);
+  }
 
   const mounted = useRef(Date.now());
 
@@ -129,7 +138,7 @@ export default function OnboardingOffer() {
       if (outcome === "unavailable") setMsg(t("settings.store.error"));
       // Backed out of Apple's sheet: wanted the deal, balked at the charge.
       // The user stays on the offer either way.
-      if (outcome === "dismissed" && shouldAskObjection()) setAsking("sheet_cancelled");
+      if (outcome === "dismissed" && shouldAskObjection()) ask("sheet_cancelled");
     } finally {
       setBusy(false);
     }
@@ -140,14 +149,15 @@ export default function OnboardingOffer() {
     track("offer_declined", { walled: !isGrandfathered(), relaunched });
     // Asked before leaving, then the decline carries on as if it had not been.
     if (shouldAskObjection()) {
-      setAsking("declined");
+      ask("declined");
       return;
     }
     leave();
   }
 
   function onObjection(reason: Objection | null) {
-    const trigger = asking;
+    const trigger = askingRef.current;
+    askingRef.current = null;
     setAsking(null);
     if (!trigger) return;
     recordObjection(reason, trigger, "discount");

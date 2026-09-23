@@ -189,3 +189,26 @@ test("declining asks first, and a skip still carries the decline through", async
   ]);
   expect(navigated).toEqual(["back"]);
 });
+
+test("two taps on the sheet in one frame decline once, not twice", async () => {
+  // Both handlers were bound in the same render, so both read the open
+  // trigger: two answers recorded, and two `router.back()`s popped past the
+  // paywall.
+  getDb().runSync("DELETE FROM app_state", []);
+  const tree = render();
+  await tap(tree, t("offer.trial.decline"));
+
+  const option = tree.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("survey.objection.price"))
+  );
+  const skip = tree.root.findAll(
+    (n) => typeof n.props.onPress === "function" && stringsIn(n).includes(t("survey.objection.skip"))
+  );
+  await act(async () => {
+    option[option.length - 1].props.onPress();
+    skip[skip.length - 1].props.onPress();
+  });
+
+  expect(objections()).toHaveLength(1);
+  expect(navigated).toEqual(["back"]);
+});
