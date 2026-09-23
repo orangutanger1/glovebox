@@ -64,7 +64,7 @@ jest.mock("../src/paywall", () => {
 });
 const mockSyncQuickActions = jest.fn(async (_offer: boolean) => {});
 jest.mock("../src/onboarding/flow", () => ({ resumeRoute: () => "welcome" }));
-jest.mock("../src/review", () => ({ recordReviewEvent: () => {} }));
+jest.mock("../src/review", () => ({ recordLaunchAndMaybeAsk: () => {} }));
 jest.mock("../src/winback", () => ({ recordOpen: () => null, getWinbackShownAt: () => null }));
 jest.mock("../src/winback/state", () => ({ shouldOfferWinback: () => false }));
 jest.mock("../src/quickactions", () => ({

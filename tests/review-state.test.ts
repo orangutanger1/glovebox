@@ -4,7 +4,8 @@ import {
   shouldRequestFirstActionReview,
   EVENT_WEIGHTS,
   SCORE_THRESHOLD,
-  COOLDOWN_DAYS,
+  shouldRequestOnboardingReview,
+  shouldRequestOpenReview,
   MAX_ASKS,
   ASK_WINDOW_DAYS,
   spentAsks,
@@ -71,22 +72,13 @@ test("engagement that has gone stale does not trigger an ask", () => {
   expect(shouldRequestReview(stale, NOW)).toBe(false);
 });
 
-test("stays silent inside the cooldown even when the user is delighted", () => {
+test("asks again the next day: the budget, not a cooldown, spaces asks", () => {
   const recent = state({
     events: events(["purchase", 0], ["log_service", 0], ["export", 0]),
-    lastAskedAt: daysAgo(COOLDOWN_DAYS - 1),
+    lastAskedAt: daysAgo(1),
     askCount: 1,
   });
-  expect(shouldRequestReview(recent, NOW)).toBe(false);
-});
-
-test("asks again once the cooldown has elapsed", () => {
-  const elapsed = state({
-    events: events(["purchase", 0], ["log_service", 0], ["export", 0]),
-    lastAskedAt: daysAgo(COOLDOWN_DAYS + 1),
-    askCount: 1,
-  });
-  expect(shouldRequestReview(elapsed, NOW)).toBe(true);
+  expect(shouldRequestReview(recent, NOW)).toBe(true);
 });
 
 test("stops asking after the number of prompts iOS will actually show", () => {
@@ -130,10 +122,38 @@ describe("the subscriber's first-action ask", () => {
     expect(shouldRequestFirstActionReview(first({ events: events(["purchase", 0]), asked: true }), NOW)).toBe(false);
   });
 
-  test("shares the engine's cooldown and yearly budget", () => {
+  test("shares the engine's yearly budget", () => {
     const paid = events(["purchase", 0]);
-    expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(1), askCount: 1 }), NOW)).toBe(false);
+    expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(0), askCount: 1 }), NOW)).toBe(true);
     expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(30), askCount: MAX_ASKS }), NOW)).toBe(false);
     expect(shouldRequestFirstActionReview(first({ events: paid, lastAskedAt: daysAgo(30), askCount: 1 }), NOW)).toBe(true);
+  });
+});
+
+describe("onboarding ask", () => {
+  test("asks once", () => {
+    expect(shouldRequestOnboardingReview({ ...state(), asked: false }, NOW)).toBe(true);
+    expect(shouldRequestOnboardingReview({ ...state(), asked: true }, NOW)).toBe(false);
+  });
+
+  test("respects the yearly budget", () => {
+    expect(
+      shouldRequestOnboardingReview({ ...state(), lastAskedAt: daysAgo(1), askCount: MAX_ASKS, asked: false }, NOW)
+    ).toBe(false);
+  });
+});
+
+describe("launch ask", () => {
+  test("asks on the 3rd, 5th and 10th launch only", () => {
+    const asks = [1, 2, 3, 4, 5, 6, 9, 10, 11].filter((openCount) =>
+      shouldRequestOpenReview({ ...state(), openCount }, NOW)
+    );
+    expect(asks).toEqual([3, 5, 10]);
+  });
+
+  test("respects the yearly budget", () => {
+    expect(
+      shouldRequestOpenReview({ ...state(), lastAskedAt: daysAgo(1), askCount: MAX_ASKS, openCount: 10 }, NOW)
+    ).toBe(false);
   });
 });

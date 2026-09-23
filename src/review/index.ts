@@ -3,10 +3,15 @@ import { getState, setState } from "../db/state";
 import {
   shouldRequestReview,
   shouldRequestFirstActionReview,
+  shouldRequestOnboardingReview,
+  shouldRequestOpenReview,
   spentAsks,
   REVIEW_LAST_ASKED_KEY,
   REVIEW_ASK_COUNT_KEY,
   REVIEW_FIRST_ACTION_KEY,
+  REVIEW_ONBOARDING_KEY,
+  REVIEW_OPEN_COUNT_KEY,
+  OPEN_ASK_DELAY_MS,
   type ReviewEvent,
   type ReviewEventKind,
 } from "./state";
@@ -68,9 +73,9 @@ function recentEvents(): ReviewEvent[] {
 /**
  * Asks iOS for the rating prompt, if the user has earned being asked.
  *
- * Call this after a completed action, never during onboarding — App Store
- * Review Guideline 5.6.3 covers soliciting reviews before the user has
- * meaningfully used the app, and Apple rejects builds for it.
+ * Call this after a completed action. Onboarding has its own ask
+ * (`requestReviewInOnboarding`); App Store Review Guideline 5.6.3 rejects
+ * soliciting reviews before the user has meaningfully used the app.
  *
  * Fire and forget. `requestReview` resolves when the request reaches StoreKit,
  * not when the user acts on it, and iOS may draw nothing at all: the annual
@@ -115,6 +120,53 @@ export async function requestReviewOnFirstAction(): Promise<void> {
     await ask(state, now);
   } catch {
     // Same as above: never the reason a tap on the car does nothing.
+  }
+}
+
+/**
+ * Counts this launch and, if it is the third, fifth or tenth, asks for the
+ * rating after OPEN_ASK_DELAY_MS. Call once per launch, from boot. The ask
+ * waits for `onboarded`: a launch still inside onboarding is counted but
+ * never asks, since the screen under it is a quiz.
+ */
+export function recordLaunchAndMaybeAsk(onboarded: boolean): void {
+  try {
+    const previous = Number(getState(REVIEW_OPEN_COUNT_KEY) ?? "0");
+    const openCount = (Number.isFinite(previous) ? previous : 0) + 1;
+    setState(REVIEW_OPEN_COUNT_KEY, String(openCount));
+    recordReviewEvent("app_open");
+    if (!onboarded) return;
+    setTimeout(() => {
+      void (async () => {
+        try {
+          const state = { ...readState(), openCount };
+          const now = new Date();
+          if (!shouldRequestOpenReview(state, now)) return;
+          await ask(state, now);
+        } catch {
+          // Never the reason a launch goes wrong.
+        }
+      })();
+    }, OPEN_ASK_DELAY_MS);
+  } catch {
+    // Same as above.
+  }
+}
+
+/**
+ * The end-of-onboarding ask, once per install. Called from the screen just
+ * before the paywall. Flag set before StoreKit is asked, as with the
+ * first-action ask.
+ */
+export async function requestReviewInOnboarding(): Promise<void> {
+  try {
+    const state = { ...readState(), asked: getState(REVIEW_ONBOARDING_KEY) !== null };
+    const now = new Date();
+    if (!shouldRequestOnboardingReview(state, now)) return;
+    setState(REVIEW_ONBOARDING_KEY, now.toISOString());
+    await ask(state, now);
+  } catch {
+    // A rating prompt never holds up onboarding.
   }
 }
 

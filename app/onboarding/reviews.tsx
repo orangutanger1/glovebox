@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, Text } from "react-native";
 import { Button } from "../../src/design/Button";
 import { Panel } from "../../src/design/Surface";
@@ -12,6 +13,7 @@ import {
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useAdvance } from "../../src/onboarding/nav";
 import { trackStepBlocked } from "../../src/analytics";
+import { requestReviewInOnboarding } from "../../src/review";
 
 /**
  * How long Continue insists on the scroll before it stops standing in the way.
@@ -44,6 +46,13 @@ const NUDGE_MS = 2000;
  */
 export default function OnboardingReviews() {
   const advance = useAdvance("reviews");
+
+  // The end-of-onboarding rating ask: after the quiz and the schedule, before
+  // the paywall. Delayed so it lands over this screen, not its transition in.
+  useEffect(() => {
+    const timer = setTimeout(() => void requestReviewInOnboarding(), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <OnboardingScreen

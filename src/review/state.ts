@@ -2,6 +2,10 @@ export const REVIEW_LAST_ASKED_KEY = "review_last_asked_at";
 export const REVIEW_ASK_COUNT_KEY = "review_ask_count";
 /** Set once the subscriber's first-action ask has been spent. */
 export const REVIEW_FIRST_ACTION_KEY = "review_first_action_asked";
+/** Set once the end-of-onboarding ask has been spent. */
+export const REVIEW_ONBOARDING_KEY = "review_onboarding_asked";
+/** Every launch, counted from install. Never pruned, unlike review_events. */
+export const REVIEW_OPEN_COUNT_KEY = "review_open_count";
 
 export type ReviewEventKind = "app_open" | "log_service" | "export" | "purchase";
 
@@ -33,8 +37,17 @@ export const EVENT_WEIGHTS: Record<ReviewEventKind, { points: number; halfLifeDa
  */
 export const SCORE_THRESHOLD = 16;
 
-/** Two weeks between asks, per RevenueCat's guidance. */
-export const COOLDOWN_DAYS = 14;
+/**
+ * The launches that ask, counting the first as 1. Each is its own moment:
+ * coming back a third, fifth and tenth time is the habit forming. Only the
+ * yearly budget stands between them, so whichever three moments arrive first
+ * are the three asks iOS shows.
+ */
+export const OPEN_ASK_COUNTS: readonly number[] = [3, 5, 10];
+
+/** How long after a launch the open ask waits, so it never lands on a user
+ *  still finding their place. */
+export const OPEN_ASK_DELAY_MS = 10_000;
 
 /**
  * iOS shows the system prompt at most three times per app per 365 days and
@@ -91,11 +104,9 @@ export function happinessScore(events: ReviewEvent[], now: Date): number {
  * getter — the whole decision is testable in Node and only the StoreKit call is
  * device-bound.
  *
- * Deliberately NOT tied to onboarding. App Store Review Guideline 5.6.3 treats
- * soliciting a review before the user has meaningfully used the app as
- * manipulating the App Store experience, and Apple rejects for it. A rating
- * gathered at first launch is also worthless as signal: the user is rating a
- * promise, and the first bad week turns it into a one-star correction.
+ * Not tied to onboarding, which has its own single ask near its end (see
+ * `shouldRequestOnboardingReview`). Guideline 5.6.3 rejects soliciting a
+ * review before the user has meaningfully used the app, so never earlier.
  */
 export function shouldRequestReview(
   state: { events: ReviewEvent[]; lastAskedAt: string | null; askCount: number },
@@ -106,20 +117,36 @@ export function shouldRequestReview(
 }
 
 /**
- * The budget and the cooldown, without the happiness test. Both asks share
- * them: iOS spends the same three prompts a year on either, and two asks a
- * day apart are one ask the user is annoyed by twice.
+ * The yearly budget, without the happiness test. Every ask shares it: iOS
+ * spends the same three prompts a year on any of them. There is no cooldown
+ * between asks — each trigger fires at most once per install, so the budget
+ * is what keeps them from piling up.
  */
 export function canAsk(
   state: { lastAskedAt: string | null; askCount: number },
   now: Date
 ): boolean {
-  if (spentAsks(state, now) >= MAX_ASKS) return false;
-  if (state.lastAskedAt) {
-    const since = now.getTime() - new Date(state.lastAskedAt).getTime();
-    if (!Number.isFinite(since) || since < COOLDOWN_DAYS * DAY_MS) return false;
-  }
-  return true;
+  return spentAsks(state, now) < MAX_ASKS;
+}
+
+/**
+ * Near the end of onboarding, once. The user has answered the quiz and seen
+ * the schedule built for their own car, which is the use Guideline 5.6.3
+ * asks for; the very start of onboarding is not.
+ */
+export function shouldRequestOnboardingReview(
+  state: { lastAskedAt: string | null; askCount: number; asked: boolean },
+  now: Date
+): boolean {
+  return !state.asked && canAsk(state, now);
+}
+
+/** Whether this launch, by its count, is one of the launches that ask. */
+export function shouldRequestOpenReview(
+  state: { lastAskedAt: string | null; askCount: number; openCount: number },
+  now: Date
+): boolean {
+  return OPEN_ASK_COUNTS.includes(state.openCount) && canAsk(state, now);
 }
 
 /**

@@ -21,7 +21,7 @@ import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { assignExperiments } from "../src/experiments";
 import { isLocked, resolveGrandfathered } from "../src/paywall";
 import { resumeRoute } from "../src/onboarding/flow";
-import { recordReviewEvent } from "../src/review";
+import { recordLaunchAndMaybeAsk } from "../src/review";
 import { recordOpen, getWinbackShownAt } from "../src/winback";
 import { shouldOfferWinback } from "../src/winback/state";
 import { openFeedback } from "../src/feedback";
@@ -211,10 +211,6 @@ export default function RootLayout() {
     // fetched on the tap and took a median 3.5 s to appear.
     boot("plans", prefetchPlans);
     boot("identify", () => void identifyFromPurchases().catch(() => {}));
-    // Weakest of the happiness signals and forgotten within a day. It is here
-    // so that coming back repeatedly counts for something, never so that it
-    // can trigger an ask on its own.
-    boot("review", () => recordReviewEvent("app_open"));
     boot("notifications", () => void rescheduleAll().catch(() => {}));
 
     // Stamped on every launch, and the value it hands back is the previous
@@ -222,6 +218,10 @@ export default function RootLayout() {
     const previousOpen = boot("open", recordOpen) ?? null;
 
     const onboarded = isOnboarded();
+
+    // Counts the launch (a weak happiness signal too) and, on the third,
+    // fifth and tenth, asks for a rating ten seconds in.
+    boot("review", () => recordLaunchAndMaybeAsk(onboarded));
 
     // The coin is tossed once, for a fresh install only, before anything
     // routes on it: `resumeRoute` below reads the variant to decide which
