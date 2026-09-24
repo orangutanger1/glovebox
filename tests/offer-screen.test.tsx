@@ -59,7 +59,7 @@ jest.mock("../src/purchases/plans", () => {
     {
       id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99,
       currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50",
-      compareAt: { priceString: "$3.99", price: 3.99, pct: 86 },
+      compareAt: { priceString: "$79.99", price: 79.99, pct: 63 },
     },
   ];
   return {

@@ -196,6 +196,7 @@ export const de: Fragment = {
 
   "offer.deal.title": "Zeitlich begrenztes Angebot",
   "offer.deal.pct": "{pct}% Rabatt",
+  "offer.deal.perWeek": "Nur {price} pro Woche",
   "offer.trial.cta": "Angebot sichern",
   "offer.trial.decline": "Lieber den vollen Preis zahlen",
   "offer.trial.gets.reminders": "Erinnerung vor jedem Service",
@@ -722,6 +723,7 @@ export const de: Fragment = {
   "paywall.period.year": "Jährlich",
   "paywall.per.week": "pro Woche",
   "paywall.per.month": "pro Monat",
+  "paywall.per.year": "pro Jahr",
   "paywall.billed.month": "{price} pro Monat abgerechnet",
   "paywall.billed.year": "{price} pro Jahr abgerechnet",
   "paywall.save": "{pct}% sparen",

@@ -573,3 +573,22 @@ asked once per install, on whichever comes first: the decline button
 (`trigger: "declined"`) or backing out of Apple's payment sheet
 (`trigger: "sheet_cancelled"`). `offer_declined` still fires at the tap, before
 the sheet; the decline then carries on as before. No other event moves.
+
+### 2026-09-24 — the exit offer shows the yearly total, not a weekly figure
+
+**Price line on `offer` (and the discount `PlanPicker` card):** was the standard
+weekly struck beside "$0.58 per week" with "86% off"; now the standard yearly
+struck beside "$29.99 per year", "Just $0.58 per week" small under it, and the
+saving yearly against yearly ("63% off" at $79.99 / $29.99). `compareAt` now
+only ever compares plans of the same period. Discount buy-tap → paid before
+this build: 5/51 (2026-09-19→24). Compare `paywall_purchase_started` →
+`subscription_success` on `offering = discount` across the OTA, and expect
+fewer taps: the screen no longer leads with the smaller number.
+
+**New events in the same build** (none moves an existing one): `review_prompt`,
+`service_logged`, `vehicle_added`, `data_exported`, `notification_opened`,
+`settings_action`, `customer_center_*`, `winback_shown` / `winback_result`,
+`quick_action` / `quick_action_result`, `feedback_opened`, and
+`restore_attempted` from Settings. See the event taxonomy. `presentPaywall`
+sources at the add-vehicle and Settings gates are `add_vehicle`,
+`settings_intervals`, `settings_upgrade` (were `gate`).

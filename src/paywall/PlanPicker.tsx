@@ -84,6 +84,10 @@ function headline(plan: Plan): { figure: string; unit: string } {
     return { figure: plan.intro.priceString, unit: t("paywall.intro.label") };
   }
   if (plan.period === "week") return { figure: plan.priceString, unit: t("paywall.per.week") };
+  // A discount plan is drawn at what it bills, beside the struck standard
+  // price of the same period: the comparison is total against total (see
+  // `markCompareAt`).
+  if (plan.compareAt) return { figure: plan.priceString, unit: t(`paywall.per.${plan.period}`) };
   return { figure: plan.perWeek, unit: t("paywall.per.week") };
 }
 

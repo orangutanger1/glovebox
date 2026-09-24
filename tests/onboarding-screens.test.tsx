@@ -64,7 +64,7 @@ const mockPlans: Record<string, unknown[] | null> = {
   // The exit offer: the yearly at a lower price, stamped with the standard
   // yearly it undercuts (see `markCompareAt`).
   discount: [
-    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50", compareAt: { priceString: "$3.99", price: 3.99, pct: 86 } },
+    { id: "$rc_annual", period: "year", package: {}, priceString: "$29.99", price: 29.99, currency: "USD", intro: null, perWeek: "$0.58", perMonth: "$2.50", compareAt: { priceString: "$79.99", price: 79.99, pct: 63 } },
   ],
 };
 const mockBuy = jest.fn(async (_plan: unknown, _offering: string) => "dismissed" as "dismissed" | "purchased" | "unavailable");
@@ -371,13 +371,15 @@ test("declining the second offer goes back to the paywall that sells full price"
   expect(texts(tree)).toContain(t("offer.trial.decline"));
   expect(texts(tree)).toContain("‹ Back");
   const printed = texts(tree).join(" ");
-  // The standard weekly struck once (the price line), the yearly price once
-  // (the footer's renewal line), the saving as the headline. Nothing about
-  // a first week.
-  expect(printed.split("$3.99").length - 1).toBe(1);
-  expect(printed.split("$29.99").length - 1).toBe(1);
-  expect(printed).toContain(t("offer.deal.pct", { pct: 86 }));
-  expect(printed).not.toContain(t("paywall.save", { pct: 86 }));
+  // The standard yearly struck once, the yearly price twice — the price line,
+  // which is what Apple's sheet will charge, and the footer's renewal line —
+  // the weekly cost only as the small line under it, and the saving as the
+  // headline. Nothing about a first week.
+  expect(printed.split("$79.99").length - 1).toBe(1);
+  expect(printed.split("$29.99").length - 1).toBe(2);
+  expect(printed).toContain(t("offer.deal.perWeek", { price: "$0.58" }));
+  expect(printed).toContain(t("offer.deal.pct", { pct: 63 }));
+  expect(printed).not.toContain(t("paywall.save", { pct: 63 }));
   expect(printed).toContain(t("paywall.legal.year", { price: "$29.99" }));
   expect(printed).not.toMatch(/first (7 )?days?|first week/i);
 

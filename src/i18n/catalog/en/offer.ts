@@ -71,6 +71,7 @@ export const offer: Fragment = {
   // purpose: the headline is the offer, not a greeting.
   "offer.deal.title": "Limited time offer",
   "offer.deal.pct": "{pct}% off",
+  "offer.deal.perWeek": "Just {price} per week",
   "offer.trial.cta": "Claim your offer",
   // The old wording sent the decliner to "the free app". There is no free app
   // to send them to any more, and a link promising one would be the last thing

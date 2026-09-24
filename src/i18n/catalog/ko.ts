@@ -190,6 +190,7 @@ export const ko: Fragment = {
 
   "offer.deal.title": "기간 한정 특가",
   "offer.deal.pct": "{pct}% 할인",
+  "offer.deal.perWeek": "주당 {price}에 불과",
   "offer.trial.cta": "특가 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",
@@ -704,6 +705,7 @@ export const ko: Fragment = {
   "paywall.period.year": "연간",
   "paywall.per.week": "/주",
   "paywall.per.month": "/월",
+  "paywall.per.year": "/년",
   "paywall.billed.month": "매월 {price} 청구",
   "paywall.billed.year": "매년 {price} 청구",
   "paywall.save": "{pct}% 절약",

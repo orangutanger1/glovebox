@@ -177,6 +177,7 @@ export const ja: Fragment = {
 
   "offer.deal.title": "期間限定オファー",
   "offer.deal.pct": "{pct}%オフ",
+  "offer.deal.perWeek": "1週間あたりわずか{price}",
   "offer.trial.cta": "オファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
@@ -678,6 +679,7 @@ export const ja: Fragment = {
   "paywall.period.year": "年額",
   "paywall.per.week": "/週",
   "paywall.per.month": "/月",
+  "paywall.per.year": "/年",
   "paywall.billed.month": "月ごとに{price}を請求",
   "paywall.billed.year": "年ごとに{price}を請求",
   "paywall.save": "{pct}%お得",

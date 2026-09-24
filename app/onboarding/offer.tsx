@@ -38,8 +38,9 @@ import { ObjectionSheet } from "../../src/survey/ObjectionSheet";
  * The page is the deal, read top to bottom in the order a stranger reads
  * a sale: the eyebrow says what kind of screen this is, the saving is the
  * headline in the biggest type in the flow, the list says what the money
- * opens, and the price sits directly over the button that pays it, the
- * standard weekly struck through beside it. No card: one plan is not a
+ * opens, and the price sits directly over the button that pays it — the
+ * yearly total Apple's sheet will charge, the standard yearly struck through
+ * beside it, and the weekly cost small underneath. No card: one plan is not a
  * choice, and a selected card with nothing to select it against is a
  * control with no job. `compareAt` is read off the standard offering in
  * `plans.ts`; when the store has no standard yearly to compare with there
@@ -289,39 +290,48 @@ export default function OnboardingOffer() {
 }
 
 /**
- * The price, once, over the button: the standard weekly struck through, then
- * what this plan costs per week, in the type the readouts use. The renewal
- * line under the button says the yearly total; this line says the weekly
- * figure the saving was computed from, so the two prices on the glass are
- * the two the percentage is about.
+ * The price, once, over the button: the standard price struck through, then
+ * what this plan bills, in the type the readouts use — the same figure and
+ * period Apple's sheet shows next, so the sheet confirms the page instead of
+ * contradicting it. The weekly cost stays, small and underneath, as the
+ * reading aid it is; it was the headline until 2026-09-24, and nine in ten
+ * who tapped on it backed out at the sheet (see `markCompareAt`).
  */
 function PriceLine({ plan }: { plan: Plan }) {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "baseline",
-        justifyContent: "center",
-        gap: tokens.space.sm,
-        paddingBottom: tokens.space.xs,
-      }}
-    >
-      {plan.compareAt && (
-        <Text
-          style={{
-            ...tokens.text.heading,
-            color: tokens.color.textFaint,
-            textDecorationLine: "line-through",
-            ...tokens.text.numeric,
-          }}
-        >
-          {plan.compareAt.priceString}
+    <View style={{ alignItems: "center", gap: tokens.space.xs, paddingBottom: tokens.space.xs }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "baseline",
+          justifyContent: "center",
+          gap: tokens.space.sm,
+        }}
+      >
+        {plan.compareAt && (
+          <Text
+            style={{
+              ...tokens.text.heading,
+              color: tokens.color.textFaint,
+              textDecorationLine: "line-through",
+              ...tokens.text.numeric,
+            }}
+          >
+            {plan.compareAt.priceString}
+          </Text>
+        )}
+        <Text style={{ ...tokens.text.hero, color: tokens.color.text, ...tokens.text.numeric }}>
+          {plan.priceString}
+          <Text style={{ ...tokens.text.heading, color: tokens.color.textMuted }}>
+            {` ${t(`paywall.per.${plan.period}`)}`}
+          </Text>
+        </Text>
+      </View>
+      {plan.period !== "week" && (
+        <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+          {t("offer.deal.perWeek", { price: plan.perWeek })}
         </Text>
       )}
-      <Text style={{ ...tokens.text.hero, color: tokens.color.text, ...tokens.text.numeric }}>
-        {plan.perWeek}
-        <Text style={{ ...tokens.text.heading, color: tokens.color.textMuted }}>{` ${t("paywall.per.week")}`}</Text>
-      </Text>
     </View>
   );
 }

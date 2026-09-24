@@ -195,6 +195,7 @@ export const sv: Fragment = {
 
   "offer.deal.title": "Tidsbegränsat erbjudande",
   "offer.deal.pct": "{pct}% rabatt",
+  "offer.deal.perWeek": "Bara {price} per vecka",
   "offer.trial.cta": "Ta erbjudandet",
   "offer.trial.decline": "Jag betalar hellre fullt pris",
   "offer.trial.gets.reminders": "Påminnelse före varje service",
@@ -709,6 +710,7 @@ export const sv: Fragment = {
   "paywall.period.year": "Årsvis",
   "paywall.per.week": "per vecka",
   "paywall.per.month": "per månad",
+  "paywall.per.year": "per år",
   "paywall.billed.month": "{price} debiteras per månad",
   "paywall.billed.year": "{price} debiteras per år",
   "paywall.save": "Spara {pct}%",

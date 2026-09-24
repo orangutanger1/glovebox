@@ -25,6 +25,7 @@ export const paywall: Fragment = {
   "paywall.period.year": "Yearly",
   "paywall.per.week": "per week",
   "paywall.per.month": "per month",
+  "paywall.per.year": "per year",
   "paywall.billed.month": "billed {price} per month",
   "paywall.billed.year": "billed {price} per year",
   "paywall.save": "Save {pct}%",
