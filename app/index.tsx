@@ -138,7 +138,7 @@ export default function Garage() {
     if (vehicles.length >= 1) {
       try {
         if ((await isPro()) !== true) {
-          const purchased = await presentPaywall();
+          const purchased = await presentPaywall("add_vehicle");
           if (!purchased) return;
           // Paying is the strongest thing a user can say about an app, and it
           // is worth the most for the longest. Recorded only — the ask itself

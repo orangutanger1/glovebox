@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { tokens } from "../src/design/tokens";
 import { DISCOUNT_OFFERING, presentOffering } from "../src/purchases";
 import { recordReviewEvent } from "../src/review";
+import { track } from "../src/analytics";
 
 /**
  * Where "Try Pro" in the home-screen menu lands.
@@ -26,7 +27,9 @@ export default function Trial() {
     if (started.current) return;
     started.current = true;
     void (async () => {
-      if ((await presentOffering(DISCOUNT_OFFERING)) === "purchased") {
+      const outcome = await presentOffering(DISCOUNT_OFFERING, "quick_action");
+      track("quick_action_result", { action: "trial", outcome });
+      if (outcome === "purchased") {
         recordReviewEvent("purchase");
       }
       router.replace("/");

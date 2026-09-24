@@ -114,7 +114,7 @@ async function rebuild(): Promise<void> {
         }),
         // iOS keeps a `DATE` trigger only as seconds-from-now, so the due
         // date itself has to ride along for `reminderStatus` to read back.
-        data: { dueAt: reminder.dueAt },
+        data: { dueAt: reminder.dueAt, serviceType: reminder.serviceType },
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(reminder.dueAt) },
     });

@@ -56,6 +56,7 @@ jest.mock("../src/analytics", () => ({
   reportFatals: () => {},
 }));
 jest.mock("../src/notify", () => ({ rescheduleAll: async () => {} }));
+jest.mock("../src/notify/opened", () => ({ watchNotificationOpens: () => () => {} }));
 jest.mock("../src/onboarding", () => ({ isOnboarded: () => true, getOnboardingStep: () => null }));
 let mockGrandfathered = true;
 jest.mock("../src/paywall", () => {

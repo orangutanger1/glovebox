@@ -22,6 +22,7 @@ import { useIsPro } from "../src/purchases/useIsPro";
 import { requestPermission, rescheduleAll, reminderStatus, type ReminderStatus } from "../src/notify";
 import { resetOnboarding } from "../src/onboarding";
 import { recordReviewEvent, maybeRequestReview } from "../src/review";
+import { track } from "../src/analytics";
 
 export default function Settings() {
   const router = useRouter();
@@ -100,12 +101,14 @@ export default function Settings() {
   async function onExport() {
     try {
       await exportAndShare();
+      track("data_exported", { outcome: "shared" });
       // Someone who just pulled their whole history out has proved the
       // durability promise to themselves. That is the app at its most
       // convincing, so it counts as much as logging a service.
       recordReviewEvent("export");
       setTimeout(() => void maybeRequestReview(), 1200);
     } catch {
+      track("data_exported", { outcome: "failed" });
       setMsg(t("settings.export.error"));
     }
   }
@@ -114,6 +117,7 @@ export default function Settings() {
   // rebuilt the schedule afterwards and this screen did not, so enabling
   // reminders here armed precisely nothing until the next cold start.
   async function onReminders() {
+    track("settings_action", { action: "reminders", permission: reminders?.permission ?? null });
     if (reminders?.permission === "denied") {
       // Nothing else can be done in-app: once iOS has a hard denial recorded,
       // requestPermissionsAsync returns denied without ever prompting again.
@@ -154,9 +158,10 @@ export default function Settings() {
   // full interval editor and only refusing at Save is the version of this that
   // wastes their time.
   async function onIntervals() {
+    track("settings_action", { action: "intervals" });
     try {
       if ((await isPro()) !== true) {
-        const purchased = await presentPaywall();
+        const purchased = await presentPaywall("settings_intervals");
         if (!purchased) return;
         recordReviewEvent("purchase");
       }
@@ -168,8 +173,9 @@ export default function Settings() {
   }
 
   async function onUpgrade() {
+    track("settings_action", { action: "upgrade" });
     try {
-      if (await presentPaywall()) {
+      if (await presentPaywall("settings_upgrade")) {
         recordReviewEvent("purchase");
         setMsg(t("settings.pro.on"));
       }
@@ -191,8 +197,21 @@ export default function Settings() {
    * here again would ask Safari twice. Nothing to do on that callback.
    */
   async function onManageSubscription() {
+    track("settings_action", { action: "manage" });
     try {
       await presentCustomerCenter({
+        // What the subscriber reached for inside the sheet. `cancel` and
+        // `refund_request` are the churn intents RevenueCat's dashboard shows
+        // only in aggregate; here they sit on the person's own timeline.
+        onManagementOptionSelected: (event) => {
+          track("customer_center_option", { option: event.option });
+        },
+        onFeedbackSurveyCompleted: ({ feedbackSurveyOptionId }) => {
+          track("customer_center_survey", { option: feedbackSurveyOptionId });
+        },
+        onRefundRequestStarted: ({ productIdentifier }) => {
+          track("customer_center_refund_started", { product: productIdentifier });
+        },
         onPromotionalOfferSucceeded: () => {
           recordReviewEvent("purchase");
           setMsg(t("settings.offer.applied"));
@@ -205,8 +224,11 @@ export default function Settings() {
 
   async function onRestore() {
     try {
-      setMsg((await restore()) ? t("settings.restore.done") : t("settings.restore.none"));
+      const found = await restore();
+      track("restore_attempted", { source: "settings", found });
+      setMsg(found ? t("settings.restore.done") : t("settings.restore.none"));
     } catch {
+      track("restore_attempted", { source: "settings", found: null });
       setMsg(t("settings.store.error"));
     }
   }
@@ -220,6 +242,7 @@ export default function Settings() {
       {
         text: t("settings.replay.confirm"),
         onPress: () => {
+          track("settings_action", { action: "replay_onboarding" });
           resetOnboarding();
           router.replace("/onboarding/welcome");
         },
@@ -252,6 +275,7 @@ export default function Settings() {
           text: t("settings.units.confirm"),
           onPress: () => {
             changeDistanceUnit(to);
+            track("settings_action", { action: "units", to });
             // Every gauge, chip and due line on the stack was formatted in the
             // old unit; the remount is what rebuilds them.
             notifyLocaleChanged();

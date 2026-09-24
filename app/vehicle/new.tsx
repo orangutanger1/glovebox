@@ -7,6 +7,7 @@ import { Field } from "../../src/design/Field";
 import { Button } from "../../src/design/Button";
 import { tokens } from "../../src/design/tokens";
 import { createVehicle } from "../../src/db/vehicles";
+import { track } from "../../src/analytics";
 import { parseNumber } from "../../src/format";
 import { t } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
@@ -32,6 +33,9 @@ export default function NewVehicle() {
       name: name.trim(),
       odometer: reading,
     });
+    // A second car is the one expansion the plan sells; the first comes from
+    // onboarding and is counted there.
+    track("vehicle_added", { has_odometer: reading !== undefined });
     router.back();
   }
 

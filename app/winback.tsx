@@ -11,6 +11,7 @@ import { DISCOUNT_OFFERING, presentOffering } from "../src/purchases";
 import { openFeedback } from "../src/feedback";
 import { recordReviewEvent } from "../src/review";
 import { markWinbackShown } from "../src/winback";
+import { track } from "../src/analytics";
 
 /**
  * The screen for somebody who had stopped using the app and came back.
@@ -38,12 +39,15 @@ export default function Winback() {
   // cooldown counts, and a user who force-quits this screen has been asked.
   useEffect(() => {
     markWinbackShown();
+    track("winback_shown");
   }, []);
 
   async function onStartTrial() {
     if (busy) return;
     setBusy(true);
-    if ((await presentOffering(DISCOUNT_OFFERING)) === "purchased") {
+    const outcome = await presentOffering(DISCOUNT_OFFERING, "winback");
+    track("winback_result", { outcome });
+    if (outcome === "purchased") {
       recordReviewEvent("purchase");
     }
     router.replace("/");
@@ -64,7 +68,10 @@ export default function Winback() {
             disabled={busy}
           />
           <Pressable
-            onPress={() => router.replace("/")}
+            onPress={() => {
+              track("winback_result", { outcome: "declined" });
+              router.replace("/");
+            }}
             disabled={busy}
             style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
           >
@@ -84,7 +91,10 @@ export default function Winback() {
           <ListRow
             title={t("offer.winback.feedback")}
             subtitle={t("offer.winback.feedbackNote")}
-            onPress={() => void openFeedback()}
+            onPress={() => {
+              track("feedback_opened", { source: "winback" });
+              void openFeedback();
+            }}
             right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
           />
         </View>

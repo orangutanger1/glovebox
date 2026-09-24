@@ -17,6 +17,7 @@ import {
 } from "../src/analytics";
 import { flushCrashes, initCrashReporting, reportCrash } from "../src/crash";
 import { rescheduleAll } from "../src/notify";
+import { watchNotificationOpens } from "../src/notify/opened";
 import { isOnboarded, getOnboardingStep } from "../src/onboarding";
 import { assignExperiments } from "../src/experiments";
 import { isLocked, resolveGrandfathered } from "../src/paywall";
@@ -212,6 +213,9 @@ export default function RootLayout() {
     boot("plans", prefetchPlans);
     boot("identify", () => void identifyFromPurchases().catch(() => {}));
     boot("notifications", () => void rescheduleAll().catch(() => {}));
+    // Taps on reminders and resume nudges, including the one that launched us.
+    // Never unsubscribed: the root layout lives as long as the process.
+    boot("notification_opens", watchNotificationOpens);
 
     // Stamped on every launch, and the value it hands back is the previous
     // one — the only measure of an absence the app has.
@@ -327,6 +331,7 @@ export default function RootLayout() {
       if (dead.current) return;
       const onboarded = boot("quickaction", isOnboarded);
       if (!onboarded) return;
+      track("quick_action", { action: action.id });
       if (action.id === QUICK_ACTION_FEEDBACK) void openFeedback();
       else if (action.id === QUICK_ACTION_TRIAL) router.navigate("/trial");
     },

@@ -1,3 +1,4 @@
+import { track } from "../analytics";
 import { getDb } from "../db/client";
 import { getState, setState } from "../db/state";
 import {
@@ -89,7 +90,7 @@ export async function maybeRequestReview(): Promise<void> {
     const state = readState();
     const now = new Date();
     if (!shouldRequestReview(state, now)) return;
-    await ask(state, now);
+    await ask(state, now, "happiness");
   } catch {
     // A rating prompt is the least important thing on screen. It never breaks
     // the flow it hangs off.
@@ -117,7 +118,7 @@ export async function requestReviewOnFirstAction(): Promise<void> {
     const now = new Date();
     if (!shouldRequestFirstActionReview(state, now)) return;
     setState(REVIEW_FIRST_ACTION_KEY, now.toISOString());
-    await ask(state, now);
+    await ask(state, now, "first_action");
   } catch {
     // Same as above: never the reason a tap on the car does nothing.
   }
@@ -142,7 +143,7 @@ export function recordLaunchAndMaybeAsk(onboarded: boolean): void {
           const state = { ...readState(), openCount };
           const now = new Date();
           if (!shouldRequestOpenReview(state, now)) return;
-          await ask(state, now);
+          await ask(state, now, "launch", { open_count: openCount });
         } catch {
           // Never the reason a launch goes wrong.
         }
@@ -164,7 +165,7 @@ export async function requestReviewInOnboarding(): Promise<void> {
     const now = new Date();
     if (!shouldRequestOnboardingReview(state, now)) return;
     setState(REVIEW_ONBOARDING_KEY, now.toISOString());
-    await ask(state, now);
+    await ask(state, now, "onboarding");
   } catch {
     // A rating prompt never holds up onboarding.
   }
@@ -179,13 +180,42 @@ function readState(): { events: ReviewEvent[]; lastAskedAt: string | null; askCo
   };
 }
 
-/** Spends one of the year's asks and hands the prompt to StoreKit. */
-async function ask(state: { lastAskedAt: string | null; askCount: number }, now: Date): Promise<void> {
-  const StoreReview = loadStoreReview();
-  if (!(await StoreReview.hasAction())) return;
+/** Which rule decided to ask. Sent with every `review_prompt`. */
+type ReviewTrigger = "onboarding" | "launch" | "first_action" | "happiness";
 
-  setState(REVIEW_LAST_ASKED_KEY, now.toISOString());
-  // Counted within the year, so a count that has aged out starts over.
-  setState(REVIEW_ASK_COUNT_KEY, String(spentAsks(state, now) + 1));
-  await StoreReview.requestReview();
+/**
+ * Spends one of the year's asks and hands the prompt to StoreKit.
+ *
+ * Every ask that got past its rule is reported as `review_prompt`, with what
+ * became of it: `requested` reached StoreKit, `no_action` means the device
+ * cannot show a prompt at all, `failed` means StoreKit threw. `requested` is
+ * the most we can know — iOS never says whether it drew anything — so the
+ * useful reading is prompts requested against ratings in App Store Connect,
+ * by day and by trigger.
+ */
+async function ask(
+  state: { lastAskedAt: string | null; askCount: number },
+  now: Date,
+  trigger: ReviewTrigger,
+  extra?: Record<string, number>
+): Promise<void> {
+  const askNumber = spentAsks(state, now) + 1;
+  const report = (outcome: "requested" | "no_action" | "failed") =>
+    track("review_prompt", { trigger, outcome, ask_number: askNumber, ...extra });
+  try {
+    const StoreReview = loadStoreReview();
+    if (!(await StoreReview.hasAction())) {
+      report("no_action");
+      return;
+    }
+
+    setState(REVIEW_LAST_ASKED_KEY, now.toISOString());
+    // Counted within the year, so a count that has aged out starts over.
+    setState(REVIEW_ASK_COUNT_KEY, String(askNumber));
+    await StoreReview.requestReview();
+    report("requested");
+  } catch (error) {
+    report("failed");
+    throw error;
+  }
 }

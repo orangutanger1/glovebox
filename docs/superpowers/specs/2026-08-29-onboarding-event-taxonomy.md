@@ -130,3 +130,27 @@ done.
   carrying `onboarding_step_blocked`, `subscription_success`,
   `first_core_action` and `home_first_view`. Build 21 has none of them and is
   the crash-fix baseline only.
+
+## Past the paywall (added 2026-09-24)
+
+Until this, nothing after the purchase said whether the product got used, whether
+a reminder brought anyone back, or whether a rating prompt was ever asked.
+
+| Event | Fires | Key properties |
+| --- | --- | --- |
+| `review_prompt` | A rating ask got past its rule and reached StoreKit (or could not) | `trigger` = `onboarding` \| `launch` \| `first_action` \| `happiness`, `outcome` = `requested` \| `no_action` \| `failed`, `ask_number`, `open_count` (launch only) |
+| `service_logged` | A service record is saved | `service_type`, `backdated`, `has_odometer`, `has_cost`, `has_notes` |
+| `vehicle_added` | A vehicle is added from the garage (not onboarding) | `has_odometer` |
+| `data_exported` | CSV export from Settings | `outcome` = `shared` \| `failed` |
+| `notification_opened` | A reminder or resume nudge is tapped | `kind` = `reminder` \| `onboarding_nudge`, `service_type` \| `nudge`, `cold` |
+| `settings_action` | A Settings row that does something | `action` = `reminders` \| `intervals` \| `upgrade` \| `manage` \| `replay_onboarding` \| `units`, plus `permission` / `to` |
+| `customer_center_option` | An option picked inside RevenueCat's Customer Center | `option` (`cancel`, `refund_request`, `custom_url`, …) |
+| `customer_center_survey` | Customer Center's own survey answered | `option` |
+| `customer_center_refund_started` | Refund request begun | `product` |
+| `restore_attempted` | Now also from Settings | `source` = `settings`, `found` |
+| `winback_shown` / `winback_result` | The win-back launch screen, and what came of it | `outcome` = `purchased` \| `dismissed` \| `unavailable` \| `declined` |
+| `quick_action` / `quick_action_result` | Home-screen menu tap, and the trial sheet's outcome | `action`, `outcome` |
+| `feedback_opened` | Feedback form opened from the win-back screen | `source` |
+
+`presentPaywall` sources are now named at the gates that had none: `add_vehicle`,
+`settings_intervals`, `settings_upgrade` (was `gate`). The fuel-card gate still says `gate`.

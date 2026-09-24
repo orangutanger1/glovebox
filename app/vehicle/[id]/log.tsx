@@ -13,6 +13,7 @@ import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
 import { recordReviewEvent, maybeRequestReview } from "../../../src/review";
+import { track } from "../../../src/analytics";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
 import { t } from "../../../src/i18n";
 import { getDistanceUnit } from "../../../src/units";
@@ -129,6 +130,17 @@ export default function LogService() {
     // The record is already committed. Everything past this point is a nicety,
     // and a notification that fails to schedule must never be reported to the
     // user as a lost service record.
+    //
+    // The service log is what the subscription pays for, and until this event
+    // nothing past the paywall said whether anyone used it. What was logged
+    // and which fields were filled, never the values.
+    track("service_logged", {
+      service_type: type,
+      backdated: daysAgo !== 0,
+      has_odometer: odo !== undefined,
+      has_cost: price !== undefined,
+      has_notes: notes.trim() !== "",
+    });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     rescheduleAll().catch(() => {});
     recordReviewEvent("log_service");
