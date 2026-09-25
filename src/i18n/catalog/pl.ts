@@ -676,6 +676,16 @@ export const pl: Fragment = {
   "vehicle.history": "Historia",
   "vehicle.history.empty":
     "Nie ma jeszcze zapisanego serwisu. Zapisz ostatnią robotę, jaka była zrobiona.",
+  "vehicle.recalls.legend": "Akcje serwisowe",
+  "vehicle.recalls.found": {"one": "{count} akcja serwisowa dotyczy: {vehicle}", "few": "{count} akcje serwisowe dotyczą: {vehicle}", "many": "{count} akcji serwisowych dotyczy: {vehicle}", "other": "{count} akcji serwisowej dotyczy: {vehicle}"},
+  "vehicle.recalls.none": "Brak akcji serwisowych na liście NHTSA dla: {vehicle}.",
+  "vehicle.recalls.parkIt": "Nie jeździj, dopóki nie zostanie naprawione",
+  "vehicle.recalls.risk": "Ryzyko",
+  "vehicle.recalls.remedy": "Naprawa",
+  "vehicle.recalls.details": "Szczegóły",
+  "vehicle.recalls.hide": "Ukryj",
+  "vehicle.recalls.check": "Sprawdź VIN na nhtsa.gov",
+  "vehicle.recalls.note": "Z publicznej listy NHTSA, dla rocznika modelu — nie dla numeru VIN twojego auta. Z telefonu wysyłane są tylko marka, model i rok.",
 
   "vehicle.over": "{distance} ponad limit",
   "vehicle.dueOn": "termin {date}",

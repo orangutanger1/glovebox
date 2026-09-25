@@ -613,6 +613,16 @@ export const es: Fragment = {
   "vehicle.history": "Historial",
   "vehicle.history.empty":
     "Aún no hay ningún mantenimiento registrado. Registra lo último que te hicieron.",
+  "vehicle.recalls.legend": "Llamados a revisión",
+  "vehicle.recalls.found": {"one": "{count} llamado a revisión afecta al {vehicle}", "other": "{count} llamados a revisión afectan al {vehicle}"},
+  "vehicle.recalls.none": "No hay llamados a revisión en la lista de la NHTSA para el {vehicle}.",
+  "vehicle.recalls.parkIt": "No lo conduzcas hasta que lo reparen",
+  "vehicle.recalls.risk": "El riesgo",
+  "vehicle.recalls.remedy": "La solución",
+  "vehicle.recalls.details": "Detalles",
+  "vehicle.recalls.hide": "Ocultar",
+  "vehicle.recalls.check": "Consulta tu VIN en nhtsa.gov",
+  "vehicle.recalls.note": "De la lista pública de la NHTSA, para el año del modelo, no para el VIN de tu auto. Solo la marca, el modelo y el año salen de este teléfono.",
 
   "vehicle.over": "{distance} de retraso",
   "vehicle.dueOn": "vence {date}",

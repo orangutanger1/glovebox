@@ -625,6 +625,16 @@ export const fr: Fragment = {
   "vehicle.history": "Historique",
   "vehicle.history.empty":
     "Aucun entretien noté. Notez la dernière chose que vous avez fait faire.",
+  "vehicle.recalls.legend": "Rappels de sécurité",
+  "vehicle.recalls.found": {"one": "{count} rappel concerne la {vehicle}", "other": "{count} rappels concernent la {vehicle}"},
+  "vehicle.recalls.none": "Aucun rappel sur la liste de la NHTSA pour la {vehicle}.",
+  "vehicle.recalls.parkIt": "Ne roulez pas avant la réparation",
+  "vehicle.recalls.risk": "Le risque",
+  "vehicle.recalls.remedy": "La réparation",
+  "vehicle.recalls.details": "Détails",
+  "vehicle.recalls.hide": "Masquer",
+  "vehicle.recalls.check": "Vérifiez votre NIV sur nhtsa.gov",
+  "vehicle.recalls.note": "Liste publique de rappels de la NHTSA, pour l’année-modèle — pas pour le NIV de votre voiture. Seuls la marque, le modèle et l’année quittent ce téléphone.",
 
   "vehicle.over": "{distance} de dépassement",
   "vehicle.dueOn": "à faire le {date}",

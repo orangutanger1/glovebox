@@ -593,6 +593,16 @@ export const ptBR: Fragment = {
   "vehicle.history": "Histórico",
   "vehicle.history.empty":
     "Nenhum serviço registrado ainda. Registre a última coisa que você fez no carro.",
+  "vehicle.recalls.legend": "Recalls",
+  "vehicle.recalls.found": {"one": "{count} recall afeta o {vehicle}", "other": "{count} recalls afetam o {vehicle}"},
+  "vehicle.recalls.none": "Nenhum recall na lista da NHTSA para o {vehicle}.",
+  "vehicle.recalls.parkIt": "Não dirija até ser consertado",
+  "vehicle.recalls.risk": "O risco",
+  "vehicle.recalls.remedy": "A solução",
+  "vehicle.recalls.details": "Detalhes",
+  "vehicle.recalls.hide": "Ocultar",
+  "vehicle.recalls.check": "Consulte seu VIN em nhtsa.gov",
+  "vehicle.recalls.note": "Da lista pública de recalls da NHTSA, para o ano-modelo — não para o VIN do seu carro. Só marca, modelo e ano saem deste celular.",
 
   "vehicle.over": "{distance} de atraso",
   "vehicle.dueOn": "vence {date}",

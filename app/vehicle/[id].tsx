@@ -28,6 +28,7 @@ import { getDistanceUnit } from "../../src/units";
 import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
+import { RecallsSection } from "../../src/recalls/RecallsSection";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -338,6 +339,10 @@ export default function VehicleDetail() {
                 ))}
               </View>
             ) : null}
+
+            {/* NHTSA's recalls for this model year, US only; draws nothing
+                when there is nothing it can honestly say. */}
+            {vehicle ? <RecallsSection vehicle={vehicle} /> : null}
 
             {/* A section of its own, never interleaved with the history below.
                 After a few months this is forty fill-ups, and an oil change

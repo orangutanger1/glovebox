@@ -27,6 +27,16 @@ export const vehicle: Fragment = {
   "vehicle.due": "Due now",
   "vehicle.history": "History",
   "vehicle.history.empty": "No service logged yet. Log the last thing you had done.",
+  "vehicle.recalls.legend": "Safety recalls",
+  "vehicle.recalls.found": {"one": "{count} recall covers the {vehicle}", "other": "{count} recalls cover the {vehicle}"},
+  "vehicle.recalls.none": "No recalls on NHTSA’s list for the {vehicle}.",
+  "vehicle.recalls.parkIt": "Don’t drive it until it’s fixed",
+  "vehicle.recalls.risk": "The risk",
+  "vehicle.recalls.remedy": "The fix",
+  "vehicle.recalls.details": "Details",
+  "vehicle.recalls.hide": "Hide",
+  "vehicle.recalls.check": "Check your VIN on nhtsa.gov",
+  "vehicle.recalls.note": "From NHTSA’s public recall list, for the model year — not your car’s VIN. Only the make, model and year leave this phone.",
 
   // `{distance}` is formatted and unit-labelled before it gets here.
   "vehicle.over": "{distance} over",

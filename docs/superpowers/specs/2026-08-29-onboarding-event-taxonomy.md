@@ -151,6 +151,8 @@ a reminder brought anyone back, or whether a rating prompt was ever asked.
 | `winback_shown` / `winback_result` | The win-back launch screen, and what came of it | `outcome` = `purchased` \| `dismissed` \| `unavailable` \| `declined` |
 | `quick_action` / `quick_action_result` | Home-screen menu tap, and the trial sheet's outcome | `action`, `outcome` |
 | `history_catchup` | The post-purchase "when was it last done?" screen is left | `outcome` = `saved` \| `skipped`, `asked`, `answered`, `filed` |
+| `recall_check` | A recall lookup went to NHTSA (cached answers send nothing) | `status` = `found` \| `none` \| `unavailable` \| `error`, `count` |
+| `recall_opened` / `recall_vin_check` | A recall expanded / the VIN-check link tapped | `campaign`, `park_it` |
 | `feedback_opened` | Feedback form opened from the win-back screen | `source` |
 
 `presentPaywall` sources are now named at the gates that had none: `add_vehicle`,
