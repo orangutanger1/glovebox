@@ -168,21 +168,13 @@ export const ptBR: Fragment = {
   "offer.paywall.dueNow": "Atrasados hoje",
   "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Nenhum",
-  "offer.paywall.point.tracked.title": "{vehicle} está registrado",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} serviço acompanhado, por data e por distância",
-    other: "{count} serviços acompanhados, por data e por distância",
+  "offer.paywall.preview.legend": "Próximos para {vehicle}",
+  "offer.paywall.preview.locked": "Data e lembrete com o Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} serviço, cada um com lembrete",
+    other: "+{count} serviços, cada um com lembrete",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} serviço atrasado hoje",
-    other: "{count} serviços atrasados hoje",
-  },
-  "offer.paywall.point.due.subtitle": "Próximo aviso {date}",
-  "offer.paywall.point.due.noNext": "Nenhum aviso necessário por enquanto",
-  "offer.paywall.point.history.title": "O histórico completo na hora de vender",
-  "offer.paywall.point.history.subtitle": "Cada serviço, custo e leitura, guardado para sempre e exportável.",
-  "offer.paywall.point.reminders.title": "Um lembrete antes de cada um",
-  "offer.paywall.point.reminders.subtitle": "No dia em que vence, e nunca insistindo.",
+  "offer.badge.pro": "Pro",
 
   "offer.deal.title": "Oferta por tempo limitado",
   "offer.deal.pct": "{pct}% de desconto",

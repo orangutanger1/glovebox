@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
-import { Check } from "../../src/design/Check";
 import { tokens } from "../../src/design/tokens";
-import { formatDate, t } from "../../src/i18n";
+import { t } from "../../src/i18n";
 import { restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
 import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
 import { ReviewCard } from "../../src/paywall/ReviewCard";
 import { IncludedStrip } from "../../src/paywall/IncludedStrip";
+import { PlanPreview, previewOpen } from "../../src/paywall/PlanPreview";
+import { getDistanceUnit } from "../../src/units";
 import { CloseButton } from "../../src/paywall/CloseButton";
 import { recordReviewEvent } from "../../src/review";
-import { nextUp } from "../../src/onboarding/plan";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { tNamed } from "../../src/onboarding";
@@ -29,8 +29,9 @@ import { track } from "../../src/analytics";
  * app's own material, so the reader who has just been shown their car's
  * overdue count sees what it costs to fix that without leaving the page.
  *
- * Top to bottom: the promise, three rows that evidence it against this car,
- * what the subscription includes, the one review the app has. The plans and
+ * Top to bottom: the promise, this car's plan with its first service dated
+ * and the rest behind the subscription (see `PlanPreview`), what the
+ * subscription includes, the one review the app has. The plans and
  * the button are in the footer, pinned under the scroll, so the price list
  * is on the glass from the first frame to the last however far the argument
  * above it runs; a plan that scrolls away with the review is a plan the
@@ -60,7 +61,16 @@ export default function OnboardingPaywall() {
     track("paywall_shown", { offering: "current" });
   }, []);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: "current", ms: Date.now() - mounted.current });
+    if (plans) {
+      // Whether the preview's open row had a date to show: a "not sure" on
+      // the service question leaves it undated, and the two may read apart.
+      const open = previewOpen(plan);
+      track("paywall_presented", {
+        offering: "current",
+        ms: Date.now() - mounted.current,
+        preview: open?.dueAt ? "dated" : open ? "undated" : "none",
+      });
+    }
   }, [plans]);
 
   const chosen: Plan | null =
@@ -114,36 +124,6 @@ export default function OnboardingPaywall() {
     advance();
   }
 
-  // The middle row is the overdue count when there is one. When there is not,
-  // which on a fresh install is always, it is the history benefit instead:
-  // "nothing overdue today" was true only because nothing had been logged,
-  // and a paywall congratulating an empty record is not evidence of anything.
-  const next = nextUp(plan);
-  const middle =
-    plan.pastDue > 0
-      ? {
-          title: t("offer.paywall.point.due.title", { count: plan.pastDue }),
-          subtitle: next?.dueAt
-            ? t("offer.paywall.point.due.subtitle", { date: formatDate(next.dueAt) })
-            : t("offer.paywall.point.due.noNext"),
-        }
-      : {
-          title: t("offer.paywall.point.history.title"),
-          subtitle: t("offer.paywall.point.history.subtitle"),
-        };
-
-  const points: { title: string; subtitle: string }[] = [
-    {
-      title: t("offer.paywall.point.tracked.title", { vehicle: vehicleName }),
-      subtitle: t("offer.paywall.point.tracked.subtitle", { count: plan.items.length }),
-    },
-    middle,
-    {
-      title: t("offer.paywall.point.reminders.title"),
-      subtitle: t("offer.paywall.point.reminders.subtitle"),
-    },
-  ];
-
   return (
     <OnboardingScreen
       route="paywall"
@@ -174,24 +154,7 @@ export default function OnboardingPaywall() {
         </>
       }
     >
-      <View style={{ gap: tokens.space.sm + 2 }}>
-        {points.map((point) => (
-          <View
-            key={point.title}
-            style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}
-          >
-            <View style={{ paddingTop: 1 }}>
-              <Check size={14} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>
-                {point.title}
-              </Text>
-              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{point.subtitle}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
+      <PlanPreview plan={plan} vehicleName={vehicleName} unit={getDistanceUnit()} />
 
       <IncludedStrip />
 

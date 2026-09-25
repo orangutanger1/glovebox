@@ -174,21 +174,13 @@ export const es: Fragment = {
   "offer.paywall.dueNow": "Vencidos hoy",
   "offer.paywall.nextUp": "Próximo aviso",
   "offer.paywall.none": "Ninguno",
-  "offer.paywall.point.tracked.title": "{vehicle} queda registrado",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} mantenimiento vigilado, por fecha y por distancia",
-    other: "{count} mantenimientos vigilados, por fecha y por distancia",
+  "offer.paywall.preview.legend": "Lo próximo para {vehicle}",
+  "offer.paywall.preview.locked": "Fecha y recordatorio con Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} servicio más, cada uno con recordatorio",
+    other: "+{count} servicios más, cada uno con recordatorio",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} mantenimiento vencido hoy",
-    other: "{count} mantenimientos vencidos hoy",
-  },
-  "offer.paywall.point.due.subtitle": "Próximo aviso {date}",
-  "offer.paywall.point.due.noNext": "Aún no hace falta ningún aviso",
-  "offer.paywall.point.history.title": "El historial completo al vender",
-  "offer.paywall.point.history.subtitle": "Cada mantenimiento, gasto y lectura, guardado para siempre y exportable.",
-  "offer.paywall.point.reminders.title": "Un recordatorio antes de cada uno",
-  "offer.paywall.point.reminders.subtitle": "El día que toca, y nunca insistiendo.",
+  "offer.badge.pro": "Pro",
 
   "offer.deal.title": "Oferta por tiempo limitado",
   "offer.deal.pct": "{pct}% de descuento",

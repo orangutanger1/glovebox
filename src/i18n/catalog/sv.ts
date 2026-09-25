@@ -177,21 +177,13 @@ export const sv: Fragment = {
   "offer.paywall.dueNow": "Försenat i dag",
   "offer.paywall.nextUp": "Nästa varning",
   "offer.paywall.none": "Ingen",
-  "offer.paywall.point.tracked.title": "{vehicle} finns på pränt",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} service bevakad, efter datum och sträcka",
-    other: "{count} servicar bevakade, efter datum och sträcka",
+  "offer.paywall.preview.legend": "På tur för {vehicle}",
+  "offer.paywall.preview.locked": "Datum och påminnelse med Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} service till, var och en med påminnelse",
+    other: "+{count} servicar till, var och en med påminnelse",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} service försenad i dag",
-    other: "{count} servicar försenade i dag",
-  },
-  "offer.paywall.point.due.subtitle": "Nästa varning {date}",
-  "offer.paywall.point.due.noNext": "Ingen varning behövs ännu",
-  "offer.paywall.point.history.title": "Hela historiken när du säljer",
-  "offer.paywall.point.history.subtitle": "Varje service, kostnad och mätarställning, sparad för alltid och exporterbar.",
-  "offer.paywall.point.reminders.title": "En påminnelse före varje",
-  "offer.paywall.point.reminders.subtitle": "Samma dag det är dags, aldrig tjatigt.",
+  "offer.badge.pro": "Pro",
 
   "offer.deal.title": "Tidsbegränsat erbjudande",
   "offer.deal.pct": "{pct}% rabatt",

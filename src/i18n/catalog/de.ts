@@ -178,21 +178,13 @@ export const de: Fragment = {
   "offer.paywall.dueNow": "Heute überfällig",
   "offer.paywall.nextUp": "Nächste Warnung",
   "offer.paywall.none": "Keine",
-  "offer.paywall.point.tracked.title": "{vehicle} ist dokumentiert",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} Service im Blick, nach Datum und Kilometern",
-    other: "{count} Services im Blick, nach Datum und Kilometern",
+  "offer.paywall.preview.legend": "Als Nächstes für {vehicle}",
+  "offer.paywall.preview.locked": "Datum und Erinnerung mit Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} weiterer Service, jeder mit Erinnerung",
+    other: "+{count} weitere Services, jeder mit Erinnerung",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} Service ist heute überfällig",
-    other: "{count} Services sind heute überfällig",
-  },
-  "offer.paywall.point.due.subtitle": "Nächste Warnung {date}",
-  "offer.paywall.point.due.noNext": "Noch keine Warnung nötig",
-  "offer.paywall.point.history.title": "Die volle Historie beim Verkauf",
-  "offer.paywall.point.history.subtitle": "Jeder Service, jede Ausgabe, jeder Stand: für immer gespeichert und exportierbar.",
-  "offer.paywall.point.reminders.title": "Eine Erinnerung vor jedem Service",
-  "offer.paywall.point.reminders.subtitle": "Am Tag der Fälligkeit, und nie aufdringlich.",
+  "offer.badge.pro": "Pro",
 
   "offer.deal.title": "Zeitlich begrenztes Angebot",
   "offer.deal.pct": "{pct}% Rabatt",

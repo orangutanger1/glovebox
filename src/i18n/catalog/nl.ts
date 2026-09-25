@@ -646,21 +646,13 @@ export const nl: Fragment = {
   "offer.paywall.dueNow": "Vandaag te laat",
   "offer.paywall.nextUp": "Volgende waarschuwing",
   "offer.paywall.none": "Geen",
-  "offer.paywall.point.tracked.title": "{vehicle} staat vastgelegd",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} beurt in de gaten, op datum en op afstand",
-    other: "{count} beurten in de gaten, op datum en op afstand",
+  "offer.paywall.preview.legend": "Binnenkort voor {vehicle}",
+  "offer.paywall.preview.locked": "Datum en herinnering met Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} andere beurt, elk met een herinnering",
+    other: "+{count} andere beurten, elk met een herinnering",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} beurt vandaag te laat",
-    other: "{count} beurten vandaag te laat",
-  },
-  "offer.paywall.point.due.subtitle": "Volgende waarschuwing {date}",
-  "offer.paywall.point.due.noNext": "Nog geen waarschuwing nodig",
-  "offer.paywall.point.history.title": "De volledige historie bij verkoop",
-  "offer.paywall.point.history.subtitle": "Elke beurt, kostenpost en stand, voor altijd bewaard en te exporteren.",
-  "offer.paywall.point.reminders.title": "Een herinnering vóór elke beurt",
-  "offer.paywall.point.reminders.subtitle": "Op de dag zelf, en nooit zeurend.",
+  "offer.badge.pro": "Pro",
 
   "offer.deal.title": "Tijdelijke aanbieding",
   "offer.deal.pct": "{pct}% korting",

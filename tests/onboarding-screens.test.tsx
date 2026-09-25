@@ -286,7 +286,7 @@ test("nothing in the flow sells the free tier", () => {
   expect(texts(render(OnboardingPaywall))).toContain(t("paywall.cta.year"));
 });
 
-test("the paywall names what is bought, and leaves the schedule to the ask", () => {
+test("the paywall names what is bought, and previews this car's plan", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
@@ -295,24 +295,37 @@ test("the paywall names what is bought, and leaves the schedule to the ask", () 
   setOnboardingVehicleId(car.id);
 
   const printed = texts(render(OnboardingPaywall));
-  // The headline is the promise; the three rows evidence it against this car;
+  // The headline is the promise; the preview evidences it against this car;
   // the price list is on the same screen, not a sheet away.
   expect(printed).toContain(t("offer.paywall.title"));
-  expect(printed.join(" ")).toContain("2014 Ford F-150");
-  expect(printed.join(" ")).toContain(t("offer.paywall.point.reminders.title"));
+  expect(printed.join(" ")).toContain(t("offer.paywall.preview.legend", { vehicle: "2014 Ford F-150" }));
   expect(printed.join(" ")).toContain("$79.99");
   expect(printed.join(" ")).toContain("$1.54");
   expect(printed).toContain(t("paywall.cta.year"));
-  // A fresh install has nothing overdue, and the row says something the app
-  // does rather than congratulating an empty record.
-  expect(printed.join(" ")).toContain(t("offer.paywall.point.history.title"));
+  // Nothing logged: one row open, watched from today, and the rest locked by
+  // name with what Pro does for them — never a blurred date that is not there.
+  expect(printed).toContain(t("onboardingC.schedule.line.fresh"));
+  expect(printed.filter((s) => s === t("offer.paywall.preview.locked"))).toHaveLength(2);
+  expect(printed.join(" ")).toMatch(/\+\d+ more services, each with a reminder/);
   expect(printed.join(" ")).not.toMatch(/nothing overdue/i);
   // No decline under the button, and no close until it has been read a while.
   expect(printed).not.toContain("Not now");
   expect(printed).not.toContain("✕");
-  // The car's dated schedule still belongs to the reminder ask.
-  expect(printed).not.toContain(serviceName("Air Filter"));
-  expect(printed).not.toContain("Nothing on file");
+});
+
+test("the paywall's open row is the service the app can date", () => {
+  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
+  setOnboardingVehicleId(car.id);
+  const done = new Date();
+  done.setMonth(done.getMonth() - 2);
+  addRecord({ vehicle_id: car.id, service_type: "Oil Change", performed_at: done.toISOString(), odometer: 95000 });
+
+  const printed = texts(render(OnboardingPaywall));
+  const at = printed.indexOf(serviceName("Oil Change"));
+  expect(at).toBeGreaterThanOrEqual(0);
+  // Its own line is a date, not the lock.
+  expect(printed[at + 1]).not.toBe(t("offer.paywall.preview.locked"));
+  expect(printed[at + 1]).not.toBe(t("onboardingC.schedule.line.fresh"));
 });
 
 test("the paywall's close arrives after a pause, goes to the trial, and a buy ends the flow paid", async () => {

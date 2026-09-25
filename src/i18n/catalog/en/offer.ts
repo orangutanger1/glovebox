@@ -41,27 +41,18 @@ export const offer: Fragment = {
   "offer.paywall.dueNow": "Overdue today",
   "offer.paywall.nextUp": "Next warning",
   "offer.paywall.none": "None",
-  // The three benefit rows on the paywall, built from this user's own plan.
-  // They replace the four gauges: the same numbers, read as sentences, on the
-  // one screen where the reader is deciding rather than glancing.
-  "offer.paywall.point.tracked.title": "{vehicle} on record",
-  "offer.paywall.point.tracked.subtitle": {
-    one: "{count} service tracked, by date and by distance",
-    other: "{count} services tracked, by date and by distance",
+  // The paywall's preview of this car's plan (`src/paywall/PlanPreview`): one
+  // service with its date, the next ones by name with what Pro does for them.
+  // It replaced three benefit rows on 2026-09-24; "try it first" was the
+  // second answer to "what stopped you?", and this is the try on the page.
+  "offer.paywall.preview.legend": "Coming up for {vehicle}",
+  "offer.paywall.preview.locked": "Date and reminder with Pro",
+  "offer.paywall.preview.more": {
+    one: "+{count} more service, each with a reminder",
+    other: "+{count} more services, each with a reminder",
   },
-  "offer.paywall.point.due.title": {
-    one: "{count} service overdue today",
-    other: "{count} services overdue today",
-  },
-  "offer.paywall.point.due.subtitle": "Next warning {date}",
-  "offer.paywall.point.due.noNext": "No warning needed yet",
-  // Drawn in place of the overdue row when nothing is overdue, which on a
-  // fresh install is always: the user has logged nothing yet, so "nothing
-  // overdue today" was the app congratulating them on an empty record.
-  "offer.paywall.point.history.title": "A full history when you sell",
-  "offer.paywall.point.history.subtitle": "Every service, cost and reading, kept forever and exportable.",
-  "offer.paywall.point.reminders.title": "A reminder before each service",
-  "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
+  // The stamp on a locked row. The product's name, the same in every language.
+  "offer.badge.pro": "Pro",
 
   // The exit offer: a yearly plan for less than the first screen asked.
   // "Limited time" is true of the screen: it is the one place the price is
