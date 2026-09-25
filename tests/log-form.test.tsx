@@ -65,7 +65,7 @@ jest.mock("../src/analytics", () => ({
 }));
 jest.mock("../src/review", () => ({
   recordReviewEvent: jest.fn(),
-  maybeRequestReview: jest.fn(async () => {}),
+  requestReviewAfterLog: jest.fn(async () => {}),
 }));
 
 import LogService from "../app/vehicle/[id]/log";

@@ -1,6 +1,7 @@
 export const REVIEW_LAST_ASKED_KEY = "review_last_asked_at";
 export const REVIEW_ASK_COUNT_KEY = "review_ask_count";
-/** Set once the subscriber's first-action ask has been spent. */
+/** Set once the subscriber's first-record ask has been spent. The key keeps
+ *  its old name so installs that spent it under the tap rule stay spent. */
 export const REVIEW_FIRST_ACTION_KEY = "review_first_action_asked";
 /** Set once the end-of-onboarding ask has been spent. */
 export const REVIEW_ONBOARDING_KEY = "review_onboarding_asked";
@@ -150,7 +151,8 @@ export function shouldRequestOpenReview(
 }
 
 /**
- * The one ask that skips the score: a subscriber's first tap on the car.
+ * The one ask that skips the score: a subscriber's first saved record (it was
+ * their first tap on the car until 2026-09-24 — seconds after paying).
  *
  * The happiness engine waits for a pattern of use, which is right for an
  * install that has not paid. A user who has just paid and is now reaching

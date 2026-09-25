@@ -138,7 +138,7 @@ a reminder brought anyone back, or whether a rating prompt was ever asked.
 
 | Event | Fires | Key properties |
 | --- | --- | --- |
-| `review_prompt` | A rating ask got past its rule and reached StoreKit (or could not) | `trigger` = `onboarding` \| `launch` \| `first_action` \| `happiness`, `outcome` = `requested` \| `no_action` \| `failed`, `ask_number`, `open_count` (launch only) |
+| `review_prompt` | A rating ask got past its rule and reached StoreKit (or could not) | `trigger` = `onboarding` \| `launch` \| `first_log` \| `happiness`, `outcome` = `requested` \| `no_action` \| `failed`, `ask_number`, `open_count` (launch only) |
 | `service_logged` | A service record is saved | `service_type`, `backdated`, `has_odometer`, `has_cost`, `has_notes` |
 | `vehicle_added` | A vehicle is added from the garage (not onboarding) | `has_odometer` |
 | `data_exported` | CSV export from Settings | `outcome` = `shared` \| `failed` |

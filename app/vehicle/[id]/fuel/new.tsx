@@ -12,7 +12,7 @@ import { tokens } from "../../../../src/design/tokens";
 import { getVehicle } from "../../../../src/db/vehicles";
 import { addFuelEntry, listFuelEntries } from "../../../../src/db/fuel";
 import { rescheduleAll } from "../../../../src/notify";
-import { recordReviewEvent, maybeRequestReview } from "../../../../src/review";
+import { recordReviewEvent, requestReviewAfterLog } from "../../../../src/review";
 import { track } from "../../../../src/analytics";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../../src/format";
 import { t } from "../../../../src/i18n";
@@ -150,7 +150,7 @@ export default function LogFuel() {
 
     // Deferred past the pop so StoreKit presents onto a screen that has settled
     // rather than one mid-transition.
-    setTimeout(() => void maybeRequestReview(), 1200);
+    setTimeout(() => void requestReviewAfterLog(), 1200);
   }
 
   return (

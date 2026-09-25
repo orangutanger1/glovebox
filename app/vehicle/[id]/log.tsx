@@ -12,7 +12,7 @@ import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
 import { rescheduleAll } from "../../../src/notify";
-import { recordReviewEvent, maybeRequestReview } from "../../../src/review";
+import { recordReviewEvent, requestReviewAfterLog } from "../../../src/review";
 import { track } from "../../../src/analytics";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
 import { t } from "../../../src/i18n";
@@ -146,11 +146,11 @@ export default function LogService() {
     recordReviewEvent("log_service");
     router.back();
 
-    // The app's whole job, just done, on a user who has done it before —
-    // maybeRequestReview only fires above the score threshold, which no single
-    // save can reach. Deferred past the pop so StoreKit presents onto a screen
-    // that has settled rather than one mid-transition.
-    setTimeout(() => void maybeRequestReview(), 1200);
+    // The app's whole job, just done: a subscriber's first saved record gets
+    // the one extra rating ask, anyone else the happiness engine's, which no
+    // single save can reach. Deferred past the pop so StoreKit presents onto
+    // a screen that has settled rather than one mid-transition.
+    setTimeout(() => void requestReviewAfterLog(), 1200);
   }
 
   return (

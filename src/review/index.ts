@@ -98,29 +98,36 @@ export async function maybeRequestReview(): Promise<void> {
 }
 
 /**
- * The subscriber's one extra ask, on their first tap on the car screen.
+ * The ask after a saved service or fill-up: the subscriber's one extra ask on
+ * their first saved record, otherwise the happiness engine's.
  *
- * Sits beside the happiness engine rather than inside it (see
- * `shouldRequestFirstActionReview` for why the moment is worth a rule of its
- * own). Call it from the controls on the vehicle screen that open something:
- * log a service, log a fill-up, edit the car. Not from delete or undo, which
- * are not the moment.
+ * The extra ask used to fire on the subscriber's first *tap* on the car
+ * screen, which is seconds after the receipt. On 2026-09-24 a buyer was asked
+ * for a rating 18 s after paying (and 50 s after the onboarding ask), and was
+ * in Customer Center asking for a refund a minute and a half later. A saved
+ * record is the first moment the app has done its job for them; a tap is only
+ * the moment they went looking for it.
+ *
+ * Call it once the record is committed, deferred past the navigation so
+ * StoreKit presents onto a screen that has settled.
  *
  * The flag is set the moment the decision is yes, before StoreKit is asked,
- * so a second tap during the await cannot spend the moment twice. An install
- * that has not paid keeps the flag clear and is checked again next tap: the
- * purchase may come later, from the settings screen, and the first tap after
- * it is still the first tap that counts.
+ * so two saves in quick succession cannot spend the moment twice. An install
+ * that has not paid keeps the flag clear: the purchase may come later, and the
+ * first save after it is still the first that counts.
  */
-export async function requestReviewOnFirstAction(): Promise<void> {
+export async function requestReviewAfterLog(): Promise<void> {
   try {
     const state = { ...readState(), asked: getState(REVIEW_FIRST_ACTION_KEY) !== null };
     const now = new Date();
-    if (!shouldRequestFirstActionReview(state, now)) return;
-    setState(REVIEW_FIRST_ACTION_KEY, now.toISOString());
-    await ask(state, now, "first_action");
+    if (shouldRequestFirstActionReview(state, now)) {
+      setState(REVIEW_FIRST_ACTION_KEY, now.toISOString());
+      await ask(state, now, "first_log");
+      return;
+    }
+    if (shouldRequestReview(state, now)) await ask(state, now, "happiness");
   } catch {
-    // Same as above: never the reason a tap on the car does nothing.
+    // Never the reason a save looks like it failed.
   }
 }
 
@@ -181,7 +188,7 @@ function readState(): { events: ReviewEvent[]; lastAskedAt: string | null; askCo
 }
 
 /** Which rule decided to ask. Sent with every `review_prompt`. */
-type ReviewTrigger = "onboarding" | "launch" | "first_action" | "happiness";
+type ReviewTrigger = "onboarding" | "launch" | "first_log" | "happiness";
 
 /**
  * Spends one of the year's asks and hands the prompt to StoreKit.
