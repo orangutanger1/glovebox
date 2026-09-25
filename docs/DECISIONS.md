@@ -28,6 +28,25 @@ Numbers from 09-19 to 09-24, counted per person, with the dev device excluded.
 - **Objection survey** (since 09-22, asked when someone declines the offer or backs out of the sheet): price 14, skipped 9, try_first 7, browsing 4, other 3.
 - **Traffic:** a TikTok spike started 09-22 (142 installs that day). TikTok users almost all land on the exit offer. They converted 0 of 53 until 09-24, when 3 paid.
 
+## Status snapshot (2026-09-24 night, PT)
+
+- **Sales by day:** 9/20 1, 9/21 2, 9/22 1 (142 installs, TikTok spike), 9/23 2, 9/24 5 (61 installs).
+- **RevenueCat:** about 15 active subscriptions, $353 revenue over 28 days. Yearly 5 of 6 set to renew; monthly 3 of 6 set to cancel.
+- **Onboarding tests** (people assigned since 09-16, paid):
+  - symptoms: control 7/194 (3.6%), no_symptoms 10/214 (4.7%)
+  - payoff: condensed 6/175 (3.4%), none 9/210 (4.3%)
+  - Both gaps are 3–4 sales. No call yet.
+- **Live update:** `01a0d6ca` (runtime 1.2.4) — the exit offer's yearly price, the `paywall_preview` A/B test, and every retention feature from 09-23 and 09-24.
+
+## Read calendar (no onboarding or paywall changes before these)
+
+| Date | What to read |
+|---|---|
+| ~10-01 | Exit offer: buy taps → paid, time on Apple's sheet. Main paywall tap rate. |
+| ~10-02 | Buyers' day-2 and day-7 return, check-in answers, share of buyers who save a document (< 10% → build the widget before document photos). |
+| ~10-03 | `onboarding_symptoms` and `onboarding_payoff` main effects, split before and after 09-22. |
+| ~10-08 | `paywall_preview` tap rate by arm, with `preview` split into `dated` / `undated`. |
+
 ## Live experiments
 
 All experiments are coin flips on the device at fresh install (`src/experiments/index.ts`). An install without an assignment gets the control. Count people through their `experiment_assigned` row.
@@ -77,3 +96,14 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 - **iOS allows 64 pending notifications.** The app uses 60: up to 30 document reminders and up to 5 check-ins, and service reminders get the rest.
 - **Updates:** an OTA update is fine for JS-only changes; `npm run ota` prints "OTA SAFE". Anything native (widget, camera, image picker) needs an App Store build.
 - **Measuring sales:** count `subscription_success` with `plan IS NOT NULL` and check it against RevenueCat's `actives_new`, in UTC days.
+
+## Next test after the reads: show the real app before the paywall
+
+Source: a founder's post shared 09-24, claiming 12%+ download→paid with the flow: app screen recording → goal → gender/age → graph vs competitors → name → 2 pain points → niche question → notification permission → loader → custom plan → reviews → 2 phone-mockup "transformation" screens → paywall, with the name used throughout and on the paywall title.
+
+- **Already in our flow (don't rebuild):** name (asked on screen 2, used on the paywall title, notifications, reminders to finish setup), pain points (`worry`, `symptoms`), niche questions (the 6 car questions), notification permission, loader (`analyzing`), custom plan (`schedule`, under test), graph (`compare`), reviews. Having these hasn't got us to 12%, so the claim doesn't explain the gap (~4% for us). It's unverified, from an unknown niche and unknown traffic.
+- **Missing, and the next candidate test:** a screen showing the real app, either an opening screen recording in a phone mockup or 1–2 mockup screens just before the paywall. It fits the "try_first" objection and the fast paywall closes. Reuse the App Store screenshot frames. Build it only after the ~10-03 / ~10-08 reads. If `paywall_preview` wins, the preview already covers part of this, so the demo screen matters less.
+- **Our data disagrees with one point:** "show their custom plan" is the post's key idea, but in our payoff test the group without the plan page is slightly ahead (9/210 vs 6/175, not significant).
+- **Rejected:**
+  - **Gender and age screens:** the app computes nothing from them, they add two screens of friction, and they cut against the privacy positioning.
+  - **Graph against named competitors:** App Review risk, and claims we can't back up. The `compare` chart (keeping to the schedule vs fixing things late) stays.
