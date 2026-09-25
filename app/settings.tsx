@@ -367,5 +367,5 @@ function Section({ legend, children }: { legend: string; children: React.ReactNo
 /** The trailing mark on a row that opens something. Same glyph the garage card
  *  uses, so "this goes somewhere" looks the same in both places. */
 function Chevron() {
-  return <Text style={{ ...tokens.text.body, color: tokens.color.textFaint }}>›</Text>;
+  return <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>;
 }

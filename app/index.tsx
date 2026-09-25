@@ -329,19 +329,6 @@ export default function Garage() {
         })
       )}
 
-      {/* Below the garage, not in the header: costs are a thing you go and
-          look at, not a thing you act on, and the header already holds the one
-          control (settings) this screen needs at a glance. Shown whenever there
-          is a vehicle at all — an empty garage has nothing to price, and the
-          screen behind this row would only be able to say so. */}
-      {vehicles.length > 0 ? (
-        <ListRow
-          title={t("insights.open")}
-          onPress={() => router.push("/insights")}
-          right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
-        />
-      ) : null}
-
       {single ? (
         <>
           {upcoming.length > 0 ? (
@@ -387,6 +374,21 @@ export default function Garage() {
             </View>
           </View>
         </>
+      ) : null}
+
+      {/* Last, and not in the header: costs are a thing you go and look at,
+          not a thing you act on, so the row sits under the car's next services
+          and the quick-log chips rather than between them and the car they
+          belong to. The header already holds the one control (settings) this
+          screen needs at a glance. Shown whenever there is a vehicle at all —
+          an empty garage has nothing to price, and the screen behind this row
+          would only be able to say so. */}
+      {vehicles.length > 0 ? (
+        <ListRow
+          title={t("insights.open")}
+          onPress={() => router.push("/insights")}
+          right={<Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>›</Text>}
+        />
       ) : null}
     </Screen>
   );

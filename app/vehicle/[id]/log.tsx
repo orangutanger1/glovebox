@@ -57,9 +57,9 @@ export default function LogService() {
   // Opens on today, so the wheels start somewhere true and the user rolls back
   // from it rather than building a date from nothing.
   const [customDate, setCustomDate] = useState(() => partsFromDate(new Date()));
-  // Prefilled so the user edits three digits instead of typing six. This field
-  // gets autofocus, not the type chips — the chips are already answered.
-  // The last reading, so the user edits three digits rather than typing six.
+  // Prefilled with the last reading, so the user edits three digits instead of
+  // typing six. This field gets autofocus, not the type chips — the chips are
+  // already answered.
   const [odometer, setOdometer] = useState(
     vehicle?.odometer === undefined ? "" : String(vehicle.odometer)
   );

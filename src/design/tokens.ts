@@ -43,7 +43,10 @@ export const tokens = {
     // Text is one neutral at three weights of presence. Never a fourth.
     text: "#EDEEF0",
     textMuted: "rgba(237,238,240,0.62)",
-    textFaint: "rgba(237,238,240,0.38)",
+    /** Section legends and chevrons. 0.38 measured about 3.1:1 against the
+     *  background, under the 4.5:1 a 13pt label needs; 0.50 clears it and
+     *  still sits a visible step below muted. */
+    textFaint: "rgba(237,238,240,0.50)",
 
     /** The only border in the system. One hairline, one value, every surface. */
     hairline: "rgba(255,255,255,0.07)",

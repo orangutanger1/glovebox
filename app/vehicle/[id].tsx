@@ -281,7 +281,10 @@ export default function VehicleDetail() {
         keyExtractor={(r) => r.id}
         contentContainerStyle={{
           ...tokens.layout.column,
-          padding: tokens.space.md,
+          // The same lg gutter every `Screen` uses, so the car's page does not
+          // sit 8px wider than the garage it was opened from.
+          paddingHorizontal: tokens.space.lg,
+          paddingTop: tokens.space.md,
           paddingBottom: tokens.space.xxl + tokens.space.xl,
           gap: tokens.space.xs,
         }}
@@ -363,10 +366,23 @@ export default function VehicleDetail() {
                 />
               ))}
               {fuel.length > RECENT_FILLS ? (
-                <Pressable onPress={() => open(`/vehicle/${id}/fuel`)}>
-                  <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-                    {t("fuel.seeAll")}
-                  </Text>
+                // A link-sized label with a finger-sized target, and the same
+                // chevron every other "goes somewhere" row carries.
+                <Pressable
+                  onPress={() => open(`/vehicle/${id}/fuel`)}
+                  accessibilityRole="button"
+                  hitSlop={8}
+                  style={{ paddingVertical: tokens.space.sm }}
+                >
+                  {({ pressed }) => {
+                    const color = pressed ? tokens.color.text : tokens.color.textMuted;
+                    return (
+                      <View style={{ flexDirection: "row", gap: tokens.space.xs }}>
+                        <Text style={{ ...tokens.text.legend, color }}>{t("fuel.seeAll")}</Text>
+                        <Text style={{ ...tokens.text.legend, color }}>›</Text>
+                      </View>
+                    );
+                  }}
                 </Pressable>
               ) : null}
             </View>
@@ -396,6 +412,7 @@ export default function VehicleDetail() {
             renderRightActions={() => (
               <Pressable
                 onPress={() => onDelete(item.id)}
+                accessibilityRole="button"
                 style={{
                   justifyContent: "center",
                   marginLeft: tokens.space.sm,
@@ -422,7 +439,15 @@ export default function VehicleDetail() {
       {/* The undo bar sits above the action rather than replacing it — losing
           the primary button for eight seconds after a delete is its own bug. */}
       <Glass edge="top">
-        <View style={{ padding: tokens.space.md, gap: tokens.space.sm }}>
+        <View
+          style={{
+            ...tokens.layout.column,
+            paddingHorizontal: tokens.space.lg,
+            paddingTop: tokens.space.md,
+            paddingBottom: tokens.space.sm,
+            gap: tokens.space.sm,
+          }}
+        >
           {undoId ? (
             <Pressable onPress={onUndo}>
               <View
