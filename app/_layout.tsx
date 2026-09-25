@@ -151,6 +151,10 @@ export default function RootLayout() {
   // launch action in its own mount effect, in the same commit as the boot
   // effect, before the state above has re-rendered.
   const dead = useRef(false);
+  // Set when a notification tap routed somewhere this launch. That launch has
+  // a destination, the same as a quick action, and the win-back must not
+  // replace it.
+  const openedFromNotification = useRef(false);
   // Bumped when the language or the unit changes, and used as the tree's key:
   // every screen then rebuilds its sentences instead of keeping the ones it
   // formatted in the previous language.
@@ -215,7 +219,17 @@ export default function RootLayout() {
     boot("notifications", () => void rescheduleAll().catch(() => {}));
     // Taps on reminders and resume nudges, including the one that launched us.
     // Never unsubscribed: the root layout lives as long as the process.
-    boot("notification_opens", watchNotificationOpens);
+    //
+    // A tap on a check-in or a document reminder carries the screen it is
+    // about. Only for a finished install: mid-onboarding there is no garage to
+    // land in, and the redirect below owns the first screen.
+    boot("notification_opens", () =>
+      watchNotificationOpens((url) => {
+        if (!isOnboarded()) return;
+        openedFromNotification.current = true;
+        router.push(url as Parameters<typeof router.push>[0]);
+      })
+    );
 
     // Stamped on every launch, and the value it hands back is the previous
     // one — the only measure of an absence the app has.
@@ -287,7 +301,7 @@ export default function RootLayout() {
         // A launch that came from the menu is a launch with a destination. The
         // win-back would replace it with a screen the user did not ask for,
         // and its cooldown would then swallow the one chance to show it.
-        if (QuickActions.initial) return;
+        if (QuickActions.initial || openedFromNotification.current) return;
 
         const due = shouldOfferWinback({
           lastOpenAt: previousOpen,
@@ -512,6 +526,12 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
           name="vehicle/[id]/fuel/new"
           options={{ title: t("fuel.form.title"), headerTitle: "" }}
         />
+        {/* Both print their own title in the body, like the other forms. */}
+        <Stack.Screen
+          name="vehicle/[id]/document"
+          options={{ title: t("documents.form.title"), headerTitle: "" }}
+        />
+        <Stack.Screen name="checkin" options={{ title: t("checkin.title"), headerTitle: "" }} />
       </Stack>
       {fatal !== null && <FatalNotice detail={fatal} />}
     </GestureHandlerRootView>

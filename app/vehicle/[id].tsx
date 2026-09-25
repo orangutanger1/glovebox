@@ -29,6 +29,8 @@ import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
 import { RecallsSection } from "../../src/recalls/RecallsSection";
+import { GloveboxSection } from "../../src/documents/GloveboxSection";
+import { listDocuments, type GloveboxDocument } from "../../src/db/documents";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -140,6 +142,7 @@ export default function VehicleDetail() {
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [records, setRecords] = useState<ServiceRecord[]>([]);
   const [fuel, setFuel] = useState<FuelRow[]>([]);
+  const [documents, setDocuments] = useState<GloveboxDocument[]>([]);
   const [undoId, setUndoId] = useState<string | null>(null);
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -147,6 +150,7 @@ export default function VehicleDetail() {
     setVehicle(getVehicle(id));
     setRecords(listRecords(id));
     setFuel(listFuelEntries(id));
+    setDocuments(listDocuments(id));
   }, [id]);
 
   useFocusEffect(refresh);
@@ -315,11 +319,40 @@ export default function VehicleDetail() {
                     align="right"
                   />
                 </View>
-                {spec ? (
-                  <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+                {/* The spec line, and beside it the way to give the app a new
+                    reading — the same screen the monthly check-in opens. */}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: tokens.space.md,
+                  }}
+                >
+                  <Text
+                    style={{ ...tokens.text.caption, color: tokens.color.textFaint, flexShrink: 1 }}
+                  >
                     {spec}
                   </Text>
-                ) : null}
+                  {vehicle ? (
+                    <Pressable
+                      onPress={() => open(`/checkin?vehicle=${id}&source=vehicle`)}
+                      accessibilityRole="button"
+                      hitSlop={8}
+                    >
+                      {({ pressed }) => (
+                        <Text
+                          style={{
+                            ...tokens.text.legend,
+                            color: pressed ? tokens.color.text : tokens.color.textMuted,
+                          }}
+                        >
+                          {t("checkin.update")}
+                        </Text>
+                      )}
+                    </Pressable>
+                  ) : null}
+                </View>
               </View>
             </Panel>
 
@@ -346,6 +379,16 @@ export default function VehicleDetail() {
             {/* NHTSA's recalls for this model year, US only; draws nothing
                 when there is nothing it can honestly say. */}
             {vehicle ? <RecallsSection vehicle={vehicle} /> : null}
+
+            {/* The papers: above fuel, because a lapsing policy is a date the
+                owner has to act on and a fill-up is not. */}
+            {vehicle ? (
+              <GloveboxSection
+                documents={documents}
+                onOpen={(d) => open(`/vehicle/${id}/document?doc=${d.id}`)}
+                onAdd={() => open(`/vehicle/${id}/document`)}
+              />
+            ) : null}
 
             {/* A section of its own, never interleaved with the history below.
                 After a few months this is forty fill-ups, and an oil change

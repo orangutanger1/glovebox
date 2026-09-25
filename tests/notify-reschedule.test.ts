@@ -17,7 +17,11 @@ jest.mock("../src/db/client", () => {
 // interleaving between two rebuilds that the test is about, and a mock that
 // answers synchronously cannot interleave.
 const tick = () => new Promise((resolve) => setTimeout(resolve, 1));
-const held: { content: { title: string } }[] = [];
+const held: { content: { title: string; data?: Record<string, unknown> } }[] = [];
+/** The service reminders among what iOS holds: each car also gets one
+ *  odometer check-in, which carries `kind` instead of a service. */
+const services = () => held.filter((h) => typeof h.content.data?.serviceType === "string");
+const checkins = () => held.filter((h) => h.content.data?.kind === "checkin");
 jest.mock("expo-notifications", () => ({
   setNotificationHandler: jest.fn(),
   getPermissionsAsync: jest.fn(async () => ({ status: "granted", canAskAgain: false })),
@@ -46,6 +50,7 @@ const TYPES = ["Oil Change", "Tire Rotation", "Brake Inspection", "Air Filter"];
 beforeEach(() => {
   held.length = 0;
   getDb().runSync("DELETE FROM service_records", []);
+  getDb().runSync("DELETE FROM documents", []);
   getDb().runSync("DELETE FROM vehicles", []);
   completeOnboarding();
   const v = createVehicle({ name: "Civic" });
@@ -56,7 +61,8 @@ beforeEach(() => {
 
 test("a rebuild holds one reminder per dated service", async () => {
   await rescheduleAll();
-  expect(held).toHaveLength(TYPES.length);
+  expect(services()).toHaveLength(TYPES.length);
+  expect(checkins()).toHaveLength(1);
 });
 
 test("two rebuilds started together still leave one copy of each reminder", async () => {
@@ -67,7 +73,8 @@ test("two rebuilds started together still leave one copy of each reminder", asyn
   await Promise.all([rescheduleAll(), rescheduleAll()]);
   const titles = held.map((h) => h.content.title).sort();
   expect(titles).toEqual([...new Set(titles)]);
-  expect(held).toHaveLength(TYPES.length);
+  expect(services()).toHaveLength(TYPES.length);
+  expect(checkins()).toHaveLength(1);
 });
 
 test("a rebuild that fails does not stop the next one", async () => {
@@ -75,5 +82,18 @@ test("a rebuild that fails does not stop the next one", async () => {
   Notifications.cancelAllScheduledNotificationsAsync.mockRejectedValueOnce(new Error("bridge"));
   await expect(rescheduleAll()).rejects.toThrow("bridge");
   await rescheduleAll();
-  expect(held).toHaveLength(TYPES.length);
+  expect(services()).toHaveLength(TYPES.length);
+});
+
+test("a dated document gets its expiry reminders, and a tap opens it", async () => {
+  const { addDocument } = jest.requireActual("../src/db/documents");
+  const vehicleId = getDb().getFirstSync<{ id: string }>("SELECT id FROM vehicles", [])!.id;
+  const expires = new Date();
+  expires.setDate(expires.getDate() + 90);
+  const doc = addDocument(vehicleId, { kind: "insurance", expires_at: expires.toISOString() });
+  await rescheduleAll();
+  const alerts = held.filter((h) => h.content.data?.kind === "document");
+  expect(alerts.map((a) => a.content.data?.daysLeft)).toEqual([30, 7]);
+  expect(alerts[0].content.data?.url).toBe(`/vehicle/${vehicleId}/document?doc=${doc.id}`);
+  expect(services()).toHaveLength(TYPES.length);
 });

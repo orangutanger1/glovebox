@@ -4,8 +4,9 @@ import { serviceName } from "../schedule/names";
 import { formatDate, t } from "../i18n";
 import { vehicleSentenceName } from "../format";
 import { tNamed } from "../onboarding";
-import { collectReminders } from "./collect";
-import { scheduledAt, selectReminders } from "./select";
+import { collectCheckins, collectDocumentAlerts, collectReminders } from "./collect";
+import { documentName } from "../documents/names";
+import { MAX_SCHEDULED, scheduledAt, selectReminders } from "./select";
 import { scheduleOnboardingNudges } from "./resume";
 
 Notifications.setNotificationHandler({
@@ -18,7 +19,13 @@ Notifications.setNotificationHandler({
 });
 
 export { MAX_SCHEDULED, selectReminders, type Reminder } from "./select";
-export { collectReminders, nextReminder, nextReminders } from "./collect";
+export {
+  collectReminders,
+  collectCheckins,
+  collectDocumentAlerts,
+  nextReminder,
+  nextReminders,
+} from "./collect";
 export { scheduleOnboardingNudges, cancelOnboardingNudges, RESUME_NUDGE_IDS } from "./resume";
 
 export type ReminderStatus = {
@@ -91,7 +98,52 @@ async function rebuild(): Promise<void> {
   // relying on. A no-op once onboarding is done.
   await scheduleOnboardingNudges();
 
-  for (const reminder of selectReminders(collectReminders(), Date.now())) {
+  const now = Date.now();
+
+  // Document expiries first: a lapsed insurance policy is a legal problem and
+  // a late oil change is not, so when the 64-slot queue is short these are the
+  // last to be dropped. Capped at half the queue so a glovebox full of papers
+  // can never crowd the service schedule out entirely.
+  const documents = collectDocumentAlerts(now).slice(0, MAX_SCHEDULED / 2);
+  for (const d of documents) {
+    const vehicle = vehicleSentenceName(d.vehicleName);
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: t("documents.notify.title", {
+          document: documentName(d),
+          date: formatDate(d.expiresAt),
+        }),
+        body: t("documents.notify.body", { vehicle }),
+        data: {
+          dueAt: d.at,
+          kind: "document",
+          documentKind: d.kind,
+          daysLeft: d.daysLeft,
+          url: `/vehicle/${d.vehicleId}/document?doc=${d.documentId}`,
+        },
+      },
+      trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(d.at) },
+    });
+  }
+
+  const checkins = collectCheckins(now);
+  for (const c of checkins) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: tNamed("checkin.notify.title"),
+        body: t("checkin.notify.body", { vehicle: vehicleSentenceName(c.vehicleName) }),
+        data: {
+          dueAt: c.at,
+          kind: "checkin",
+          url: `/checkin?vehicle=${c.vehicleId}&source=notification`,
+        },
+      },
+      trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(c.at) },
+    });
+  }
+
+  const room = Math.max(0, MAX_SCHEDULED - documents.length - checkins.length);
+  for (const reminder of selectReminders(collectReminders(), now, room)) {
     await Notifications.scheduleNotificationAsync({
       content: {
         // Addressed to the driver by name where the app has one. The name is

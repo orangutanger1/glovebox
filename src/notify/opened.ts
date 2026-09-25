@@ -17,9 +17,13 @@ import { RESUME_NUDGE_IDS } from "./resume";
  * last response is cleared once read so the next launch does not report it
  * again.
  *
+ * A notification that carries a `url` in its data (check-ins, document
+ * expiries) is also handed to `onOpen`, once per tap, so the caller can route
+ * to the screen it is about. Service reminders carry none and just open the app.
+ *
  * Call once, from boot. Returns the unsubscribe. Never throws.
  */
-export function watchNotificationOpens(): () => void {
+export function watchNotificationOpens(onOpen?: (url: string) => void): () => void {
   const seen = new Set<string>();
 
   function report(response: Notifications.NotificationResponse, cold: boolean): void {
@@ -28,6 +32,14 @@ export function watchNotificationOpens(): () => void {
     if (seen.has(key)) return;
     seen.add(key);
     track("notification_opened", { ...describe(request), cold });
+    const url = request.content.data?.url;
+    if (onOpen && typeof url === "string" && url.startsWith("/")) {
+      try {
+        onOpen(url);
+      } catch {
+        // A route that no longer exists: the app is open, which is most of it.
+      }
+    }
   }
 
   try {
@@ -53,6 +65,14 @@ function describe(request: Notifications.NotificationRequest): Record<string, st
   const nudge = RESUME_NUDGE_IDS.indexOf(request.identifier as (typeof RESUME_NUDGE_IDS)[number]);
   if (nudge >= 0) return { kind: "onboarding_nudge", nudge: nudge + 1 };
   const data = request.content.data ?? {};
+  if (data.kind === "checkin") return { kind: "checkin" };
+  if (data.kind === "document") {
+    return {
+      kind: "document",
+      document_kind: typeof data.documentKind === "string" ? data.documentKind : null,
+      days_left: typeof data.daysLeft === "number" ? data.daysLeft : null,
+    };
+  }
   const serviceType = typeof data.serviceType === "string" ? data.serviceType : null;
   return { kind: "reminder", service_type: serviceType };
 }

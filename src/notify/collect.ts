@@ -3,6 +3,10 @@ import { listRecords } from "../db/records";
 import { getIntervals } from "../db/intervals";
 import { dueStates } from "../schedule/due";
 import { selectReminders, type Reminder } from "./select";
+import { lastReadingAt } from "../db/checkin";
+import { datedDocuments } from "../db/documents";
+import { MAX_CHECKINS, nextCheckinAt } from "../checkin";
+import { expiryAlerts, type DocumentKind } from "../documents";
 
 /**
  * What the app would schedule right now, read from the records.
@@ -71,4 +75,48 @@ export function nextReminder(
   now: number = Date.now(),
 ): Reminder | undefined {
   return nextReminders(vehicleId, 1, now)[0];
+}
+
+export type CheckinReminder = { vehicleId: string; vehicleName: string; at: string };
+
+/**
+ * One odometer check-in per car, soonest first, for at most `MAX_CHECKINS`
+ * cars. See `../checkin` for why the date steps a month at a time.
+ */
+export function collectCheckins(now: number = Date.now()): CheckinReminder[] {
+  return listVehicles()
+    .map((v) => ({ vehicleId: v.id, vehicleName: v.name, at: nextCheckinAt(lastReadingAt(v), now) }))
+    .sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
+    .slice(0, MAX_CHECKINS);
+}
+
+export type DocumentReminder = {
+  documentId: string;
+  vehicleId: string;
+  vehicleName: string;
+  kind: DocumentKind;
+  issuer?: string;
+  expiresAt: string;
+  daysLeft: number;
+  at: string;
+};
+
+/** Every future expiry alert across the garage, soonest first. */
+export function collectDocumentAlerts(now: number = Date.now()): DocumentReminder[] {
+  const out: DocumentReminder[] = [];
+  for (const d of datedDocuments()) {
+    for (const alert of expiryAlerts(d.expires_at, now)) {
+      out.push({
+        documentId: d.id,
+        vehicleId: d.vehicle_id,
+        vehicleName: d.vehicle_name,
+        kind: d.kind,
+        issuer: d.issuer,
+        expiresAt: d.expires_at!,
+        daysLeft: alert.daysLeft,
+        at: alert.at,
+      });
+    }
+  }
+  return out.sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime());
 }
