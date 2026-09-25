@@ -10,6 +10,7 @@ import { tokens } from "../src/design/tokens";
 import { features } from "../src/onboarding/features";
 import { useOnboardingFindings } from "../src/onboarding/usePlan";
 import { nextUp } from "../src/onboarding/plan";
+import { catchupServices } from "../src/onboarding/catchup";
 import { track } from "../src/analytics";
 import { formatDate, formatNumber, t } from "../src/i18n";
 
@@ -62,6 +63,13 @@ export default function Subscribed() {
   }, []);
 
   function onFirstAction() {
+    // Services with nothing on file get one screen of "when was it last
+    // done?" first (see app/catchup.tsx), which lands on the car the same way.
+    if (vehicle && catchupServices(plan).length > 0) {
+      track("first_core_action", { source: "subscribed", action: "catch_up" });
+      router.replace("/catchup" as never);
+      return;
+    }
     track("first_core_action", { source: "subscribed", action: "open_vehicle" });
     // The garage first, then the car on top of it. This screen is the end of
     // onboarding and must not sit behind the car for a back-swipe to walk

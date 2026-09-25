@@ -131,6 +131,7 @@ import OnboardingNotify from "../app/onboarding/notify";
 import OnboardingPaywall from "../app/onboarding/paywall";
 import OnboardingOffer from "../app/onboarding/offer";
 import Subscribed from "../app/subscribed";
+import Catchup from "../app/catchup";
 
 /** Where the year drum opens, which is `app/onboarding/vehicle.tsx`'s own
  *  default: the average car on the road is about twelve years old. */
@@ -1132,9 +1133,21 @@ describe("the screen after a purchase", () => {
     }
   });
 
+  test("the one action asks about unlogged services first, when there are any", () => {
+    const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
+    setOnboardingVehicleId(id);
+
+    press(render(Subscribed), "See the schedule");
+    expect(navigated.at(-1)).toBe("replace:/catchup");
+  });
+
   test("the one action opens the car, not the garage", () => {
     const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
     setOnboardingVehicleId(id);
+    // Every service the catch-up would ask about already has a record.
+    for (const service_type of ["Oil Change", "Tire Rotation", "Brake Inspection", "Air Filter", "Inspection"]) {
+      addRecord({ vehicle_id: id, service_type, performed_at: new Date().toISOString() });
+    }
 
     press(render(Subscribed), "See the schedule");
     // The garage underneath, the car on top: a stack of only the car had no
@@ -1147,6 +1160,52 @@ describe("the screen after a purchase", () => {
     // resumed-and-deleted install reaches. It must not be a dead button.
     press(render(Subscribed), "See the schedule");
     expect(navigated.at(-1)).toBe("replace:/");
+  });
+});
+
+/**
+ * The catch-up after the receipt: one screen of "when was it last done?" for
+ * the common services with nothing on file.
+ */
+describe("the catch-up after a purchase", () => {
+  function answer(tree: TestRenderer.ReactTestRenderer, service: string, when: string): void {
+    const row = tree.root.findAll(
+      (n) => typeof n.type === "function" && n.type.name === "ChipRow" && n.props.legend === serviceName(service),
+    )[0];
+    act(() => row.props.onPress(when));
+  }
+
+  test("files a record for each answered service, at the stated age, and lands on the car", () => {
+    const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
+    setOnboardingVehicleId(id);
+
+    const tree = render(Catchup);
+    answer(tree, "Oil Change", "3 months ago");
+    answer(tree, "Tire Rotation", "Over a year ago");
+    answer(tree, "Brake Inspection", "Not sure");
+    press(tree, t("subscribed.catchup.save"));
+
+    const records = listRecords(id);
+    const byType = new Map(records.map((r) => [r.service_type, r]));
+    expect([...byType.keys()].sort()).toEqual(["Oil Change", "Tire Rotation"]);
+    const ageDays = (iso: string) => Math.round((Date.now() - new Date(iso).getTime()) / 86_400_000);
+    expect(ageDays(byType.get("Oil Change")!.performed_at)).toBeGreaterThanOrEqual(89);
+    expect(ageDays(byType.get("Oil Change")!.performed_at)).toBeLessThanOrEqual(91);
+    // Counted back from today's reading, not filed at it.
+    expect(byType.get("Oil Change")!.odometer).toBeLessThan(90_000);
+    expect(navigated.slice(-2)).toEqual(["replace:/", `/vehicle/${id}`]);
+  });
+
+  test("skipping files nothing and still lands on the car", () => {
+    const id = createVehicle({ name: "2019 Toyota", year: 2019, odometer: 90_000 }).id;
+    setOnboardingVehicleId(id);
+
+    const tree = render(Catchup);
+    answer(tree, "Oil Change", "3 months ago");
+    press(tree, t("subscribed.catchup.skip"));
+
+    expect(listRecords(id)).toEqual([]);
+    expect(navigated.slice(-2)).toEqual(["replace:/", `/vehicle/${id}`]);
   });
 });
 

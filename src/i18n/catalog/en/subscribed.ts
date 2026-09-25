@@ -20,4 +20,9 @@ export const subscribed: Fragment = {
   // several, but the schedule this user just paid to be warned about is on the
   // car itself.
   "subscribed.cta": "See the schedule",
+  "subscribed.catchup.title": "Fill in the gaps.",
+  "subscribed.catchup.body": "When was each of these last done? A rough answer is fine — it turns “No record” into a real due date.",
+  "subscribed.catchup.overYear": "Over a year ago",
+  "subscribed.catchup.save": "Save my history",
+  "subscribed.catchup.skip": "Skip for now",
 };

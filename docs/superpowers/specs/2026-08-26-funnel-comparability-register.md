@@ -592,3 +592,16 @@ fewer taps: the screen no longer leads with the smaller number.
 `restore_attempted` from Settings. See the event taxonomy. `presentPaywall`
 sources at the add-vehicle and Settings gates are `add_vehicle`,
 `settings_intervals`, `settings_upgrade` (were `gate`).
+
+### 2026-09-25 — a catch-up screen after the receipt, and the subscriber's rating ask moves
+
+**New route `catchup`, after `subscribed`.** "When was each of these last done?"
+for up to four common services with nothing on file (oil, tires, brakes, air
+filter, inspection — in that order), answers filed as backdated records. Shown
+only when there is something to ask. **`first_core_action` from `subscribed` now
+reports `action: "catch_up"`** when it routes there (was always `open_vehicle`).
+New: `history_catchup {outcome: saved|skipped, asked, answered, filed}`.
+
+**The subscriber's extra rating ask** moved from their first tap on the car to
+their first saved service or fill-up. `review_prompt` `trigger` is `first_log`
+(the `first_action` value shipped for one day and never again).
