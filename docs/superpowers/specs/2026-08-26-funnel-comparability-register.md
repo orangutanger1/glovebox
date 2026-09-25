@@ -652,3 +652,10 @@ document, build the widget before document photos.
 - **Overlap with `onboarding_payoff`:** the `none` arm skips the schedule page but now sees a small schedule on the paywall, so the difference between arms is smaller. Treat a narrowed payoff gap after 09-25 as possibly this change.
 - It stacks with the exit-offer price change (OTA `01a0d5a2`, same day). Fewer people reaching the offer changes its volume, not its tap → paid rate.
 - Read ~10/01: tap rate on the main paywall, and the share of "try_first" answers.
+
+### 2026-09-24 — the paywall preview becomes an A/B test (OTA `01a0d6ca`, commit 5282938)
+
+- New experiment `paywall_preview`: `points` (control, the three benefit rows the paywall had before `01a0d651`) or `preview` (the car's plan). Only fresh installs are assigned; everyone else sees `points`.
+- Between OTA `01a0d651` and this one (a few hours on 09-24), every installation saw the preview. Leave those installs out of both arms. They have no `paywall_preview` row, so they fall out of the count automatically.
+- Metric: main-paywall `paywall_presented` → `paywall_purchase_started`, per person, by arm. Read ~10-08, split `preview` by `dated` / `undated`.
+- `docs/DECISIONS.md` now holds the conclusions (decided, rejected, read dates). This register remains the ship log.

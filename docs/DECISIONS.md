@@ -10,7 +10,7 @@ What shipped and when, and how each release affects the funnel numbers, is in
 log). Event names are in `docs/superpowers/specs/2026-08-29-onboarding-event-taxonomy.md`.
 This file keeps only the conclusions.
 
-Last updated: 2026-09-24.
+Last updated: 2026-09-24 (A/B live in OTA `01a0d6ca`).
 
 ---
 
