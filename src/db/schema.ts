@@ -165,6 +165,33 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
       UPDATE vehicles SET odometer_dash = odometer WHERE odometer IS NOT NULL;
     `,
   },
+  // The glovebox: insurance, registration and the other papers a car carries,
+  // kept as the facts on them (who issued it, its number, when it lapses)
+  // rather than as a photo — a picture needs a camera module this binary does
+  // not ship. `expires_at` is nullable because a warranty booklet or a
+  // roadside card may simply not lapse, and a guessed date would fire a
+  // reminder about a deadline that does not exist. `vehicle_id` is required:
+  // every kind here belongs to one car, and a document with no car would have
+  // no screen to live on.
+  {
+    version: 10,
+    sql: `
+      CREATE TABLE IF NOT EXISTS documents (
+        id TEXT PRIMARY KEY NOT NULL,
+        vehicle_id TEXT NOT NULL,
+        kind TEXT NOT NULL,
+        issuer TEXT,
+        number TEXT,
+        expires_at TEXT,
+        notes TEXT,
+        deleted_at TEXT,
+        created_at TEXT NOT NULL
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_documents_vehicle
+        ON documents (vehicle_id, expires_at);
+    `,
+  },
 ];
 
 /**

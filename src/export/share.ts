@@ -1,8 +1,9 @@
 import { Paths, File } from "expo-file-system";
 import * as Sharing from "expo-sharing";
-import { toCsv, toFuelCsv } from "./csv";
+import { toCsv, toDocumentsCsv, toFuelCsv } from "./csv";
 import { allRecordsForExport } from "../db/records";
 import { allFuelForExport } from "../db/fuel";
+import { allDocumentsForExport } from "../db/documents";
 
 /** Filename and stamp stay ASCII and ISO in every language: these travel into
  *  Files, Mail attachments and other people's spreadsheets, where a localised
@@ -23,7 +24,7 @@ async function share(file: File): Promise<void> {
 }
 
 /**
- * Two sheets, shared one after the other.
+ * Up to three sheets, shared one after the other.
  *
  * `Sharing.shareAsync` takes one URI, and zipping the pair would hand a
  * spreadsheet user an archive to unpack instead of a file to open. The services
@@ -37,6 +38,10 @@ export async function exportAndShare(): Promise<void> {
   // Only when there is something in it. A garage that has never logged a fill
   // was handed a second share sheet for a file holding one header row.
   const fills = allFuelForExport();
-  if (fills.length === 0) return;
-  await share(write(`car-fuel-${stamp}.csv`, toFuelCsv(fills)));
+  if (fills.length > 0) await share(write(`car-fuel-${stamp}.csv`, toFuelCsv(fills)));
+  // The glovebox last, under the same rule: no papers, no third sheet.
+  const documents = allDocumentsForExport();
+  if (documents.length > 0) {
+    await share(write(`car-documents-${stamp}.csv`, toDocumentsCsv(documents)));
+  }
 }

@@ -53,6 +53,10 @@ const SAMPLES: Record<string, string | number> = {
   price: "$4.99",
   intro: "$0.99",
   pct: 38,
+  reading: "51,771",
+  detail: "Geico",
+  when: "Expires 14 Sep 2026",
+  document: "Insurance",
 };
 
 const varsFor = (key: string, count?: number): Vars => {
@@ -136,8 +140,9 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //   it paywall.privacy         Italian uses the English loanword "Privacy"
     //   nl paywall.per.week        Dutch "per week" is spelled the same as English
     //   *  survey.source.(tiktok|instagram|youtube)  brand names, never translated
+    //   documents.row.detail       a pure template: "{detail} · {when}"
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$|^survey\.source\.(tiktok|instagram|youtube)$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$|^survey\.source\.(tiktok|instagram|youtube)$|^documents\.row\.detail$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

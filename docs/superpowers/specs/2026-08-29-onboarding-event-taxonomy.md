@@ -142,7 +142,7 @@ a reminder brought anyone back, or whether a rating prompt was ever asked.
 | `service_logged` | A service record is saved | `service_type`, `backdated`, `has_odometer`, `has_cost`, `has_notes` |
 | `vehicle_added` | A vehicle is added from the garage (not onboarding) | `has_odometer` |
 | `data_exported` | CSV export from Settings | `outcome` = `shared` \| `failed` |
-| `notification_opened` | A reminder or resume nudge is tapped | `kind` = `reminder` \| `onboarding_nudge`, `service_type` \| `nudge`, `cold` |
+| `notification_opened` | A reminder, nudge, check-in or document alert is tapped | `kind` = `reminder` \| `onboarding_nudge` \| `checkin` \| `document`, `service_type` \| `nudge` \| `document_kind` + `days_left`, `cold` |
 | `settings_action` | A Settings row that does something | `action` = `reminders` \| `intervals` \| `upgrade` \| `manage` \| `replay_onboarding` \| `units`, plus `permission` / `to` |
 | `customer_center_option` | An option picked inside RevenueCat's Customer Center | `option` (`cancel`, `refund_request`, `custom_url`, …) |
 | `customer_center_survey` | Customer Center's own survey answered | `option` |
@@ -154,6 +154,8 @@ a reminder brought anyone back, or whether a rating prompt was ever asked.
 | `recall_check` | A recall lookup went to NHTSA (cached answers send nothing) | `status` = `found` \| `none` \| `unavailable` \| `error`, `count` |
 | `recall_opened` / `recall_vin_check` | A recall expanded / the VIN-check link tapped | `campaign`, `park_it` |
 | `feedback_opened` | Feedback form opened from the win-back screen | `source` |
+| `odometer_checkin` | The monthly odometer check-in is answered (notification or car screen) | `source` = `notification` \| `vehicle`, `changed`, `had_reading`, `moved` = `<250` \| `250-1000` \| `1000-2500` \| `2500+` \| null |
+| `document_saved` / `document_deleted` | A glovebox document is added, edited or deleted | `kind`, `is_new`, `has_expiry`, `has_issuer`, `has_number` (never the values) |
 
 `presentPaywall` sources are now named at the gates that had none: `add_vehicle`,
 `settings_intervals`, `settings_upgrade` (was `gate`). The fuel-card gate still says `gate`.

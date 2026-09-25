@@ -1,4 +1,6 @@
 import type { Entry, Fragment } from "../types";
+import { checkin } from "./checkin";
+import { documents } from "./documents";
 import { evidence } from "./evidence";
 import { features } from "./features";
 import { fuel } from "./fuel";
@@ -38,6 +40,8 @@ import { vehicleForms } from "./vehicleForms";
  * that the sum of the fragment sizes equals the size of the merge.
  */
 export const FRAGMENTS: Record<string, Fragment> = {
+  checkin,
+  documents,
   evidence,
   features,
   fuel,

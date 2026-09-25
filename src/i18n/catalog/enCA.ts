@@ -33,4 +33,7 @@ export const enCA: Fragment = {
 
   "service.Registration": "Plate Renewal",
   "service.Inspection": "Safety Inspection",
+  // The glovebox, in this market's words.
+  "documents.kind.inspection": "Safety inspection",
+  "documents.kind.license": "Driver's licence",
 };

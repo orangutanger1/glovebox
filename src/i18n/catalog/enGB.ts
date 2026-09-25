@@ -61,4 +61,9 @@ export const enGB: Fragment = {
   "pain.bills.headline": "A skipped service is not saved money",
   "pain.resale.body":
     "The buyer discounts what you cannot show them, and so does the dealer taking it in part-exchange. The car is only worth what you can prove about it.",
+  // The glovebox, in this market's words.
+  "documents.kind.registration": "V5C logbook",
+  "documents.kind.inspection": "MOT certificate",
+  "documents.kind.license": "Driving licence",
+  "documents.empty": "Insurance, V5C, MOT and more, with a reminder before they expire.",
 };

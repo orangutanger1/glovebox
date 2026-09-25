@@ -129,4 +129,9 @@ export const esMX: Fragment = {
   "vehicleForms.new.odometer": "Odómetro actual ({unit})",
   "vehicleForms.log.odometer": "Odómetro ({unit})",
   "vehicleForms.log.cost": "Costo (opcional)",
+  // The glovebox, in this market's words.
+  "documents.kind.registration": "Tarjeta de circulación",
+  "documents.kind.inspection": "Verificación",
+  "documents.kind.license": "Licencia de manejo",
+  "documents.empty": "Seguro, tarjeta de circulación y más, con un aviso antes de que venzan.",
 };

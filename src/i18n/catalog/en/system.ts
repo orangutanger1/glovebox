@@ -97,6 +97,10 @@ export const system: Fragment = {
   "system.csv.fuel.full": "Full tank",
   "system.csv.cell.yes": "Yes",
   "system.csv.cell.no": "No",
+  "system.csv.doc.kind": "Document",
+  "system.csv.doc.issuer": "Issued by",
+  "system.csv.doc.number": "Number",
+  "system.csv.doc.expires": "Expires",
 
   "system.quickaction.trial.title": "Try Pro",
   "system.quickaction.trial.subtitle": "A year of Pro at the offer price",

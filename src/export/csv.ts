@@ -114,3 +114,48 @@ export function toFuelCsv(rows: FuelCsvRow[]): string {
   }
   return lines.join("\n") + "\n";
 }
+
+export type DocumentCsvRow = {
+  vehicle_name: string;
+  kind: string;
+  issuer?: string | null;
+  number?: string | null;
+  expires_at?: string | null;
+  notes?: string | null;
+  deleted_at?: string | null;
+};
+
+/**
+ * Glovebox documents, as a third file, under the same rules: the kind cell is
+ * the stored English key ("insurance"), the date is ISO, and only the header
+ * row is translated.
+ */
+function documentHeader(): string[] {
+  return [
+    t("system.csv.header.vehicle"),
+    t("system.csv.doc.kind"),
+    t("system.csv.doc.issuer"),
+    t("system.csv.doc.number"),
+    t("system.csv.doc.expires"),
+    t("system.csv.header.notes"),
+    t("system.csv.header.deleted"),
+  ];
+}
+
+export function toDocumentsCsv(rows: DocumentCsvRow[]): string {
+  const lines = [documentHeader().join(",")];
+  for (const r of rows) {
+    lines.push(
+      [
+        cell(r.vehicle_name),
+        cell(r.kind),
+        cell(r.issuer),
+        cell(r.number),
+        cell(r.expires_at ? localDay(r.expires_at) : ""),
+        cell(r.notes),
+        cell(r.deleted_at ? t("system.csv.cell.deleted") : ""),
+      ].join(",")
+    );
+  }
+  return lines.join("\n") + "\n";
+}

@@ -40,17 +40,26 @@ export function DateWheel({
   /** How far back the year drum goes. Ten years covers the service history
    *  anyone is entering by hand on a phone. */
   yearsBack = 10,
+  /** How far forward it goes. Zero for everything that already happened (a
+   *  service, a fill); an expiry date is the one thing entered here that is
+   *  usually in the future. */
+  yearsAhead = 0,
   today = new Date(),
 }: {
   value: DateParts;
   onChange: (p: DateParts) => void;
   yearsBack?: number;
+  yearsAhead?: number;
   today?: Date;
 }) {
-  const maxYear = today.getFullYear();
+  const maxYear = today.getFullYear() + yearsAhead;
+  const minYear = today.getFullYear() - yearsBack;
+  // The latest date any drum may land on: today for a past-only wheel, the
+  // last day of the last year on the drum for one that looks ahead.
+  const max = yearsAhead > 0 ? new Date(maxYear, 11, 31) : today;
   const years = useMemo(
-    () => Array.from({ length: yearsBack + 1 }, (_, i) => maxYear - yearsBack + i),
-    [maxYear, yearsBack]
+    () => Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i),
+    [minYear, maxYear]
   );
   const days = useMemo(
     () => Array.from({ length: daysInMonth(value.year, value.month) }, (_, i) => String(i + 1)),
@@ -64,7 +73,7 @@ export function DateWheel({
   // (Jan 31 → Feb) or push it into the future (last year → this year, in a
   // month that hasn't come round yet), and both are corrected the same way.
   function set(next: Partial<DateParts>) {
-    onChange(clampDateParts({ ...value, ...next }, today));
+    onChange(clampDateParts({ ...value, ...next }, max));
   }
 
   return (

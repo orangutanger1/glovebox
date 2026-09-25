@@ -113,4 +113,8 @@ export const frCA: Fragment = {
   // "voiture" is the base French word; Québec says "auto", and the paywall
   // headline is where the noun is spoken aloud.
   "offer.paywall.title": "Ne manquez plus jamais un entretien.",
+  // The glovebox, in this market's words.
+  "documents.kind.registration": "Certificat d'immatriculation",
+  "documents.kind.inspection": "Inspection mécanique",
+  "documents.empty": "Assurance, immatriculation et plus, avec un rappel avant l'échéance.",
 };

@@ -56,4 +56,9 @@ export const enAU: Fragment = {
 
   "vehicle.body.wagon": "Estate",
   "vehicle.body.pickup": "Ute",
+  // The glovebox, in this market's words.
+  "documents.kind.registration": "Rego papers",
+  "documents.kind.inspection": "Roadworthy certificate",
+  "documents.kind.license": "Driver's licence",
+  "documents.empty": "Insurance, rego and more, with a reminder before they expire.",
 };
