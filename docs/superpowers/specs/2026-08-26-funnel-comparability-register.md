@@ -642,3 +642,13 @@ cannot be attributed to any single one of the five changes; per-feature usage
 can (`history_catchup`, `recall_check`, `odometer_checkin`, `document_saved`).
 Read ~2026-10-02. Decision rule set on ship: if under 10% of buyers save a
 document, build the widget before document photos.
+
+### 2026-09-24 — the onboarding paywall previews the car's plan (OTA `01a0d651`, commit 4ff5e67)
+
+- The three benefit rows under the paywall headline are replaced by "Coming up for {car}": one service with its due date and status, two more by name marked "Date and reminder with Pro", and "+N more services". The price list, button, close delay and chips are unchanged.
+- Why: "try it first" is the second-largest objection (after price), and 83 of 184 main-paywall closers left 5–8 s in, just after the close appears at 4 s. A free trial was ruled out: monthly (3/6 set to cancel) and the old $0.99 week (2/2 gone) show short commitments churn, while yearly renews 5/6.
+- Baseline 09-19 → 09-24: main paywall presented → buy tap 19/264 (7%), tap → paid 8/19.
+- `paywall_presented` (offering `current`) now carries `preview` = `dated` | `undated` | `none`. Split by it: "not sure" on the service question gives an undated open row.
+- **Overlap with `onboarding_payoff`:** the `none` arm skips the schedule page but now sees a small schedule on the paywall, so the difference between arms is smaller. Treat a narrowed payoff gap after 09-25 as possibly this change.
+- It stacks with the exit-offer price change (OTA `01a0d5a2`, same day). Fewer people reaching the offer changes its volume, not its tap → paid rate.
+- Read ~10/01: tap rate on the main paywall, and the share of "try_first" answers.
