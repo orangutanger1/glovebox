@@ -168,6 +168,21 @@ export const it: Fragment = {
   "offer.paywall.dueNow": "In ritardo oggi",
   "offer.paywall.nextUp": "Prossimo avviso",
   "offer.paywall.none": "Nessuno",
+  "offer.paywall.point.tracked.title": "{vehicle} è a libretto",
+  "offer.paywall.point.tracked.subtitle": {
+    one: "{count} intervento seguito, per data e per chilometri",
+    other: "{count} interventi seguiti, per data e per chilometri",
+  },
+  "offer.paywall.point.due.title": {
+    one: "{count} intervento scaduto oggi",
+    other: "{count} interventi scaduti oggi",
+  },
+  "offer.paywall.point.due.subtitle": "Prossimo avviso {date}",
+  "offer.paywall.point.due.noNext": "Nessun avviso necessario per ora",
+  "offer.paywall.point.history.title": "Lo storico completo quando vendi",
+  "offer.paywall.point.history.subtitle": "Ogni intervento, costo e lettura, conservato per sempre ed esportabile.",
+  "offer.paywall.point.reminders.title": "Un promemoria prima di ognuno",
+  "offer.paywall.point.reminders.subtitle": "Il giorno della scadenza, senza insistere.",
   "offer.paywall.preview.legend": "In arrivo per {vehicle}",
   "offer.paywall.preview.locked": "Data e promemoria con Pro",
   "offer.paywall.preview.more": {

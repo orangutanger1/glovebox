@@ -185,6 +185,21 @@ export const fr: Fragment = {
   "offer.paywall.dueNow": "En retard",
   "offer.paywall.nextUp": "Prochaine alerte",
   "offer.paywall.none": "Aucun",
+  "offer.paywall.point.tracked.title": "{vehicle} est consignée",
+  "offer.paywall.point.tracked.subtitle": {
+    one: "{count} entretien suivi, par date et par distance",
+    other: "{count} entretiens suivis, par date et par distance",
+  },
+  "offer.paywall.point.due.title": {
+    one: "{count} entretien en retard aujourd’hui",
+    other: "{count} entretiens en retard aujourd’hui",
+  },
+  "offer.paywall.point.due.subtitle": "Prochaine alerte {date}",
+  "offer.paywall.point.due.noNext": "Aucune alerte nécessaire pour l’instant",
+  "offer.paywall.point.history.title": "Un historique complet à la revente",
+  "offer.paywall.point.history.subtitle": "Chaque entretien, coût et relevé, conservé pour toujours et exportable.",
+  "offer.paywall.point.reminders.title": "Un rappel avant chacun",
+  "offer.paywall.point.reminders.subtitle": "Le jour de l’échéance, jamais de relance.",
   "offer.paywall.preview.legend": "À venir pour {vehicle}",
   "offer.paywall.preview.locked": "Date et rappel avec Pro",
   "offer.paywall.preview.more": {

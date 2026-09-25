@@ -260,6 +260,8 @@ afterEach(() => {
 // Civic typed three tests earlier.
 beforeEach(() => {
   resetOnboarding();
+  // Back to control; the preview arm is opted into per test.
+  setState("experiment.paywall_preview", "points");
 });
 
 test("nothing in the flow sells the free tier", () => {
@@ -286,13 +288,32 @@ test("nothing in the flow sells the free tier", () => {
   expect(texts(render(OnboardingPaywall))).toContain(t("paywall.cta.year"));
 });
 
-test("the paywall names what is bought, and previews this car's plan", () => {
+test("the paywall's control arm names what is bought, and leaves the schedule to the ask", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
     odometer: 96500,
   });
   setOnboardingVehicleId(car.id);
+
+  // Unassigned reads as control: the three benefit rows, no preview.
+  const printed = texts(render(OnboardingPaywall));
+  expect(printed.join(" ")).toContain(t("offer.paywall.point.tracked.title", { vehicle: "2014 Ford F-150" }));
+  expect(printed.join(" ")).toContain(t("offer.paywall.point.reminders.title"));
+  // A fresh install has nothing overdue: the history row, not an empty congratulation.
+  expect(printed.join(" ")).toContain(t("offer.paywall.point.history.title"));
+  expect(printed).not.toContain(t("offer.paywall.preview.locked"));
+  expect(printed).not.toContain(serviceName("Air Filter"));
+});
+
+test("the paywall's preview arm names what is bought, and previews this car's plan", () => {
+  const car = createVehicle({
+    name: "2014 Ford F-150",
+    year: 2014,
+    odometer: 96500,
+  });
+  setOnboardingVehicleId(car.id);
+  setState("experiment.paywall_preview", "preview");
 
   const printed = texts(render(OnboardingPaywall));
   // The headline is the promise; the preview evidences it against this car;
@@ -319,6 +340,7 @@ test("the paywall's open row is the service the app can date", () => {
   const done = new Date();
   done.setMonth(done.getMonth() - 2);
   addRecord({ vehicle_id: car.id, service_type: "Oil Change", performed_at: done.toISOString(), odometer: 95000 });
+  setState("experiment.paywall_preview", "preview");
 
   const printed = texts(render(OnboardingPaywall));
   const at = printed.indexOf(serviceName("Oil Change"));

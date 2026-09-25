@@ -31,21 +31,26 @@ import {
 import { getDb } from "../src/db/client";
 import { getState, setState } from "../src/db/state";
 
-const UNASSIGNED = { exp_onboarding_symptoms: "unassigned", exp_onboarding_payoff: "unassigned" };
+const UNASSIGNED = {
+  exp_onboarding_symptoms: "unassigned",
+  exp_onboarding_payoff: "unassigned",
+  exp_paywall_preview: "unassigned",
+};
 
 beforeEach(() => {
   tracked.length = 0;
   getDb().runSync("DELETE FROM app_state", []);
 });
 
-test("the registry holds two experiments with two variants each", () => {
+test("the registry holds three experiments with two variants each", () => {
   expect(EXPERIMENTS.onboarding_symptoms).toEqual(["control", "no_symptoms"]);
   expect(EXPERIMENTS.onboarding_payoff).toEqual(["condensed", "none"]);
+  expect(EXPERIMENTS.paywall_preview).toEqual(["points", "preview"]);
 });
 
 test("a fresh install is assigned once, persisted, and never re-flipped", () => {
   const first = assignExperiments(true, () => 0.99);
-  expect(first).toEqual({ onboarding_symptoms: "no_symptoms", onboarding_payoff: "none" });
+  expect(first).toEqual({ onboarding_symptoms: "no_symptoms", onboarding_payoff: "none", paywall_preview: "preview" });
   expect(getState("experiment.onboarding_symptoms")).toBe("no_symptoms");
   expect(getVariant("onboarding_symptoms")).toBe("no_symptoms");
   expect(getVariant("onboarding_payoff")).toBe("none");
@@ -58,6 +63,10 @@ test("a fresh install is assigned once, persisted, and never re-flipped", () => 
       event: "experiment_assigned",
       props: { experiment: "onboarding_payoff", variant: "none" },
     },
+    {
+      event: "experiment_assigned",
+      props: { experiment: "paywall_preview", variant: "preview" },
+    },
   ]);
 
   // Same install, next launch, still on welcome: the coin is not tossed again.
@@ -65,7 +74,7 @@ test("a fresh install is assigned once, persisted, and never re-flipped", () => 
   expect(second).toEqual({});
   expect(getVariant("onboarding_symptoms")).toBe("no_symptoms");
   expect(getVariant("onboarding_payoff")).toBe("none");
-  expect(tracked).toHaveLength(2);
+  expect(tracked).toHaveLength(3);
 });
 
 test("the flip honours the random source", () => {
@@ -87,9 +96,10 @@ test("an install assigned under the one-experiment build is not re-flipped, and 
   expect(experimentProperties()).toEqual({
     exp_onboarding_symptoms: "control",
     exp_onboarding_payoff: "unassigned",
+    exp_paywall_preview: "unassigned",
   });
-  // Fresh and eligible with one row already: only the missing coin is tossed.
-  expect(assignExperiments(true, () => 0.99)).toEqual({ onboarding_payoff: "none" });
+  // Fresh and eligible with one row already: only the missing coins are tossed.
+  expect(assignExperiments(true, () => 0.99)).toEqual({ onboarding_payoff: "none", paywall_preview: "preview" });
   expect(getVariant("onboarding_symptoms")).toBe("control");
 });
 
@@ -107,6 +117,7 @@ test("properties carry the stored variant", () => {
   expect(experimentProperties()).toEqual({
     exp_onboarding_symptoms: "control",
     exp_onboarding_payoff: "condensed",
+    exp_paywall_preview: "unassigned",
   });
 });
 
@@ -121,6 +132,7 @@ test("a stored value outside the variant list reads as unassigned", () => {
   expect(getState("experiment.onboarding_symptoms")).toBe("half_symptoms");
   expect(tracked).toEqual([
     { event: "experiment_assigned", props: { experiment: "onboarding_payoff", variant: "condensed" } },
+    { event: "experiment_assigned", props: { experiment: "paywall_preview", variant: "points" } },
   ]);
 });
 

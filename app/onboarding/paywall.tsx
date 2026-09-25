@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import { tokens } from "../../src/design/tokens";
-import { t } from "../../src/i18n";
+import { Check } from "../../src/design/Check";
+import { formatDate, t } from "../../src/i18n";
+import { nextUp, type Plan as MaintenancePlan } from "../../src/onboarding/plan";
+import { getVariant } from "../../src/experiments";
 import { restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
 import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
@@ -54,6 +57,8 @@ export default function OnboardingPaywall() {
   const [msg, setMsg] = useState<string | null>(null);
 
   const mounted = useRef(Date.now());
+  // Unassigned installs (mid-flow when the test shipped) see the control.
+  const showPreview = getVariant("paywall_preview") === "preview";
 
   // Shown once per mount, in the sheet's vocabulary, so the funnel's
   // `paywall_shown → paywall_presented` step keeps meaning "tapped → drawn".
@@ -64,11 +69,12 @@ export default function OnboardingPaywall() {
     if (plans) {
       // Whether the preview's open row had a date to show: a "not sure" on
       // the service question leaves it undated, and the two may read apart.
-      const open = previewOpen(plan);
+      // Absent on the `points` arm, which draws no preview.
+      const open = showPreview ? previewOpen(plan) : undefined;
       track("paywall_presented", {
         offering: "current",
         ms: Date.now() - mounted.current,
-        preview: open?.dueAt ? "dated" : open ? "undated" : "none",
+        ...(showPreview && { preview: open?.dueAt ? "dated" : open ? "undated" : "none" }),
       });
     }
   }, [plans]);
@@ -154,11 +160,68 @@ export default function OnboardingPaywall() {
         </>
       }
     >
-      <PlanPreview plan={plan} vehicleName={vehicleName} unit={getDistanceUnit()} />
+      {showPreview ? (
+        <PlanPreview plan={plan} vehicleName={vehicleName} unit={getDistanceUnit()} />
+      ) : (
+        <BenefitPoints plan={plan} vehicleName={vehicleName} />
+      )}
 
       <IncludedStrip />
 
       <ReviewCard />
     </OnboardingScreen>
+  );
+}
+
+/**
+ * The `points` arm of `paywall_preview`: three rows that evidence the promise
+ * against this car, as the paywall drew them until 2026-09-24.
+ *
+ * The middle row is the overdue count when there is one. When there is not,
+ * which on a fresh install is always, it is the history benefit instead:
+ * "nothing overdue today" was true only because nothing had been logged,
+ * and a paywall congratulating an empty record is not evidence of anything.
+ */
+function BenefitPoints({ plan, vehicleName }: { plan: MaintenancePlan; vehicleName: string }) {
+  const next = nextUp(plan);
+  const middle =
+    plan.pastDue > 0
+      ? {
+          title: t("offer.paywall.point.due.title", { count: plan.pastDue }),
+          subtitle: next?.dueAt
+            ? t("offer.paywall.point.due.subtitle", { date: formatDate(next.dueAt) })
+            : t("offer.paywall.point.due.noNext"),
+        }
+      : {
+          title: t("offer.paywall.point.history.title"),
+          subtitle: t("offer.paywall.point.history.subtitle"),
+        };
+
+  const points: { title: string; subtitle: string }[] = [
+    {
+      title: t("offer.paywall.point.tracked.title", { vehicle: vehicleName }),
+      subtitle: t("offer.paywall.point.tracked.subtitle", { count: plan.items.length }),
+    },
+    middle,
+    {
+      title: t("offer.paywall.point.reminders.title"),
+      subtitle: t("offer.paywall.point.reminders.subtitle"),
+    },
+  ];
+
+  return (
+    <View style={{ gap: tokens.space.sm + 2 }}>
+      {points.map((point) => (
+        <View key={point.title} style={{ flexDirection: "row", alignItems: "flex-start", gap: tokens.space.sm }}>
+          <View style={{ paddingTop: 1 }}>
+            <Check size={14} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }}>{point.title}</Text>
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>{point.subtitle}</Text>
+          </View>
+        </View>
+      ))}
+    </View>
   );
 }

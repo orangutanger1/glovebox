@@ -45,6 +45,23 @@ export const offer: Fragment = {
   // service with its date, the next ones by name with what Pro does for them.
   // It replaced three benefit rows on 2026-09-24; "try it first" was the
   // second answer to "what stopped you?", and this is the try on the page.
+  // The three benefit rows: the `points` arm of `paywall_preview`, and
+  // what the paywall showed before the preview.
+  "offer.paywall.point.tracked.title": "{vehicle} on record",
+  "offer.paywall.point.tracked.subtitle": {
+    one: "{count} service tracked, by date and by distance",
+    other: "{count} services tracked, by date and by distance",
+  },
+  "offer.paywall.point.due.title": {
+    one: "{count} service overdue today",
+    other: "{count} services overdue today",
+  },
+  "offer.paywall.point.due.subtitle": "Next warning {date}",
+  "offer.paywall.point.due.noNext": "No warning needed yet",
+  "offer.paywall.point.history.title": "A full history when you sell",
+  "offer.paywall.point.history.subtitle": "Every service, cost and reading, kept forever and exportable.",
+  "offer.paywall.point.reminders.title": "A reminder before each service",
+  "offer.paywall.point.reminders.subtitle": "On the day it comes due, and never a nag.",
   "offer.paywall.preview.legend": "Coming up for {vehicle}",
   "offer.paywall.preview.locked": "Date and reminder with Pro",
   "offer.paywall.preview.more": {

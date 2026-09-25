@@ -32,6 +32,13 @@ export const EXPERIMENTS = {
   // There is no arm that keeps the old pair. Pulled 2026-09-18 on 4/23 vs
   // 0/15 paid, put back 2026-09-19 to run longer: too few installs to call.
   onboarding_payoff: ["condensed", "none"],
+  // What sits under the onboarding paywall's headline. "points" is the three
+  // benefit rows it carried until 2026-09-24; "preview" is this car's plan,
+  // one service dated and the next ones by name behind Pro — the answer to
+  // "I want to try it first" that is not a free trial. Shipped to everyone
+  // for a few hours as OTA 01a0d651, then split. See
+  // docs/DECISIONS.md.
+  paywall_preview: ["points", "preview"],
 } as const;
 
 export type ExperimentName = keyof typeof EXPERIMENTS;

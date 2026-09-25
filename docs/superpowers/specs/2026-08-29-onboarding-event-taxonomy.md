@@ -26,7 +26,7 @@ same thing, **the shipped name stays** and the mapping is recorded here.
 | `vehicle_entry` | Vehicle/odometer field focused or skipped | `field`, `event` |
 | `notification_permission` | The reminder ask resolves | `outcome` |
 | `paywall_shown` | The paywall route is reached | — |
-| `paywall_presented` | The RevenueCat sheet actually appeared | On the onboarding paywall since 2026-09-24: `preview` = `dated` \| `undated` \| `none`, whether the plan preview's open row carried a due date |
+| `paywall_presented` | The RevenueCat sheet actually appeared | On the onboarding paywall, `paywall_preview` = `preview` arm only: `preview` = `dated` \| `undated` \| `none`, whether the plan preview's open row carried a due date |
 | `paywall_closed` | The sheet was dismissed | — |
 | `paywall_unavailable` / `paywall_unconfigured` | The sheet could not present | — |
 | `paywall_stalled` | 8s after the CTA with the sheet neither up nor failed | `offering`, `ms` |
