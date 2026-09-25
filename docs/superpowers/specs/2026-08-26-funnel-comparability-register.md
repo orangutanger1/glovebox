@@ -605,3 +605,40 @@ New: `history_catchup {outcome: saved|skipped, asked, answered, filed}`.
 **The subscriber's extra rating ask** moved from their first tap on the car to
 their first saved service or fill-up. `review_prompt` `trigger` is `first_log`
 (the `first_action` value shipped for one day and never again).
+
+### 2026-09-24 — design tidy, a monthly odometer check-in, and the glovebox (OTAs `01a0d61e`, `01a0d640`)
+
+**Design tidy (`ff35e2c`, OTA `01a0d61e`).** `textFaint` 0.38 → 0.50 app-wide,
+which includes the onboarding screens in the 2×2 test; both arms get it, so the
+arms stay comparable, but a small lift in any onboarding step that day is not
+a test effect. The garage's Insights row moved below Coming up / Quick log; the
+car screen's gutter went 16 → 24pt. No event changed.
+
+**Monthly odometer check-in (`e405dc1`, OTA `01a0d640`).** A new scheduled
+notification per car (max 5), 10:00 local, 30 days after its last reading
+(answered check-in, service with mileage, fill-up, or the car's creation),
+stepping a month at a time when ignored. Most existing installs have no reading
+in the last 30 days, so **the first wave fires within a day or two of the OTA**:
+expect a one-off jump in `notification_opened` and in day-N opens around
+2026-09-25/26 that is the backlog, not a trend. New: `odometer_checkin
+{source: notification|vehicle, changed, had_reading, moved}`;
+`notification_opened` gains `kind: checkin`. A tap routes to `/checkin` and
+**skips the win-back on that launch**, so `winback_shown` can dip slightly.
+
+**Glovebox documents (`4c8046d`, same OTA).** New `documents` table (migration
+10), a Glovebox section on the car screen above Fuel, `/vehicle/[id]/document`,
+and reminders 30 and 7 days before an expiry (`notification_opened` `kind:
+document`). Text only; photos need a native build. Not paywalled. New:
+`document_saved {kind, is_new, has_expiry, has_issuer, has_number}`,
+`document_deleted {kind}`. The CSV export adds a third file when any exist.
+
+**Service reminders now share the 60-slot notification queue** with document
+alerts (up to 30) and check-ins (up to 5). Only a garage with dozens of dated
+services would lose a service reminder to this.
+
+**Stacking caveat.** This lands one day after the 09-25 retention build
+(catch-up, recalls, rating-ask move). Buyer day-2/day-7 return after 09-24
+cannot be attributed to any single one of the five changes; per-feature usage
+can (`history_catchup`, `recall_check`, `odometer_checkin`, `document_saved`).
+Read ~2026-10-02. Decision rule set on ship: if under 10% of buyers save a
+document, build the widget before document photos.
