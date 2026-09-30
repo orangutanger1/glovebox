@@ -660,7 +660,7 @@ document, build the widget before document photos.
 - Metric: main-paywall `paywall_presented` → `paywall_purchase_started`, per person, by arm. Read ~10-08, split `preview` by `dated` / `undated`.
 - `docs/DECISIONS.md` now holds the conclusions (decided, rejected, read dates). This register remains the ship log.
 
-### 2026-09-30 — `paywall_preview` ended; benefit rows for everyone (OTA pending)
+### 2026-09-30 — `paywall_preview` ended; benefit rows for everyone (OTA `01a0f442`, commit 289ff31)
 
 - The `paywall_preview` experiment is removed from the registry. The main paywall always draws the three benefit rows (the old `points` arm). No new `experiment_assigned` rows for it, and events no longer carry `exp_paywall_preview`. Installs that already have an `experiment.paywall_preview` row keep it, but nothing reads it.
 - `paywall_presented` (offering `current`) no longer carries `preview`.
