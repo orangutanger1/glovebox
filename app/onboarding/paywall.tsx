@@ -5,15 +5,12 @@ import { tokens } from "../../src/design/tokens";
 import { Check } from "../../src/design/Check";
 import { formatDate, t } from "../../src/i18n";
 import { nextUp, type Plan as MaintenancePlan } from "../../src/onboarding/plan";
-import { getVariant } from "../../src/experiments";
 import { restore } from "../../src/purchases";
 import { buy, usePlans, type Plan } from "../../src/purchases/plans";
 import { PlanPicker, defaultPlan } from "../../src/paywall/PlanPicker";
 import { BuyFooter } from "../../src/paywall/BuyFooter";
 import { ReviewCard } from "../../src/paywall/ReviewCard";
 import { IncludedStrip } from "../../src/paywall/IncludedStrip";
-import { PlanPreview, previewOpen } from "../../src/paywall/PlanPreview";
-import { getDistanceUnit } from "../../src/units";
 import { CloseButton } from "../../src/paywall/CloseButton";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
@@ -32,9 +29,8 @@ import { track } from "../../src/analytics";
  * app's own material, so the reader who has just been shown their car's
  * overdue count sees what it costs to fix that without leaving the page.
  *
- * Top to bottom: the promise, this car's plan with its first service dated
- * and the rest behind the subscription (see `PlanPreview`), what the
- * subscription includes, the one review the app has. The plans and
+ * Top to bottom: the promise, three rows that evidence it against this car
+ * (see `BenefitPoints`), what the subscription includes, the one review the app has. The plans and
  * the button are in the footer, pinned under the scroll, so the price list
  * is on the glass from the first frame to the last however far the argument
  * above it runs; a plan that scrolls away with the review is a plan the
@@ -57,8 +53,6 @@ export default function OnboardingPaywall() {
   const [msg, setMsg] = useState<string | null>(null);
 
   const mounted = useRef(Date.now());
-  // Unassigned installs (mid-flow when the test shipped) see the control.
-  const showPreview = getVariant("paywall_preview") === "preview";
 
   // Shown once per mount, in the sheet's vocabulary, so the funnel's
   // `paywall_shown → paywall_presented` step keeps meaning "tapped → drawn".
@@ -67,15 +61,7 @@ export default function OnboardingPaywall() {
   }, []);
   useEffect(() => {
     if (plans) {
-      // Whether the preview's open row had a date to show: a "not sure" on
-      // the service question leaves it undated, and the two may read apart.
-      // Absent on the `points` arm, which draws no preview.
-      const open = showPreview ? previewOpen(plan) : undefined;
-      track("paywall_presented", {
-        offering: "current",
-        ms: Date.now() - mounted.current,
-        ...(showPreview && { preview: open?.dueAt ? "dated" : open ? "undated" : "none" }),
-      });
+      track("paywall_presented", { offering: "current", ms: Date.now() - mounted.current });
     }
   }, [plans]);
 
@@ -160,11 +146,7 @@ export default function OnboardingPaywall() {
         </>
       }
     >
-      {showPreview ? (
-        <PlanPreview plan={plan} vehicleName={vehicleName} unit={getDistanceUnit()} />
-      ) : (
-        <BenefitPoints plan={plan} vehicleName={vehicleName} />
-      )}
+      <BenefitPoints plan={plan} vehicleName={vehicleName} />
 
       <IncludedStrip />
 
@@ -174,8 +156,9 @@ export default function OnboardingPaywall() {
 }
 
 /**
- * The `points` arm of `paywall_preview`: three rows that evidence the promise
- * against this car, as the paywall drew them until 2026-09-24.
+ * Three rows that evidence the promise against this car. From 2026-09-24 to
+ * 09-30 they were the `points` arm of `paywall_preview` and beat a preview of
+ * the car's plan (`src/paywall/PlanPreview`, kept but unused) on buy taps.
  *
  * The middle row is the overdue count when there is one. When there is not,
  * which on a fresh install is always, it is the history benefit instead:

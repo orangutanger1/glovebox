@@ -659,3 +659,10 @@ document, build the widget before document photos.
 - Between OTA `01a0d651` and this one (a few hours on 09-24), every installation saw the preview. Leave those installs out of both arms. They have no `paywall_preview` row, so they fall out of the count automatically.
 - Metric: main-paywall `paywall_presented` → `paywall_purchase_started`, per person, by arm. Read ~10-08, split `preview` by `dated` / `undated`.
 - `docs/DECISIONS.md` now holds the conclusions (decided, rejected, read dates). This register remains the ship log.
+
+### 2026-09-30 — `paywall_preview` ended; benefit rows for everyone (OTA pending)
+
+- The `paywall_preview` experiment is removed from the registry. The main paywall always draws the three benefit rows (the old `points` arm). No new `experiment_assigned` rows for it, and events no longer carry `exp_paywall_preview`. Installs that already have an `experiment.paywall_preview` row keep it, but nothing reads it.
+- `paywall_presented` (offering `current`) no longer carries `preview`.
+- Why: points 16/102 vs preview 6/109 main-paywall buy taps (p≈0.02), with 4 vs 0 sales, ended a week before the planned 10-08 read. See `docs/DECISIONS.md`.
+- From this OTA on, the main-paywall tap rate should look like the `points` arm's (~16%), not the blended 09-24 → 09-30 figure (~10%). A jump at this boundary is this change.

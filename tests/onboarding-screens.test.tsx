@@ -260,8 +260,6 @@ afterEach(() => {
 // Civic typed three tests earlier.
 beforeEach(() => {
   resetOnboarding();
-  // Back to control; the preview arm is opted into per test.
-  setState("experiment.paywall_preview", "points");
 });
 
 test("nothing in the flow sells the free tier", () => {
@@ -288,7 +286,7 @@ test("nothing in the flow sells the free tier", () => {
   expect(texts(render(OnboardingPaywall))).toContain(t("paywall.cta.year"));
 });
 
-test("the paywall's control arm names what is bought, and leaves the schedule to the ask", () => {
+test("the paywall names what is bought, and leaves the schedule to the ask", () => {
   const car = createVehicle({
     name: "2014 Ford F-150",
     year: 2014,
@@ -296,58 +294,21 @@ test("the paywall's control arm names what is bought, and leaves the schedule to
   });
   setOnboardingVehicleId(car.id);
 
-  // Unassigned reads as control: the three benefit rows, no preview.
   const printed = texts(render(OnboardingPaywall));
+  // The headline is the promise; the rows evidence it against this car; the
+  // price list is on the same screen, not a sheet away.
+  expect(printed).toContain(t("offer.paywall.title"));
   expect(printed.join(" ")).toContain(t("offer.paywall.point.tracked.title", { vehicle: "2014 Ford F-150" }));
   expect(printed.join(" ")).toContain(t("offer.paywall.point.reminders.title"));
   // A fresh install has nothing overdue: the history row, not an empty congratulation.
   expect(printed.join(" ")).toContain(t("offer.paywall.point.history.title"));
-  expect(printed).not.toContain(t("offer.paywall.preview.locked"));
   expect(printed).not.toContain(serviceName("Air Filter"));
-});
-
-test("the paywall's preview arm names what is bought, and previews this car's plan", () => {
-  const car = createVehicle({
-    name: "2014 Ford F-150",
-    year: 2014,
-    odometer: 96500,
-  });
-  setOnboardingVehicleId(car.id);
-  setState("experiment.paywall_preview", "preview");
-
-  const printed = texts(render(OnboardingPaywall));
-  // The headline is the promise; the preview evidences it against this car;
-  // the price list is on the same screen, not a sheet away.
-  expect(printed).toContain(t("offer.paywall.title"));
-  expect(printed.join(" ")).toContain(t("offer.paywall.preview.legend", { vehicle: "2014 Ford F-150" }));
   expect(printed.join(" ")).toContain("$79.99");
   expect(printed.join(" ")).toContain("$1.54");
   expect(printed).toContain(t("paywall.cta.year"));
-  // Nothing logged: one row open, watched from today, and the rest locked by
-  // name with what Pro does for them — never a blurred date that is not there.
-  expect(printed).toContain(t("onboardingC.schedule.line.fresh"));
-  expect(printed.filter((s) => s === t("offer.paywall.preview.locked"))).toHaveLength(2);
-  expect(printed.join(" ")).toMatch(/\+\d+ more services, each with a reminder/);
-  expect(printed.join(" ")).not.toMatch(/nothing overdue/i);
   // No decline under the button, and no close until it has been read a while.
   expect(printed).not.toContain("Not now");
   expect(printed).not.toContain("✕");
-});
-
-test("the paywall's open row is the service the app can date", () => {
-  const car = createVehicle({ name: "2014 Ford F-150", year: 2014, odometer: 96500 });
-  setOnboardingVehicleId(car.id);
-  const done = new Date();
-  done.setMonth(done.getMonth() - 2);
-  addRecord({ vehicle_id: car.id, service_type: "Oil Change", performed_at: done.toISOString(), odometer: 95000 });
-  setState("experiment.paywall_preview", "preview");
-
-  const printed = texts(render(OnboardingPaywall));
-  const at = printed.indexOf(serviceName("Oil Change"));
-  expect(at).toBeGreaterThanOrEqual(0);
-  // Its own line is a date, not the lock.
-  expect(printed[at + 1]).not.toBe(t("offer.paywall.preview.locked"));
-  expect(printed[at + 1]).not.toBe(t("onboardingC.schedule.line.fresh"));
 });
 
 test("the paywall's close arrives after a pause, goes to the trial, and a buy ends the flow paid", async () => {

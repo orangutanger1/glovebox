@@ -10,7 +10,7 @@ What shipped and when, and how each release affects the funnel numbers, is in
 log). Event names are in `docs/superpowers/specs/2026-08-29-onboarding-event-taxonomy.md`.
 This file keeps only the conclusions.
 
-Last updated: 2026-09-24 (A/B live in OTA `01a0d6ca`).
+Last updated: 2026-09-30 (`paywall_preview` ended early; benefit rows for everyone).
 
 ---
 
@@ -45,7 +45,6 @@ Numbers from 09-19 to 09-24, counted per person, with the dev device excluded.
 | ~10-01 | Exit offer: buy taps → paid, time on Apple's sheet. Main paywall tap rate. |
 | ~10-02 | Buyers' day-2 and day-7 return, check-in answers, share of buyers who save a document (< 10% → build the widget before document photos). |
 | ~10-03 | `onboarding_symptoms` and `onboarding_payoff` main effects, split before and after 09-22. |
-| ~10-08 | `paywall_preview` tap rate by arm, with `preview` split into `dated` / `undated`. |
 
 ## Live experiments
 
@@ -55,7 +54,6 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 |---|---|---|---|---|
 | `onboarding_symptoms` | control / no_symptoms | 09-16 | ~10-03 | Split the read before and after 09-22 (TikTok). The early lead for no_symptoms didn't hold after 09-22. |
 | `onboarding_payoff` | condensed / none | 09-19 (restored) | ~10-03 | Read each experiment on its own, not the four combined groups (too few per group). The difference between arms may have narrowed from 09-24, because the paywall preview also shows a schedule. |
-| `paywall_preview` | points / preview | 09-24 | ~10-08 | Measures the tap rate on the main paywall. Split `preview` by `dated` / `undated`. It needs about 2 weeks at ~30 paywall views a day. |
 
 - **Don't call a result early.** It takes about 80 people per arm to see a main effect. We get about 10–12 assigned installs a day.
 - **Don't merge `onboarding_symptoms` and `onboarding_payoff` into one 3-arm test.** Proposed on 09-19 and rejected: as two separate tests, each gets the full sample.
@@ -70,14 +68,17 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 - **Cancel feedback:** RevenueCat's Customer Center links to a Google Form.
 
 ### Rejected
-- **Free trial (on the yearly plan, for everyone or as an A/B test):** rejected 09-24. The user's concern: people who bought cancelled within minutes, and people on the earlier free trial (there was a 3-day trial on `pro_annual` in August) cancelled a few days in. The data agrees. Short commitments churn: monthly has 3 of 6 set to cancel, and the old $0.99 first week has 2 of 2 gone. Yearly has 5 of 6 set to renew. A maintenance log shows nothing in its first week. The paywall preview answers "try it first" instead. *Reopen if:* the preview fails to move the tap rate by ~10-08 and there is a way to deliver value within a trial (for example, a reminder that fires inside it).
+- **Free trial (on the yearly plan, for everyone or as an A/B test):** rejected 09-24. The user's concern: people who bought cancelled within minutes, and people on the earlier free trial (there was a 3-day trial on `pro_annual` in August) cancelled a few days in. The data agrees. Short commitments churn: monthly has 3 of 6 set to cancel, and the old $0.99 first week has 2 of 2 gone. Yearly has 5 of 6 set to renew. A maintenance log shows nothing in its first week. The paywall preview answers "try it first" instead. *Reopen if:* there is a way to deliver value within a trial (for example, a reminder that fires inside it). The paywall preview, the other answer to "try it first", lost its test on 09-30 (see The main paywall).
 - **Save-50 promotional offers and win-back offers in App Store Connect:** built and then deleted on 09-20 by the user's choice. *Reopen if:* cancellations become a large share of revenue.
 - **Removing the monthly plan:** it brings 3 of the 9 full-price sales, even though it churns. *Reopen after* the ~10-01 read.
 
 ## The main paywall
 
 - **Decided:** the plans are drawn in the app itself, not RevenueCat's sheet (09-16). The close button appears after 4 s. There is no free option and no "Not now". Closing leads to the exit offer.
-- **Decided:** under test, the three benefit rows are replaced by a preview of the car's plan. One service is shown with its real date, two more by name with "Date and reminder with Pro", then "+N more". Locked rows never show a blurred or made-up date (most services have no date on a fresh install).
+- **Decided (09-30):** the paywall shows the three benefit rows to everyone. The `paywall_preview` test ended early, a week before its planned 10-08 read. From 09-24 to 09-30, main-paywall buy taps were points 16/102 (16%) vs preview 6/109 (6%), p≈0.02. Sales on the main paywall were 4 vs 0. On 09-28 the gap was already p≈0.045, and it grew. Each extra day of the test was costing sales. `src/paywall/PlanPreview.tsx` and its strings are kept but not used.
+
+### Rejected
+- **Plan preview in place of the benefit rows** (one dated service, two locked by name, "+N more"): lost the 09-24 → 09-30 A/B test on buy taps (see above). *Reopen if:* it comes back in another form, such as a screen showing the real app before the paywall (see "Next test"), not in place of the rows.
 - **Considered, not done:** show the yearly total in the plan rows as well as the per-week figure, and make the monthly plan quieter. Full-price taps pay at 42%, so the sheet surprise is small there.
 
 ## After purchase
@@ -102,7 +103,7 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 Source: a founder's post shared 09-24, claiming 12%+ download→paid with the flow: app screen recording → goal → gender/age → graph vs competitors → name → 2 pain points → niche question → notification permission → loader → custom plan → reviews → 2 phone-mockup "transformation" screens → paywall, with the name used throughout and on the paywall title.
 
 - **Already in our flow (don't rebuild):** name (asked on screen 2, used on the paywall title, notifications, reminders to finish setup), pain points (`worry`, `symptoms`), niche questions (the 6 car questions), notification permission, loader (`analyzing`), custom plan (`schedule`, under test), graph (`compare`), reviews. Having these hasn't got us to 12%, so the claim doesn't explain the gap (~4% for us). It's unverified, from an unknown niche and unknown traffic.
-- **Missing, and the next candidate test:** a screen showing the real app, either an opening screen recording in a phone mockup or 1–2 mockup screens just before the paywall. It fits the "try_first" objection and the fast paywall closes. Reuse the App Store screenshot frames. Build it only after the ~10-03 / ~10-08 reads. If `paywall_preview` wins, the preview already covers part of this, so the demo screen matters less.
+- **Missing, and the next candidate test:** a screen showing the real app, either an opening screen recording in a phone mockup or 1–2 mockup screens just before the paywall. It fits the "try_first" objection and the fast paywall closes. Reuse the App Store screenshot frames. Build it only after the ~10-03 read. The in-paywall preview lost (09-30), so showing the app has to happen on its own screen, before the paywall, not in place of the benefit rows.
 - **Our data disagrees with one point:** "show their custom plan" is the post's key idea, but in our payoff test the group without the plan page is slightly ahead (9/210 vs 6/175, not significant).
 - **Rejected:**
   - **Gender and age screens:** the app computes nothing from them, they add two screens of friction, and they cut against the privacy positioning.
