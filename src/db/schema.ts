@@ -192,6 +192,14 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
         ON documents (vehicle_id, expires_at);
     `,
   },
+  // Photos of a document: the front and back of a card, as file names under
+  // the app's documents directory (never a full path — the container path
+  // changes between installs and restores). A JSON array in one column, at
+  // most two, because nothing queries them individually.
+  {
+    version: 11,
+    sql: `ALTER TABLE documents ADD COLUMN photos TEXT;`,
+  },
 ];
 
 /**

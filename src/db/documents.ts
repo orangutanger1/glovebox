@@ -10,6 +10,8 @@ export type GloveboxDocument = {
   number?: string;
   expires_at?: string;
   notes?: string;
+  /** JSON array of file names; read it with `documentPhotos`. */
+  photos?: string;
   deleted_at?: string;
   created_at: string;
 };
@@ -20,7 +22,23 @@ export type DocumentInput = {
   number?: string;
   expires_at?: string;
   notes?: string;
+  photos?: string[];
 };
+
+/** The photo file names on a row, oldest first. Anything unreadable is none. */
+export function documentPhotos(doc: Pick<GloveboxDocument, "photos"> | null): string[] {
+  if (!doc?.photos) return [];
+  try {
+    const parsed: unknown = JSON.parse(doc.photos);
+    return Array.isArray(parsed) ? parsed.filter((p): p is string => typeof p === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function photosColumn(photos: string[] | undefined): string | null {
+  return photos && photos.length > 0 ? JSON.stringify(photos) : null;
+}
 
 function id() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
@@ -63,15 +81,17 @@ export function datedDocuments(): (GloveboxDocument & { vehicle_name: string })[
 }
 
 export function addDocument(vehicleId: string, input: DocumentInput): GloveboxDocument {
+  const { photos, ...fields } = clean(input);
   const doc: GloveboxDocument = {
     id: id(),
     vehicle_id: vehicleId,
-    ...clean(input),
+    ...fields,
+    photos: photosColumn(photos) ?? undefined,
     created_at: new Date().toISOString(),
   };
   getDb().runSync(
-    `INSERT INTO documents (id, vehicle_id, kind, issuer, number, expires_at, notes, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO documents (id, vehicle_id, kind, issuer, number, expires_at, notes, photos, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       doc.id,
       doc.vehicle_id,
@@ -80,6 +100,7 @@ export function addDocument(vehicleId: string, input: DocumentInput): GloveboxDo
       doc.number ?? null,
       doc.expires_at ?? null,
       doc.notes ?? null,
+      doc.photos ?? null,
       doc.created_at,
     ]
   );
@@ -91,9 +112,17 @@ export function addDocument(vehicleId: string, input: DocumentInput): GloveboxDo
 export function updateDocument(documentId: string, input: DocumentInput): void {
   const d = clean(input);
   getDb().runSync(
-    `UPDATE documents SET kind = ?, issuer = ?, number = ?, expires_at = ?, notes = ?
+    `UPDATE documents SET kind = ?, issuer = ?, number = ?, expires_at = ?, notes = ?, photos = ?
      WHERE id = ?`,
-    [d.kind, d.issuer ?? null, d.number ?? null, d.expires_at ?? null, d.notes ?? null, documentId]
+    [
+      d.kind,
+      d.issuer ?? null,
+      d.number ?? null,
+      d.expires_at ?? null,
+      d.notes ?? null,
+      photosColumn(d.photos),
+      documentId,
+    ]
   );
 }
 
@@ -127,5 +156,6 @@ function clean(input: DocumentInput): DocumentInput {
     number: text(input.number),
     expires_at: input.expires_at || undefined,
     notes: text(input.notes),
+    photos: input.photos,
   };
 }

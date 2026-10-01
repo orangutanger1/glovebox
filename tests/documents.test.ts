@@ -20,6 +20,7 @@ import {
   addDocument,
   allDocumentsForExport,
   datedDocuments,
+  documentPhotos,
   getDocument,
   listDocuments,
   softDeleteDocument,
@@ -97,6 +98,16 @@ describe("the documents table", () => {
     expect(getDocument(d.id)).toMatchObject({ number: "ABC-1" });
     expect(getDocument(d.id)!.expires_at).toBeUndefined();
     expect(datedDocuments()).toHaveLength(0);
+  });
+
+  test("photos are stored as file names, kept on edit, and cleared when removed", () => {
+    const d = addDocument("v1", { kind: "insurance", photos: ["front.jpg", "back.jpg"] });
+    expect(documentPhotos(getDocument(d.id))).toEqual(["front.jpg", "back.jpg"]);
+    updateDocument(d.id, { kind: "insurance", photos: ["front.jpg"] });
+    expect(documentPhotos(getDocument(d.id))).toEqual(["front.jpg"]);
+    updateDocument(d.id, { kind: "insurance", photos: [] });
+    expect(getDocument(d.id)!.photos).toBeUndefined();
+    expect(documentPhotos({ photos: "not json" })).toEqual([]);
   });
 
   test("a deleted document stops reminding and stays in the export", () => {

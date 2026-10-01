@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Alert, View, Text } from "react-native";
+import { Alert, Image, Modal, Pressable, View, Text } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../../src/design/Screen";
@@ -11,11 +11,13 @@ import { DateWheel } from "../../../src/design/DateWheel";
 import { tokens } from "../../../src/design/tokens";
 import {
   addDocument,
+  documentPhotos,
   getDocument,
   softDeleteDocument,
   updateDocument,
 } from "../../../src/db/documents";
 import { DOCUMENT_KINDS, type DocumentKind } from "../../../src/documents";
+import { MAX_PHOTOS, addPhoto, canTakePhotos, deletePhoto, photoUri } from "../../../src/documents/photos";
 import { rescheduleAll } from "../../../src/notify";
 import { track } from "../../../src/analytics";
 import { dateFromParts, partsFromDate } from "../../../src/format";
@@ -53,6 +55,26 @@ export default function DocumentForm() {
     return partsFromDate(inAYear);
   });
   const [error, setError] = useState("");
+  // Front and back of the card, at most. Removed photos are only deleted from
+  // disk on save, so backing out of the form leaves the document as it was.
+  const [photos, setPhotos] = useState<string[]>(() => documentPhotos(existing));
+  const [viewing, setViewing] = useState<string | null>(null);
+  const photosOn = useMemo(canTakePhotos, []);
+
+  function onAddPhoto() {
+    const pick = (source: "camera" | "library") => {
+      addPhoto(source)
+        .then((name) => {
+          if (name) setPhotos((p) => [...p, name].slice(0, MAX_PHOTOS));
+        })
+        .catch(() => setError(t("documents.form.error")));
+    };
+    Alert.alert(t("documents.photo.add"), undefined, [
+      { text: t("documents.photo.camera"), onPress: () => pick("camera") },
+      { text: t("documents.photo.library"), onPress: () => pick("library") },
+      { text: t("documents.delete.cancel"), style: "cancel" },
+    ]);
+  }
 
   function onSave() {
     if (!id) return;
@@ -62,6 +84,7 @@ export default function DocumentForm() {
       number,
       notes,
       expires_at: expires ? dateFromParts(expiry).toISOString() : undefined,
+      photos,
     };
     try {
       if (existing) updateDocument(existing.id, input);
@@ -78,7 +101,9 @@ export default function DocumentForm() {
       has_expiry: expires,
       has_issuer: issuer.trim() !== "",
       has_number: number.trim() !== "",
+      photos: photos.length,
     });
+    for (const old of documentPhotos(existing)) if (!photos.includes(old)) deletePhoto(old);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     rescheduleAll().catch(() => {});
     router.back();
@@ -171,6 +196,67 @@ export default function DocumentForm() {
           </>
         ) : null}
       </Card>
+
+      {photosOn ? (
+        <Card>
+          <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+            {t("documents.form.photos")}
+          </Text>
+          <View style={{ flexDirection: "row", gap: tokens.space.sm }}>
+            {photos.map((name) => (
+              <Pressable
+                key={name}
+                onPress={() => setViewing(name)}
+                onLongPress={() => setPhotos((p) => p.filter((n) => n !== name))}
+                accessibilityRole="imagebutton"
+                accessibilityLabel={t("documents.form.photos")}
+                accessibilityHint={t("documents.photo.removeHint")}
+              >
+                <Image
+                  source={{ uri: photoUri(name) }}
+                  style={{ width: 96, height: 64, borderRadius: tokens.radius.sm, backgroundColor: tokens.color.sunken }}
+                />
+              </Pressable>
+            ))}
+            {photos.length < MAX_PHOTOS ? (
+              <Pressable
+                onPress={onAddPhoto}
+                accessibilityRole="button"
+                style={{
+                  width: 96,
+                  height: 64,
+                  borderRadius: tokens.radius.sm,
+                  borderWidth: 1,
+                  borderStyle: "dashed",
+                  borderColor: tokens.color.hairline,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                  {t("documents.photo.add")}
+                </Text>
+              </Pressable>
+            ) : null}
+          </View>
+          {photos.length > 0 ? (
+            <Text style={{ ...tokens.text.caption, color: tokens.color.textFaint }}>
+              {t("documents.photo.removeHint")}
+            </Text>
+          ) : null}
+        </Card>
+      ) : null}
+
+      <Modal visible={viewing !== null} transparent animationType="fade" onRequestClose={() => setViewing(null)}>
+        <Pressable
+          onPress={() => setViewing(null)}
+          style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.92)", justifyContent: "center" }}
+        >
+          {viewing ? (
+            <Image source={{ uri: photoUri(viewing) }} resizeMode="contain" style={{ width: "100%", height: "80%" }} />
+          ) : null}
+        </Pressable>
+      </Modal>
 
       <Card>
         <Field label={t("documents.form.notes")} value={notes} onChangeText={setNotes} />

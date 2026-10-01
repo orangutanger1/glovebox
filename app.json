@@ -78,6 +78,14 @@
             }
           ]
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Wrenchy uses your photos only when you attach one to a glovebox document. It stays on this iPhone.",
+          "cameraPermission": "Wrenchy uses the camera only when you photograph a glovebox document. The photo stays on this iPhone.",
+          "microphonePermission": false
+        }
       ]
     ],
     "runtimeVersion": {
