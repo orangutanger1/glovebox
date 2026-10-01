@@ -14,7 +14,7 @@
       "bundleIdentifier": "com.idea6.carmaintenancelog",
       "supportsTablet": true,
       "requireFullScreen": true,
-      "buildNumber": "43",
+      "buildNumber": "44",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleLocalizations": [
