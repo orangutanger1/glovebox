@@ -64,8 +64,7 @@ export const FLOW = [
   // lands in a year at the rate the user drives. It replaced two — "results"
   // (the car today) and "outlook" (twelve months on) — which on a fresh
   // install read "12 services have no record yet" and then projected a year
-  // from that nothing. The `onboarding_payoff` experiment also tries the flow
-  // with no payoff screen at all; see `hiddenRoutes`.
+  // from that nothing. Hidden since 2026-10-01; see `HIDDEN` in flow.ts.
   "schedule",
   "symptoms",
   // The second of the two outside-figure screens, and the counterpart to

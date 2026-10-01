@@ -1,12 +1,7 @@
-// The flow reads the stored variant for its default `hidden` list, and the
-// store is the device database. These tests pass `hidden` explicitly, so the
-// store is stubbed to "never assigned" rather than opened.
-jest.mock("../src/experiments", () => ({ getVariant: () => null }));
-
 import {
   FLOW,
   QUIZ,
-  hiddenRoutes,
+  HIDDEN,
   nextRoute,
   previousRoute,
   quizStep,
@@ -24,13 +19,13 @@ test("the flow is a single chain with a start and an end", () => {
     walked.push(at);
     at = nextRoute(at);
   }
-  expect(walked).toEqual([...FLOW]);
+  expect(walked).toEqual(FLOW.filter((r) => !HIDDEN.includes(r)));
 });
 
 test("back steps over analyzing, which advances itself", () => {
-  // Landing on it from the schedule would push the user straight forward again
-  // and make the screen before it unreachable.
-  expect(previousRoute("schedule")).toBe("source");
+  // Landing on it from the screen after would push the user straight forward
+  // again and make the screen before it unreachable.
+  expect(previousRoute("compare")).toBe("source");
   expect(previousRoute("analyzing")).toBe("source");
 });
 
@@ -99,13 +94,13 @@ test("the notification ask comes before the screens a user drops out of", () => 
   // It is not one of the six questions, however deep into them it sits.
   expect(QUIZ).not.toContain("notify");
   expect(quizStep("notify")).toBeNull();
-  // The loader lands on the one payoff page.
-  expect(nextRoute("analyzing")).toBe("schedule");
+  // The loader goes straight to the comparison: no payoff page, no pain beat.
+  expect(nextRoute("analyzing")).toBe("compare");
 });
 
-test("the two old payoff screens resume on the page that replaced them", () => {
-  expect(resumeRoute("results")).toBe("schedule");
-  expect(resumeRoute("outlook")).toBe("schedule");
+test("the old payoff screens resume past the hidden payoff page", () => {
+  expect(resumeRoute("results")).toBe("compare");
+  expect(resumeRoute("outlook")).toBe("compare");
 });
 
 test("a resume point from a version that shipped different screens still lands somewhere", () => {
@@ -121,7 +116,7 @@ test("a resume point from a version that shipped different screens still lands s
   expect(resumeRoute("intro")).toBe("vehicle");
   expect(resumeRoute("a-screen-that-never-existed")).toBe("welcome");
   expect(resumeRoute(null)).toBe("welcome");
-  expect(resumeRoute("symptoms")).toBe("symptoms");
+  expect(resumeRoute("compare")).toBe("compare");
 });
 
 test("the flow introduces itself before it interrogates", () => {
@@ -141,8 +136,7 @@ test("the two statistic screens are not back to back", () => {
   expect(nextRoute("service")).toBe("cost");
   expect(nextRoute("cost")).toBe("tracking");
   expect(quizStep("cost")).toBeNull();
-  expect(nextRoute("symptoms")).toBe("compare");
-  expect(nextRoute("compare")).toBe("help");
+  expect(nextRoute("compare")).toBe("reviews");
 });
 
 test("route names are checked, not assumed", () => {
@@ -150,78 +144,37 @@ test("route names are checked, not assumed", () => {
   expect(isOnboardingRoute("garage")).toBe(false);
 });
 
-describe("the no_symptoms variant", () => {
-  const hidden = hiddenRoutes("no_symptoms");
-
-  test("hides the pain beat and nothing else", () => {
-    expect(hidden).toEqual(["symptoms", "help"]);
-    expect(hiddenRoutes("control")).toEqual([]);
-    expect(hiddenRoutes(null)).toEqual([]);
-    expect(hiddenRoutes("half_symptoms")).toEqual([]);
+describe("the screens the ended experiments hid", () => {
+  test("are the pain beat and the payoff page, and nothing else", () => {
+    expect([...HIDDEN].sort()).toEqual(["help", "schedule", "symptoms"]);
+    for (const r of HIDDEN) expect(FLOW).toContain(r);
   });
 
-  test("walks forward through the flow minus the hidden screens", () => {
-    const walked: string[] = ["welcome"];
-    let at = nextRoute("welcome", hidden);
-    while (at) {
-      walked.push(at);
-      at = nextRoute(at, hidden);
-    }
-    expect(walked).toEqual(FLOW.filter((r) => !hidden.includes(r)));
-    expect(nextRoute("schedule", hidden)).toBe("compare");
-  });
-
-  test("walks back the same path", () => {
-    expect(previousRoute("compare", hidden)).toBe("schedule");
+  test("walks back the same path forward skips", () => {
     const walked: string[] = ["offer"];
-    let at = previousRoute("offer", hidden);
+    let at = previousRoute("offer");
     while (at) {
       walked.push(at);
-      at = previousRoute(at, hidden);
+      at = previousRoute(at);
     }
     // Back also steps over "analyzing", as it always has.
     expect(walked).toEqual(
-      FLOW.filter((r) => !hidden.includes(r) && r !== "analyzing").reverse()
+      FLOW.filter((r) => !HIDDEN.includes(r) && r !== "analyzing").reverse()
     );
+    expect(previousRoute("reviews")).toBe("compare");
   });
 
   test("a persisted step on a hidden screen resumes on the next visible one", () => {
-    expect(resumeRoute("symptoms", hidden)).toBe("compare");
+    expect(resumeRoute("schedule")).toBe("compare");
+    expect(resumeRoute("symptoms")).toBe("compare");
     // "help" sits after "compare", so it resumes one further on.
-    expect(resumeRoute("help", hidden)).toBe("reviews");
-    expect(resumeRoute("schedule", hidden)).toBe("schedule");
+    expect(resumeRoute("help")).toBe("reviews");
   });
 
-  test("with nothing hidden the graph is unchanged", () => {
-    expect(nextRoute("schedule")).toBe("symptoms");
+  test("with nothing hidden the full graph is intact", () => {
+    expect(nextRoute("analyzing", [])).toBe("schedule");
     expect(nextRoute("schedule", [])).toBe("symptoms");
-    expect(previousRoute("compare")).toBe("symptoms");
-    expect(previousRoute("reviews")).toBe("help");
-    expect(resumeRoute("symptoms")).toBe("symptoms");
+    expect(previousRoute("reviews", [])).toBe("help");
   });
 });
 
-describe("the onboarding_payoff experiment", () => {
-  test("the none arm hides the schedule page and nothing else", () => {
-    expect(hiddenRoutes({ payoff: "none" })).toEqual(["schedule"]);
-    expect(hiddenRoutes({ payoff: "condensed" })).toEqual([]);
-    expect(hiddenRoutes({ payoff: null })).toEqual([]);
-    expect(hiddenRoutes({ payoff: "both" })).toEqual([]);
-  });
-
-  test("the loader lands on the pain beat, or past it, with the page hidden", () => {
-    expect(nextRoute("analyzing", hiddenRoutes({ payoff: "none" }))).toBe("symptoms");
-    // The two experiments stack: the install with neither screen goes from
-    // the loader to the comparison.
-    const both = hiddenRoutes({ symptoms: "no_symptoms", payoff: "none" });
-    expect(both).toEqual(["symptoms", "help", "schedule"]);
-    expect(nextRoute("analyzing", both)).toBe("compare");
-    expect(previousRoute("compare", both)).toBe("source");
-  });
-
-  test("an install parked on the page, or on either screen it replaced, resumes past it", () => {
-    const hidden = hiddenRoutes({ payoff: "none" });
-    expect(resumeRoute("schedule", hidden)).toBe("symptoms");
-    expect(resumeRoute("results", hidden)).toBe("symptoms");
-  });
-});

@@ -666,3 +666,10 @@ document, build the widget before document photos.
 - `paywall_presented` (offering `current`) no longer carries `preview`.
 - Why: points 16/102 vs preview 6/109 main-paywall buy taps (p≈0.02), with 4 vs 0 sales, ended a week before the planned 10-08 read. See `docs/DECISIONS.md`.
 - From this OTA on, the main-paywall tap rate should look like the `points` arm's (~16%), not the blended 09-24 → 09-30 figure (~10%). A jump at this boundary is this change.
+
+### 2026-10-01 — onboarding tests ended; shorter flow for everyone (OTA `PENDING`)
+
+- `onboarding_symptoms` and `onboarding_payoff` are removed from the registry, which is now empty. No new `experiment_assigned` rows, and events no longer carry `exp_onboarding_*`. Installs keep their `experiment.*` rows; nothing reads them.
+- Every install skips `schedule`, `symptoms` and `help` (`HIDDEN` in `src/onboarding/flow.ts`): `analyzing` → `compare` → `reviews` → `paywall`. Installs parked on a hidden screen resume on the next visible one. This includes older builds' `results`/`outlook`, which now land on `compare`.
+- Why: no_symptoms 16/394 vs control 10/394 (p 0.32); payoff none 14/396 vs condensed 10/369 (p 0.54). Not significant, and not going to become significant at this volume. The shorter arms led throughout. See `docs/DECISIONS.md`.
+- **Funnel effect:** the flow is three screens shorter for everyone. A small jump in reaching the paywall at this boundary is this change. For the ~25% of earlier installs that were already in the no_symptoms/none cell, nothing changes.

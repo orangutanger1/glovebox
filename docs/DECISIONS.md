@@ -10,7 +10,7 @@ What shipped and when, and how each release affects the funnel numbers, is in
 log). Event names are in `docs/superpowers/specs/2026-08-29-onboarding-event-taxonomy.md`.
 This file keeps only the conclusions.
 
-Last updated: 2026-09-30 (`paywall_preview` ended early; benefit rows for everyone, OTA `01a0f442`).
+Last updated: 2026-10-01 (both onboarding tests ended; shorter flow for everyone. 10-01 and 10-02 reads done).
 
 ---
 
@@ -42,27 +42,32 @@ Numbers from 09-19 to 09-24, counted per person, with the dev device excluded.
 
 | Date | What to read |
 |---|---|
-| ~10-01 | Exit offer: buy taps → paid, time on Apple's sheet. Main paywall tap rate. |
-| ~10-02 | Buyers' day-2 and day-7 return, check-in answers, share of buyers who save a document (< 10% → build the widget before document photos). |
-| ~10-03 | `onboarding_symptoms` and `onboarding_payoff` main effects, split before and after 09-22. |
+| ~~10-01~~ done | Exit offer: buy taps → paid **4/42 (10%)** after the 09-24 headline, vs 5/51 before (p=1.0). **The headline didn't fix people backing out at the sheet.** Main paywall since 09-24: 34/321 tapped buy, 7 of 34 paid. |
+| ~~10-02~~ done 10-01 | Buyers since 09-18: day-1/2 return 6/25 (24%), day-6/7 6/17. Check-in answered 1. **Documents saved 0** → build the widget before document photos. |
+| ~~10-03~~ done 10-01 | Onboarding tests ended; see below. |
+| ~10-08 | Main paywall buy-tap rate for the first full week with benefit rows for everyone (OTA `01a0f442`); expect about 16%. |
 
 ## Live experiments
 
-All experiments are coin flips on the device at fresh install (`src/experiments/index.ts`). An install without an assignment gets the control. Count people through their `experiment_assigned` row.
+None since 2026-10-01. All experiments are coin flips on the device at fresh install (`src/experiments/index.ts`). An install without an assignment gets the control. Count people through their `experiment_assigned` row.
 
-| Experiment | Arms | Since | Read on | Notes |
-|---|---|---|---|---|
-| `onboarding_symptoms` | control / no_symptoms | 09-16 | ~10-03 | Split the read before and after 09-22 (TikTok). The early lead for no_symptoms didn't hold after 09-22. |
-| `onboarding_payoff` | condensed / none | 09-19 (restored) | ~10-03 | Read each experiment on its own, not the four combined groups (too few per group). The difference between arms may have narrowed from 09-24, because the paywall preview also shows a schedule. |
+### Ended: `onboarding_symptoms` and `onboarding_payoff` (2026-10-01, two days before the planned 10-03 read)
 
-- **Don't call a result early.** It takes about 80 people per arm to see a main effect. We get about 10–12 assigned installs a day.
-- **Don't merge `onboarding_symptoms` and `onboarding_payoff` into one 3-arm test.** Proposed on 09-19 and rejected: as two separate tests, each gets the full sample.
+| Test | Arms (paid / assigned since 09-16) | p | After 09-22 only |
+|---|---|---|---|
+| `onboarding_symptoms` | control 10/394 (2.5%), **no_symptoms 16/394 (4.1%)** | 0.32 | 7/323 vs 9/315 (p 0.62) |
+| `onboarding_payoff` | condensed 10/369 (2.7%), **none 14/396 (3.5%)** | 0.54 | 7/312 vs 9/326 (p 0.80) |
+
+- **Decided:** ship both shorter arms to everyone. The flow no longer shows `symptoms`, `help` or `schedule`; the loader goes straight to `compare` (`HIDDEN` in `src/onboarding/flow.ts`). The screens are kept but not used.
+- **Why we stopped early:** each arm had ~390 people, about 5× the 80 that were planned. Proving a 2.5% vs 4% gap would take ~1,700 per arm, which is months at ~40 installs a day. Two more days could not decide it. Neither result is significant; the shorter arm led both the whole way, and fewer screens wins a tie.
+- **What we learned:** at this volume, paid-per-install can only detect very large effects. Judge future tests on an earlier step with more events (buy taps, or taps → paid), as `paywall_preview` was.
+- *Reopen if:* the pain beat or the plan page comes back in a different form. Don't restore the old screens as they were.
 
 ## Pricing and offers
 
 ### Decided
 - **The exit offer sells one yearly plan at $29.99** (the `discount` offering, `pro_annual_discount`), not a cheap first week. The old $0.99-first-week price also showed up on the first paywall, because Apple attaches an intro price to the product, and it renewed at the full weekly price. (09-17)
-- **The exit offer leads with "$29.99 per year".** The standard yearly price is struck through beside it with "63% off", and the per-week figure is a small line underneath (09-24, OTA `01a0d5a2`). It used to lead with the per-week figure, and 9 in 10 buy taps then backed out at Apple's sheet. The saving is compared yearly against yearly, never against the weekly price. Read ~10-01: buy taps → paid, and time on the sheet.
+- **The exit offer leads with "$29.99 per year".** The standard yearly price is struck through beside it with "63% off", and the per-week figure is a small line underneath (09-24, OTA `01a0d5a2`). It used to lead with the per-week figure, and 9 in 10 buy taps then backed out at Apple's sheet. The saving is compared yearly against yearly, never against the weekly price. Read 10-01: 4/42 buy taps paid (10%), the same as before the change (5/51). It stays, because the honest yearly headline costs nothing, but it is not the fix. Price is the top objection (36 of 96 since 09-24).
 - **The weekly plan stays in the default offering as a price anchor.** It is what makes the "Save N%" badges work (`plans.ts`). If it is removed, the savings have to be re-based on the monthly plan.
 - **Billing grace period is on:** 16 days, all renewals (09-20).
 - **Cancel feedback:** RevenueCat's Customer Center links to a Google Form.

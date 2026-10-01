@@ -813,10 +813,10 @@ test("the loader draws a bar and holds the screen for the whole readout", () => 
   step(650);
   step(650);
   step(650);
-  expect(navigated).not.toContain("replace:/onboarding/schedule");
+  expect(navigated).not.toContain("replace:/onboarding/compare");
 
   step(700);
-  expect(navigated).toContain("replace:/onboarding/schedule");
+  expect(navigated).toContain("replace:/onboarding/compare");
   jest.useRealTimers();
 });
 
@@ -857,7 +857,7 @@ test("the loader cannot be skipped", () => {
       .findAll((n) => typeof n.props.onPress === "function")
       .filter((n) => stringsIn(n).includes("Working out the schedule.")),
   ).toHaveLength(0);
-  expect(navigated).not.toContain("replace:/onboarding/schedule");
+  expect(navigated).not.toContain("replace:/onboarding/compare");
   jest.useRealTimers();
 });
 

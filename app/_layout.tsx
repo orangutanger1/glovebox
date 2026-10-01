@@ -241,11 +241,10 @@ export default function RootLayout() {
     // fifth and tenth, asks for a rating ten seconds in.
     boot("review", () => recordLaunchAndMaybeAsk(onboarded));
 
-    // The coin is tossed once, for a fresh install only, before anything
-    // routes on it: `resumeRoute` below reads the variant to decide which
-    // screens exist. An install already mid-flow or finished keeps the flow
-    // it started on and reports "unassigned". `boot` swallows a throw, and
-    // an install that could not be assigned is on the control flow.
+    // The coin is tossed once, for a fresh install only, for every registered
+    // experiment (none since 2026-10-01). An install already mid-flow or
+    // finished reports "unassigned". `boot` swallows a throw, and an install
+    // that could not be assigned is on the control flow.
     boot("experiments", () => assignExperiments(!onboarded && getOnboardingStep() === null));
 
     // Stamped before anything can route on it, and only ever written once. An

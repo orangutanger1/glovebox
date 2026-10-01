@@ -23,21 +23,15 @@ import { track } from "../analytics";
  * would count the same user in two arms.
  */
 
-export const EXPERIMENTS = {
-  onboarding_symptoms: ["control", "no_symptoms"],
-  // The payoff after the loader. It used to be two screens — "12 services
-  // have no record yet" and "The next twelve months" — that on a fresh install
-  // stated the obvious and projected from nothing. "condensed" is the two
-  // folded into one honest page; "none" goes from the loader straight on.
-  // There is no arm that keeps the old pair. Pulled 2026-09-18 on 4/23 vs
-  // 0/15 paid, put back 2026-09-19 to run longer: too few installs to call.
-  onboarding_payoff: ["condensed", "none"],
-  // `paywall_preview` (points / preview) ran 2026-09-24 → 2026-09-30 and
-  // ended early: the car's plan preview drew 6/109 main-paywall buy taps
-  // against 16/102 for the benefit rows (p≈0.02), and 0 sales to 4. Everyone
-  // gets the rows now. Installs keep their `experiment.paywall_preview` row;
-  // nothing reads it. See docs/DECISIONS.md.
-} as const;
+// Empty since 2026-10-01. `onboarding_symptoms` (control / no_symptoms) and
+// `onboarding_payoff` (condensed / none) ran from 09-16 and 09-19 and ended
+// with the shorter arm shipped to everyone (see `HIDDEN` in
+// src/onboarding/flow.ts): 16/394 vs 10/394 and 14/396 vs 10/369 paid, neither
+// significant, and ~1,700 per arm would have been needed to tell. Before them,
+// `paywall_preview` (points / preview) ran 2026-09-24 → 2026-09-30 and ended
+// early on 16/102 vs 6/109 main-paywall buy taps. Installs keep their
+// `experiment.*` rows; nothing reads them. See docs/DECISIONS.md.
+export const EXPERIMENTS: Readonly<Record<string, readonly string[]>> = {};
 
 export type ExperimentName = keyof typeof EXPERIMENTS;
 export type Variant<E extends ExperimentName> = (typeof EXPERIMENTS)[E][number];
@@ -54,7 +48,7 @@ export function getVariant<E extends ExperimentName>(name: E): Variant<E> | null
   } catch {
     return null;
   }
-  const variants: readonly string[] = EXPERIMENTS[name];
+  const variants: readonly string[] = EXPERIMENTS[name] ?? [];
   return raw !== null && variants.includes(raw) ? (raw as Variant<E>) : null;
 }
 

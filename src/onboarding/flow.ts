@@ -1,5 +1,3 @@
-import { getVariant } from "../experiments";
-
 /**
  * The onboarding route graph.
  *
@@ -36,43 +34,21 @@ export {
 } from "./routes";
 import { FLOW, QUIZ, isOnboardingRoute, type OnboardingRoute } from "./routes";
 
-/** The variants that shape the flow, one slot per experiment. */
-export type FlowVariants = {
-  symptoms?: string | null;
-  payoff?: string | null;
-};
-
 /**
- * Screens the install's variants do not show. The symptoms experiment hides
- * the pain beat: the three red cards and the reply to them. The payoff
- * experiment's "none" arm hides the schedule page, so the loader lands on
- * whatever comes next. Anything that is not a recognised variant — control,
- * unassigned, a value this build does not know — hides nothing, so the
- * fallback flow is the fuller one.
+ * Screens in FLOW that no install is shown. Both onboarding experiments ended
+ * on 2026-10-01 and their shorter arms shipped to everyone:
+ * `onboarding_symptoms` → no_symptoms (16/394 paid vs 10/394) hides the pain
+ * beat, "symptoms" and "help"; `onboarding_payoff` → none (14/396 vs 10/369)
+ * hides the "schedule" page, so the loader goes straight to "compare". Neither
+ * gap was significant; the shorter flow won the tie. The screens stay in FLOW
+ * and on disk, unreached, so a later test can bring one back with a line here.
+ * See docs/DECISIONS.md.
  */
-export function hiddenRoutes(variants: FlowVariants | string | null): readonly OnboardingRoute[] {
-  // A bare string is the symptoms variant: the shape every caller used before
-  // there was a second experiment, kept so a test can still say
-  // `hiddenRoutes("no_symptoms")`.
-  const v: FlowVariants = typeof variants === "string" || variants === null ? { symptoms: variants } : variants;
-  const hidden: OnboardingRoute[] = [];
-  if (v.symptoms === "no_symptoms") hidden.push("symptoms", "help");
-  if (v.payoff === "none") hidden.push("schedule");
-  return hidden;
-}
-
-/** What this install hides, from its stored variants. The default for every
- *  caller that is not a test. */
-function activeHidden(): readonly OnboardingRoute[] {
-  return hiddenRoutes({
-    symptoms: getVariant("onboarding_symptoms"),
-    payoff: getVariant("onboarding_payoff"),
-  });
-}
+export const HIDDEN: readonly OnboardingRoute[] = ["schedule", "symptoms", "help"];
 
 export function nextRoute(
   route: OnboardingRoute,
-  hidden: readonly OnboardingRoute[] = activeHidden()
+  hidden: readonly OnboardingRoute[] = HIDDEN
 ): OnboardingRoute | null {
   let i = FLOW.indexOf(route) + 1;
   while (i < FLOW.length && hidden.includes(FLOW[i])) i += 1;
@@ -89,7 +65,7 @@ const TRANSIENT: readonly OnboardingRoute[] = ["analyzing"];
 
 export function previousRoute(
   route: OnboardingRoute,
-  hidden: readonly OnboardingRoute[] = activeHidden()
+  hidden: readonly OnboardingRoute[] = HIDDEN
 ): OnboardingRoute | null {
   let i = FLOW.indexOf(route) - 1;
   while (i >= 0 && (TRANSIENT.includes(FLOW[i]) || hidden.includes(FLOW[i]))) i -= 1;
@@ -137,7 +113,7 @@ const RETIRED: Record<string, OnboardingRoute> = {
  *  this install's variant does not show resumes on the next screen it does. */
 export function resumeRoute(
   step: string | null,
-  hidden: readonly OnboardingRoute[] = activeHidden()
+  hidden: readonly OnboardingRoute[] = HIDDEN
 ): OnboardingRoute {
   if (!step) return "welcome";
   const route = isOnboardingRoute(step) ? step : RETIRED[step];
