@@ -588,6 +588,7 @@ export const de: Fragment = {
   "system.csv.header.cost": "Kosten",
   "system.csv.header.notes": "Notizen",
   "system.csv.header.deleted": "Gelöscht",
+  "system.csv.header.tread": "Profil (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro testen",
@@ -644,6 +645,10 @@ export const de: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · Profil {tread}",
+  "vehicle.tread.title": "Reifenprofil",
+  "vehicle.tread.replaceSoon": "Noch {depth} – bald ersetzen",
+  "vehicle.tread.replaceNow": "Noch {depth} – jetzt ersetzen",
 
   "vehicle.swipe.delete": "Löschen",
   "vehicle.serviceDeleted": "Service gelöscht",
@@ -680,6 +685,8 @@ export const de: Fragment = {
   "vehicleForms.log.odometer": "Tachostand ({unit})",
   "vehicleForms.log.cost": "Kosten (optional)",
   "vehicleForms.log.notes": "Notizen (optional)",
+  "vehicleForms.log.tread32": "Profiltiefe (32stel Zoll, optional)",
+  "vehicleForms.log.treadMm": "Profiltiefe (mm, optional)",
   "subscribed.title": "Pro ist an.",
   "subscribed.body": "{vehicle} steht jetzt im Plan. Du wirst vor jeder fälligen Wartung informiert, nicht danach.",
   "subscribed.unlocked": "Jetzt aktiv",

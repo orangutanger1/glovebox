@@ -31,6 +31,7 @@ import { serviceName } from "../../src/schedule/names";
 import { RecallsSection } from "../../src/recalls/RecallsSection";
 import { GloveboxSection } from "../../src/documents/GloveboxSection";
 import { listDocuments, type GloveboxDocument } from "../../src/db/documents";
+import { formatTread, latestTread, treadStatus } from "../../src/tires/tread";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -56,6 +57,19 @@ function dueItems(vehicle: Vehicle, records: ServiceRecord[]): DueItem[] {
             : t("vehicle.dueSoon");
     items.push({ type: s.type, status: s.status, line });
   }
+  // Worn tread is due on its own clock, not the rotation's: only a low
+  // reading earns a row, and a healthy one stays in the history.
+  const tread = latestTread(records);
+  const worn = tread ? treadStatus(tread.mm) : "ok";
+  if (tread && worn !== "ok") {
+    items.push({
+      type: "tread",
+      status: worn,
+      line: t(worn === "due" ? "vehicle.tread.replaceNow" : "vehicle.tread.replaceSoon", {
+        depth: formatTread(tread.mm, unit),
+      }),
+    });
+  }
   return items;
 }
 
@@ -78,6 +92,13 @@ function recordSubtitle(record: ServiceRecord): string {
   // other read as unpriced while the insights total counted it.
   const distance = record.odometer !== undefined ? formatDistance(record.odometer) : undefined;
   const cost = record.cost !== undefined ? formatMoney(record.cost) : undefined;
+  const base = baseSubtitle(date, distance, cost);
+  return record.tread_mm !== undefined
+    ? t("vehicle.row.withTread", { base, tread: formatTread(record.tread_mm, getDistanceUnit()) })
+    : base;
+}
+
+function baseSubtitle(date: string, distance?: string, cost?: string): string {
   if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
   if (distance) return t("vehicle.row.dateDistance", { date, distance });
   if (cost) return t("vehicle.row.dateCost", { date, cost });
@@ -362,7 +383,7 @@ export default function VehicleDetail() {
                 {due.map((d) => (
                   <ListRow
                     key={d.type}
-                    title={serviceName(d.type)}
+                    title={d.type === "tread" ? t("vehicle.tread.title") : serviceName(d.type)}
                     subtitle={d.line}
                     status={d.status === "due" ? "overdue" : "soon"}
                     right={

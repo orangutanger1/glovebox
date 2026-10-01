@@ -50,6 +50,10 @@ export const vehicle: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · tread {tread}",
+  "vehicle.tread.title": "Tire tread",
+  "vehicle.tread.replaceSoon": "{depth} left — replace soon",
+  "vehicle.tread.replaceNow": "{depth} left — replace now",
 
   "vehicle.swipe.delete": "Delete",
   "vehicle.serviceDeleted": "Service deleted",

@@ -11,6 +11,7 @@ import { DateWheel } from "../../../src/design/DateWheel";
 import { tokens } from "../../../src/design/tokens";
 import { getVehicle } from "../../../src/db/vehicles";
 import { addRecord } from "../../../src/db/records";
+import { TREAD_SERVICE, parseTread } from "../../../src/tires/tread";
 import { rescheduleAll } from "../../../src/notify";
 import { recordReviewEvent, requestReviewAfterLog } from "../../../src/review";
 import { track } from "../../../src/analytics";
@@ -65,6 +66,8 @@ export default function LogService() {
   );
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
+  // Only asked on a tire rotation, which is when a gauge is in someone's hand.
+  const [tread, setTread] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -81,12 +84,13 @@ export default function LogService() {
     // not model; both used to be stored and then silently ignored downstream.
     const odo = parseNumber(odometer);
     const price = parseNumber(cost);
+    const treadMm = type === TREAD_SERVICE ? parseTread(tread, unit) : undefined;
     // Something typed that did not parse is refused, not dropped. Both fields
     // are optional, so an empty one is fine; a filled one that came back
     // `undefined` used to be stored as NULL, which lost the reading with no
     // word to the user — the same silent failure the onboarding odometer
     // screen already reports.
-    if ((odometer.trim() && odo === undefined) || (cost.trim() && price === undefined)) {
+    if ((odometer.trim() && odo === undefined) || (cost.trim() && price === undefined) || treadMm === null) {
       setError(t("vehicleForms.number.invalid"));
       setSaving(false);
       return;
@@ -119,6 +123,7 @@ export default function LogService() {
         odometer: odo,
         cost: price,
         notes: notes.trim() || undefined,
+        tread_mm: treadMm ?? undefined,
       });
     } catch {
       // Never clear the form on failure. The user's typing is the thing we protect.
@@ -140,6 +145,7 @@ export default function LogService() {
       has_odometer: odo !== undefined,
       has_cost: price !== undefined,
       has_notes: notes.trim() !== "",
+      has_tread: treadMm != null,
     });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     rescheduleAll().catch(() => {});
@@ -217,6 +223,14 @@ export default function LogService() {
           onChangeText={setCost}
           keyboardType="numeric"
         />
+        {type === TREAD_SERVICE ? (
+          <Field
+            label={t(unit === "mi" ? "vehicleForms.log.tread32" : "vehicleForms.log.treadMm")}
+            value={tread}
+            onChangeText={setTread}
+            keyboardType="numeric"
+          />
+        ) : null}
         <Field label={t("vehicleForms.log.notes")} value={notes} onChangeText={setNotes} />
       </Card>
     </Screen>

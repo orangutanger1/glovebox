@@ -569,6 +569,7 @@ export const ko: Fragment = {
   "system.csv.header.cost": "비용",
   "system.csv.header.notes": "메모",
   "system.csv.header.deleted": "삭제",
+  "system.csv.header.tread": "트레드 (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro 써 보기",
@@ -625,6 +626,10 @@ export const ko: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · 트레드 {tread}",
+  "vehicle.tread.title": "타이어 트레드",
+  "vehicle.tread.replaceSoon": "{depth} 남음 — 곧 교체",
+  "vehicle.tread.replaceNow": "{depth} 남음 — 지금 교체",
 
   "vehicle.swipe.delete": "삭제",
   "vehicle.serviceDeleted": "정비를 삭제했어요",
@@ -661,6 +666,8 @@ export const ko: Fragment = {
   "vehicleForms.log.odometer": "주행거리({unit})",
   "vehicleForms.log.cost": "비용(선택)",
   "vehicleForms.log.notes": "메모(선택)",
+  "vehicleForms.log.tread32": "트레드 깊이(32분의 1인치, 선택)",
+  "vehicleForms.log.treadMm": "트레드 깊이(mm, 선택)",
   "subscribed.title": "Pro가 켜졌습니다.",
   "subscribed.body": "{vehicle}을(를) 정비 일정에 등록했습니다. 기한이 지난 뒤가 아니라 그전에 알려드립니다.",
   "subscribed.unlocked": "이제 쓸 수 있어요",

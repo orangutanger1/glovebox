@@ -36,7 +36,7 @@ beforeAll(() => setLanguage("en"));
 
 beforeEach(() => setDistanceUnit("mi"));
 
-const HEADER = "Vehicle,Service,Date,Odometer (mi),Cost,Notes,Deleted\n";
+const HEADER = "Vehicle,Service,Date,Odometer (mi),Cost,Notes,Deleted,Tread (mm)\n";
 
 test("writes a header row even when there are no records", () => {
   expect(toCsv([])).toBe(HEADER);
@@ -63,7 +63,7 @@ test("writes one line per record", () => {
       notes: "Mobil 1",
     },
   ]);
-  expect(out).toBe(HEADER + "Civic,Oil Change,2026-01-15,50000,49.99,Mobil 1,\n");
+  expect(out).toBe(HEADER + "Civic,Oil Change,2026-01-15,50000,49.99,Mobil 1,,\n");
 });
 
 test("the cells stay machine-readable whatever the header says", () => {
@@ -82,8 +82,8 @@ test("the cells stay machine-readable whatever the header says", () => {
     },
   ]);
   expect(out).toBe(
-    "Vehicle,Service,Date,Odometer (km),Cost,Notes,Deleted\n" +
-      "Civic,Oil Change,2026-01-15,51771,49.99,Mobil 1,\n"
+    "Vehicle,Service,Date,Odometer (km),Cost,Notes,Deleted,Tread (mm)\n" +
+      "Civic,Oil Change,2026-01-15,51771,49.99,Mobil 1,,\n"
   );
 });
 
@@ -108,7 +108,7 @@ test("marks soft-deleted rows instead of omitting them", () => {
       deleted_at: "2026-02-01T17:00:00.000Z",
     },
   ]);
-  expect(out.trim().endsWith(",deleted")).toBe(true);
+  expect(out.trim().endsWith(",deleted,")).toBe(true);
 });
 
 const FUEL_HEADER = "Vehicle,Date,Odometer (mi),Fuel (gal),Cost,Full tank,Deleted\n";

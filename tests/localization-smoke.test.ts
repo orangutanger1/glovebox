@@ -57,6 +57,10 @@ const SAMPLES: Record<string, string | number> = {
   detail: "Geico",
   when: "Expires 14 Sep 2026",
   document: "Insurance",
+  // Tire tread: a gauge reading, and the history row it is appended to.
+  base: "14 Sep 2026 · 51,771 mi",
+  tread: "5/32″",
+  depth: "3/32″",
 };
 
 const varsFor = (key: string, count?: number): Vars => {

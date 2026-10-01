@@ -569,6 +569,7 @@ export const ptBR: Fragment = {
   "system.csv.header.cost": "Custo",
   "system.csv.header.notes": "Observações",
   "system.csv.header.deleted": "Apagado",
+  "system.csv.header.tread": "Sulco (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Testar o Pro",
@@ -624,6 +625,10 @@ export const ptBR: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · sulco {tread}",
+  "vehicle.tread.title": "Sulco dos pneus",
+  "vehicle.tread.replaceSoon": "Restam {depth}: troque em breve",
+  "vehicle.tread.replaceNow": "Restam {depth}: troque agora",
 
   "vehicle.swipe.delete": "Apagar",
   "vehicle.serviceDeleted": "Serviço apagado",
@@ -659,6 +664,8 @@ export const ptBR: Fragment = {
   "vehicleForms.log.odometer": "Odômetro ({unit})",
   "vehicleForms.log.cost": "Custo (opcional)",
   "vehicleForms.log.notes": "Observações (opcional)",
+  "vehicleForms.log.tread32": "Profundidade do sulco (32 avos, opcional)",
+  "vehicleForms.log.treadMm": "Profundidade do sulco (mm, opcional)",
   "subscribed.title": "O Pro está ligado.",
   "subscribed.body": "{vehicle} já está no plano. Você será avisado antes de cada serviço vencer, não depois.",
   "subscribed.unlocked": "Agora ativo",

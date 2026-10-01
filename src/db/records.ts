@@ -11,6 +11,8 @@ export type ServiceRecord = {
   odometer?: number;
   cost?: number;
   notes?: string;
+  /** Tire tread depth in mm, when the owner measured it. */
+  tread_mm?: number;
   revision: number;
   supersedes?: string;
   deleted_at?: string;
@@ -39,6 +41,7 @@ export function addRecord(r: {
   odometer?: number;
   cost?: number;
   notes?: string;
+  tread_mm?: number;
 }): ServiceRecord {
   const row: ServiceRecord = {
     id: id(),
@@ -48,10 +51,10 @@ export function addRecord(r: {
   };
   getDb().runSync(
     `INSERT INTO service_records
-       (id, vehicle_id, service_type, performed_at, odometer, cost, notes, revision, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       (id, vehicle_id, service_type, performed_at, odometer, cost, notes, tread_mm, revision, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [row.id, row.vehicle_id, row.service_type, row.performed_at, row.odometer ?? null,
-     row.cost ?? null, row.notes ?? null, row.revision, row.created_at]
+     row.cost ?? null, row.notes ?? null, row.tread_mm ?? null, row.revision, row.created_at]
   );
   if (r.odometer !== undefined) {
     getDb().runSync(

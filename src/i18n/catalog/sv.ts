@@ -578,6 +578,7 @@ export const sv: Fragment = {
   "system.csv.header.cost": "Kostnad",
   "system.csv.header.notes": "Anteckningar",
   "system.csv.header.deleted": "Raderad",
+  "system.csv.header.tread": "Mönster (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Testa Pro",
@@ -632,6 +633,10 @@ export const sv: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · mönster {tread}",
+  "vehicle.tread.title": "Däckmönster",
+  "vehicle.tread.replaceSoon": "{depth} kvar – byt snart",
+  "vehicle.tread.replaceNow": "{depth} kvar – byt nu",
 
   "vehicle.swipe.delete": "Ta bort",
   "vehicle.serviceDeleted": "Servicen togs bort",
@@ -667,6 +672,8 @@ export const sv: Fragment = {
   "vehicleForms.log.odometer": "Mätarställning ({unit})",
   "vehicleForms.log.cost": "Kostnad (frivilligt)",
   "vehicleForms.log.notes": "Anteckningar (frivilligt)",
+  "vehicleForms.log.tread32": "Mönsterdjup (32-delar, valfritt)",
+  "vehicleForms.log.treadMm": "Mönsterdjup (mm, valfritt)",
   "subscribed.title": "Pro är på.",
   "subscribed.body": "{vehicle} finns nu i schemat. Du får veta innan varje service förfaller, inte efteråt.",
   "subscribed.unlocked": "Nu på",

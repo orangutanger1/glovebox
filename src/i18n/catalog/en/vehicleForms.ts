@@ -30,4 +30,6 @@ export const vehicleForms: Fragment = {
   "vehicleForms.log.odometer": "Odometer ({unit})",
   "vehicleForms.log.cost": "Cost (optional)",
   "vehicleForms.log.notes": "Notes (optional)",
+  "vehicleForms.log.tread32": "Tread depth (32nds, optional)",
+  "vehicleForms.log.treadMm": "Tread depth (mm, optional)",
 };

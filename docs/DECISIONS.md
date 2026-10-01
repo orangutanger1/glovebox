@@ -96,8 +96,15 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 - **The 2-minute cancel** (09-24, a TikTok monthly buyer): the cancel survey said "purchased by mistake". It came right after a rating ask 18 s after purchase. This was a problem with the buying moment, not with the product.
 - **Shipped (don't rebuild):** rating ask moved to after the first saved record; a catch-up screen after purchase; NHTSA recalls (US only); a monthly odometer check-in (steps a month at a time, never nags daily); glovebox documents with expiry reminders (text only).
 - **Stop adding retention features until ~10-02.** Five retention changes landed in two days, so their effects can't be told apart. Measure the day-2 and day-7 return rate of buyers, how many answer the check-in, and how many save a document.
-- **Widget built 10-01** (0 of 25 buyers saved a document, so the widget came first): `NextService` in `src/widget/`, small/medium home screen plus lock screen, showing the first car's worst-then-soonest three services in the garage card's words. It is refreshed from `rescheduleAll`. It needs a native App Store build (`expo-widgets`, app group `group.com.idea6.carmaintenancelog`); it does nothing on OTA-only binaries. Document photos go in the same build or the next one. Measure: buyers' day-7 return before vs after the build.
+- **Widget built 10-01** (0 of 25 buyers saved a document, so the widget came first): `NextService` in `src/widget/`, small/medium home screen plus lock screen, showing the first car's worst-then-soonest three services in the garage card's words. It is refreshed from `rescheduleAll`. It needs a native App Store build (`expo-widgets`, app group `group.com.idea6.carmaintenancelog`); it does nothing on OTA-only binaries. Document photos (front and back, on-device only) and tire tread depth ship in the same build. Measure: buyers' day-7 return before vs after the build, `document_saved.photos > 0`, `service_logged.has_tread`.
 - **Not built:** a week-1 summary notification.
+
+## Versus CARFAX Car Care (reviewed 10-01)
+
+CARFAX is free, rated 4.8★ from 128K ratings, redesigned for Liquid Glass in v5.4 (June), and fills in service history from its network of shops. That network is a moat we can't copy.
+- **Positioning, decided:** Wrenchy is the log for everything CARFAX can't see: DIY work, any mechanic, your own intervals, data with no account. These are its top complaints (non-network shops refused, wrong mileage that can't be corrected, records that can't be edited, account lockouts, fixed intervals).
+- **Taken from CARFAX (10-01):** document photos and tire tread depth. UI rule: no new sections. Tread appears as one optional field, only when logging a Tire Rotation. It shows in the history row, and only worn tread (≤4/32″ or 3 mm) adds a due row.
+- **Rejected:** car value, shop reviews and repair cost estimates (all need a server and outside data, against "no server"); naming CARFAX in App Store metadata (trademark).
 
 ## Constraints to remember
 

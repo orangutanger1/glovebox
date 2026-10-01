@@ -200,6 +200,13 @@ export const MIGRATIONS: { version: number; sql: string }[] = [
     version: 11,
     sql: `ALTER TABLE documents ADD COLUMN photos TEXT;`,
   },
+  // Tread depth read at a rotation, in millimetres whatever the display unit.
+  // Nullable: most records are not tire records, and most tire records will
+  // not carry a reading.
+  {
+    version: 12,
+    sql: `ALTER TABLE service_records ADD COLUMN tread_mm REAL;`,
+  },
 ];
 
 /**

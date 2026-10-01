@@ -543,6 +543,7 @@ export const ja: Fragment = {
   "system.csv.header.cost": "費用",
   "system.csv.header.notes": "メモ",
   "system.csv.header.deleted": "削除",
+  "system.csv.header.tread": "溝 (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Proを試す",
@@ -599,6 +600,10 @@ export const ja: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · 溝 {tread}",
+  "vehicle.tread.title": "タイヤの溝",
+  "vehicle.tread.replaceSoon": "残り{depth}：まもなく交換",
+  "vehicle.tread.replaceNow": "残り{depth}：今すぐ交換",
 
   "vehicle.swipe.delete": "削除",
   "vehicle.serviceDeleted": "整備記録を削除しました",
@@ -635,6 +640,8 @@ export const ja: Fragment = {
   "vehicleForms.log.odometer": "走行距離（{unit}）",
   "vehicleForms.log.cost": "費用（任意）",
   "vehicleForms.log.notes": "メモ（任意）",
+  "vehicleForms.log.tread32": "溝の深さ（32分の1インチ、任意）",
+  "vehicleForms.log.treadMm": "溝の深さ（mm、任意）",
   "subscribed.title": "Pro が有効になりました。",
   "subscribed.body": "{vehicle} を整備計画に登録しました。期限が過ぎてからではなく、その前にお知らせします。",
   "subscribed.unlocked": "これが使えます",

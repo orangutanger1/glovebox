@@ -598,6 +598,7 @@ export const fr: Fragment = {
   "system.csv.header.cost": "Coût",
   "system.csv.header.notes": "Notes",
   "system.csv.header.deleted": "Supprimé",
+  "system.csv.header.tread": "Sculptures (mm)",
   // A CSV cell value, not copy: it stays the token a spreadsheet filters on.
   "system.csv.cell.deleted": "deleted",
 
@@ -656,6 +657,10 @@ export const fr: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · sculptures {tread}",
+  "vehicle.tread.title": "Sculptures des pneus",
+  "vehicle.tread.replaceSoon": "Reste {depth} : à remplacer bientôt",
+  "vehicle.tread.replaceNow": "Reste {depth} : à remplacer maintenant",
 
   "vehicle.swipe.delete": "Supprimer",
   "vehicle.serviceDeleted": "Entretien supprimé",
@@ -692,6 +697,8 @@ export const fr: Fragment = {
   "vehicleForms.log.odometer": "Compteur ({unit})",
   "vehicleForms.log.cost": "Coût (facultatif)",
   "vehicleForms.log.notes": "Notes (facultatif)",
+  "vehicleForms.log.tread32": "Profondeur des sculptures (32e de pouce, facultatif)",
+  "vehicleForms.log.treadMm": "Profondeur des sculptures (mm, facultatif)",
   "subscribed.title": "Pro est activé.",
   "subscribed.body": "{vehicle} est désormais au programme. Vous serez prévenu avant chaque entretien, pas après.",
   "subscribed.unlocked": "Maintenant actif",

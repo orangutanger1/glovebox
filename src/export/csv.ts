@@ -11,6 +11,7 @@ export type CsvRow = {
   cost?: number | null;
   notes?: string | null;
   deleted_at?: string | null;
+  tread_mm?: number | null;
 };
 
 /**
@@ -28,6 +29,8 @@ function header(): string[] {
     t("system.csv.header.cost"),
     t("system.csv.header.notes"),
     t("system.csv.header.deleted"),
+    // Last, so every column before it keeps the position older exports had.
+    t("system.csv.header.tread"),
   ];
 }
 
@@ -56,6 +59,7 @@ export function toCsv(rows: CsvRow[]): string {
         cell(r.cost),
         cell(r.notes),
         cell(r.deleted_at ? t("system.csv.cell.deleted") : ""),
+        cell(r.tread_mm),
       ].join(",")
     );
   }

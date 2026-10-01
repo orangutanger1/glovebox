@@ -652,6 +652,7 @@ export const pl: Fragment = {
   "system.csv.header.cost": "Koszt",
   "system.csv.header.notes": "Notatki",
   "system.csv.header.deleted": "Usunięte",
+  "system.csv.header.tread": "Bieżnik (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Wypróbuj Pro",
@@ -709,6 +710,10 @@ export const pl: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · bieżnik {tread}",
+  "vehicle.tread.title": "Bieżnik opon",
+  "vehicle.tread.replaceSoon": "Zostało {depth} – wymień wkrótce",
+  "vehicle.tread.replaceNow": "Zostało {depth} – wymień teraz",
 
   "vehicle.swipe.delete": "Usuń",
   "vehicle.serviceDeleted": "Serwis usunięty",
@@ -745,6 +750,8 @@ export const pl: Fragment = {
   "vehicleForms.log.odometer": "Przebieg ({unit})",
   "vehicleForms.log.cost": "Koszt (opcjonalnie)",
   "vehicleForms.log.notes": "Notatki (opcjonalnie)",
+  "vehicleForms.log.tread32": "Głębokość bieżnika (1/32 cala, opcjonalnie)",
+  "vehicleForms.log.treadMm": "Głębokość bieżnika (mm, opcjonalnie)",
   "subscribed.title": "Pro jest włączone.",
   "subscribed.body": "{vehicle} jest już w harmonogramie. Dostaniesz znać, zanim przegląd stanie się wymagalny, a nie po fakcie.",
   "subscribed.unlocked": "Teraz działa",

@@ -587,6 +587,7 @@ export const es: Fragment = {
   "system.csv.header.cost": "Coste",
   "system.csv.header.notes": "Notas",
   "system.csv.header.deleted": "Borrado",
+  "system.csv.header.tread": "Dibujo (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Prueba Pro",
@@ -644,6 +645,10 @@ export const es: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · dibujo {tread}",
+  "vehicle.tread.title": "Dibujo de neumáticos",
+  "vehicle.tread.replaceSoon": "Quedan {depth}: cámbialos pronto",
+  "vehicle.tread.replaceNow": "Quedan {depth}: cámbialos ya",
 
   "vehicle.swipe.delete": "Borrar",
   "vehicle.serviceDeleted": "Mantenimiento borrado",
@@ -681,6 +686,8 @@ export const es: Fragment = {
   "vehicleForms.log.odometer": "Cuentakilómetros ({unit})",
   "vehicleForms.log.cost": "Coste (opcional)",
   "vehicleForms.log.notes": "Notas (opcional)",
+  "vehicleForms.log.tread32": "Profundidad del dibujo (32avos, opcional)",
+  "vehicleForms.log.treadMm": "Profundidad del dibujo (mm, opcional)",
   "subscribed.title": "Pro está activo.",
   "subscribed.body": "{vehicle} ya está en el plan. Te avisaremos antes de cada mantenimiento, no después.",
   "subscribed.unlocked": "Ahora activo",

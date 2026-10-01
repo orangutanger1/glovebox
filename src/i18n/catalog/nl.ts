@@ -96,6 +96,10 @@ export const nl: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · profiel {tread}",
+  "vehicle.tread.title": "Bandenprofiel",
+  "vehicle.tread.replaceSoon": "Nog {depth}: binnenkort vervangen",
+  "vehicle.tread.replaceNow": "Nog {depth}: nu vervangen",
 
   "vehicle.swipe.delete": "Verwijder",
   "vehicle.serviceDeleted": "Onderhoud verwijderd",
@@ -220,6 +224,7 @@ export const nl: Fragment = {
   "system.csv.header.cost": "Kosten",
   "system.csv.header.notes": "Notities",
   "system.csv.header.deleted": "Verwijderd",
+  "system.csv.header.tread": "Profiel (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Pro proberen",
@@ -352,6 +357,8 @@ export const nl: Fragment = {
   "vehicleForms.log.odometer": "Kilometerstand ({unit})",
   "vehicleForms.log.cost": "Kosten (optioneel)",
   "vehicleForms.log.notes": "Notities (optioneel)",
+  "vehicleForms.log.tread32": "Profieldiepte (32ste inch, optioneel)",
+  "vehicleForms.log.treadMm": "Profieldiepte (mm, optioneel)",
 
   // onboardingA
   "onboardingA.continue": "Verder",

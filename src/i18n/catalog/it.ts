@@ -572,6 +572,7 @@ export const it: Fragment = {
   "system.csv.header.cost": "Costo",
   "system.csv.header.notes": "Note",
   "system.csv.header.deleted": "Eliminato",
+  "system.csv.header.tread": "Battistrada (mm)",
   "system.csv.cell.deleted": "deleted",
 
   "system.quickaction.trial.title": "Prova Pro",
@@ -627,6 +628,10 @@ export const it: Fragment = {
   "vehicle.row.dateDistance": "{date} · {distance}",
   "vehicle.row.dateCost": "{date} · {cost}",
   "vehicle.row.dateDistanceCost": "{date} · {distance} · {cost}",
+  "vehicle.row.withTread": "{base} · battistrada {tread}",
+  "vehicle.tread.title": "Battistrada",
+  "vehicle.tread.replaceSoon": "Restano {depth}: sostituisci presto",
+  "vehicle.tread.replaceNow": "Restano {depth}: sostituisci ora",
 
   "vehicle.swipe.delete": "Elimina",
   "vehicle.serviceDeleted": "Manutenzione eliminata",
@@ -663,6 +668,8 @@ export const it: Fragment = {
   "vehicleForms.log.odometer": "Contachilometri ({unit})",
   "vehicleForms.log.cost": "Costo (facoltativo)",
   "vehicleForms.log.notes": "Note (facoltativo)",
+  "vehicleForms.log.tread32": "Profondità battistrada (32esimi, facoltativo)",
+  "vehicleForms.log.treadMm": "Profondità battistrada (mm, facoltativo)",
   "subscribed.title": "Pro è attivo.",
   "subscribed.body": "{vehicle} ora è nel programma. Ti avviseremo prima di ogni intervento, non dopo.",
   "subscribed.unlocked": "Ora attivo",

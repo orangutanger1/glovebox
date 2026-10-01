@@ -92,6 +92,7 @@ export const system: Fragment = {
   "system.csv.header.cost": "Cost",
   "system.csv.header.notes": "Notes",
   "system.csv.header.deleted": "Deleted",
+  "system.csv.header.tread": "Tread (mm)",
   "system.csv.cell.deleted": "deleted",
   "system.csv.fuel.volume": "Fuel ({unit})",
   "system.csv.fuel.full": "Full tank",

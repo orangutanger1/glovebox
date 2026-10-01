@@ -124,7 +124,8 @@ test("migration 8 retires an estimated reading rather than promoting it", () => 
     INSERT INTO vehicles VALUES ('est', 'Guessed', 94500, 1, '2026-01-01T00:00:00.000Z');
     INSERT INTO vehicles VALUES ('read', 'Read', 84210, NULL, '2026-01-01T00:00:00.000Z');
   `);
-  applyMigrations(exec, 7);
+  // Only migration 8: later ones alter tables this miniature does not have.
+  for (const m of MIGRATIONS) if (m.version === 8) exec(m.sql);
   const rows = db
     .prepare("SELECT id, odometer, odometer_estimated FROM vehicles ORDER BY id")
     .all() as { id: string; odometer: number | null; odometer_estimated: number | null }[];

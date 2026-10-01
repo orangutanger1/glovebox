@@ -680,3 +680,10 @@ document, build the widget before document photos.
 - A monthly sale from the exit offer is `subscription_success` with `offering=discount`, `plan=$rc_monthly`. Before this, every discount sale was `$rc_annual`.
 - `paywall_presented` (offering `discount`) now carries `monthly: true|false`.
 - Read on exit-offer buy taps → paid and paid per viewer, per arm. See `docs/DECISIONS.md`.
+
+### 2026-10-01 — native build: widget, document photos, tire tread (not yet built; commits be33cf8, 89e53ba, next)
+
+- Adds the native modules `expo-widgets`, `@expo/ui` and `expo-image-picker`, so it needs an App Store build. OTA updates from this point need the new runtime.
+- `NextService` widget (home and lock screen). Document photos (DB migration 11). Tire tread depth on Tire Rotation records (migration 12, `tread_mm`; CSV gains a trailing "Tread (mm)" column).
+- New props: `document_saved.photos` (count), `service_logged.has_tread`.
+- **Funnel effect:** none before the paywall. Read buyers' day-7 return before vs after this build reaches users.
