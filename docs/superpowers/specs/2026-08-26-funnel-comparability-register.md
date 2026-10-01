@@ -681,7 +681,7 @@ document, build the widget before document photos.
 - `paywall_presented` (offering `discount`) now carries `monthly: true|false`.
 - Read on exit-offer buy taps → paid and paid per viewer, per arm. See `docs/DECISIONS.md`.
 
-### 2026-10-01 — native build: widget, document photos, tire tread (not yet built; commits be33cf8, 89e53ba, next)
+### 2026-10-01 — native build 1.3.0 (44): widget, document photos, tire tread, launch cover (EAS 56293f82; TestFlight 10-01, not yet in review)
 
 - Adds the native modules `expo-widgets`, `@expo/ui` and `expo-image-picker`, so it needs an App Store build. OTA updates from this point need the new runtime.
 - `NextService` widget (home and lock screen). Document photos (DB migration 11). Tire tread depth on Tire Rotation records (migration 12, `tread_mm`; CSV gains a trailing "Tread (mm)" column).
