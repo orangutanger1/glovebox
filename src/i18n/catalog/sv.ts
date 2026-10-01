@@ -89,6 +89,7 @@ export const sv: Fragment = {
   "garage.noSchedule.detail": "loggad, inte bevakad",
   "garage.nothingLogged": "Inget loggat",
   "garage.nothingLogged.detail": "lägg till en service",
+  "garage.widgetNoCar": "Lägg till din bil i Wrenchy",
 
   "garage.openHistory": "Öppna historiken",
   "garage.openAndLog": "Öppna och logga en service",

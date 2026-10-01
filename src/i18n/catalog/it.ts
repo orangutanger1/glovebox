@@ -80,6 +80,7 @@ export const it: Fragment = {
   "garage.noSchedule.detail": "registrato, non monitorato",
   "garage.nothingLogged": "Niente registrato",
   "garage.nothingLogged.detail": "aggiungi un tagliando",
+  "garage.widgetNoCar": "Aggiungi la tua auto su Wrenchy",
 
   "garage.openHistory": "Apri lo storico",
   "garage.openAndLog": "Apri e registra un tagliando",

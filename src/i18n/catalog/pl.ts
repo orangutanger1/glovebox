@@ -58,6 +58,7 @@ export const pl: Fragment = {
   "garage.noSchedule.detail": "zapisane, nieśledzone",
   "garage.nothingLogged": "Brak wpisów",
   "garage.nothingLogged.detail": "dodaj serwis",
+  "garage.widgetNoCar": "Dodaj swój samochód w Wrenchy",
 
   "garage.openHistory": "Otwórz historię",
   "garage.openAndLog": "Otwórz i zapisz serwis",

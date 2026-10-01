@@ -82,6 +82,7 @@ export const ja: Fragment = {
   "garage.noSchedule.detail": "記録のみ、管理対象外",
   "garage.nothingLogged": "記録がありません",
   "garage.nothingLogged.detail": "整備を追加",
+  "garage.widgetNoCar": "Wrenchyで車を追加",
 
   "garage.openHistory": "履歴を開く",
   "garage.openAndLog": "開いて整備を記録",

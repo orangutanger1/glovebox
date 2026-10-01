@@ -81,6 +81,16 @@ let queue: Promise<void> = Promise.resolve();
  * Runs are serialised; see `queue`.
  */
 export function rescheduleAll(): Promise<void> {
+  // The widget reads the same records and goes stale on the same writes, so
+  // it is refreshed from here, ahead of the permission check that ends the
+  // rebuild early: a user who said no to notifications can still have the
+  // widget. Required here rather than imported: the widget module pulls in
+  // react-native and the database, which the notification tests run without.
+  try {
+    (require("../widget") as typeof import("../widget")).syncWidget();
+  } catch {
+    // Never let the widget block a reminder rebuild.
+  }
   const run = queue.then(rebuild);
   queue = run.catch(() => {});
   return run;

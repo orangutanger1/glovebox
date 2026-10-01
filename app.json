@@ -56,6 +56,28 @@
           "imageWidth": 160,
           "resizeMode": "contain"
         }
+      ],
+      [
+        "expo-widgets",
+        {
+          "bundleIdentifier": "com.idea6.carmaintenancelog.ExpoWidgetsTarget",
+          "groupIdentifier": "group.com.idea6.carmaintenancelog",
+          "widgets": [
+            {
+              "name": "NextService",
+              "displayName": "Next service",
+              "description": "What your car needs next, and when.",
+              "ios": {
+                "supportedFamilies": [
+                  "systemSmall",
+                  "systemMedium",
+                  "accessoryRectangular",
+                  "accessoryInline"
+                ]
+              }
+            }
+          ]
+        }
       ]
     ],
     "runtimeVersion": {

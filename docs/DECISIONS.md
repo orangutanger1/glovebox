@@ -96,7 +96,7 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 - **The 2-minute cancel** (09-24, a TikTok monthly buyer): the cancel survey said "purchased by mistake". It came right after a rating ask 18 s after purchase. This was a problem with the buying moment, not with the product.
 - **Shipped (don't rebuild):** rating ask moved to after the first saved record; a catch-up screen after purchase; NHTSA recalls (US only); a monthly odometer check-in (steps a month at a time, never nags daily); glovebox documents with expiry reminders (text only).
 - **Stop adding retention features until ~10-02.** Five retention changes landed in two days, so their effects can't be told apart. Measure the day-2 and day-7 return rate of buyers, how many answer the check-in, and how many save a document.
-- **Next, if the data supports it:** a home-screen widget, and photos of documents. Both need a native build, so bundle them. If fewer than 10% of buyers save a document, build the widget first.
+- **Widget built 10-01** (0 of 25 buyers saved a document, so the widget came first): `NextService` in `src/widget/`, small/medium home screen plus lock screen, showing the first car's worst-then-soonest three services in the garage card's words. It is refreshed from `rescheduleAll`. It needs a native App Store build (`expo-widgets`, app group `group.com.idea6.carmaintenancelog`); it does nothing on OTA-only binaries. Document photos go in the same build or the next one. Measure: buyers' day-7 return before vs after the build.
 - **Not built:** a week-1 summary notification.
 
 ## Constraints to remember

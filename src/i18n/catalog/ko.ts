@@ -91,6 +91,7 @@ export const ko: Fragment = {
   "garage.noSchedule.detail": "기록만, 추적 안 함",
   "garage.nothingLogged": "기록 없음",
   "garage.nothingLogged.detail": "정비 추가하기",
+  "garage.widgetNoCar": "Wrenchy에 차량을 추가하세요",
 
   "garage.openHistory": "차계부 열기",
   "garage.openAndLog": "열어서 정비 기록하기",

@@ -93,6 +93,7 @@ export const fr: Fragment = {
   "garage.noSchedule.detail": "noté, pas suivi",
   "garage.nothingLogged": "Rien de noté",
   "garage.nothingLogged.detail": "ajoutez un entretien",
+  "garage.widgetNoCar": "Ajoutez votre voiture dans Wrenchy",
 
   "garage.openHistory": "Ouvrir l'historique",
   "garage.openAndLog": "Ouvrir et noter un entretien",

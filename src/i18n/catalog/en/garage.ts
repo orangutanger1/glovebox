@@ -35,6 +35,7 @@ export const garage: Fragment = {
   "garage.noSchedule.detail": "logged, not tracked",
   "garage.nothingLogged": "Nothing logged",
   "garage.nothingLogged.detail": "add a service",
+  "garage.widgetNoCar": "Add your car in Wrenchy",
 
   "garage.openHistory": "Open history",
   "garage.openAndLog": "Open and log a service",

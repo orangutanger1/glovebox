@@ -80,6 +80,7 @@ export const ptBR: Fragment = {
   "garage.noSchedule.detail": "registrado, sem acompanhamento",
   "garage.nothingLogged": "Nada registrado",
   "garage.nothingLogged.detail": "registre um serviço",
+  "garage.widgetNoCar": "Adicione seu carro no Wrenchy",
 
   "garage.openHistory": "Abrir histórico",
   "garage.openAndLog": "Abrir e registrar um serviço",

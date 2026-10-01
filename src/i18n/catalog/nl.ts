@@ -50,6 +50,7 @@ export const nl: Fragment = {
   "garage.noSchedule.detail": "vastgelegd, niet gevolgd",
   "garage.nothingLogged": "Niets vastgelegd",
   "garage.nothingLogged.detail": "leg onderhoud vast",
+  "garage.widgetNoCar": "Voeg je auto toe in Wrenchy",
 
   "garage.openHistory": "Historie openen",
   "garage.openAndLog": "Openen en onderhoud vastleggen",
