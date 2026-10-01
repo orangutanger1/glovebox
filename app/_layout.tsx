@@ -159,6 +159,12 @@ export default function RootLayout() {
   // every screen then rebuilds its sentences instead of keeping the ones it
   // formatted in the previous language.
   const [localeEpoch, setLocaleEpoch] = useState(0);
+  // True while a launch that may end on the wall waits for the store. The
+  // garage used to render first and the wall replaced it a beat later, so a
+  // walled user saw their garage flash on every launch. Covered by a blank
+  // housing instead, capped at `WALL_WAIT_MS` so a store with no signal still
+  // leaves the user on the garage rather than on nothing.
+  const [holding, setHolding] = useState(false);
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
@@ -275,6 +281,17 @@ export default function RootLayout() {
     // the store would mean a user with no signal staring at nothing. The same
     // pair decides whether the home-screen menu should be offering a trial.
     const lastShownAt = getWinbackShownAt();
+    // Only a launch that can end on the wall waits: a grandfathered user can
+    // never be walled, and their garage draws at once as it always has.
+    let release = () => {};
+    if (!grandfathered) {
+      setHolding(true);
+      const timer = setTimeout(() => setHolding(false), WALL_WAIT_MS);
+      release = () => {
+        clearTimeout(timer);
+        setHolding(false);
+      };
+    }
     Promise.all([isPro(), hasOffering(DISCOUNT_OFFERING)])
       .then(([pro, hasOffer]) => {
         // `null` is a store that could not answer, and everything below reads
@@ -313,7 +330,10 @@ export default function RootLayout() {
       })
       .catch(() => {
         // No store, no offer to make. The garage is already on screen.
-      });
+      })
+      // After the replace above, in the same tick, so the cover lifts onto
+      // whichever screen won.
+      .finally(release);
   }, []);
 
   /**
@@ -371,8 +391,12 @@ export default function RootLayout() {
   //
   // The fatal state is drawn as an overlay over a mounted `<Stack>` instead.
   // Same pixels, no unmounted navigator.
-  return <Chrome localeEpoch={localeEpoch} fatal={fatal} />;
+  return <Chrome localeEpoch={localeEpoch} fatal={fatal} holding={holding} />;
 }
+
+/** The longest a launch waits on the store before showing the garage. A
+ *  cached RevenueCat answer comes back in well under this. */
+const WALL_WAIT_MS = 1500;
 
 /**
  * The database is gone and no screen can be trusted. Absolutely positioned
@@ -418,7 +442,15 @@ function FatalNotice({ detail }: { detail: string }) {
  * `fatal` is drawn over the stack rather than in place of it. See the note in
  * `RootLayout` for why nothing may take the navigator's place.
  */
-function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | null }) {
+function Chrome({
+  localeEpoch,
+  fatal,
+  holding,
+}: {
+  localeEpoch: number;
+  fatal: string | null;
+  holding: boolean;
+}) {
   const router = useRouter();
 
   return (
@@ -532,6 +564,15 @@ function Chrome({ localeEpoch, fatal }: { localeEpoch: number; fatal: string | n
         />
         <Stack.Screen name="checkin" options={{ title: t("checkin.title"), headerTitle: "" }} />
       </Stack>
+      {/* Opaque and empty, over a mounted stack (see the note in RootLayout
+          on why nothing may replace the navigator). */}
+      {holding && fatal === null && (
+        <View
+          testID="launch-cover"
+          pointerEvents="auto"
+          style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: tokens.color.housing }}
+        />
+      )}
       {fatal !== null && <FatalNotice detail={fatal} />}
     </GestureHandlerRootView>
   );

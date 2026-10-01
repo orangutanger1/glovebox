@@ -27,6 +27,8 @@ jest.mock("expo-router", () => {
 const mockReplace = jest.fn();
 let mockPro: boolean | null = false;
 let mockHasOffer = false;
+// When set, the store's answer waits on it: a launch caught mid-question.
+let mockProGate: Promise<void> | null = null;
 jest.mock("react-native-gesture-handler", () => {
   const { createElement } = require("react");
   return {
@@ -47,7 +49,10 @@ jest.mock("../src/purchases", () => ({
   DISCOUNT_OFFERING: "discount",
   hasOffering: async () => mockHasOffer,
   initPurchases: () => {},
-  isPro: async () => mockPro,
+  isPro: async () => {
+    if (mockProGate) await mockProGate;
+    return mockPro;
+  },
 }));
 jest.mock("../src/purchases/plans", () => ({ prefetchPlans: jest.fn() }));
 jest.mock("../src/analytics", () => ({
@@ -160,5 +165,58 @@ describe("the launch and the entitlement", () => {
     await launch();
     expect(mockReplace).not.toHaveBeenCalled();
     expect(mockSyncQuickActions).toHaveBeenCalledWith(false);
+  });
+});
+
+/**
+ * A walled user's garage used to draw first and be replaced by the wall a beat
+ * later, so every launch flashed the garage. The launch now covers the stack
+ * while the store answers, for the users who can be walled, and only them.
+ */
+describe("the launch cover", () => {
+  beforeEach(() => {
+    mockReplace.mockClear();
+    mockHasOffer = true;
+    mockPro = false;
+  });
+  afterEach(() => {
+    mockProGate = null;
+  });
+
+  async function mount(): Promise<{ tree: TestRenderer.ReactTestRenderer; answer: () => Promise<void> }> {
+    let open!: () => void;
+    mockProGate = new Promise<void>((resolve) => (open = resolve));
+    let tree!: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(<RootLayout />);
+    });
+    return {
+      tree,
+      answer: async () => {
+        await act(async () => {
+          open();
+        });
+      },
+    };
+  }
+  const covered = (tree: TestRenderer.ReactTestRenderer) =>
+    tree.root.findAllByProps({ testID: "launch-cover" }).length > 0;
+
+  test("covers the garage until the store answers, then lifts onto the wall", async () => {
+    mockGrandfathered = false;
+    const { tree, answer } = await mount();
+    expect(covered(tree)).toBe(true);
+    await answer();
+    expect(mockReplace).toHaveBeenCalledWith("/onboarding/offer?walled=1");
+    expect(covered(tree)).toBe(false);
+    act(() => tree.unmount());
+  });
+
+  test("never covers a grandfathered user, who cannot be walled", async () => {
+    mockGrandfathered = true;
+    const { tree, answer } = await mount();
+    expect(covered(tree)).toBe(false);
+    await answer();
+    act(() => tree.unmount());
   });
 });
