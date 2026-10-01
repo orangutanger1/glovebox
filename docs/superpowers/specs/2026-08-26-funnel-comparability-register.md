@@ -667,7 +667,7 @@ document, build the widget before document photos.
 - Why: points 16/102 vs preview 6/109 main-paywall buy taps (p≈0.02), with 4 vs 0 sales, ended a week before the planned 10-08 read. See `docs/DECISIONS.md`.
 - From this OTA on, the main-paywall tap rate should look like the `points` arm's (~16%), not the blended 09-24 → 09-30 figure (~10%). A jump at this boundary is this change.
 
-### 2026-10-01 — onboarding tests ended; shorter flow for everyone (OTA `PENDING`)
+### 2026-10-01 — onboarding tests ended; shorter flow for everyone (OTA `01a0f993`, commit 36df343)
 
 - `onboarding_symptoms` and `onboarding_payoff` are removed from the registry, which is now empty. No new `experiment_assigned` rows, and events no longer carry `exp_onboarding_*`. Installs keep their `experiment.*` rows; nothing reads them.
 - Every install skips `schedule`, `symptoms` and `help` (`HIDDEN` in `src/onboarding/flow.ts`): `analyzing` → `compare` → `reviews` → `paywall`. Installs parked on a hidden screen resume on the next visible one. This includes older builds' `results`/`outlook`, which now land on `compare`.
