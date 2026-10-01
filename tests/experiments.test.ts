@@ -36,28 +36,43 @@ beforeEach(() => {
   getDb().runSync("DELETE FROM app_state", []);
 });
 
-// No experiment is running (both onboarding tests ended 2026-10-01). The
-// machinery stays for the next one; these pin what it does with none.
-test("the registry is empty", () => {
-  expect(EXPERIMENTS).toEqual({});
+test("the registry holds the exit-offer test", () => {
+  expect(EXPERIMENTS).toEqual({ exit_offer_plans: ["yearly", "with_monthly"] });
 });
 
-test("a fresh install is assigned nothing and tracks nothing", () => {
-  expect(assignExperiments(true, () => 0.99)).toEqual({});
+test("a fresh install is assigned once, persisted, and never re-flipped", () => {
+  expect(assignExperiments(true, () => 0.99)).toEqual({ exit_offer_plans: "with_monthly" });
+  expect(getVariant("exit_offer_plans")).toBe("with_monthly");
+  expect(tracked).toEqual([
+    { event: "experiment_assigned", props: { experiment: "exit_offer_plans", variant: "with_monthly" } },
+  ]);
+  expect(assignExperiments(true, () => 0)).toEqual({});
+  expect(getVariant("exit_offer_plans")).toBe("with_monthly");
+  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "with_monthly" });
+});
+
+test("an ineligible install is left alone and reports unassigned", () => {
+  expect(assignExperiments(false)).toEqual({});
+  expect(getVariant("exit_offer_plans")).toBeNull();
+  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "unassigned" });
   expect(tracked).toHaveLength(0);
-  expect(experimentProperties()).toEqual({});
 });
 
 test("rows from ended experiments are kept and not reported", () => {
   // The row is the record of what the install was shown; a later build never
   // rewrites it, and nothing reads it once its experiment is gone.
   setState("experiment.onboarding_symptoms", "no_symptoms");
-  setState("experiment.onboarding_payoff", "condensed");
-  expect(assignExperiments(true, () => 0)).toEqual({});
+  assignExperiments(true, () => 0);
   expect(getState("experiment.onboarding_symptoms")).toBe("no_symptoms");
-  expect(getState("experiment.onboarding_payoff")).toBe("condensed");
   expect(getVariant("onboarding_symptoms")).toBeNull();
-  expect(experimentProperties()).toEqual({});
+  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "yearly" });
+});
+
+test("a stored value outside the variant list reads as unassigned and is not overwritten", () => {
+  setState("experiment.exit_offer_plans", "weekly");
+  expect(getVariant("exit_offer_plans")).toBeNull();
+  expect(assignExperiments(true, () => 0)).toEqual({});
+  expect(getState("experiment.exit_offer_plans")).toBe("weekly");
 });
 
 test("properties never throw when the database is unavailable", () => {
@@ -67,8 +82,8 @@ test("properties never throw when the database is unavailable", () => {
     throw new Error("no database");
   };
   try {
-    expect(experimentProperties()).toEqual({});
-    expect(getVariant("onboarding_symptoms")).toBeNull();
+    expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "unassigned" });
+    expect(getVariant("exit_offer_plans")).toBeNull();
   } finally {
     client.getDb = real;
   }

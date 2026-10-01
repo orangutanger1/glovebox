@@ -672,6 +672,7 @@ export const nl: Fragment = {
   "offer.deal.title": "Tijdelijke aanbieding",
   "offer.deal.pct": "{pct}% korting",
   "offer.deal.perWeek": "Slechts {price} per week",
+  "offer.deal.monthly": "Of {price} per maand, altijd opzegbaar",
   "offer.trial.cta": "Aanbieding claimen",
   "offer.trial.decline": "Ik betaal liever de volle prijs",
   "offer.trial.gets.reminders": "Herinnering voor elke beurt",

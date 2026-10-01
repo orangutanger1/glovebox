@@ -197,6 +197,7 @@ export const ko: Fragment = {
   "offer.deal.title": "기간 한정 특가",
   "offer.deal.pct": "{pct}% 할인",
   "offer.deal.perWeek": "주당 {price}에 불과",
+  "offer.deal.monthly": "또는 월 {price}, 언제든지 해지 가능",
   "offer.trial.cta": "특가 받기",
   "offer.trial.decline": "정가로 구매할게요",
   "offer.trial.gets.reminders": "정비 전에 미리 알림",

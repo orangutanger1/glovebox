@@ -17,6 +17,7 @@ import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 import { track } from "../../src/analytics";
+import { getVariant } from "../../src/experiments";
 import { recordObjection, shouldAskObjection, type Objection, type ObjectionTrigger } from "../../src/survey";
 import { ObjectionSheet } from "../../src/survey/ObjectionSheet";
 
@@ -62,6 +63,12 @@ export default function OnboardingOffer() {
   const relaunched = walled === "1";
 
   const { plans: offered, loading, retry } = usePlans("discount");
+  // The `exit_offer_plans` test: the with_monthly arm also offers the
+  // standard monthly plan, small, under the button. The hook runs for both
+  // arms (hooks cannot be conditional); the yearly arm never reads it.
+  const withMonthly = getVariant("exit_offer_plans") === "with_monthly";
+  const { plans: standard } = usePlans("default");
+  const monthly = withMonthly ? (standard?.find((p) => p.period === "month") ?? null) : null;
   // One plan. The screen sells the yearly at the offer price and nothing
   // beside it — a second card is a comparison the reader makes instead of a
   // decision. The offering can carry more than one package while a new
@@ -99,8 +106,8 @@ export default function OnboardingOffer() {
     track("paywall_shown", { offering: "discount" });
   }, []);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: "discount", ms: Date.now() - mounted.current });
-  }, [plans]);
+    if (plans) track("paywall_presented", { offering: "discount", ms: Date.now() - mounted.current, monthly: withMonthly });
+  }, [plans, withMonthly]);
 
   const chosen: Plan | null =
     plans?.find((p) => p.id === defaultPlan(plans)) ?? null;
@@ -119,12 +126,14 @@ export default function OnboardingOffer() {
     finish(exit);
   }
 
-  async function onBuy() {
-    if (busy || !chosen) return;
+  async function onBuy(plan: Plan | null = chosen) {
+    if (busy || !plan) return;
     setBusy(true);
     setMsg(null);
     try {
-      const outcome = await buy(chosen, "discount");
+      // Labelled "discount" whichever plan it is: the sale came from this
+      // screen, and `plan` says which product it was.
+      const outcome = await buy(plan, "discount");
       if (outcome === "purchased") {
         // The receipt, felt: the same success the log gives a saved service,
         // for the one tap in the app that cost money.
@@ -220,12 +229,24 @@ export default function OnboardingOffer() {
           <BuyFooter
             plan={chosen}
             busy={busy}
-            onBuy={onBuy}
+            onBuy={() => void onBuy()}
             onRestore={onRestore}
             variant={hasDeal ? "accent" : "primary"}
             label={chosen?.compareAt ? t("offer.trial.cta") : undefined}
             lead={chosen ? <PriceLine plan={chosen} /> : null}
           >
+            {monthly && (
+              <Pressable
+                onPress={() => void onBuy(monthly)}
+                disabled={busy}
+                accessibilityRole="button"
+                style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
+              >
+                <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textDecorationLine: "underline" }}>
+                  {t("offer.deal.monthly", { price: monthly.priceString })}
+                </Text>
+              </Pressable>
+            )}
             {!relaunched && (
               <Button label={t("offer.trial.decline")} onPress={onDecline} disabled={busy} variant="secondary" />
             )}

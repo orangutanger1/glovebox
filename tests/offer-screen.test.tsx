@@ -62,8 +62,18 @@ jest.mock("../src/purchases/plans", () => {
       compareAt: { priceString: "$79.99", price: 79.99, pct: 63 },
     },
   ];
+  const standard = [
+    {
+      id: "$rc_monthly", period: "month", package: {}, priceString: "$6.99", price: 6.99,
+      currency: "USD", intro: null, perWeek: "$1.61", perMonth: "$6.99",
+    },
+  ];
   return {
-    usePlans: () => ({ plans, loading: false, retry: () => {} }),
+    usePlans: (offering: string) => ({
+      plans: offering === "default" ? standard : plans,
+      loading: false,
+      retry: () => {},
+    }),
     buy: (plan: unknown, offering: string) => mockBuy(plan, offering),
   };
 });
@@ -86,6 +96,7 @@ jest.mock("expo-haptics", () => ({
 import { setLanguage, t } from "../src/i18n";
 import OnboardingOffer from "../app/onboarding/offer";
 import { getDb } from "../src/db/client";
+import { setState } from "../src/db/state";
 
 beforeAll(() => setLanguage("en"));
 beforeEach(() => {
@@ -211,4 +222,25 @@ test("two taps on the sheet in one frame decline once, not twice", async () => {
 
   expect(objections()).toHaveLength(1);
   expect(navigated).toEqual(["back"]);
+});
+
+describe("the exit_offer_plans test", () => {
+  const monthlyLabel = () => t("offer.deal.monthly", { price: "$6.99" });
+  afterEach(() => getDb().runSync("DELETE FROM app_state", []));
+
+  test("the yearly arm, and an unassigned install, sell the yearly alone", () => {
+    expect(stringsIn(render().root)).not.toContain(monthlyLabel());
+    setState("experiment.exit_offer_plans", "yearly");
+    expect(stringsIn(render().root)).not.toContain(monthlyLabel());
+  });
+
+  test("the with_monthly arm offers the standard monthly under the button, bought from this screen", async () => {
+    setState("experiment.exit_offer_plans", "with_monthly");
+    mockBuy.mockClear();
+    const tree = render();
+    expect(stringsIn(tree.root)).toContain(monthlyLabel());
+    expect(presented()[0].props?.monthly).toBe(true);
+    await tap(tree, monthlyLabel());
+    expect(mockBuy).toHaveBeenCalledWith(expect.objectContaining({ id: "$rc_monthly" }), "discount");
+  });
 });

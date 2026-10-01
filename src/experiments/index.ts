@@ -23,7 +23,7 @@ import { track } from "../analytics";
  * would count the same user in two arms.
  */
 
-// Empty since 2026-10-01. `onboarding_symptoms` (control / no_symptoms) and
+// `onboarding_symptoms` (control / no_symptoms) and
 // `onboarding_payoff` (condensed / none) ran from 09-16 and 09-19 and ended
 // with the shorter arm shipped to everyone (see `HIDDEN` in
 // src/onboarding/flow.ts): 16/394 vs 10/394 and 14/396 vs 10/369 paid, neither
@@ -31,7 +31,15 @@ import { track } from "../analytics";
 // `paywall_preview` (points / preview) ran 2026-09-24 → 2026-09-30 and ended
 // early on 16/102 vs 6/109 main-paywall buy taps. Installs keep their
 // `experiment.*` rows; nothing reads them. See docs/DECISIONS.md.
-export const EXPERIMENTS: Readonly<Record<string, readonly string[]>> = {};
+export const EXPERIMENTS: Readonly<Record<string, readonly string[]>> = {
+  // The exit offer, 2026-10-01. `yearly` is the offer as it was: one yearly
+  // plan at $29.99. `with_monthly` adds a link under the button that buys the
+  // standard monthly plan, for the buyer who wants the app but balks at a
+  // year up front (4/42 exit-offer buy taps paid after the 09-24 headline fix,
+  // the same as before it; monthly is the most-bought full-price plan). Read
+  // on exit-offer buy taps → paid per arm, and paid per offer viewer.
+  exit_offer_plans: ["yearly", "with_monthly"],
+};
 
 export type ExperimentName = keyof typeof EXPERIMENTS;
 export type Variant<E extends ExperimentName> = (typeof EXPERIMENTS)[E][number];

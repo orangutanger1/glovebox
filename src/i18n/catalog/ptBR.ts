@@ -194,6 +194,7 @@ export const ptBR: Fragment = {
   "offer.deal.title": "Oferta por tempo limitado",
   "offer.deal.pct": "{pct}% de desconto",
   "offer.deal.perWeek": "Apenas {price} por semana",
+  "offer.deal.monthly": "Ou {price} por mês, cancele quando quiser",
   "offer.trial.cta": "Aproveitar a oferta",
   "offer.trial.decline": "Prefiro pagar o preço cheio",
   "offer.trial.gets.reminders": "Lembretes antes de cada serviço",

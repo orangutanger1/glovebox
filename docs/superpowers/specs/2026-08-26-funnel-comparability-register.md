@@ -673,3 +673,10 @@ document, build the widget before document photos.
 - Every install skips `schedule`, `symptoms` and `help` (`HIDDEN` in `src/onboarding/flow.ts`): `analyzing` → `compare` → `reviews` → `paywall`. Installs parked on a hidden screen resume on the next visible one. This includes older builds' `results`/`outlook`, which now land on `compare`.
 - Why: no_symptoms 16/394 vs control 10/394 (p 0.32); payoff none 14/396 vs condensed 10/369 (p 0.54). Not significant, and not going to become significant at this volume. The shorter arms led throughout. See `docs/DECISIONS.md`.
 - **Funnel effect:** the flow is three screens shorter for everyone. A small jump in reaching the paywall at this boundary is this change. For the ~25% of earlier installs that were already in the no_symptoms/none cell, nothing changes.
+
+### 2026-10-01 — `exit_offer_plans` test on the exit offer (OTA `PENDING`)
+
+- New experiment `exit_offer_plans`: `yearly` (control, the $29.99 yearly alone) or `with_monthly` (the same screen, plus "Or {price} per month, cancel anytime" under the button, which buys the standard monthly plan). Only fresh installs are assigned; everyone else sees `yearly`.
+- A monthly sale from the exit offer is `subscription_success` with `offering=discount`, `plan=$rc_monthly`. Before this, every discount sale was `$rc_annual`.
+- `paywall_presented` (offering `discount`) now carries `monthly: true|false`.
+- Read on exit-offer buy taps → paid and paid per viewer, per arm. See `docs/DECISIONS.md`.

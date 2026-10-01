@@ -211,6 +211,7 @@ export const fr: Fragment = {
   "offer.deal.title": "Offre à durée limitée",
   "offer.deal.pct": "{pct}% de réduction",
   "offer.deal.perWeek": "Seulement {price} par semaine",
+  "offer.deal.monthly": "Ou {price} par mois, résiliable à tout moment",
   "offer.trial.cta": "Profiter de l’offre",
   "offer.trial.decline": "Je préfère payer le plein tarif",
   "offer.trial.gets.reminders": "Rappels avant chaque entretien",

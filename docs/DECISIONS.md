@@ -49,7 +49,11 @@ Numbers from 09-19 to 09-24, counted per person, with the dev device excluded.
 
 ## Live experiments
 
-None since 2026-10-01. All experiments are coin flips on the device at fresh install (`src/experiments/index.ts`). An install without an assignment gets the control. Count people through their `experiment_assigned` row.
+| Experiment | Arms | Since | Read on | Notes |
+|---|---|---|---|---|
+| `exit_offer_plans` | yearly / with_monthly | 10-01 | ~10-15, or earlier on a clear gap | The with_monthly arm adds "Or {price} per month, cancel anytime" under the exit offer's button; it buys the standard monthly plan (`plan=$rc_monthly`, `offering=discount`). Metric: exit-offer buy taps → paid, and paid per exit-offer viewer, per arm. Why: 4/42 buy taps paid after the 09-24 headline fix, unchanged; price is the top objection; monthly is the most-bought full-price plan. Watch: monthly churns (3/6 set to cancel on 09-24), so check renewals before shipping the winner. |
+
+All experiments are coin flips on the device at fresh install (`src/experiments/index.ts`). An install without an assignment gets the control. Count people through their `experiment_assigned` row.
 
 ### Ended: `onboarding_symptoms` and `onboarding_payoff` (2026-10-01, two days before the planned 10-03 read)
 

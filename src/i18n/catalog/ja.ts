@@ -184,6 +184,7 @@ export const ja: Fragment = {
   "offer.deal.title": "期間限定オファー",
   "offer.deal.pct": "{pct}%オフ",
   "offer.deal.perWeek": "1週間あたりわずか{price}",
+  "offer.deal.monthly": "または月額{price}、いつでも解約可能",
   "offer.trial.cta": "オファーを受け取る",
   "offer.trial.decline": "通常価格で購入する",
   "offer.trial.gets.reminders": "整備の前に必ず通知",
