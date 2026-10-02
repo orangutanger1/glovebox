@@ -19,5 +19,5 @@
     "inspectionTerm": "Safety/emissions inspection (varies by state)",
     "reasoning": "Primary locale. Recovered into the staged workflow from the canonical tree, which was the only place en-US existed - `ship meta stage` regenerates canonical from staged, so an unstaged primary locale was one `stage` away from being lost and was silently excluded from `ship meta lint`/`apply`."
   },
-  "whatsNew": "Reminders that help you finish.\n\n- Step away mid-setup and Wrenchy reminds you to come back — by name, with your car\n- Reminders taper off over a month, then stop\n- Small fixes"
+  "whatsNew": "A widget, photos and tire tread.\n\n- Home and lock screen widget: what your car needs next, at a glance\n- Add photos of your insurance and registration cards\n- Log tire tread at each rotation and get told when it's worn\n- Shorter setup and small fixes"
 }
