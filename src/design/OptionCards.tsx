@@ -3,6 +3,8 @@ import { View, Text, Pressable, Animated, Easing } from "react-native";
 import * as Haptics from "expo-haptics";
 import { tokens } from "./tokens";
 import { usePressScale } from "./press";
+import { isRedesign } from "./theme";
+import { Icon } from "../redesign/icons";
 
 /**
  * The answers to a question, as a column of full-width cards.
@@ -90,6 +92,7 @@ function OptionCard({
   delay: number;
 }) {
   const press = usePressScale(disabled);
+  const redesign = isRedesign();
   const enter = useRef(new Animated.Value(0)).current;
   // Starts wherever the card starts, so a screen returned to by Back shows its
   // answer already picked instead of playing the pick again.
@@ -154,18 +157,31 @@ function OptionCard({
             minHeight: 62,
             paddingHorizontal: tokens.space.md,
             paddingVertical: tokens.space.sm + 4,
-            borderRadius: tokens.radius.md,
-            borderWidth: 1,
+            borderRadius: redesign ? 22 : tokens.radius.md,
+            borderCurve: "continuous",
+            borderWidth: redesign ? 2 : 1,
+            ...(redesign ? tokens.shadow.ambient : null),
             // The chosen card is one value up with a lit hairline round it.
             // That is the whole difference: a picked answer does not need to
             // be a different material from the ones beside it, only a brighter
             // one, and the socket on the right is already saying which it is.
+            // Arm A: every answer is a white pill on the grey page, and the
+            // picked one gets an accent rim and a filled check — Planta's
+            // option card, Opal's pill.
             backgroundColor: disabled
               ? tokens.color.surface
               : selected
-                ? tokens.color.surfaceHi
+                ? redesign
+                  ? tokens.color.surface
+                  : tokens.color.surfaceHi
                 : tokens.color.surface,
-            borderColor: selected ? tokens.color.hairlineLit : tokens.color.hairline,
+            borderColor: selected
+              ? redesign
+                ? tokens.color.accent
+                : tokens.color.hairlineLit
+              : redesign
+                ? "transparent"
+                : tokens.color.hairline,
           }}
         >
           <View style={{ flex: 1, gap: 2 }}>
@@ -175,7 +191,7 @@ function OptionCard({
                 fontWeight: selected ? "600" : "400",
                 color: disabled
                   ? tokens.color.textFaint
-                  : selected
+                  : selected || redesign
                     ? tokens.color.text
                     : tokens.color.textMuted,
               }}
@@ -188,10 +204,46 @@ function OptionCard({
               </Text>
             ) : null}
           </View>
-          <Socket pick={pick} />
+          {redesign ? <CheckCircle pick={pick} /> : <Socket pick={pick} />}
         </Animated.View>
       </Pressable>
     </Animated.View>
+  );
+}
+
+/** Arm A's selection mark: an empty ring that fills with the accent and a
+ *  white tick. */
+function CheckCircle({ pick }: { pick: Animated.Value }) {
+  return (
+    <View
+      style={{
+        width: 26,
+        height: 26,
+        borderRadius: 13,
+        borderWidth: 1.5,
+        borderColor: tokens.color.hairlineLit,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Animated.View
+        style={{
+          position: "absolute",
+          top: -1.5,
+          left: -1.5,
+          width: 26,
+          height: 26,
+          borderRadius: 13,
+          backgroundColor: tokens.color.accent,
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: pick,
+          transform: [{ scale: pick.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] }) }],
+        }}
+      >
+        <Icon name="check" size={16} color={tokens.color.onAccent} />
+      </Animated.View>
+    </View>
   );
 }
 
@@ -225,7 +277,7 @@ function Socket({ pick }: { pick: Animated.Value }) {
           width: STUD,
           height: STUD,
           borderRadius: STUD / 2,
-          backgroundColor: tokens.color.white,
+          backgroundColor: isRedesign() ? tokens.color.accent : tokens.color.white,
           opacity: pick,
           transform: [
             { scale: pick.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] }) },

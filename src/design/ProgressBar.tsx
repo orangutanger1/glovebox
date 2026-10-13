@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { View, Animated, Easing } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /** Ease in, ease out, and hard through the middle — the standard cubic pair
  *  rather than React Native's own `Easing.inOut(Easing.cubic)`, which spends
@@ -87,7 +88,7 @@ export function ProgressBar({
         style={{
           height: "100%",
           borderRadius: tokens.radius.pill,
-          backgroundColor: tokens.color.text,
+          backgroundColor: isRedesign() ? tokens.color.accent : tokens.color.text,
           width: progress.interpolate({
             inputRange: [0, 1],
             outputRange: ["0%", "100%"],

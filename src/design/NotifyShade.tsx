@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { View } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * The notification shade the app's own banner arrives into.
@@ -12,13 +13,15 @@ import { tokens } from "./tokens";
  * exactly one message to read and no invented one to read wrongly.
  */
 function GhostBanner() {
+  // The ghosts are the shade's own tone, a step off the page either way.
+  const ink = isRedesign() ? "0,0,0" : "255,255,255";
   const bar = (width: number | `${number}%`) => (
     <View
       style={{
         height: 8,
         width,
         borderRadius: 4,
-        backgroundColor: "rgba(255,255,255,0.06)",
+        backgroundColor: `rgba(${ink},0.06)`,
       }}
     />
   );
@@ -33,8 +36,8 @@ function GhostBanner() {
         borderRadius: 24,
         borderCurve: "continuous",
         borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.05)",
-        backgroundColor: "rgba(255,255,255,0.02)",
+        borderColor: `rgba(${ink},0.05)`,
+        backgroundColor: `rgba(${ink},0.02)`,
       }}
     >
       <View
@@ -42,7 +45,7 @@ function GhostBanner() {
           width: 48,
           height: 48,
           borderRadius: 11,
-          backgroundColor: "rgba(255,255,255,0.05)",
+          backgroundColor: `rgba(${ink},0.05)`,
         }}
       />
       <View style={{ flex: 1, gap: 8 }}>

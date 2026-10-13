@@ -23,6 +23,7 @@ import { trackNotificationPermission } from "../../src/analytics";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { useAdvance } from "../../src/onboarding/nav";
+import { isRedesign } from "../../src/design/theme";
 
 const NOTIFICATION = require("../../assets/onboarding/notification.png");
 
@@ -94,7 +95,9 @@ export default function OnboardingNotify() {
   const [granted, setGranted] = useState<boolean | null>(null);
 
   const unit = getDistanceUnit();
-  const art = ART_LANGUAGES.includes(getLanguage());
+  // The still is a dark-appearance banner; arm A of `app_design` is a light
+  // page, so it draws the light banner from the user's own car instead.
+  const art = !isRedesign() && ART_LANGUAGES.includes(getLanguage());
   // Measured, not expressed as a percentage. A percentage width plus an aspect
   // ratio left the image at its intrinsic 1100pt, hanging a banner off both
   // edges of the phone at four times the height it should be; an explicit

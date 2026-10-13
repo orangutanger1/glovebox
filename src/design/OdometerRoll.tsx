@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { View, Text, Animated, Easing } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * A mechanical odometer that actually rolls.
@@ -145,7 +146,8 @@ export function OdometerRoll({
             style={{
               // The last drum is the tenths wheel, tinted so the reading is
               // read as a measurement and not as a six-figure integer.
-              backgroundColor: i === places - 1 ? tokens.color.redWash : tokens.color.surfaceHi,
+              backgroundColor:
+                i === places - 1 ? tokens.color.redWash : isRedesign() ? tokens.color.surface : tokens.color.surfaceHi,
               borderRadius: 4,
               borderWidth: 1,
               borderColor: tokens.color.hairline,
@@ -162,7 +164,11 @@ export function OdometerRoll({
                 box; shaded top and bottom, it is a cylinder seen edge-on. */}
             <LinearGradient
               pointerEvents="none"
-              colors={["rgba(0,0,0,0.75)", "transparent", "rgba(0,0,0,0.75)"]}
+              colors={
+                isRedesign()
+                  ? ["rgba(22,22,26,0.14)", "transparent", "rgba(22,22,26,0.14)"]
+                  : ["rgba(0,0,0,0.75)", "transparent", "rgba(0,0,0,0.75)"]
+              }
               locations={[0, 0.5, 1]}
               style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
             />

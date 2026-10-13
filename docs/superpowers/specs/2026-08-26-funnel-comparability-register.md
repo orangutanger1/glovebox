@@ -687,3 +687,20 @@ document, build the widget before document photos.
 - `NextService` widget (home and lock screen). Document photos (DB migration 11). Tire tread depth on Tire Rotation records (migration 12, `tread_mm`; CSV gains a trailing "Tread (mm)" column).
 - New props: `document_saved.photos` (count), `service_logged.has_tread`.
 - **Funnel effect:** none before the paywall. Read buyers' day-7 return before vs after this build reaches users.
+
+### 2026-10-13 — `exit_offer_plans` ended; the exit offer is yearly-only (same OTA as `app_design`, below)
+
+- `exit_offer_plans` is removed from the registry. The exit offer never shows "Or {price} per month, cancel anytime"; it sells the $29.99 yearly alone, as the `yearly` arm did. Installs keep their `experiment.exit_offer_plans` row; nothing reads it, and events no longer carry `exp_exit_offer_plans`.
+- `paywall_presented` (offering `discount`) no longer carries `monthly`.
+- `subscription_success {offering:"discount", plan:"$rc_monthly"}` can no longer happen from the build that carries this.
+- Why: since 10-02, yearly 1/99 viewers paid, with_monthly 0/73, and none of the 9 monthly buy taps paid. Ended by the user's call, not on significance (p=1.0).
+- **Funnel effect:** the with_monthly half of exit-offer viewers loses the monthly link. Expect no change in exit-offer sales, since that arm made none. Shipped in the same update as `app_design` (below).
+- **Correction to the 2026-09-24 entry:** it says "63% off" at $79.99 / $29.99. Live US prices have been $39.99 yearly and $29.99 on the exit offer since 08-26 (App Store Connect, checked 10-13), so users saw "25% off". The $79.99 is `pro_annual_direct`, which was never submitted.
+
+### 2026-10-13 — `app_design` A/B test ships (OTA OTA_ID, commit COMMIT_ID)
+
+- New experiment `app_design`: `classic` (B, control, the app as it was) or `redesign` (A: the light Planta/Opal/Bevel app with the blue car mascot, conversational onboarding, the launch intro). Fresh installs only; every earlier install has no row and stays classic. `experiment_assigned {experiment:"app_design"}` and `exp_app_design` on every event.
+- Nothing in the funnel's logic differs between arms: same steps, order, plans, prices, offerings, timers, benefit rows, events. Only surfaces and the arm-A-only conversation lines and intro.
+- **Funnel effect:** none expected for B. For A, read main-paywall buy taps per viewer against B (see `docs/DECISIONS.md`); check at ~3 weeks, run to ~11 at current traffic (~9 main-paywall viewers per arm a day).
+- Stacks with the end of `exit_offer_plans` in the same update; both arms get the yearly-only exit offer, so the design read is unaffected.
+

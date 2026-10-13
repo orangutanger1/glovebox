@@ -16,6 +16,7 @@ import { onboardingC } from "./onboardingC";
 import { pain } from "./pain";
 import { paywall } from "./paywall";
 import { plan } from "./plan";
+import { redesign } from "./redesign";
 import { service } from "./service";
 import { settings } from "./settings";
 import { subscribed } from "./subscribed";
@@ -57,6 +58,7 @@ export const FRAGMENTS: Record<string, Fragment> = {
   pain,
   paywall,
   plan,
+  redesign,
   service,
   settings,
   subscribed,

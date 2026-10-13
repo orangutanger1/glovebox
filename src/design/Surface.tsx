@@ -1,5 +1,6 @@
 import { View, type ViewStyle, type StyleProp } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * The three surface primitives every control is built from.
@@ -61,14 +62,24 @@ export function Well({
   focused?: boolean;
   style?: StyleProp<ViewStyle>;
 }) {
+  const redesign = isRedesign();
   return (
     <View
       style={[
         {
-          borderRadius: radius,
+          borderRadius: redesign ? 16 : radius,
+          borderCurve: "continuous",
           backgroundColor: tokens.color.sunken,
-          borderWidth: 1,
-          borderColor: focused ? tokens.color.hairlineLit : tokens.color.hairline,
+          borderWidth: redesign ? 1.5 : 1,
+          // Arm A: focus is the accent. On a light page a brighter hairline is
+          // invisible, and the accent is already "where you are" there.
+          borderColor: focused
+            ? redesign
+              ? tokens.color.accent
+              : tokens.color.hairlineLit
+            : redesign
+              ? "transparent"
+              : tokens.color.hairline,
         },
         style,
       ]}
@@ -81,18 +92,28 @@ export function Well({
 /** A surface holding content. Cards and list containers. */
 export function Panel({
   children,
-  radius = tokens.radius.md,
+  radius,
   style,
 }: {
   children: React.ReactNode;
   radius?: number;
   style?: StyleProp<ViewStyle>;
 }) {
+  if (isRedesign()) {
+    // Arm A: Bevel's white card, lifted by a soft shadow instead of outlined.
+    // iOS drops the shadow of a view that clips, so the clip is a second view.
+    const r = radius ?? tokens.radius.xl;
+    return (
+      <View style={[{ borderRadius: r, backgroundColor: tokens.color.surface, ...tokens.shadow.ambient }, style]}>
+        <View style={{ borderRadius: r, borderCurve: "continuous", overflow: "hidden" }}>{children}</View>
+      </View>
+    );
+  }
   return (
     <View
       style={[
         {
-          borderRadius: radius,
+          borderRadius: radius ?? tokens.radius.md,
           backgroundColor: tokens.color.surface,
           borderWidth: 1,
           borderColor: tokens.color.hairline,

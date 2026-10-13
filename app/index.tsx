@@ -26,6 +26,8 @@ import { t, formatNumber, formatDate } from "../src/i18n";
 import { getDistanceUnit } from "../src/units";
 import { formatDistance, distanceUnitLabel } from "../src/units/format";
 import { serviceName } from "../src/schedule/names";
+import { isRedesign } from "../src/design/theme";
+import { RedesignHome } from "../src/redesign/Home";
 
 type Summary = { status: "due" | "soon" | "ok"; label: string; detail: string };
 
@@ -94,7 +96,15 @@ function summarize(vehicle: Vehicle): Summary {
   return best;
 }
 
-export default function Garage() {
+/**
+ * The home route. Arm A of `app_design` gets the redesign's Today / Garage;
+ * arm B, and every install from before the test, the classic garage below.
+ */
+export default function Home() {
+  return isRedesign() ? <RedesignHome /> : <Garage />;
+}
+
+function Garage() {
   const router = useRouter();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [msg, setMsg] = useState("");

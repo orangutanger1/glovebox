@@ -33,6 +33,7 @@ const SAMPLES: Record<string, string | number> = {
   step: 3,
   name: "2019 Civic",
   vehicle: "2019 Civic",
+  car: "Civic",
   service: "Oil Change",
   date: "14 Sep 2026",
   distance: "51,771 mi",
@@ -145,8 +146,11 @@ describe.each(LANGUAGES)("%s renders every string", (language) => {
     //   nl paywall.per.week        Dutch "per week" is spelled the same as English
     //   *  survey.source.(tiktok|instagram|youtube)  brand names, never translated
     //   documents.row.detail       a pure template: "{detail} · {when}"
+    //   redesign.task.on/car.next  pure templates: "{vehicle} · {detail}",
+    //                              "{service}: {when}"
+    //   redesign.tab.garage        the same loanword as garage.title
     const BORROWED =
-      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$|^survey\.source\.(tiktok|instagram|youtube)$|^documents\.row\.detail$|^documents\.form\.photos$/;
+      /^(unit|service|intervals)\.|\.status\.ok$|^offer\.badge\.pro$|^language\.system$|^(garage\.title|layout\.garage)$|Placeholder(\.|$)|^onboardingA\.odometer\.placeholder\.|^onboardingA\.vehicle\.model$|^vehicleForms\.new\.name$|^onboardingC\.(question|results\.onFileValue)$|^vehicle\.row\.date|^system\.csv\.|^onboardingB\.service\.legend$|[Pp]ercent$|^vehicle\.body\.(sedan|hatchback|suv|pickup|van)$|^paywall\.title$|^paywall\.review\.(quote|name)$|^paywall\.privacy$|^paywall\.per\.week$|^survey\.source\.(tiktok|instagram|youtube)$|^documents\.row\.detail$|^redesign\.(task\.on|car\.next|tab\.garage)$|^documents\.form\.photos$/;
     for (const key of identical) expect({ language, key }).toEqual({ language, key: expect.stringMatching(BORROWED) });
   });
 });

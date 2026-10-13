@@ -2,6 +2,7 @@ import { View, Text, type StyleProp, type ViewStyle } from "react-native";
 import * as Haptics from "expo-haptics";
 import { PressableScale } from "../design/PressableScale";
 import { tokens } from "../design/tokens";
+import { isRedesign } from "../design/theme";
 import { t } from "../i18n";
 import { track } from "../analytics";
 import type { Plan } from "../purchases/plans";
@@ -35,19 +36,29 @@ export function defaultPlan(plans: Plan[]): string {
 const RING = 2;
 
 function Mark({ label }: { label: string }) {
+  // Arm A: Bevel's solid "Save 44%" badge, in the one accent.
+  const redesign = isRedesign();
   return (
     <View
       style={{
         alignSelf: "flex-start",
-        backgroundColor: tokens.color.greenWash,
-        borderColor: tokens.color.greenGlow,
+        backgroundColor: redesign ? tokens.color.accent : tokens.color.greenWash,
+        borderColor: redesign ? tokens.color.accent : tokens.color.greenGlow,
         borderWidth: 1,
         borderRadius: tokens.radius.pill,
         paddingHorizontal: tokens.space.sm + 2,
         paddingVertical: 3,
       }}
     >
-      <Text style={{ ...tokens.text.legend, color: tokens.color.green }}>{label}</Text>
+      <Text
+        style={{
+          ...tokens.text.legend,
+          ...(redesign ? { fontWeight: "700" as const, fontSize: 12 } : null),
+          color: redesign ? tokens.color.onAccent : tokens.color.green,
+        }}
+      >
+        {label}
+      </Text>
     </View>
   );
 }
@@ -62,13 +73,13 @@ function Tick({ on }: { on: boolean }) {
         borderRadius: size / 2,
         borderWidth: on ? 0 : 1.5,
         borderColor: tokens.color.hairlineLit,
-        backgroundColor: on ? tokens.color.white : "transparent",
+        backgroundColor: on ? (isRedesign() ? tokens.color.accent : tokens.color.white) : "transparent",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
       {on && (
-        <Text style={{ color: tokens.color.housing, fontSize: 13, fontWeight: "700", lineHeight: 15 }}>✓</Text>
+        <Text style={{ color: isRedesign() ? tokens.color.onAccent : tokens.color.housing, fontSize: 13, fontWeight: "700", lineHeight: 15 }}>✓</Text>
       )}
     </View>
   );
@@ -123,9 +134,18 @@ function Frame({
         [
           {
             borderRadius: tokens.radius.lg,
-            backgroundColor: on ? tokens.color.surfaceHi : tokens.color.surface,
+            borderCurve: "continuous",
+            backgroundColor: on ? (isRedesign() ? tokens.color.accentWash : tokens.color.surfaceHi) : tokens.color.surface,
             borderWidth: RING,
-            borderColor: on ? tokens.color.hairlineLit : tokens.color.hairline,
+            // Arm A: the cards sit on the white plan sheet, so an unpicked one
+            // needs a visible edge, not the hairline that vanishes on white.
+            borderColor: on
+              ? isRedesign()
+                ? tokens.color.accent
+                : tokens.color.hairlineLit
+              : isRedesign()
+                ? tokens.color.sunken
+                : tokens.color.hairline,
             padding: tokens.space.md,
           },
           style,

@@ -1,3 +1,5 @@
+import { isRedesign } from "./theme";
+
 /**
  * The flat dark visual system. See
  * docs/superpowers/specs/2026-09-10-glovebox-flat-dark-design.md.
@@ -19,8 +21,7 @@
  * The key names are unchanged from the panel system so that no screen had to
  * be rewritten to move; the values behind them are new.
  */
-export const tokens = {
-  color: {
+const CLASSIC_COLOR = {
     /** The app background. Not pure black — a flat #000 makes every surface
      *  above it look like a floating rectangle, and OLED smearing on scroll is
      *  worse against it. */
@@ -73,14 +74,32 @@ export const tokens = {
     redWash: "rgba(229,72,77,0.12)",
     greenGlow: "rgba(61,214,140,0.40)",
     greenWash: "rgba(61,214,140,0.12)",
-  },
 
-  material: {
+    /** The redesign's one accent (arm A of `app_design` only): the mascot's
+     *  body colour, spent on the primary action, the active tab and progress.
+     *  Classic screens never read these. */
+    accent: "#4C7DFF",
+    accentPressed: "#3F6BE0",
+    accentWash: "rgba(76,125,255,0.14)",
+    accentLine: "rgba(76,125,255,0.35)",
+    /** Due soon, in the redesign. Amber would read as a dashboard warning
+     *  light next to the blue car; a pale accent says "coming up" instead. */
+    accentSoft: "#9DB6FF",
+    /** Text and marks on the accent or on red. White in both arms. */
+    onAccent: "#FFFFFF",
+  };
+
+const CLASSIC_GLASS = {
+    face: ["rgba(255,255,255,0.065)", "rgba(255,255,255,0.02)"] as readonly [string, string],
+    edge: "rgba(255,255,255,0.09)",
+  };
+
+const CLASSIC_MATERIAL = {
     /** Flat. Kept as a two-stop pair so any remaining gradient call site
      *  renders a solid surface rather than a ramp. */
-    metalFace: ["#131518", "#131518"] as const,
+    metalFace: ["#131518", "#131518"] as readonly [string, string],
     /** The chosen state of a neutral control: one value up, not a new hue. */
-    metalFaceLit: ["#1B1E23", "#1B1E23"] as const,
+    metalFaceLit: ["#1B1E23", "#1B1E23"] as readonly [string, string],
     /** The press language is now scale, not travel. These are kept at zero so
      *  a control that still reads them cannot reintroduce the bevel. */
     edgeHeight: 0,
@@ -89,7 +108,104 @@ export const tokens = {
     /** What a pressed control scales to. Subtle enough to be felt rather than
      *  watched, which is the entire job of press feedback. */
     pressScale: 0.97,
+  };
+
+const CLASSIC_SHADOW = {
+    /** Depth is value, not shade. What is left is a wide, almost invisible
+     *  ambient that keeps a surface from being a flat sticker at the edges. */
+    ambient: {
+      shadowColor: "#000",
+      shadowOpacity: 0.5,
+      shadowRadius: 24,
+      shadowOffset: { width: 0, height: 8 },
+    },
+  };
+
+/**
+ * Arm A of `app_design`: Bevel's light canvas.
+ *
+ * The same keys with light values, so every screen — the redesigned ones and
+ * the classic ones a user can still reach from them (settings, the log form,
+ * costs) — renders on one surface instead of a light home pushing onto a black
+ * form. The keys keep their classic meaning, not their literal names: `white`
+ * is "the highest-contrast ink", which on a light canvas is near-black, and
+ * `housing` is the page. Text sitting on the accent or on red reads
+ * `onAccent`, which is white in both arms.
+ */
+const LIGHT_COLOR: typeof CLASSIC_COLOR = {
+  housing: "#F4F4F7",
+  surface: "#FFFFFF",
+  surfaceHi: "#ECECF1",
+  sunken: "#E9E9EF",
+  white: "#16161A",
+  red: "#E5484D",
+  green: "#12A05C",
+  text: "#16161A",
+  textMuted: "rgba(22,22,26,0.60)",
+  textFaint: "rgba(22,22,26,0.46)",
+  hairline: "rgba(0,0,0,0.07)",
+  hairlineLit: "rgba(0,0,0,0.22)",
+  unlitBulb: "rgba(0,0,0,0.12)",
+  edge: "rgba(0,0,0,0.05)",
+  edgeSolid: "#E9E9EF",
+  metalHi: "rgba(22,22,26,0.40)",
+  metalLo: "rgba(22,22,26,0.08)",
+  redGlow: "rgba(229,72,77,0.28)",
+  redWash: "rgba(229,72,77,0.09)",
+  greenGlow: "rgba(18,160,92,0.28)",
+  greenWash: "rgba(18,160,92,0.10)",
+  accent: "#4C7DFF",
+  accentPressed: "#3F6BE0",
+  accentWash: "rgba(76,125,255,0.10)",
+  accentLine: "rgba(76,125,255,0.40)",
+  accentSoft: "#F0892A",
+  onAccent: "#FFFFFF",
+};
+
+const LIGHT_GLASS: typeof CLASSIC_GLASS = {
+  face: ["#FFFFFF", "#FFFFFF"] as const,
+  edge: "rgba(0,0,0,0.04)",
+};
+
+const LIGHT_MATERIAL: typeof CLASSIC_MATERIAL = {
+  ...CLASSIC_MATERIAL,
+  metalFace: ["#FFFFFF", "#FFFFFF"] as const,
+  metalFaceLit: ["#ECECF1", "#ECECF1"] as const,
+};
+
+const LIGHT_SHADOW: typeof CLASSIC_SHADOW = {
+  ambient: {
+    shadowColor: "#1A1D3A",
+    shadowOpacity: 0.07,
+    shadowRadius: 22,
+    shadowOffset: { width: 0, height: 8 },
   },
+};
+
+/**
+ * One object whose every key is read at access time. Screens read tokens
+ * inline in render, so the arm is decided per frame, never frozen at import —
+ * the same rule `isRedesign` itself follows.
+ */
+function themed<T extends object>(classic: T, light: T): T {
+  const out = {} as T;
+  for (const key of Object.keys(classic) as (keyof T)[]) {
+    Object.defineProperty(out, key, {
+      enumerable: true,
+      get: () => (isRedesign() ? light[key] : classic[key]),
+    });
+  }
+  return out;
+}
+
+export const tokens = {
+  color: themed(CLASSIC_COLOR, LIGHT_COLOR),
+
+  /** The redesign's glass card: a faint top light over the surface, as Opal's
+   *  cards are lit from above. Two stops, top to bottom. */
+  glass: themed(CLASSIC_GLASS, LIGHT_GLASS),
+
+  material: themed(CLASSIC_MATERIAL, LIGHT_MATERIAL),
 
   /** Under 300ms for anything the user is waiting on. Entering and exiting are
    *  ease-out: the movement has to start immediately, because the first frame
@@ -119,7 +235,9 @@ export const tokens = {
      *  centres the column in whatever is left over. */
     column: { width: "100%", maxWidth: 600, alignSelf: "center" } as const,
   },
-  radius: { sm: 10, md: 14, lg: 20, pill: 999 },
+  /** Classic: rows 10, cards and buttons 14. Redesign: rows 14, cards 24,
+   *  every action a pill. */
+  radius: { sm: 10, md: 14, lg: 20, xl: 24, pill: 999 },
 
   text: {
     hero: { fontSize: 32, fontWeight: "700" as const, lineHeight: 38, letterSpacing: -0.6 },
@@ -148,14 +266,5 @@ export const tokens = {
     numeric: { fontVariant: ["tabular-nums"] as ("tabular-nums")[] },
   },
 
-  shadow: {
-    /** Depth is value, not shade. What is left is a wide, almost invisible
-     *  ambient that keeps a surface from being a flat sticker at the edges. */
-    ambient: {
-      shadowColor: "#000",
-      shadowOpacity: 0.5,
-      shadowRadius: 24,
-      shadowOffset: { width: 0, height: 8 },
-    },
-  },
+  shadow: themed(CLASSIC_SHADOW, LIGHT_SHADOW),
 };

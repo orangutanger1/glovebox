@@ -36,25 +36,33 @@ beforeEach(() => {
   getDb().runSync("DELETE FROM app_state", []);
 });
 
-test("the registry holds the exit-offer test", () => {
-  expect(EXPERIMENTS).toEqual({ exit_offer_plans: ["yearly", "with_monthly"] });
+test("the registry holds the design test", () => {
+  expect(EXPERIMENTS).toEqual({
+    app_design: ["classic", "redesign"],
+  });
 });
 
 test("a fresh install is assigned once, persisted, and never re-flipped", () => {
-  expect(assignExperiments(true, () => 0.99)).toEqual({ exit_offer_plans: "with_monthly" });
-  expect(getVariant("exit_offer_plans")).toBe("with_monthly");
+  expect(assignExperiments(true, () => 0.99)).toEqual({
+    app_design: "redesign",
+  });
+  expect(getVariant("app_design")).toBe("redesign");
   expect(tracked).toEqual([
-    { event: "experiment_assigned", props: { experiment: "exit_offer_plans", variant: "with_monthly" } },
+    { event: "experiment_assigned", props: { experiment: "app_design", variant: "redesign" } },
   ]);
   expect(assignExperiments(true, () => 0)).toEqual({});
-  expect(getVariant("exit_offer_plans")).toBe("with_monthly");
-  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "with_monthly" });
+  expect(getVariant("app_design")).toBe("redesign");
+  expect(experimentProperties()).toEqual({
+    exp_app_design: "redesign",
+  });
 });
 
 test("an ineligible install is left alone and reports unassigned", () => {
   expect(assignExperiments(false)).toEqual({});
-  expect(getVariant("exit_offer_plans")).toBeNull();
-  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "unassigned" });
+  expect(getVariant("app_design")).toBeNull();
+  expect(experimentProperties()).toEqual({
+    exp_app_design: "unassigned",
+  });
   expect(tracked).toHaveLength(0);
 });
 
@@ -62,17 +70,20 @@ test("rows from ended experiments are kept and not reported", () => {
   // The row is the record of what the install was shown; a later build never
   // rewrites it, and nothing reads it once its experiment is gone.
   setState("experiment.onboarding_symptoms", "no_symptoms");
+  setState("experiment.exit_offer_plans", "with_monthly");
   assignExperiments(true, () => 0);
   expect(getState("experiment.onboarding_symptoms")).toBe("no_symptoms");
-  expect(getVariant("onboarding_symptoms")).toBeNull();
-  expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "yearly" });
+  expect(getState("experiment.exit_offer_plans")).toBe("with_monthly");
+  expect(getVariant("onboarding_symptoms" as never)).toBeNull();
+  expect(getVariant("exit_offer_plans" as never)).toBeNull();
+  expect(experimentProperties()).toEqual({ exp_app_design: "classic" });
 });
 
 test("a stored value outside the variant list reads as unassigned and is not overwritten", () => {
-  setState("experiment.exit_offer_plans", "weekly");
-  expect(getVariant("exit_offer_plans")).toBeNull();
+  setState("experiment.app_design", "weekly");
+  expect(getVariant("app_design")).toBeNull();
   expect(assignExperiments(true, () => 0)).toEqual({});
-  expect(getState("experiment.exit_offer_plans")).toBe("weekly");
+  expect(getState("experiment.app_design")).toBe("weekly");
 });
 
 test("properties never throw when the database is unavailable", () => {
@@ -82,9 +93,39 @@ test("properties never throw when the database is unavailable", () => {
     throw new Error("no database");
   };
   try {
-    expect(experimentProperties()).toEqual({ exp_exit_offer_plans: "unassigned" });
-    expect(getVariant("exit_offer_plans")).toBeNull();
+    expect(experimentProperties()).toEqual({
+      exp_app_design: "unassigned",
+    });
+    expect(getVariant("app_design")).toBeNull();
   } finally {
     client.getDb = real;
   }
+});
+
+test("the design arm the experiment writes is the one the screens read", () => {
+  const { isRedesign, resetDesignCache, DESIGN_KEY } = require("../src/design/theme");
+  expect(DESIGN_KEY).toBe("experiment.app_design");
+
+  // Before assignment (the first frame of a fresh install, and every install
+  // from before the test): classic, and not cached.
+  resetDesignCache();
+  expect(isRedesign()).toBe(false);
+
+  assignExperiments(true, () => 0.99);
+  expect(getVariant("app_design")).toBe("redesign");
+  expect(isRedesign()).toBe(true);
+
+  // Cached once known: the row never changes, and buttons read it per render.
+  setState("experiment.app_design", "classic");
+  expect(isRedesign()).toBe(true);
+  resetDesignCache();
+  expect(isRedesign()).toBe(false);
+  resetDesignCache();
+});
+
+test("store builds have no pinned design arm", () => {
+  // `redesign-check` in eas.json pins arm A for device checks; production must not.
+  const eas = require("../eas.json");
+  expect(eas.build.production.env?.EXPO_PUBLIC_APP_DESIGN).toBeUndefined();
+  expect(eas.build["redesign-check"].env.EXPO_PUBLIC_APP_DESIGN).toBe("redesign");
 });

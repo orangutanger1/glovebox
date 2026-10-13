@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * Onboarding progress.
@@ -34,7 +35,9 @@ export function StepLamps({ step, total }: { step: number; total: number }) {
               borderRadius: 2,
               backgroundColor: done
                 ? current
-                  ? tokens.color.text
+                  ? isRedesign()
+                    ? tokens.color.accent
+                    : tokens.color.text
                   : tokens.color.metalHi
                 : tokens.color.metalLo,
             }}

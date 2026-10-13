@@ -18,20 +18,21 @@ import {
   type ServiceRecord,
 } from "../../src/db/records";
 import { listFuelEntries, type FuelRow } from "../../src/db/fuel";
-import { averageEfficiency, latestEfficiency } from "../../src/fuel";
-import { currentFuelUnits, formatEfficiency, formatVolume } from "../../src/fuel/format";
+import { formatVolume } from "../../src/fuel/format";
 import { dueStates } from "../../src/schedule/due";
 import { rescheduleAll } from "../../src/notify";
 import { getIntervals } from "../../src/db/intervals";
 import { t, formatNumber, formatDate } from "../../src/i18n";
 import { getDistanceUnit } from "../../src/units";
-import { formatMoney } from "../../src/money";
 import { formatDistance, distanceUnitLabel } from "../../src/units/format";
 import { serviceName } from "../../src/schedule/names";
 import { RecallsSection } from "../../src/recalls/RecallsSection";
 import { GloveboxSection } from "../../src/documents/GloveboxSection";
 import { listDocuments, type GloveboxDocument } from "../../src/db/documents";
 import { formatTread, latestTread, treadStatus } from "../../src/tires/tread";
+import { FuelSummary, fillSubtitle, recordSubtitle } from "../../src/vehicles/rows";
+import { isRedesign } from "../../src/design/theme";
+import { RedesignVehicle } from "../../src/redesign/VehicleScreen";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -80,76 +81,6 @@ const UNDO_WINDOW_MS = 8000;
  *  the screen is for. */
 const RECENT_FILLS = 3;
 
-/**
- * The facts a history row can carry, as one message per combination: the middot
- * is punctuation a translator has to be able to change, and only a whole
- * message can be reordered for a language that reads them in another order.
- */
-function recordSubtitle(record: ServiceRecord): string {
-  const date = formatDate(record.performed_at);
-  // Presence, not truthiness: a reading of 0 and a job that cost nothing are
-  // both facts the owner typed, and `?` on them hid the one and made the
-  // other read as unpriced while the insights total counted it.
-  const distance = record.odometer !== undefined ? formatDistance(record.odometer) : undefined;
-  const cost = record.cost !== undefined ? formatMoney(record.cost) : undefined;
-  const base = baseSubtitle(date, distance, cost);
-  return record.tread_mm !== undefined
-    ? t("vehicle.row.withTread", { base, tread: formatTread(record.tread_mm, getDistanceUnit()) })
-    : base;
-}
-
-function baseSubtitle(date: string, distance?: string, cost?: string): string {
-  if (distance && cost) return t("vehicle.row.dateDistanceCost", { date, distance, cost });
-  if (distance) return t("vehicle.row.dateDistance", { date, distance });
-  if (cost) return t("vehicle.row.dateCost", { date, cost });
-  return date;
-}
-
-/**
- * Last tank, with the average beneath it.
- *
- * The two "not yet" states are the point. A dash where a figure belongs reads
- * as a broken calculation, and a user whose first fill produced nothing has to
- * be told that the second full tank is where the number arrives — otherwise
- * the feature looks broken on exactly the day they first try it.
- */
-function FuelSummary({ entries }: { entries: FuelRow[] }) {
-  const { style } = currentFuelUnits();
-  const latest = latestEfficiency(entries, style);
-  const average = averageEfficiency(entries, style);
-
-  if (latest === null) {
-    return (
-      <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
-        {entries.length === 0 ? t("fuel.summary.needFirst") : t("fuel.summary.needSecond")}
-      </Text>
-    );
-  }
-
-  return (
-    <View style={{ flexDirection: "row", justifyContent: "space-between", gap: tokens.space.md }}>
-      <Gauge legend={t("fuel.summary.last")} value={formatEfficiency(latest, style)} />
-      {average !== null ? (
-        <Gauge
-          legend={t("fuel.summary.average")}
-          value={formatEfficiency(average, style)}
-          align="right"
-        />
-      ) : null}
-    </View>
-  );
-}
-
-/** A fill row, carrying the same facts as a service row and through the same
- *  messages: "date · distance · cost" is exactly a fill. */
-function fillSubtitle(entry: FuelRow): string {
-  const date = formatDate(entry.filled_at);
-  const distance = formatDistance(entry.odometer);
-  const cost = entry.cost !== undefined ? formatMoney(entry.cost) : undefined;
-  return cost
-    ? t("vehicle.row.dateDistanceCost", { date, distance, cost })
-    : t("vehicle.row.dateDistance", { date, distance });
-}
 
 function SectionLegend({ children }: { children: string }) {
   return (
@@ -157,7 +88,13 @@ function SectionLegend({ children }: { children: string }) {
   );
 }
 
-export default function VehicleDetail() {
+/** Arm A of `app_design` gets the redesign's vehicle screen; arm B, and every
+ *  install from before the test, the classic one below. */
+export default function VehicleRoute() {
+  return isRedesign() ? <RedesignVehicle /> : <VehicleDetail />;
+}
+
+function VehicleDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);

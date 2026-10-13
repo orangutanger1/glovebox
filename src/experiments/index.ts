@@ -29,16 +29,21 @@ import { track } from "../analytics";
 // src/onboarding/flow.ts): 16/394 vs 10/394 and 14/396 vs 10/369 paid, neither
 // significant, and ~1,700 per arm would have been needed to tell. Before them,
 // `paywall_preview` (points / preview) ran 2026-09-24 → 2026-09-30 and ended
-// early on 16/102 vs 6/109 main-paywall buy taps. Installs keep their
+// early on 16/102 vs 6/109 main-paywall buy taps. `exit_offer_plans`
+// (yearly / with_monthly) ran 2026-10-01 → 2026-10-13 and ended with the
+// yearly-only offer for everyone: 1/99 vs 0/73 paid per viewer, and none of
+// the 9 monthly buy taps paid. Installs keep their
 // `experiment.*` rows; nothing reads them. See docs/DECISIONS.md.
 export const EXPERIMENTS: Readonly<Record<string, readonly string[]>> = {
-  // The exit offer, 2026-10-01. `yearly` is the offer as it was: one yearly
-  // plan at $29.99. `with_monthly` adds a link under the button that buys the
-  // standard monthly plan, for the buyer who wants the app but balks at a
-  // year up front (4/42 exit-offer buy taps paid after the 09-24 headline fix,
-  // the same as before it; monthly is the most-bought full-price plan). Read
-  // on exit-offer buy taps → paid per arm, and paid per offer viewer.
-  exit_offer_plans: ["yearly", "with_monthly"],
+  // The whole look, 2026-10-12. `classic` (B) is the app as it was: the flat
+  // dark garage, white buttons, no mascot. `redesign` (A) is the Planta-shaped
+  // app — a Today list of service tasks and a Garage, a floating tab bar, a
+  // vehicle screen split into To-do / Care plan / History — dressed like Opal
+  // and Bevel, with the blue car mascot whose mood follows the service status.
+  // Onboarding and both paywalls keep every step, price, timer and test arm;
+  // only their surfaces change (blue pill buttons, rounder cards, the mascot).
+  // An install with no row (everyone before this build) stays classic.
+  app_design: ["classic", "redesign"],
 };
 
 export type ExperimentName = keyof typeof EXPERIMENTS;

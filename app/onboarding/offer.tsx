@@ -14,10 +14,10 @@ import { Check } from "../../src/design/Check";
 import { recordReviewEvent } from "../../src/review";
 import { isGrandfathered } from "../../src/paywall";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { isRedesign } from "../../src/design/theme";
 import { tNamed } from "../../src/onboarding";
 import { useFinish } from "../../src/onboarding/nav";
 import { track } from "../../src/analytics";
-import { getVariant } from "../../src/experiments";
 import { recordObjection, shouldAskObjection, type Objection, type ObjectionTrigger } from "../../src/survey";
 import { ObjectionSheet } from "../../src/survey/ObjectionSheet";
 
@@ -63,12 +63,6 @@ export default function OnboardingOffer() {
   const relaunched = walled === "1";
 
   const { plans: offered, loading, retry } = usePlans("discount");
-  // The `exit_offer_plans` test: the with_monthly arm also offers the
-  // standard monthly plan, small, under the button. The hook runs for both
-  // arms (hooks cannot be conditional); the yearly arm never reads it.
-  const withMonthly = getVariant("exit_offer_plans") === "with_monthly";
-  const { plans: standard } = usePlans("default");
-  const monthly = withMonthly ? (standard?.find((p) => p.period === "month") ?? null) : null;
   // One plan. The screen sells the yearly at the offer price and nothing
   // beside it — a second card is a comparison the reader makes instead of a
   // decision. The offering can carry more than one package while a new
@@ -106,8 +100,8 @@ export default function OnboardingOffer() {
     track("paywall_shown", { offering: "discount" });
   }, []);
   useEffect(() => {
-    if (plans) track("paywall_presented", { offering: "discount", ms: Date.now() - mounted.current, monthly: withMonthly });
-  }, [plans, withMonthly]);
+    if (plans) track("paywall_presented", { offering: "discount", ms: Date.now() - mounted.current });
+  }, [plans]);
 
   const chosen: Plan | null =
     plans?.find((p) => p.id === defaultPlan(plans)) ?? null;
@@ -209,6 +203,11 @@ export default function OnboardingOffer() {
   return (
     <OnboardingScreen
       route="offer"
+      // Arm A of `app_design`: the worried car's line, and the price on a
+      // sheet. Every element of the offer — the yearly price leading, the
+      // struck standard price, the per-week line, the
+      // decline — is shared between arms.
+      footerSheet
       // While the deal is on, the headline is the saving, drawn in the body
       // below; the screen's own title slot stays empty.
       title={hasDeal ? undefined : tNamed("offer.paywall.title")}
@@ -231,22 +230,12 @@ export default function OnboardingOffer() {
             busy={busy}
             onBuy={() => void onBuy()}
             onRestore={onRestore}
-            variant={hasDeal ? "accent" : "primary"}
+            // Arm A spends one accent, and the claim is the page's primary
+            // action: the black pill.
+            variant={hasDeal && !isRedesign() ? "accent" : "primary"}
             label={chosen?.compareAt ? t("offer.trial.cta") : undefined}
             lead={chosen ? <PriceLine plan={chosen} /> : null}
           >
-            {monthly && (
-              <Pressable
-                onPress={() => void onBuy(monthly)}
-                disabled={busy}
-                accessibilityRole="button"
-                style={{ alignItems: "center", paddingVertical: tokens.space.sm }}
-              >
-                <Text style={{ ...tokens.text.body, color: tokens.color.textMuted, textDecorationLine: "underline" }}>
-                  {t("offer.deal.monthly", { price: monthly.priceString })}
-                </Text>
-              </Pressable>
-            )}
             {!relaunched && (
               <Button label={t("offer.trial.decline")} onPress={onDecline} disabled={busy} variant="secondary" />
             )}
@@ -282,7 +271,7 @@ export default function OnboardingOffer() {
                 fontSize: 56,
                 lineHeight: 62,
                 letterSpacing: -1.6,
-                color: tokens.color.green,
+                color: isRedesign() ? tokens.color.accent : tokens.color.green,
                 textAlign: "center",
                 textTransform: "uppercase",
                 ...tokens.text.numeric,

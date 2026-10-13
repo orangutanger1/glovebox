@@ -14,6 +14,9 @@ import { IncludedStrip } from "../../src/paywall/IncludedStrip";
 import { CloseButton } from "../../src/paywall/CloseButton";
 import { recordReviewEvent } from "../../src/review";
 import { OnboardingScreen } from "../../src/onboarding/Screen";
+import { isRedesign } from "../../src/design/theme";
+import { Journey } from "../../src/paywall/Journey";
+import type { IconName } from "../../src/redesign/icons";
 import { useOnboardingFindings } from "../../src/onboarding/usePlan";
 import { tNamed } from "../../src/onboarding";
 import { useAdvance, useFinish } from "../../src/onboarding/nav";
@@ -119,6 +122,10 @@ export default function OnboardingPaywall() {
   return (
     <OnboardingScreen
       route="paywall"
+      // Arm A of `app_design` draws the same screen as Opal's: the car's line,
+      // the benefits as a journey, and the plans on a sheet. Plans, prices,
+      // timer, copy and events are shared between arms.
+      footerSheet
       title={tNamed("offer.paywall.title")}
       subtitle={t("offer.paywall.subtitle")}
       trailing={<CloseButton onPress={onClose} disabled={busy} delayMs={CLOSE_AFTER_MS} />}
@@ -180,17 +187,21 @@ function BenefitPoints({ plan, vehicleName }: { plan: MaintenancePlan; vehicleNa
           subtitle: t("offer.paywall.point.history.subtitle"),
         };
 
-  const points: { title: string; subtitle: string }[] = [
+  const points: { icon: IconName; title: string; subtitle: string }[] = [
     {
+      icon: "calendar",
       title: t("offer.paywall.point.tracked.title", { vehicle: vehicleName }),
       subtitle: t("offer.paywall.point.tracked.subtitle", { count: plan.items.length }),
     },
-    middle,
+    { icon: plan.pastDue > 0 ? "gauge" : "receipt", ...middle },
     {
+      icon: "bell",
       title: t("offer.paywall.point.reminders.title"),
       subtitle: t("offer.paywall.point.reminders.subtitle"),
     },
   ];
+
+  if (isRedesign()) return <Journey points={points} />;
 
   return (
     <View style={{ gap: tokens.space.sm + 2 }}>

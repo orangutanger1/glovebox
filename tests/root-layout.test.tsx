@@ -38,6 +38,12 @@ jest.mock("react-native-gesture-handler", () => {
 });
 jest.mock("expo-quick-actions", () => ({ initial: null }));
 jest.mock("expo-quick-actions/hooks", () => ({ useQuickActionCallback: () => {} }));
+// The arm is read on every render (tokens, the status bar). Pinned here so the
+// `getDb` count below still counts boots, not style reads.
+jest.mock("../src/design/theme", () => ({
+  ...jest.requireActual("../src/design/theme"),
+  isRedesign: () => false,
+}));
 let mockDbBoots = 0;
 jest.mock("../src/db/client", () => ({
   getDb: () => {

@@ -1,4 +1,5 @@
 import { View, Text, Image } from "react-native";
+import { isRedesign } from "./theme";
 
 const ICON = require("../../assets/icon.png");
 
@@ -34,11 +35,26 @@ const ICON = require("../../assets/icon.png");
  * the scheduler's own copy, rendered against the user's own car.
  */
 
-// System label colours (iOS dark appearance), not the app's palette: this card
-// is the OS's, and it has to look borrowed.
-const LABEL = "#FFFFFF";
-const SECONDARY = "rgba(235,235,245,0.6)";
-const BODY = "rgba(235,235,245,0.78)";
+// System label colours, not the app's palette: this card is the OS's, and it
+// has to look borrowed. Dark appearance on the classic dark glass; arm A of
+// `app_design` is a light page, and the same argument picks iOS's light
+// appearance there (a charcoal capsule on a grey page reads as a sticker).
+const DARK = {
+  label: "#FFFFFF",
+  secondary: "rgba(235,235,245,0.6)",
+  body: "rgba(235,235,245,0.78)",
+  fill: "rgba(58,58,60,0.72)",
+  lip: "rgba(255,255,255,0.10)",
+  shadow: 0.45,
+};
+const LIGHT = {
+  label: "#000000",
+  secondary: "rgba(60,60,67,0.6)",
+  body: "rgba(60,60,67,0.85)",
+  fill: "rgba(255,255,255,0.92)",
+  lip: "rgba(0,0,0,0.04)",
+  shadow: 0.12,
+};
 
 export function NotifyBanner({
   title,
@@ -49,6 +65,7 @@ export function NotifyBanner({
   body: string;
   when: string;
 }) {
+  const c = isRedesign() ? LIGHT : DARK;
   return (
     <View
       style={{
@@ -60,15 +77,15 @@ export function NotifyBanner({
         borderRadius: 24,
         // iOS continuous corners; ignored on platforms that lack it.
         borderCurve: "continuous",
-        backgroundColor: "rgba(58,58,60,0.72)",
+        backgroundColor: c.fill,
         // The lip the system's material catches light on. Without it the
         // capsule dissolves into a dark screen instead of floating over it.
         borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.10)",
+        borderColor: c.lip,
         // The banner's own drop shadow, softer and wider than the app's ambient
         // one — it is lit by the system, not by the panel above it.
         shadowColor: "#000",
-        shadowOpacity: 0.45,
+        shadowOpacity: c.shadow,
         shadowRadius: 18,
         shadowOffset: { width: 0, height: 10 },
         elevation: 12,
@@ -90,7 +107,7 @@ export function NotifyBanner({
               fontSize: 16,
               lineHeight: 21,
               fontWeight: "600",
-              color: LABEL,
+              color: c.label,
             }}
           >
             {title}
@@ -99,7 +116,7 @@ export function NotifyBanner({
             style={{
               fontSize: 13,
               lineHeight: 18,
-              color: SECONDARY,
+              color: c.secondary,
               marginLeft: 8,
               marginTop: 1,
             }}
@@ -109,7 +126,7 @@ export function NotifyBanner({
         </View>
         <Text
           numberOfLines={1}
-          style={{ fontSize: 16, lineHeight: 21, color: BODY }}
+          style={{ fontSize: 16, lineHeight: 21, color: c.body }}
         >
           {body}
         </Text>

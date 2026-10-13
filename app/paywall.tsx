@@ -15,6 +15,8 @@ import { CloseButton } from "../src/paywall/CloseButton";
 import { settlePaywall } from "../src/paywall/present";
 import { recordReviewEvent } from "../src/review";
 import { track } from "../src/analytics";
+import { isRedesign } from "../src/design/theme";
+import { ConvoStage } from "../src/onboarding/Convo";
 
 /**
  * The paywall every feature gate opens.
@@ -148,6 +150,9 @@ export default function PaywallRoute() {
         <Text style={{ ...tokens.text.title, color: tokens.color.text }}>{t("paywall.title")}</Text>
         <CloseButton onPress={onClose} disabled={busy} />
       </View>
+      {/* Arm A of `app_design`: the car and its line under the title. Plans
+          and copy are shared. */}
+      {isRedesign() ? <ConvoStage route="paywall" /> : null}
 
       <IncludedStrip />
       <ReviewCard />

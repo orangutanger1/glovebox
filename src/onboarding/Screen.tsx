@@ -15,11 +15,13 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { StepLamps } from "../design/StepLamps";
 import { tokens } from "../design/tokens";
+import { isRedesign } from "../design/theme";
 import { t } from "../i18n";
 import { setOnboardingStep } from ".";
 import { track, trackStepBack } from "../analytics";
 import { isAskStep, previousRoute, quizStep, type OnboardingRoute } from "./flow";
 import { scheduleOnboardingNudges } from "../notify/resume";
+import { ConvoStage, ConvoHeader } from "./Convo";
 
 /**
  * The frame every onboarding screen after the hook is built in.
@@ -68,6 +70,8 @@ export function OnboardingScreen({
   hideBack = false,
   trailing,
   banner,
+  stage = true,
+  footerSheet = false,
 }: {
   route: OnboardingRoute;
   title?: string;
@@ -117,6 +121,13 @@ export function OnboardingScreen({
    *  outside the scroll — where iOS delivers a notification banner. Non-
    *  interactive: it never intercepts the scroll or a tap beneath it. */
   banner?: ReactNode;
+  /** Arm A of `app_design` only: leave the talking car off. For the screens
+   *  whose own hero is the car, drawn bigger. */
+  stage?: boolean;
+  /** Arm A only: the footer is a white sheet pinned to the bottom edge, as
+   *  Opal's plan sheet is — the price list reads as its own layer over the
+   *  argument rather than as more of the page. */
+  footerSheet?: boolean;
 }) {
   const router = useRouter();
   const previous = previousRoute(route);
@@ -256,6 +267,143 @@ export function OnboardingScreen({
     </>
   );
 
+  const footerNode = footer
+    ? gated
+      ? (footer as (state: { atBottom: boolean; unlocked: boolean }) => ReactNode)({
+          atBottom,
+          unlocked: atBottom || nudged,
+        })
+      : footer
+    : null;
+
+  const bannerNode = banner ? (
+    <View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        alignItems: "center",
+        paddingHorizontal: tokens.space.md,
+        paddingTop: tokens.space.sm,
+      }}
+    >
+      <View style={tokens.layout.column}>{banner}</View>
+    </View>
+  ) : null;
+
+  if (isRedesign()) {
+    // Arm A: Opal's conversation on Bevel's light page. A pinned header (a
+    // round back button, a thin progress line on the quiz), the car with its
+    // line, the question as the one big sentence, the answers, and a black
+    // pill. The classic frame below is untouched.
+    // A sheet runs to the bottom edge and pads the home indicator itself.
+    const sheet = footerSheet && footerNode !== null;
+    return (
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: tokens.color.housing }}
+        edges={sheet ? ["top", "left", "right"] : undefined}
+      >
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <ConvoHeader
+            onBack={!hideBack && (previous || onBack) ? goBack : undefined}
+            progress={quiz}
+            legend={legend}
+            trailing={trailing}
+          />
+          <ScrollView
+            contentContainerStyle={{
+              ...tokens.layout.column,
+              flexGrow: 1,
+              paddingHorizontal: tokens.space.lg,
+              paddingTop: tokens.space.sm,
+              paddingBottom: tokens.space.md,
+              gap: tokens.space.lg,
+            }}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+            scrollEventThrottle={16}
+            onScroll={gated ? onScroll : undefined}
+            onLayout={gated ? onScrollLayout : undefined}
+            onContentSizeChange={gated ? onContentSizeChange : undefined}
+          >
+            {stage ? <ConvoStage route={route} /> : null}
+            {center ? <View style={{ flex: 1 }} /> : null}
+            {title || subtitle || overline ? (
+              <View style={{ gap: tokens.space.sm }}>
+                {overline}
+                {title ? (
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      lineHeight: 36,
+                      fontWeight: "700",
+                      letterSpacing: -0.7,
+                      color: tokens.color.text,
+                    }}
+                  >
+                    {title}
+                  </Text>
+                ) : null}
+                {subtitle ? (
+                  <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>{subtitle}</Text>
+                ) : null}
+              </View>
+            ) : null}
+            {children}
+            <View style={{ flex: 1 }} />
+          </ScrollView>
+          {footerNode ? (
+            sheet ? (
+              <SafeAreaView
+                edges={["bottom"]}
+                style={{
+                  backgroundColor: tokens.color.surface,
+                  borderTopLeftRadius: 28,
+                  borderTopRightRadius: 28,
+                  shadowColor: "#1A1D3A",
+                  shadowOpacity: 0.1,
+                  shadowRadius: 24,
+                  shadowOffset: { width: 0, height: -6 },
+                }}
+              >
+                <View
+                  style={{
+                    ...tokens.layout.column,
+                    paddingHorizontal: tokens.space.lg,
+                    paddingTop: tokens.space.lg,
+                    paddingBottom: tokens.space.sm,
+                    gap: tokens.space.sm + 2,
+                  }}
+                >
+                  {footerNode}
+                </View>
+              </SafeAreaView>
+            ) : (
+              <View
+                style={{
+                  ...tokens.layout.column,
+                  paddingHorizontal: tokens.space.lg,
+                  paddingTop: tokens.space.sm,
+                  paddingBottom: tokens.space.sm,
+                  gap: tokens.space.sm,
+                }}
+              >
+                {footerNode}
+              </View>
+            )
+          ) : null}
+          {bannerNode}
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.color.housing }}>
       {/* A single soft wash at the top of the flow's background, so a screen
@@ -338,31 +486,10 @@ export function OnboardingScreen({
               gap: tokens.space.sm,
             }}
           >
-            {gated
-              ? (footer as (state: { atBottom: boolean; unlocked: boolean }) => ReactNode)({
-                  atBottom,
-                  unlocked: atBottom || nudged,
-                })
-              : footer}
+            {footerNode}
           </View>
         ) : null}
-        {banner ? (
-          <View
-            pointerEvents="none"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 10,
-              alignItems: "center",
-              paddingHorizontal: tokens.space.md,
-              paddingTop: tokens.space.sm,
-            }}
-          >
-            <View style={tokens.layout.column}>{banner}</View>
-          </View>
-        ) : null}
+        {bannerNode}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

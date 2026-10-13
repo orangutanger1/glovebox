@@ -9,15 +9,19 @@ import { tokens } from "./tokens";
  * `due` is a wash and a red label rather than a solid red block: at this size
  * a filled chip is a sticker, and the row it sits in already carries the
  * alarm. The badge names the state, it does not shout it.
+ *
+ * Read per render: the arm decides the palette.
  */
-const TONE = {
-  due: { bg: tokens.color.redWash, fg: tokens.color.red, border: "rgba(229,72,77,0.30)" },
-  soon: { bg: tokens.color.surfaceHi, fg: tokens.color.text, border: tokens.color.hairline },
-  ok: { bg: "transparent", fg: tokens.color.textMuted, border: tokens.color.hairline },
-};
+function tones() {
+  return {
+    due: { bg: tokens.color.redWash, fg: tokens.color.red, border: "rgba(229,72,77,0.30)" },
+    soon: { bg: tokens.color.surfaceHi, fg: tokens.color.text, border: tokens.color.hairline },
+    ok: { bg: "transparent", fg: tokens.color.textMuted, border: tokens.color.hairline },
+  };
+}
 
 export function Badge({ label, tone }: { label: string; tone: "due" | "soon" | "ok" }) {
-  const t = TONE[tone];
+  const t = tones()[tone];
   return (
     <View
       style={{

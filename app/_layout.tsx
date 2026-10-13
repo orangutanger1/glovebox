@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { isRedesign } from "../src/design/theme";
+import { LaunchCurtain } from "../src/redesign/LaunchCurtain";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack, useRouter, type ErrorBoundaryProps } from "expo-router";
 import * as QuickActions from "expo-quick-actions";
@@ -128,7 +130,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
         gap: tokens.space.md,
       }}
     >
-      <StatusBar style="light" />
+      <StatusBar style={isRedesign() ? "dark" : "light"} />
       <Text style={{ ...tokens.text.heading, color: tokens.color.text, textAlign: "center" }}>
         {t("layout.fatal.title")}
       </Text>
@@ -455,7 +457,8 @@ function Chrome({
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="light" />
+      {/* Arm A of `app_design` is a light page: dark status-bar text. */}
+      <StatusBar style={isRedesign() ? "dark" : "light"} />
       <Stack
         key={localeEpoch}
         screenOptions={{
@@ -573,6 +576,8 @@ function Chrome({
           style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: tokens.color.housing }}
         />
       )}
+      {/* Arm A only: opens the dark native splash onto the light page. */}
+      {fatal === null && <LaunchCurtain />}
       {fatal !== null && <FatalNotice detail={fatal} />}
     </GestureHandlerRootView>
   );

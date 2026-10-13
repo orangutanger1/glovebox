@@ -66,17 +66,14 @@ export function DotGrid({
   );
 }
 
-const FILL = {
-  green: tokens.color.green,
-  red: tokens.color.red,
-  metal: tokens.color.metalHi,
-} as const;
+// Read per render: the arm decides the palette.
+function fill(tone: "green" | "red" | "metal"): string {
+  return { green: tokens.color.green, red: tokens.color.red, metal: tokens.color.metalHi }[tone];
+}
 
-const GLOW = {
-  green: tokens.color.greenGlow,
-  red: tokens.color.redGlow,
-  metal: tokens.color.hairline,
-} as const;
+function glow(tone: "green" | "red" | "metal"): string {
+  return { green: tokens.color.greenGlow, red: tokens.color.redGlow, metal: tokens.color.hairline }[tone];
+}
 
 /** Long enough to be a part being seated rather than a pixel changing colour,
  *  short enough that a grid of twelve is finished before the eye has left it. */
@@ -129,9 +126,9 @@ function Dot({
             width: size - 4,
             height: size - 4,
             borderRadius: (size - 4) / 2,
-            backgroundColor: FILL[tone],
+            backgroundColor: fill(tone),
             borderWidth: 1,
-            borderColor: GLOW[tone],
+            borderColor: glow(tone),
             opacity: seat,
             // From 0.6, never from nothing: a stud that scales out of an empty
             // hole is a graphic being drawn, not a part being fitted.

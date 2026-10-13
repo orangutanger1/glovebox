@@ -10,6 +10,7 @@ import * as Haptics from "expo-haptics";
 import { LinearGradient } from "expo-linear-gradient";
 import { Well } from "./Surface";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * The drum, and the case it turns in.
@@ -124,13 +125,18 @@ export function WheelCase({ children }: { children: React.ReactNode }) {
             borderTopWidth: 1,
             borderBottomWidth: 1,
             borderColor: tokens.color.hairline,
-            backgroundColor: "rgba(255,255,255,0.04)",
+            // Arm A: the detent is a white band on the grey well.
+            backgroundColor: isRedesign() ? tokens.color.surface : "rgba(255,255,255,0.04)",
           }}
         />
         <View style={{ flexDirection: "row", justifyContent: "center" }}>{children}</View>
         <LinearGradient
           pointerEvents="none"
-          colors={["rgba(8,9,11,0.96)", "rgba(8,9,11,0)", "rgba(8,9,11,0.96)"]}
+          colors={
+            isRedesign()
+              ? ["rgba(233,233,239,0.96)", "rgba(233,233,239,0)", "rgba(233,233,239,0.96)"]
+              : ["rgba(8,9,11,0.96)", "rgba(8,9,11,0)", "rgba(8,9,11,0.96)"]
+          }
           locations={[0, 0.5, 1]}
           style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
         />

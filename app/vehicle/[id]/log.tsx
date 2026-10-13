@@ -14,6 +14,7 @@ import { addRecord } from "../../../src/db/records";
 import { TREAD_SERVICE, parseTread } from "../../../src/tires/tread";
 import { rescheduleAll } from "../../../src/notify";
 import { recordReviewEvent, requestReviewAfterLog } from "../../../src/review";
+import { markLogged } from "../../../src/mascot/celebrate";
 import { track } from "../../../src/analytics";
 import { parseNumber, dateFromParts, partsFromDate } from "../../../src/format";
 import { t } from "../../../src/i18n";
@@ -150,6 +151,9 @@ export default function LogService() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     rescheduleAll().catch(() => {});
     recordReviewEvent("log_service");
+    // The screen underneath shows the celebration (redesign only; classic
+    // screens never read it).
+    markLogged(id, type);
     router.back();
 
     // The app's whole job, just done: a subscriber's first saved record gets

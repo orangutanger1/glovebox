@@ -224,23 +224,18 @@ test("two taps on the sheet in one frame decline once, not twice", async () => {
   expect(navigated).toEqual(["back"]);
 });
 
-describe("the exit_offer_plans test", () => {
-  const monthlyLabel = () => t("offer.deal.monthly", { price: "$6.99" });
+describe("after the exit_offer_plans test", () => {
+  // Ended 2026-10-13 with the yearly-only offer for everyone. An install
+  // assigned the with_monthly arm keeps its row; nothing reads it.
+  const monthlyLine = /per month, cancel anytime/;
   afterEach(() => getDb().runSync("DELETE FROM app_state", []));
 
-  test("the yearly arm, and an unassigned install, sell the yearly alone", () => {
-    expect(stringsIn(render().root)).not.toContain(monthlyLabel());
-    setState("experiment.exit_offer_plans", "yearly");
-    expect(stringsIn(render().root)).not.toContain(monthlyLabel());
-  });
-
-  test("the with_monthly arm offers the standard monthly under the button, bought from this screen", async () => {
+  test("every install sells the yearly alone, including one assigned with_monthly", () => {
+    expect(stringsIn(render().root).some((s) => monthlyLine.test(s))).toBe(false);
     setState("experiment.exit_offer_plans", "with_monthly");
-    mockBuy.mockClear();
     const tree = render();
-    expect(stringsIn(tree.root)).toContain(monthlyLabel());
-    expect(presented()[0].props?.monthly).toBe(true);
-    await tap(tree, monthlyLabel());
-    expect(mockBuy).toHaveBeenCalledWith(expect.objectContaining({ id: "$rc_monthly" }), "discount");
+    expect(stringsIn(tree.root).some((s) => monthlyLine.test(s))).toBe(false);
+    expect(presented()[presented().length - 1].props).not.toHaveProperty("monthly");
   });
 });
+

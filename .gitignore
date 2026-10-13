@@ -36,6 +36,7 @@ yarn-error.*
 .posthog.env
 .sentry.env
 .asc.env
+.kie.env
 
 # typescript
 *.tsbuildinfo

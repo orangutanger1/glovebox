@@ -25,6 +25,12 @@
       },
       "channel": "preview"
     },
+    "redesign-check": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_APP_DESIGN": "redesign"
+      }
+    },
     "production": {
       "autoIncrement": true,
       "channel": "production",

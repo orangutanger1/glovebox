@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Well } from "./Surface";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /** The height of every well, whichever type sits in it. A comfortable tap
  *  target, and the number that makes a text field and a numeric one the same
@@ -94,7 +95,7 @@ export function Field({
             onBlur?.();
           }}
           placeholderTextColor={tokens.color.textFaint}
-          selectionColor={tokens.color.white}
+          selectionColor={isRedesign() ? tokens.color.accent : tokens.color.white}
           inputAccessoryViewID={needsAccessory ? accessoryId : undefined}
           style={{
             ...(numeric ? tokens.text.readout : tokens.text.body),
@@ -112,7 +113,8 @@ export function Field({
             // the glyphs: a 16pt name field and a 24pt mileage readout are
             // then the same height, and two fields side by side line up
             // whatever is typed into them.
-            minHeight: FIELD_HEIGHT,
+            minHeight: isRedesign() ? 56 : FIELD_HEIGHT,
+            ...(isRedesign() && !numeric ? { fontSize: 19, fontWeight: "500" as const } : null),
             paddingVertical: 0,
           }}
         />
@@ -133,7 +135,13 @@ export function Field({
             }}
           >
             <Pressable onPress={() => Keyboard.dismiss()} hitSlop={12}>
-              <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.white }}>
+              <Text
+                style={{
+                  ...tokens.text.body,
+                  fontWeight: "600",
+                  color: isRedesign() ? tokens.color.accent : tokens.color.white,
+                }}
+              >
                 Done
               </Text>
             </Pressable>

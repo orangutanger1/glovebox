@@ -218,7 +218,7 @@ function usable(plans: Plan[]): Plan[] | null {
  * The exit screen sells a yearly plan for less than the first screen asked,
  * and the argument is the gap — shown in the unit Apple's sheet will charge.
  * The standard yearly is struck through beside the discount yearly, and the
- * saving is between the two: "$79.99" struck, "$29.99 per year", "63% off".
+ * saving is between the two: "$39.99" struck, "$29.99 per year", "25% off".
  *
  * It used to compare per week: the standard weekly struck beside the yearly's
  * weekly cost, "$3.99" over "$0.58 per week", "86% off". The tap rate was fine

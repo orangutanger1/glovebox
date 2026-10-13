@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { View, Text, Image, Animated, Easing } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { View, Text, Image, Animated, Easing, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button } from "../../src/design/Button";
@@ -7,6 +7,9 @@ import { tokens } from "../../src/design/tokens";
 import { useAdvance } from "../../src/onboarding/nav";
 import { t } from "../../src/i18n";
 import { track } from "../../src/analytics";
+import { isRedesign } from "../../src/design/theme";
+import { WelcomeIntro, INTRO } from "../../src/redesign/WelcomeIntro";
+import { whenRevealed } from "../../src/redesign/LaunchCurtain";
 
 const LIGHT = require("../../assets/onboarding/light.jpeg");
 const LIGHT_RATIO = 1242 / 1663;
@@ -18,15 +21,29 @@ export default function Welcome() {
   // and appears again inside the first second is indistinguishable from a bug.
   const content = useRef(new Animated.Value(0)).current;
 
+  // Arm A of `app_design`: the car meets the user instead of the photograph.
+  // Same headline, same button, same privacy line, same step event.
+  const redesign = isRedesign();
+  const { width } = useWindowDimensions();
+  const [stage, setStage] = useState(0);
+
   useEffect(() => {
-    Animated.timing(content, {
-      toValue: 1,
-      duration: 520,
-      delay: 260,
-      easing: Easing.out(Easing.cubic),
-      useNativeDriver: true,
-    }).start();
-  }, [content]);
+    const show = (delay: number) =>
+      Animated.timing(content, {
+        toValue: 1,
+        duration: 520,
+        delay,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }).start();
+    if (!redesign) {
+      show(260);
+      return;
+    }
+    // After the stage's intro has had its beat: the line lands once the car,
+    // its stickers and the name are in.
+    return whenRevealed(() => show(INTRO.content));
+  }, [content, redesign]);
 
   // Welcome is the one route outside the `OnboardingScreen` frame — it is a
   // full-bleed photograph with its own layout — so the event the frame emits
@@ -44,6 +61,8 @@ export default function Welcome() {
 
   return (
     <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>
+      {redesign ? null : (
+      <>
       {/* Full width, own aspect ratio, pinned to the top. Stretched to fill the
           screen instead, `cover` crops about a third off each side of a phone —
           and what it crops is exactly where the trail sweeps out of frame, which
@@ -67,9 +86,22 @@ export default function Welcome() {
           style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "45%" }}
         />
       </View>
+      </>
+      )}
 
-      <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
-        <View style={{ flex: 1 }} />
+      <SafeAreaView style={{ flex: 1 }} edges={redesign ? ["top", "bottom"] : ["bottom"]}>
+        {redesign ? (
+          // The stage takes whatever the copy leaves, so a small phone gets a
+          // smaller ring of stickers instead of stickers under the headline.
+          <View
+            style={{ flex: 1 }}
+            onLayout={(e) => setStage(e.nativeEvent.layout.height)}
+          >
+            {stage > 0 ? <WelcomeIntro width={width} height={stage} /> : null}
+          </View>
+        ) : (
+          <View style={{ flex: 1 }} />
+        )}
         <Animated.View
           style={{
             ...tokens.layout.column,

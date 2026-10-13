@@ -2,6 +2,7 @@ import { Animated, Pressable, Text } from "react-native";
 import * as Haptics from "expo-haptics";
 import { tokens } from "./tokens";
 import { usePressScale } from "./press";
+import { isRedesign } from "./theme";
 
 /**
  * The primary control.
@@ -14,7 +15,8 @@ import { usePressScale } from "./press";
  * watched, and is the same language every pressable surface in the app now
  * speaks.
  *
- * Primary is white, not red. Red is reserved for overdue and destructive.
+ * Primary is the page's strongest ink, not red. Red is reserved for overdue
+ * and destructive.
  *
  * `disabled` deserves its own paragraph, because the plain version of it cost
  * this app a funnel. React Native's `Pressable` with `disabled` does not fire
@@ -33,38 +35,46 @@ import { usePressScale } from "./press";
  * that refused and a phone that did not register the tap.
  */
 
-const FACE = {
-  primary: tokens.color.white,
-  // The one lit button in the app: the exit offer's claim, where the saving
-  // above it is already green and the button is the same fact, pressed.
-  accent: tokens.color.green,
-  secondary: tokens.color.surfaceHi,
-  danger: tokens.color.red,
-};
+// Read per render, never captured at import: the arm decides the palette.
+function face(variant: Variant): string {
+  return {
+    // Primary is the highest-contrast ink: white on the classic black page,
+    // near-black on arm A's light one — Bevel's black pill.
+    primary: tokens.color.white,
+    // The one lit button in the app: the exit offer's claim, where the saving
+    // above it is already green and the button is the same fact, pressed.
+    accent: tokens.color.green,
+    secondary: isRedesign() ? tokens.color.surface : tokens.color.surfaceHi,
+    danger: tokens.color.red,
+  }[variant];
+}
 
-const FG = {
-  primary: tokens.color.housing,
-  accent: tokens.color.housing,
-  secondary: tokens.color.text,
-  danger: tokens.color.white,
-};
+function ink(variant: Variant): string {
+  return {
+    primary: tokens.color.housing,
+    accent: isRedesign() ? tokens.color.onAccent : tokens.color.housing,
+    secondary: tokens.color.text,
+    danger: tokens.color.onAccent,
+  }[variant];
+}
 
-const BORDER = {
-  primary: "transparent",
-  accent: "transparent",
-  secondary: tokens.color.hairline,
-  danger: "transparent",
-};
+function border(variant: Variant): string {
+  return variant === "secondary" ? tokens.color.hairline : "transparent";
+}
 
 /**
  * The unavailable face. A control that is not live yet is not a white button
  * turned down — dimming the lit face keeps the shape of something switched on
  * and reads as a rendering bug against a near-black background. It is a
  * surface with nothing on it, one step below the enabled secondary, so coming
- * alive is a real change of material rather than a change of opacity.
+ * alive is a real change of material rather than a change of opacity. On arm
+ * A's light page the step down is the grey well, not white.
  */
-const FACE_OFF = tokens.color.surface;
-const FG_OFF = tokens.color.textFaint;
+function faceOff(): string {
+  return isRedesign() ? tokens.color.surfaceHi : tokens.color.surface;
+}
+
+type Variant = "primary" | "accent" | "secondary" | "danger";
 
 export function Button({
   label,
@@ -76,7 +86,7 @@ export function Button({
 }: {
   label: string;
   onPress: () => void;
-  variant?: "primary" | "accent" | "secondary" | "danger";
+  variant?: Variant;
   disabled?: boolean;
   /**
    * How hard the press is felt. Light everywhere, which is the weight of a
@@ -92,6 +102,9 @@ export function Button({
   onBlockedPress?: () => void;
 }) {
   const reportsBlocked = disabled && onBlockedPress !== undefined;
+  // Arm A of `app_design`: every action is a pill. Arm B (classic) keeps the
+  // squared button untouched.
+  const redesign = isRedesign();
   // A blocked button still answers the press: the scale is the only thing
   // telling a user whose tap was swallowed that the tap was registered at all.
   const press = usePressScale();
@@ -126,11 +139,11 @@ export function Button({
       <Animated.View
         style={{
           transform: [{ scale: press.scale }],
-          borderRadius: tokens.radius.md,
-          backgroundColor: disabled ? FACE_OFF : FACE[variant],
+          borderRadius: redesign ? tokens.radius.pill : tokens.radius.md,
+          backgroundColor: disabled ? faceOff() : face(variant),
           borderWidth: 1,
-          borderColor: disabled ? tokens.color.hairline : BORDER[variant],
-          paddingVertical: 16,
+          borderColor: disabled ? tokens.color.hairline : border(variant),
+          paddingVertical: redesign ? 18 : 16,
           alignItems: "center",
         }}
       >
@@ -138,7 +151,7 @@ export function Button({
           style={{
             ...tokens.text.body,
             fontWeight: "600",
-            color: disabled ? FG_OFF : FG[variant],
+            color: disabled ? tokens.color.textFaint : ink(variant),
           }}
         >
           {label}

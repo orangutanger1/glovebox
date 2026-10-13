@@ -40,6 +40,7 @@ export const enGB: Fragment = {
   // referred to that screen.
   "garage.title": "My cars",
   "layout.garage": "My cars",
+  "redesign.tab.garage": "My cars",
   "vehicle.delete.body":
     "It leaves your list of cars along with its service history. Records already exported stay in that file.",
   "features.garage.subtitle": "Every car, van and lorry you own, tracked in one place.",

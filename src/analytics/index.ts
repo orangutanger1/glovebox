@@ -35,6 +35,9 @@ const HOST = process.env.EXPO_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
 
 export function initAnalytics(): void {
   if (client) return;
+  // A build with a pinned design arm (`redesign-check` in eas.json) is a device
+  // check, not a user: its taps would land in the live tests' numbers.
+  if (process.env.EXPO_PUBLIC_APP_DESIGN) return;
   const apiKey = process.env.EXPO_PUBLIC_POSTHOG_KEY;
   if (!apiKey) {
     if (!warned && __DEV__) console.warn("EXPO_PUBLIC_POSTHOG_KEY missing, analytics disabled");

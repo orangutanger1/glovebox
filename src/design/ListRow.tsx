@@ -1,5 +1,6 @@
 import { Pressable, View, Text } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * A row in a list. Flat, and one value up from the panel it sits in, so a list
@@ -37,7 +38,7 @@ export function ListRow({
             // row inside a bordered panel is a box in a box, and the row has
             // to read the same standing alone on the background as it does
             // inside a list.
-            backgroundColor: pressed ? "#23272C" : tokens.color.surfaceHi,
+            backgroundColor: pressed ? (isRedesign() ? tokens.color.sunken : "#23272C") : tokens.color.surfaceHi,
             overflow: "hidden",
           }}
         >

@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { tokens } from "./tokens";
+import { isRedesign } from "./theme";
 
 /**
  * The affirmative mark. Green, never a lamp.
@@ -19,6 +20,11 @@ import { tokens } from "./tokens";
 export function Check({ size, filled = false }: { size?: number; filled?: boolean }) {
   const glyph = size ?? tokens.text.body.fontSize;
   const disc = Math.round(glyph * 1.4);
+  // Arm A of `app_design` has one accent, and a confirmed thing is drawn in
+  // it: the same filled check the answer pills use.
+  const mark = isRedesign() ? tokens.color.accent : tokens.color.green;
+  const wash = isRedesign() ? tokens.color.accentWash : tokens.color.greenWash;
+  const ring = isRedesign() ? tokens.color.accentWash : tokens.color.greenGlow;
 
   return (
     <View
@@ -31,9 +37,9 @@ export function Check({ size, filled = false }: { size?: number; filled?: boolea
         // Filled, the disc is the colour and the tick is cut out of it: the
         // exit offer's list, where seven washed rings read as a form and
         // seven solid marks read as a receipt.
-        backgroundColor: filled ? tokens.color.green : tokens.color.greenWash,
+        backgroundColor: filled ? mark : wash,
         borderWidth: 1,
-        borderColor: filled ? tokens.color.green : tokens.color.greenGlow,
+        borderColor: filled ? mark : ring,
       }}
     >
       <Text
@@ -42,7 +48,7 @@ export function Check({ size, filled = false }: { size?: number; filled?: boolea
           fontSize: glyph * 0.72,
           lineHeight: glyph * 0.9,
           fontWeight: "700",
-          color: filled ? tokens.color.housing : tokens.color.green,
+          color: filled ? (isRedesign() ? tokens.color.onAccent : tokens.color.housing) : mark,
         }}
       >
         ✓

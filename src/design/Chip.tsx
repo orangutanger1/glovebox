@@ -2,6 +2,7 @@ import { Animated, Pressable, Text } from "react-native";
 import * as Haptics from "expo-haptics";
 import { tokens } from "./tokens";
 import { usePressScale } from "./press";
+import { isRedesign } from "./theme";
 
 /**
  * A pill toggle. Flat: a surface when off, white when on, with the label
@@ -24,6 +25,11 @@ export function Chip({
   disabled?: boolean;
 }) {
   const press = usePressScale(disabled);
+  const redesign = isRedesign();
+  const on = redesign ? tokens.color.accent : tokens.color.white;
+  const onInk = redesign ? tokens.color.onAccent : tokens.color.housing;
+  // Arm A: a white pill on the grey page, as the option cards are.
+  const idle = redesign ? tokens.color.surface : tokens.color.surfaceHi;
 
   function handlePress() {
     Haptics.selectionAsync().catch(() => {});
@@ -50,9 +56,10 @@ export function Chip({
           backgroundColor: disabled
             ? tokens.color.surface
             : selected
-              ? tokens.color.white
-              : tokens.color.surfaceHi,
-          borderColor: selected ? "transparent" : tokens.color.hairline,
+              ? on
+              : idle,
+          borderColor: selected || redesign ? "transparent" : tokens.color.hairline,
+          ...(redesign && !selected && !disabled ? tokens.shadow.ambient : null),
         }}
       >
         <Text
@@ -62,7 +69,7 @@ export function Chip({
             color: disabled
               ? tokens.color.textFaint
               : selected
-                ? tokens.color.housing
+                ? onInk
                 : tokens.color.text,
           }}
         >
