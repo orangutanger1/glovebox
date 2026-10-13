@@ -697,7 +697,7 @@ document, build the widget before document photos.
 - **Funnel effect:** the with_monthly half of exit-offer viewers loses the monthly link. Expect no change in exit-offer sales, since that arm made none. Shipped in the same update as `app_design` (below).
 - **Correction to the 2026-09-24 entry:** it says "63% off" at $79.99 / $29.99. Live US prices have been $39.99 yearly and $29.99 on the exit offer since 08-26 (App Store Connect, checked 10-13), so users saw "25% off". The $79.99 is `pro_annual_direct`, which was never submitted.
 
-### 2026-10-13 — `app_design` A/B test ships (OTA OTA_ID, commit COMMIT_ID)
+### 2026-10-13 — `app_design` A/B test ships (OTA `01a133f8`, commit 1c61ea8)
 
 - New experiment `app_design`: `classic` (B, control, the app as it was) or `redesign` (A: the light Planta/Opal/Bevel app with the blue car mascot, conversational onboarding, the launch intro). Fresh installs only; every earlier install has no row and stays classic. `experiment_assigned {experiment:"app_design"}` and `exp_app_design` on every event.
 - Nothing in the funnel's logic differs between arms: same steps, order, plans, prices, offerings, timers, benefit rows, events. Only surfaces and the arm-A-only conversation lines and intro.
