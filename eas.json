@@ -31,6 +31,13 @@
         "EXPO_PUBLIC_APP_DESIGN": "redesign"
       }
     },
+    "design-v2-check": {
+      "extends": "preview",
+      "env": {
+        "EXPO_PUBLIC_APP_DESIGN": "redesign",
+        "EXPO_PUBLIC_DESIGN_V2": "1"
+      }
+    },
     "production": {
       "autoIncrement": true,
       "channel": "production",

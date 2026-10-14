@@ -44,6 +44,18 @@ export function isRedesign(): boolean {
   return cached;
 }
 
+/**
+ * Arm A's second look (docs/superpowers/plans/2026-10-13-app-design-v2.md).
+ * Inside arm A only, and for now only on a build that pins it (the
+ * `design-v2-check` EAS profile): how v2 reaches users is decided after the
+ * `app_design` read. Read at render time, like `isRedesign`.
+ */
+const V2_PIN = process.env.EXPO_PUBLIC_DESIGN_V2;
+
+export function isDesignV2(): boolean {
+  return V2_PIN === "1" && isRedesign();
+}
+
 /** Test seam: forget the cached arm so a test can switch it. */
 export function resetDesignCache(): void {
   cached = undefined;
