@@ -3,6 +3,8 @@ import {
   garageMood,
   heroFigure,
   planCompleteness,
+  roadFor,
+  roads,
   todayTasks,
   upcomingItems,
   vehicleView,
@@ -155,5 +157,45 @@ describe("Today's one figure", () => {
 
   test("nothing logged, no figure", () => {
     expect(heroFigure([view(car("a"), [])], { a: undefined })).toBeNull();
+  });
+});
+
+describe("the road", () => {
+  test("overdue services are behind the car, the rest ahead in due order", () => {
+    const v = view(car("a", 48210), [
+      rec("Oil Change", "2026-03-16T00:00:00.000Z", 41000),
+      rec("Tire Rotation", "2026-08-01T00:00:00.000Z", 45000),
+      rec("Brake Inspection", "2026-04-27T00:00:00.000Z", 44000),
+    ]);
+    const r = roadFor(v);
+    expect(r.behind.map((s) => s.type)).toContain("Oil Change");
+    expect(r.ahead.length).toBeGreaterThan(0);
+    expect(r.ahead.every((s) => s.status !== "due")).toBe(true);
+    const order = r.ahead.map((s) => s.type);
+    expect([...r.ahead].sort((a, b) => (a.dueAt ?? "~").localeCompare(b.dueAt ?? "~")).map((s) => s.type)).toEqual(order);
+    expect(r.odometer).toBe(48210);
+  });
+
+  test("at most six signs ahead", () => {
+    const many = ["Oil Change", "Tire Rotation", "Brake Inspection", "Air Filter", "Cabin Air Filter", "Wiper Blades", "Battery Check", "Coolant Flush"]
+      .map((type) => rec(type, "2026-10-01T00:00:00.000Z", 48000));
+    expect(roadFor(view(car("a", 48210), many)).ahead.length).toBe(6);
+  });
+
+  test("no odometer, no reading on the road; stops by date", () => {
+    const r = roadFor(view(car("a"), [
+      rec("Oil Change", "2026-09-01T00:00:00.000Z"),
+      rec("Wiper Blades", "2026-02-01T00:00:00.000Z"),
+    ]));
+    expect(r.odometer).toBeUndefined();
+    expect(r.ahead.map((s) => s.type)).toEqual(["Oil Change", "Wiper Blades"].sort((a, b) =>
+      (r.ahead.find((s) => s.type === a)!.dueAt!).localeCompare(r.ahead.find((s) => s.type === b)!.dueAt!)));
+  });
+
+  test("most urgent car first; cars with nothing tracked are left off", () => {
+    const fine = view(car("a", 1000), [rec("Oil Change", "2026-10-01T00:00:00.000Z", 900)]);
+    const late = view(car("b", 48210), [rec("Oil Change", "2026-03-16T00:00:00.000Z", 41000)]);
+    const empty = view(car("c"), []);
+    expect(roads([fine, late, empty]).map((r) => r.vehicleId)).toEqual(["b", "a"]);
   });
 });

@@ -981,6 +981,8 @@ export const pl: Fragment = {
   "redesign.convo.paywall.both": "{name}, jestem gotów zadbać o Twój samochód {car}.",
   "redesign.convo.offer": "Zaczekaj! Mam lepszą ofertę, zanim wyjdziesz.",
   "redesign.back": "Wstecz",
+  "redesign.road.here": "Jesteś tutaj",
+  "redesign.road.behind": "Za tobą",
   "redesign.hero.overdue": "Zaległe",
   "redesign.hero.dueSoon": "Wkrótce",
   "redesign.hero.next": "Następne",

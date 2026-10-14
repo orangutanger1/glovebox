@@ -95,6 +95,13 @@ beforeAll(() => {
     performed_at: new Date(Date.now() - 365 * 86_400_000).toISOString(),
     odometer: 94_265,
   });
+  // Brakes done last month: on schedule, a sign ahead on the road.
+  addRecord({
+    vehicle_id: id,
+    service_type: "Brake Inspection",
+    performed_at: new Date(Date.now() - 30 * 86_400_000).toISOString(),
+    odometer: 100_000,
+  });
 });
 
 const mounted: TestRenderer.ReactTestRenderer[] = [];
@@ -218,4 +225,31 @@ test("v2's plus is a black disc", () => {
   const plus = tree.root.find((n) => n.props.accessibilityLabel === t("redesign.plus") && typeof n.props.onPress === "function");
   const discs = plus.findAll((n) => typeof n.type === "string" && n.props.style?.width === 58);
   expect(discs[0].props.style.backgroundColor).toBe("#16161A");
+});
+
+function upcomingTab(tree: TestRenderer.ReactTestRenderer) {
+  const target = tree.root.findAll(
+    (n) => n.props.accessibilityRole === "tab" && typeof n.props.onPress === "function" && texts(n).includes(t("redesign.segment.upcoming")),
+  )[0];
+  act(() => target.props.onPress());
+}
+
+test("v2's Upcoming is a road: signs ahead, the car, overdue behind", () => {
+  setState("experiment.app_design", "redesign");
+  mockV2 = true;
+  const tree = render();
+  upcomingTab(tree);
+  const rendered = texts(tree.root);
+  const here = rendered.indexOf(t("redesign.road.here"));
+  expect(here).toBeGreaterThan(-1);
+  const brake = tree.root.findAll((n) => typeof n.props.accessibilityLabel === "string" && n.props.accessibilityLabel.startsWith("Brake Inspection, "));
+  expect(brake.length).toBeGreaterThan(0);
+  expect(rendered.lastIndexOf("Oil Change")).toBeGreaterThan(here);
+});
+
+test("arm A without v2 keeps the Upcoming list", () => {
+  setState("experiment.app_design", "redesign");
+  const tree = render();
+  upcomingTab(tree);
+  expect(texts(tree.root)).not.toContain(t("redesign.road.here"));
 });

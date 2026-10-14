@@ -895,6 +895,8 @@ export const ptBR: Fragment = {
   "redesign.convo.paywall.both": "{name}, estou pronto para cuidar do seu {car}.",
   "redesign.convo.offer": "Espera! Aqui vai uma oferta melhor antes de você ir.",
   "redesign.back": "Voltar",
+  "redesign.road.here": "Você está aqui",
+  "redesign.road.behind": "Ficou para trás",
   "redesign.hero.overdue": "Atrasado",
   "redesign.hero.dueSoon": "Em breve",
   "redesign.hero.next": "A seguir",

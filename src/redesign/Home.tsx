@@ -36,6 +36,7 @@ import {
   byUrgency,
   garageMood,
   heroFigure,
+  roads,
   todayTasks,
   upcomingItems,
   vehicleView,
@@ -60,6 +61,7 @@ import { isDesignV2 } from "../design/theme";
 import { v2 } from "../design/type";
 import { HeroCard, AMBER_TEXT, RED_TEXT } from "./HeroCard";
 import { ServiceSticker } from "./stickers";
+import { Road } from "./Road";
 
 /** The same three one-tap services the classic garage offers. */
 const QUICK_LOG = ["Oil Change", "Tire Rotation", "Brake Inspection"];
@@ -107,6 +109,14 @@ export function RedesignHome() {
   const [msg, setMsg] = useState("");
   const [celebrated, setCelebrated] = useState<string | null>(null);
   const scroll = useRef<ScrollView>(null);
+  // A v2's road: where it starts in the scroll, and whether the user has moved
+  // since it was opened (then it is left where they put it).
+  const roadTop = useRef(0);
+  const userScrolled = useRef(false);
+  const showCar = useCallback((carY: number) => {
+    if (userScrolled.current) return;
+    scroll.current?.scrollTo({ y: Math.max(0, roadTop.current + carY - 240), animated: false });
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -171,6 +181,7 @@ export function RedesignHome() {
     ? heroFigure(views, Object.fromEntries(views.map((v) => [v.vehicle.id, v.vehicle.odometer])))
     : null;
   const nextUp = designV2 ? nextUpRows(views, hero) : [];
+  const roadList = designV2 ? roads(views) : [];
 
   const status =
     logged === 0
@@ -337,6 +348,7 @@ export function RedesignHome() {
       <Stack.Screen options={{ headerShown: false }} />
       <ScrollView
         ref={scroll}
+        onScrollBeginDrag={() => (userScrolled.current = true)}
         contentInsetAdjustmentBehavior="never"
         contentContainerStyle={{
           ...tokens.layout.column,
@@ -430,7 +442,10 @@ export function RedesignHome() {
                 { value: "upcoming", label: t("redesign.segment.upcoming") },
               ]}
               value={segment}
-              onChange={setSegment}
+              onChange={(next) => {
+                userScrolled.current = false;
+                setSegment(next);
+              }}
             />
 
             {segment === "today" && designV2 && logged > 0 && hero ? (
@@ -458,6 +473,28 @@ export function RedesignHome() {
                 </GlassCard>
               </View>
               ) : null
+            ) : segment === "upcoming" && designV2 ? (
+              // A v2: the road. Brought to the car once it is laid out, unless
+              // the user has already scrolled.
+              roadList.length === 0 ? (
+                <GlassCard>
+                  <Text style={{ ...tokens.text.body, color: tokens.color.textMuted }}>
+                    {t("redesign.upcoming.empty")}
+                  </Text>
+                </GlassCard>
+              ) : (
+                <View onLayout={(e) => (roadTop.current = e.nativeEvent.layout.y)} style={{ gap: tokens.space.lg }}>
+                  {roadList.map((r, i) => (
+                    <Road
+                      key={r.vehicleId}
+                      road={r}
+                      mood={views.find((v) => v.vehicle.id === r.vehicleId)?.mood ?? "happy"}
+                      showName={roadList.length > 1}
+                      onCarLayout={i === 0 ? showCar : undefined}
+                    />
+                  ))}
+                </View>
+              )
             ) : segment === "today" ? (
               <GlassCard>
                 <SectionTitle>{t("redesign.todayTasks")}</SectionTitle>

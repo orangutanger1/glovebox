@@ -871,6 +871,8 @@ export const ja: Fragment = {
   "redesign.convo.paywall.both": "{name}さん、{car}のお世話をする準備ができました。",
   "redesign.convo.offer": "待ってください！お得なオファーがあります。",
   "redesign.back": "戻る",
+  "redesign.road.here": "現在地",
+  "redesign.road.behind": "通り過ぎた項目",
   "redesign.hero.overdue": "期限切れ",
   "redesign.hero.dueSoon": "まもなく",
   "redesign.hero.next": "次の予定",

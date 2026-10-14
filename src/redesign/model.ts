@@ -175,6 +175,39 @@ export function heroFigure(
   return null;
 }
 
+export type Road = { vehicleId: string; vehicleName: string; odometer?: number; ahead: DueState[]; behind: DueState[] };
+
+const AHEAD_MAX = 6;
+
+/** A v2's Upcoming tab as a road: the car at its reading, what's next as signs
+ *  ahead in the order it comes due, and anything overdue behind it. */
+export function roadFor(view: VehicleView): Road {
+  const sorted = [...view.states].sort(byUrgency);
+  const ahead = sorted
+    .filter((s) => s.status !== "due")
+    .sort(
+      (a, b) =>
+        (a.dueAt ?? "~").localeCompare(b.dueAt ?? "~") ||
+        (a.dueOdometer ?? Infinity) - (b.dueOdometer ?? Infinity),
+    )
+    .slice(0, AHEAD_MAX);
+  return {
+    vehicleId: view.vehicle.id,
+    vehicleName: view.vehicle.name,
+    odometer: view.vehicle.odometer,
+    ahead,
+    behind: sorted.filter((s) => s.status === "due"),
+  };
+}
+
+/** One road per car with anything tracked, most urgent car first. */
+export function roads(views: readonly VehicleView[]): Road[] {
+  return views
+    .filter((v) => v.states.length > 0)
+    .sort((a, b) => (a.next && b.next ? byUrgency(a.next, b.next) : a.next ? -1 : b.next ? 1 : 0))
+    .map(roadFor);
+}
+
 export type UpcomingItem = { vehicleId: string; vehicleName: string; type: string; dueAt: string };
 
 /** Planta's "Upcoming": every service on schedule that has a date, soonest

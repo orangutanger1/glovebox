@@ -897,6 +897,8 @@ export const ko: Fragment = {
   "redesign.convo.paywall.both": "{name}님, {car}을 돌볼 준비가 됐어요.",
   "redesign.convo.offer": "잠깐만요! 가기 전에 더 좋은 혜택이 있어요.",
   "redesign.back": "뒤로",
+  "redesign.road.here": "현재 위치",
+  "redesign.road.behind": "지나온 항목",
   "redesign.hero.overdue": "기한 지남",
   "redesign.hero.dueSoon": "곧 예정",
   "redesign.hero.next": "다음 차례",

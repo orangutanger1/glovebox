@@ -903,6 +903,8 @@ export const sv: Fragment = {
   "redesign.convo.paywall.both": "{name}, jag är redo att ta hand om din {car}.",
   "redesign.convo.offer": "Vänta! Här är ett bättre erbjudande innan du går.",
   "redesign.back": "Tillbaka",
+  "redesign.road.here": "Du är här",
+  "redesign.road.behind": "Bakom dig",
   "redesign.hero.overdue": "Försenad",
   "redesign.hero.dueSoon": "Snart",
   "redesign.hero.next": "Näst på tur",
