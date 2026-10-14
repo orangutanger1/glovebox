@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import { FONT_ASSETS, markFontsLoaded } from "../src/design/type";
 import { isRedesign } from "../src/design/theme";
 import { LaunchCurtain } from "../src/redesign/LaunchCurtain";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -173,6 +175,12 @@ export default function RootLayout() {
   // ran its whole first session under the dark header. Re-read once the arm is
   // written.
   const [redesign, setRedesign] = useState(isRedesign);
+  // A v2's faces (src/design/type.ts). Never waited on: nothing here may
+  // render without the navigator (see the note at the bottom), and until they
+  // load every v2 style falls back to the system face at the same size.
+  // Loaded in both arms so it does not depend on when the arm is known.
+  const [fontsLoaded] = useFonts(FONT_ASSETS);
+  if (fontsLoaded) markFontsLoaded();
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
