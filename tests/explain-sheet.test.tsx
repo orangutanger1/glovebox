@@ -48,7 +48,17 @@ jest.mock("../src/analytics", () => ({
   track: (event: string, props?: Record<string, unknown>) => tracked.push({ event, props }),
 }));
 
+// A v2 pinned per test: v2 implies arm A.
+let mockV2 = false;
+jest.mock("../src/design/theme", () => ({
+  ...jest.requireActual("../src/design/theme"),
+  isDesignV2: () => mockV2,
+  isRedesign: () => mockV2 || jest.requireActual("../src/design/theme").isRedesign(),
+}));
+
 import ExplainSheet from "../app/explain";
+import { ServiceSticker } from "../src/redesign/stickers";
+import { Mascot } from "../src/mascot/Mascot";
 import { getDb } from "../src/db/client";
 import { t, setLanguage } from "../src/i18n";
 import { setDistanceUnit } from "../src/units";
@@ -142,4 +152,32 @@ test("a service with no card closes without reporting anything", () => {
   render();
   expect(tracked).toEqual([]);
   expect(navigated).toEqual(["back"]);
+});
+
+describe("A v2's explainer", () => {
+  afterEach(() => {
+    mockV2 = false;
+  });
+
+  test("leads with the service's sticker, not the car", () => {
+    mockV2 = true;
+    mockParams = { type: "Oil Change", vehicle: "v1", source: "service_row" };
+    const tree = render();
+    expect(tree.root.findAllByType(ServiceSticker)).toHaveLength(1);
+    expect(tree.root.findAllByType(Mascot)).toHaveLength(0);
+  });
+
+  test("without v2 the explainer is unchanged", () => {
+    mockParams = { type: "Oil Change", vehicle: "v1", source: "service_row" };
+    const tree = render();
+    expect(tree.root.findAllByType(ServiceSticker)).toHaveLength(0);
+  });
+
+  test("Log this service still opens the log form", () => {
+    mockV2 = true;
+    mockParams = { type: "Oil Change", vehicle: "v1", source: "service_row" };
+    const tree = render();
+    press(tree, t("explain.log"));
+    expect(navigated).toEqual(["replace:/vehicle/v1/log?type=Oil%20Change"]);
+  });
 });

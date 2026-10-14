@@ -3,7 +3,10 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Button } from "../src/design/Button";
 import { tokens } from "../src/design/tokens";
-import { isRedesign } from "../src/design/theme";
+import { isDesignV2, isRedesign } from "../src/design/theme";
+import { v2 } from "../src/design/type";
+import { ServiceSticker } from "../src/redesign/stickers";
+import { RED_TEXT } from "../src/redesign/HeroCard";
 import { Mascot } from "../src/mascot/Mascot";
 import type { Mood } from "../src/mascot/mood";
 import { track } from "../src/analytics";
@@ -110,6 +113,13 @@ export default function ExplainSheet() {
   const difficulty = difficultyOf(type);
   const lines = scheduleLines({ interval, state, unit });
   const redesign = isRedesign();
+  // A v2: the service's sticker leads (the card is about the service; the car
+  // already speaks on Today), the title in the display face, three mono
+  // section labels, the schedule on a white card in mono.
+  const designV2 = isDesignV2();
+  const sectionLabel = designV2
+    ? { ...v2.label(), color: tokens.color.textMuted }
+    : { ...tokens.text.legend, color: tokens.color.textMuted };
 
   return (
     <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>
@@ -122,9 +132,15 @@ export default function ExplainSheet() {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
-          {redesign ? <Mascot mood={MOOD[status]} size={64} /> : null}
+          {designV2 ? (
+            <ServiceSticker type={type} size={56} />
+          ) : redesign ? (
+            <Mascot mood={MOOD[status]} size={64} />
+          ) : null}
           <View style={{ flex: 1, gap: tokens.space.xs }}>
-            <Text style={{ ...tokens.text.title, color: tokens.color.text }}>{serviceName(type)}</Text>
+            <Text style={{ ...(designV2 ? v2.greeting() : tokens.text.title), color: tokens.color.text }}>
+              {serviceName(type)}
+            </Text>
             {difficulty ? (
               <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
                 {t(`explain.difficulty.${difficulty}`)}
@@ -139,13 +155,26 @@ export default function ExplainSheet() {
         </View>
 
         <View
-          style={{
-            backgroundColor: tokens.color.surfaceHi,
-            borderRadius: tokens.radius.sm,
-            padding: tokens.space.md,
-            gap: 2,
-          }}
+          style={
+            designV2
+              ? {
+                  backgroundColor: tokens.color.surface,
+                  borderRadius: tokens.radius.lg,
+                  borderCurve: "continuous",
+                  padding: tokens.space.md,
+                  gap: 4,
+                  ...tokens.shadow.ambient,
+                }
+              : {
+                  backgroundColor: tokens.color.surfaceHi,
+                  borderRadius: tokens.radius.sm,
+                  padding: tokens.space.md,
+                  gap: 2,
+                }
+          }
         >
+          {/* Plain legend in v2 too: the screen's three mono labels are the
+              sections below. */}
           <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{t("explain.schedule")}</Text>
           {lines.map((line, i) => (
             <Text
@@ -153,8 +182,14 @@ export default function ExplainSheet() {
               style={{
                 ...tokens.text.body,
                 ...tokens.text.numeric,
+                ...(designV2 ? { ...v2.value(), fontSize: 15 } : {}),
                 fontWeight: i === lines.length - 1 && status === "overdue" ? "600" : "400",
-                color: i === lines.length - 1 && status === "overdue" ? tokens.color.red : tokens.color.text,
+                color:
+                  i === lines.length - 1 && status === "overdue"
+                    ? designV2
+                      ? RED_TEXT
+                      : tokens.color.red
+                    : tokens.color.text,
               }}
             >
               {line}
@@ -164,7 +199,7 @@ export default function ExplainSheet() {
 
         {(["what", "why", "diy"] as const).map((part) => (
           <View key={part} style={{ gap: tokens.space.xs }}>
-            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{t(`explain.${part}`)}</Text>
+            <Text style={sectionLabel}>{t(`explain.${part}`)}</Text>
             <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{t(`explain.${type}.${part}`)}</Text>
           </View>
         ))}
