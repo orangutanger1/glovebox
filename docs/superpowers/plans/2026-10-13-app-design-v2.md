@@ -24,7 +24,7 @@ What the three references share and arm A lacks: a look of its own, readable fro
 
 ## Prerequisite: the service explainers
 
-The service explainers (spec `docs/superpowers/specs/2026-10-13-service-explainers-design.md`, DECISIONS "Service explainers, built 2026-10-13") are **built but uncommitted** in the working tree: `app/explain.tsx`, `src/explain/`, and edits to `app/_layout.tsx`, `app/vehicle/[id].tsx`, `app/vehicle/[id]/log.tsx`, `src/redesign/VehicleScreen.tsx`, `src/notify/*`, the i18n catalogs and tests. Tasks 1, 3, 7, 9 and 10 edit the same files. **Before Task 1:** ask the user to commit the explainers (or confirm they should be committed), so this plan's commits never mix with them and either piece can be reverted alone. Explainers ship the same in both `app_design` arms; v2 only restyles their screen (Task 10) and must keep every way into it working.
+The service explainers (spec `docs/superpowers/specs/2026-10-13-service-explainers-design.md`, DECISIONS "Service explainers, built 2026-10-13") are **built but uncommitted** in the working tree: `app/explain.tsx`, `src/explain/`, and edits to `app/_layout.tsx`, `app/vehicle/[id].tsx`, `app/vehicle/[id]/log.tsx`, `src/redesign/VehicleScreen.tsx`, `src/notify/*`, the i18n catalogs and tests. Tasks 1, 3, 7, 9 and 10 edit the same files. **Done:** the explainers were committed on their own in `3bb2c22` (2026-10-13), so this plan's commits never mix with them and either piece can be reverted alone. Explainers ship the same in both `app_design` arms; v2 only restyles their screen (Task 10) and must keep every way into it working.
 
 ## Global Constraints
 
