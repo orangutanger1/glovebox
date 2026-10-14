@@ -33,3 +33,20 @@ test("never before the arm is assigned", () => {
   state.clear();
   expect(load({ EXPO_PUBLIC_DESIGN_V2: "1", EXPO_PUBLIC_APP_DESIGN: undefined }).isDesignV2()).toBe(false);
 });
+
+test("v2 warms the page; arm A without v2 keeps #F4F4F7", () => {
+  state.set("experiment.app_design", "redesign");
+  load({ EXPO_PUBLIC_DESIGN_V2: "1", EXPO_PUBLIC_APP_DESIGN: undefined });
+  const { tokens: t2 } = require("../src/design/tokens");
+  expect(t2.color.housing).toBe("#F6F3EE");
+  load({ EXPO_PUBLIC_DESIGN_V2: undefined, EXPO_PUBLIC_APP_DESIGN: undefined });
+  const { tokens: t1 } = require("../src/design/tokens");
+  expect(t1.color.housing).toBe("#F4F4F7");
+});
+
+test("v2 never reaches arm B's page", () => {
+  state.set("experiment.app_design", "classic");
+  load({ EXPO_PUBLIC_DESIGN_V2: "1", EXPO_PUBLIC_APP_DESIGN: undefined });
+  const { tokens } = require("../src/design/tokens");
+  expect(tokens.color.housing).toBe("#0A0B0D");
+});

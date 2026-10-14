@@ -7,7 +7,7 @@ import TestRenderer from "react-test-renderer";
  * a waiter is released by the cap even if the curtain never reports.
  */
 let mockRedesign = false;
-jest.mock("../src/design/theme", () => ({ isRedesign: () => mockRedesign }));
+jest.mock("../src/design/theme", () => ({ isRedesign: () => mockRedesign, isDesignV2: () => false }));
 
 import { LaunchCurtain, resetLaunchCurtain, whenRevealed } from "../src/redesign/LaunchCurtain";
 

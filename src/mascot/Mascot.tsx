@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Animated, Image, View } from "react-native";
+import { isDesignV2 } from "../design/theme";
 import { useReduceMotion } from "../design/useReduceMotion";
 import type { Mood } from "./mood";
 
@@ -27,6 +28,15 @@ const LOOP: Record<Mood, number> = {
 
 // The loops frame the car a little smaller than the stills do (room for the
 // sparkles and the sway); drawn this much larger, the car is the same size either way.
+// The same loops graded to A v2's warm page (`grade.py <out_dir> F6F3EE`).
+const LOOP_V2: Record<Mood, number> = {
+  happy: require("../../assets/mascot/v2/car-happy.gif"),
+  "heads-up": require("../../assets/mascot/v2/car-heads-up.gif"),
+  worried: require("../../assets/mascot/v2/car-worried.gif"),
+  sleepy: require("../../assets/mascot/v2/car-sleepy.gif"),
+  celebrating: require("../../assets/mascot/v2/car-celebrating.gif"),
+};
+
 const LOOP_SCALE = 1.14;
 
 /**
@@ -62,7 +72,7 @@ export function Mascot({ mood, size, animate = false }: { mood: Mood; size: numb
       <Animated.View style={{ transform: [{ scale: pop }] }}>
         <Image
           key={loop ? "loop" : "still"}
-          source={loop ? LOOP[mood] : STILL[mood]}
+          source={loop ? (isDesignV2() ? LOOP_V2 : LOOP)[mood] : STILL[mood]}
           style={{ width: drawn, height: drawn }}
         />
       </Animated.View>

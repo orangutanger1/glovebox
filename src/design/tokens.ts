@@ -1,4 +1,4 @@
-import { isRedesign } from "./theme";
+import { isDesignV2, isRedesign } from "./theme";
 
 /**
  * The flat dark visual system. See
@@ -182,24 +182,36 @@ const LIGHT_SHADOW: typeof CLASSIC_SHADOW = {
   },
 };
 
+/** A v2's page: a warm off-white instead of Bevel's cool grey. The keys that
+ *  are "the page, a shade down" move with it; everything else is LIGHT_COLOR.
+ *  Muted text keeps 4.5:1 on it, as on #F4F4F7. */
+export const V2_PAGE = "#F6F3EE";
+const V2_COLOR: typeof CLASSIC_COLOR = {
+  ...LIGHT_COLOR,
+  housing: V2_PAGE,
+  surfaceHi: "#EFEBE4",
+  sunken: "#ECE8E1",
+  edgeSolid: "#ECE8E1",
+};
+
 /**
  * One object whose every key is read at access time. Screens read tokens
  * inline in render, so the arm is decided per frame, never frozen at import —
  * the same rule `isRedesign` itself follows.
  */
-function themed<T extends object>(classic: T, light: T): T {
+function themed<T extends object>(classic: T, light: T, v2: T = light): T {
   const out = {} as T;
   for (const key of Object.keys(classic) as (keyof T)[]) {
     Object.defineProperty(out, key, {
       enumerable: true,
-      get: () => (isRedesign() ? light[key] : classic[key]),
+      get: () => (isRedesign() ? (isDesignV2() ? v2[key] : light[key]) : classic[key]),
     });
   }
   return out;
 }
 
 export const tokens = {
-  color: themed(CLASSIC_COLOR, LIGHT_COLOR),
+  color: themed(CLASSIC_COLOR, LIGHT_COLOR, V2_COLOR),
 
   /** The redesign's glass card: a faint top light over the surface, as Opal's
    *  cards are lit from above. Two stops, top to bottom. */

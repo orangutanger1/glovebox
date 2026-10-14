@@ -18,7 +18,8 @@ Pixels that land near the page are then snapped to #F4F4F7 exactly, and the
 loop is quantized undithered to one palette, so the GIF's background meets the
 arm-A canvas without a seam.
 
-Usage: python3 grade.py <out_dir>   (reads ./<mood>.mp4 and ./in/<mood>.png)
+Usage: python3 grade.py <out_dir> [page_hex]   (reads ./<mood>.mp4 and ./in/<mood>.png)
+page_hex defaults to F4F4F7 (arm A); A v2's warm page is F6F3EE.
 """
 import glob
 import os
@@ -155,7 +156,9 @@ def stabilize(frames, tol=12):
     return out
 
 
-def main(out_dir):
+def main(out_dir, page_hex="F4F4F7"):
+    global PAGE
+    PAGE = np.array([int(page_hex[i:i + 2], 16) for i in (0, 2, 4)], float)
     for mood in MOODS:
         tmp = tempfile.mkdtemp()
         subprocess.run(
@@ -188,4 +191,4 @@ def main(out_dir):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(*sys.argv[1:])
