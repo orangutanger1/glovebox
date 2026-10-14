@@ -167,6 +167,12 @@ export default function RootLayout() {
   // housing instead, capped at `WALL_WAIT_MS` so a store with no signal still
   // leaves the user on the garage rather than on nothing.
   const [holding, setHolding] = useState(false);
+  // The `app_design` arm as of the last render. A fresh install's first frame
+  // comes before the boot effect tosses the coin, so the stack's header colours
+  // were read as classic and, with nothing else re-rendering `Chrome`, arm A
+  // ran its whole first session under the dark header. Re-read once the arm is
+  // written.
+  const [redesign, setRedesign] = useState(isRedesign);
 
   useEffect(() => subscribeLocaleChanged(() => setLocaleEpoch((n) => n + 1)), []);
 
@@ -254,6 +260,7 @@ export default function RootLayout() {
     // finished reports "unassigned". `boot` swallows a throw, and an install
     // that could not be assigned is on the control flow.
     boot("experiments", () => assignExperiments(!onboarded && getOnboardingStep() === null));
+    setRedesign(isRedesign());
 
     // Stamped before anything can route on it, and only ever written once. An
     // install that had already finished onboarding when this build first ran
@@ -393,7 +400,7 @@ export default function RootLayout() {
   //
   // The fatal state is drawn as an overlay over a mounted `<Stack>` instead.
   // Same pixels, no unmounted navigator.
-  return <Chrome localeEpoch={localeEpoch} fatal={fatal} holding={holding} />;
+  return <Chrome localeEpoch={localeEpoch} fatal={fatal} holding={holding} redesign={redesign} />;
 }
 
 /** The longest a launch waits on the store before showing the garage. A
@@ -448,17 +455,20 @@ function Chrome({
   localeEpoch,
   fatal,
   holding,
+  redesign,
 }: {
   localeEpoch: number;
   fatal: string | null;
   holding: boolean;
+  /** Passed so that the arm being written at boot re-renders the header. */
+  redesign: boolean;
 }) {
   const router = useRouter();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Arm A of `app_design` is a light page: dark status-bar text. */}
-      <StatusBar style={isRedesign() ? "dark" : "light"} />
+      <StatusBar style={redesign ? "dark" : "light"} />
       <Stack
         key={localeEpoch}
         screenOptions={{

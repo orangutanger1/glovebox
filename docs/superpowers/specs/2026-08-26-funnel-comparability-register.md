@@ -704,3 +704,9 @@ document, build the widget before document photos.
 - **Funnel effect:** none expected for B. For A, read main-paywall buy taps per viewer against B (see `docs/DECISIONS.md`); check at ~3 weeks, run to ~11 at current traffic (~9 main-paywall viewers per arm a day).
 - Stacks with the end of `exit_offer_plans` in the same update; both arms get the yearly-only exit offer, so the design read is unaffected.
 
+
+### 2026-10-13 — arm A vehicle header fix (commit on `feat/app-design-v2`, not shipped yet)
+
+- Arm A's first session after a fresh install drew every stack header (vehicle, settings, log) with the classic dark bar and a white chevron, and the light status bar, because the root stack read its colours before the boot effect wrote the `app_design` row and nothing re-rendered it. From the second launch on the arm was cached and the header was light. The vehicle screen showed it worst: its own title is drawn in A's dark text, so a dark title on a dark bar. Fix: `RootLayout` re-renders `Chrome` once the arm is written.
+- Post-onboarding only (onboarding and paywalls have no stack header). Does not touch the paywall metric or any event. Arm B unchanged.
+- **Funnel effect:** none expected. Possibly a small lift in arm A's first-session `service_logged` (the header was hard to read); too small to read.

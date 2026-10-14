@@ -15,8 +15,10 @@ import TestRenderer from "react-test-renderer";
  */
 jest.mock("expo-router", () => {
   const { createElement } = require("react");
-  const Stack = ({ children }: { children?: React.ReactNode }) =>
-    createElement("View", { testID: "navigator" }, children);
+  const Stack = ({ children, screenOptions }: { children?: React.ReactNode; screenOptions?: Record<string, unknown> }) => {
+    if (screenOptions) mockScreenOptions.push(screenOptions);
+    return createElement("View", { testID: "navigator" }, children);
+  };
   Stack.Screen = () => null;
   return {
     Stack,
@@ -25,6 +27,13 @@ jest.mock("expo-router", () => {
 });
 // Prefixed `mock` so the hoisted factories above and below may close over them.
 const mockReplace = jest.fn();
+// Every `screenOptions` the root stack was rendered with, in order.
+const mockScreenOptions: Record<string, unknown>[] = [];
+// The `app_design` arm as `isRedesign` reports it; `assignExperiments` can flip
+// it, the way the boot effect writes the row on a fresh install.
+let mockArmA = false;
+let mockAssign: () => void = () => {};
+let mockOnboarded = true;
 let mockPro: boolean | null = false;
 let mockHasOffer = false;
 // When set, the store's answer waits on it: a launch caught mid-question.
@@ -38,11 +47,13 @@ jest.mock("react-native-gesture-handler", () => {
 });
 jest.mock("expo-quick-actions", () => ({ initial: null }));
 jest.mock("expo-quick-actions/hooks", () => ({ useQuickActionCallback: () => {} }));
+jest.mock("expo-status-bar", () => ({ StatusBar: () => null }));
+jest.mock("../src/experiments", () => ({ assignExperiments: () => mockAssign() }));
 // The arm is read on every render (tokens, the status bar). Pinned here so the
 // `getDb` count below still counts boots, not style reads.
 jest.mock("../src/design/theme", () => ({
   ...jest.requireActual("../src/design/theme"),
-  isRedesign: () => false,
+  isRedesign: () => mockArmA,
 }));
 let mockDbBoots = 0;
 jest.mock("../src/db/client", () => ({
@@ -68,7 +79,7 @@ jest.mock("../src/analytics", () => ({
 }));
 jest.mock("../src/notify", () => ({ rescheduleAll: async () => {} }));
 jest.mock("../src/notify/opened", () => ({ watchNotificationOpens: () => () => {} }));
-jest.mock("../src/onboarding", () => ({ isOnboarded: () => true, getOnboardingStep: () => null }));
+jest.mock("../src/onboarding", () => ({ isOnboarded: () => mockOnboarded, getOnboardingStep: () => null }));
 let mockGrandfathered = true;
 jest.mock("../src/paywall", () => {
   const { isLocked } = jest.requireActual("../src/paywall/state");
@@ -224,5 +235,42 @@ describe("the launch cover", () => {
     expect(covered(tree)).toBe(false);
     await answer();
     act(() => tree.unmount());
+  });
+});
+
+/**
+ * A fresh install's first frame comes before the boot effect has tossed the
+ * `app_design` coin, so the root stack was drawn with the classic (dark) header
+ * and nothing re-rendered it. Arm A then ran its whole first session under a
+ * dark header bar with a white chevron, while screens that draw their own
+ * title (the vehicle screen) printed it in A's dark text: a barely visible
+ * title on a dark bar.
+ */
+describe("the header follows the arm assigned at boot", () => {
+  afterEach(() => {
+    mockArmA = false;
+    mockAssign = () => {};
+    mockOnboarded = true;
+    mockScreenOptions.length = 0;
+  });
+
+  test("a fresh install assigned arm A gets the light header", async () => {
+    mockOnboarded = false;
+    mockAssign = () => {
+      mockArmA = true;
+    };
+    let tree!: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(<RootLayout />);
+    });
+    const last = mockScreenOptions[mockScreenOptions.length - 1] as {
+      headerStyle: { backgroundColor: string };
+      headerTintColor: string;
+    };
+    expect(last.headerStyle).toEqual({ backgroundColor: "#F4F4F7" });
+    expect(last.headerTintColor).toBe("#16161A");
+    await act(async () => {
+      tree.unmount();
+    });
   });
 });
