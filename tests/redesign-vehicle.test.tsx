@@ -74,6 +74,8 @@ jest.mock("../src/design/theme", () => ({
 import VehicleRoute from "../app/vehicle/[id]";
 import { explainPath } from "../src/explain";
 import { ServiceSticker } from "../src/redesign/stickers";
+import { markLogged } from "../src/mascot/celebrate";
+import { Modal } from "react-native";
 import { createVehicle, listVehicles } from "../src/db/vehicles";
 import { addRecord } from "../src/db/records";
 import { setState } from "../src/db/state";
@@ -189,5 +191,31 @@ describe("A v2's vehicle screen", () => {
     navigated.length = 0;
     pressWhere(tree, (n) => n.props.accessibilityRole !== "tab" && texts(n).includes("Oil Change") && !texts(n).includes(t("redesign.car.tab.history")));
     expect(navigated).toEqual([explainPath("Oil Change", "service_row", id())]);
+  });
+});
+
+describe("A v2's logged moment", () => {
+  const id = () => listVehicles()[0].id;
+  const shown = (tree: TestRenderer.ReactTestRenderer) =>
+    tree.root.findAllByType(Modal).some((m) => m.props.visible) && texts(tree.root).includes("Oil Change logged.");
+
+  test("a log shows the full-screen moment once, until Done", () => {
+    mockV2 = true;
+    markLogged(id(), "Oil Change");
+    const tree = render();
+    expect(shown(tree)).toBe(true);
+    expect(texts(tree.root)).not.toContain(t("redesign.celebrate.title"));
+    expect(texts(tree.root).some((s) => s.startsWith("Next at "))).toBe(true);
+    const done = tree.root.findAll((n) => n.props.accessibilityRole === "button" && typeof n.props.onPress === "function" && texts(n).includes(t("redesign.logged.done")))[0];
+    act(() => done.props.onPress());
+    expect(shown(tree)).toBe(false);
+    expect(shown(render())).toBe(false);
+  });
+
+  test("without v2 the toast celebrates instead", () => {
+    markLogged(id(), "Oil Change");
+    const tree = render();
+    expect(texts(tree.root)).toContain(t("redesign.celebrate.title"));
+    expect(shown(tree)).toBe(false);
   });
 });

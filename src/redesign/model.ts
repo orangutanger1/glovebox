@@ -208,6 +208,15 @@ export function roads(views: readonly VehicleView[]): Road[] {
     .map(roadFor);
 }
 
+/** Where a service is next due, read off the view rebuilt after the log, so
+ *  A v2's logged screen says what the schedule will say. Null when the type
+ *  has no interval (a custom service). */
+export function nextFor(view: VehicleView, type: string): { dueOdometer?: number; dueAt?: string } | null {
+  const s = view.states.find((x) => x.type === type);
+  if (!s || (s.dueOdometer === undefined && !s.dueAt)) return null;
+  return { dueOdometer: s.dueOdometer, dueAt: s.dueAt };
+}
+
 export type UpcomingItem = { vehicleId: string; vehicleName: string; type: string; dueAt: string };
 
 /** Planta's "Upcoming": every service on schedule that has a date, soonest

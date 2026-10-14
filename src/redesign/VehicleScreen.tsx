@@ -38,11 +38,13 @@ import { FuelSummary, fillSubtitle, recordSubtitle } from "../vehicles/rows";
 import { UpcomingRow } from "./icons";
 import { ServiceSticker } from "./stickers";
 import { AMBER_TEXT, RED_TEXT } from "./HeroCard";
+import { LoggedMoment } from "./LoggedMoment";
 import { isDesignV2 } from "../design/theme";
 import { v2 } from "../design/type";
 import { OdometerRoll } from "../design/OdometerRoll";
 import {
   byUrgency,
+  nextFor,
   PLAN_BASIS,
   planCompleteness,
   todayTasks,
@@ -87,6 +89,8 @@ export function RedesignVehicle() {
   const [pane, setPane] = useState<Pane>("todo");
   const [undoId, setUndoId] = useState<string | null>(null);
   const [celebrated, setCelebrated] = useState<string | null>(null);
+  // The type as logged, for A v2's logged moment to read its next due point.
+  const [loggedType, setLoggedType] = useState<string | null>(null);
   const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const refresh = useCallback(() => {
@@ -100,7 +104,10 @@ export function RedesignVehicle() {
     useCallback(() => {
       refresh();
       const logged = takeLogged();
-      if (logged) setCelebrated(serviceName(logged.service));
+      if (logged) {
+        setCelebrated(serviceName(logged.service));
+        setLoggedType(logged.service);
+      }
     }, [refresh]),
   );
 
@@ -857,12 +864,24 @@ export function RedesignVehicle() {
         </View>
       </Glass>
 
-      <CelebrateToast
-        visible={celebrated !== null}
-        title={t("redesign.celebrate.title")}
-        body={t("redesign.celebrate.body", { service: celebrated ?? "" })}
-        onHidden={() => setCelebrated(null)}
-      />
+      {designV2 ? (
+        <LoggedMoment
+          visible={celebrated !== null && loggedType !== null}
+          service={loggedType ?? ""}
+          next={view && loggedType ? nextFor(view, loggedType) : null}
+          onDone={() => {
+            setCelebrated(null);
+            setLoggedType(null);
+          }}
+        />
+      ) : (
+        <CelebrateToast
+          visible={celebrated !== null}
+          title={t("redesign.celebrate.title")}
+          body={t("redesign.celebrate.body", { service: celebrated ?? "" })}
+          onHidden={() => setCelebrated(null)}
+        />
+      )}
     </SafeAreaView>
   );
 }

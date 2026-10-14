@@ -36,6 +36,7 @@ import {
   byUrgency,
   garageMood,
   heroFigure,
+  nextFor,
   roads,
   todayTasks,
   upcomingItems,
@@ -62,6 +63,7 @@ import { v2 } from "../design/type";
 import { HeroCard, AMBER_TEXT, RED_TEXT } from "./HeroCard";
 import { ServiceSticker } from "./stickers";
 import { Road } from "./Road";
+import { LoggedMoment } from "./LoggedMoment";
 
 /** The same three one-tap services the classic garage offers. */
 const QUICK_LOG = ["Oil Change", "Tire Rotation", "Brake Inspection"];
@@ -108,6 +110,8 @@ export function RedesignHome() {
   const [epoch, setEpoch] = useState(0);
   const [msg, setMsg] = useState("");
   const [celebrated, setCelebrated] = useState<string | null>(null);
+  // What was logged, on which car, for A v2's logged moment.
+  const [loggedRaw, setLoggedRaw] = useState<{ vehicleId: string; service: string } | null>(null);
   const scroll = useRef<ScrollView>(null);
   // A v2's road: where it starts in the scroll, and whether the user has moved
   // since it was opened (then it is left where they put it).
@@ -123,7 +127,10 @@ export function RedesignHome() {
       setVehicles(listVehicles());
       setEpoch((n) => n + 1);
       const logged = takeLogged();
-      if (logged) setCelebrated(serviceName(logged.service));
+      if (logged) {
+        setCelebrated(serviceName(logged.service));
+        setLoggedRaw(logged);
+      }
     }, []),
   );
 
@@ -724,12 +731,27 @@ export function RedesignHome() {
         plusLabel={t("redesign.plus")}
       />
 
-      <CelebrateToast
-        visible={celebrated !== null}
-        title={t("redesign.celebrate.title")}
-        body={t("redesign.celebrate.body", { service: celebrated ?? "" })}
-        onHidden={() => setCelebrated(null)}
-      />
+      {designV2 ? (
+        <LoggedMoment
+          visible={celebrated !== null && loggedRaw !== null}
+          service={loggedRaw?.service ?? ""}
+          next={(() => {
+            const v = loggedRaw ? views.find((x) => x.vehicle.id === loggedRaw.vehicleId) : undefined;
+            return v && loggedRaw ? nextFor(v, loggedRaw.service) : null;
+          })()}
+          onDone={() => {
+            setCelebrated(null);
+            setLoggedRaw(null);
+          }}
+        />
+      ) : (
+        <CelebrateToast
+          visible={celebrated !== null}
+          title={t("redesign.celebrate.title")}
+          body={t("redesign.celebrate.body", { service: celebrated ?? "" })}
+          onHidden={() => setCelebrated(null)}
+        />
+      )}
     </View>
   );
 }

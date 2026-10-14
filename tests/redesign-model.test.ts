@@ -2,6 +2,7 @@ import { lifeLeft, moodFor } from "../src/mascot/mood";
 import {
   garageMood,
   heroFigure,
+  nextFor,
   planCompleteness,
   roadFor,
   roads,
@@ -197,5 +198,18 @@ describe("the road", () => {
     const late = view(car("b", 48210), [rec("Oil Change", "2026-03-16T00:00:00.000Z", 41000)]);
     const empty = view(car("c"), []);
     expect(roads([fine, late, empty]).map((r) => r.vehicleId)).toEqual(["b", "a"]);
+  });
+});
+
+describe("the logged moment's next", () => {
+  test("after a log, next is the fresh due point", () => {
+    const v = view(car("a", 48210), [rec("Oil Change", "2026-10-12T00:00:00.000Z", 48210)]);
+    const n = nextFor(v, "Oil Change");
+    expect(n).toEqual({ dueOdometer: 53210, dueAt: expect.any(String) });
+  });
+
+  test("a custom type with no interval has no next", () => {
+    const v = view(car("a", 48210), [rec("Timing belt (my own)", "2026-10-12T00:00:00.000Z", 48210)]);
+    expect(nextFor(v, "Timing belt (my own)")).toBeNull();
   });
 });
