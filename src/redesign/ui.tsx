@@ -551,12 +551,13 @@ export function FloatingTabBar<T extends string>({
               alignItems: "center",
               justifyContent: "center",
               // Bevel's "+": a white disc beside the bar, not a coloured
-              // button — the bar and the disc read as one control.
-              backgroundColor: tokens.color.surface,
+              // button — the bar and the disc read as one control. A v2
+              // makes it the one black button on the page.
+              backgroundColor: isDesignV2() ? tokens.color.text : tokens.color.surface,
               boxShadow: "0 10px 30px rgba(26,29,58,0.12)",
             }}
           >
-            <Plus color={tokens.color.text} />
+            <Plus color={isDesignV2() ? tokens.color.onAccent : tokens.color.text} />
           </View>
         </PressableScale>
       </View>

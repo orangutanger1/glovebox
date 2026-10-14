@@ -916,6 +916,13 @@ export const de: Fragment = {
   "redesign.convo.paywall.both": "{name}, ich bin bereit, mich um deinen {car} zu kümmern.",
   "redesign.convo.offer": "Warte! Hier ist ein besseres Angebot, bevor du gehst.",
   "redesign.back": "Zurück",
+  "redesign.hero.overdue": "Überfällig",
+  "redesign.hero.dueSoon": "Bald fällig",
+  "redesign.hero.next": "Als Nächstes",
+  "redesign.hero.overUnit": "{unit} drüber",
+  "redesign.hero.leftUnit": "{unit} noch",
+  "redesign.hero.lastDone": "Zuletzt am {date}",
+  "redesign.hero.lastDoneAt": "Zuletzt am {date} bei {reading}",
 
   // explain
   "explain.close": "Schließen",

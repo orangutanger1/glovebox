@@ -903,6 +903,13 @@ export const sv: Fragment = {
   "redesign.convo.paywall.both": "{name}, jag är redo att ta hand om din {car}.",
   "redesign.convo.offer": "Vänta! Här är ett bättre erbjudande innan du går.",
   "redesign.back": "Tillbaka",
+  "redesign.hero.overdue": "Försenad",
+  "redesign.hero.dueSoon": "Snart",
+  "redesign.hero.next": "Näst på tur",
+  "redesign.hero.overUnit": "{unit} över",
+  "redesign.hero.leftUnit": "{unit} kvar",
+  "redesign.hero.lastDone": "Senast gjord {date}",
+  "redesign.hero.lastDoneAt": "Senast gjord {date} vid {reading}",
 
   // explain
   "explain.close": "Stäng",

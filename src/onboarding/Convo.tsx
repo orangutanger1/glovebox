@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Animated, Easing, Pressable, Text, View } from "react-native";
 import { tokens } from "../design/tokens";
 import { useReduceMotion } from "../design/useReduceMotion";
+import { isDesignV2 } from "../design/theme";
+import { v2 } from "../design/type";
 import { Mascot } from "../mascot/Mascot";
 import { Icon } from "../redesign/icons";
 import { t } from "../i18n";
@@ -160,7 +162,14 @@ export function Bubble({ text, tail = "left" }: { text: string; tail?: "left" | 
           ...tokens.shadow.ambient,
         }}
       >
-        <Text style={{ ...tokens.text.body, fontWeight: "500", color: tokens.color.text }}>{text}</Text>
+        {/* A v2 sets the car's line in the display face. v2 is never on
+            during onboarding (a pinned check build only), so the funnel is
+            untouched. */}
+        <Text
+          style={{ ...tokens.text.body, fontWeight: "500", ...(isDesignV2() ? v2.bubble() : {}), color: tokens.color.text }}
+        >
+          {text}
+        </Text>
       </View>
       {/* The tail: a small square turned 45°, tucked under the bubble's edge. */}
       <View

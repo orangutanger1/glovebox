@@ -62,7 +62,16 @@ jest.mock("expo-haptics", () => ({
   ImpactFeedbackStyle: { Light: "light", Heavy: "heavy" },
 }));
 
+// A v2 is pinned per test; everything else about the arm is the real module.
+let mockV2 = false;
+jest.mock("../src/design/theme", () => ({
+  ...jest.requireActual("../src/design/theme"),
+  isDesignV2: () => mockV2,
+}));
+
 import Home from "../app/index";
+import { Ring } from "../src/redesign/ui";
+import { HeroCard } from "../src/redesign/HeroCard";
 import { createVehicle, listVehicles } from "../src/db/vehicles";
 import { addRecord } from "../src/db/records";
 import { setState } from "../src/db/state";
@@ -78,12 +87,13 @@ beforeAll(() => {
   setDistanceUnit("mi");
   createVehicle({ name: NAME, odometer: 101_475 });
   const id = listVehicles()[0].id;
-  // An oil change a year and 9,000 miles ago: overdue on both counts.
+  // An oil change a year and 7,210 miles ago: overdue on both counts, and
+  // 2,210 mi past the default 5,000 mi interval.
   addRecord({
     vehicle_id: id,
     service_type: "Oil Change",
     performed_at: new Date(Date.now() - 365 * 86_400_000).toISOString(),
-    odometer: 92_475,
+    odometer: 94_265,
   });
 });
 
@@ -95,6 +105,7 @@ afterEach(() => {
     for (const tree of mounted.splice(0)) tree.unmount();
   });
   resetDesignCache();
+  mockV2 = false;
 });
 
 function render(): TestRenderer.ReactTestRenderer {
@@ -173,4 +184,38 @@ test("a just-logged service celebrates once", () => {
   const rendered = texts(render().root);
   expect(rendered).toContain(t("redesign.celebrate.title"));
   expect(texts(render().root)).not.toContain(t("redesign.celebrate.title"));
+});
+
+test("v2 leads with one figure instead of rings", () => {
+  setState("experiment.app_design", "redesign");
+  mockV2 = true;
+  const tree = render();
+  expect(texts(tree.root)).toContain("2,210");
+  expect(tree.root.findAllByType(HeroCard)).toHaveLength(1);
+  expect(tree.root.findAllByType(Ring)).toHaveLength(0);
+});
+
+test("v2 keeps the check that logs a task", () => {
+  setState("experiment.app_design", "redesign");
+  mockV2 = true;
+  const tree = render();
+  navigated.length = 0;
+  press(tree, (n) => n.props.accessibilityLabel === t("redesign.check", { service: "Oil Change" }));
+  expect(navigated).toEqual([`/vehicle/${listVehicles()[0].id}/log?type=Oil%20Change`]);
+});
+
+test("arm A without v2 keeps the ring row", () => {
+  setState("experiment.app_design", "redesign");
+  const tree = render();
+  expect(tree.root.findAllByType(Ring).length).toBeGreaterThan(0);
+  expect(tree.root.findAllByType(HeroCard)).toHaveLength(0);
+});
+
+test("v2's plus is a black disc", () => {
+  setState("experiment.app_design", "redesign");
+  mockV2 = true;
+  const tree = render();
+  const plus = tree.root.find((n) => n.props.accessibilityLabel === t("redesign.plus") && typeof n.props.onPress === "function");
+  const discs = plus.findAll((n) => typeof n.type === "string" && n.props.style?.width === 58);
+  expect(discs[0].props.style.backgroundColor).toBe("#16161A");
 });

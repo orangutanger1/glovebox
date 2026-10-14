@@ -928,6 +928,13 @@ export const fr: Fragment = {
   "redesign.convo.paywall.both": "{name}, je suis prêt à veiller sur ta {car}.",
   "redesign.convo.offer": "Attends ! Voici une meilleure offre avant de partir.",
   "redesign.back": "Retour",
+  "redesign.hero.overdue": "En retard",
+  "redesign.hero.dueSoon": "Bientôt",
+  "redesign.hero.next": "À suivre",
+  "redesign.hero.overUnit": "{unit} de dépassement",
+  "redesign.hero.leftUnit": "{unit} restants",
+  "redesign.hero.lastDone": "Dernière fois le {date}",
+  "redesign.hero.lastDoneAt": "Dernière fois le {date} à {reading}",
 
   // explain
   "explain.close": "Fermer",

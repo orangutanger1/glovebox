@@ -1,6 +1,7 @@
 import { lifeLeft, moodFor } from "../src/mascot/mood";
 import {
   garageMood,
+  heroFigure,
   planCompleteness,
   todayTasks,
   upcomingItems,
@@ -120,5 +121,39 @@ describe("plan completeness", () => {
         records: ["Oil Change", "Tire Rotation", "Brake Inspection", "Air Filter"].map((t) => rec(t, NOW)),
       })
     ).toEqual({ percent: 100, gap: null });
+  });
+});
+
+describe("Today's one figure", () => {
+  test("an overdue-by-distance service shows how far over", () => {
+    const v = view(car("a", 48210), [rec("Oil Change", "2026-03-16T00:00:00.000Z", 41000)]);
+    const fig = heroFigure([v], { a: 48210 });
+    expect(fig?.kind).toBe("over");
+    expect(fig?.type).toBe("Oil Change");
+    if (fig?.kind === "over") expect(fig.overBy).toBe(v.next?.overBy);
+  });
+
+  test("a car with no odometer shows a date", () => {
+    const v = view(car("a"), [rec("Oil Change", "2026-09-01T00:00:00.000Z")]);
+    const fig = heroFigure([v], { a: undefined });
+    expect(fig?.kind).toBe("date");
+  });
+
+  test("the most urgent car wins across cars, and is named", () => {
+    const ok = view(car("a", 1000), [rec("Oil Change", "2026-10-01T00:00:00.000Z", 900)]);
+    const late = view(car("b", 48210), [rec("Oil Change", "2026-03-16T00:00:00.000Z", 41000)]);
+    const fig = heroFigure([ok, late], { a: 1000, b: 48210 });
+    expect(fig?.vehicleId).toBe("b");
+    expect(fig?.vehicleName).toBe("Car b");
+  });
+
+  test("a distance-only interval with a reading shows distance left", () => {
+    const v = view(car("a", 48210), [rec("Spark Plugs", "2026-03-16T00:00:00.000Z", 41000)]);
+    const fig = heroFigure([v], { a: 48210 });
+    expect(fig).toMatchObject({ kind: "distance", left: 41000 + 60000 - 48210 });
+  });
+
+  test("nothing logged, no figure", () => {
+    expect(heroFigure([view(car("a"), [])], { a: undefined })).toBeNull();
   });
 });

@@ -895,6 +895,13 @@ export const ptBR: Fragment = {
   "redesign.convo.paywall.both": "{name}, estou pronto para cuidar do seu {car}.",
   "redesign.convo.offer": "Espera! Aqui vai uma oferta melhor antes de você ir.",
   "redesign.back": "Voltar",
+  "redesign.hero.overdue": "Atrasado",
+  "redesign.hero.dueSoon": "Em breve",
+  "redesign.hero.next": "A seguir",
+  "redesign.hero.overUnit": "{unit} a mais",
+  "redesign.hero.leftUnit": "{unit} restantes",
+  "redesign.hero.lastDone": "Última vez em {date}",
+  "redesign.hero.lastDoneAt": "Última vez em {date} com {reading}",
 
   // explain
   "explain.close": "Fechar",

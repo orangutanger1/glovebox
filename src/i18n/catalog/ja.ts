@@ -871,6 +871,13 @@ export const ja: Fragment = {
   "redesign.convo.paywall.both": "{name}さん、{car}のお世話をする準備ができました。",
   "redesign.convo.offer": "待ってください！お得なオファーがあります。",
   "redesign.back": "戻る",
+  "redesign.hero.overdue": "期限切れ",
+  "redesign.hero.dueSoon": "まもなく",
+  "redesign.hero.next": "次の予定",
+  "redesign.hero.overUnit": "{unit}超過",
+  "redesign.hero.leftUnit": "{unit}残り",
+  "redesign.hero.lastDone": "前回 {date}",
+  "redesign.hero.lastDoneAt": "前回 {date}（{reading}）",
 
   // explain
   "explain.close": "閉じる",

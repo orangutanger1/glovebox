@@ -147,6 +147,34 @@ export function todayTasks(views: readonly VehicleView[]): Task[] {
   return out.sort((a, b) => RANK[b.status] - RANK[a.status]);
 }
 
+export type HeroFigure =
+  | { kind: "over"; vehicleId: string; vehicleName: string; type: string; overBy: number; last: DueState["last"] }
+  | { kind: "date"; vehicleId: string; vehicleName: string; type: string; status: Status; dueAt: string }
+  | { kind: "distance"; vehicleId: string; vehicleName: string; type: string; status: Status; left: number };
+
+/** A v2's Today leads with one figure: the most urgent next service across
+ *  every car, as the single number that says it best. Distance over beats a
+ *  date; a date beats distance left, because it needs no odometer to be right. */
+export function heroFigure(
+  views: readonly VehicleView[],
+  odometers: Record<string, number | undefined>,
+): HeroFigure | null {
+  const ranked = views
+    .filter((v): v is VehicleView & { next: DueState } => v.next !== undefined)
+    .sort((a, b) => byUrgency(a.next, b.next));
+  const top = ranked[0];
+  if (!top) return null;
+  const s = top.next;
+  const base = { vehicleId: top.vehicle.id, vehicleName: top.vehicle.name, type: s.type };
+  if (s.overBy !== undefined) return { ...base, kind: "over", overBy: s.overBy, last: s.last };
+  if (s.dueAt) return { ...base, kind: "date", status: s.status, dueAt: s.dueAt };
+  const odo = odometers[top.vehicle.id];
+  if (s.dueOdometer !== undefined && odo !== undefined) {
+    return { ...base, kind: "distance", status: s.status, left: Math.max(0, s.dueOdometer - odo) };
+  }
+  return null;
+}
+
 export type UpcomingItem = { vehicleId: string; vehicleName: string; type: string; dueAt: string };
 
 /** Planta's "Upcoming": every service on schedule that has a date, soonest

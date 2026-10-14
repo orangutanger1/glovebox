@@ -33,10 +33,14 @@ import { TREAD_SERVICE } from "../tires/tread";
 import { taskDetail, taskTitle, whenLabel } from "./copy";
 import { UpcomingRow } from "./icons";
 import {
+  byUrgency,
   garageMood,
+  heroFigure,
   todayTasks,
   upcomingItems,
   vehicleView,
+  type HeroFigure,
+  type Task,
   type VehicleView,
 } from "./model";
 import {
@@ -49,7 +53,13 @@ import {
   SectionTitle,
   TaskRow,
   TAB_BAR_CLEARANCE,
+  CheckButton,
+  LifeBar,
 } from "./ui";
+import { isDesignV2 } from "../design/theme";
+import { v2 } from "../design/type";
+import { HeroCard, AMBER_TEXT, RED_TEXT } from "./HeroCard";
+import { ServiceSticker } from "./stickers";
 
 /** The same three one-tap services the classic garage offers. */
 const QUICK_LOG = ["Oil Change", "Tire Rotation", "Brake Inspection"];
@@ -155,6 +165,13 @@ export function RedesignHome() {
     .filter((life, i, all) => all.findIndex((x) => x.type === life.type) === i)
     .slice(0, 3);
 
+  // A v2: one figure in place of the rings, and "Next up" under it.
+  const designV2 = isDesignV2();
+  const hero = designV2
+    ? heroFigure(views, Object.fromEntries(views.map((v) => [v.vehicle.id, v.vehicle.odometer])))
+    : null;
+  const nextUp = designV2 ? nextUpRows(views, hero) : [];
+
   const status =
     logged === 0
       ? t("redesign.status.sleepy")
@@ -240,7 +257,15 @@ export function RedesignHome() {
   const header = (title: string, subtitle?: string, eyebrow?: string) => (
     <View style={{ gap: tokens.space.xs }}>
       {eyebrow ? (
-        <Text style={{ ...tokens.text.legend, fontWeight: "600", color: tokens.color.textMuted }}>{eyebrow}</Text>
+        <Text
+          style={
+            designV2
+              ? { ...v2.label(), color: tokens.color.textMuted }
+              : { ...tokens.text.legend, fontWeight: "600", color: tokens.color.textMuted }
+          }
+        >
+          {eyebrow}
+        </Text>
       ) : null}
       <View
         style={{
@@ -250,7 +275,11 @@ export function RedesignHome() {
         }}
       >
         <Text
-          style={{ ...tokens.text.hero, fontSize: 30, lineHeight: 36, color: tokens.color.text, flex: 1 }}
+          style={
+            designV2
+              ? { ...v2.greeting(), color: tokens.color.text, flex: 1 }
+              : { ...tokens.text.hero, fontSize: 30, lineHeight: 36, color: tokens.color.text, flex: 1 }
+          }
         >
           {title}
         </Text>
@@ -322,24 +351,41 @@ export function RedesignHome() {
             {header(
               greeting(getOnboardingName(), new Date().getHours()),
               undefined,
-              todayLabel(),
+              // A v2: "MON · OCT 12 · MAZDA CX-5" with one car.
+              designV2 && single ? `${todayLabel()} · ${vehicles[0].name}` : todayLabel(),
             )}
 
             {/* The car on the page, saying what it is reacting to. It is the
                 one thing on Today that moves, and it stands on the page itself
                 — its loop is drawn on the page colour — not on a card. */}
-            <View style={{ alignItems: "center" }}>
-              {/* Over the car, tucked into the empty top of its frame: the
-                  loop leaves headroom for the car to jump into. */}
-              <View style={{ zIndex: 2, marginBottom: -30, maxWidth: "88%" }}>
-                <Bubble text={status} tail="bottom" />
+            {designV2 ? (
+              // A v2: the car on the left, speaking to the right.
+              <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.xs }}>
+                <Mascot mood={mood} size={124} animate />
+                <Bubble text={status} tail="left" />
               </View>
-              <Mascot mood={mood} size={196} animate />
-            </View>
+            ) : (
+              <View style={{ alignItems: "center" }}>
+                {/* Over the car, tucked into the empty top of its frame: the
+                    loop leaves headroom for the car to jump into. */}
+                <View style={{ zIndex: 2, marginBottom: -30, maxWidth: "88%" }}>
+                  <Bubble text={status} tail="bottom" />
+                </View>
+                <Mascot mood={mood} size={196} animate />
+              </View>
+            )}
+
+            {hero ? (
+              <HeroCard
+                fig={hero}
+                showCar={views.length > 1}
+                onLog={() => logFor(hero.vehicleId, hero.type, "today_task")}
+              />
+            ) : null}
 
             {/* Bevel's ring row: how much of each interval is left, most used
                 up first. Nothing logged means nothing to measure. */}
-            {rings.length > 0 ? (
+            {!designV2 && rings.length > 0 ? (
               <GlassCard>
                 <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
                   {rings.map((life, i) => (
@@ -387,7 +433,32 @@ export function RedesignHome() {
               onChange={setSegment}
             />
 
-            {segment === "today" ? (
+            {segment === "today" && designV2 && logged > 0 && hero ? (
+              nextUp.length > 0 ? (
+              <View style={{ gap: tokens.space.sm }}>
+                <Text style={{ ...v2.label(), color: tokens.color.textMuted, paddingLeft: tokens.space.xs }}>
+                  {t("redesign.hero.next")}
+                </Text>
+                <GlassCard>
+                  {nextUp.map((row) => (
+                    <NextUpRow
+                      key={`${row.task.vehicleId}:${row.task.type}`}
+                      row={row}
+                      single={single}
+                      onLog={() =>
+                        logFor(
+                          row.task.vehicleId,
+                          row.task.type === "tread" ? TREAD_SERVICE : row.task.type,
+                          "today_task",
+                        )
+                      }
+                      onOpen={() => router.push(`/vehicle/${row.task.vehicleId}`)}
+                    />
+                  ))}
+                </GlassCard>
+              </View>
+              ) : null
+            ) : segment === "today" ? (
               <GlassCard>
                 <SectionTitle>{t("redesign.todayTasks")}</SectionTitle>
                 {vehicles.length === 0 ? (
@@ -734,5 +805,77 @@ function GarageCard({
         </GlassCard>
       </PressableScale>
     </Swipeable>
+  );
+}
+
+type NextUp = { task: Task; life?: number };
+
+/** A v2's "Next up": what is due or due soon after the hero, then what comes
+ *  after that, three rows at most. Each row's bar is the interval left. */
+function nextUpRows(views: readonly VehicleView[], hero: HeroFigure | null): NextUp[] {
+  const isHero = (vehicleId: string, type: string) =>
+    hero !== null && hero.vehicleId === vehicleId && hero.type === type;
+  const lifeOf = (vehicleId: string, type: string) =>
+    views.find((v) => v.vehicle.id === vehicleId)?.lives.find((l) => l.type === type)?.left;
+  const rows: NextUp[] = todayTasks(views)
+    .filter((task) => !isHero(task.vehicleId, task.type))
+    .map((task) => ({ task, life: lifeOf(task.vehicleId, task.type) }));
+  const later = views
+    .flatMap((v) => v.states.filter((s) => s.status === "ok").map((s) => ({ v, s })))
+    .sort((a, b) => byUrgency(a.s, b.s))
+    .filter(({ v, s }) => !isHero(v.vehicle.id, s.type));
+  for (const { v, s } of later) {
+    rows.push({
+      task: { vehicleId: v.vehicle.id, vehicleName: v.vehicle.name, type: s.type, status: "soon", state: s },
+      life: lifeOf(v.vehicle.id, s.type),
+    });
+  }
+  return rows.slice(0, 3);
+}
+
+function NextUpRow({
+  row,
+  single,
+  onLog,
+  onOpen,
+}: {
+  row: NextUp;
+  single: boolean;
+  onLog: () => void;
+  onOpen: () => void;
+}) {
+  const { task, life } = row;
+  const status = task.state?.status ?? task.status;
+  const when = taskDetail(task);
+  const tone = status === "due" ? RED_TEXT : status === "soon" ? AMBER_TEXT : tokens.color.accent;
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md, paddingVertical: tokens.space.sm }}>
+      <Pressable
+        onPress={onOpen}
+        accessibilityRole="button"
+        accessibilityLabel={`${taskTitle(task)}, ${when}`}
+        style={{ flex: 1 }}
+      >
+        {({ pressed }) => (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md, opacity: pressed ? 0.6 : 1 }}>
+            <ServiceSticker type={task.type} />
+            <View style={{ flex: 1, gap: 6 }}>
+              <Text style={{ ...tokens.text.body, fontWeight: "600", color: tokens.color.text }} numberOfLines={1}>
+                {single ? taskTitle(task) : `${taskTitle(task)} · ${task.vehicleName}`}
+              </Text>
+              {life !== undefined ? <LifeBar value={life} status={status} /> : null}
+            </View>
+            <Text style={{ ...v2.value(), color: tone }}>{when}</Text>
+          </View>
+        )}
+      </Pressable>
+      {status !== "ok" ? (
+        <CheckButton
+          status={status}
+          onPress={onLog}
+          label={t("redesign.check", { service: taskTitle(task) })}
+        />
+      ) : null}
+    </View>
   );
 }
