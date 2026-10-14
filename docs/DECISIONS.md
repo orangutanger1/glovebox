@@ -10,7 +10,7 @@ What shipped and when, and how each release affects the funnel numbers, is in
 log). Event names are in `docs/superpowers/specs/2026-08-29-onboarding-event-taxonomy.md`.
 This file keeps only the conclusions.
 
-Last updated: 2026-10-13 (`app_design` A/B shipped; `exit_offer_plans` ended, the exit offer sells the yearly alone). Before that 2026-10-12: `app_design` A/B built. Before that 2026-10-01: both onboarding tests ended; shorter flow for everyone, OTA `01a0f993`. 10-01 and 10-02 reads done.
+Last updated: 2026-10-13 (service explainers drafted, retention, no Learn tab; `app_design` A/B shipped; `exit_offer_plans` ended, the exit offer sells the yearly alone). Before that 2026-10-12: `app_design` A/B built. Before that 2026-10-01: both onboarding tests ended; shorter flow for everyone, OTA `01a0f993`. 10-01 and 10-02 reads done.
 
 ---
 
@@ -47,6 +47,7 @@ Numbers from 09-19 to 09-24, counted per person, with the dev device excluded.
 | ~~10-03~~ done 10-01 | Onboarding tests ended; see below. |
 | ~~10-15~~ done 10-13 | `exit_offer_plans` (since 10-02): yearly **1/99** viewers paid (20 tapped), with_monthly **0/73** (16 tapped; 9 monthly taps, 0 paid). p=1.0, nowhere near a read, but the monthly link sold nothing. **Ended by the user: the exit offer is yearly-only for everyone.** |
 | ~11-03 | `app_design` first check: main-paywall buy taps per viewer, A vs B. Stop on a clear gap; otherwise run on (~12-29 at current traffic). |
+| ship + 4 wk | Service explainers: engagement gate for phase-2 lessons, buyers' day-7 return before vs after (spec 2026-10-13). |
 | ~10-08 | Main paywall buy-tap rate for the first full week with benefit rows for everyone (OTA `01a0f442`); expect about 16%. |
 
 ## Live experiments
@@ -118,6 +119,8 @@ All experiments are coin flips on the device at fresh install (`src/experiments/
 - **Stop adding retention features until ~10-02.** Five retention changes landed in two days, so their effects can't be told apart. Measure the day-2 and day-7 return rate of buyers, how many answer the check-in, and how many save a document.
 - **Widget built 10-01** (0 of 25 buyers saved a document, so the widget came first): `NextService` in `src/widget/`, small/medium home screen plus lock screen, showing the first car's worst-then-soonest three services in the garage card's words. It is refreshed from `rescheduleAll`. It needs a native App Store build (`expo-widgets`, app group `group.com.idea6.carmaintenancelog`); it does nothing on OTA-only binaries. Document photos (front and back, on-device only) and tire tread depth ship in the same build. Measure: buyers' day-7 return before vs after the build, `document_saved.photos > 0`, `service_logged.has_tread`.
 - **Not built:** a week-1 summary notification.
+- **Service explainers, built 2026-10-13 (user's call, not shipped yet):** a short card per shipped service (what it is, why it matters, DIY or shop, the user's own schedule), opened by tapping service rows, due notifications and the log form. This is a retention feature: behind the paywall, the same in both `app_design` arms, nothing in onboarding or on the paywalls. **No Learn tab, no streaks, no XP.** Measure: share of buyers who open a card within 14 days, cards per buyer, opens followed by `service_logged`, and buyers' day-7 return before vs after. Personalized lessons (fitted to car and mileage) come only if the gate in the spec is met (≥30% of buyers open a card, and ≥10% open 3+ or notification opens are ≥20%). Spec and draft copy: `docs/superpowers/specs/2026-10-13-service-explainers-design.md`.
+  - *Rejected for now:* a Duolingo-style course (separate tab, streaks, XP). Car care happens every few months, there are only a few dozen lessons' worth of material, and daily nudges go against the check-in's "never nags daily" rule. *Reopen if:* phase-2 lessons pass their own engagement read.
 
 ## Versus CARFAX Car Care (reviewed 10-01)
 

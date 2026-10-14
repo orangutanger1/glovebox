@@ -7,6 +7,7 @@ import { tNamed } from "../onboarding";
 import { collectCheckins, collectDocumentAlerts, collectReminders } from "./collect";
 import { documentName } from "../documents/names";
 import { MAX_SCHEDULED, scheduledAt, selectReminders } from "./select";
+import { explainPath, hasExplainer } from "../explain";
 import { scheduleOnboardingNudges } from "./resume";
 
 Notifications.setNotificationHandler({
@@ -176,7 +177,17 @@ async function rebuild(): Promise<void> {
         }),
         // iOS keeps a `DATE` trigger only as seconds-from-now, so the due
         // date itself has to ride along for `reminderStatus` to read back.
-        data: { dueAt: reminder.dueAt, serviceType: reminder.serviceType },
+        //
+        // The url opens the service's explainer over the app, so a reminder
+        // for something the owner doesn't recognise answers "what is this?"
+        // on the tap. Services with no card keep opening just the app.
+        data: {
+          dueAt: reminder.dueAt,
+          serviceType: reminder.serviceType,
+          ...(hasExplainer(reminder.serviceType)
+            ? { url: explainPath(reminder.serviceType, "notification", reminder.vehicleId) }
+            : {}),
+        },
       },
       trigger: { type: SchedulableTriggerInputTypes.DATE, date: new Date(reminder.dueAt) },
     });

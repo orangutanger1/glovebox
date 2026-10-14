@@ -48,6 +48,8 @@ const SAMPLES: Record<string, string | number> = {
   percent: 41,
   overdue: "CARFAX 2025",
   default: "6 months · 5,000 mi",
+  // A service explainer's schedule line: the interval, already formatted.
+  interval: "6 months · 5,000 mi",
   language: "English (US)",
   // The paywall: prices and the trial's own price are StoreKit's already-
   // localised strings, and the discount is arithmetic on them, not typed here.

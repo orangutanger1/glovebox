@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Screen } from "../../../src/design/Screen";
@@ -21,6 +21,7 @@ import { t } from "../../../src/i18n";
 import { getDistanceUnit } from "../../../src/units";
 import { distanceUnitLabel } from "../../../src/units/format";
 import { serviceOptions } from "../../../src/schedule/names";
+import { explainPath, hasExplainer } from "../../../src/explain";
 
 // The six people actually log. Everything else lives behind "Other". These are
 // the stored identifiers, not the chip copy: the label comes from the schedule
@@ -189,6 +190,26 @@ export default function LogService() {
             />
           ))}
         </View>
+        {hasExplainer(type) ? (
+          <Pressable
+            onPress={() => router.push(explainPath(type, "log_form", id) as never)}
+            hitSlop={8}
+            accessibilityRole="button"
+            style={{ alignSelf: "flex-start" }}
+          >
+            {({ pressed }) => (
+              <Text
+                style={{
+                  ...tokens.text.legend,
+                  color: pressed ? tokens.color.text : tokens.color.textMuted,
+                  textDecorationLine: "underline",
+                }}
+              >
+                {t("explain.open")}
+              </Text>
+            )}
+          </Pressable>
+        ) : null}
       </Card>
       <Card>
         <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>

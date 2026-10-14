@@ -42,6 +42,7 @@ export function collectReminders(vehicleId?: string): Reminder[] {
     })) {
       if (!s.dueAt) continue;
       out.push({
+        vehicleId: vehicle.id,
         vehicleName: vehicle.name,
         serviceType: s.type,
         dueAt: s.dueAt,

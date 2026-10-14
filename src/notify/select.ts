@@ -15,6 +15,8 @@
 export const MAX_SCHEDULED = 60;
 
 export type Reminder = {
+  /** Absent only on reminders built by hand in tests. */
+  vehicleId?: string;
   vehicleName: string;
   serviceType: string;
   dueAt: string;

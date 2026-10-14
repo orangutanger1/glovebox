@@ -18,8 +18,10 @@ import { RESUME_NUDGE_IDS } from "./resume";
  * again.
  *
  * A notification that carries a `url` in its data (check-ins, document
- * expiries) is also handed to `onOpen`, once per tap, so the caller can route
- * to the screen it is about. Service reminders carry none and just open the app.
+ * expiries, service reminders since the explainers) is also handed to
+ * `onOpen`, once per tap, so the caller can route to the screen it is about. A
+ * service reminder opens that service's explainer; one for a service with no
+ * card, or scheduled before the explainers, carries none and just opens the app.
  *
  * Call once, from boot. Returns the unsubscribe. Never throws.
  */

@@ -2,6 +2,7 @@ import type { Entry, Fragment } from "../types";
 import { checkin } from "./checkin";
 import { documents } from "./documents";
 import { evidence } from "./evidence";
+import { explain } from "./explain";
 import { features } from "./features";
 import { fuel } from "./fuel";
 import { garage } from "./garage";
@@ -44,6 +45,7 @@ export const FRAGMENTS: Record<string, Fragment> = {
   checkin,
   documents,
   evidence,
+  explain,
   features,
   fuel,
   garage,

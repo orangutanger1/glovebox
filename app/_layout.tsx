@@ -566,6 +566,19 @@ function Chrome({
           options={{ title: t("documents.form.title"), headerTitle: "" }}
         />
         <Stack.Screen name="checkin" options={{ title: t("checkin.title"), headerTitle: "" }} />
+        {/* A service explainer: a sheet over whatever opened it, so closing it
+            puts the owner back on the row they tapped. */}
+        <Stack.Screen
+          name="explain"
+          options={{
+            title: t("explain.what"),
+            headerShown: false,
+            presentation: "formSheet",
+            sheetAllowedDetents: [0.7, 1],
+            sheetGrabberVisible: true,
+            sheetCornerRadius: tokens.radius.xl,
+          }}
+        />
       </Stack>
       {/* Opaque and empty, over a mounted stack (see the note in RootLayout
           on why nothing may replace the navigator). */}

@@ -148,6 +148,9 @@ a reminder brought anyone back, or whether a rating prompt was ever asked.
 | `customer_center_survey` | Customer Center's own survey answered | `option` |
 | `customer_center_refund_started` | Refund request begun | `product` |
 | `restore_attempted` | Now also from Settings | `source` = `settings`, `found` |
+| `explainer_opened` | A service explainer card opens (added 2026-10-13) | `service_type`, `source` = `service_row` \| `due_row` \| `notification` \| `log_form`, `status` = `ok` \| `due_soon` \| `overdue` \| `never_logged` |
+| `explainer_closed` | The card closes | `service_type`, `seconds` (time open, capped at 300) |
+| `explainer_action` | A button on the card is tapped | `service_type`, `action` = `log_service` \| `change_interval` |
 | `winback_shown` / `winback_result` | The win-back launch screen, and what came of it | `outcome` = `purchased` \| `dismissed` \| `unavailable` \| `declined` |
 | `quick_action` / `quick_action_result` | Home-screen menu tap, and the trial sheet's outcome | `action`, `outcome` |
 | `history_catchup` | The post-purchase "when was it last done?" screen is left | `outcome` = `saved` \| `skipped`, `asked`, `answered`, `filed` |

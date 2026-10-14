@@ -61,4 +61,22 @@ export const enAU: Fragment = {
   "documents.kind.inspection": "Roadworthy certificate",
   "documents.kind.license": "Driver's licence",
   "documents.empty": "Insurance, rego and more, with a reminder before they expire.",
+
+  // explain
+  "explain.difficulty.shop": "Mechanic job",
+  "explain.Oil Change.diy": "Doable with a jack, a drain pan and a filter wrench. Most people use a mechanic or quick service, which takes about half an hour.",
+  "explain.Tire Rotation.what": "Moving each tyre to a different corner of the car so they all wear evenly.",
+  "explain.Tire Rotation.why": "The front tyres wear faster. Rotating them makes a set last noticeably longer and keeps the grip even.",
+  "explain.Tire Rotation.diy": "Possible with axle stands, but most tyre shops do it quickly, often free if you bought the tyres there.",
+  "explain.Brake Inspection.diy": "Leave it to a mechanic unless you've done brakes before.",
+  "explain.Air Filter.diy": "Usually a few clips and no tools, about five minutes. Mechanics often charge a lot for it.",
+  "explain.Wiper Blades.what": "The rubber blades that clear the windscreen.",
+  "explain.Coolant Flush.diy": "Leave it to a mechanic. Never open the radiator cap on a hot engine.",
+  "explain.Transmission Fluid.diy": "A mechanic job. Some cars say the fluid is “lifetime”. Your manual says whether yours really is.",
+  "explain.Registration.what": "Your yearly rego, which in most states includes your CTP (green slip) insurance.",
+  "explain.Registration.why": "Driving unregistered can mean a heavy fine, and you may be uninsured if you're in a crash.",
+  "explain.Registration.diy": "Usually renewed online in a few minutes. Save the confirmation in your glovebox documents.",
+  "explain.Inspection.what": "A roadworthy or safety check (pink slip in NSW), needed in some states for rego or when you sell.",
+  "explain.Inspection.why": "Without one when it's required, you can't renew rego or transfer the car.",
+  "explain.Inspection.diy": "Done at a licensed inspection station or mechanic. Fix any warning lights first.",
 };

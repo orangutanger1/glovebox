@@ -134,4 +134,19 @@ export const esMX: Fragment = {
   "documents.kind.inspection": "Verificación",
   "documents.kind.license": "Licencia de manejo",
   "documents.empty": "Seguro, tarjeta de circulación y más, con un aviso antes de que venzan.",
+
+  // explain
+  "explain.Oil Change.diy": "Se puede con un gato, una charola y una llave de filtro. La mayoría va a un taller o servicio rápido, y tarda una media hora.",
+  "explain.Tire Rotation.what": "Cambiar cada llanta de posición para que se desgasten por igual.",
+  "explain.Tire Rotation.why": "Las delanteras se desgastan antes. Rotarlas hace que el juego dure bastante más y mantiene el agarre parejo.",
+  "explain.Tire Rotation.diy": "Se puede con torres, pero las llanteras lo hacen rápido, muchas veces gratis si ahí compraste las llantas.",
+  "explain.Wiper Blades.what": "Las plumas de hule que limpian el parabrisas.",
+  "explain.Wiper Blades.diy": "Se enganchan a presión. Muchas refaccionarias las ponen gratis.",
+  "explain.Battery Check.diy": "Muchas refaccionarias y talleres la prueban gratis en unos minutos.",
+  "explain.Registration.what": "La tenencia o el refrendo anual de tu coche, según tu estado.",
+  "explain.Registration.why": "Si no lo pagas se acumulan recargos y multas, y no podrás vender el coche ni hacer trámites con él.",
+  "explain.Registration.diy": "Se paga en línea en la página de finanzas de tu estado en unos minutos. Guarda el comprobante en la guantera de la app.",
+  "explain.Inspection.what": "La verificación vehicular: la revisión de emisiones obligatoria en varios estados.",
+  "explain.Inspection.why": "Circular sin verificación vigente es motivo de multa, y en algunas ciudades limita los días en que puedes circular.",
+  "explain.Inspection.diy": "Solo en un verificentro autorizado. Arregla antes cualquier testigo encendido, puede hacer que no la pases.",
 };

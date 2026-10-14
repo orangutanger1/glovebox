@@ -117,4 +117,12 @@ export const frCA: Fragment = {
   "documents.kind.registration": "Certificat d'immatriculation",
   "documents.kind.inspection": "Inspection mécanique",
   "documents.empty": "Assurance, immatriculation et plus, avec un rappel avant l'échéance.",
+
+  // explain
+  "explain.Registration.what": "Le renouvellement annuel de l’immatriculation à la SAAQ, qui comprend l’assurance publique.",
+  "explain.Registration.why": "Rouler avec une immatriculation non payée peut coûter une amende et le remorquage du véhicule.",
+  "explain.Registration.diy": "Se paie en ligne sur SAAQclic en quelques minutes. Rangez la preuve dans la boîte à gants de l’app.",
+  "explain.Inspection.what": "L’inspection mécanique de la SAAQ, exigée pour certains véhicules, par exemple d’occasion venant de l’extérieur du Québec.",
+  "explain.Inspection.why": "Sans inspection quand elle est exigée, vous ne pouvez pas immatriculer ni transférer le véhicule.",
+  "explain.Inspection.diy": "Dans un centre mandataire de la SAAQ. Faites réparer les voyants allumés avant.",
 };

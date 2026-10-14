@@ -33,6 +33,7 @@ import { formatTread, latestTread, treadStatus } from "../../src/tires/tread";
 import { FuelSummary, fillSubtitle, recordSubtitle } from "../../src/vehicles/rows";
 import { isRedesign } from "../../src/design/theme";
 import { RedesignVehicle } from "../../src/redesign/VehicleScreen";
+import { explainPath, hasExplainer } from "../../src/explain";
 
 type DueItem = { type: string; status: "due" | "soon"; line: string };
 
@@ -323,6 +324,9 @@ function VehicleDetail() {
                     title={d.type === "tread" ? t("vehicle.tread.title") : serviceName(d.type)}
                     subtitle={d.line}
                     status={d.status === "due" ? "overdue" : "soon"}
+                    onPress={
+                      hasExplainer(d.type) ? () => open(explainPath(d.type, "due_row", id)) : undefined
+                    }
                     right={
                       <Badge
                         label={d.status === "due" ? t("vehicle.badge.overdue") : t("vehicle.badge.soon")}
@@ -432,6 +436,11 @@ function VehicleDetail() {
               title={serviceName(item.service_type)}
               subtitle={recordSubtitle(item)}
               status="ok"
+              onPress={
+                hasExplainer(item.service_type)
+                  ? () => open(explainPath(item.service_type, "service_row", id))
+                  : undefined
+              }
             />
           </Swipeable>
         )}

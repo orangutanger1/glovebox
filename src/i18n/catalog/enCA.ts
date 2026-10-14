@@ -36,4 +36,11 @@ export const enCA: Fragment = {
   // The glovebox, in this market's words.
   "documents.kind.inspection": "Safety inspection",
   "documents.kind.license": "Driver's licence",
+
+  // explain
+  "explain.Registration.what": "Your plate (licence plate sticker) renewal, which keeps your car legal to drive.",
+  "explain.Registration.why": "Driving with expired plates can mean a fine, and in some provinces the car can be towed.",
+  "explain.Inspection.what": "A provincial safety inspection, required in some provinces each year or when a car changes owners.",
+  "explain.Inspection.why": "Without one when your province requires it, you can't register or transfer the car.",
+  "explain.Inspection.diy": "Done at a licensed inspection station. Fix any warning lights first.",
 };

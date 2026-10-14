@@ -45,6 +45,7 @@ import {
   vehicleView,
 } from "./model";
 import { taskDetail, taskTitle, whenLabel } from "./copy";
+import { explainPath, hasExplainer } from "../explain";
 import {
   CelebrateToast,
   GlassCard,
@@ -433,10 +434,27 @@ export function RedesignVehicle() {
             odometer: vehicle?.odometer,
             now,
           });
+          // Tapping a row explains the service; the bar already says when.
+          const explainable = hasExplainer(s.type);
           return (
-            <View
+            <Pressable
               key={s.type}
-              style={{ gap: 6, paddingVertical: tokens.space.xs }}
+              disabled={!explainable}
+              onPress={() =>
+                open(
+                  explainPath(
+                    s.type,
+                    s.status === "ok" ? "service_row" : "due_row",
+                    id,
+                  ),
+                )
+              }
+              accessibilityRole={explainable ? "button" : undefined}
+              style={({ pressed }) => ({
+                gap: 6,
+                paddingVertical: tokens.space.xs,
+                opacity: pressed ? 0.7 : 1,
+              })}
             >
               <View
                 style={{
@@ -470,7 +488,7 @@ export function RedesignVehicle() {
               {left !== null ? (
                 <LifeBar value={left} status={s.status} />
               ) : null}
-            </View>
+            </Pressable>
           );
         })}
         {untracked.map((type) => (
@@ -673,6 +691,11 @@ export function RedesignVehicle() {
               title={serviceName(item.service_type)}
               subtitle={recordSubtitle(item)}
               status="ok"
+              onPress={
+                hasExplainer(item.service_type)
+                  ? () => open(explainPath(item.service_type, "service_row", id))
+                  : undefined
+              }
             />
           </Swipeable>
         )}
