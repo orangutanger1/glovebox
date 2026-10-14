@@ -15,6 +15,8 @@ import { tokens } from "../design/tokens";
 import { PressableScale } from "../design/PressableScale";
 import { Mascot } from "../mascot/Mascot";
 import { Icon, type IconName } from "./icons";
+import { ServiceSticker } from "./stickers";
+import { isDesignV2 } from "../design/theme";
 
 /**
  * The redesign's parts, on Bevel's light page. Shape rule: cards 24, rows
@@ -304,6 +306,7 @@ export function CheckButton({
 
 /** A task in a list: the check, what to do, which car and when. */
 export function TaskRow({
+  type,
   title,
   subtitle,
   status,
@@ -311,6 +314,9 @@ export function TaskRow({
   onCheck,
   onPress,
 }: {
+  /** The service type. In A v2 its sticker leads the row and the check moves
+   *  to the right; without v2 it is unused. */
+  type?: string;
   title: string;
   subtitle: string;
   status: "due" | "soon";
@@ -320,6 +326,8 @@ export function TaskRow({
 }) {
   // The check and the row are siblings, not nested: an accessible row button
   // would swallow the check for VoiceOver.
+  const sticker = isDesignV2() && type !== undefined;
+  const check = <CheckButton status={status} onPress={onCheck} label={checkLabel} />;
   return (
     <View
       style={{
@@ -329,7 +337,7 @@ export function TaskRow({
         paddingVertical: tokens.space.sm + 2,
       }}
     >
-      <CheckButton status={status} onPress={onCheck} label={checkLabel} />
+      {sticker ? <ServiceSticker type={type} /> : check}
       <Pressable
         onPress={onPress}
         disabled={!onPress}
@@ -360,6 +368,7 @@ export function TaskRow({
           </View>
         )}
       </Pressable>
+      {sticker ? check : null}
     </View>
   );
 }

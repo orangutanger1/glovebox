@@ -467,6 +467,7 @@ export function RedesignHome() {
                   tasks.map((task) => (
                     <TaskRow
                       key={`${task.vehicleId}:${task.type}`}
+                      type={task.type}
                       title={taskTitle(task)}
                       subtitle={
                         single

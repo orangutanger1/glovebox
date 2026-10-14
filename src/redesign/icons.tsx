@@ -1,5 +1,7 @@
 import { Image, Pressable, Text, View } from "react-native";
 import { tokens } from "../design/tokens";
+import { isDesignV2 } from "../design/theme";
+import { ServiceSticker } from "./stickers";
 
 /**
  * Line icons for the redesign, drawn in one grammar (24-unit grid, 1.8 stroke,
@@ -101,22 +103,26 @@ export function UpcomingRow({
             opacity: pressed ? 0.6 : 1,
           }}
         >
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: tokens.color.accentWash,
-            }}
-          >
-            <Icon
-              name={serviceIcon(type)}
-              size={20}
-              color={tokens.color.accent}
-            />
-          </View>
+          {isDesignV2() ? (
+            <ServiceSticker type={type} size={40} />
+          ) : (
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 20,
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: tokens.color.accentWash,
+              }}
+            >
+              <Icon
+                name={serviceIcon(type)}
+                size={20}
+                color={tokens.color.accent}
+              />
+            </View>
+          )}
           <View style={{ flex: 1, gap: 2 }}>
             <Text
               style={{

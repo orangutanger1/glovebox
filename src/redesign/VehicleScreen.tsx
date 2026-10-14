@@ -36,6 +36,8 @@ import { GloveboxSection } from "../documents/GloveboxSection";
 import { TREAD_SERVICE } from "../tires/tread";
 import { FuelSummary, fillSubtitle, recordSubtitle } from "../vehicles/rows";
 import { UpcomingRow } from "./icons";
+import { ServiceSticker } from "./stickers";
+import { isDesignV2 } from "../design/theme";
 import {
   byUrgency,
   PLAN_BASIS,
@@ -259,6 +261,7 @@ export function RedesignVehicle() {
           tasks.map((task) => (
             <TaskRow
               key={task.type}
+              type={task.type}
               title={taskTitle(task)}
               subtitle={taskDetail(task)}
               status={task.status}
@@ -456,38 +459,43 @@ export function RedesignVehicle() {
                 opacity: pressed ? 0.7 : 1,
               })}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  gap: tokens.space.sm,
-                }}
-              >
-                <Text
-                  style={{
-                    ...tokens.text.body,
-                    color: tokens.color.text,
-                    flex: 1,
-                  }}
-                >
-                  {serviceName(s.type)}
-                </Text>
-                <Text
-                  style={{
-                    ...tokens.text.caption,
-                    ...tokens.text.numeric,
-                    color:
-                      s.status === "due"
-                        ? tokens.color.red
-                        : tokens.color.textMuted,
-                  }}
-                >
-                  {whenLabel(s)}
-                </Text>
+              <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
+                {isDesignV2() ? <ServiceSticker type={s.type} size={32} /> : null}
+                <View style={{ flex: 1, gap: 6 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      gap: tokens.space.sm,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        ...tokens.text.body,
+                        color: tokens.color.text,
+                        flex: 1,
+                      }}
+                    >
+                      {serviceName(s.type)}
+                    </Text>
+                    <Text
+                      style={{
+                        ...tokens.text.caption,
+                        ...tokens.text.numeric,
+                        color:
+                          s.status === "due"
+                            ? tokens.color.red
+                            : tokens.color.textMuted,
+                      }}
+                    >
+                      {whenLabel(s)}
+                    </Text>
+                  </View>
+                  {left !== null ? (
+                    <LifeBar value={left} status={s.status} />
+                  ) : null}
+                </View>
               </View>
-              {left !== null ? (
-                <LifeBar value={left} status={s.status} />
-              ) : null}
             </Pressable>
           );
         })}
@@ -690,6 +698,7 @@ export function RedesignVehicle() {
             <ListRow
               title={serviceName(item.service_type)}
               subtitle={recordSubtitle(item)}
+              left={isDesignV2() ? <ServiceSticker type={item.service_type} size={32} /> : undefined}
               status="ok"
               onPress={
                 hasExplainer(item.service_type)

@@ -14,12 +14,15 @@ import { isRedesign } from "./theme";
 export function ListRow({
   title,
   subtitle,
+  left,
   right,
   onPress,
   status,
 }: {
   title: string;
   subtitle?: string;
+  /** Drawn before the title (A v2's service sticker). */
+  left?: React.ReactNode;
   right?: React.ReactNode;
   onPress?: () => void;
   status?: "overdue" | "soon" | "ok";
@@ -56,6 +59,7 @@ export function ListRow({
               paddingVertical: tokens.space.sm + 4,
             }}
           >
+            {left}
             <View style={{ flex: 1, gap: 2 }}>
               <Text
                 style={{
