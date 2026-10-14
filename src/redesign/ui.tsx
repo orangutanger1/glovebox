@@ -17,6 +17,7 @@ import { Mascot } from "../mascot/Mascot";
 import { Icon, type IconName } from "./icons";
 import { ServiceSticker } from "./stickers";
 import { isDesignV2 } from "../design/theme";
+import { v2 } from "../design/type";
 
 /**
  * The redesign's parts, on Bevel's light page. Shape rule: cards 24, rows
@@ -355,19 +356,28 @@ export function TaskRow({
             >
               {title}
             </Text>
-            <Text
-              style={{
-                ...tokens.text.caption,
-                ...tokens.text.numeric,
-                color:
-                  status === "due" ? tokens.color.red : tokens.color.textMuted,
-              }}
-            >
-              {subtitle}
-            </Text>
+            {sticker ? null : (
+              <Text
+                style={{
+                  ...tokens.text.caption,
+                  ...tokens.text.numeric,
+                  color:
+                    status === "due" ? tokens.color.red : tokens.color.textMuted,
+                }}
+              >
+                {subtitle}
+              </Text>
+            )}
           </View>
         )}
       </Pressable>
+      {sticker ? (
+        // A v2: when, on the right, in mono; red and amber dark enough for
+        // small text on white.
+        <Text style={{ ...v2.value(), color: status === "due" ? "#C42B30" : "#B65A00", flexShrink: 1 }}>
+          {subtitle}
+        </Text>
+      ) : null}
       {sticker ? check : null}
     </View>
   );

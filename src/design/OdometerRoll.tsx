@@ -3,6 +3,8 @@ import { View, Text, Animated, Easing } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { tokens } from "./tokens";
 import { isRedesign } from "./theme";
+import { formatNumber } from "../i18n";
+import { distanceUnitLabel } from "../units/format";
 
 /**
  * A mechanical odometer that actually rolls.
@@ -32,6 +34,27 @@ function digitsOf(value: number, places: number): number[] {
     .slice(-places)
     .split("")
     .map(Number);
+}
+
+/** A drum at rest on its digit: no strip, no animation. */
+function StillWheel({ digit }: { digit: number }) {
+  return (
+    <View style={{ width: DIGIT_WIDTH, height: DIGIT_HEIGHT, overflow: "hidden" }}>
+      <Text
+        style={{
+          height: DIGIT_HEIGHT,
+          lineHeight: DIGIT_HEIGHT,
+          textAlign: "center",
+          fontSize: 30,
+          fontWeight: "600",
+          fontVariant: ["tabular-nums"],
+          color: tokens.color.text,
+        }}
+      >
+        {digit}
+      </Text>
+    </View>
+  );
 }
 
 function Wheel({
@@ -107,6 +130,7 @@ export function OdometerRoll({
   value,
   places = 6,
   live = false,
+  still = false,
 }: {
   /** The reading the drums settle on. */
   value: number;
@@ -121,11 +145,21 @@ export function OdometerRoll({
    * and short enough that the next keystroke is not queued behind it.
    */
   live?: boolean;
+  /**
+   * The drums at rest on the car's reading (A v2's vehicle screen): no roll.
+   * Read by VoiceOver as one number with its unit, not as six digits.
+   */
+  still?: boolean;
 }) {
   const digits = digitsOf(value, places);
 
   return (
-    <View style={{ alignItems: "center", justifyContent: "center", paddingVertical: 20 }}>
+    <View
+      style={{ alignItems: "center", justifyContent: "center", paddingVertical: still ? 0 : 20 }}
+      {...(still
+        ? { accessible: true, accessibilityLabel: `${formatNumber(value)} ${distanceUnitLabel()}` }
+        : {})}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -153,13 +187,17 @@ export function OdometerRoll({
               borderColor: tokens.color.hairline,
             }}
           >
-            <Wheel
-              digit={d}
-              spins={live ? 0 : 3}
-              // Right-to-left stagger: the tenths wheel is the last to settle.
-              delay={live ? 0 : 120 + (places - 1 - i) * 90}
-              duration={live ? 220 : 1100 + (places - 1 - i) * 260}
-            />
+            {still ? (
+              <StillWheel digit={d} />
+            ) : (
+              <Wheel
+                digit={d}
+                spins={live ? 0 : 3}
+                // Right-to-left stagger: the tenths wheel is the last to settle.
+                delay={live ? 0 : 120 + (places - 1 - i) * 90}
+                duration={live ? 220 : 1100 + (places - 1 - i) * 260}
+              />
+            )}
             {/* Curvature. A flat digit on a flat rectangle is a number in a
                 box; shaded top and bottom, it is a cylinder seen edge-on. */}
             <LinearGradient

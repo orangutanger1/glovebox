@@ -65,7 +65,15 @@ jest.mock("expo-haptics", () => ({
 
 jest.mock("../src/recalls/RecallsSection", () => ({ RecallsSection: () => null }));
 
+let mockV2 = false;
+jest.mock("../src/design/theme", () => ({
+  ...jest.requireActual("../src/design/theme"),
+  isDesignV2: () => mockV2,
+}));
+
 import VehicleRoute from "../app/vehicle/[id]";
+import { explainPath } from "../src/explain";
+import { ServiceSticker } from "../src/redesign/stickers";
 import { createVehicle, listVehicles } from "../src/db/vehicles";
 import { addRecord } from "../src/db/records";
 import { setState } from "../src/db/state";
@@ -93,6 +101,7 @@ afterEach(() => {
   act(() => {
     for (const tree of mounted.splice(0)) tree.unmount();
   });
+  mockV2 = false;
 });
 afterAll(() => resetDesignCache());
 
@@ -147,4 +156,38 @@ test("History lists the log and keeps the delete-vehicle action", () => {
   const rendered = texts(tree.root);
   expect(rendered).toContain("Oil Change");
   expect(rendered).toContain(t("vehicle.deleteVehicle"));
+});
+
+describe("A v2's vehicle screen", () => {
+  const id = () => listVehicles()[0].id;
+  function pressWhere(tree: TestRenderer.ReactTestRenderer, pred: (n: TestRenderer.ReactTestInstance) => boolean) {
+    const target = tree.root.find((n) => typeof n.props.onPress === "function" && !n.props.disabled && pred(n));
+    act(() => target.props.onPress());
+  }
+
+  test("the odometer reads as one number, not six digits", () => {
+    mockV2 = true;
+    const tree = render();
+    expect(tree.root.findAll((n) => n.props.accessibilityLabel === "50,000 mi" && n.props.accessible === true).length).toBeGreaterThan(0);
+    expect(texts(tree.root)).not.toContain("50,000 mi");
+  });
+
+  test("care plan rows still open the explainer", () => {
+    mockV2 = true;
+    const tree = render();
+    tab(tree, t("redesign.car.tab.plan"));
+    navigated.length = 0;
+    pressWhere(tree, (n) => n.props.accessibilityRole === "button" && texts(n).includes("Oil Change"));
+    expect(navigated).toEqual([explainPath("Oil Change", "service_row", id())]);
+  });
+
+  test("History rows still open the explainer, with the service's sticker", () => {
+    mockV2 = true;
+    const tree = render();
+    tab(tree, t("redesign.car.tab.history"));
+    expect(tree.root.findAllByType(ServiceSticker).length).toBeGreaterThan(0);
+    navigated.length = 0;
+    pressWhere(tree, (n) => n.props.accessibilityRole !== "tab" && texts(n).includes("Oil Change") && !texts(n).includes(t("redesign.car.tab.history")));
+    expect(navigated).toEqual([explainPath("Oil Change", "service_row", id())]);
+  });
 });

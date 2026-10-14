@@ -37,7 +37,10 @@ import { TREAD_SERVICE } from "../tires/tread";
 import { FuelSummary, fillSubtitle, recordSubtitle } from "../vehicles/rows";
 import { UpcomingRow } from "./icons";
 import { ServiceSticker } from "./stickers";
+import { AMBER_TEXT, RED_TEXT } from "./HeroCard";
 import { isDesignV2 } from "../design/theme";
+import { v2 } from "../design/type";
+import { OdometerRoll } from "../design/OdometerRoll";
 import {
   byUrgency,
   PLAN_BASIS,
@@ -173,7 +176,48 @@ export function RedesignVehicle() {
 
   // The car stands on the page, looping in its mood (its loop is drawn on the
   // page colour, so never on a card), with the reading under it.
-  const hero = (
+  const designV2 = isDesignV2();
+  const updateOdometer = vehicle ? (
+    <Pressable
+      onPress={() => open(`/checkin?vehicle=${id}&source=vehicle`)}
+      accessibilityRole="button"
+      hitSlop={8}
+      style={{ paddingTop: tokens.space.xs }}
+    >
+      {({ pressed }) => (
+        <Text
+          style={{
+            ...tokens.text.legend,
+            fontWeight: "600",
+            color: pressed ? tokens.color.text : tokens.color.accent,
+          }}
+        >
+          {t("checkin.update")}
+        </Text>
+      )}
+    </Pressable>
+  ) : null;
+
+  // A v2: the reading on still drums, the way a dashboard prints it. The spec
+  // line moves up into the header.
+  const heroV2 = (
+    <View style={{ alignItems: "center", gap: tokens.space.sm }}>
+      <Mascot mood={celebrated ? "celebrating" : (view?.mood ?? "sleepy")} size={120} animate />
+      {vehicle?.odometer !== undefined ? (
+        <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.sm }}>
+          <OdometerRoll value={vehicle.odometer} still />
+          <Text style={{ ...v2.value(), color: tokens.color.textMuted }} accessibilityElementsHidden importantForAccessibility="no">
+            {distanceUnitLabel()}
+          </Text>
+        </View>
+      ) : (
+        <Text style={{ ...tokens.text.readout, color: tokens.color.text }}>{t("vehicle.odometer.notSet")}</Text>
+      )}
+      {updateOdometer}
+    </View>
+  );
+
+  const hero = designV2 ? heroV2 : (
     <View style={{ alignItems: "center", gap: tokens.space.xs }}>
       <Mascot
         mood={celebrated ? "celebrating" : (view?.mood ?? "sleepy")}
@@ -193,32 +237,68 @@ export function RedesignVehicle() {
             {spec}
           </Text>
         ) : null}
-        {vehicle ? (
-          <Pressable
-            onPress={() => open(`/checkin?vehicle=${id}&source=vehicle`)}
-            accessibilityRole="button"
-            hitSlop={8}
-            style={{ paddingTop: tokens.space.xs }}
-          >
-            {({ pressed }) => (
-              <Text
-                style={{
-                  ...tokens.text.legend,
-                  fontWeight: "600",
-                  color: pressed ? tokens.color.text : tokens.color.accent,
-                }}
-              >
-                {t("checkin.update")}
-              </Text>
-            )}
-          </Pressable>
-        ) : null}
+        {updateOdometer}
       </View>
     </View>
   );
 
+  // A v2: the next service as a white card, its sticker on a tinted tile, the
+  // status in mono and the line in the display face.
+  const nextTone = next?.status === "due" ? RED_TEXT : next?.status === "soon" ? AMBER_TEXT : tokens.color.accent;
+  const bannerV2 = next ? (
+    <Pressable onPress={() => logType(next.type)} accessibilityRole="button">
+      {({ pressed }) => (
+        <View
+          style={{
+            backgroundColor: tokens.color.surface,
+            borderRadius: 22,
+            borderCurve: "continuous",
+            padding: tokens.space.md,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 14,
+            opacity: pressed ? 0.85 : 1,
+            ...tokens.shadow.ambient,
+          }}
+        >
+          <View
+            style={{
+              width: 52,
+              height: 52,
+              borderRadius: 16,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: next.status === "due" ? tokens.color.redWash : tokens.color.accentWash,
+            }}
+          >
+            <ServiceSticker type={next.type} size={34} />
+          </View>
+          <View style={{ flex: 1, gap: 3 }}>
+            <Text style={{ ...v2.label(), color: nextTone }}>
+              {t(
+                next.status === "due"
+                  ? "redesign.hero.overdue"
+                  : next.status === "soon"
+                    ? "redesign.hero.dueSoon"
+                    : "redesign.hero.next",
+              )}
+            </Text>
+            <Text style={{ ...v2.headline(), color: tokens.color.text }}>
+              {t("redesign.car.next", { service: serviceName(next.type), when: whenLabel(next) })}
+            </Text>
+            {lastOfNext ? (
+              <Text style={{ ...tokens.text.caption, color: tokens.color.textMuted }}>
+                {t("redesign.car.last", { date: lastOfNext })}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+      )}
+    </Pressable>
+  ) : null;
+
   // Planta's "Regular watering: in 10 days · Last: yesterday" banner.
-  const banner = (
+  const banner = designV2 && bannerV2 ? bannerV2 : (
     <Pressable
       onPress={() => (next ? logType(next.type) : logType())}
       accessibilityRole="button"
@@ -594,7 +674,16 @@ export function RedesignVehicle() {
                 gap: tokens.space.xs,
               }}
             >
-              {({ pressed }) => (
+              {({ pressed }) =>
+                designV2 ? (
+                  // A v2: the spec line in mono, "2019 MAZDA CX-5".
+                  <Text
+                    numberOfLines={1}
+                    style={{ ...v2.label(), color: pressed ? tokens.color.text : tokens.color.textMuted }}
+                  >
+                    {spec || vehicle?.name || t("vehicle.title")}
+                  </Text>
+                ) : (
                 <>
                   <Text
                     numberOfLines={1}
@@ -620,7 +709,8 @@ export function RedesignVehicle() {
                     </Text>
                   ) : null}
                 </>
-              )}
+                )
+              }
             </Pressable>
           ),
         }}
