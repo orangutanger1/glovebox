@@ -710,3 +710,11 @@ document, build the widget before document photos.
 - Arm A's first session after a fresh install drew every stack header (vehicle, settings, log) with the classic dark bar and a white chevron, and the light status bar, because the root stack read its colours before the boot effect wrote the `app_design` row and nothing re-rendered it. From the second launch on the arm was cached and the header was light. The vehicle screen showed it worst: its own title is drawn in A's dark text, so a dark title on a dark bar. Fix: `RootLayout` re-renders `Chrome` once the arm is written.
 - Post-onboarding only (onboarding and paywalls have no stack header). Does not touch the paywall metric or any event. Arm B unchanged.
 - **Funnel effect:** none expected. Possibly a small lift in arm A's first-session `service_logged` (the header was hard to read); too small to read.
+
+### 2026-10-14 — native build 1.3.1: A v2 becomes arm A (commit on `feat/app-design-v2`, App Review pending)
+
+- Arm A (`redesign`) gets v2 on 1.3.1: Bricolage Grotesque and DM Mono, the warm page `#F6F3EE` (onboarding included), one big figure plus "Next up" on Today, service stickers, the road on Upcoming, the full-screen logged moment, the restyled explainer. Arm B unchanged. Also carries the arm A header fix (above) and the service explainers (both arms).
+- New native dependencies `@expo-google-fonts/bricolage-grotesque` and `@expo-google-fonts/dm-mono`, so this is a binary, not an OTA. `runtimeVersion` follows the app version: from here OTAs built on this tree reach 1.3.1 installs only; 1.3.0 installs need a separate publish from a 1.3.0 tree.
+- No event, step, price, plan, timer or copy under test changes.
+- **Funnel effect:** arm A before and after 1.3.1 are two different designs. **Never pool them.** The `app_design` read restarts at 1.3.1: filter both arms to installs whose first `Application Opened` is 1.3.1 or later.
+

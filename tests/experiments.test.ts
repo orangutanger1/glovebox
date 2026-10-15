@@ -128,7 +128,6 @@ test("store builds have no pinned design arm", () => {
   const eas = require("../eas.json");
   expect(eas.build.production.env?.EXPO_PUBLIC_APP_DESIGN).toBeUndefined();
   expect(eas.build["redesign-check"].env.EXPO_PUBLIC_APP_DESIGN).toBe("redesign");
-  // `design-v2-check` pins arm A plus its second look; production never does.
-  expect(eas.build.production.env?.EXPO_PUBLIC_DESIGN_V2).toBeUndefined();
-  expect(eas.build["design-v2-check"].env).toEqual({ EXPO_PUBLIC_APP_DESIGN: "redesign", EXPO_PUBLIC_DESIGN_V2: "1" });
+  // v2 is arm A since 1.3.1; no build pins it any more.
+  expect(eas.build["design-v2-check"]).toBeUndefined();
 });
