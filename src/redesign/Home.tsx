@@ -37,12 +37,12 @@ import {
   garageMood,
   heroFigure,
   nextFor,
+  nextUpRows,
   roads,
   todayTasks,
   upcomingItems,
   vehicleView,
-  type HeroFigure,
-  type Task,
+  type NextUp,
   type VehicleView,
 } from "./model";
 import {
@@ -60,7 +60,7 @@ import {
 } from "./ui";
 import { isDesignV2 } from "../design/theme";
 import { v2 } from "../design/type";
-import { HeroCard, AMBER_TEXT, RED_TEXT } from "./HeroCard";
+import { HeroCard, ACCENT_TEXT, AMBER_TEXT, RED_TEXT } from "./HeroCard";
 import { ServiceSticker } from "./stickers";
 import { Road } from "./Road";
 import { LoggedMoment } from "./LoggedMoment";
@@ -498,6 +498,7 @@ export function RedesignHome() {
                       mood={views.find((v) => v.vehicle.id === r.vehicleId)?.mood ?? "happy"}
                       showName={roadList.length > 1}
                       onCarLayout={i === 0 ? showCar : undefined}
+                      onOpen={() => router.push(`/vehicle/${r.vehicleId}`)}
                     />
                   ))}
                 </View>
@@ -867,31 +868,6 @@ function GarageCard({
   );
 }
 
-type NextUp = { task: Task; life?: number };
-
-/** A v2's "Next up": what is due or due soon after the hero, then what comes
- *  after that, three rows at most. Each row's bar is the interval left. */
-function nextUpRows(views: readonly VehicleView[], hero: HeroFigure | null): NextUp[] {
-  const isHero = (vehicleId: string, type: string) =>
-    hero !== null && hero.vehicleId === vehicleId && hero.type === type;
-  const lifeOf = (vehicleId: string, type: string) =>
-    views.find((v) => v.vehicle.id === vehicleId)?.lives.find((l) => l.type === type)?.left;
-  const rows: NextUp[] = todayTasks(views)
-    .filter((task) => !isHero(task.vehicleId, task.type))
-    .map((task) => ({ task, life: lifeOf(task.vehicleId, task.type) }));
-  const later = views
-    .flatMap((v) => v.states.filter((s) => s.status === "ok").map((s) => ({ v, s })))
-    .sort((a, b) => byUrgency(a.s, b.s))
-    .filter(({ v, s }) => !isHero(v.vehicle.id, s.type));
-  for (const { v, s } of later) {
-    rows.push({
-      task: { vehicleId: v.vehicle.id, vehicleName: v.vehicle.name, type: s.type, status: "soon", state: s },
-      life: lifeOf(v.vehicle.id, s.type),
-    });
-  }
-  return rows.slice(0, 3);
-}
-
 function NextUpRow({
   row,
   single,
@@ -906,7 +882,7 @@ function NextUpRow({
   const { task, life } = row;
   const status = task.state?.status ?? task.status;
   const when = taskDetail(task);
-  const tone = status === "due" ? RED_TEXT : status === "soon" ? AMBER_TEXT : tokens.color.accent;
+  const tone = status === "due" ? RED_TEXT : status === "soon" ? AMBER_TEXT : ACCENT_TEXT;
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md, paddingVertical: tokens.space.sm }}>
       <Pressable

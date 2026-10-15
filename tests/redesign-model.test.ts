@@ -4,6 +4,7 @@ import {
   heroFigure,
   nextFor,
   planCompleteness,
+  nextUpRows,
   roadFor,
   roads,
   todayTasks,
@@ -211,5 +212,27 @@ describe("the logged moment's next", () => {
   test("a custom type with no interval has no next", () => {
     const v = view(car("a", 48210), [rec("Timing belt (my own)", "2026-10-12T00:00:00.000Z", 48210)]);
     expect(nextFor(v, "Timing belt (my own)")).toBeNull();
+  });
+});
+
+describe("review fixes", () => {
+  test("a distance-only service comes after dated ones on the road", () => {
+    const r = roadFor(view(car("a", 48210), [
+      rec("Spark Plugs", "2026-03-16T00:00:00.000Z", 41000),
+      rec("Oil Change", "2026-10-01T00:00:00.000Z", 48000),
+    ]));
+    expect(r.ahead.map((s) => s.type)).toEqual(["Oil Change", "Spark Plugs"]);
+  });
+
+  test("Next up keeps every due or soon task, padding with later ones to three", () => {
+    const old = "2025-01-01T00:00:00.000Z";
+    const v = view(car("a", 48210), ["Oil Change", "Tire Rotation", "Brake Inspection", "Air Filter", "Cabin Air Filter"].map((t) => rec(t, old, 30000)));
+    const hero = heroFigure([v], { a: 48210 });
+    const rows = nextUpRows([v], hero);
+    expect(rows).toHaveLength(4);
+    expect(rows.every((r) => r.task.status === "due")).toBe(true);
+    const one = view(car("b", 48210), [rec("Oil Change", old, 30000), rec("Spark Plugs", "2026-10-01T00:00:00.000Z", 48000), rec("Wiper Blades", "2026-10-01T00:00:00.000Z")]);
+    const r2 = nextUpRows([one], heroFigure([one], { b: 48210 }));
+    expect(r2.map((r) => r.task.type).sort()).toEqual(["Spark Plugs", "Wiper Blades"]);
   });
 });

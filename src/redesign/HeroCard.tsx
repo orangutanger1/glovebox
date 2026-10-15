@@ -11,6 +11,8 @@ import { LifeBar } from "./ui";
 /** Red and amber dark enough for small text on white (≥4.5:1). */
 export const RED_TEXT = "#C42B30";
 export const AMBER_TEXT = "#B65A00";
+/** The accent darkened to 4.5:1 on white (#4C7DFF is 3.7:1), for small text. */
+export const ACCENT_TEXT = "#3A64E0";
 
 /**
  * A v2's Today hero: the most urgent thing as one number ("2,210 mi over", or
@@ -34,7 +36,7 @@ export function HeroCard({
   const status = fig.kind === "over" ? "due" : fig.status;
   const due = status === "due";
   const soon = status === "soon";
-  const tone = due ? RED_TEXT : soon ? AMBER_TEXT : tokens.color.accent;
+  const tone = due ? RED_TEXT : soon ? AMBER_TEXT : ACCENT_TEXT;
   const label = `${serviceName(fig.type)} · ${t(
     due ? "redesign.hero.overdue" : soon ? "redesign.hero.dueSoon" : "redesign.hero.next",
   )}`;

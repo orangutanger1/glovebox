@@ -37,7 +37,7 @@ import { TREAD_SERVICE } from "../tires/tread";
 import { FuelSummary, fillSubtitle, recordSubtitle } from "../vehicles/rows";
 import { UpcomingRow } from "./icons";
 import { ServiceSticker } from "./stickers";
-import { AMBER_TEXT, RED_TEXT } from "./HeroCard";
+import { ACCENT_TEXT, AMBER_TEXT, RED_TEXT } from "./HeroCard";
 import { LoggedMoment } from "./LoggedMoment";
 import { isDesignV2 } from "../design/theme";
 import { v2 } from "../design/type";
@@ -251,7 +251,7 @@ export function RedesignVehicle() {
 
   // A v2: the next service as a white card, its sticker on a tinted tile, the
   // status in mono and the line in the display face.
-  const nextTone = next?.status === "due" ? RED_TEXT : next?.status === "soon" ? AMBER_TEXT : tokens.color.accent;
+  const nextTone = next?.status === "due" ? RED_TEXT : next?.status === "soon" ? AMBER_TEXT : ACCENT_TEXT;
   const bannerV2 = next ? (
     <Pressable onPress={() => logType(next.type)} accessibilityRole="button">
       {({ pressed }) => (

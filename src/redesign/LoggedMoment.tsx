@@ -93,7 +93,8 @@ export function LoggedMoment({
               style={{
                 ...v2.value(),
                 fontSize: 15,
-                color: "rgba(255,255,255,0.85)",
+                // Plain white: 85% white is 4.2:1 on this blue at 15 pt.
+                color: "#FFFFFF",
                 textAlign: "center",
                 ...(upper ? { textTransform: "uppercase" as const, letterSpacing: 1.2 } : {}),
               }}

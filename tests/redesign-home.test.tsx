@@ -253,3 +253,16 @@ test("arm A without v2 keeps the Upcoming list", () => {
   upcomingTab(tree);
   expect(texts(tree.root)).not.toContain(t("redesign.road.here"));
 });
+
+test("v2 Upcoming: signs open the car, and at most three mono labels", () => {
+  setState("experiment.app_design", "redesign");
+  mockV2 = true;
+  const tree = render();
+  upcomingTab(tree);
+  const mono = tree.root.findAll((n) => typeof n.type === "string" && n.props.style?.letterSpacing === 1.6);
+  expect(mono.length).toBeLessThanOrEqual(3);
+  navigated.length = 0;
+  const sign = tree.root.findAll((n) => typeof n.props.onPress === "function" && typeof n.props.accessibilityLabel === "string" && n.props.accessibilityLabel.startsWith("Brake Inspection, "))[0];
+  act(() => sign.props.onPress());
+  expect(navigated).toEqual([`/vehicle/${listVehicles()[0].id}`]);
+});

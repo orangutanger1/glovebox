@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Animated, Easing, Text, View } from "react-native";
+import { Animated, Easing, Pressable, Text, View } from "react-native";
 import { tokens } from "../design/tokens";
 import { v2 } from "../design/type";
 import { useReduceMotion } from "../design/useReduceMotion";
@@ -13,10 +13,7 @@ import type { Road as RoadModel } from "./model";
 import { whenLabel } from "./copy";
 import { ServiceSticker } from "./stickers";
 import { SectionTitle } from "./ui";
-import { AMBER_TEXT, RED_TEXT } from "./HeroCard";
-
-/** The blue accent darkened to 4.5:1 on white, for small text. */
-const ACCENT_TEXT = "#3A64E0";
+import { ACCENT_TEXT, AMBER_TEXT, RED_TEXT } from "./HeroCard";
 const ASPHALT = "#2B2F3A";
 const STRIP = 56;
 const DASH = { width: 3, height: 8, gap: 14 };
@@ -37,12 +34,15 @@ export function Road({
   mood,
   showName,
   onCarLayout,
+  onOpen,
 }: {
   road: RoadModel;
   mood: Mood;
   showName: boolean;
   /** The car's offset from the top of this road, once laid out. */
   onCarLayout?: (y: number) => void;
+  /** A sign opens the car, as arm A's Upcoming rows do. */
+  onOpen?: () => void;
 }) {
   const reduced = useReduceMotion();
   // Furthest ahead at the top.
@@ -83,7 +83,7 @@ export function Road({
 
         <View style={{ paddingVertical: tokens.space.md, gap: tokens.space.md }}>
           {ahead.map((s) => (
-            <Sign key={s.type} state={s} side={index % 2 === 0 ? "left" : "right"} order={index++} reduced={reduced} />
+            <Sign key={s.type} state={s} side={index % 2 === 0 ? "left" : "right"} order={index++} reduced={reduced} onOpen={onOpen} />
           ))}
 
           <View
@@ -93,7 +93,11 @@ export function Road({
             <View style={{ flex: 1 }} />
             <Mascot mood={mood} size={96} />
             <View style={{ flex: 1, paddingLeft: tokens.space.sm, gap: 2 }}>
-              <Text style={{ ...v2.label(), color: tokens.color.textMuted }}>{t("redesign.road.here")}</Text>
+              {/* Plain legend, not mono: the date and the hero above already
+                  use the screen's mono labels. */}
+              <Text style={{ ...tokens.text.legend, fontWeight: "600", color: tokens.color.textMuted }}>
+                {t("redesign.road.here")}
+              </Text>
               {road.odometer !== undefined ? (
                 <Text style={{ ...v2.value(), color: tokens.color.text }}>
                   {`${formatNumber(road.odometer)} ${distanceUnitLabel()}`}
@@ -106,11 +110,13 @@ export function Road({
             <View style={{ flexDirection: "row" }}>
               <View style={{ flex: 1 }} />
               <View style={{ width: STRIP + STUB * 2 }} />
-              <Text style={{ ...v2.label(), color: RED_TEXT, flex: 1 }}>{t("redesign.road.behind")}</Text>
+              <Text style={{ ...tokens.text.legend, fontWeight: "600", color: RED_TEXT, flex: 1 }}>
+                {t("redesign.road.behind")}
+              </Text>
             </View>
           ) : null}
           {road.behind.map((s) => (
-            <Sign key={s.type} state={s} side={index % 2 === 0 ? "left" : "right"} order={index++} reduced={reduced} />
+            <Sign key={s.type} state={s} side={index % 2 === 0 ? "left" : "right"} order={index++} reduced={reduced} onOpen={onOpen} />
           ))}
         </View>
       </View>
@@ -123,15 +129,21 @@ function Sign({
   side,
   order,
   reduced,
+  onOpen,
 }: {
   state: DueState;
   side: "left" | "right";
   order: number;
   reduced: boolean;
+  onOpen?: () => void;
 }) {
   const enter = useRef(new Animated.Value(reduced ? 1 : 0)).current;
+  // Re-run on `reduced`: it answers asynchronously, so a mount can start the
+  // rise before Reduce Motion is known to be on. Turning it off again re-runs
+  // a rise from 1 to 1, which does nothing.
   useEffect(() => {
     if (reduced) {
+      enter.stopAnimation();
       enter.setValue(1);
       return;
     }
@@ -144,18 +156,21 @@ function Sign({
     });
     run.start();
     return () => run.stop();
-    // Once per mount.
+    // `order` is read once: a re-sort must not stop a rise midway.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reduced]);
 
   const overdue = state.status === "due";
   const when = whenLabel(state);
   const tone = overdue ? RED_TEXT : state.status === "soon" ? AMBER_TEXT : ACCENT_TEXT;
   const card = (
-    <View
-      accessible
+    <Pressable
+      onPress={onOpen}
+      disabled={!onOpen}
+      accessibilityRole={onOpen ? "button" : undefined}
       accessibilityLabel={`${serviceName(state.type)}, ${when}`}
-      style={{
+      style={({ pressed }) => ({
+        opacity: pressed ? 0.7 : 1,
         flexShrink: 1,
         flexDirection: "row",
         alignItems: "center",
@@ -165,7 +180,7 @@ function Sign({
         borderCurve: "continuous",
         backgroundColor: overdue ? tokens.color.redWash : tokens.color.surface,
         ...(overdue ? {} : tokens.shadow.ambient),
-      }}
+      })}
     >
       <ServiceSticker type={state.type} size={40} />
       <View style={{ flexShrink: 1, gap: 2 }}>
@@ -174,7 +189,7 @@ function Sign({
         </Text>
         <Text style={{ ...v2.value(), color: tone }}>{when}</Text>
       </View>
-    </View>
+    </Pressable>
   );
   const stub = <View style={{ width: STUB, height: 2, backgroundColor: tokens.color.hairlineLit }} />;
 

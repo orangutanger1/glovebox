@@ -185,11 +185,7 @@ export function roadFor(view: VehicleView): Road {
   const sorted = [...view.states].sort(byUrgency);
   const ahead = sorted
     .filter((s) => s.status !== "due")
-    .sort(
-      (a, b) =>
-        (a.dueAt ?? "~").localeCompare(b.dueAt ?? "~") ||
-        (a.dueOdometer ?? Infinity) - (b.dueOdometer ?? Infinity),
-    )
+    .sort((a, b) => byDueDate(a, b) || (a.dueOdometer ?? Infinity) - (b.dueOdometer ?? Infinity) || 0)
     .slice(0, AHEAD_MAX);
   return {
     vehicleId: view.vehicle.id,
@@ -198,6 +194,40 @@ export function roadFor(view: VehicleView): Road {
     ahead,
     behind: sorted.filter((s) => s.status === "due"),
   };
+}
+
+/** Earliest date first, undated (distance-only) last. Not a sentinel string:
+ *  locale collation sorts "~" before digits. */
+function byDueDate(a: DueState, b: DueState): number {
+  if (a.dueAt && b.dueAt) return a.dueAt < b.dueAt ? -1 : a.dueAt > b.dueAt ? 1 : 0;
+  return a.dueAt ? -1 : b.dueAt ? 1 : 0;
+}
+
+export type NextUp = { task: Task; life?: number };
+
+/** A v2's "Next up" under the hero: every due or due-soon task but the hero's
+ *  own (none may drop off Today), then what comes after, up to three rows in
+ *  all. Each row's bar is the interval left. */
+export function nextUpRows(views: readonly VehicleView[], hero: HeroFigure | null): NextUp[] {
+  const isHero = (vehicleId: string, type: string) =>
+    hero !== null && hero.vehicleId === vehicleId && hero.type === type;
+  const lifeOf = (vehicleId: string, type: string) =>
+    views.find((v) => v.vehicle.id === vehicleId)?.lives.find((l) => l.type === type)?.left;
+  const rows: NextUp[] = todayTasks(views)
+    .filter((task) => !isHero(task.vehicleId, task.type))
+    .map((task) => ({ task, life: lifeOf(task.vehicleId, task.type) }));
+  const later = views
+    .flatMap((v) => v.states.filter((s) => s.status === "ok").map((s) => ({ v, s })))
+    .sort((a, b) => byUrgency(a.s, b.s))
+    .filter(({ v, s }) => !isHero(v.vehicle.id, s.type));
+  for (const { v, s } of later) {
+    if (rows.length >= 3) break;
+    rows.push({
+      task: { vehicleId: v.vehicle.id, vehicleName: v.vehicle.name, type: s.type, status: "soon", state: s },
+      life: lifeOf(v.vehicle.id, s.type),
+    });
+  }
+  return rows;
 }
 
 /** One road per car with anything tracked, most urgent car first. */
