@@ -711,7 +711,7 @@ document, build the widget before document photos.
 - Post-onboarding only (onboarding and paywalls have no stack header). Does not touch the paywall metric or any event. Arm B unchanged.
 - **Funnel effect:** none expected. Possibly a small lift in arm A's first-session `service_logged` (the header was hard to read); too small to read.
 
-### 2026-10-14 — native build 1.3.1 (46): A v2 becomes arm A (EAS build d570d372 in ASC; submitted for App Review 10-14 PT, then withdrawn by the user the same night to add more; branch `feat/app-design-v2`)
+### 2026-10-14 — native build 1.3.1 (46): A v2 becomes arm A (EAS build d570d372 in ASC; submitted for App Review 10-14 PT, then withdrawn by the user the same night to add more; **resubmitted unchanged 10-14 PT** after the user decided to add nothing (state WAITING_FOR_REVIEW, release AFTER_APPROVAL); branch `feat/app-design-v2`)
 
 - Arm A (`redesign`) gets v2 on 1.3.1: Bricolage Grotesque and DM Mono, the warm page `#F6F3EE` (onboarding included), one big figure plus "Next up" on Today, service stickers, the road on Upcoming, the full-screen logged moment, the restyled explainer. Arm B unchanged. Also carries the arm A header fix (above) and the service explainers (both arms).
 - New native dependencies `@expo-google-fonts/bricolage-grotesque` and `@expo-google-fonts/dm-mono`, so this is a binary, not an OTA. `runtimeVersion` follows the app version: from here OTAs built on this tree reach 1.3.1 installs only; 1.3.0 installs need a separate publish from a 1.3.0 tree.
