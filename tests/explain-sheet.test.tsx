@@ -181,3 +181,12 @@ describe("A v2's explainer", () => {
     expect(navigated).toEqual(["replace:/vehicle/v1/log?type=Oil%20Change"]);
   });
 });
+
+// react-native-screens sizes a formSheet's ScrollView only when it is the
+// screen's root view; wrapped in a flex: 1 View it laid out at zero height and
+// the sheet showed blank on device (TestFlight 1.3.1 (46)).
+test("renders a ScrollView as the sheet's root view", () => {
+  mockParams = { type: "Oil Change", vehicle: "v1", source: "service_row" };
+  const root = render().toJSON() as TestRenderer.ReactTestRendererJSON;
+  expect(root.type).toBe("RCTScrollView");
+});

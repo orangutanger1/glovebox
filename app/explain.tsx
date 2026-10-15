@@ -122,97 +122,99 @@ export default function ExplainSheet() {
     : { ...tokens.text.legend, color: tokens.color.textMuted };
 
   return (
-    <View style={{ flex: 1, backgroundColor: tokens.color.housing }}>
-      <ScrollView
-        contentContainerStyle={{
-          ...tokens.layout.column,
-          padding: tokens.space.lg,
-          paddingBottom: tokens.space.xl,
-          gap: tokens.space.lg,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
-          {designV2 ? (
-            <ServiceSticker type={type} size={56} />
-          ) : redesign ? (
-            <Mascot mood={MOOD[status]} size={64} />
+    // The ScrollView is the root on purpose: react-native-screens sizes a
+    // formSheet's ScrollView to the sheet only when it is the screen's root
+    // view. Inside a flex: 1 View it got zero height and the sheet was blank.
+    <ScrollView
+      style={{ backgroundColor: tokens.color.housing }}
+      contentContainerStyle={{
+        ...tokens.layout.column,
+        padding: tokens.space.lg,
+        paddingBottom: tokens.space.xl,
+        gap: tokens.space.lg,
+      }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", gap: tokens.space.md }}>
+        {designV2 ? (
+          <ServiceSticker type={type} size={56} />
+        ) : redesign ? (
+          <Mascot mood={MOOD[status]} size={64} />
+        ) : null}
+        <View style={{ flex: 1, gap: tokens.space.xs }}>
+          <Text style={{ ...(designV2 ? v2.greeting() : tokens.text.title), color: tokens.color.text }}>
+            {serviceName(type)}
+          </Text>
+          {difficulty ? (
+            <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
+              {t(`explain.difficulty.${difficulty}`)}
+            </Text>
           ) : null}
-          <View style={{ flex: 1, gap: tokens.space.xs }}>
-            <Text style={{ ...(designV2 ? v2.greeting() : tokens.text.title), color: tokens.color.text }}>
-              {serviceName(type)}
-            </Text>
-            {difficulty ? (
-              <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>
-                {t(`explain.difficulty.${difficulty}`)}
-              </Text>
-            ) : null}
-          </View>
-          <Pressable onPress={close} hitSlop={12} accessibilityRole="button" accessibilityLabel={t("explain.close")}>
-            {({ pressed }) => (
-              <Text style={{ fontSize: 22, color: pressed ? tokens.color.text : tokens.color.textMuted }}>✕</Text>
-            )}
-          </Pressable>
         </View>
+        <Pressable onPress={close} hitSlop={12} accessibilityRole="button" accessibilityLabel={t("explain.close")}>
+          {({ pressed }) => (
+            <Text style={{ fontSize: 22, color: pressed ? tokens.color.text : tokens.color.textMuted }}>✕</Text>
+          )}
+        </Pressable>
+      </View>
 
-        <View
-          style={
-            designV2
-              ? {
-                  backgroundColor: tokens.color.surface,
-                  borderRadius: tokens.radius.lg,
-                  borderCurve: "continuous",
-                  padding: tokens.space.md,
-                  gap: 4,
-                  ...tokens.shadow.ambient,
-                }
-              : {
-                  backgroundColor: tokens.color.surfaceHi,
-                  borderRadius: tokens.radius.sm,
-                  padding: tokens.space.md,
-                  gap: 2,
-                }
-          }
-        >
-          {/* Plain legend in v2 too: the screen's three mono labels are the
-              sections below. */}
-          <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{t("explain.schedule")}</Text>
-          {lines.map((line, i) => (
-            <Text
-              key={line}
-              style={{
-                ...tokens.text.body,
-                ...tokens.text.numeric,
-                ...(designV2 ? { ...v2.value(), fontSize: 15 } : {}),
-                fontWeight: i === lines.length - 1 && status === "overdue" ? "600" : "400",
-                color:
-                  i === lines.length - 1 && status === "overdue"
-                    ? designV2
-                      ? RED_TEXT
-                      : tokens.color.red
-                    : tokens.color.text,
-              }}
-            >
-              {line}
-            </Text>
-          ))}
-        </View>
-
-        {(["what", "why", "diy"] as const).map((part) => (
-          <View key={part} style={{ gap: tokens.space.xs }}>
-            <Text style={sectionLabel}>{t(`explain.${part}`)}</Text>
-            <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{t(`explain.${type}.${part}`)}</Text>
-          </View>
+      <View
+        style={
+          designV2
+            ? {
+                backgroundColor: tokens.color.surface,
+                borderRadius: tokens.radius.lg,
+                borderCurve: "continuous",
+                padding: tokens.space.md,
+                gap: 4,
+                ...tokens.shadow.ambient,
+              }
+            : {
+                backgroundColor: tokens.color.surfaceHi,
+                borderRadius: tokens.radius.sm,
+                padding: tokens.space.md,
+                gap: 2,
+              }
+        }
+      >
+        {/* Plain legend in v2 too: the screen's three mono labels are the
+            sections below. */}
+        <Text style={{ ...tokens.text.legend, color: tokens.color.textMuted }}>{t("explain.schedule")}</Text>
+        {lines.map((line, i) => (
+          <Text
+            key={line}
+            style={{
+              ...tokens.text.body,
+              ...tokens.text.numeric,
+              ...(designV2 ? { ...v2.value(), fontSize: 15 } : {}),
+              fontWeight: i === lines.length - 1 && status === "overdue" ? "600" : "400",
+              color:
+                i === lines.length - 1 && status === "overdue"
+                  ? designV2
+                    ? RED_TEXT
+                    : tokens.color.red
+                  : tokens.color.text,
+            }}
+          >
+            {line}
+          </Text>
         ))}
+      </View>
 
-        <View style={{ gap: tokens.space.sm }}>
-          {vehicle ? <Button label={t("explain.log")} onPress={() => act("log_service")} /> : null}
-          <Button label={t("explain.interval")} variant="secondary" onPress={() => act("change_interval")} />
+      {(["what", "why", "diy"] as const).map((part) => (
+        <View key={part} style={{ gap: tokens.space.xs }}>
+          <Text style={sectionLabel}>{t(`explain.${part}`)}</Text>
+          <Text style={{ ...tokens.text.body, color: tokens.color.text }}>{t(`explain.${type}.${part}`)}</Text>
         </View>
+      ))}
 
-        <Text style={{ ...tokens.text.footnote, color: tokens.color.textFaint, textAlign: "center" }}>
-          {t("explain.disclaimer")}
-        </Text>
-      </ScrollView>
-    </View>
+      <View style={{ gap: tokens.space.sm }}>
+        {vehicle ? <Button label={t("explain.log")} onPress={() => act("log_service")} /> : null}
+        <Button label={t("explain.interval")} variant="secondary" onPress={() => act("change_interval")} />
+      </View>
+
+      <Text style={{ ...tokens.text.footnote, color: tokens.color.textFaint, textAlign: "center" }}>
+        {t("explain.disclaimer")}
+      </Text>
+    </ScrollView>
   );
 }
