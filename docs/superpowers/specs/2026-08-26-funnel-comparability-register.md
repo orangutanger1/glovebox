@@ -718,3 +718,9 @@ document, build the widget before document photos.
 - No event, step, price, plan, timer or copy under test changes.
 - **Funnel effect:** arm A before and after 1.3.1 are two different designs. **Never pool them.** The `app_design` read restarts at 1.3.1: filter both arms to installs whose first `Application Opened` is 1.3.1 or later.
 
+### 2026-10-14 — OTA `01a13e35` (runtime 1.3.1, production): service card no longer blank (commit c1f1b13)
+
+- On TestFlight 1.3.1 (46) every service card opened as a blank white sheet: react-native-screens sizes a formSheet's ScrollView only when it is the screen's root view, and the card wrapped it in a `flex: 1` View. The ScrollView is now the root. Both arms.
+- Reaches 1.3.1 installs only (TestFlight and App Review's copy of 46, which was in review when it went out). Live 1.3.0 (44) predates the explainers and is unaffected.
+- **Funnel effect:** none on onboarding or paywalls. Explainer events (`explainer_opened` and the rest) from 46 before this update came from a blank card; count explainer engagement from this update on.
+
